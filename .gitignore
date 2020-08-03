@@ -1,0 +1,14 @@
+vendor/
+node_modules/
+upload/*
+
+# Ignore VueJS compiled files
+views/css/app.css
+views/js/app.js
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
