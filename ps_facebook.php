@@ -149,6 +149,10 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
+        $this->context->smarty->assign([
+            'pathApp' => $this->_path . 'views/js/main.js',
+        ]);
+
         return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
     }
 
