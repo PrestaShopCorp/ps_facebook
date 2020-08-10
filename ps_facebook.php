@@ -29,8 +29,16 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class Psfacebook extends Module
+class Ps_facebook extends Module
 {
+    const MODULE_ADMIN_CONTROLLERS = [
+        'AdminAjaxPsfacebookController',
+    ];
+
+    const HOOK_LIST = [
+        'displayHeader'
+    ];
+
     public $name;
     public $tab;
     public $version;
@@ -48,8 +56,8 @@ class Psfacebook extends Module
     public $ps_versions_compliancy;
     public $compiled_path;
     public $js_path;
-    public $hook = [
-        'displayHeader',
+    public $configurationList = [
+        'fbe_account_id'
     ];
 
     public function __construct()
@@ -59,7 +67,7 @@ class Psfacebook extends Module
         $this->version = '2.0.2';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        $this->module_key = '';
+        // $this->module_key = '82bc763z4cfef947e06f15c78f5ete2e';
 
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
 
@@ -85,10 +93,69 @@ class Psfacebook extends Module
      * - set some configuration value
      * - register hook used by the module.
      *
-     * @return void
+     * @return bool
      */
     public function install()
     {
+        return parent::install() &&
+            $this->installConfiguration() &&
+            $this->registerHook(self::HOOK_LIST) &&
+            $this->installTabs();
+    }
+
+    /**
+     * Install configuration for each shop
+     *
+     * @return bool
+     */
+    public function installConfiguration()
+    {
+        $result = true;
+
+        foreach (\Shop::getShops(false, null, true) as $shopId) {
+            foreach ($this->configurationList as $name => $value) {
+                if (false === Configuration::hasKey($name, null, null, (int) $shopId)) {
+                    $result = $result && Configuration::updateValue(
+                        $name,
+                        $value,
+                        false,
+                        null,
+                        (int) $shopId
+                    );
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * This method is often use to create an ajax controller
+     *
+     * @return bool
+     */
+    public function installTabs()
+    {
+        $installTabCompleted = true;
+
+        foreach (static::MODULE_ADMIN_CONTROLLERS as $controllerName) {
+            if (Tab::getIdFromClassName($controllerName)) {
+                continue;
+            }
+
+            $tab = new Tab();
+            $tab->class_name = $controllerName;
+            $tab->active = true;
+            $tab->name = array_fill_keys(
+                Language::getIDs(false),
+                $this->displayName
+            );
+            $tab->id_parent = -1;
+            $tab->module = $this->name;
+            $installTabCompleted = $installTabCompleted && $tab->add();
+        }
+
+        return $installTabCompleted;
     }
 
     /**
@@ -111,6 +178,7 @@ class Psfacebook extends Module
      */
     public function getContent()
     {
+        return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
     }
 
     /**
