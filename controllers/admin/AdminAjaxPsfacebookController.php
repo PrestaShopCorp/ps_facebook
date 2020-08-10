@@ -16,4 +16,19 @@
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
+    /**
+     * AJAX: Get the form Payload for PSX. Check the data and send it to PSL
+     */
+    public function ajaxProcessFbeAccount()
+    {
+        $payload = json_decode(\Tools::getValue('payload'), true);
+
+        if (!empty($errors)) {
+            $this->ajaxDie(json_encode($errors));
+        }
+
+        // Configuration::updateValue();
+
+        $this->ajaxDie(json_encode($response));
+    }
 }

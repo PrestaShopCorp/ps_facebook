@@ -31,6 +31,35 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class Ps_facebook extends Module
 {
+    const MODULE_ADMIN_CONTROLLERS = [
+        'AdminAjaxPsfacebookController',
+    ];
+
+    const HOOK_LIST = [
+        'displayHeader'
+    ];
+
+    public $name;
+    /**
+     * @var string
+     */
+    public $tab;
+    /**
+     * @var string
+     */
+    public $version;
+    /**
+     * @var string
+     */
+    public $author;
+    /**
+     * @var int
+     */
+    public $need_instance;
+    /**
+     * @var string
+     */
+    public $module_key;
     /**
      * @var string
      */
@@ -51,8 +80,8 @@ class Ps_facebook extends Module
      * @var string
      */
     public $js_path;
-    public $hook = [
-        'displayHeader',
+    public $configurationList = [
+        'fbe_account_id'
     ];
 
     public function __construct()
@@ -62,7 +91,7 @@ class Ps_facebook extends Module
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        $this->module_key = '';
+        // $this->module_key = '82bc763z4cfef947e06f15c78f5ete2e';
 
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
 
@@ -120,10 +149,7 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
-        $this->context->smarty->assign('pathApp', $this->_path . 'views/js/app.js');
-        $this->context->smarty->assign('chunkVendor', $this->_path . 'views/js/chunk-vendors.js');
-
-        return $this->display(__FILE__, '/views/templates/admin/app.tpl');
+        return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
     }
 
     /**
