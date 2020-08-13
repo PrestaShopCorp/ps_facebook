@@ -23,24 +23,24 @@ function launchFBE() {
         if (response.authResponse) {
             // returns a User Access Token with scopes requested
             const accessToken = response.authResponse.accessToken;
-            const message = {
-                'success':true,
-                'access_token':accessToken,
-            };
             
             console.log('accessToken', accessToken);
+            console.log('PsfacebookControllerLink', PsfacebookControllerLink);
             
             let request = $.ajax({
-                url: "script.php",
-                method: "GET",
-                data: { accessToken : accessToken },
-                dataType: "json"
+                url: PsfacebookControllerLink,
+                method: 'GET',
+                data: {
+                    ajax: 1,
+                    action: 'SaveTokenFbeAccount',
+                    accessToken : accessToken 
+                },
+                dataType: 'json'
             }).success(function( msg ) {
                 console.log('success');
             }).fail(function( jqXHR, textStatus ) {
                 console.log('fail');
             });
-              
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }

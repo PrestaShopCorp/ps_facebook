@@ -180,6 +180,7 @@ class Ps_facebook extends Module
     {
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
+            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebookController')
         ]);
 
         return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
