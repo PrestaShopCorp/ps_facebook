@@ -20,13 +20,26 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         return parent::postProcess(); // IF YOU DON'T DO THIS FOR ANY REASON
     }
-    
+
     public function ajaxProcessSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
-        var_dump($token);
-        $response = Configuration::updateValue('token_fbe_account', $token);
+        $response = Configuration::updateValue('fbe_access_token', $token);
 
         $this->ajaxDie(json_encode($response));
+    }
+
+    public function ajaxProcessFacebookWebhooks()
+    {
+        // TODO: add some checks
+        Configuration::updateValue('fbe_pixel_id', \Tools::getValue('pixel_id'));
+        Configuration::updateValue('fbe_business_id', \Tools::getValue('business_id'));
+        Configuration::updateValue('fbe_business_manager_id', \Tools::getValue('business_manager_id'));
+        Configuration::updateValue('fbe_access_token', \Tools::getValue('access_token'));
+        Configuration::updateValue('fbe_profiles', \Tools::getValue('profiles'));
+        Configuration::updateValue('fbe_pages', \Tools::getValue('pages'));
+        Configuration::updateValue('fbe_ad_account_id', \Tools::getValue('ad_account_id'));
+        Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
+
     }
 }
