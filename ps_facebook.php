@@ -91,7 +91,7 @@ class Ps_facebook extends Module
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        // $this->module_key = '82bc763z4cfef947e06f15c78f5ete2e';
+        // TODO : $this->module_key = '';
 
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
 
@@ -151,7 +151,7 @@ class Ps_facebook extends Module
     {
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
-            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebookController')
+            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook')
         ]);
 
         return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');

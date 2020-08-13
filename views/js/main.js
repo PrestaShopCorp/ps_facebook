@@ -6,6 +6,8 @@ window.fbAsyncInit = function() {
         xfbml      : true,  // parse social plugins on this page
         version    : 'v7.0' // uses graph api version v4.0
     });
+    console.log(FB);
+
 };
 
 //1. Load the JavaScript SDK asynchronously
@@ -62,4 +64,10 @@ function launchFBE() {
             "repeat":false
         }
     });
+}
+
+
+function installFBE() {
+    // fbe_external_business_id
+     
 }
