@@ -29,7 +29,7 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class Psfacebook extends Module
+class Ps_facebook extends Module
 {
     public $name;
     public $tab;
@@ -56,7 +56,7 @@ class Psfacebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '2.0.2';
+        $this->version = '1.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '';
@@ -70,11 +70,9 @@ class Psfacebook extends Module
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
         $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
-
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
-
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
     }
