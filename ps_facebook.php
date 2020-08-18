@@ -35,8 +35,12 @@ class Ps_facebook extends Module
         'AdminAjaxPsfacebookController',
     ];
 
+    const FRONT_CONTROLLERS = [
+        'FrontAjaxFacebookWebhooks',
+    ];
+
     const HOOK_LIST = [
-        'displayHeader'
+        'displayHeader',
     ];
 
     public $name;
@@ -57,7 +61,14 @@ class Ps_facebook extends Module
     public $compiled_path;
     public $js_path;
     public $configurationList = [
-        'fbe_account_id'
+        'fbe_pixel_id',
+        'fbe_business_id',
+        'fbe_business_manager_id',
+        'fbe_access_token',
+        'fbe_profiles',
+        'fbe_pages',
+        'fbe_ad_account_id',
+        'fbe_catalog_id',
     ];
 
     public function __construct()
@@ -178,6 +189,9 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
+        // dump($this->context->xlink->getModuleLink('ps_facebook', 'AdminAjaxPsfacebookController'));
+        // die;
+
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook')
@@ -194,4 +208,13 @@ class Ps_facebook extends Module
     public function loadAsset()
     {
     }
+
+    public function hookDisplayHeader(array $param)
+    {
+        $page = $this->context->controller->php_self;
+        // TODO: send to API conversion
+        dump($page);
+        dump($param);
+    }
+
 }
