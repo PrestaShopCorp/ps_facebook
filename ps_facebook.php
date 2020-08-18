@@ -168,6 +168,10 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
+        $this->context->smarty->assign('pathApp', $this->_path . 'views/js/app.js');
+        $this->context->smarty->assign('chunkVendor', $this->_path . 'views/js/chunk-vendors.js');
+
+        return $this->display(__FILE__, '/views/templates/admin/app.tpl');
     }
 
     /**
