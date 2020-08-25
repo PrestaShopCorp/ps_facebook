@@ -42,7 +42,9 @@ class Ps_facebook extends Module
     const HOOK_LIST = [
         'displayHeader',
         'actionCustomerAccountAdd',
-        'actionObjectContactAddAfter'
+        'actionObjectContactAddAfter',
+        'actionCartSave',
+        'actionSearch'
     ];
 
     public $name;
@@ -342,6 +344,20 @@ class Ps_facebook extends Module
         $this->context->smarty->assign($smartyVariables);
         return $this->display(__FILE__, 'views/templates/hook/header.tpl');
         
+    }
+
+    public function hookActionSearch(array $param)
+    {
+        if ($this->psVersionIs17) {
+            // 1.7 version
+        } else {
+            // 1.6 version
+        }
+    }
+
+    public function hookActionCartSave(array $param)
+    {
+        // TODO: send datas to conversion API
     }
 
     /**
