@@ -12,12 +12,16 @@
     "require": {
         "php": ">=5.6",
         "guzzlehttp/guzzle": "~5.3",
-        "prestashop/circuit-breaker": "^3.0"
+        "prestashop/circuit-breaker": "^3.0",
+        "facebook/php-business-sdk": "^8.0"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "3.*"
     },
     "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\PrestashopFacebook\\": "classes/"
+        },
         "classmap": [
             "ps_facebook.php",
             "controllers",

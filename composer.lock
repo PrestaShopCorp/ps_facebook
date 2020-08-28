@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6331dffb71c8a7ea6d72ed38ded433d",
+    "content-hash": "2c0e646d99509bc2508f8328dcb8e13d",
     "packages": [
+        {
+            "name": "facebook/php-business-sdk",
+            "version": "8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/facebook-php-business-sdk.git",
+                "reference": "26d79d5c33aff01ade2192e1720ab3f646ae8aa9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/facebook-php-business-sdk/zipball/26d79d5c33aff01ade2192e1720ab3f646ae8aa9",
+                "reference": "26d79d5c33aff01ade2192e1720ab3f646ae8aa9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8",
+                "symfony/finder": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FacebookAds\\": "src/FacebookAds/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PHP SDK for Facebook Business",
+            "homepage": "https://developers.facebook.com/",
+            "keywords": [
+                "ads",
+                "business",
+                "facebook",
+                "instagram",
+                "page",
+                "sdk"
+            ],
+            "time": "2020-08-05T05:08:38+00:00"
+        },
         {
             "name": "guzzlehttp/guzzle",
             "version": "5.3.4",
