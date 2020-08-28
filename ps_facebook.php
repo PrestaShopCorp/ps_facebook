@@ -1,4 +1,7 @@
 <?php
+
+use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 /**
  * 2007-2020 PrestaShop.
  *
@@ -44,7 +47,8 @@ class Ps_facebook extends Module
         'actionCustomerAccountAdd',
         'actionObjectContactAddAfter',
         'actionCartSave',
-        'actionSearch'
+        'actionSearch',
+        'displayOrderConfirmation'
     ];
 
     public $name;
@@ -164,8 +168,11 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
-        // dump($this->context->xlink->getModuleLink('ps_facebook', 'AdminAjaxPsfacebookController'));
-        // die;
+        $dispatcher = new EventDispatcher();
+        dump($dispatcher->dispatch([
+            'userData' => $this->createSdkUser()
+        ]));
+        die;
 
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
@@ -182,15 +189,18 @@ class Ps_facebook extends Module
      */
     public function loadAsset()
     {
+        // ¯\_(ツ)_/¯ yet
     }
 
     public function hookActionCustomerAccountAdd(array $param)
     {
         // TODO: send datas to conversion API
+        $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
     public function hookDisplayHeader(array $param)
     {
+        // TODO: refacto and clean this in another class ?
         $pixel_id = Configuration::get('PS_PIXEL_ID');
         if (empty($pixel_id)) {
             return;
@@ -309,7 +319,7 @@ class Ps_facebook extends Module
         );
 
         if ($this->context->customer->id) {
-            $smartyVariables['userInfos'] = $this->getUserInformations();
+            $smartyVariables['userInfos'] = $this->getCustomerInformations();
         }
 
         $this->context->smarty->assign($smartyVariables);
@@ -319,6 +329,7 @@ class Ps_facebook extends Module
 
     public function hookActionSearch(array $param)
     {
+        // ApiConversion and Pixel with TPL
         if ($this->psVersionIs17) {
             // 1.7 version
         } else {
@@ -331,6 +342,11 @@ class Ps_facebook extends Module
         // TODO: send datas to conversion API
     }
 
+    public function displayOrderConfirmation(array $params): void
+    {
+        // $params = ['order' => Order $order]
+    }
+
     /**
      * formatPixel
      *
@@ -340,6 +356,7 @@ class Ps_facebook extends Module
      */
     private function formatPixel($params)
     {
+        // TODO: might need some refacto/clean 
         if (!empty($params)) {
             $format = '{';
             foreach ($params as $key => &$val) {
@@ -358,8 +375,6 @@ class Ps_facebook extends Module
                 }
             }
 
-            unset($params, $key, $val);
-
             $format = Tools::substr($format, 0, -2);
             $format .= '}';
 
@@ -370,11 +385,11 @@ class Ps_facebook extends Module
     }
 
     /**
-     * getUserInformations
+     * getCustomerInformations
      *
      * @return Array
      */
-    private function getUserInformations()
+    private function getCustomerInformations()
     {
         $arrayReturned = array();
         $simpleAddresses = $this->context->customer->getSimpleAddresses();
@@ -407,6 +422,23 @@ class Ps_facebook extends Module
         $arrayReturned['fn'] = $this->context->customer->lastname;
         $arrayReturned['em'] = $this->context->customer->email;
 
+        // data structured for pixel
         return $arrayReturned;
+    }
+
+    /**
+     * @param array $userInfos
+     *
+     * @return UserData
+     */
+    private function createSdkUser()
+    {
+        return (new UserData())
+            ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
+            // It is recommended to send Client IP and User Agent for ServerSide API Events.
+            ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
+            ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setFbp('fb.1.1558571054389.1098115397')
+            ->setEmail('joe@eg.com');
     }
 }

@@ -18,7 +18,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 {
     public function postProcess()
     {
-        return parent::postProcess(); // IF YOU DON'T DO THIS FOR ANY REASON
+        return parent::postProcess();
     }
 
     public function ajaxProcessSaveTokenFbeAccount()
