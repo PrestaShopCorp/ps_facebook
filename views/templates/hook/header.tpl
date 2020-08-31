@@ -46,6 +46,7 @@
 {/strip}
 {literal}
     fbq('track', 'PageView');
+    var pixel_fc = {/literal}{$pixel_fc|escape:'htmlall':'UTF-8'}{literal};
 </script>
 
 <noscript>
