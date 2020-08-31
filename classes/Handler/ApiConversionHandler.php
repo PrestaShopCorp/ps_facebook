@@ -20,10 +20,23 @@ class ApiconversionHandler
         $this->facebookBusinessSDK->setLogger(new CurlLogger());
     }
 
-    public function sendEvent($event = null)
+    public function sendEvent($eventName = null, $event = null)
     {
-        // TODO: add logic to handle different event
-        $this->send($event);
+        // TODO: add logic to handle different event 
+        switch ($eventName) {
+            case 'hookActionSearch':
+                // $this->sendSearch($datas);
+
+            break;
+            case 'hookDisplayHeader':
+                // $this->sendViewContent('product', $datas);
+                // $this->sendViewContent('category', $datas);
+            break;
+            
+            default:
+                // $this->send($event);
+            break;
+        }
     }
 
     private function send($event = null): void

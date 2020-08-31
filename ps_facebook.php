@@ -226,6 +226,9 @@ class Ps_facebook extends Module
         $content_type = 'product';
         $track = 'track';
 
+        // TODO: moove this in handlers ?
+        // $this->eventDispatcher->dispatch('product', $datas); ?
+
         /**
         * Triggers ViewContent product pages
         */
@@ -307,11 +310,8 @@ class Ps_facebook extends Module
 
         $content = $this->formatPixel($content);
 
-        Media::addJsDef(array(
-            'pixel_fc' => $this->front_controller
-        ));
-
         $smartyVariables = array(
+            'pixel_fc' => $this->front_controller,
             'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
             'type' => $type,
             'content' => $content,
@@ -329,6 +329,7 @@ class Ps_facebook extends Module
 
     public function hookActionSearch(array $param)
     {
+
         // ApiConversion and Pixel with TPL
         if ($this->psVersionIs17) {
             // 1.7 version
