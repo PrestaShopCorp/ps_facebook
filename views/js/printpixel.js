@@ -79,4 +79,10 @@ $(document).ready(function() {
     }
   });
 
+  prestashop.on('updatedProduct', function(params) {
+    if (typeof(params) !== 'undefined') {
+      fbq('track', 'CustomizeProduct');
+    }
+  })
+
 });
