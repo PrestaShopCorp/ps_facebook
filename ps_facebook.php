@@ -195,7 +195,7 @@ class Ps_facebook extends Module
     public function hookActionCustomerAccountAdd(array $param)
     {
         // TODO: send datas to conversion API
-        $this->eventResolver->resolve(__FUNCTION__, $param);
+        // $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
     public function hookDisplayHeader(array $param)
@@ -329,13 +329,7 @@ class Ps_facebook extends Module
 
     public function hookActionSearch(array $param)
     {
-
-        // ApiConversion and Pixel with TPL
-        if ($this->psVersionIs17) {
-            // 1.7 version
-        } else {
-            // 1.6 version
-        }
+        $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
     public function hookActionCartSave(array $param)
