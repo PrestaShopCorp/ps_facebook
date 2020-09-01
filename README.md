@@ -11,6 +11,12 @@ You need a facebook developper account added to the PrestaShop Social Media app 
 ## Usage
 Install module and connect to FBE in module BO
 
+## Event Pixel not supported on PrestaShop 1.6
+
+```
+CustomizeProduct
+```
+
 ### Params
 
 ```
