@@ -17,7 +17,7 @@ Install module and connect to FBE in module BO
 CustomizeProduct
 ```
 
-link of all events available for pixel : https://developers.facebook.com/docs/facebook-pixel/reference/
+link of all event available for pixel <a href="https://developers.facebook.com/docs/facebook-pixel/reference/" target="_blank">here</a>
 
 ### Params
 
