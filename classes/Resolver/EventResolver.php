@@ -32,7 +32,7 @@ class EventResolver
             
             default:
                 $this->sendConversionEvent($name, $params);
-                $this->sendPixelEvent($name, $params);
+                return $this->sendPixelEvent($name, $params);
             break;
         }
     }

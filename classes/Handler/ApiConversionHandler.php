@@ -28,7 +28,7 @@ class ApiconversionHandler
         // TODO: add logic to handle different event 
         switch ($eventName) {
             case 'hookActionSearch':
-                $this->sendSearchEvent($datas);
+                $this->sendSearchEvent($event);
             break;
             case 'hookDisplayHeader':
                 $this->sendViewContentEvent($event);
@@ -39,16 +39,9 @@ class ApiconversionHandler
             break;
         }
     }
-    public function sendViewContent($event)
+    public function sendViewContentEvent($event)
     {
-        $controller_type = $this->context->controller->controller_type;
-        $id_lang = (int)$this->context->language->id;
-        $locale = Tools::strtoupper($this->context->language->iso_code);
-        $currency_iso_code = $this->context->currency->iso_code;
-        $content_type = 'product';
-        $track = 'track';
-
-
+       
     }
 
     private function sendSearchEvent($event)
