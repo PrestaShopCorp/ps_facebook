@@ -79,6 +79,7 @@ $(document).ready(function() {
     }
   });
 
+  // Track CustomizeProduct event for PS1.7
   prestashop.on('updatedProduct', function(params) {
     if (typeof(params) !== 'undefined') {
       fbq('track', 'CustomizeProduct');
