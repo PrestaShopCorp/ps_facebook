@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 class Installer
 {
-    public function __construct(\Ps_facebook $module) 
+    private $module;
+    
+    public function __construct(\Ps_facebook $module)
     {
         $this->module = $module;
     }
@@ -27,9 +29,9 @@ class Installer
 
         foreach (\Shop::getShops(false, null, true) as $shopId) {
             foreach (\Ps_facebook::CONFIGURATION_LIST as $name => $value) {
-                if (false === \Configuration::hasKey($name, null, null, (int) $shopId)) {
+                if (false === \Configuration::hasKey((string) $name, null, null, (int) $shopId)) {
                     $result = $result && \Configuration::updateValue(
-                        $name,
+                        (string) $name,
                         $value,
                         false,
                         null,

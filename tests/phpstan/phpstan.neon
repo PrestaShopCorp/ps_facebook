@@ -11,4 +11,7 @@ parameters:
 	ignoreErrors:
 		- '#Property TabCore::\$name \(string\) does not accept array.#'
 
+	ignoreErrors:
+		- '#Property TabCore::\$name \(string\) does not accept array.#'
+
 	level: 5

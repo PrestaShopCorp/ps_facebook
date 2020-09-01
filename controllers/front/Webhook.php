@@ -17,12 +17,15 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-
 class ps_facebookWebhookModuleFrontController extends ModuleFrontController
 {
     public function display()
     {
-        // verifyToken should be set in dashboard app and in config of shop i guess 
+        // TODO: AFAIK all of this should be done by another service
+
+
+        
+        // verifyToken should be set in dashboard app and in config of shop i guess
         // anyway they must match
         // if (!Configuration::get('fbe_verify_token') === \Tools::getValue('verify_token')) {
         //     $this->ajaxDie('wrong verify token');
@@ -36,21 +39,21 @@ class ps_facebookWebhookModuleFrontController extends ModuleFrontController
         $jsonGet = json_encode($_GET);
         $jsonPost = json_encode($_POST);
         file_put_contents('modules/ps_facebook/debug.log', '');
-        file_put_contents('modules/ps_facebook/debug.log', $jsonGet.PHP_EOL, FILE_APPEND);
-        file_put_contents('modules/ps_facebook/debug.log', $jsonPost.PHP_EOL, FILE_APPEND);
+        file_put_contents('modules/ps_facebook/debug.log', $jsonGet . PHP_EOL, FILE_APPEND);
+        file_put_contents('modules/ps_facebook/debug.log', $jsonPost . PHP_EOL, FILE_APPEND);
 
         // TODO: add some checks
-        Configuration::updateValue('fbe_pixel_id', $values['pixel_id']);
-        Configuration::updateValue('fbe_business_id', $values['business_id']);
-        Configuration::updateValue('fbe_business_manager_id', $values['business_manager_id']);
-        if (!empty($values['access_token'])) {
-            Configuration::updateValue('fbe_access_token', $values['access_token']);
-        } 
+        // Configuration::updateValue('fbe_pixel_id', $values['pixel_id']);
+        // Configuration::updateValue('fbe_business_id', $values['business_id']);
+        // Configuration::updateValue('fbe_business_manager_id', $values['business_manager_id']);
+        // if (!empty($values['access_token'])) {
+        //     Configuration::updateValue('fbe_access_token', $values['access_token']);
+        // }
         // Configuration::updateValue('fbe_profiles', $values['profiles']); is an array
         // Configuration::updateValue('fbe_pages', $values['pages']); is an array
-        Configuration::updateValue('fbe_ad_account_id', $values['ad_account_id']);
-        Configuration::updateValue('fbe_catalog_id', $values['catalog_id']);
-        
+        // Configuration::updateValue('fbe_ad_account_id', $values['ad_account_id']);
+        // Configuration::updateValue('fbe_catalog_id', $values['catalog_id']);
+
         // hub.challenge is sent by FB and must be returned in response
         $this->ajaxDie(Tools::getValue('hub_challenge'));
     }

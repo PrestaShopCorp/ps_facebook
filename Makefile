@@ -38,7 +38,7 @@ tests: test-back test-front
 
 # target: test-back                    - Launch the tests back
 test-back:
-	docker-compose run --rm php sh -c "vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --diff-format udiff"
+	docker-compose run --rm php sh -c "vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --diff-format udiff";
 	docker run -tid --rm -v ps-volume:/var/www/html --name temp-ps prestashop/prestashop; docker run --rm --volumes-from temp-ps -v $PWD:/web/module -e _PS_ROOT_DIR_=/var/www/html --workdir=/web/module phpstan/phpstan analyse --configuration=/web/module/tests/phpstan/phpstan.neon;
 
 # target: test-front                   - Launch the tests front (does not work linter is not configured)
@@ -47,8 +47,5 @@ test-front:
 
 # target: fix-lint
 fix-lint:
+	docker-compose run --rm php sh -c "vendor/bin/php-cs-fixer fix --using-cache=no"
 	docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"
-
-# target: storybook
-storybook:
-	docker-compose run --rm node sh -c "cd _dev/ && npm run storybook"

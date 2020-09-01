@@ -1,16 +1,18 @@
-<?php 
+<?php
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\UserData;
 use FacebookAds\Object\ServerSide\EventRequest;
+use FacebookAds\Object\ServerSide\UserData;
 
-class ApiconversionHandler
+class ApiConversionHandler
 {
-    public function __construct() 
+    private $facebookBusinessSDK;
+
+    public function __construct()
     {
         // TODO: replace with some configuration::getValue()
         Api::init(
@@ -25,7 +27,7 @@ class ApiconversionHandler
 
     public function sendEvent($eventName, $event)
     {
-        // TODO: add logic to handle different event 
+        // TODO: add logic to handle different event
         switch ($eventName) {
             case 'hookActionSearch':
                 $this->sendSearchEvent($event);
@@ -33,15 +35,15 @@ class ApiconversionHandler
             case 'hookDisplayHeader':
                 $this->sendViewContentEvent($event);
             break;
-            
+
             default:
-                // $this->send($event);
+                // unsupported event, log and throw ?
             break;
         }
     }
+
     public function sendViewContentEvent($event)
     {
-       
     }
 
     private function sendSearchEvent($event)
@@ -51,13 +53,11 @@ class ApiconversionHandler
 
     private function send($event)
     {
-        $user_data = $this->createSdkUserData();
-
         $event = (new Event())
             ->setEventName('Purchase')
             ->setEventTime(time())
             ->setEventSourceUrl('http://jaspers-market.com/product/123')
-            ->setUserData($user_data);
+            ->setUserData($this->createSdkUserData());
 
         $events = [$event];
         $request = (new EventRequest('726899634800479'))->setEvents($events);

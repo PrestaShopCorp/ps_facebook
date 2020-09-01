@@ -1,11 +1,10 @@
 <?php
 
-use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
-use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
-/**
+
+/*
  * 2007-2020 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -163,16 +162,11 @@ class Ps_facebook extends Module
             (new Uninstaller($this))->uninstall();
     }
 
-    /**
-     * Load the configuration form.
-     *
-     * @return string
-     */
     public function getContent()
     {
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
-            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook')
+            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
         ]);
 
         return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
@@ -198,6 +192,12 @@ class Ps_facebook extends Module
         return $this->eventResolver->resolve(__FUNCTION__, $params);
     }
 
+    // Handle QuickView (ViewContent)
+    public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
+    {
+        return $this->eventResolver->resolve(__FUNCTION__, $params);
+    }
+
     public function hookActionSearch(array $params)
     {
         return $this->eventResolver->resolve(__FUNCTION__, $params);
@@ -208,7 +208,7 @@ class Ps_facebook extends Module
         return $this->eventResolver->resolve(__FUNCTION__, $params);
     }
 
-    public function displayOrderConfirmation(array $params)
+    public function hookDisplayOrderConfirmation(array $params)
     {
         return $this->eventResolver->resolve(__FUNCTION__, $params);
     }

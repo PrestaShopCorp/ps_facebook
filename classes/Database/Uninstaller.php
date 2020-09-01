@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 class Uninstaller
 {
-    public function __construct(\Ps_facebook $module) 
+    private $module;
+
+    public function __construct(\Ps_facebook $module)
     {
         $this->module = $module;
     }
@@ -12,7 +14,7 @@ class Uninstaller
     public function uninstall()
     {
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
-            \Configuration::deleteByName($name);
+            \Configuration::deleteByName((string) $name);
         }
 
         return $this->uninstallTabs();
