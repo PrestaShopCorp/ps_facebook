@@ -9,6 +9,7 @@ class EventResolver
 {
     public function __construct() 
     {
+        $this->context = Context::getContext();
         $this->conversionHandler = new ApiConversionHandler();
         $this->pixelHandler = new PixelHandler();
     }
@@ -38,11 +39,11 @@ class EventResolver
 
     private function sendConversionEvent($name, $params)
     {
-        $this->conversionHandler->send($name, $params);
+        $this->conversionHandler->sendEvent($name, $params);
     }
 
     private function sendPixelEvent($name, $params)
     {
-        $this->pixelHandler->send($name, $params);
+        $this->pixelHandler->sendEvent($name, $params);
     }
 }

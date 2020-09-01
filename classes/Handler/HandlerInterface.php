@@ -4,5 +4,5 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 interface HandlerInterface
 {
-    public function sendEvent(array $event);
+    public function sendEvent(string $eventName, array $event);
 }

@@ -1,6 +1,7 @@
 <?php
 
 use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 /**
  * 2007-2020 PrestaShop.
@@ -103,6 +104,8 @@ class Ps_facebook extends Module
         'fbe_catalog_id',
     ];
 
+    private $eventResolver;
+
     public function __construct()
     {
         $this->name = 'ps_facebook';
@@ -125,8 +128,9 @@ class Ps_facebook extends Module
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
-        $this->ps_versions_compliancy = ['min' => '1.6.1', 'max' => _PS_VERSION_];
-    }
+        $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
+        $this->eventResolver = new EventResolver();
+}
 
     /**
      * This method is trigger at the installation of the module
@@ -194,37 +198,15 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $param)
     {
-        // TODO: send datas to conversion API
-        // $this->eventResolver->resolve(__FUNCTION__, $param);
+        $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
     public function hookDisplayHeader(array $param)
     {
+        $this->eventResolver->resolve(__FUNCTION__, $param);
+
         // TODO: refacto and clean this in another class ?
-        $pixel_id = Configuration::get('PS_PIXEL_ID');
-        if (empty($pixel_id)) {
-            return;
-        }
-
-        $page = $this->context->controller->php_self;
-        if (empty($page)) {
-            $page = Tools::getValue('controller');
-            $page = pSQL($page);
-            if (empty($page)) {
-                return;
-            }
-        }
-
-        $this->context->controller->addJs([
-            $this->_path.'views/js/printpixel.js',
-        ]);
-
-        $controller_type = $this->context->controller->controller_type;
-        $id_lang = (int)$this->context->language->id;
-        $locale = Tools::strtoupper($this->context->language->iso_code);
-        $currency_iso_code = $this->context->currency->iso_code;
-        $content_type = 'product';
-        $track = 'track';
+        
 
         // TODO: moove this in handlers ?
         // $this->eventDispatcher->dispatch('product', $datas); ?
@@ -334,12 +316,13 @@ class Ps_facebook extends Module
 
     public function hookActionCartSave(array $param)
     {
-        // TODO: send datas to conversion API
+        $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
-    public function displayOrderConfirmation(array $params): void
+    public function displayOrderConfirmation(array $params)
     {
         // $params = ['order' => Order $order]
+        $this->eventResolver->resolve(__FUNCTION__, $param);
     }
 
     /**
@@ -351,7 +334,7 @@ class Ps_facebook extends Module
      */
     private function formatPixel($params)
     {
-        // TODO: might need some refacto/clean 
+        // TODO: might need some refacto/clean ? this look like a manual jsonEncode()
         if (!empty($params)) {
             $format = '{';
             foreach ($params as $key => &$val) {
@@ -419,21 +402,5 @@ class Ps_facebook extends Module
 
         // data structured for pixel
         return $arrayReturned;
-    }
-
-    /**
-     * @param array $userInfos
-     *
-     * @return UserData
-     */
-    private function createSdkUser()
-    {
-        return (new UserData())
-            ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
-            // It is recommended to send Client IP and User Agent for ServerSide API Events.
-            ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
-            ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setFbp('fb.1.1558571054389.1098115397')
-            ->setEmail('joe@eg.com');
     }
 }

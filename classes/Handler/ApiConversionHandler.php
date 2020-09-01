@@ -5,32 +5,33 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\ServerSide\Event;
+use FacebookAds\Object\ServerSide\UserData;
 use FacebookAds\Object\ServerSide\EventRequest;
 
 class ApiconversionHandler
 {
     public function __construct() 
     {
+        // TODO: replace with some configuration::getValue()
         Api::init(
             '726899634800479', // app_id
-            'b3f469de46ebc1f94f5b8e3e0db09fc4', // app_secret and access_token below
-            '726899634800479|8Bwl57pXa2EdPBQug5QwGUFS0gY'
+            'b3f469de46ebc1f94f5b8e3e0db09fc4', // app_secret
+            '726899634800479|8Bwl57pXa2EdPBQug5QwGUFS0gY' // access_token
         );
+
         $this->facebookBusinessSDK = Api::instance();
         $this->facebookBusinessSDK->setLogger(new CurlLogger());
     }
 
-    public function sendEvent($eventName = null, $event = null)
+    public function sendEvent($eventName, $event)
     {
         // TODO: add logic to handle different event 
         switch ($eventName) {
             case 'hookActionSearch':
-                // $this->sendSearch($datas);
-
+                $this->sendSearchEvent($datas);
             break;
             case 'hookDisplayHeader':
-                // $this->sendViewContent('product', $datas);
-                // $this->sendViewContent('category', $datas);
+                $this->sendViewContentEvent($event);
             break;
             
             default:
@@ -38,10 +39,26 @@ class ApiconversionHandler
             break;
         }
     }
-
-    private function send($event = null): void
+    public function sendViewContent($event)
     {
-        $user_data = $event['userData'];
+        $controller_type = $this->context->controller->controller_type;
+        $id_lang = (int)$this->context->language->id;
+        $locale = Tools::strtoupper($this->context->language->iso_code);
+        $currency_iso_code = $this->context->currency->iso_code;
+        $content_type = 'product';
+        $track = 'track';
+
+
+    }
+
+    private function sendSearchEvent($event)
+    {
+        // TODO
+    }
+
+    private function send($event): void
+    {
+        $user_data = $this->createSdkUserData();
 
         $event = (new Event())
             ->setEventName('Purchase')
@@ -55,5 +72,19 @@ class ApiconversionHandler
         dump($response);
         die;
         // TODO: retry if wrong response?
+    }
+
+    /**
+     * @return UserData
+     */
+    private function createSdkUserData()
+    {
+        return (new UserData())
+            ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
+            // It is recommended to send Client IP and User Agent for ServerSide API Events.
+            ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
+            ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setFbp('fb.1.1558571054389.1098115397')
+            ->setEmail('joe@eg.com');
     }
 }
