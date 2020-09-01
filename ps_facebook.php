@@ -1,6 +1,8 @@
 <?php
 
 use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Database\Installer;
+use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 /**
@@ -49,7 +51,18 @@ class Ps_facebook extends Module
         'actionObjectContactAddAfter',
         'actionCartSave',
         'actionSearch',
-        'displayOrderConfirmation'
+        'displayOrderConfirmation',
+    ];
+
+    const CONFIGURATION_LIST = [
+        'fbe_pixel_id',
+        'fbe_business_id',
+        'fbe_business_manager_id',
+        'fbe_access_token',
+        'fbe_profiles',
+        'fbe_pages',
+        'fbe_ad_account_id',
+        'fbe_catalog_id',
     ];
 
     public $name;
@@ -93,16 +106,6 @@ class Ps_facebook extends Module
      * @var string
      */
     public $js_path;
-    public $configurationList = [
-        'fbe_pixel_id',
-        'fbe_business_id',
-        'fbe_business_manager_id',
-        'fbe_access_token',
-        'fbe_profiles',
-        'fbe_pages',
-        'fbe_ad_account_id',
-        'fbe_catalog_id',
-    ];
 
     private $eventResolver;
 
@@ -130,7 +133,7 @@ class Ps_facebook extends Module
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
         $this->eventResolver = new EventResolver();
-}
+    }
 
     /**
      * This method is trigger at the installation of the module
@@ -142,11 +145,8 @@ class Ps_facebook extends Module
      */
     public function install()
     {
-        $database = new PrestaShop\Module\Psfacebook\Database\Install($this);
-
         return parent::install() &&
-            $database->installTab() &&
-            $this->registerHook($this->hook);
+            (new Installer($this))->install();
     }
 
     /**
@@ -159,10 +159,8 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
-        $database = new PrestaShop\Module\Psfacebook\Database\Uninstall($this);
-
         return parent::uninstall() &&
-            $database->uninstallTab();
+            (new Uninstaller($this))->uninstall();
     }
 
     /**
@@ -172,12 +170,6 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
-        $dispatcher = new EventDispatcher();
-        dump($dispatcher->dispatch([
-            'userData' => $this->createSdkUser()
-        ]));
-        die;
-
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook')
@@ -219,47 +211,5 @@ class Ps_facebook extends Module
     public function displayOrderConfirmation(array $params)
     {
         return $this->eventResolver->resolve(__FUNCTION__, $params);
-    }
-
-    /**
-     * getCustomerInformations
-     *
-     * @return Array
-     */
-    private function getCustomerInformations()
-    {
-        $arrayReturned = array();
-        $simpleAddresses = $this->context->customer->getSimpleAddresses();
-
-        if (count($simpleAddresses) > 0) {
-            $current = reset($simpleAddresses);
-            if ($current['city'] != null) {
-                $arrayReturned['ct'] = $current['city'];
-            }
-            if ($current['country_iso'] != null) {
-                $arrayReturned['country'] = $current['country_iso'];
-            }
-            if ($current['postcode'] != null) {
-                $arrayReturned['zp'] = $current['postcode'];
-            }
-            if ($current['phone'] != null) {
-                $arrayReturned['ph'] = $current['phone'];
-            }
-        };
-
-        $gender = $this->context->customer->id_gender == '1' ? 'm' : 'f';
-        $arrayReturned['gender'] = $gender;
-
-        $birthDate = \DateTime::createFromFormat('Y-m-d', $this->context->customer->birthday);
-        if ($birthDate instanceof \DateTime) {
-            $arrayReturned['db'] = $birthDate->format('Ymd');
-        }
-
-        $arrayReturned['ln'] = $this->context->customer->firstname;
-        $arrayReturned['fn'] = $this->context->customer->lastname;
-        $arrayReturned['em'] = $this->context->customer->email;
-
-        // data structured for pixel
-        return $arrayReturned;
     }
 }

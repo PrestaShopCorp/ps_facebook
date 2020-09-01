@@ -7,9 +7,11 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 
 class EventResolver
 {
+    private $conversionHandler;
+    private $pixelHandler;
+
     public function __construct() 
     {
-        $this->context = Context::getContext();
         $this->conversionHandler = new ApiConversionHandler();
         $this->pixelHandler = new PixelHandler();
     }

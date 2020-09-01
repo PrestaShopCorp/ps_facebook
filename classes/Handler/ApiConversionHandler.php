@@ -49,7 +49,7 @@ class ApiconversionHandler
         // TODO
     }
 
-    private function send($event): void
+    private function send($event)
     {
         $user_data = $this->createSdkUserData();
 
