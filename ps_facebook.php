@@ -52,6 +52,11 @@ class Ps_facebook extends Module
         'displayHeader',
     ];
 
+    /**
+     * Symfony DI Container
+     */
+    private $moduleContainer;
+
     public function __construct()
     {
         $this->name = 'ps_facebook';
@@ -75,6 +80,11 @@ class Ps_facebook extends Module
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
+
+        $this->compile();
+        /** @var \PrestaShop\Module\PrestashopFacebook\Provider\ProductProvider $productProvider */
+        $productProvider = $this->getContainer(\PrestaShop\Module\PrestashopFacebook\Provider\ProductProvider::class);
+        $productProvider->getProducts();
     }
 
     /**
@@ -118,5 +128,29 @@ class Ps_facebook extends Module
      */
     public function loadAsset()
     {
+    }
+
+    /**
+     * @param bool $id
+     * @return mixed
+     */
+    public function getContainer($id = false)
+    {
+        if ($id) {
+            return $this->moduleContainer->get($id);
+        }
+
+        return $this->moduleContainer;
+    }
+
+    private function compile()
+    {
+        $containerBuilder = new \Symfony\Component\DependencyInjection\ContainerBuilder();
+        $locator = new \Symfony\Component\Config\FileLocator($this->getLocalPath() . 'config');
+        $loader = new \Symfony\Component\DependencyInjection\Loader\YamlFileLoader($containerBuilder, $locator);
+        $loader->load('config.yml');
+        $containerBuilder->compile();
+
+        $this->moduleContainer = $containerBuilder;
     }
 }

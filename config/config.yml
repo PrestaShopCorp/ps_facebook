@@ -1,0 +1,3 @@
+imports:
+  - { resource: repository.yml }
+  - { resource: provider.yml }

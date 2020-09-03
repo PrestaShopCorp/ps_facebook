@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Provider\ProductProvider:
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'

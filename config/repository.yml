@@ -1,0 +1,2 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository:
