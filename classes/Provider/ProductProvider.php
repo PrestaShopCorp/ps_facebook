@@ -29,8 +29,8 @@ class ProductProvider implements CatalogProvider
      */
     public function getProducts()
     {
-        $isOrderOutOfStockAvailable = Configuration::get('PS_ORDER_OUT_OF_STOCK');
-        $products = $this->productRepository->getProductsForFacebook(Configuration::get('PS_LANG_DEFAULT'));
+        $isOrderOutOfStockAvailable = (int) Configuration::get('PS_ORDER_OUT_OF_STOCK');
+        $products = $this->productRepository->getProductsForFacebook((int) Configuration::get('PS_LANG_DEFAULT'));
         $facebookProducts = [];
         foreach ($products as $product) {
             $facebookProduct = new FacebookProduct();
@@ -38,10 +38,10 @@ class ProductProvider implements CatalogProvider
                 ->setId($this->buildId($product))
                 ->setTitle($this->buildTitle($product))
                 ->setDescription($product['product_description_short'])
-                ->setAvailability($this->buildAvailability($product['id_product'], (int) $isOrderOutOfStockAvailable))
+                ->setAvailability($this->buildAvailability((int) $product['id_product'], $isOrderOutOfStockAvailable))
                 ->setInventory($this->buildInventory($product['id_product']))
                 ->setCondition($this->buildCondition($product))
-                ->setPrice($this->buildPrice($product['id_product']));
+                ->setPrice($this->buildPrice((int) $product['id_product']));
 
             $facebookProducts[] = $facebookProduct;
         }
@@ -77,12 +77,11 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param $productId
-     * @param $isOrderOutOfStockAvailable
+     * @param $productId int
+     * @param $isOrderOutOfStockAvailable bool
      *
      * @return string
      *
-     * @throws \PrestaShopException
      */
     private function buildAvailability($productId, $isOrderOutOfStockAvailable)
     {
@@ -117,6 +116,12 @@ class ProductProvider implements CatalogProvider
         return \StockAvailableCore::getQuantityAvailableByProduct($productId);
     }
 
+    /**
+     * @param array $product
+     *
+     * @return string
+     * @throws \Exception
+     */
     private function buildCondition(array $product)
     {
         $productAddDate = new DateTime($product['date_add']);
@@ -134,6 +139,13 @@ class ProductProvider implements CatalogProvider
         return 'used';
     }
 
+    /**
+     * @param $productId int
+     *
+     * @return string
+     * @throws \PrestaShopDatabaseException
+     * @throws \PrestaShopException
+     */
     private function buildPrice($productId)
     {
         $product = new Product($productId);
