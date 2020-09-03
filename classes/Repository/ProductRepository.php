@@ -8,7 +8,7 @@ use DbQuery;
 class ProductRepository
 {
     /**
-     * @param $langId int
+     * @param int $langId
      *
      * @return array|bool|\mysqli_result|\PDOStatement|resource|null
      *

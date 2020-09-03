@@ -9,7 +9,7 @@ class DateUtility
     /**
      * @param DateTime $currentDate
      * @param DateTime $comparedDate
-     * @param $days int
+     * @param int $days
      *
      * @return bool
      */

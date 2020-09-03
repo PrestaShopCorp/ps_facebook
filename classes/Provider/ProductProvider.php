@@ -77,8 +77,8 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param $productId int
-     * @param $isOrderOutOfStockAvailable bool
+     * @param int $productId
+     * @param bool $isOrderOutOfStockAvailable
      *
      * @return string
      *
@@ -107,7 +107,7 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param $productId
+     * @param int $productId
      *
      * @return int
      */
@@ -140,7 +140,7 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param $productId int
+     * @param int $productId
      *
      * @return string
      * @throws \PrestaShopDatabaseException
