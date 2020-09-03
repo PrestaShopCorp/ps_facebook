@@ -6,7 +6,6 @@ use JsonSerializable;
 
 class FacebookProduct implements JsonSerializable
 {
-
     /**
      * @var string
      */
@@ -219,6 +218,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $id
+     *
      * @return FacebookProduct
      */
     public function setId($id)
@@ -238,6 +238,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $title
+     *
      * @return FacebookProduct
      */
     public function setTitle($title)
@@ -257,6 +258,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $description
+     *
      * @return FacebookProduct
      */
     public function setDescription($description)
@@ -276,6 +278,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $availability
+     *
      * @return FacebookProduct
      */
     public function setAvailability($availability)
@@ -295,6 +298,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $inventory
+     *
      * @return FacebookProduct
      */
     public function setInventory($inventory)
@@ -314,6 +318,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $condition
+     *
      * @return FacebookProduct
      */
     public function setCondition($condition)
@@ -333,6 +338,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $price
+     *
      * @return FacebookProduct
      */
     public function setPrice($price)
@@ -352,6 +358,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param mixed $link
+     *
      * @return FacebookProduct
      */
     public function setLink($link)
@@ -371,6 +378,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $imageLink
+     *
      * @return FacebookProduct
      */
     public function setImageLink($imageLink)
@@ -390,6 +398,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $brand
+     *
      * @return FacebookProduct
      */
     public function setBrand($brand)
@@ -409,6 +418,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $additionalImageLink
+     *
      * @return FacebookProduct
      */
     public function setAdditionalImageLink($additionalImageLink)
@@ -428,6 +438,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $ageGroup
+     *
      * @return FacebookProduct
      */
     public function setAgeGroup($ageGroup)
@@ -447,6 +458,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $color
+     *
      * @return FacebookProduct
      */
     public function setColor($color)
@@ -466,6 +478,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $gender
+     *
      * @return FacebookProduct
      */
     public function setGender($gender)
@@ -485,6 +498,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $itemGroupId
+     *
      * @return FacebookProduct
      */
     public function setItemGroupId($itemGroupId)
@@ -504,6 +518,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $googleProductCategory
+     *
      * @return FacebookProduct
      */
     public function setGoogleProductCategory($googleProductCategory)
@@ -523,6 +538,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $commerceTaxCategory
+     *
      * @return FacebookProduct
      */
     public function setCommerceTaxCategory($commerceTaxCategory)
@@ -542,6 +558,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $material
+     *
      * @return FacebookProduct
      */
     public function setMaterial($material)
@@ -561,6 +578,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $pattern
+     *
      * @return FacebookProduct
      */
     public function setPattern($pattern)
@@ -580,6 +598,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $productType
+     *
      * @return FacebookProduct
      */
     public function setProductType($productType)
@@ -599,6 +618,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $salePrice
+     *
      * @return FacebookProduct
      */
     public function setSalePrice($salePrice)
@@ -618,6 +638,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $salePriceEffectiveDate
+     *
      * @return FacebookProduct
      */
     public function setSalePriceEffectiveDate($salePriceEffectiveDate)
@@ -637,6 +658,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $shipping
+     *
      * @return FacebookProduct
      */
     public function setShipping($shipping)
@@ -656,6 +678,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $shippingWeight
+     *
      * @return FacebookProduct
      */
     public function setShippingWeight($shippingWeight)
@@ -675,6 +698,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $size
+     *
      * @return FacebookProduct
      */
     public function setSize($size)
@@ -694,6 +718,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $customLabel0
+     *
      * @return FacebookProduct
      */
     public function setCustomLabel0($customLabel0)
@@ -713,6 +738,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $customLabel1
+     *
      * @return FacebookProduct
      */
     public function setCustomLabel1($customLabel1)
@@ -732,6 +758,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $customLabel2
+     *
      * @return FacebookProduct
      */
     public function setCustomLabel2($customLabel2)
@@ -751,6 +778,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $customLabel3
+     *
      * @return FacebookProduct
      */
     public function setCustomLabel3($customLabel3)
@@ -770,6 +798,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $customLabel4
+     *
      * @return FacebookProduct
      */
     public function setCustomLabel4($customLabel4)
@@ -789,6 +818,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $richTextDescription
+     *
      * @return FacebookProduct
      */
     public function setRichTextDescription($richTextDescription)
@@ -808,6 +838,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $gtin
+     *
      * @return FacebookProduct
      */
     public function setGtin($gtin)
@@ -827,6 +858,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $mpn
+     *
      * @return FacebookProduct
      */
     public function setMpn($mpn)
@@ -846,6 +878,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $returnPolicyInfo
+     *
      * @return FacebookProduct
      */
     public function setReturnPolicyInfo($returnPolicyInfo)
@@ -865,6 +898,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $launchDate
+     *
      * @return FacebookProduct
      */
     public function setLaunchDate($launchDate)
@@ -884,6 +918,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $expirationDate
+     *
      * @return FacebookProduct
      */
     public function setExpirationDate($expirationDate)
@@ -903,6 +938,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $visibility
+     *
      * @return FacebookProduct
      */
     public function setVisibility($visibility)
@@ -922,6 +958,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $mobileLink
+     *
      * @return FacebookProduct
      */
     public function setMobileLink($mobileLink)
@@ -941,6 +978,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $additionalVariantAttribute
+     *
      * @return FacebookProduct
      */
     public function setAdditionalVariantAttribute($additionalVariantAttribute)
@@ -960,6 +998,7 @@ class FacebookProduct implements JsonSerializable
 
     /**
      * @param string $appLink
+     *
      * @return FacebookProduct
      */
     public function setAppLink($appLink)

@@ -10,6 +10,7 @@ class DateUtility
      * @param DateTime $currentDate
      * @param DateTime $comparedDate
      * @param $days int
+     *
      * @return bool
      */
     public static function isDateNewerThenGivenDays(DateTime $currentDate, DateTime $comparedDate, $days = 7)

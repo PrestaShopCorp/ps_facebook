@@ -129,6 +129,7 @@ class Ps_facebook extends Module
 
     /**
      * @param bool $id
+     *
      * @return mixed
      */
     public function getContainer($id = false)

@@ -12,3 +12,4 @@ views/js/app.js
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.php_cs.cache

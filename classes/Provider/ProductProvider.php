@@ -12,7 +12,6 @@ use Product;
 
 class ProductProvider implements CatalogProvider
 {
-
     /**
      * @var ProductRepository
      */
@@ -25,12 +24,13 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @return FacebookProduct[]|array
+     *
      * @throws \PrestaShopException
      */
     public function getProducts()
     {
         $isOrderOutOfStockAvailable = Configuration::get('PS_ORDER_OUT_OF_STOCK');
-        $products = $this->productRepository->getProductsForFacebook();
+        $products = $this->productRepository->getProductsForFacebook(Configuration::get('PS_LANG_DEFAULT'));
         $facebookProducts = [];
         foreach ($products as $product) {
             $facebookProduct = new FacebookProduct();
@@ -38,7 +38,7 @@ class ProductProvider implements CatalogProvider
                 ->setId($this->buildId($product))
                 ->setTitle($this->buildTitle($product))
                 ->setDescription($product['product_description_short'])
-                ->setAvailability($this->buildAvailability($product['id_product'], (int)$isOrderOutOfStockAvailable))
+                ->setAvailability($this->buildAvailability($product['id_product'], (int) $isOrderOutOfStockAvailable))
                 ->setInventory($this->buildInventory($product['id_product']))
                 ->setCondition($this->buildCondition($product))
                 ->setPrice($this->buildPrice($product['id_product']));
@@ -51,6 +51,7 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @param array $product
+     *
      * @return mixed
      */
     private function buildId(array $product)
@@ -61,6 +62,7 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @param array $product
+     *
      * @return string
      */
     private function buildTitle(array $product)
@@ -77,7 +79,9 @@ class ProductProvider implements CatalogProvider
     /**
      * @param $productId
      * @param $isOrderOutOfStockAvailable
+     *
      * @return string
+     *
      * @throws \PrestaShopException
      */
     private function buildAvailability($productId, $isOrderOutOfStockAvailable)
@@ -105,6 +109,7 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @param $productId
+     *
      * @return int
      */
     private function buildInventory($productId)
