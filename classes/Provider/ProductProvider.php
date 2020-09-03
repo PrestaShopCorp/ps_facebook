@@ -29,7 +29,7 @@ class ProductProvider implements CatalogProvider
      */
     public function getProducts()
     {
-        $isOrderOutOfStockAvailable = (int) Configuration::get('PS_ORDER_OUT_OF_STOCK');
+        $isOrderOutOfStockAvailable = (bool) Configuration::get('PS_ORDER_OUT_OF_STOCK');
         $products = $this->productRepository->getProductsForFacebook((int) Configuration::get('PS_LANG_DEFAULT'));
         $facebookProducts = [];
         foreach ($products as $product) {
@@ -151,7 +151,7 @@ class ProductProvider implements CatalogProvider
         $product = new Product($productId);
         // todo: need a way to know if price is shown with tax or without
         $price = $product->getPrice(true, null, 2);
-        $currency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
+        $currency = Currency::getCurrencyInstance((int) Configuration::get('PS_CURRENCY_DEFAULT'));
 
         return "{$price} {$currency->iso_code}";
     }

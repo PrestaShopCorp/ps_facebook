@@ -24,6 +24,6 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->from('product', 'p');
 
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
+        return Db::getInstance()->executeS($sql);
     }
 }
