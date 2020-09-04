@@ -32,104 +32,70 @@ require_once __DIR__ . '/vendor/autoload.php';
 class Ps_facebook extends Module
 {
     /**
-     * name
-     *
      * @var string
      */
     public $name;
     /**
-     * tab
-     *
      * @var string
      */
     public $tab;
     /**
-     * version
-     *
      * @var string
      */
     public $version;
     /**
-     * author
-     *
      * @var string
      */
     public $author;
     /**
-     * need_instance
-     *
      * @var int
      */
     public $need_instance;
     /**
-     * module_key
-     *
      * @var string
      */
     public $module_key;
     /**
-     * controllerAdmin
-     *
      * @var string
      */
     public $controllerAdmin;
     /**
-     * bootstrap
-     *
      * @var bool
      */
     public $bootstrap;
     /**
-     * displayName
-     *
      * @var string
      */
     public $displayName;
     /**
-     * description
-     *
      * @var string
      */
     public $description;
     /**
-     * psVersionIs17
-     *
      * @var bool
      */
     public $psVersionIs17;
     /**
-     * css_path
-     *
      * @var string
      */
     public $css_path;
     /**
-     * docs_path
-     *
      * @var string
      */
     public $docs_path;
     /**
-     * confirmUninstall
-     *
      * @var string
      */
     public $confirmUninstall;
     /**
-     * ps_versions_compliancy
-     *
      * @var array
      */
     public $ps_versions_compliancy;
     /**
-     * compiled_path
-     *
      * @var string
      */
     public $compiled_path;
     /**
-     * js_path
-     *
      * @var string
      */
     public $js_path;
