@@ -34,43 +34,7 @@ class Ps_facebook extends Module
     /**
      * @var string
      */
-    public $name;
-    /**
-     * @var string
-     */
-    public $tab;
-    /**
-     * @var string
-     */
-    public $version;
-    /**
-     * @var string
-     */
-    public $author;
-    /**
-     * @var int
-     */
-    public $need_instance;
-    /**
-     * @var string
-     */
-    public $module_key;
-    /**
-     * @var string
-     */
     public $controllerAdmin;
-    /**
-     * @var bool
-     */
-    public $bootstrap;
-    /**
-     * @var string
-     */
-    public $displayName;
-    /**
-     * @var string
-     */
-    public $description;
     /**
      * @var bool
      */
@@ -83,18 +47,6 @@ class Ps_facebook extends Module
      * @var string
      */
     public $docs_path;
-    /**
-     * @var string
-     */
-    public $confirmUninstall;
-    /**
-     * @var array
-     */
-    public $ps_versions_compliancy;
-    /**
-     * @var string
-     */
-    public $compiled_path;
     /**
      * @var string
      */
