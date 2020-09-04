@@ -4,8 +4,6 @@ includes:
 parameters:
 	stubFiles:
 		- stubs/Module.stub
-		- stubs/ModuleCore.stub
-		- stubs/ModuleInterface.stub
 	paths:
 		- ../../classes
 		- ../../controllers

@@ -1,7 +1,0 @@
-<?php
-
-namespace PrestaShop\PrestaShop\Core\Module;
-
-interface ModuleInterface
-{
-}
