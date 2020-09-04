@@ -31,22 +31,73 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class Ps_facebook extends Module
 {
+    /**
+     * @var string
+     */
     public $name;
+    /**
+     * @var string
+     */
     public $tab;
+    /**
+     * @var string
+     */
     public $version;
+    /**
+     * @var string
+     */
     public $author;
+    /**
+     * @var int
+     */
     public $need_instance;
+    /**
+     * @var string
+     */
     public $module_key;
+    /**
+     * @var string
+     */
     public $controllerAdmin;
+    /**
+     * @var bool
+     */
     public $bootstrap;
+    /**
+     * @var string
+     */
     public $displayName;
+    /**
+     * @var string
+     */
     public $description;
+    /**
+     * @var bool
+     */
     public $psVersionIs17;
+    /**
+     * @var string
+     */
     public $css_path;
+    /**
+     * @var string
+     */
     public $docs_path;
+    /**
+     * @var string
+     */
     public $confirmUninstall;
+    /**
+     * @var array
+     */
     public $ps_versions_compliancy;
+    /**
+     * @var string
+     */
     public $compiled_path;
+    /**
+     * @var string
+     */
     public $js_path;
     public $hook = [
         'displayHeader',
@@ -74,7 +125,7 @@ class Ps_facebook extends Module
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
-        $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.6.1', 'max' => _PS_VERSION_];
     }
 
     /**
@@ -83,10 +134,15 @@ class Ps_facebook extends Module
      * - set some configuration value
      * - register hook used by the module.
      *
-     * @return void
+     * @return bool
      */
     public function install()
     {
+        $database = new PrestaShop\Module\Psfacebook\Database\Install($this);
+
+        return parent::install() &&
+            $database->installTab() &&
+            $this->registerHook($this->hook);
     }
 
     /**
@@ -99,7 +155,10 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
-        return true;
+        $database = new PrestaShop\Module\Psfacebook\Database\Uninstall($this);
+
+        return parent::uninstall() &&
+            $database->uninstallTab();
     }
 
     /**

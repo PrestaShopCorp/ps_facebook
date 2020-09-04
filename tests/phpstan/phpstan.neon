@@ -8,5 +8,7 @@ parameters:
 		- ../../ps_facebook.php
 	reportUnmatchedIgnoredErrors: false
 	checkMissingIterableValueType: false
+	ignoreErrors:
+		- '#Property TabCore::\$name \(string\) does not accept array.#'
 
 	level: 5
