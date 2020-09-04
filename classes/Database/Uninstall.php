@@ -43,18 +43,18 @@ class Uninstall
      *
      * @return bool
      */
-    public function uninstallTables()
-    {
-        $sql[] = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'psfacebook`';
+    // public function uninstallTables()
+    // {
+    //     $sql[] = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'psfacebook`';
 
-        foreach ($sql as $query) {
-            if (!\Db::getInstance()->execute($query)) {
-                return false;
-            }
-        }
+    //     foreach ($sql as $query) {
+    //         if (!\Db::getInstance()->execute($query)) {
+    //             return false;
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     /**
      * Unregister admin ajax controler.

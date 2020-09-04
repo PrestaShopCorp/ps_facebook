@@ -175,7 +175,6 @@ class Ps_facebook extends Module
         $database = new PrestaShop\Module\Psfacebook\Database\Install($this);
 
         return parent::install() &&
-            $database->installTables() &&
             $database->installTab() &&
             $this->registerHook($this->hook);
     }
@@ -193,7 +192,6 @@ class Ps_facebook extends Module
         $database = new PrestaShop\Module\Psfacebook\Database\Uninstall($this);
 
         return parent::uninstall() &&
-            $database->uninstallTables() &&
             $database->uninstallTab();
     }
 

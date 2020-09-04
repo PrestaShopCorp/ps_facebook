@@ -43,24 +43,23 @@ class Install
      *
      * @return bool
      */
-    public function installTables()
-    {
-        $sql = [];
+    // public function installTables()
+    // {
+    //     $sql = [];
 
-        $sql[] = ' CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'psfacebook` (
-            `id_psfacebook` int(10) unsigned NOT NULL AUTO_INCREMENT,
-            `token` varchar(250) NOT NULL,
-            PRIMARY KEY (`id_psfacebook`)
-        ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
+    //     $sql[] = ' CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'psfacebook` (
+    //         `id_psfacebook` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    //         PRIMARY KEY (`id_psfacebook`)
+    //     ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
 
-        foreach ($sql as $query) {
-            if (!\Db::getInstance()->execute($query)) {
-                return false;
-            }
-        }
+    //     foreach ($sql as $query) {
+    //         if (!\Db::getInstance()->execute($query)) {
+    //             return false;
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     /**
      * installTab
