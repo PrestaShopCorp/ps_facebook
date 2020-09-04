@@ -61,7 +61,7 @@ class Ps_facebook extends Module
         $this->tab = 'advertising_marketing';
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
-        $this->need_instance = 'gni';
+        $this->need_instance = 0;
         $this->module_key = '';
 
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
