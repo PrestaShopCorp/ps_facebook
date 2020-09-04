@@ -20,6 +20,19 @@ class DateUtilityTest extends TestCase
         self::assertEquals($result, $isNewer);
     }
 
+    /**
+     * @dataProvider formatDateDataProvider
+     * @param $date
+     * @param $result
+     * @throws Exception
+     */
+    public function testFormattedDate($date, $result)
+    {
+        $formattedDate = DateUtility::formattedDate($date);
+
+        self::assertEquals($result, $formattedDate);
+    }
+
     public function isDateNewerThenGivenDaysDataProvider()
     {
         return [
@@ -47,6 +60,16 @@ class DateUtilityTest extends TestCase
                 'days' => 7,
                 'result' => false,
             ],
+        ];
+    }
+
+    public function formatDateDataProvider()
+    {
+        return [
+            'case1' => [
+                'date' => '2020-02-05 13:00:30',
+                'result' => '2020-02-05T13:00:30'
+            ]
         ];
     }
 }

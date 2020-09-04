@@ -102,7 +102,7 @@ class FacebookProduct implements JsonSerializable
     private $pattern;
 
     /**
-     * @var string
+     * @var array
      */
     private $productType;
 
@@ -589,7 +589,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getProductType()
     {
@@ -597,7 +597,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @param string $productType
+     * @param array $productType
      *
      * @return FacebookProduct
      */

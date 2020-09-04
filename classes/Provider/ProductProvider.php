@@ -4,18 +4,26 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Category;
 use Configuration;
+use Context;
 use Currency;
 use DateTime;
-use Image;
 use Manufacturer;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookProduct;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\PrestashopFacebook\Utility\DateUtility;
 use PrestaShop\PrestaShop\Adapter\Entity\Language;
 use Product;
+use Shop;
+use SpecificPrice;
 
 class ProductProvider implements CatalogProvider
 {
+
+    /**
+     * @var int
+     */
+    private $shopId;
+
     /**
      * @var ProductRepository
      */
@@ -27,40 +35,64 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
+     * @param int $shopId
+     *
+     * @return ProductProvider
+     */
+    public function setShopId($shopId)
+    {
+        $this->shopId = $shopId;
+
+        return $this;
+    }
+
+    /**
      * @return FacebookProduct[]|array
      *
+     * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
     public function getProducts()
     {
-        $isOrderOutOfStockAvailable = (bool) Configuration::get('PS_ORDER_OUT_OF_STOCK');
-        $products = $this->productRepository->getProductsForFacebook((int) Configuration::get('PS_LANG_DEFAULT'));
+        $shopId = $this->shopId ?: (int)Configuration::get('PS_SHOP_DEFAULT');
+        $isOrderOutOfStockAvailable = (bool)Configuration::get('PS_ORDER_OUT_OF_STOCK');
+        $products = $this->productRepository->getProductsForFacebook((int)Configuration::get('PS_LANG_DEFAULT'));
+        $currencyId = (int)Configuration::get('PS_CURRENCY_DEFAULT');
         $languages = Language::getLanguages(true);
+
         $facebookProducts = [];
 
         /** @var array $language */
         foreach ($languages as $language) {
             foreach ($products as $product) {
-                $productId = (int) $product['id_product'];
+                $productId = (int)$product['id_product'];
+                $productObj = new Product($productId, false, $language['id_lang']);
                 $facebookProduct = new FacebookProduct();
                 $facebookProduct
                     ->setId($this->buildId($product))
                     ->setTitle($this->buildTitle($product))
                     ->setDescription($this->buildDescription($product))
                     ->setAvailability($this->buildAvailability($productId, $isOrderOutOfStockAvailable))
-                    ->setInventory($this->buildInventory($product['id_product']))
+                    ->setInventory($this->buildInventory($productId))
                     ->setCondition($this->buildCondition($product))
-                    ->setPrice($this->buildPrice($productId))
-                    ->setLink($this->buildLink($productId))
-                    ->setImageLink($this->buildImageLink($productId))
-                    ->setBrand($this->buildBrand($productId))
-                    ->setAdditionalImageLink($this->buildAdditionalImageLink($productId, $language['id_lang']))
+                    ->setPrice($this->buildPrice($productObj, $currencyId))
+                    ->setLink($this->buildLink($productObj))
+                    ->setImageLink($this->buildImageLink($productObj))
+                    ->setBrand($this->buildBrand($productObj))
+                    ->setAdditionalImageLink($this->buildAdditionalImageLink($productObj, $language['id_lang']))
                     ->setAgeGroup(null)
-                    ->setColor($this->buildColor($productId, $language['id_lang']))
+                    ->setColor($this->buildColor($productObj, $language['id_lang']))
                     ->setGender($this->buildGender())
                     ->setItemGroupId($this->buildItemGroupId($product))
                     ->setGoogleProductCategory($this->buildGoogleProductCategory($product, $language['id_lang']))
-                ;
+                    ->setCommerceTaxCategory($this->buildCommerceTaxCategory())
+                    ->setMaterial($this->buildMaterial())
+                    ->setPattern($this->buildPattern())
+                    ->setProductType($this->buildProductType($product, $language['id_lang']))
+                    ->setSalePrice($this->buildSalePrice($productObj, $currencyId))
+                    ->setSalePriceEffectiveDate($this->buildSalePriceEffectiveDate($productId, $shopId, $currencyId))
+                    ->setShipping($this->buildShipping())
+                    ->setShippingWeight($this->buildShippingWeight($productObj));
 
                 $facebookProducts[] = $facebookProduct;
             }
@@ -170,62 +202,50 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param int $productId
+     * @param Product $product
+     * @param int $currencyId
      *
      * @return string
      *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
-    private function buildPrice($productId)
+    private function buildPrice(Product $product, $currencyId)
     {
-        $product = new Product($productId);
         // todo: need a way to know if price is shown with tax or without
-        $price = $product->getPrice(true, null, 2);
-        $currency = Currency::getCurrencyInstance((int) Configuration::get('PS_CURRENCY_DEFAULT'));
+        $price = $product->getPriceWithoutReduct(false, null, 2);
+        $currency = Currency::getCurrencyInstance($currencyId);
 
         return "{$price} {$currency->iso_code}";
     }
 
     /**
-     * @param int $productId
-     *
+     * @param Product $product
      * @return string
      *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
-    private function buildLink($productId)
+    private function buildLink(Product $product)
     {
-        $product = new Product($productId);
-
         return $product->getLink();
     }
 
     /**
-     * @param int $productId
-     *
+     * @param Product $product
      * @return string
      */
-    private function buildImageLink($productId)
+    private function buildImageLink(Product $product)
     {
-        $productCover = Product::getCover($productId);
-        $image = new Image($productCover['id_image']);
+        $productCover = Product::getCover($product->id);
 
-        return _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . '.jpg';
+        return Context::getContext()->link->getImageLink($product->link_rewrite, $productCover['id_image']);
     }
 
     /**
-     * @param int $productId
+     * @param Product $product
      *
      * @return string
      *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
-    private function buildBrand($productId)
+    private function buildBrand(Product $product)
     {
-        $product = new Product($productId);
         $manufacturer = new Manufacturer($product->id_manufacturer);
 
         if (!$manufacturer) {
@@ -236,17 +256,14 @@ class ProductProvider implements CatalogProvider
     }
 
     /**
-     * @param int $productId
+     * @param Product $product
      * @param int $lang
      *
      * @return string
      *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
-    private function buildAdditionalImageLink($productId, $lang)
+    private function buildAdditionalImageLink(Product $product, $lang)
     {
-        $product = new Product($productId);
         $productImages = $product->getImages($lang);
 
         $additionalImageLinks = [];
@@ -254,17 +271,21 @@ class ProductProvider implements CatalogProvider
             if ($productImage['cover']) {
                 continue;
             }
-            $image = new Image($productImage['id_image']);
-            $imageLink = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . '.jpg';
+            $imageLink = Context::getContext()->link->getImageLink($product->link_rewrite, $productImage['id_image']);
             $additionalImageLinks[] = $imageLink;
         }
 
         return implode(',', $additionalImageLinks);
     }
 
-    private function buildColor($productId, $langId)
+    /**
+     * @param Product $product
+     * @param int $langId
+     *
+     * @return string
+     */
+    private function buildColor(Product $product, $langId)
     {
-        $product = new Product($productId);
         $productAttributes = $product->getAttributeCombinations($langId);
 
         $colors = [];
@@ -318,5 +339,119 @@ class ProductProvider implements CatalogProvider
         $googleProductCategory[$category->getName($langId)] = $category->id_category;
 
         return $googleProductCategory;
+    }
+
+    /**
+     * @return string ''
+     * @todo Need more information when to send what category tax or if its even needed
+     */
+    private function buildCommerceTaxCategory()
+    {
+        return '';
+    }
+
+    /**
+     * @return string ''
+     * @todo Need more information or if its even needed
+     *
+     */
+    private function buildMaterial()
+    {
+        return '';
+    }
+
+    /**
+     * @return string ''
+     * @todo Need more information or if its even needed
+     *
+     */
+    private function buildPattern()
+    {
+        return '';
+    }
+
+    /**
+     * @param array $product
+     * @param int $langId
+     *
+     * @return array
+     */
+    private function buildProductType(array $product, $langId)
+    {
+        $categoryId = $product['id_category_default'];
+        $category = new Category($categoryId);
+        $parentCategories = $category->getAllParents();
+
+        $googleProductCategory = [];
+        /** @var Category $parentCategory */
+        foreach ($parentCategories as $parentCategory) {
+            $googleProductCategory[$parentCategory->name] = $parentCategory->id_category;
+        }
+        $googleProductCategory[$category->getName($langId)] = $category->id_category;
+
+        return $googleProductCategory;
+    }
+
+    /**
+     * @param Product $product
+     * @param int $currencyId
+     *
+     * @return string
+     */
+    private function buildSalePrice(Product $product, $currencyId)
+    {
+        // todo: need a way to know if price is shown with tax or without
+        $price = $product->getPrice(true, null, 2);
+        $currency = Currency::getCurrencyInstance($currencyId);
+
+        return "{$price} {$currency->iso_code}";
+    }
+
+    /**
+     * @param int $productId
+     * @param int $shopId
+     * @param int $currencyId
+     *
+     * @return string
+     * @throws \Exception
+     * @todo is it okey if we send date as 00-00-00T00:00:00 if date is not selected?
+     */
+    private function buildSalePriceEffectiveDate($productId, $shopId, $currencyId)
+    {
+        $shop = new Shop($shopId);
+        $specificPrice = SpecificPrice::getSpecificPrice(
+            $productId,
+            $shop->id,
+            $currencyId,
+            0,
+            $shop->getGroup()->id,
+            1
+        );
+
+        $discountDateFrom = DateUtility::formattedDate($specificPrice['from']);
+        $discountDateTo = DateUtility::formattedDate($specificPrice['to']);
+
+        return implode('/', [$discountDateFrom, $discountDateTo]);
+    }
+
+    /**
+     * @return string
+     * @todo how can we get shipping price if there can be more then one carrier?
+     */
+    private function buildShipping()
+    {
+        return '';
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return string
+     */
+    private function buildShippingWeight(Product $product)
+    {
+        $weightUnit = Configuration::get('PS_WEIGHT_UNIT');
+
+        return "{$product->weight} {$weightUnit}";
     }
 }
