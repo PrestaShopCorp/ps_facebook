@@ -82,7 +82,7 @@ class FacebookProduct implements JsonSerializable
     private $itemGroupId;
 
     /**
-     * @var string
+     * @var array
      */
     private $googleProductCategory;
 
@@ -509,7 +509,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getGoogleProductCategory()
     {
@@ -517,7 +517,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @param string $googleProductCategory
+     * @param array $googleProductCategory
      *
      * @return FacebookProduct
      */
