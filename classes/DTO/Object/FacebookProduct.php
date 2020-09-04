@@ -349,7 +349,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLink()
     {
@@ -357,7 +357,7 @@ class FacebookProduct implements JsonSerializable
     }
 
     /**
-     * @param mixed $link
+     * @param string $link
      *
      * @return FacebookProduct
      */

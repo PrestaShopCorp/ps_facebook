@@ -33,15 +33,15 @@ class ProductProvider implements CatalogProvider
      */
     public function getProducts()
     {
-        $isOrderOutOfStockAvailable = (bool)Configuration::get('PS_ORDER_OUT_OF_STOCK');
-        $products = $this->productRepository->getProductsForFacebook((int)Configuration::get('PS_LANG_DEFAULT'));
+        $isOrderOutOfStockAvailable = (bool) Configuration::get('PS_ORDER_OUT_OF_STOCK');
+        $products = $this->productRepository->getProductsForFacebook((int) Configuration::get('PS_LANG_DEFAULT'));
         $languages = Language::getLanguages(true);
         $facebookProducts = [];
 
         /** @var array $language */
         foreach ($languages as $language) {
             foreach ($products as $product) {
-                $productId = (int)$product['id_product'];
+                $productId = (int) $product['id_product'];
                 $facebookProduct = new FacebookProduct();
                 $facebookProduct
                     ->setId($this->buildId($product))
@@ -111,7 +111,6 @@ class ProductProvider implements CatalogProvider
      * @param bool $isOrderOutOfStockAvailable
      *
      * @return string
-     *
      */
     private function buildAvailability($productId, $isOrderOutOfStockAvailable)
     {
@@ -150,6 +149,7 @@ class ProductProvider implements CatalogProvider
      * @param array $product
      *
      * @return string
+     *
      * @throws \Exception
      */
     private function buildCondition(array $product)
@@ -173,6 +173,7 @@ class ProductProvider implements CatalogProvider
      * @param int $productId
      *
      * @return string
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
@@ -181,7 +182,7 @@ class ProductProvider implements CatalogProvider
         $product = new Product($productId);
         // todo: need a way to know if price is shown with tax or without
         $price = $product->getPrice(true, null, 2);
-        $currency = Currency::getCurrencyInstance((int)Configuration::get('PS_CURRENCY_DEFAULT'));
+        $currency = Currency::getCurrencyInstance((int) Configuration::get('PS_CURRENCY_DEFAULT'));
 
         return "{$price} {$currency->iso_code}";
     }
@@ -190,6 +191,7 @@ class ProductProvider implements CatalogProvider
      * @param int $productId
      *
      * @return string
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
@@ -202,6 +204,7 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @param int $productId
+     *
      * @return string
      */
     private function buildImageLink($productId)
@@ -209,13 +212,14 @@ class ProductProvider implements CatalogProvider
         $productCover = Product::getCover($productId);
         $image = new Image($productCover['id_image']);
 
-        return _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
+        return _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . '.jpg';
     }
 
     /**
      * @param int $productId
      *
      * @return string
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
@@ -236,6 +240,7 @@ class ProductProvider implements CatalogProvider
      * @param int $lang
      *
      * @return string
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
@@ -250,7 +255,7 @@ class ProductProvider implements CatalogProvider
                 continue;
             }
             $image = new Image($productImage['id_image']);
-            $imageLink = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
+            $imageLink = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . '.jpg';
             $additionalImageLinks[] = $imageLink;
         }
 
@@ -275,6 +280,7 @@ class ProductProvider implements CatalogProvider
 
     /**
      * todo: how can we know the gender?
+     *
      * @return string
      */
     private function buildGender()
@@ -294,8 +300,8 @@ class ProductProvider implements CatalogProvider
 
     /**
      * @param array $product
+     * @param int $langId
      *
-     * @param $langId
      * @return array
      */
     private function buildGoogleProductCategory(array $product, $langId)
