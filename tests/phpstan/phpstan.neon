@@ -2,6 +2,10 @@ includes:
 	- %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
 
 parameters:
+	stubFiles:
+		- stubs/Module.stub
+		- stubs/ModuleCore.stub
+		- stubs/ModuleInterface.stub
 	paths:
 		- ../../classes
 		- ../../controllers
