@@ -164,7 +164,7 @@ class Ps_facebook extends Module
     /**
      * Load the configuration form.
      *
-     * @return void
+     * @return string
      */
     public function getContent()
     {
