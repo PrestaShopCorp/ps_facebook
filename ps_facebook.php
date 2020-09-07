@@ -184,32 +184,32 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayHeader(array $params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     // Handle QuickView (ViewContent)
     public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionSearch(array $params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayOrderConfirmation(array $params)
     {
-        return $this->eventResolver->resolve(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 }

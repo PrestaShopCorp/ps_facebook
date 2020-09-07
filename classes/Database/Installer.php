@@ -5,7 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 class Installer
 {
     private $module;
-    
+
     public function __construct(\Ps_facebook $module)
     {
         $this->module = $module;

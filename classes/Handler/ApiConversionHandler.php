@@ -4,9 +4,9 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
-use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Handler\Conversion\SearchEvent;
+use PrestaShop\Module\PrestashopFacebook\Handler\Pixel\ViewContentEvent;
 
 class ApiConversionHandler
 {
@@ -25,46 +25,22 @@ class ApiConversionHandler
         $this->facebookBusinessSDK->setLogger(new CurlLogger());
     }
 
-    public function sendEvent($eventName, $event)
+    public function handleEvent($eventName, $event)
     {
         // TODO: add logic to handle different event
         switch ($eventName) {
             case 'hookActionSearch':
-                $this->sendSearchEvent($event);
+                (new SearchEvent($this->context))->send($event);
             break;
+
             case 'hookDisplayHeader':
-                $this->sendViewContentEvent($event);
+                (new ViewContentEvent($this->context))->send($event);
             break;
 
             default:
-                // unsupported event, log and throw ?
+                // unsupported event
             break;
         }
-    }
-
-    public function sendViewContentEvent($event)
-    {
-    }
-
-    private function sendSearchEvent($event)
-    {
-        // TODO
-    }
-
-    private function send($event)
-    {
-        $event = (new Event())
-            ->setEventName('Purchase')
-            ->setEventTime(time())
-            ->setEventSourceUrl('http://jaspers-market.com/product/123')
-            ->setUserData($this->createSdkUserData());
-
-        $events = [$event];
-        $request = (new EventRequest('726899634800479'))->setEvents($events);
-        $response = $request->execute();
-        dump($response);
-        die;
-        // TODO: retry if wrong response?
     }
 
     /**

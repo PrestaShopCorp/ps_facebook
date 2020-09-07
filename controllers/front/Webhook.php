@@ -23,8 +23,6 @@ class ps_facebookWebhookModuleFrontController extends ModuleFrontController
     {
         // TODO: AFAIK all of this should be done by another service
 
-
-        
         // verifyToken should be set in dashboard app and in config of shop i guess
         // anyway they must match
         // if (!Configuration::get('fbe_verify_token') === \Tools::getValue('verify_token')) {
