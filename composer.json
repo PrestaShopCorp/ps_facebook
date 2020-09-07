@@ -20,8 +20,8 @@
     "autoload": {
         "classmap": [
             "ps_facebook.php",
-            "controllers",
-            "classes"
+            "controllers/",
+            "classes/"
         ]
     }
 }

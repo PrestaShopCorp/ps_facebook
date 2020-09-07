@@ -27,7 +27,7 @@ build-front:
 
 # target: watch-front                   - Watch VueJS files and compile when saved
 watch-front:
-	docker-compose run --rm node sh -c "cd _dev/ && npm run watch"
+	docker-compose run --rm node sh -c "cd _dev/ && npm run dev"
 
 build-composer:
 	docker-compose run --rm php sh -c "composer install"
@@ -47,3 +47,7 @@ test-front:
 # target: fix-lint
 fix-lint:
 	docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"
+
+# target: storybook
+storybook:
+	docker-compose run --rm node sh -c "cd _dev/ && npm run storybook"

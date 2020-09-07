@@ -1,0 +1,48 @@
+{
+  "name": "dev",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --no-clean",
+    "lint": "vue-cli-service lint --fix",
+    "dev": "vue-cli-service build --no-clean --mode development --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^1.0.0-beta.6",
+    "bootstrap-vue": "^2.16.0",
+    "bootstrap": "^4.5.0",
+    "prestakit": "^1.1.0",
+    "vue-i18n": "^8.15.3",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/vue": "^5.3.19",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-typescript": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "babel-loader": "^8.1.0",
+    "babel-preset-vue": "^2.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2",
+    "typescript": "~3.9.3",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
