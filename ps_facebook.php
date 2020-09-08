@@ -1,8 +1,12 @@
 <?php
 
+use FacebookAds\Object\ServerSide\Event;
+use FacebookAds\Object\ServerSide\UserData;
+use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
+use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 
 /*
  * 2007-2020 PrestaShop.
@@ -51,6 +55,7 @@ class Ps_facebook extends Module
         'actionCartSave',
         'actionSearch',
         'displayOrderConfirmation',
+        'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter'
     ];
 
     const CONFIGURATION_LIST = [
@@ -106,7 +111,7 @@ class Ps_facebook extends Module
      */
     public $js_path;
 
-    private $eventResolver;
+    private $eventDispatcher;
 
     public function __construct()
     {
@@ -131,7 +136,7 @@ class Ps_facebook extends Module
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
-        $this->eventResolver = new EventResolver();
+        $this->eventDispatcher = new EventDispatcher();
     }
 
     /**
@@ -164,6 +169,26 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
+        // (#3) Application does not have the capability to make this API call.
+        // $user = (new UserData())
+        //     // ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
+        //     // It is recommended to send Client IP and User Agent for ServerSide API Events.
+        //     ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
+        //     ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
+        //     // ->setFbp('fb.1.1558571054389.1098115397')
+        //     ->setEmail('joe@eg.com');
+
+        // $event = (new Event())
+        // ->setEventName('ViewContent')
+        // ->setEventTime(time())
+        // ->setEventSourceUrl('http://jaspers-market.com/product/123')
+        // ->setUserData($user);
+
+        // $events = [$event];
+        // $request = (new EventRequest('726899634800479'))->setEvents($events);
+        // $response = $request->execute();
+
+
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
@@ -182,34 +207,8 @@ class Ps_facebook extends Module
         // ¯\_(ツ)_/¯ yet
     }
 
-    public function hookActionCustomerAccountAdd(array $params)
+    public function renderWidget($hookName, array $params)
     {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    public function hookDisplayHeader(array $params)
-    {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    // Handle QuickView (ViewContent)
-    public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
-    {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    public function hookActionSearch(array $params)
-    {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    public function hookActionCartSave(array $params)
-    {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    public function hookDisplayOrderConfirmation(array $params)
-    {
-        return $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        return $this->eventDispatcher->dispatch($hookName, $params);
     }
 }
