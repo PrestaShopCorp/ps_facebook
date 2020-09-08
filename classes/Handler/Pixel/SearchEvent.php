@@ -4,8 +4,8 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler\Pixel;
 
 class SearchEvent extends BaseEvent
 {
-    public function send($event)
+    public function sendToBuffer($buffer, $event)
     {
-        $this->templateBuffer->add('');
+        $buffer->add('');
     }
 }

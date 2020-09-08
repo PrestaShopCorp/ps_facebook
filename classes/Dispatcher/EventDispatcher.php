@@ -3,32 +3,35 @@
 namespace PrestaShop\Module\PrestashopFacebook\Dispatcher;
 
 use PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler;
-use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 
 class EventDispatcher
 {
+    /**
+     * @var ConversionHandler
+     */
     private $conversionHandler;
+
+    /**
+     * @var PixelHandler
+     */
     private $pixelHandler;
 
-    public function __construct()
+    public function __construct($module)
     {
-        $this->templateBuffer = new TemplateBuffer();
         $this->conversionHandler = new ApiConversionHandler();
-        $this->pixelHandler = new PixelHandler($this->templateBuffer);
+        $this->pixelHandler = new PixelHandler($module);
     }
 
     /**
      * @param string $name
      * @param array $params
      *
-     * @return string (empty string or tpl to display)
+     * @return void
      */
-    public function dispatcher(string $name, array $params)
+    public function dispatch(string $name, array $params)
     {
         $this->conversionHandler->handleEvent($name, $params);
         $this->pixelHandler->handleEvent($name, $params);
-
-        return $this->templateBuffer->flush();
     }
 }

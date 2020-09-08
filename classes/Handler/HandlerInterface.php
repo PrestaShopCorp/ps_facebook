@@ -8,7 +8,7 @@ interface HandlerInterface
      * @param string $eventName
      * @param array $event
      *
-     * @return string
+     * @return void
      */
     public function handleEvent(string $eventName, array $event);
 }

@@ -25,65 +25,61 @@
 
 $(document).ready(function() {
 
-  function ajaxGetProduct(id, attribute) {
-   $.ajax({
-       type: 'POST',
-       url: pixel_fc,
-       dataType: 'json',
-       data: {
-          action: 'GetProduct',
-          ajax: true,
-          id_product: id,
-          id_attribute: attribute,
-       },
-       success: function(data) {
-          var iso_code = prestashop.currency.iso_code,
-          amount = data.price_amount;
+    function ajaxGetProduct(id, attribute) {
+        $.ajax({
+            type: 'POST',
+            url: pixel_fc,
+            dataType: 'json',
+            data: {
+                action: 'GetProduct',
+                ajax: true,
+                id_product: id,
+                id_attribute: attribute,
+            },
+            success: function(data) {
+                var iso_code = prestashop.currency.iso_code,
+                    amount = data.price_amount;
 
-          fbq('track', 'AddToCart', {value: amount, currency: iso_code});
-       },
-       error: function(err) {
-       }
-   });
-  }
-
-  // Track Add to cart
-  prestashop.on('updateCart', function(params) {
-
-    if (
-      typeof(params) !== 'undefined'
-      && typeof(prestashop.cart) !== 'undefined'
-    ) {
-      var iso_code = prestashop.currency.iso_code,
-      products = prestashop.cart.products,
-      my_id = params.reason.idProduct,
-      my_attribute = params.reason.idProductAttribute,
-      my_link = params.reason.linkAction;
-
-      if (my_link != 'delete-from-cart') {
-
-        // Keep ajax call
-        // ajaxGetProduct(my_id, my_attribute);
-
-        // Find product
-        var search_product = $.grep(products, function(e){
-          return e.id_product == my_id && e.id_product_attribute == my_attribute;
+                fbq('track', 'AddToCart', {value: amount, currency: iso_code});
+            },
+            error: function(err) {}
         });
+    }
 
-        if (products.length != 0) {
-          var amount = search_product[0].price_wt;
-          fbq('track', 'AddToCart', { value: amount, currency: iso_code, content_ids: my_id, content_type: "product" });
+    // Track Add to cart
+    prestashop.on('updateCart', function(params) {
+        if (
+            typeof(params) !== 'undefined'
+            && typeof(prestashop.cart) !== 'undefined'
+        ) {
+            var iso_code = prestashop.currency.iso_code,
+                products = prestashop.cart.products,
+                my_id = params.reason.idProduct,
+                my_attribute = params.reason.idProductAttribute,
+                my_link = params.reason.linkAction;
+
+            if (my_link != 'delete-from-cart') {
+
+                // Keep ajax call
+                // ajaxGetProduct(my_id, my_attribute);
+
+                // Find product
+                var search_product = $.grep(products, function(e){
+                    return e.id_product == my_id && e.id_product_attribute == my_attribute;
+                });
+
+                if (products.length != 0) {
+                    var amount = search_product[0].price_wt;
+                    fbq('track', 'AddToCart', { value: amount, currency: iso_code, content_ids: my_id, content_type: "product" });
+                }
+            }
         }
+    });
 
-      }
-    }
-  });
-
-  // Track CustomizeProduct event for PS1.7
-  prestashop.on('updatedProduct', function(params) {
-    if (typeof(params) !== 'undefined') {
-      fbq('track', 'CustomizeProduct');
-    }
-  })
-
+    // Track CustomizeProduct event for PS1.7
+    prestashop.on('updatedProduct', function(params) {
+        if (typeof(params) !== 'undefined') {
+            fbq('track', 'CustomizeProduct');
+        }
+    })
 });

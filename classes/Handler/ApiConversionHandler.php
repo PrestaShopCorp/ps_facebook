@@ -6,10 +6,12 @@ use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Handler\Conversion\SearchEvent;
-use PrestaShop\Module\PrestashopFacebook\Handler\Pixel\ViewContentEvent;
 
 class ApiConversionHandler
 {
+    /**
+     * @var Api|null
+     */
     private $facebookBusinessSDK;
 
     public function __construct()
@@ -30,11 +32,11 @@ class ApiConversionHandler
         // TODO: add logic to handle different event
         switch ($eventName) {
             case 'hookActionSearch':
-                (new SearchEvent($this->context))->send($event);
+                // (new SearchEvent($this->context))->send($event);
             break;
 
             case 'hookDisplayHeader':
-                (new ViewContentEvent($this->context))->send($event);
+                // (new ViewContentEvent($this->context))->send($event);
             break;
 
             default:

@@ -5,6 +5,7 @@ use FacebookAds\Object\ServerSide\UserData;
 use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
+use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 
@@ -111,7 +112,17 @@ class Ps_facebook extends Module
      */
     public $js_path;
 
-    private $eventDispatcher;
+    /**
+     * @var EventDispatcher
+     */
+    public $eventDispatcher;
+
+    /**
+     * @var TemplateBuffer
+     */
+    public $templateBuffer;
+
+    public $front_controller = null;
 
     public function __construct()
     {
@@ -136,7 +147,14 @@ class Ps_facebook extends Module
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
-        $this->eventDispatcher = new EventDispatcher();
+        $this->front_controller = $this->context->link->getModuleLink(
+            $this->name,
+            'FrontAjaxPixel',
+            array(),
+            true
+        );
+        $this->templateBuffer = new TemplateBuffer();
+        $this->eventDispatcher = new EventDispatcher($this);
     }
 
     /**
@@ -169,7 +187,7 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
-        // (#3) Application does not have the capability to make this API call.
+        // this return -> (#3) Application does not have the capability to make this API call.
         // $user = (new UserData())
         //     // ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
         //     // It is recommended to send Client IP and User Agent for ServerSide API Events.
@@ -207,8 +225,49 @@ class Ps_facebook extends Module
         // ¯\_(ツ)_/¯ yet
     }
 
-    public function renderWidget($hookName, array $params)
+    /**
+     * return __FILE__
+     *
+     * @return string
+     */
+    public function getFilePath()
     {
-        return $this->eventDispatcher->dispatch($hookName, $params);
+        return __FILE__;
+    }
+
+    public function hookActionCustomerAccountAdd(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookDisplayHeader(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    // Handle QuickView (ViewContent)
+    public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookActionSearch(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookActionCartSave(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
     }
 }

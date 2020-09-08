@@ -4,17 +4,17 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler\Pixel;
 
 class ViewContentEvent extends BaseEvent
 {
-    public function send($event)
+    public function sendToBuffer($buffer, $event)
     {
-        $pixel_id = \Configuration::get('PS_PIXEL_ID');
-        if (empty($pixel_id)) {
-            return;
-        }
+        // $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        // if (empty($pixel_id)) {
+        //     return;
+        // }
 
         // Asset Manager to be sure the JS is loaded
         $this->context->controller->registerJavascript(
             'front_common',
-            $this->context->module->js_path . 'printpixel.js', //TODO : verify path is correct
+            $this->module->js_path . 'printpixel.js', //TODO : verify path is correct
             ['position' => 'bottom', 'priority' => 150]
         );
 
@@ -145,7 +145,7 @@ class ViewContentEvent extends BaseEvent
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
-            'pixel_fc' => $this->context->module->front_controller,
+            'pixel_fc' => $this->module->front_controller,
             'id_pixel' => pSQL(\Configuration::get('PS_PIXEL_ID')),
             'type' => $type,
             'content' => $content,
@@ -158,8 +158,6 @@ class ViewContentEvent extends BaseEvent
 
         $this->context->smarty->assign($smartyVariables);
 
-        $this->templateBuffer->add($this->context->module->display(__FILE__, 'views/templates/hook/header.tpl'));
+        $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/header.tpl'));
     }
-
-
 }
