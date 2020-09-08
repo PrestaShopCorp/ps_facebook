@@ -1,12 +1,11 @@
 <?php
 
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\UserData;
 use FacebookAds\Object\ServerSide\EventRequest;
+use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
-use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
-use PrestaShop\Module\PrestashopFacebook\Resolver\EventResolver;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 
 /*
@@ -56,7 +55,7 @@ class Ps_facebook extends Module
         'actionCartSave',
         'actionSearch',
         'displayOrderConfirmation',
-        'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter'
+        'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
     ];
 
     const CONFIGURATION_LIST = [
@@ -150,7 +149,7 @@ class Ps_facebook extends Module
         $this->front_controller = $this->context->link->getModuleLink(
             $this->name,
             'FrontAjaxPixel',
-            array(),
+            [],
             true
         );
         $this->templateBuffer = new TemplateBuffer();
@@ -205,7 +204,6 @@ class Ps_facebook extends Module
         // $events = [$event];
         // $request = (new EventRequest('726899634800479'))->setEvents($events);
         // $response = $request->execute();
-
 
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/main.js',

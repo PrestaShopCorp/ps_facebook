@@ -12,7 +12,10 @@ class ViewContentEvent extends BaseEvent
         // }
 
         // Asset Manager to be sure the JS is loaded
-        $this->context->controller->registerJavascript(
+        /** @var \FrontController $controller*/
+        $controller = $this->context->controller;
+
+        $controller->registerJavascript(
             'front_common',
             $this->module->js_path . 'printpixel.js', //TODO : verify path is correct
             ['position' => 'bottom', 'priority' => 150]
@@ -21,13 +24,13 @@ class ViewContentEvent extends BaseEvent
         $type = '';
         $content = [];
 
-        $page = $this->context->controller->php_self;
+        $page = $controller->php_self;
         if (empty($page)) {
             $page = \Tools::getValue('controller');
         }
         $page = pSQL($page);
 
-        $controller_type = $this->context->controller->controller_type;
+        $controller_type = $controller->controller_type;
         $id_lang = (int) $this->context->language->id;
         $locale = \Tools::strtoupper($this->context->language->iso_code);
         $currency_iso_code = $this->context->currency->iso_code;
@@ -39,7 +42,7 @@ class ViewContentEvent extends BaseEvent
         */
         if ($page === 'product') {
             $type = 'ViewContent';
-            $prods = $this->context->controller->getTemplateVarProduct();
+            $prods = $controller->getTemplateVarProduct();
 
             $content = [
               'content_name' => \Tools::replaceAccentedChars($prods['name']) . ' ' . $locale,
@@ -55,9 +58,9 @@ class ViewContentEvent extends BaseEvent
         */
         if ($page === 'category' && $controller_type === 'front') {
             $type = 'ViewCategory';
-            $category = $this->context->controller->getCategory();
+            $category = $controller->getCategory();
 
-            $breadcrumbs = $this->context->controller->getBreadcrumbLinks();
+            $breadcrumbs = $controller->getBreadcrumbLinks();
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
             $prods = $category->getProducts($id_lang, 1, 10);
@@ -78,7 +81,7 @@ class ViewContentEvent extends BaseEvent
             $type = 'ViewCMS';
             $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
-            $breadcrumbs = $this->context->controller->getBreadcrumbLinks();
+            $breadcrumbs = $controller->getBreadcrumbLinks();
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
             $track = 'trackCustom';
 

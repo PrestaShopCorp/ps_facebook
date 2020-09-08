@@ -6,16 +6,18 @@ class SearchEvent
 {
     public function send($event)
     {
-        // return nothing ?
-        $event = (new Event())
-            ->setEventName('Purchase')
-            ->setEventTime(time())
-            ->setEventSourceUrl('http://jaspers-market.com/product/123')
-            ->setUserData($this->createSdkUserData());
+        // TODO
 
-        $events = [$event];
-        $request = (new EventRequest('726899634800479'))->setEvents($events);
-        $response = $request->execute();
+        // return nothing ?
+        // $event = (new Event())
+        //     ->setEventName('Purchase')
+        //     ->setEventTime(time())
+        //     ->setEventSourceUrl('http://jaspers-market.com/product/123')
+        //     ->setUserData($this->createSdkUserData());
+
+        // $events = [$event];
+        // $request = (new EventRequest('726899634800479'))->setEvents($events);
+        // $response = $request->execute();
 
         return '';
     }

@@ -33,7 +33,7 @@ watch-front:
 build-composer:
 	docker-compose run --rm php sh -c "composer install"
 
-# target: tests                   	   	- Launch the tests/lints suite front and back
+# target: tests				- Launch the tests/lints suite front and back
 tests: test-back test-front
 
 # target: test-back                    	- Launch the tests back
@@ -45,7 +45,7 @@ test-back:
 test-front:
 	docker-compose run --rm node sh -c "cd _dev/ && npm run lint"
 
-# target: fix-lint						- Launch php cs fixer and npm run lint
+# target: fix-lint			- Launch php cs fixer and npm run lint
 fix-lint:
 	docker-compose run --rm php sh -c "vendor/bin/php-cs-fixer fix --using-cache=no"
-	docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"
+	# docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"

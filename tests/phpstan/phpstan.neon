@@ -1,17 +1,15 @@
 includes:
-	- %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
+  - %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
 
 parameters:
-	paths:
-		- ../../classes
-		- ../../controllers
-		- ../../ps_facebook.php
-	reportUnmatchedIgnoredErrors: false
-	checkMissingIterableValueType: false
-	ignoreErrors:
-		- '#Property TabCore::\$name \(string\) does not accept array.#'
+  paths:
+    - ../../classes
+    - ../../controllers
+    - ../../ps_facebook.php
+  reportUnmatchedIgnoredErrors: false
+  checkMissingIterableValueType: false
+  ignoreErrors:
+    - '#Property TabCore::\$name \(string\) does not accept array.#'
+    - '#Parameter \#4 \$ssl of method LinkCore::getModuleLink\(\) expects null, true given.#'
 
-	ignoreErrors:
-		- '#Property TabCore::\$name \(string\) does not accept array.#'
-
-	level: 5
+  level: 5

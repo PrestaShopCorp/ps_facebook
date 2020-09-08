@@ -14,7 +14,7 @@ class BaseEvent
      */
     protected $module;
 
-    public function __construct(\Context $context,\Ps_facebook $module )
+    public function __construct(\Context $context, \Ps_facebook $module)
     {
         $this->context = $context;
         $this->module = $module;
