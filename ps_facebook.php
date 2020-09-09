@@ -101,6 +101,7 @@ class Ps_facebook extends Module
     public $js_path;
     public $hook = [
         'displayHeader',
+        'actionFrontControllerSetMedia',
     ];
 
     public function __construct()
@@ -181,5 +182,19 @@ class Ps_facebook extends Module
      */
     public function loadAsset()
     {
+    }
+
+    /**
+     * Load asset on the front office
+     */
+    public function hookActionFrontControllerSetMedia()
+    {
+        $this->context->controller->registerJavascript(
+            'ps-facebook-event',
+            'modules/' . $this->name . '/views/js/product.js',
+            [
+              'priority' => 200,
+            ]
+        );
     }
 }
