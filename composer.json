@@ -15,7 +15,7 @@
         "prestashop/circuit-breaker": "^3.0"
     },
     "require-dev": {
-        "prestashop/php-dev-tools": "3.*"
+        "prestashop/php-dev-tools": "^3.0"
     },
     "autoload": {
         "classmap": [
