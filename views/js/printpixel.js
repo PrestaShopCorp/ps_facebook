@@ -87,4 +87,19 @@ $(document).ready(function() {
             fbq('track', 'CustomizeProduct');
         }
     })
+
+    //Track product added to a wishlist
+    prestashop.on('wishlistEventBusInit', () => {
+        window.WishlistEventBus.$on('addedToWishlist', (params) => {
+            console.log(params)
+            //fbq('track', '');
+        })
+    })
+
+    //Track event when checkout funel is started
+    prestashop.on('initiateCheckout', function(params) {
+        if (typeof(params) !== 'undefined') {
+            fbq('track', 'InitiateCheckout');
+        }
+    })
 });
