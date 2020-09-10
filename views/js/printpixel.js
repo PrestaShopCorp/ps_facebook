@@ -91,8 +91,7 @@ $(document).ready(function() {
     //Track product added to a wishlist
     prestashop.on('wishlistEventBusInit', () => {
         window.WishlistEventBus.$on('addedToWishlist', (params) => {
-            console.log(params)
-            //fbq('track', '');
+            fbq('track', 'addedToWishlist', {id_produit: params.detail.idProduct, content_type: "product"});
         })
     })
 
