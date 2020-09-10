@@ -46,6 +46,11 @@ $(document).ready(function() {
         });
     }
 
+    // support 1.6 version
+    if (typeof(prestashop) == 'undefined') {
+        return;
+    }
+
     // Track Add to cart
     prestashop.on('updateCart', function(params) {
         if (

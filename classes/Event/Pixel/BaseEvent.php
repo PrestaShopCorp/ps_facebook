@@ -65,6 +65,7 @@ abstract class BaseEvent
     protected function getCustomerInformations()
     {
         $arrayReturned = [];
+        // TODO: fix for 1.6
         $simpleAddresses = $this->context->customer->getSimpleAddresses();
 
         if (count($simpleAddresses) > 0) {
