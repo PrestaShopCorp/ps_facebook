@@ -14,5 +14,8 @@ parameters:
     - '#Call to an undefined method FrontController::getTemplateVarProduct\(\).#'
     - '#Call to an undefined method FrontController::getCategory\(\).#'
     - '#Call to protected method getBreadcrumbLinks\(\) of class FrontControllerCore.#'
+    - '#Call to an undefined method Customer::getSimpleAddresses\(\).#'
+    - '#Call to an undefined method FrontController::registerJavascript\(\).#'
+    - '#Call to an undefined method FrontController::getBreadcrumbLinks\(\).#'
 
   level: 5
