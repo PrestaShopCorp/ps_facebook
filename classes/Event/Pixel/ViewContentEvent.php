@@ -2,6 +2,8 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
+
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
@@ -12,7 +14,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         // }
 
         // Asset Manager to be sure the JS is loaded
-        /** @var \FrontController $controller*/
+        /** @var \FrontController|\ProductController|\CategoryController $controller */
         $controller = $this->context->controller;
 
         $controller->registerJavascript(

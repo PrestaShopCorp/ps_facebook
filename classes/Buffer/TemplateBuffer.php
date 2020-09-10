@@ -34,7 +34,7 @@ class TemplateBuffer
     /**
      * return buffer content and reset it
      *
-     * @return void
+     * @return string
      */
     public function flush()
     {

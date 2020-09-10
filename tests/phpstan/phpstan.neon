@@ -11,5 +11,8 @@ parameters:
   ignoreErrors:
     - '#Property TabCore::\$name \(string\) does not accept array.#'
     - '#Parameter \#4 \$ssl of method LinkCore::getModuleLink\(\) expects null, true given.#'
+    - '#Call to an undefined method FrontController::getTemplateVarProduct\(\).#'
+    - '#Call to an undefined method FrontController::getCategory\(\).#'
+    - '#Call to protected method getBreadcrumbLinks\(\) of class FrontControllerCore.#'
 
   level: 5
