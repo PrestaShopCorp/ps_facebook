@@ -1,8 +1,5 @@
 <?php
 
-use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
-use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
@@ -131,9 +128,7 @@ class Ps_facebook extends Module
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         // TODO : $this->module_key = '';
-
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
-
         $this->bootstrap = true;
 
         parent::__construct();
@@ -210,7 +205,7 @@ class Ps_facebook extends Module
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
         ]);
 
-        return $this->display(__FILE__, '/views/templates/admin/configuration.tpl');
+        return $this->display(__FILE__, '/views/templates/admin/app.tpl');
     }
 
     /**

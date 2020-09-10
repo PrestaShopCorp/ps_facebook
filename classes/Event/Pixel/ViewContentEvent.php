@@ -1,8 +1,8 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Handler\Pixel;
+namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
-class ViewContentEvent extends BaseEvent
+class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {

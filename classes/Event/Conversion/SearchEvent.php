@@ -1,8 +1,10 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Handler\Conversion;
+namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
-class SearchEvent
+use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
+
+class SearchEvent implements ConversionEventInterface
 {
     public function send($event)
     {

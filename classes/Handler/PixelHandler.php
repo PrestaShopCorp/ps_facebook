@@ -3,8 +3,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
-use PrestaShop\Module\PrestashopFacebook\Handler\Pixel\SearchEvent;
-use PrestaShop\Module\PrestashopFacebook\Handler\Pixel\ViewContentEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Pixel\SearchEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ViewContentEvent;
 
 class PixelHandler
 {
@@ -12,6 +12,10 @@ class PixelHandler
      * @var \Context
      */
     private $context;
+
+    /**
+     * @var \Ps_facebook
+     */
     private $module;
 
     /**

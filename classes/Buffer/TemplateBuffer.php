@@ -4,19 +4,39 @@ namespace PrestaShop\Module\PrestashopFacebook\Buffer;
 
 class TemplateBuffer
 {
+    /**
+     * @var string
+     */
     private $data;
 
-    public function add(string $data): void
+    /**
+     * add data to the buffer
+     *
+     * @param string $data
+     *
+     * @return void
+     */
+    public function add(string $data)
     {
         $this->data .= $data;
     }
 
-    public function clean(): void
+    /**
+     * reset buffer content
+     *
+     * @return void
+     */
+    public function clean()
     {
         $this->data = '';
     }
 
-    public function flush(): string
+    /**
+     * return buffer content and reset it
+     *
+     * @return void
+     */
+    public function flush()
     {
         $returnedData = $this->data;
         $this->clean();

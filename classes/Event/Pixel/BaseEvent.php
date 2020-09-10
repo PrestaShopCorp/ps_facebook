@@ -1,8 +1,8 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Handler\Pixel;
+namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
-class BaseEvent
+abstract class BaseEvent
 {
     /**
      * @var \Context
