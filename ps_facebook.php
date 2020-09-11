@@ -182,7 +182,6 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
-
         // this return -> (#3) Application does not have the capability to make this API call.
         // $user = (new UserData())
         //     // ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
@@ -206,15 +205,15 @@ class Ps_facebook extends Module
 
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/app.js',
-            'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js'
+            'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js',
         ]);
 
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'i18n' => [
                 'isoCode' => $this->context->language->iso_code,
-                'languageLocale' => $this->context->language->language_code
-            ]
+                'languageLocale' => $this->context->language->language_code,
+            ],
         ]);
 
         return $this->display(__FILE__, '/views/templates/admin/app.tpl');

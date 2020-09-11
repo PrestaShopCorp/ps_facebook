@@ -48,4 +48,4 @@ test-front:
 # target: fix-lint			- Launch php cs fixer and npm run lint
 fix-lint:
 	docker-compose run --rm php sh -c "vendor/bin/php-cs-fixer fix --using-cache=no"
-	# docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"
+	docker-compose run --rm node sh -c "cd _dev/ && npm run lint --fix"

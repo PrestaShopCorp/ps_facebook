@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="onboarding">
+  <div id="configuration">
     <PsAccounts class="m-4" />
   </div>
 </template>
@@ -26,7 +26,7 @@
 import {PsAccounts} from 'prestashop_accounts_vue_components';
 
 export default {
-  name: 'Onboarding',
+  name: 'Configuration',
   components: {
     PsAccounts,
   },

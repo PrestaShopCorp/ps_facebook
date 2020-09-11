@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter, {RouteConfig} from 'vue-router';
-import Onboarding from '../views/Onboarding.vue';
+import Configuration from '../views/Configuration.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/onboarding',
-    name: 'Onboarding',
-    component: Onboarding,
+    path: '/configuration',
+    name: 'Configuration',
+    component: Configuration,
   },
 ];
 

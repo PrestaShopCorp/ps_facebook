@@ -16,16 +16,16 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-import Vue from "vue";
-import VueI18n from "vue-i18n";
+import Vue from 'vue';
+import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
 
-const { contextPsAccounts } = global;
+const {contextPsAccounts} = global;
 const locale = contextPsAccounts.context.i18n.isoCode
   ? contextPsAccounts.context.i18n.isoCode
-  : "";
+  : '';
 
 export default new VueI18n({
-  locale
+  locale,
 });

@@ -19,8 +19,8 @@
 <template>
   <div id="app">
     <Menu>
-      <MenuItem route="/onboarding">
-        Onboarding
+      <MenuItem route="/configuration">
+        Configuration
       </MenuItem>
       <MenuItem route="/help">
         Help
