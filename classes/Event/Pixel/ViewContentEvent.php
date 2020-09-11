@@ -20,7 +20,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         if (true === $this->module->psVersionIs17) {
             $controller->registerJavascript(
                 'front_common',
-                $this->module->js_path . 'printpixel.js' . $this->module->version, //TODO : verify path is correct
+                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
                 ['position' => 'bottom', 'priority' => 150]
             );
         } else {
@@ -70,23 +70,38 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         if ($page === 'category' && $controller->controller_type === 'front') {
             $type = 'ViewCategory';
             $category = $controller->getCategory();
+            $track = 'trackCustom';
+            $prods = $category->getProducts($id_lang, 1, 10);
 
             if (true === $this->module->psVersionIs17) {
                 $breadcrumbs = $controller->getBreadcrumbLinks();
                 $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
-
-                $prods = $category->getProducts($id_lang, 1, 10);
-                $track = 'trackCustom';
-
-                $content = [
-                    'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $locale,
-                    'content_category' => \Tools::replaceAccentedChars($breadcrumb),
-                    'content_ids' => array_column($prods, 'id_product'),
-                    'content_type' => $content_type,
-                ];
             } else {
-                // TODO: 1.6 unsupported?
+                $breadcrumbs = [];
+                $breadcrumbs['links'][] = [
+                    'title' => $this->module->l('Home'),
+                    'url' => $this->context->link->getPageLink('index', true),
+                ];
+
+                foreach ($controller->getCategory()->getAllParents() as $category) {
+                    if ($category->id_parent != 0 && !$category->is_root_category) {
+                        $breadcrumbs['links'][] = [
+                            'title' => $category->name,
+                            'url' => $this->context->link->getCategoryLink($category),
+                        ];
+                    }
+                }
+
+                $breadcrumbs['links'][] = $this->context->link->getCategoryLink($controller->getCategory());
+                $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
             }
+
+            $content = [
+                'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $locale,
+                'content_category' => \Tools::replaceAccentedChars($breadcrumb),
+                'content_ids' => array_column($prods, 'id_product'),
+                'content_type' => $content_type,
+            ];
         }
 
         /*
