@@ -66,27 +66,6 @@ class Ps_facebook extends Module
         'fbe_catalog_id',
     ];
 
-    public $name;
-    /**
-     * @var string
-     */
-    public $tab;
-    /**
-     * @var string
-     */
-    public $version;
-    /**
-     * @var string
-     */
-    public $author;
-    /**
-     * @var int
-     */
-    public $need_instance;
-    /**
-     * @var string
-     */
-    public $module_key;
     /**
      * @var string
      */
@@ -140,7 +119,7 @@ class Ps_facebook extends Module
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
-        $this->ps_versions_compliancy = ['min' => '1.6.1.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.0.0', 'max' => _PS_VERSION_];
         $this->front_controller = $this->context->link->getModuleLink(
             $this->name,
             'FrontAjaxPixel',
