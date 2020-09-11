@@ -29,7 +29,7 @@ class EventDispatcher
      *
      * @return void
      */
-    public function dispatch(string $name, array $params)
+    public function dispatch($name, array $params)
     {
         $this->conversionHandler->handleEvent($name, $params);
         $this->pixelHandler->handleEvent($name, $params);
