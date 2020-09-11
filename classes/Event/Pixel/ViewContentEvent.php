@@ -1,0 +1,185 @@
+<?php
+
+namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
+
+use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
+
+class ViewContentEvent extends BaseEvent implements PixelEventInterface
+{
+    public function sendToBuffer($buffer, $event)
+    {
+        // $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        // if (empty($pixel_id)) {
+        //     return;
+        // }
+
+        // Asset Manager to be sure the JS is loaded
+        /** @var \FrontController|\ProductController|\CategoryController $controller */
+        $controller = $this->context->controller;
+
+        if (true === $this->module->psVersionIs17) {
+            $controller->registerJavascript(
+                'front_common',
+                $this->module->js_path . 'printpixel.js' . $this->module->version, //TODO : verify path is correct
+                ['position' => 'bottom', 'priority' => 150]
+            );
+        } else {
+            $controller->addJs(
+                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
+                false
+            );
+        }
+
+        $type = '';
+        $content = [];
+
+        $page = $controller->php_self;
+        if (empty($page)) {
+            $page = \Tools::getValue('controller');
+        }
+        $page = pSQL($page); // is this really needed ?
+
+        $id_lang = (int) $this->context->language->id;
+        $locale = \Tools::strtoupper($this->context->language->iso_code);
+        $currency_iso_code = $this->context->currency->iso_code;
+        $content_type = 'product';
+        $track = 'track';
+
+        /*
+        * Triggers ViewContent product pages
+        */
+        if ($page === 'product') {
+            $type = 'ViewContent';
+
+            if (true === $this->module->psVersionIs17) {
+                $prods = $controller->getTemplateVarProduct();
+
+                $content = [
+                    'content_name' => \Tools::replaceAccentedChars($prods['name']) . ' ' . $locale,
+                    'content_ids' => $prods['id_product'],
+                    'content_type' => $content_type,
+                    'value' => (float) $prods['price_amount'],
+                    'currency' => $currency_iso_code,
+                ];
+            }
+        }
+
+        /*
+        * Triggers ViewContent for category pages
+        */
+        if ($page === 'category' && $controller->controller_type === 'front') {
+            $type = 'ViewCategory';
+            $category = $controller->getCategory();
+
+            if (true === $this->module->psVersionIs17) {
+                $breadcrumbs = $controller->getBreadcrumbLinks();
+                $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
+
+                $prods = $category->getProducts($id_lang, 1, 10);
+                $track = 'trackCustom';
+
+                $content = [
+                    'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $locale,
+                    'content_category' => \Tools::replaceAccentedChars($breadcrumb),
+                    'content_ids' => array_column($prods, 'id_product'),
+                    'content_type' => $content_type,
+                ];
+            } else {
+                // TODO: 1.6 unsupported?
+            }
+        }
+
+        /*
+        * Triggers ViewContent for cms pages
+        */
+        if ($page === 'cms') {
+            $type = 'ViewCMS';
+            $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
+
+            if (true === $this->module->psVersionIs17) {
+                $breadcrumbs = $controller->getBreadcrumbLinks();
+                $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
+                $track = 'trackCustom';
+
+                $content = [
+                    'content_category' => \Tools::replaceAccentedChars($breadcrumb),
+                    'content_name' => \Tools::replaceAccentedChars($cms->meta_title) . ' ' . $locale,
+                ];
+            } else {
+                // TODO: 1.6 unsupported?
+            }
+        }
+
+        /*
+        * Triggers Search for result pages
+        */
+        if ($page === 'search') {
+            $type = \Tools::ucfirst($page);
+            $content = [
+                'search_string' => pSQL(\Tools::getValue('s')),
+            ];
+        }
+
+        /*
+        * Triggers InitiateCheckout for checkout page
+        */
+        if ($page === 'cart') {
+            $type = 'InitiateCheckout';
+
+            $content = [
+                'num_items' => $this->context->cart->nbProducts(),
+                'content_ids' => array_column($this->context->cart->getProducts(), 'id_product'),
+                'content_type' => $content_type,
+                'value' => (float) $this->context->cart->getOrderTotal(),
+                'currency' => $currency_iso_code,
+            ];
+        }
+
+        // TODO: refaco this from Quickview
+        // // Decode Product Object
+        // $value = Tools::jsonDecode($params['value']);
+        // $locale = pSQL(Tools::strtoupper($this->context->language->iso_code));
+        // $iso_code = pSQL($this->context->currency->iso_code);
+
+        // $content = array(
+        // 'content_name' => Tools::replaceAccentedChars($value->product->name) .' '.$locale,
+        // 'content_ids' => array($value->product->id_product),
+        // 'content_type' => 'product',
+        // 'value' => (float)$value->product->price_amount,
+        // 'currency' => $iso_code,
+        // );
+        // $content = $this->formatPixel($content);
+
+        // $this->context->smarty->assign(array(
+        // 'type' => 'ViewContent',
+        // 'content' => $content,
+        // ));
+
+        // $value->quickview_html .= $this->context->smarty->fetch(
+        //     $this->local_path.'views/templates/hook/displaypixel.tpl'
+        // );
+
+        // // Recode Product Object
+        // $params['value'] = Tools::jsonEncode($value);
+
+        // die($params['value']);
+
+        $content = $this->formatPixel($content);
+
+        $smartyVariables = [
+            'pixel_fc' => $this->module->front_controller,
+            'id_pixel' => pSQL(\Configuration::get('PS_PIXEL_ID')),
+            'type' => $type,
+            'content' => $content,
+            'track' => $track,
+        ];
+
+        if ($this->context->customer->id) {
+            $smartyVariables['userInfos'] = $this->getCustomerInformations();
+        }
+
+        $this->context->smarty->assign($smartyVariables);
+
+        $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/header.tpl'));
+    }
+}
