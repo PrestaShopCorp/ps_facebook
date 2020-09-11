@@ -53,7 +53,7 @@ export default {
     @import '~prestakit/dist/css/bootstrap-prestashop-ui-kit';
   }
   #app {
-    margin: -17px;
+    margin: 0px;
     font-family: Open Sans,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-size: .875rem;
