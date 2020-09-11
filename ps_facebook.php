@@ -129,7 +129,7 @@ class Ps_facebook extends Module
         $this->need_instance = 0;
         // TODO : $this->module_key = '';
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
-        $this->bootstrap = true;
+        $this->bootstrap = false;
 
         parent::__construct();
 
@@ -205,6 +205,8 @@ class Ps_facebook extends Module
 
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/app.js',
+            'fbeApp' => $this->_path . 'views/js/main.js',
+            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js',
         ]);
 
