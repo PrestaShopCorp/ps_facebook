@@ -162,6 +162,7 @@ class Ps_facebook extends Module
     public function install()
     {
         return parent::install() &&
+            (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
             (new Installer($this))->install();
     }
 
@@ -200,9 +201,19 @@ class Ps_facebook extends Module
         // $request = (new EventRequest('726899634800479'))->setEvents($events);
         // $response = $request->execute();
 
+        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
+
         $this->context->smarty->assign([
-            'pathApp' => $this->_path . 'views/js/main.js',
-            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
+            'pathApp' => $this->_path . 'views/js/app.js',
+            'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js',
+        ]);
+
+        Media::addJsDef([
+            'contextPsAccounts' => $psAccountPresenter->present(),
+            'i18n' => [
+                'isoCode' => $this->context->language->iso_code,
+                'languageLocale' => $this->context->language->language_code,
+            ],
         ]);
 
         return $this->display(__FILE__, '/views/templates/admin/app.tpl');
