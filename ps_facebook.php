@@ -205,6 +205,7 @@ class Ps_facebook extends Module
 
         $this->context->smarty->assign([
             'pathApp' => $this->_path . 'views/js/app.js',
+            'fbeApp' => $this->_path . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js',
         ]);
