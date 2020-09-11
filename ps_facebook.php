@@ -66,27 +66,6 @@ class Ps_facebook extends Module
         'fbe_catalog_id',
     ];
 
-    public $name;
-    /**
-     * @var string
-     */
-    public $tab;
-    /**
-     * @var string
-     */
-    public $version;
-    /**
-     * @var string
-     */
-    public $author;
-    /**
-     * @var int
-     */
-    public $need_instance;
-    /**
-     * @var string
-     */
-    public $module_key;
     /**
      * @var string
      */
