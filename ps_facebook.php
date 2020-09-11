@@ -139,9 +139,10 @@ class Ps_facebook extends Module
     public function install()
     {
         $database = new PrestaShop\Module\Psfacebook\Database\Install($this);
-
+        
         return parent::install() &&
             $database->installTab() &&
+            (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
             $this->registerHook($this->hook);
     }
 
@@ -168,8 +169,20 @@ class Ps_facebook extends Module
      */
     public function getContent()
     {
-        $this->context->smarty->assign('pathApp', $this->_path . 'views/js/app.js');
-        $this->context->smarty->assign('chunkVendor', $this->_path . 'views/js/chunk-vendors.js');
+        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
+        
+        $this->context->smarty->assign([
+            'pathApp' => $this->_path . 'views/js/app.js',
+            'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js'
+        ]);
+
+        Media::addJsDef([
+            'contextPsAccounts' => $psAccountPresenter->present(),
+            'i18n' => [
+                'isoCode' => $this->context->language->iso_code,
+                'languageLocale' => $this->context->language->language_code
+            ]
+        ]);
 
         return $this->display(__FILE__, '/views/templates/admin/app.tpl');
     }

@@ -15,9 +15,11 @@
     "bootstrap-vue": "^2.16.0",
     "bootstrap": "^4.5.0",
     "prestakit": "^1.1.0",
+    "prestashop_accounts_vue_components": "^0.1.5",
     "vue-i18n": "^8.15.3",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuex-module-decorators": "^0.17.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -38,7 +40,11 @@
     "babel-loader": "^8.1.0",
     "babel-preset-vue": "^2.0.2",
     "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prestashop": "0.0.2",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",

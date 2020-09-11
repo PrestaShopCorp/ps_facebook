@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.6",
         "guzzlehttp/guzzle": "~5.3",
-        "prestashop/circuit-breaker": "^3.0"
+        "prestashop/circuit-breaker": "^3.0",
+        "prestashop/prestashop-accounts-auth": "^2.0"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "3.*"

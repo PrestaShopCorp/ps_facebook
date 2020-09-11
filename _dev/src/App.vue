@@ -20,12 +20,17 @@
   <div id="app">
     <Menu>
       <MenuItem route="/onboarding">
-          Onboarding
+        Onboarding
       </MenuItem>
       <MenuItem route="/help">
         Help
       </MenuItem>
     </Menu>
+
+    <div class="pt-5" />
+    <div class="pt-3" />
+
+    <router-view />
   </div>
 </template>
 
@@ -48,7 +53,7 @@ export default {
     @import '~prestakit/dist/css/bootstrap-prestashop-ui-kit';
   }
   #app {
-    margin: -23px;
+    margin: -17px;
     font-family: Open Sans,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-size: .875rem;
