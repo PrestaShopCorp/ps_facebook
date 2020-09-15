@@ -53,6 +53,7 @@ class Ps_facebook extends Module
         'actionSearch',
         'displayOrderConfirmation',
         'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
+        'actionObjectCustomerMessageAddAfter',
     ];
 
     const CONFIGURATION_LIST = [
@@ -250,6 +251,13 @@ class Ps_facebook extends Module
     }
 
     public function hookActionCartSave(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookActionObjectCustomerMessageAddAfter(array $params)
     {
         $this->eventDispatcher->dispatch(__FUNCTION__, $params);
 
