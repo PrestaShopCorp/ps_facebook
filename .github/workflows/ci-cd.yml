@@ -1,4 +1,4 @@
-name: Module Facebook CD Multishop
+name: Module Facebook CI/CD
 
 #on:
 #  push:
@@ -70,4 +70,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "."
-          target: build
+          target: ps_facebook
