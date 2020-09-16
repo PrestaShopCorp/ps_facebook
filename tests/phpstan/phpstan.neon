@@ -1,12 +1,21 @@
 includes:
-	- %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
+  - %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
 
 parameters:
-	paths:
-		- ../../classes
-		- ../../controllers
-		- ../../ps_facebook.php
-	reportUnmatchedIgnoredErrors: false
-	checkMissingIterableValueType: false
+  paths:
+    - ../../classes
+    - ../../controllers
+    - ../../ps_facebook.php
+  reportUnmatchedIgnoredErrors: false
+  checkMissingIterableValueType: false
+  ignoreErrors:
+    - '#Property TabCore::\$name \(string\) does not accept array.#'
+    - '#Parameter \#4 \$ssl of method LinkCore::getModuleLink\(\) expects null, true given.#'
+    - '#Call to an undefined method FrontController::getTemplateVarProduct\(\).#'
+    - '#Call to an undefined method FrontController::getCategory\(\).#'
+    - '#Call to protected method getBreadcrumbLinks\(\) of class FrontControllerCore.#'
+    - '#Call to an undefined method Customer::getSimpleAddresses\(\).#'
+    - '#Call to an undefined method FrontController::registerJavascript\(\).#'
+    - '#Call to an undefined method FrontController::getBreadcrumbLinks\(\).#'
 
-	level: 5
+  level: 5
