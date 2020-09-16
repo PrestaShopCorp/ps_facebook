@@ -35,12 +35,12 @@ class PixelHandler
         switch ($eventName) {
             case 'hookActionSearch':
                 (new SearchEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                ->sendToBuffer($this->templateBuffer, $event);
             break;
 
             case 'hookDisplayHeader':
                 (new ViewContentEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                ->sendToBuffer($this->templateBuffer, $event);
             break;
 
             default:

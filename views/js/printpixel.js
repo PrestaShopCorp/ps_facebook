@@ -91,14 +91,14 @@ $(document).ready(function() {
     //Track product added to a wishlist
     prestashop.on('wishlistEventBusInit', () => {
         window.WishlistEventBus.$on('addedToWishlist', (params) => {
-            fbq('track', 'addedToWishlist', {id_produit: params.detail.idProduct, content_type: "product"});
+            fbq('track', 'AddToWishlist', {id_produit: params.detail.idProduct, content_type: "product"});
         })
     })
 
-    //Track event when checkout funel is started
-    prestashop.on('initiateCheckout', function(params) {
+    //Track event when someone registers
+    prestashop.on('completeRegistration', function(params) {
         if (typeof(params) !== 'undefined') {
-            fbq('track', 'InitiateCheckout');
+            fbq('track', 'CompleteRegistration');
         }
     })
 });
