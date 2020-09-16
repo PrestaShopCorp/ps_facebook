@@ -30,17 +30,13 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-#      - name: Build ps checkout
-#        working-directory: ps_checkout
-#        run: |
-#          yarn --cwd _dev/ add prestashop_accounts_vue_components
-#          yarn --cwd _dev/ install
-#          yarn --cwd _dev/ build
-#          composer install
-#          composer require prestashop/prestashop-accounts-auth:${ACCOUNTSAUTH_VERSION}
-#        env:
-#          VCOMPONENTS_VERSION: ${{ steps.version_vcomponents.outputs.VERSION }}
-#          ACCOUNTSAUTH_VERSION: ${{ steps.version_auth.outputs.VERSION }}
+      - name: Build ps checkout
+        working-directory: ps_checkout
+        run: |
+          composer install
+        env:
+          VCOMPONENTS_VERSION: ${{ steps.version_vcomponents.outputs.VERSION }}
+          ACCOUNTSAUTH_VERSION: ${{ steps.version_auth.outputs.VERSION }}
 
 #      - name: Delete old modules 1.7
 #        continue-on-error: true
@@ -52,17 +48,7 @@ jobs:
 #          script: |
 #            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_17_PATH }}/ps_accounts'
 #            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_17_PATH }}/ps_checkout'
-#      - name: Delete old modules 1.6
-#        continue-on-error: true
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.SSH_HOST_INTEGRATION }}
-#          username: ${{ secrets.SSH_USERNAME }}
-#          key: ${{ secrets.SSH_KEY }}
-#          script: |
-#            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_16_PATH }}/ps_accounts'
-#            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_16_PATH }}/ps_checkout'
-
+      -
       - name: Copy modules
         uses: appleboy/scp-action@master
         with:
@@ -71,3 +57,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "."
           target: ps_facebook
+
+          ## composer build
