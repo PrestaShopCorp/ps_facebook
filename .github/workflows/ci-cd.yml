@@ -48,7 +48,7 @@ jobs:
 #          script: |
 #            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_17_PATH }}/ps_accounts'
 #            sudo su -c 'rm -rf ${{ secrets.MULTISHOP_17_PATH }}/ps_checkout'
-      -
+
       - name: Copy modules
         uses: appleboy/scp-action@master
         with:
