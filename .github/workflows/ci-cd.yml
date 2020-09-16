@@ -15,7 +15,7 @@ env:
 jobs:
 
   build:
-    name: Build ps_accounts and ps_checkout
+    name: Build ps_facebook
     runs-on: ubuntu-latest
     timeout-minutes: 10
 #    if: contains(github.event.pull_request.labels.*.name, 'quality assurance needed') || github.ref == 'refs/heads/master'
@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build ps checkout
-        working-directory: ps_facebook
         run: composer install
 
 #      - name: Delete old modules 1.7
