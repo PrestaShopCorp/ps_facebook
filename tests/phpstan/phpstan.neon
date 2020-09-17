@@ -17,5 +17,7 @@ parameters:
     - '#Call to an undefined method Customer::getSimpleAddresses\(\).#'
     - '#Call to an undefined method FrontController::registerJavascript\(\).#'
     - '#Call to an undefined method FrontController::getBreadcrumbLinks\(\).#'
+    - '# Parameter \#1 \$app_id of static method FacebookAds\Api::init\(\) expects string, null given.#'
+    - '#Parameter \#2 \$app_secret of static method FacebookAds\Api::init\(\) expects string, null given.#'
 
   level: 5

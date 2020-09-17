@@ -11,16 +11,16 @@ class SearchEvent implements ConversionEventInterface
     public function send($event)
     {
         // TO DO name and source URL
-        $event = (new Event())
-            ->setEventName('Purchase')
-            ->setEventTime(time())
-            ->setEventSourceUrl('http://jaspers-market.com/product/123')
-            ->setUserData($this->createSdkUserData());
+        // $event = (new Event())
+        //     ->setEventName('Purchase')
+        //     ->setEventTime(time())
+        //     ->setEventSourceUrl('http://jaspers-market.com/product/123')
+        //     ->setUserData($this->createSdkUserData());
 
-        $events = [$event];
-        $request = (new EventRequest(Configuration::get('PS_PIXEL_ID')))->setEvents($events);
-        $response = $request->execute();
+        // $events = [$event];
+        // $request = (new EventRequest(\Configuration::get('PS_PIXEL_ID')))->setEvents($events);
+        // $response = $request->execute();
 
-        return $response;
+        // return $response;
     }
 }
