@@ -11,11 +11,11 @@ class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
         $type = 'OrderConfirmation';
         $track = 'trackCustom';
 
+        $order = $this->module->psVersionIs17 ? $event['order'] : $event['objOrder'];
         $content = [
-            'customerID' => $event['order']->id_customer,
-            'orderID' => $event['order']->id,
+            'customerID' => $order->id_customer,
+            'orderID' => $order->id,
         ];
-
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
@@ -31,7 +31,6 @@ class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
         }
 
         $this->context->smarty->assign($smartyVariables);
-
         $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/OrderConfirmationEvent.tpl'));
     }
 }
