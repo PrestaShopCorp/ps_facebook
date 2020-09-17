@@ -10,7 +10,7 @@ class SearchEvent implements ConversionEventInterface
 {
     public function send($event)
     {
-
+        // TO DO name and source URL
         $event = (new Event())
             ->setEventName('Purchase')
             ->setEventTime(time())
@@ -21,6 +21,6 @@ class SearchEvent implements ConversionEventInterface
         $request = (new EventRequest(Configuration::get('PS_PIXEL_ID')))->setEvents($events);
         $response = $request->execute();
 
-        return '';
+        return $response;
     }
 }
