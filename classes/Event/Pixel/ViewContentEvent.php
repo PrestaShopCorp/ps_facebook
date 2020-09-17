@@ -8,10 +8,10 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        // $pixel_id = \Configuration::get('PS_PIXEL_ID');
-        // if (empty($pixel_id)) {
-        //     return;
-        // }
+        $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        if (empty($pixel_id)) {
+            return;
+        }
 
         // Asset Manager to be sure the JS is loaded
         /** @var \FrontController|\ProductController|\CategoryController $controller */
@@ -183,7 +183,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
 
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
-            'id_pixel' => pSQL(\Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => $pixel_id,
             'type' => $type,
             'content' => $content,
             'track' => $track,

@@ -2,15 +2,15 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
+use FacebookAds\Object\ServerSide\Event;
+use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 
 class SearchEvent implements ConversionEventInterface
 {
     public function send($event)
     {
-        // TODO
-
-        // return nothing ?
+        // TO DO name and source URL
         // $event = (new Event())
         //     ->setEventName('Purchase')
         //     ->setEventTime(time())
@@ -18,9 +18,9 @@ class SearchEvent implements ConversionEventInterface
         //     ->setUserData($this->createSdkUserData());
 
         // $events = [$event];
-        // $request = (new EventRequest('726899634800479'))->setEvents($events);
+        // $request = (new EventRequest(\Configuration::get('PS_PIXEL_ID')))->setEvents($events);
         // $response = $request->execute();
 
-        return '';
+        // return $response;
     }
 }

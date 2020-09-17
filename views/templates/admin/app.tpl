@@ -46,3 +46,5 @@ var PsfacebookControllerLink="{$PsfacebookControllerLink}"
     display: none;
   }
 </style>
+
+{include file="./conf.tpl"}

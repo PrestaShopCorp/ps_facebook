@@ -86,12 +86,10 @@ class Ps_facebook extends Module
      * @var string
      */
     public $js_path;
-
     /**
      * @var EventDispatcher
      */
     public $eventDispatcher;
-
     /**
      * @var TemplateBuffer
      */
@@ -159,30 +157,28 @@ class Ps_facebook extends Module
             (new Uninstaller($this))->uninstall();
     }
 
+    public function handleForms()
+    {
+        $id_pixel = Tools::getValue('PS_PIXEL_ID');
+        if (!empty($id_pixel)) {
+            Configuration::updateValue('PS_PIXEL_ID', $id_pixel);
+        }
+
+        $access_token = Tools::getValue('PS_FBE_ACCESS_TOKEN');
+        if (!empty($access_token)) {
+            Configuration::updateValue('PS_FBE_ACCESS_TOKEN', $access_token);
+        }
+    }
+
     public function getContent()
     {
-        // this return -> (#3) Application does not have the capability to make this API call.
-        // $user = (new UserData())
-        //     // ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
-        //     // It is recommended to send Client IP and User Agent for ServerSide API Events.
-        //     ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
-        //     ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
-        //     // ->setFbp('fb.1.1558571054389.1098115397')
-        //     ->setEmail('joe@eg.com');
-
-        // $event = (new Event())
-        // ->setEventName('ViewContent')
-        // ->setEventTime(time())
-        // ->setEventSourceUrl('http://jaspers-market.com/product/123')
-        // ->setUserData($user);
-
-        // $events = [$event];
-        // $request = (new EventRequest('726899634800479'))->setEvents($events);
-        // $response = $request->execute();
+        $this->handleForms();
 
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
 
         $this->context->smarty->assign([
+            'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
+            'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->_path . 'views/js/app.js',
             'fbeApp' => $this->_path . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
