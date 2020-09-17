@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ContactEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Pixel\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\SearchEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ViewContentEvent;
 
@@ -46,6 +47,11 @@ class PixelHandler
 
             case 'hookActionObjectCustomerMessageAddAfter':
                 (new ContactEvent($this->context, $this->module))
+                    ->sendToBuffer($this->templateBuffer, $event);
+            break;
+
+            case 'hookDisplayOrderConfirmation':
+                (new OrderConfirmationEvent($this->context, $this->module))
                     ->sendToBuffer($this->templateBuffer, $event);
             break;
 

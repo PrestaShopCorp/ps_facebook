@@ -259,4 +259,11 @@ class Ps_facebook extends Module
 
         return $this->templateBuffer->flush();
     }
+
+    public function hookDisplayOrderConfirmation(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
 }
