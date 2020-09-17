@@ -17,9 +17,9 @@ class ApiConversionHandler
     public function __construct()
     {
         Api::init(
-            null, // app_id
-            null, // app_secret
-            Configuration::get('PS_FBE_ACCESS_TOKEN') // access_token
+            'null', // app_id
+            'null', // app_secret
+            \Configuration::get('PS_FBE_ACCESS_TOKEN') // access_token
         );
 
         $this->facebookBusinessSDK = Api::instance();
