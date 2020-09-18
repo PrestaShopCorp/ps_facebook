@@ -4,8 +4,8 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
+use FacebookAds\Object\ServerSide\Gender;
 use FacebookAds\Object\ServerSide\UserData;
-use PrestaShop\Module\PrestashopFacebook\Handler\Conversion\SearchEvent;
 
 class ApiConversionHandler
 {
@@ -32,15 +32,15 @@ class ApiConversionHandler
         switch ($eventName) {
             case 'hookActionSearch':
                 // (new SearchEvent($this->context))->send($event);
-            break;
+                break;
 
             case 'hookDisplayHeader':
                 // (new ViewContentEvent($this->context))->send($event);
-            break;
+                break;
 
             default:
                 // unsupported event
-            break;
+                break;
         }
     }
 
@@ -55,6 +55,16 @@ class ApiConversionHandler
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
             ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
             ->setFbp('fb.1.1558571054389.1098115397')
-            ->setEmail('joe@eg.com');
+            ->setEmail(strtolower('joe@eg.com'))
+            ->setFirstName(strtolower('Joe'))
+            ->setLastName(strtolower('Bean'))
+            ->setPhone(preg_replace('/[^0-9.]+/', '', '+29712345678'))
+            ->setExternalId('username')
+            ->setGender(new Gender(Gender::MALE))
+            ->setDateOfBirth(preg_replace('/[^0-9.]+/', '', '1990-05-10'))
+            ->setCity(strtolower('London'))
+            ->setState(strtolower('ca'))
+            ->setZipCode(preg_replace('/[^0-9.]+/', '', '1234 AA'))
+            ->setCountryCode(strtolower('en'));
     }
 }
