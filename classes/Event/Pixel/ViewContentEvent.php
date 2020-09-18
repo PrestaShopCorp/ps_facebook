@@ -38,7 +38,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             $page = \Tools::getValue('controller');
         }
         $page = pSQL($page); // is this really needed ?
-        dump($page);
 
         $id_lang = (int) $this->context->language->id;
         $locale = \Tools::strtoupper($this->context->language->iso_code);
@@ -149,13 +148,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
                 'value' => (float) $this->context->cart->getOrderTotal(),
                 'currency' => $currency_iso_code,
             ];
-        }
-
-        /*
-        * Triggers CompleteRegistration for authentication page
-        */
-        if ($page === 'authentication') {
-            $type = 'CompleteRegistration';
         }
 
         // TODO: refaco this from Quickview
