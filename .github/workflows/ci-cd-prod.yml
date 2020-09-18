@@ -69,7 +69,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "./ps_facebook/*"
-          target: ps_facebook
+          target: "build/ps_facebook"
 
       - name: Move modules
         uses: appleboy/ssh-action@master
