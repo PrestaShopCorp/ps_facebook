@@ -60,7 +60,7 @@ class ApiConversionHandler
             ->setLastName(strtolower('Bean'))
             ->setPhone(preg_replace('/[^0-9.]+/', '', '+29712345678'))
             ->setExternalId('username')
-            ->setGender(new Gender(Gender::MALE))
+            ->setGender(Gender::MALE)
             ->setDateOfBirth(preg_replace('/[^0-9.]+/', '', '1990-05-10'))
             ->setCity(strtolower('London'))
             ->setState(strtolower('ca'))
