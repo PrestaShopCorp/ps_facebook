@@ -14,7 +14,7 @@ class CompleteRegistrationEvent extends BaseEvent implements PixelEventInterface
         $content = [
             'content_name' => 'authentication',
             'currency' => $this->context->currency->iso_code,
-            'value'=> 1,
+            'value' => 1,
         ];
         $content = $this->formatPixel($content);
 
