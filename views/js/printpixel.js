@@ -95,10 +95,4 @@ $(document).ready(function() {
         })
     })
 
-    //Track event when someone registers
-    prestashop.on('completeRegistration', function(params) {
-        if (typeof(params) !== 'undefined') {
-            fbq('track', 'CompleteRegistration');
-        }
-    })
 });
