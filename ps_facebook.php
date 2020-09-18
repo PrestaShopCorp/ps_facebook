@@ -54,6 +54,7 @@ class Ps_facebook extends Module
         'displayOrderConfirmation',
         'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
         'actionObjectCustomerMessageAddAfter',
+        'displayFooter'
     ];
 
     const CONFIGURATION_LIST = [
@@ -71,26 +72,32 @@ class Ps_facebook extends Module
      * @var string
      */
     public $controllerAdmin;
+
     /**
      * @var bool
      */
     public $psVersionIs17;
+
     /**
      * @var string
      */
     public $css_path;
+
     /**
      * @var string
      */
     public $docs_path;
+
     /**
      * @var string
      */
     public $js_path;
+
     /**
      * @var EventDispatcher
      */
     public $eventDispatcher;
+
     /**
      * @var TemplateBuffer
      */
@@ -113,7 +120,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -241,9 +248,11 @@ class Ps_facebook extends Module
 
     public function hookActionSearch(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        if (true === $this->context->controller->ajax) {
+            return;
+        }
 
-        return $this->templateBuffer->flush();
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
@@ -264,6 +273,11 @@ class Ps_facebook extends Module
     {
         $this->eventDispatcher->dispatch(__FUNCTION__, $params);
 
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookDisplayFooter()
+    {
         return $this->templateBuffer->flush();
     }
 }
