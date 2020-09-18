@@ -8,6 +8,10 @@ class SearchEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
+        $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        if (empty($pixel_id)) {
+            return;
+        }
         $type = 'Search';
         $track = 'trackCustom';
 
@@ -19,7 +23,7 @@ class SearchEvent extends BaseEvent implements PixelEventInterface
 
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
-            'id_pixel' => pSQL(\Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => pSQL($pixel_id),
             'type' => $type,
             'content' => $content,
             'track' => $track,

@@ -9,9 +9,9 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
     public function sendToBuffer($buffer, $event)
     {
         $pixel_id = \Configuration::get('PS_PIXEL_ID');
-//        if (empty($pixel_id)) {
-//            return;
-//        }
+        if (empty($pixel_id)) {
+            return;
+        }
 
         // Asset Manager to be sure the JS is loaded
         /** @var \FrontController|\ProductController|\CategoryController $controller */
@@ -124,16 +124,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
                 // TODO: 1.6 unsupported?
             }
         }
-
-        /*
-        * Triggers Search for result pages
-        */
-//        if ($page === 'search') {
-//            $type = 'Search';
-//            $content = [
-//                'search_string' => pSQL(\Tools::getValue('s')),
-//            ];
-//        }
 
         /*
         * Triggers InitiateCheckout for checkout page
