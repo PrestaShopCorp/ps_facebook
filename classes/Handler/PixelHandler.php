@@ -55,6 +55,11 @@ class PixelHandler
                     ->sendToBuffer($this->templateBuffer, $event);
             break;
 
+            case 'hookActionCustomerAccountAdd' :
+                (new ViewContentEvent($this->context, $this->module))
+                ->sendToBuffer($this->templateBuffer, $event);
+            break;
+
             default:
                 // unsupported event
             break;
