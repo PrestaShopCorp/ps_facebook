@@ -129,7 +129,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         * Triggers Search for result pages
         */
         if ($page === 'search') {
-            $type = \Tools::ucfirst($page);
+            $type = 'Search';
             $content = [
                 'search_string' => pSQL(\Tools::getValue('s')),
             ];
