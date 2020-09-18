@@ -19,7 +19,7 @@ class SearchEvent extends BaseEvent implements PixelEventInterface
         $totalResults = pSQL($event['total']);
         $content = [
             'search_string' => $searchQuery,
-            'total_results' => $totalResults
+            'total_results' => $totalResults,
         ];
         $content = $this->formatPixel($content);
 
