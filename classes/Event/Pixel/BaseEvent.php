@@ -65,22 +65,24 @@ abstract class BaseEvent
     protected function getCustomerInformations()
     {
         $arrayReturned = [];
-        // TODO: fix for 1.6
-        $simpleAddresses = $this->context->customer->getSimpleAddresses();
+        // TODO: fix for 1.6 ?
+        if (true === $this->module->psVersionIs17) {
+            $simpleAddresses = $this->context->customer->getSimpleAddresses();
 
-        if (count($simpleAddresses) > 0) {
-            $current = reset($simpleAddresses);
-            if ($current['city'] != null) {
-                $arrayReturned['ct'] = $current['city'];
-            }
-            if ($current['country_iso'] != null) {
-                $arrayReturned['country'] = $current['country_iso'];
-            }
-            if ($current['postcode'] != null) {
-                $arrayReturned['zp'] = $current['postcode'];
-            }
-            if ($current['phone'] != null) {
-                $arrayReturned['ph'] = $current['phone'];
+            if (count($simpleAddresses) > 0) {
+                $current = reset($simpleAddresses);
+                if ($current['city'] != null) {
+                    $arrayReturned['ct'] = $current['city'];
+                }
+                if ($current['country_iso'] != null) {
+                    $arrayReturned['country'] = $current['country_iso'];
+                }
+                if ($current['postcode'] != null) {
+                    $arrayReturned['zp'] = $current['postcode'];
+                }
+                if ($current['phone'] != null) {
+                    $arrayReturned['ph'] = $current['phone'];
+                }
             }
         }
 
