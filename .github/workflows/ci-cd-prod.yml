@@ -14,7 +14,7 @@ env:
 
 jobs:
 
-  build_push_prod:
+  build_stable:
     name: CI/CD integration ps_facebook
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -48,36 +48,7 @@ jobs:
           name: ${{ github.event.repository.name }}
           path: ../
 
-      - name: Copy modules
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_INTEGRATION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "."
-          target: ps_facebook
-
-      - name: Move modules
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_INTEGRATION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'cp -R build/ps_facebook ${{ secrets.MODULE_PATH }}'
-            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_accounts'
-
-      - name: Install modules
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_INTEGRATION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
-
-  push:
+  push_stable:
     name: CI/CD integration ps_facebook
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -89,3 +60,32 @@ jobs:
           name: ${{ github.event.repository.name }}
 
       - run: ls -al
+
+      - name: Copy modules
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PRODUCTION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "."
+          target: ps_facebook
+
+      - name: Move modules
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PRODUCTION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo su -c 'cp -R build/ps_facebook ${{ secrets.MODULE_PATH }}'
+            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_accounts'
+
+      - name: Install modules
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PRODUCTION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
