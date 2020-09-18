@@ -31,6 +31,6 @@ class ContactEvent extends BaseEvent implements PixelEventInterface
 
         $this->context->smarty->assign($smartyVariables);
 
-        $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/contactEvent.tpl'));
+        $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/fbTrack.tpl'));
     }
 }
