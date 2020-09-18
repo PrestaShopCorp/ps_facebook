@@ -68,7 +68,7 @@ jobs:
           host: ${{ secrets.SSH_HOST_PRODUCTION }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: "./ps_facebook"
+          source: "./ps_facebook/ps_facebook"
           target: "build"
 
       - name: Move modules
