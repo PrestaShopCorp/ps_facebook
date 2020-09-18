@@ -15,7 +15,7 @@ env:
 jobs:
 
   build_stable:
-    name: CI/CD integration ps_facebook
+    name: CI/CD build production ps_facebook
     runs-on: ubuntu-latest
     timeout-minutes: 10
     #    if: contains(github.event.pull_request.labels.*.name, 'quality assurance needed') || github.ref == 'refs/heads/master'
@@ -49,9 +49,10 @@ jobs:
           path: ../
 
   push_stable:
-    name: CI/CD integration ps_facebook
+    name: CI/CD push production ps_facebook
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: build_stable
     steps:
 
       - name: Download artifact
