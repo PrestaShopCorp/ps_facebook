@@ -14,3 +14,4 @@ views/js/app.js
 !.vscode/extensions.json
 
 .php_cs.cache
+.env

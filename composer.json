@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "~5.3",
         "prestashop/circuit-breaker": "^3.0",
         "facebook/php-business-sdk": "^8.0",
-        "prestashop/prestashop-accounts-auth": "^2.0"
+        "prestashop/prestashop-accounts-auth": "^2.0",
+        "vlucas/phpdotenv": "3.4"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "^3.0"
