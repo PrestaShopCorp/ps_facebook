@@ -1,9 +1,10 @@
 <?php
 
-use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
+use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
  * 2007-2020 PrestaShop.
@@ -105,6 +106,11 @@ class Ps_facebook extends Module
 
     public $front_controller = null;
 
+    /**
+     * @var ServiceContainer
+     */
+    private $serviceContainer;
+
     public function __construct()
     {
         $this->name = 'ps_facebook';
@@ -132,6 +138,7 @@ class Ps_facebook extends Module
             [],
             true
         );
+        $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
         $this->templateBuffer = new TemplateBuffer();
         $this->eventDispatcher = new EventDispatcher($this);
     }
@@ -147,7 +154,7 @@ class Ps_facebook extends Module
     public function install()
     {
         return parent::install() &&
-            (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
+            (new \PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
             (new Installer($this))->install();
     }
 
@@ -279,5 +286,15 @@ class Ps_facebook extends Module
     public function hookDisplayFooter()
     {
         return $this->templateBuffer->flush();
+    }
+
+    /**
+     * @param string $serviceName
+     *
+     * @return mixed
+     */
+    public function getService($serviceName)
+    {
+        return $this->serviceContainer->getService($serviceName);
     }
 }

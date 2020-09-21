@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    public: true
+
+  ps_facebook.module:
+    class: 'Ps_facebook'
+    factory: ['Module', 'getInstanceByName']
+    arguments:
+      - 'ps_facebook'
+
+  ps_facebook.buffer.templatebuffer:
+    class: 'PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer'

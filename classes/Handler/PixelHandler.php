@@ -30,7 +30,7 @@ class PixelHandler
     {
         $this->context = \Context::getContext();
         $this->module = $module;
-        $this->templateBuffer = $module->templateBuffer;
+        $this->templateBuffer = $module->getService('ps_facebook.buffer.templatebuffer');
     }
 
     public function handleEvent($eventName, $event)
