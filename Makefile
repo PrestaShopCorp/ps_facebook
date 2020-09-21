@@ -13,7 +13,11 @@ docker-down:
 
 # target: docker-build|db              	- Setup PHP & (node)JS dependencies
 db: docker-build
-docker-build: build-front build-composer
+docker-build: build-front build-composer copy-env
+
+copy-env:
+	cp .env.dist .env
+	@echo 'You can now update the .env file !'
 
 # target: bash-app                     	- Connect into app container
 ba: bash-app

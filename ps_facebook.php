@@ -1,5 +1,6 @@
 <?php
 
+use Dotenv\Dotenv;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
@@ -134,6 +135,9 @@ class Ps_facebook extends Module
         );
         $this->templateBuffer = new TemplateBuffer();
         $this->eventDispatcher = new EventDispatcher($this);
+
+        $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/.env');
+        $dotenv->load();
     }
 
     /**
