@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * 2007-2020 PrestaShop.
  *
  * NOTICE OF LICENSE
@@ -24,57 +24,45 @@
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
-namespace PrestaShop\Module\Psfacebook\Database;
+namespace PrestaShop\Module\Ps_facebook\Translations;
 
-class Uninstall
-{
+class PsFacebookTranslations {
+
     /**
-     * @var \Ps_facebook
+     * @var \Module
      */
     private $module;
 
-    public function __construct(\Ps_facebook $module)
+    /**
+     * __construct
+     *
+     * @param \Module $module
+     *
+     * @return void
+     */
+    public function __construct(\Module $module)
     {
         $this->module = $module;
     }
 
     /**
-     * uninstallTables
+     * Create all translations for Dashboard App
      *
-     * @return bool
+     * @return array
      */
-    // public function uninstallTables()
-    // {
-    //     $sql[] = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'psfacebook`';
-
-    //     foreach ($sql as $query) {
-    //         if (!\Db::getInstance()->execute($query)) {
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    // }
-
-    /**
-     * Unregister admin ajax controler.
-     *
-     * @return bool
-     */
-    public function uninstallTab()
+    public function getTranslations()
     {
-        $id_tab = (int) \Tab::getIdFromClassName($this->module->controllerAdmin);
+        $locale = \Context::getContext()->language->iso_code;
 
-        if ($id_tab) {
-            $tab = new \Tab($id_tab);
+        $translations[$locale] = [
+            'general' => [
+                'tabs' => [
+                    'configuration' => $this->module->l('Configuration', 'PsFacebookTranslations'),
+                    'help' => $this->module->l('Help', 'PsFacebookTranslations')
+                ],
+            ],
+        ];
 
-            if (\Validate::isLoadedObject($tab)) {
-                return $tab->delete();
-            }
-
-            return false;
-        }
-
-        return true;
+        return $translations;
     }
 }

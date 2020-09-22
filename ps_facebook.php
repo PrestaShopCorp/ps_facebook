@@ -5,6 +5,7 @@ use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 /*
  * 2007-2020 PrestaShop.
@@ -136,8 +137,8 @@ class Ps_facebook extends Module
         $this->templateBuffer = new TemplateBuffer();
         $this->eventDispatcher = new EventDispatcher($this);
 
-        $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/.env');
-        $dotenv->load();
+        // $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/.env');
+        // $dotenv->load();
     }
 
     /**
@@ -184,7 +185,7 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
-        $this->handleForms();
+       $this->handleForms();
 
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
 
@@ -199,7 +200,8 @@ class Ps_facebook extends Module
 
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
-            'i18n' => [
+            'translations' => (new PsFacebookTranslations($this))->getTranslations(),
+            'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,
             ],
