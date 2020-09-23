@@ -7,30 +7,16 @@ use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
-use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use Product;
 
 class AddToCartEvent extends AbstractEvent
 {
-    /**
-     * @var ToolsAdapter
-     */
     private $toolsAdapter;
 
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    public function __construct(
-        Context $context,
-        $pixelId,
-        ToolsAdapter $toolsAdapter,
-        ProductRepository $productRepository
-    ) {
+    public function __construct(Context $context, $pixelId, ToolsAdapter $toolsAdapter)
+    {
         parent::__construct($context, $pixelId);
         $this->toolsAdapter = $toolsAdapter;
-        $this->productRepository = $productRepository;
     }
 
     public function send($params)
@@ -40,15 +26,6 @@ class AddToCartEvent extends AbstractEvent
         $idProduct = $this->toolsAdapter->getValue('id_product');
         $op = $this->toolsAdapter->getValue('op');
         $isDelete = $this->toolsAdapter->getValue('delete');
-        $idProductAttribute = $this->toolsAdapter->getValue('id_product_attribute');
-        $attributeGroups = $this->toolsAdapter->getValue('group');
-
-        if ($attributeGroups) {
-            $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
-                $idProduct,
-                $attributeGroups
-            );
-        }
 
         if ($action !== 'update') {
             return true;
@@ -63,7 +40,7 @@ class AddToCartEvent extends AbstractEvent
             $quantity = null;
         }
 
-        $productName = Product::getProductName($idProduct, $idProductAttribute);
+        $productName = Product::getProductName($idProduct);
         $user = $this->createSdkUserData($this->context);
         $customData = (new CustomData())
             ->setContentName(pSQL($productName))
