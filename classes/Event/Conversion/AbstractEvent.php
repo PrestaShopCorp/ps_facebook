@@ -42,8 +42,11 @@ abstract class AbstractEvent implements ConversionEventInterface
         $customer = $context->customer;
         $addressId = Address::getFirstCustomerAddressId($customer->id);
         $address = new Address($addressId);
-        $psGender = new PsGender($context->customer->id_gender, $context->language->id);
-        $gender = $psGender->type ? Gender::FEMALE : Gender::MALE;
+        $gender = null;
+        if ($context->customer->id_gender) {
+            $psGender = new PsGender($context->customer->id_gender, $context->language->id);
+            $gender = (int) $psGender->type === 1 ? Gender::FEMALE : Gender::MALE;
+        }
         $country = new Country($address->id_country);
 
         return (new UserData())
