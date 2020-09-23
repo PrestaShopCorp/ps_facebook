@@ -4,5 +4,5 @@ namespace PrestaShop\Module\PrestashopFacebook\Event;
 
 interface ConversionEventInterface
 {
-    public function send($event);
+    public function send($params);
 }
