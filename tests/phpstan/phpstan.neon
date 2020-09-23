@@ -20,5 +20,8 @@ parameters:
     - '#Parameter \#1 \$app_id of static method FacebookAds\Api::init\(\) expects string, null given.#'
     - '#Parameter \#2 \$app_secret of static method FacebookAds\Api::init\(\) expects string, null given.#'
     - '#Parameter \#1 \$gender of method FacebookAds\\Object\\ServerSide\\UserData::setGender\(\) expects FacebookAds\\Object\\ServerSide\\FacebookAds\\Object\\ServerSide\\Gender, string given.#'
+    - '#Parameter \#1 \$custom_data of method FacebookAds\\Object\\ServerSide\\Event::setCustomData\(\) expects FacebookAds\\Object\\ServerSide\\FacebookAds\\Object\\ServerSide\\CustomData, FacebookAds\\Object\\ServerSide\\CustomData given.#'
+    - '#Parameter \#1 \$user_data of method FacebookAds\\Object\\ServerSide\\Event::setUserData\(\) expects FacebookAds\\Object\\ServerSide\\FacebookAds\\Object\\ServerSide\\UserData, FacebookAds\\Object\\ServerSide\\UserData given.#'
+    - '#Parameter \#1 \$events of method FacebookAds\\Object\\ServerSide\\EventRequest::setEvents\(\) expects array<FacebookAds\\Object\\ServerSide\\FacebookAds\\Object\\ServerSide\\Event>, array<int, FacebookAds\\Object\\ServerSide\\Event> given.#'
 
   level: 5
