@@ -19,5 +19,7 @@ parameters:
     - '#Call to an undefined method FrontController::getBreadcrumbLinks\(\).#'
     - '# Parameter \#1 \$app_id of static method FacebookAds\Api::init\(\) expects string, null given.#'
     - '#Parameter \#2 \$app_secret of static method FacebookAds\Api::init\(\) expects string, null given.#'
+    - 'Parameter #1 $gender of method FacebookAds\Object\ServerSide\UserData::setGender() expects
+     FacebookAds\Object\ServerSide\FacebookAds\Object\ServerSide\Gender, string given.'
 
   level: 5
