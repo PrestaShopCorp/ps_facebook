@@ -32,6 +32,7 @@ abstract class AbstractEvent implements ConversionEventInterface
      * @param Context $context
      *
      * @return UserData
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
