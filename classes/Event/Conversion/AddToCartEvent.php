@@ -26,6 +26,15 @@ class AddToCartEvent extends AbstractEvent
         $idProduct = $this->toolsAdapter->getValue('id_product');
         $op = $this->toolsAdapter->getValue('op');
         $isDelete = $this->toolsAdapter->getValue('delete');
+        $idProductAttribute = $this->toolsAdapter->getValue('id_product_attribute');
+        $attributeGroups = $this->toolsAdapter->getValue('group');
+
+        if ($attributeGroups) {
+            $idProductAttribute = Product::getIdProductAttributeByIdAttributes(
+                $idProduct,
+                $attributeGroups
+            );
+        }
 
         if ($action !== 'update') {
             return true;
@@ -40,7 +49,7 @@ class AddToCartEvent extends AbstractEvent
             $quantity = null;
         }
 
-        $productName = Product::getProductName($idProduct);
+        $productName = Product::getProductName($idProduct, $idProductAttribute);
         $user = $this->createSdkUserData($this->context);
         $customData = (new CustomData())
             ->setContentName(pSQL($productName))
