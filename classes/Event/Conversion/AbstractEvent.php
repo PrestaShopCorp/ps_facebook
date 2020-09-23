@@ -42,7 +42,7 @@ abstract class AbstractEvent implements ConversionEventInterface
     {
         $customer = $context->customer;
         $addressId = Address::getFirstCustomerAddressId($customer->id);
-        $address = new ADdress($addressId);
+        $address = new Address($addressId);
         $psGender = new PsGender($context->customer->id_gender, $context->language->id);
         $gender = $psGender->type ? Gender::FEMALE : Gender::MALE;
         $country = new Country($address->id_country);
