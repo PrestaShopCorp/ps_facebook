@@ -22,8 +22,8 @@ class ApiConversionHandler
     public function __construct()
     {
         Api::init(
-            null, // app_id
-            null, // app_secret
+            'null', // app_id
+            'null', // app_secret
             \Configuration::get('PS_FBE_ACCESS_TOKEN') // access_token
         );
 
