@@ -8,12 +8,12 @@ use FacebookAds\Object\ServerSide\EventRequest;
 
 class SearchEvent extends AbstractEvent
 {
-    public function send($event)
+    public function send($params)
     {
         $user = $this->createSdkUserData($this->context);
         $customData = (new CustomData())
-            ->setSearchString(pSQL($event['searched_query']))
-            ->setItemNumber(pSQL($event['total']));
+            ->setSearchString(pSQL($params['searched_query']))
+            ->setItemNumber(pSQL($params['total']));
 
         $event = (new Event())
             ->setEventName('Search')
