@@ -3,7 +3,6 @@
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
 use Address;
-use Configuration;
 use Context;
 use Country;
 use FacebookAds\Object\ServerSide\Gender;
@@ -24,10 +23,10 @@ abstract class AbstractEvent implements ConversionEventInterface
      */
     protected $pixelId;
 
-    public function __construct(Context $context)
+    public function __construct(Context $context, $pixelId)
     {
         $this->context = $context;
-        $this->pixelId = Configuration::get('PS_PIXEL_ID');
+        $this->pixelId = $pixelId;
     }
 
     /**
