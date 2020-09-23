@@ -8,8 +8,8 @@ use Context;
 use Country;
 use FacebookAds\Object\ServerSide\Gender;
 use FacebookAds\Object\ServerSide\UserData;
-use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 use Gender as PsGender;
+use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 use State;
 
 abstract class AbstractEvent implements ConversionEventInterface
