@@ -40,7 +40,7 @@ class OrderConfirmationEvent extends AbstractEvent
                 ->setTitle($product['product_name'])
                 ->setCategory((new Category($product['id_category_default']))->getName($langId))
                 ->setItemPrice($product['price'])
-                ->setQuantity($product['quantity'])
+                ->setQuantity($product['product_quantity'])
                 ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
 
             $contents[] = $content;
