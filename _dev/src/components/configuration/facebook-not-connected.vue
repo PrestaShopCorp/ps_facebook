@@ -17,55 +17,49 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div>
-    <b-alert
-      variant="success"
-      dismissible
-      :show="showOnboardSucceeded"
-    >
-      <p>{{ $t('configuration.messages.success') }}</p>
-    </b-alert>
-
-    <b-alert
-      variant="warning"
-      dismissible
-      :show="showSyncCatalogAdvice"
-    >
-      <p>
-        {{ $t('configuration.messages.syncCatalogAdvice') }}
-        <br />
-        <b-button variant="primary" class="mt-2" @click="onSyncCatalogAdviceClick">
-          {{ $t('configuration.messages.syncCatalogButton') }}
-        </b-button>
-      </p>
-    </b-alert>
-  </div>
+  <b-card no-body>
+    <template v-slot:header>
+      <h3 class="d-inline">
+        {{ $t('configuration.facebook.title') }}
+      </h3>
+    </template>
+    <b-card-body>
+      TODO
+      + button qui declenche onFbeOnboardClick
+    </b-card-body>
+  </b-card>
 </template>
 
 <script lang="ts">
   import { defineComponent } from '@vue/composition-api';
-  import { BAlert, BButton } from 'bootstrap-vue';
+  import { BCard, BCardBody } from 'bootstrap-vue';
 
   export default defineComponent({
-    name: 'Messages',
-    components: { BAlert, BButton },
+    name: 'FacebookNotConnected',
+    components: { BCard, BCardBody },
     mixins: [],
-    props: {
-      showOnboardSucceeded: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
-      showSyncCatalogAdvice: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
+    props: { },
+    computed: { },
+    data() {
+      return {
+
+      };
     },
     methods: {
-      onSyncCatalogAdviceClick() {
-        this.$emit('onSyncCatalogAdviceClick');
+      onFbeOnboardClick() {
+        this.$emit('onFbeOnboardClick');
       }
+    },
+    watch: { },
+    created() {
+    },
+    mounted() {
+    },
+    updated() {
     },
   });
 </script>
+
+<style lang="scss" scoped>
+
+</style>

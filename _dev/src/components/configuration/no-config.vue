@@ -17,36 +17,21 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div>
-    - No config TODO
-  </div>
+  <b-card no-body>
+    <template v-slot:header>
+      <h3 class="d-inline">
+        {{ $t('configuration.noConfig.title') }}
+      </h3>
+    </template>
+  </b-card>
 </template>
 
 <script lang="ts">
   import { defineComponent } from '@vue/composition-api';
+  import { BCard } from 'bootstrap-vue';
 
   export default defineComponent({
     name: 'NoConfig',
-    components: { },
-    mixins: [],
-    props: { },
-    computed: { },
-    data() {
-      return {
-
-      };
-    },
-    methods: { },
-    watch: { },
-    created() {
-    },
-    mounted() {
-    },
-    updated() {
-    },
+    components: { BCard },
   });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

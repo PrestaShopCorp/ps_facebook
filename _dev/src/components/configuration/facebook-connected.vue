@@ -17,55 +17,59 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div>
-    <b-alert
-      variant="success"
-      dismissible
-      :show="showOnboardSucceeded"
-    >
-      <p>{{ $t('configuration.messages.success') }}</p>
-    </b-alert>
-
-    <b-alert
-      variant="warning"
-      dismissible
-      :show="showSyncCatalogAdvice"
-    >
-      <p>
-        {{ $t('configuration.messages.syncCatalogAdvice') }}
-        <br />
-        <b-button variant="primary" class="mt-2" @click="onSyncCatalogAdviceClick">
-          {{ $t('configuration.messages.syncCatalogButton') }}
-        </b-button>
-      </p>
-    </b-alert>
-  </div>
+  <b-card no-body>
+    <template v-slot:header>
+      <b-iconstack
+        font-scale="1.5"
+        class="mr-2 align-bottom fixed-size"
+        width="20"
+        height="20"
+      >
+        <b-icon-circle-fill stacked variant="success" />
+        <b-icon-check stacked variant="white" />
+      </b-iconstack>
+      <h3 class="d-inline">
+        {{ $t('configuration.facebook.title') }}
+      </h3>
+    </template>
+    <b-card-body>
+      TODO
+    </b-card-body>
+  </b-card>
 </template>
 
 <script lang="ts">
   import { defineComponent } from '@vue/composition-api';
-  import { BAlert, BButton } from 'bootstrap-vue';
+  import { BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill } from 'bootstrap-vue';
 
   export default defineComponent({
-    name: 'Messages',
-    components: { BAlert, BButton },
+    name: 'FacebookConnected',
+    components: { BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill },
     mixins: [],
     props: {
-      showOnboardSucceeded: {
-        type: Boolean,
+      contextPsFacebook: {
+        type: Object,
         required: false,
-        default: false,
-      },
-      showSyncCatalogAdvice: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
-    },
-    methods: {
-      onSyncCatalogAdviceClick() {
-        this.$emit('onSyncCatalogAdviceClick');
+        default: null,
       }
+    },
+    computed: { },
+    data() {
+      return {
+
+      };
+    },
+    methods: { },
+    watch: { },
+    created() {
+    },
+    mounted() {
+    },
+    updated() {
     },
   });
 </script>
+
+<style lang="scss" scoped>
+
+</style>

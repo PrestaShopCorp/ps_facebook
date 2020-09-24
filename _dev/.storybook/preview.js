@@ -40,8 +40,6 @@ global.contextPsAccounts = {
   superAdminEmail: 'nobody@prestashop.com',
   ssoResendVerificationEmail: null,
   manageAccountLink: 'https://perdu.com',
-  psAccountsIsInstalled: true,
-  psAccountsIsEnabled: true,
 };
 
 // i18n and store
@@ -59,4 +57,21 @@ configure(require.context('../src', true, /\.stories\.(ts|js|md)x?$/), module);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  backgrounds: {
+    default: 'backOffice',
+    values: [
+      {
+        name: 'backOffice',
+        value: '#F1F1F1'
+      },
+      {
+        name: 'white',
+        value: '#ffffff'
+      },
+      {
+        name: 'black',
+        value: '#000000'
+      },
+    ],
+  }
 }

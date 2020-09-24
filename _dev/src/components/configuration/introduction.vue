@@ -17,38 +17,26 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div>
-    - Introduction TODO
-    <b-button @click="onHide">Hey !</b-button>
-  </div>
+  <b-card>
+    Introduction page, TODO
+    <hr />
+    <b-button variant="primary" @click="onHide">
+      {{ $t('configuration.introduction.getStarted') }}
+    </b-button>
+  </b-card>
 </template>
 
 <script lang="ts">
   import { defineComponent } from '@vue/composition-api';
-  import { BButton } from 'bootstrap-vue';
+  import { BCard, BButton } from 'bootstrap-vue';
 
   export default defineComponent({
     name: 'Introduction',
-    components: { BButton },
-    mixins: [],
-    props: { },
-    computed: { },
-    data() {
-      return {
-
-      };
-    },
+    components: { BCard, BButton },
     methods: {
       onHide() {
         this.$emit('onHide');
       }
-    },
-    watch: { },
-    created() {
-    },
-    mounted() {
-    },
-    updated() {
     },
   });
 </script>

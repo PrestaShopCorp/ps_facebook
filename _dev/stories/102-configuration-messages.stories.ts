@@ -8,7 +8,7 @@ export default {
 const Template = (args: any, { argTypes }: any) => ({
   props: Object.keys(argTypes),
   components: { Messages },
-  template: '<messages :showOnboardSucceeded="showOnboardSucceeded" :showSyncCatalogAdvice="showSyncCatalogAdvice" />',
+  template: '<messages :showOnboardSucceeded="showOnboardSucceeded" :showSyncCatalogAdvice="showSyncCatalogAdvice" @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick" />',
 });
 export const AllShown:any = Template.bind({});
 AllShown.args = {
