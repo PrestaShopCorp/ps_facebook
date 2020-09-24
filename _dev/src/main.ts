@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { BootstrapVue } from 'bootstrap-vue';
+import {BootstrapVue} from 'bootstrap-vue';
 import psAccountsVueComponents from 'prestashop_accounts_vue_components';
 import router from './router';
 import store from './store';

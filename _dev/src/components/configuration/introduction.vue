@@ -19,26 +19,29 @@
 <template>
   <b-card>
     Introduction page, TODO
-    <hr />
-    <b-button variant="primary" @click="onHide">
+    <hr>
+    <b-button
+      variant="primary"
+      @click="onHide"
+    >
       {{ $t('configuration.introduction.getStarted') }}
     </b-button>
   </b-card>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@vue/composition-api';
-  import { BCard, BButton } from 'bootstrap-vue';
+import {defineComponent} from '@vue/composition-api';
+import {BCard, BButton} from 'bootstrap-vue';
 
-  export default defineComponent({
-    name: 'Introduction',
-    components: { BCard, BButton },
-    methods: {
-      onHide() {
-        this.$emit('onHide');
-      }
+export default defineComponent({
+  name: 'Introduction',
+  components: {BCard, BButton},
+  methods: {
+    onHide() {
+      this.$emit('onHide');
     },
-  });
+  },
+});
 </script>
 
 <style lang="scss" scoped>

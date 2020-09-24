@@ -27,11 +27,11 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@vue/composition-api';
-  import { BCard } from 'bootstrap-vue';
+import {defineComponent} from '@vue/composition-api';
+import {BCard} from 'bootstrap-vue';
 
-  export default defineComponent({
-    name: 'NoConfig',
-    components: { BCard },
-  });
+export default defineComponent({
+  name: 'NoConfig',
+  components: {BCard},
+});
 </script>

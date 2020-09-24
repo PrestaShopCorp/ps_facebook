@@ -17,96 +17,111 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="configuration" class="ps-facebook-configuration-tab">
+  <div
+    id="configuration"
+    class="ps-facebook-configuration-tab"
+  >
     <introduction
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
       class="m-4"
     />
     <template v-else>
-
       <messages
-        :showOnboardSucceeded="psFacebookJustOnboarded"
-        :showSyncCatalogAdvice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :show-onboard-succeeded="psFacebookJustOnboarded"
+        :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
         class="m-4"
       />
-      <ps-accounts :context="contextPsAccounts" class="m-4" />
+      <ps-accounts
+        :context="contextPsAccounts"
+        class="m-4"
+      />
 
-      <no-config v-if="!psAccountsOnboarded" class="m-4" />
+      <no-config
+        v-if="!psAccountsOnboarded"
+        class="m-4"
+      />
       <template v-else>
-        <facebook-not-connected v-if="!facebookConnected" @onFbeOnboardClick="onFbeOnboardClick" class="m-4" />
-        <facebook-connected v-else :contextPsFacebook="contextPsFacebook" class="m-4" />
+        <facebook-not-connected
+          v-if="!facebookConnected"
+          @onFbeOnboardClick="onFbeOnboardClick"
+          class="m-4"
+        />
+        <facebook-connected
+          v-else
+          :context-ps-facebook="contextPsFacebook"
+          class="m-4"
+        />
       </template>
-
     </template>
   </div>
 </template>
 
 <script>
-  import { defineComponent } from '@vue/composition-api';
-  import { PsAccounts } from 'prestashop_accounts_vue_components';
-  import Introduction from '../components/configuration/introduction.vue';
-  import Messages from '../components/configuration/messages.vue';
-  import NoConfig from '../components/configuration/no-config.vue';
-  import FacebookConnected from '../components/configuration/facebook-connected.vue';
-  import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import {defineComponent} from '@vue/composition-api';
+import {PsAccounts} from 'prestashop_accounts_vue_components';
+import Introduction from '../components/configuration/introduction.vue';
+import Messages from '../components/configuration/messages.vue';
+import NoConfig from '../components/configuration/no-config.vue';
+import FacebookConnected from '../components/configuration/facebook-connected.vue';
+import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 
-  export default defineComponent({
-    name: 'Configuration',
-    components: {
-      Introduction,
-      Messages,
-      PsAccounts,
-      NoConfig,
-      FacebookNotConnected,
-      FacebookConnected,
+export default defineComponent({
+  name: 'Configuration',
+  components: {
+    Introduction,
+    Messages,
+    PsAccounts,
+    NoConfig,
+    FacebookNotConnected,
+    FacebookConnected,
+  },
+  mixins: [],
+  props: {
+    contextPsAccounts: {
+      type: Object,
+      required: false,
+      default: () => global.contextPsAccounts,
     },
-    mixins: [],
-    props: {
-      contextPsAccounts: {
-        type: Object,
-        required: false,
-        default: () => global.contextPsAccounts,
-      },
-      contextPsFacebook: {
-        type: Object,
-        required: false,
-        default: null, // TODO !0: aller le chercher par defaut !
-      },
+    contextPsFacebook: {
+      type: Object,
+      required: false,
+      default: null, // TODO !0: aller le chercher par defaut !
     },
-    computed: {
-      psAccountsOnboarded() {
-        return this.contextPsAccounts.user.email !== null
-          && this.contextPsAccounts.user.emailIsValidated;
-      },
-      facebookConnected() {
-        return !!this.contextPsFacebook;
-      }
+  },
+  computed: {
+    psAccountsOnboarded() {
+      return this.contextPsAccounts.user.email !== null
+        && this.contextPsAccounts.user.emailIsValidated;
     },
-    data() {
-      return {
-        showIntroduction: true, // Initialized to true except if a props should avoid the introduction.
-        psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished, once!
-        showSyncCatalogAdvice: true, // TODO !0: when this should be displayed and hidden ???
-      };
+    facebookConnected() {
+      return !!this.contextPsFacebook;
     },
-    methods: {
-      onSyncCatalogAdviceClick() {
-        // TODO !0: what feature ???
-      },
-      onFbeOnboardClick() {
-        // TODO !0: launch FBE onboarding
-      }
+  },
+  data() {
+    return {
+      showIntroduction: true, // Initialized to true except if a props should avoid the introduction
+      psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
+      showSyncCatalogAdvice: true, // TODO !0: when this should be displayed and hidden ???
+    };
+  },
+  methods: {
+    onSyncCatalogAdviceClick() {
+      // TODO !0: what feature ???
     },
-    watch: { },
-    created() {
+    onFbeOnboardClick() {
+      // TODO !0: launch FBE onboarding
     },
-    mounted() {
-    },
-    updated() {
-    },
-  });
+  },
+  watch: { },
+  created() {
+  },
+  mounted() {
+  },
+  updated() {
+  },
+});
 </script>
 
 <style lang="scss">

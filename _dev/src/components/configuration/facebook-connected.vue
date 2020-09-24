@@ -25,8 +25,14 @@
         width="20"
         height="20"
       >
-        <b-icon-circle-fill stacked variant="success" />
-        <b-icon-check stacked variant="white" />
+        <b-icon-circle-fill
+          stacked
+          variant="success"
+        />
+        <b-icon-check
+          stacked
+          variant="white"
+        />
       </b-iconstack>
       <h3 class="d-inline">
         {{ $t('configuration.facebook.title') }}
@@ -39,35 +45,39 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@vue/composition-api';
-  import { BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill } from 'bootstrap-vue';
+import {defineComponent} from '@vue/composition-api';
+import {
+  BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+} from 'bootstrap-vue';
 
-  export default defineComponent({
-    name: 'FacebookConnected',
-    components: { BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill },
-    mixins: [],
-    props: {
-      contextPsFacebook: {
-        type: Object,
-        required: false,
-        default: null,
-      }
+export default defineComponent({
+  name: 'FacebookConnected',
+  components: {
+    BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+  },
+  mixins: [],
+  props: {
+    contextPsFacebook: {
+      type: Object,
+      required: false,
+      default: null,
     },
-    computed: { },
-    data() {
-      return {
+  },
+  computed: { },
+  data() {
+    return {
 
-      };
-    },
-    methods: { },
-    watch: { },
-    created() {
-    },
-    mounted() {
-    },
-    updated() {
-    },
-  });
+    };
+  },
+  methods: { },
+  watch: { },
+  created() {
+  },
+  mounted() {
+  },
+  updated() {
+  },
+});
 </script>
 
 <style lang="scss" scoped>

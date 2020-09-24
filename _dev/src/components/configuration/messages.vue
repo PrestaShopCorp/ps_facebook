@@ -33,8 +33,12 @@
     >
       <p>
         {{ $t('configuration.messages.syncCatalogAdvice') }}
-        <br />
-        <b-button variant="primary" class="mt-2" @click="onSyncCatalogAdviceClick">
+        <br>
+        <b-button
+          variant="primary"
+          class="mt-2"
+          @click="onSyncCatalogAdviceClick"
+        >
           {{ $t('configuration.messages.syncCatalogButton') }}
         </b-button>
       </p>
@@ -43,29 +47,29 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@vue/composition-api';
-  import { BAlert, BButton } from 'bootstrap-vue';
+import {defineComponent} from '@vue/composition-api';
+import {BAlert, BButton} from 'bootstrap-vue';
 
-  export default defineComponent({
-    name: 'Messages',
-    components: { BAlert, BButton },
-    mixins: [],
-    props: {
-      showOnboardSucceeded: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
-      showSyncCatalogAdvice: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
+export default defineComponent({
+  name: 'Messages',
+  components: {BAlert, BButton},
+  mixins: [],
+  props: {
+    showOnboardSucceeded: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
-    methods: {
-      onSyncCatalogAdviceClick() {
-        this.$emit('onSyncCatalogAdviceClick');
-      }
+    showSyncCatalogAdvice: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
-  });
+  },
+  methods: {
+    onSyncCatalogAdviceClick() {
+      this.$emit('onSyncCatalogAdviceClick');
+    },
+  },
+});
 </script>
