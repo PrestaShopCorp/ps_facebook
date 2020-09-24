@@ -29,7 +29,7 @@ class OrderConfirmationEvent extends AbstractEvent
         /** @var Order $order */
         $order = $params['order'];
         $langId = $this->toolsAdapter->getValue('id_lang');
-        $currency = new \Currency($order->id_currency);
+        $currencyIsoCode = $this->context->currency->iso_code;
         $user = $this->createSdkUserData($this->context);
 
         $contents = [];
@@ -46,7 +46,7 @@ class OrderConfirmationEvent extends AbstractEvent
             $contents[] = $content;
         }
         $customData = (new CustomData())
-            ->setCurrency($currency->iso_code)
+            ->setCurrency($currencyIsoCode)
             ->setValue($order->total_paid)
             ->setContents($contents);
 
