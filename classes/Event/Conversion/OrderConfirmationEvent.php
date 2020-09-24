@@ -45,6 +45,7 @@ class OrderConfirmationEvent extends AbstractEvent
 
             $contents[] = $content;
         }
+
         $customData = (new CustomData())
             ->setCurrency($currencyIsoCode)
             ->setValue($order->total_paid)
