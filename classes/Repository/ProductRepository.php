@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Db;
 use PrestaShopException;
-use PrestaShopObjectNotFoundException;
 
 class ProductRepository
 {
