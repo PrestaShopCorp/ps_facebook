@@ -56,6 +56,7 @@ class Ps_facebook extends Module
         'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
         'actionObjectCustomerMessageAddAfter',
         'displayFooter',
+        'actionNewsletterRegistrationAfter',
     ];
 
     const CONFIGURATION_LIST = [
@@ -274,6 +275,13 @@ class Ps_facebook extends Module
     }
 
     public function hookDisplayOrderConfirmation(array $params)
+    {
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookActionNewsletterRegistrationAfter(array $params)
     {
         $this->eventDispatcher->dispatch(__FUNCTION__, $params);
 
