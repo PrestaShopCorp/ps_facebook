@@ -24,8 +24,29 @@
       </h3>
     </template>
     <b-card-body>
-      TODO
-      + button qui declenche onFbeOnboardClick
+      {{ $t('configuration.facebook.notConnected.intro') }}
+    </b-card-body>
+    <b-card-body class="pt-0">
+
+      <b-button variant="primary" class="float-right ml-4" @click="onFbeOnboardClick">
+        {{ $t('configuration.facebook.notConnected.connectButton') }}
+      </b-button>
+
+      <div class="logo mr-3">
+        <img :src="facebookLogo" alt="colors" />
+      </div>
+
+      <div class="description pr-2">
+        <div>
+          {{ $t('configuration.facebook.notConnected.description') }}
+          <br />
+          <p
+            class="facebook-not-connected-details small-text text-muted"
+            v-html="$t('configuration.facebook.notConnected.details')"
+          />
+        </div>
+      </div>
+
     </b-card-body>
   </b-card>
 </template>
@@ -33,16 +54,14 @@
 <script lang="ts">
   import { defineComponent } from '@vue/composition-api';
   import { BCard, BCardBody } from 'bootstrap-vue';
+  import facebookLogo from '../../assets/facebook_logo.svg';
 
   export default defineComponent({
     name: 'FacebookNotConnected',
     components: { BCard, BCardBody },
-    mixins: [],
-    props: { },
-    computed: { },
     data() {
       return {
-
+        facebookLogo
       };
     },
     methods: {
@@ -50,16 +69,31 @@
         this.$emit('onFbeOnboardClick');
       }
     },
-    watch: { },
-    created() {
-    },
-    mounted() {
-    },
-    updated() {
-    },
   });
 </script>
 
 <style lang="scss" scoped>
+  .logo {
+    float: left;
+    display: block;
+  }
 
+  .description {
+    display: table-cell;
+  }
+</style>
+<style lang="scss">
+  .facebook-not-connected-details {
+    margin-top: 0.8em;
+    margin-bottom: 0;
+
+    > ul {
+      margin-bottom: 0;
+      padding-inline-start: 1.6rem;
+
+      > li {
+        padding-left: 0.8rem;
+      }
+    }
+  }
 </style>

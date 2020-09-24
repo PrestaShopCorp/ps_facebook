@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <defs>
+        <polygon id="path-1" points="0.002578125 0.00171875 44 0.00171875 44 43.7327344 0.002578125 43.7327344"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Configuration---PS-Account" transform="translate(-245.000000, -706.000000)">
+            <g id="fbe" transform="translate(225.000000, 641.000000)">
+                <g id="Group-3" transform="translate(20.000000, 65.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <path d="M44,22 C44,9.84972656 34.1502734,0 22,0 C9.84972656,0 0,9.84972656 0,22 C0,32.9808359 8.04508203,42.0823047 18.5625,43.7327344 L18.5625,28.359375 L12.9765625,28.359375 L12.9765625,22 L18.5625,22 L18.5625,17.153125 C18.5625,11.639375 21.8469453,8.59375 26.8722266,8.59375 C29.279207,8.59375 31.796875,9.0234375 31.796875,9.0234375 L31.796875,14.4375 L29.0227266,14.4375 C26.2897852,14.4375 25.4375,16.1333477 25.4375,17.8731523 L25.4375,22 L31.5390625,22 L30.5636719,28.359375 L25.4375,28.359375 L25.4375,43.7327344 C35.954918,42.0823047 44,32.9808359 44,22" id="Fill-1" fill="#1877F2" mask="url(#mask-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

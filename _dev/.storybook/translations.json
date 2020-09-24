@@ -9,11 +9,14 @@
         "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
         "syncCatalogButton": "Sync product"
       },
-      "noConfig": {
-        "title": "Connect your store to Facebook"
-      },
       "facebook": {
-        "title": "Connect your store to Facebook"
+        "title": "Connect your store to Facebook",
+        "notConnected": {
+          "intro": "Integrate your shop with Facebook.",
+          "connectButton": "Connect to Facebook",
+          "description": "With Facebook Business Manager, Facebook Page, Facebook Ads account, Facebook Pixel, Instagram Business account and products, you’ll be able to:",
+          "details": "<ul><li>Create catalog <li>Sync your catalog automatically and in real time <li>Create Shop on Facebook Page & Instagram Shopping <li>Add Messenger plugin in your shop <li>Customize your Facebook Page with call-to-action</ul>"
+        }
       }
     }
   }

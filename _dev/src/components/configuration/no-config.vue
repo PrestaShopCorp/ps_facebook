@@ -20,7 +20,7 @@
   <b-card no-body>
     <template v-slot:header>
       <h3 class="d-inline">
-        {{ $t('configuration.noConfig.title') }}
+        {{ $t('configuration.facebook.title') }}
       </h3>
     </template>
   </b-card>
