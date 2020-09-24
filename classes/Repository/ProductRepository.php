@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Db;
 use PrestaShopException;
+use PrestaShopObjectNotFoundException;
 
 class ProductRepository
 {
@@ -28,14 +29,19 @@ class ProductRepository
      */
     public function getIdProductAttributeByIdAttributes($idProduct, $idAttributes, $findBest = false)
     {
-        $idProduct = (int) $idProduct;
+        $idProduct = (int)$idProduct;
 
         if (!is_array($idAttributes) && is_numeric($idAttributes)) {
-            $idAttributes = [(int) $idAttributes];
+            $idAttributes = [(int)$idAttributes];
         }
 
         if (!is_array($idAttributes) || empty($idAttributes)) {
-            throw new PrestaShopException(sprintf('Invalid parameter $idAttributes with value: "%s"', print_r($idAttributes, true)));
+            throw new PrestaShopException(
+                sprintf(
+                    'Invalid parameter $idAttributes with value: "%s"',
+                    print_r($idAttributes, true)
+                )
+            );
         }
 
         $idAttributesImploded = implode(',', array_map('intval', $idAttributes));
@@ -86,7 +92,7 @@ class ProductRepository
                         `' . _DB_PREFIX_ . 'product_attribute_combination` pac
                         INNER JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.id_product_attribute = pac.id_product_attribute
                     WHERE
-                        pa.id_product = ' . (int) $idProduct . '
+                        pa.id_product = ' . (int)$idProduct . '
                         AND pac.id_attribute IN (' . implode(',', array_map('intval', $orderred)) . ')
                     GROUP BY
                         pac.id_product_attribute
@@ -97,9 +103,9 @@ class ProductRepository
         }
 
         if (empty($idProductAttribute)) {
-            throw new PrestaShopException('Can not retrieve the id_product_attribute');
+            throw new PrestaShopObjectNotFoundException('Can not retrieve the id_product_attribute');
         }
 
-        return (int) $idProductAttribute;
+        return $idProductAttribute;
     }
 }
