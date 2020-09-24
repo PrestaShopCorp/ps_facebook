@@ -7,16 +7,31 @@ use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
+use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use Product;
 
 class AddToCartEvent extends AbstractEvent
 {
+    /**
+     * @var ToolsAdapter
+     */
     private $toolsAdapter;
 
-    public function __construct(Context $context, $pixelId, ToolsAdapter $toolsAdapter)
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    public function __construct(
+        Context $context,
+        $pixelId,
+        ToolsAdapter $toolsAdapter,
+        ProductRepository $productRepository
+    )
     {
         parent::__construct($context, $pixelId);
         $this->toolsAdapter = $toolsAdapter;
+        $this->productRepository = $productRepository;
     }
 
     public function send($params)
@@ -30,7 +45,7 @@ class AddToCartEvent extends AbstractEvent
         $attributeGroups = $this->toolsAdapter->getValue('group');
 
         if ($attributeGroups) {
-            $idProductAttribute = Product::getIdProductAttributeByIdAttributes(
+            $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
                 $idProduct,
                 $attributeGroups
             );
