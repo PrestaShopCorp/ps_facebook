@@ -27,8 +27,7 @@ class AddToCartEvent extends AbstractEvent
         $pixelId,
         ToolsAdapter $toolsAdapter,
         ProductRepository $productRepository
-    )
-    {
+    ) {
         parent::__construct($context, $pixelId);
         $this->toolsAdapter = $toolsAdapter;
         $this->productRepository = $productRepository;
