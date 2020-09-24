@@ -71,6 +71,10 @@ class ApiConversionHandler
                 (new ContactEvent($this->context, $pixelId))
                     ->send($params);
                 break;
+            case 'hookActionObjectCustomerMessageAddAfter':
+                (new ContactEvent($this->context, $pixelId))
+                    ->send($params);
+                break;
             case 'hookDisplayPersonalInformationTop':
                 (new FirstCheckoutStepEvent($this->context, $pixelId, new ToolsAdapter()))
                     ->send($params);
