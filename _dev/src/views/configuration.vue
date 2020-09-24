@@ -18,19 +18,48 @@
  *-->
 <template>
   <div id="configuration">
-    <PsAccounts class="m-4" />
+    <introduction v-if="showIntroduction" @onHide="showIntroduction = false" class="m-4" />
+    <template v-else>
+      <messages :showOnboardSucceeded="true" :showSyncCatalogAdvice="true" class="m-4" />
+      <ps-accounts class="m-4" />
+      <no-config class="m-4" />
+    </template>
   </div>
 </template>
 
 <script>
-import { PsAccounts } from 'prestashop_accounts_vue_components';
+  import { defineComponent } from '@vue/composition-api';
+  import { PsAccounts } from 'prestashop_accounts_vue_components';
+  import Introduction from '../components/configuration/introduction.vue';
+  import Messages from '../components/configuration/messages.vue';
+  import NoConfig from '../components/configuration/no-config.vue';
 
-export default {
-  name: 'Configuration',
-  components: {
-    PsAccounts,
-  },
-};
+  export default defineComponent({
+    name: 'Configuration',
+    components: {
+      Introduction,
+      Messages,
+      PsAccounts,
+      NoConfig,
+    },
+    mixins: [],
+    props: { },
+    computed: { },
+    data() {
+      return {
+        showIntroduction: true,
+      };
+    },
+    methods: {
+    },
+    watch: { },
+    created() {
+    },
+    mounted() {
+    },
+    updated() {
+    },
+  });
 </script>
 
 <style lang="scss" scoped>

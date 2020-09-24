@@ -19,13 +19,17 @@
 <template>
   <div>
     - Introduction TODO
+    <b-button @click="onHide">Hey !</b-button>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
+  import { defineComponent } from '@vue/composition-api';
+  import { BButton } from 'bootstrap-vue';
+
+  export default defineComponent({
     name: 'Introduction',
-    components: { },
+    components: { BButton },
     mixins: [],
     props: { },
     computed: { },
@@ -34,7 +38,11 @@
 
       };
     },
-    methods: { },
+    methods: {
+      onHide() {
+        this.$emit('onHide');
+      }
+    },
     watch: { },
     created() {
     },
@@ -42,7 +50,7 @@
     },
     updated() {
     },
-  };
+  });
 </script>
 
 <style lang="scss" scoped>

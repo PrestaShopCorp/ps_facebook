@@ -23,7 +23,9 @@
 </template>
 
 <script lang="ts">
-  export default {
+  import { defineComponent } from '@vue/composition-api';
+
+  export default defineComponent({
     name: 'NoConfig',
     components: { },
     mixins: [],
@@ -42,7 +44,7 @@
     },
     updated() {
     },
-  };
+  });
 </script>
 
 <style lang="scss" scoped>

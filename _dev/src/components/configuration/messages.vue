@@ -20,21 +20,22 @@
   <div>
     - Messages TODO
     <b-alert
-      variant="danger"
+      variant="success"
       dismissible
-      :show="true"
+      :show="showOnboardSucceeded"
     >
       <p>
-        {{ $t('pouet') }}
+        {{ $t('onboard succeeded') }}
       </p>
     </b-alert>
   </div>
 </template>
 
 <script lang="ts">
+  import { defineComponent } from '@vue/composition-api';
   import { BAlert } from 'bootstrap-vue';
 
-  export default {
+  export default defineComponent({
     name: 'Messages',
     components: { BAlert },
     mixins: [],
@@ -64,7 +65,7 @@
     },
     updated() {
     },
-  };
+  });
 </script>
 
 <style lang="scss" scoped>
