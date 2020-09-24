@@ -7,6 +7,7 @@ use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\AddToCartEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Conversion\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\SearchEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ShopSubscriptionEvent;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
@@ -43,7 +44,8 @@ class ApiConversionHandler
         // TODO: add logic to handle different event
         switch ($eventName) {
             case 'hookActionSearch':
-                (new SearchEvent($this->context, $pixelId))->send($params);
+                (new SearchEvent($this->context, $pixelId))
+                    ->send($params);
                 break;
             case 'hookActionCartSave':
                 (new AddToCartEvent($this->context, $pixelId, new ToolsAdapter(), new ProductRepository()))
@@ -51,6 +53,10 @@ class ApiConversionHandler
                 break;
             case 'hookActionNewsletterRegistrationAfter':
                 (new ShopSubscriptionEvent($this->context, $pixelId))
+                    ->send($params);
+                break;
+            case 'hookDisplayOrderConfirmation':
+                (new OrderConfirmationEvent($this->context, $pixelId, new ToolsAdapter()))
                     ->send($params);
                 break;
             case 'hookDisplayHeader':
