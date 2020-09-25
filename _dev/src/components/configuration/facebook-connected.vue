@@ -22,7 +22,7 @@
     <template v-slot:header>
       <a
         @click="fold"
-        href="javascript:void();"
+        href="javascript:void(0);"
         class="float-right tooltip-link"
       >
         <i v-if="folded" class="material-icons fixed-size-small float-right">expand_more</i>
@@ -45,48 +45,102 @@
 
     <b-card-body v-if="!folded">
       <b-button
-        variant=""
+        variant="outline-secondary"
+        @click="edit"
         class="float-right ml-4"
       >
-        TODO
+        {{ $t('configuration.facebook.connected.editButton') }}
       </b-button>
 
       <div class="logo mr-3">
-        <img
-          :src="facebookLogo"
-          alt="colors"
-        >
+        <img :src="facebookLogo" alt="colors" />
       </div>
 
-      <div class="description pr-2">
+      <div v-if="!!contextPsFacebook" class="description pr-2">
         <div>
           {{ $t('configuration.facebook.connected.description') }}
           <br>
-          <strong>
-            EMAIL TODO
-          </strong>
+          <div class="font-weight-bold text-break text-truncate" v-if="!!contextPsFacebook.email">
+            {{ contextPsFacebook.email }}
+          </div>
         </div>
       </div>
-
-      TODO
     </b-card-body>
 
+    <b-card-body v-if="!folded" class="py-0 px-1">
+      <b-container fluid>
+        <b-row align-v="stretch">
+          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+            <facebook-app
+              :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
+              :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
+              :app-name="contextPsFacebook.facebookBusinessManager.name"
+              :email="contextPsFacebook.facebookBusinessManager.email"
+              :created-at="contextPsFacebook.facebookBusinessManager.createdAt"
+            />
+          </b-col>
+          <div class="w-100 d-block d-sm-none" />
+          <div class="w-100 d-none d-sm-block d-md-none" />
+          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+            <facebook-app
+              :app-type="$t('configuration.facebook.connected.facebookPixel')"
+              :tooltip="$t('configuration.facebook.connected.facebookPixelTooltip')"
+              :app-name="contextPsFacebook.pixel.name"
+              :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
+              :last-active="Date.now()"
+              :activation-switch="contextPsFacebook.pixel.activated"
+              @onActivation="pixelActivation"
+            />
+          </b-col>
+          <div class="w-100" />
+          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+            <facebook-app
+              :app-type="$t('configuration.facebook.connected.facebookPage')"
+              :tooltip="$t('configuration.facebook.connected.facebookPageTooltip')"
+              :app-name="contextPsFacebook.page.name"
+              :likes="contextPsFacebook.page.likes"
+              :logo="contextPsFacebook.page.logo"
+            />
+          </b-col>
+          <div class="w-100 d-block d-sm-none" />
+          <div class="w-100 d-none d-sm-block d-md-none" />
+          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+            <facebook-app
+              :app-type="$t('configuration.facebook.connected.facebookAds')"
+              :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"
+              :app-name="contextPsFacebook.ads.name"
+              :email="contextPsFacebook.ads.email"
+              :created-at="contextPsFacebook.ads.createdAt"
+            />
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-card-body>
   </b-card>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {
-  BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+  BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill, BContainer, BRow, BCol,
 } from 'bootstrap-vue';
+import FacebookApp from './facebook-app.vue';
 import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
   name: 'FacebookConnected',
   components: {
-    BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+    BCard,
+    BButton,
+    BCardBody,
+    BIconstack,
+    BIconCheck,
+    BIconCircleFill,
+    FacebookApp,
+    BContainer,
+    BRow,
+    BCol,
   },
-  mixins: [],
   props: {
     contextPsFacebook: {
       type: Object,
@@ -99,7 +153,6 @@ export default defineComponent({
       default: false,
     },
   },
-  computed: { },
   data() {
     return {
       facebookLogo,
@@ -110,13 +163,12 @@ export default defineComponent({
     fold() {
       this.folded = !this.folded;
     },
-  },
-  watch: { },
-  created() {
-  },
-  mounted() {
-  },
-  updated() {
+    edit() {
+      this.$emit('onEditClick');
+    },
+    pixelActivation(activated: boolean) {
+      this.$emit('onPixelActivation', activated);
+    },
   },
 });
 </script>
@@ -129,5 +181,9 @@ export default defineComponent({
 
   .description {
     display: table-cell;
+
+    div.font-weight-bold {
+      max-width: 30em;
+    }
   }
 </style>

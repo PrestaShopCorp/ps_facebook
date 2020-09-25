@@ -51,6 +51,8 @@
         <facebook-connected
           v-else
           :context-ps-facebook="contextPsFacebook"
+          @onEditClick="onEditClick"
+          @onPixelActivation="onPixelActivation"
           class="m-4"
         />
       </template>
@@ -112,6 +114,12 @@ export default defineComponent({
     },
     onFbeOnboardClick() {
       // TODO !0: launch FBE onboarding
+    },
+    onEditClick() {
+      // TODO !0: RE-launch FBE onboarding
+    },
+    onPixelActivation() {
+      // TODO !0
     },
   },
   watch: { },

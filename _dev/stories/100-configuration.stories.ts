@@ -58,6 +58,27 @@ export const FullConnected: any = Template.bind({});
 FullConnected.args = {
   contextPsAccounts: window.contextPsAccounts,
   contextPsFacebook: {
-    // TODO !0: formaliser
+    email: 'him@prestashop.com',
+    facebookBusinessManager: {
+      name: 'La Fanchonette',
+      email: 'fanchonette@ps.com',
+      createdAt: Date.now(),
+    },
+    pixel: {
+      name: 'La Fanchonette Test Pixel',
+      id: '1234567890',
+      lastActive: Date.now(),
+      activated: true,
+    },
+    page: {
+      name: 'La Fanchonette',
+      likes: 42,
+      logo: null,
+    },
+    ads: {
+      name: 'La Fanchonette',
+      email: 'fanchonette@ps.com',
+      createdAt: Date.now(),
+    },
   },
 };

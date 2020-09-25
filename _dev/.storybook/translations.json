@@ -16,7 +16,27 @@
           "connectButton": "Connect to Facebook",
           "description": "With Facebook Business Manager, Facebook Page, Facebook Ads account, Facebook Pixel, Instagram Business account and products, you’ll be able to:",
           "details": "<ul><li>Create catalog <li>Sync your catalog automatically and in real time <li>Create Shop on Facebook Page & Instagram Shopping <li>Add Messenger plugin in your shop <li>Customize your Facebook Page with call-to-action</ul>"
+        },
+        "connected": {
+          "description": "You authorize this Facebook account to connect to your store:",
+          "editButton": "Edit",
+          "facebookBusinessManager": "Facebook Business Manager",
+          "facebookBusinessManagerTooltip": "Facebook Business Manager",
+          "facebookPixel": "Facebook Pixel",
+          "facebookPixelTooltip": "Facebook Pixel",
+          "facebookPage": "Facebook Page",
+          "facebookPageTooltip": "Facebook Page",
+          "facebookAds": "Facebook Ads",
+          "facebookAdsTooltip": "Facebook Ads"
         }
+      },
+      "app": {
+        "like": "like",
+        "likes": "likes",
+        "createdAt": "Created",
+        "lastActive": "Last active",
+        "activated": "Activated",
+        "disabled": "Disabled"
       }
     }
   }
