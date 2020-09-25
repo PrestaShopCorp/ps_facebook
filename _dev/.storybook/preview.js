@@ -11,7 +11,7 @@ import 'prestakit/dist/css/bootstrap-prestashop-ui-kit.css';
 Vue.use(BootstrapVue, BootstrapVueIcons);
 
 // PsAccounts default mock
-global.contextPsAccounts = {
+window.contextPsAccounts = {
   psIs17: true,
   currentShop: {
     id: 1,

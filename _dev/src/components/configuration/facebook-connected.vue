@@ -18,42 +18,73 @@
  *-->
 <template>
   <b-card no-body>
+
     <template v-slot:header>
+      <a
+        @click="fold"
+        href="javascript:void();"
+        class="float-right tooltip-link"
+      >
+        <i v-if="folded" class="material-icons fixed-size-small float-right">expand_more</i>
+        <i v-else class="material-icons fixed-size-small float-right">expand_less</i>
+      </a>
       <b-iconstack
+        @click="fold"
         font-scale="1.5"
         class="mr-2 align-bottom fixed-size"
         width="20"
         height="20"
       >
-        <b-icon-circle-fill
-          stacked
-          variant="success"
-        />
-        <b-icon-check
-          stacked
-          variant="white"
-        />
+        <b-icon-circle-fill stacked variant="success" />
+        <b-icon-check stacked variant="white" />
       </b-iconstack>
-      <h3 class="d-inline">
+      <h3 @click="fold" class="d-inline">
         {{ $t('configuration.facebook.title') }}
       </h3>
     </template>
-    <b-card-body>
+
+    <b-card-body v-if="!folded">
+      <b-button
+        variant=""
+        class="float-right ml-4"
+      >
+        TODO
+      </b-button>
+
+      <div class="logo mr-3">
+        <img
+          :src="facebookLogo"
+          alt="colors"
+        >
+      </div>
+
+      <div class="description pr-2">
+        <div>
+          {{ $t('configuration.facebook.connected.description') }}
+          <br>
+          <strong>
+            EMAIL TODO
+          </strong>
+        </div>
+      </div>
+
       TODO
     </b-card-body>
+
   </b-card>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {
-  BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+  BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
 } from 'bootstrap-vue';
+import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
   name: 'FacebookConnected',
   components: {
-    BCard, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
+    BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill,
   },
   mixins: [],
   props: {
@@ -62,14 +93,24 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    startExpanded: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: { },
   data() {
     return {
-
+      facebookLogo,
+      folded: !this.startExpanded,
     };
   },
-  methods: { },
+  methods: {
+    fold() {
+      this.folded = !this.folded;
+    },
+  },
   watch: { },
   created() {
   },
@@ -81,5 +122,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .logo {
+    float: left;
+    display: block;
+  }
 
+  .description {
+    display: table-cell;
+  }
 </style>
