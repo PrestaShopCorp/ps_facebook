@@ -26,8 +26,8 @@
 
 namespace PrestaShop\Module\Ps_facebook\Translations;
 
-class PsFacebookTranslations {
-
+class PsFacebookTranslations
+{
     /**
      * @var \Module
      */
@@ -58,7 +58,7 @@ class PsFacebookTranslations {
             'general' => [
                 'tabs' => [
                     'configuration' => $this->module->l('Configuration', 'PsFacebookTranslations'),
-                    'help' => $this->module->l('Help', 'PsFacebookTranslations')
+                    'help' => $this->module->l('Help', 'PsFacebookTranslations'),
                 ],
             ],
         ];

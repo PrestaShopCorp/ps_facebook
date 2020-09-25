@@ -185,7 +185,7 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
-       $this->handleForms();
+        $this->handleForms();
 
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
 
