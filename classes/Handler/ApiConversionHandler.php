@@ -71,7 +71,7 @@ class ApiConversionHandler
                     ->send($params);
                 break;
             case 'hookDisplayHeader':
-                (new ViewContentEvent($this->context, $pixelId))
+                (new ViewContentEvent($this->context, $pixelId, new ToolsAdapter()))
                     ->send($params);
                 break;
 

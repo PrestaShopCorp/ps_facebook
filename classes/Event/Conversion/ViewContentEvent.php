@@ -3,13 +3,26 @@
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
 use Category;
+use Context;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 
 class ViewContentEvent extends AbstractEvent
 {
+    /**
+     * @var ToolsAdapter
+     */
+    private $toolsAdapter;
+
+    public function __construct(Context $context, $pixelId, ToolsAdapter $toolsAdapter)
+    {
+        parent::__construct($context, $pixelId);
+        $this->toolsAdapter = $toolsAdapter;
+    }
+
     public function send($params)
     {
         if (empty($this->pixelId)) {
@@ -114,7 +127,7 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers InitiateCheckout for checkout page
         */
-        if ($page === 'cart') {
+        if ($page === 'cart' && $this->toolsAdapter->getValue('action') === 'show') {
             $type = 'InitiateCheckout';
             $cart = $this->context->cart;
 
@@ -124,10 +137,10 @@ class ViewContentEvent extends AbstractEvent
                 $content = new Content();
                 $content
                     ->setProductId($product['id_product'])
-                    ->setTitle(\Tools::replaceAccentedChars($product['product_name']))
+                    ->setTitle(\Tools::replaceAccentedChars($product['name']))
                     ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
                     ->setItemPrice($product['price'])
-                    ->setQuantity($product['product_quantity'])
+                    ->setQuantity($product['quantity'])
                     ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
 
                 $contents[] = $content;
@@ -150,6 +163,7 @@ class ViewContentEvent extends AbstractEvent
         if (empty($event)) {
             return true;
         }
+
         $request = (new EventRequest($this->pixelId))
             ->setEvents($events);
 

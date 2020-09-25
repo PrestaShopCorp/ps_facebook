@@ -107,7 +107,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         /*
         * Triggers ViewContent for cms pages
         */
-        if ($page === 'cms') {
+        if ($page === 'cms' && \Tools::getValue('action') === 'show') {
             $type = 'ViewCMS';
             $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
