@@ -9,6 +9,8 @@ declare global {
 
     interface Window {
       contextPsAccounts: any;
+      translations: any;
+      i18nSettings: any;
     }
   //   interface IntrinsicElements {
   //     [elem: string]: any;

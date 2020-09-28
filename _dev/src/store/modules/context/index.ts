@@ -19,11 +19,19 @@
 import {Module, VuexModule} from 'vuex-module-decorators';
 
 const {contextPsAccounts} = window || {};
+const {translations} = window || {};
+const {i18nSettings} = window || {};
 const stateContext = contextPsAccounts ? contextPsAccounts.context : {};
+const stateTranslations = translations || {};
+const statei18nSettings = i18nSettings || {};
 
 @Module({namespaced: true})
 export default class ModuleContext extends VuexModule {
   appContext: Record<string, any> = {...stateContext};
+
+  stateTranslations: Record<string, any> = {...stateTranslations};
+
+  statei18nSettings: Record<string, any> = {...statei18nSettings};
 
   get shopDomain() {
     return this.appContext.shop.domain;
