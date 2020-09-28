@@ -22,8 +22,8 @@ class FirstCheckoutStepEvent extends AbstractEvent
 
     public function send($params)
     {
-        $isEditAddress = (bool)$this->toolsAdapter->getValue('editAddress');
-        $isEditAddressCancel = (bool)$this->toolsAdapter->getValue('cancelAddress');
+        $isEditAddress = (bool) $this->toolsAdapter->getValue('editAddress');
+        $isEditAddressCancel = (bool) $this->toolsAdapter->getValue('cancelAddress');
 
         if ($isEditAddress || $isEditAddressCancel) {
             return false;
