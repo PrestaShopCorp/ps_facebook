@@ -27,7 +27,7 @@ const contextPsFacebook = {
 };
 
 const contextPsFacebookOverflows = {
-  email: 'a.very.long.email.should.not.be.a.problem.even.if.this.email.cannot.be.so.long.so.long.so.long@prestashop.com',
+  email: 'a.very.long.email.should.not.be.a.problem.even.if.this.email.cannot.be.so.long@prestashop.com',
   facebookBusinessManager: {
     name: 'La Fanchonette qui s\'étend sur la longueur',
     email: 'fanchonette.a.very.long.email.should.not.be.a.problem.even.if.its.too.long@ps.com',

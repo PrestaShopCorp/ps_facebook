@@ -18,10 +18,8 @@
  *-->
 <template>
   <b-card no-body>
-
-    <template v-slot:header>
+    <b-card-header @click="fold">
       <a
-        @click="fold"
         href="javascript:void(0);"
         class="float-right tooltip-link"
       >
@@ -29,7 +27,6 @@
         <i v-else class="material-icons fixed-size-small float-right">expand_less</i>
       </a>
       <b-iconstack
-        @click="fold"
         font-scale="1.5"
         class="mr-2 align-bottom fixed-size"
         width="20"
@@ -38,33 +35,29 @@
         <b-icon-circle-fill stacked variant="success" />
         <b-icon-check stacked variant="white" />
       </b-iconstack>
-      <h3 @click="fold" class="d-inline">
+      <h3 class="d-inline">
         {{ $t('configuration.facebook.title') }}
       </h3>
-    </template>
+    </b-card-header>
 
-    <b-card-body v-if="!folded">
+    <b-card-body v-if="!folded" class="description">
+      <img class="mr-3" :src="facebookLogo" alt="colors" />
+
+      <div v-if="!!contextPsFacebook">
+        {{ $t('configuration.facebook.connected.description') }}
+        <br>
+        <span class="font-weight-bold" v-if="!!contextPsFacebook.email">
+          {{ contextPsFacebook.email }}
+        </span>
+      </div>
+
       <b-button
         variant="outline-secondary"
         @click="edit"
-        class="float-right ml-4"
+        class="ml-4"
       >
         {{ $t('configuration.facebook.connected.editButton') }}
       </b-button>
-
-      <div class="logo mr-3">
-        <img :src="facebookLogo" alt="colors" />
-      </div>
-
-      <div v-if="!!contextPsFacebook" class="description pr-2">
-        <div>
-          {{ $t('configuration.facebook.connected.description') }}
-          <br>
-          <div class="font-weight-bold text-break text-truncate" v-if="!!contextPsFacebook.email">
-            {{ contextPsFacebook.email }}
-          </div>
-        </div>
-      </div>
     </b-card-body>
 
     <b-card-body v-if="!folded" class="py-0 px-1">
@@ -122,7 +115,16 @@
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {
-  BCard, BButton, BCardBody, BIconstack, BIconCheck, BIconCircleFill, BContainer, BRow, BCol,
+  BCard,
+  BButton,
+  BCardBody,
+  BCardHeader,
+  BIconstack,
+  BIconCheck,
+  BIconCircleFill,
+  BContainer,
+  BRow,
+  BCol,
 } from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 import facebookLogo from '../../assets/facebook_logo.svg';
@@ -140,6 +142,7 @@ export default defineComponent({
     BContainer,
     BRow,
     BCol,
+    BCardHeader,
   },
   props: {
     contextPsFacebook: {
@@ -174,16 +177,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .logo {
-    float: left;
-    display: block;
-  }
-
   .description {
-    display: table-cell;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 
-    div.font-weight-bold {
-      max-width: 30em;
+    > div {
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      > span {
+        word-break: break-word;
+      }
     }
   }
 </style>
