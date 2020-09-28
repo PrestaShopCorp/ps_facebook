@@ -9,6 +9,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\AddToCartEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CompleteRegistrationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ContactEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CustomisationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\FirstCheckoutStepEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\SearchEvent;
@@ -77,6 +78,10 @@ class ApiConversionHandler
                 break;
             case 'hookDisplayPersonalInformationTop':
                 (new FirstCheckoutStepEvent($this->context, $pixelId, new ToolsAdapter()))
+                    ->send($params);
+                break;
+            case 'hookActionBeforeAjaxDieProductControllerdisplayAjaxRefresh':
+                (new CustomisationEvent($this->context, $pixelId, new ToolsAdapter()))
                     ->send($params);
                 break;
             case 'hookDisplayHeader':

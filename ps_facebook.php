@@ -46,6 +46,7 @@ class Ps_facebook extends Module
 
     const FRONT_CONTROLLERS = [
         'FrontAjaxFacebookWebhooks',
+        'FrontAjaxFacebookAjax',
     ];
 
     const HOOK_LIST = [
@@ -61,8 +62,9 @@ class Ps_facebook extends Module
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
-        'actionAdminControllerSetMedia',
         'displayBackOfficeHeader',
+        'actionBeforeAjaxDieProductControllerdisplayAjaxRefresh',
+        'displayPersonalInformationTop',
     ];
 
     const CONFIGURATION_LIST = [
@@ -273,6 +275,13 @@ class Ps_facebook extends Module
             return false;
         }
 
+        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+
+        return $this->templateBuffer->flush();
+    }
+
+    public function hookActionBeforeAjaxDieProductControllerdisplayAjaxRefresh(array $params)
+    {
         $this->eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
