@@ -21,9 +21,9 @@ class Uninstaller
 
     public function uninstall()
     {
-        foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
-            \Configuration::deleteByName((string) $name);
-        }
+//        foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
+//            \Configuration::deleteByName((string) $name);
+//        }
 
         return $this->uninstallTabs();
     }

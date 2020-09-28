@@ -25,7 +25,9 @@ class CustomisationEvent extends AbstractEvent
     public function send($params)
     {
         $idLang = (int) $this->context->language->id;
-        $customData = $this->getCustomAttributeData($idLang);
+        $productId = $params['productId'];
+        $attributeIds = $params['attributeIds'];
+        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
 
         $user = $this->createSdkUserData($this->context);
 
@@ -44,20 +46,19 @@ class CustomisationEvent extends AbstractEvent
         return $request->execute();
     }
 
-    private function getCustomAttributeData($idLang)
+    private function getCustomAttributeData($productId, $idLang, $attributeIds)
     {
-        $attributeIds = $this->toolsAdapter->getValue('group');
-        $quantity = $this->toolsAdapter->getValue('qty');
         $attributes = [];
         foreach ($attributeIds as $attributeId) {
             $attributes[] = (new Attribute($attributeId, $idLang))->name;
         }
 
         return (new CustomData())
+            ->setContentType('product')
+            ->setItemNumber($productId)
             ->setCustomProperties(
                 [
                     'custom attributes' => $attributes,
-                    'quantity' => $quantity,
                 ]
             );
     }

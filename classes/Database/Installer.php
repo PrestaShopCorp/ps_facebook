@@ -28,6 +28,7 @@ class Installer
      */
     public function installConfiguration()
     {
+        return
         $result = true;
 
         foreach (\Shop::getShops(false, null, true) as $shopId) {
