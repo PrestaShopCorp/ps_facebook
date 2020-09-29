@@ -138,7 +138,6 @@ class Ps_facebook extends Module
         );
         $this->templateBuffer = new TemplateBuffer();
         $this->eventDispatcher = new EventDispatcher($this);
-//        $this->registerHook('actionbeforesubmitaccount');
 
         $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
         $dotenv->load();
