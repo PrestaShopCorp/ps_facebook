@@ -2,7 +2,22 @@
   "en": {
     "configuration": {
       "introduction": {
-        "getStarted": "Get started"
+        "getStarted": "Get started",
+        "subTitle": "Build your business presence into Facebook community easily and quickly!",
+        "proPoints": "<ul><li>No credit card required <li>Easy setup <li>Cancel anytime</ul>",
+        "resume": "Make your first steps with PrestaShop Facebook!",
+        "proPoint1Title": "Manage your business",
+        "proPoint1Description": "Control your ad settings and business tools \nfrom one place.",
+        "proPoint2Title": "Manage your ad account",
+        "proPoint2Description": "Choose the account where you store ad payment information for your business.",
+        "proPoint3Title": "Understand your traffic",
+        "proPoint3Description": "Use data from Facebook Pixel* to understand actions people take on your website.",
+        "proPoint4Title": "Build and manage inventory",
+        "proPoint4Description": "Manage your product catalog and \nunlock the power of ads.",
+        "proPoint5Title": "Reach more people",
+        "proPoint5Description": "Help people find your products on Instagram \nand Facebook.",
+        "needMoreFeatures": "Need more features?",
+        "seeDetailedPlans": "See detailed plans"
       },
       "messages": {
         "success": "PrestaShop Facebook is now activated!",

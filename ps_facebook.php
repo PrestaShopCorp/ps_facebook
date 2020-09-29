@@ -199,6 +199,30 @@ class Ps_facebook extends Module
 
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
+            'contextPsFacebook' => [
+                /* 'email' => 'him@prestashop.com',
+                'facebookBusinessManager' => [
+                  'name' => 'La Fanchonette',
+                  'email' => 'fanchonette@ps.com',
+                  'createdAt' => 1601283877000
+                ],
+                'pixel' => [
+                  'name' => 'La Fanchonette Test Pixel',
+                  'id' => '1234567890',
+                  'lastActive' => 1601283877000,
+                  'activated' => true
+                ],
+                'page' => [
+                  'name' => 'La Fanchonette',
+                  'likes' => 42,
+                  'logo' => null
+                ],
+                'ads' => [
+                  'name' => 'La Fanchonette',
+                  'email' => 'fanchonette@ps.com',
+                  'createdAt' => 1601283877000
+                ] */
+            ], // TODO !1: need to fill this object !
             'i18n' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,

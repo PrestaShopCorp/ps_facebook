@@ -89,7 +89,7 @@ export default defineComponent({
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: null, // TODO !0: aller le chercher par defaut !
+      default: () => global.contextPsFacebook,
     },
   },
   computed: {
@@ -116,19 +116,13 @@ export default defineComponent({
       // TODO !0: launch FBE onboarding
     },
     onEditClick() {
-      // TODO !0: RE-launch FBE onboarding
+      // TODO !0: RE-launch FBE onboarding ?
     },
     onPixelActivation() {
       // TODO !0
     },
   },
-  watch: { },
-  created() {
-  },
-  mounted() {
-  },
-  updated() {
-  },
+  watch: { }, // TODO !1: does the props.contextPsFacebook can change in time?
 });
 </script>
 
