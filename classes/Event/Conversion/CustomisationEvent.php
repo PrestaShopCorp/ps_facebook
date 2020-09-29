@@ -8,7 +8,6 @@ use FacebookAds\Object\ServerSide\EventRequest;
 
 class CustomisationEvent extends AbstractEvent
 {
-
     public function send($params)
     {
         $idLang = (int) $this->context->language->id;
