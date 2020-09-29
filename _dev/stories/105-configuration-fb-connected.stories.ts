@@ -1,5 +1,6 @@
 import FacebookConnected from '../src/components/configuration/facebook-connected.vue';
-import facebookLogo from '../../_dev/src/assets/facebook_logo.svg';
+// @ts-ignore
+import facebookLogo from '../src/assets/facebook_logo.svg';
 
 const contextPsFacebook = {
   email: 'him@prestashop.com',
