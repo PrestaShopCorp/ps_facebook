@@ -2,7 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
+use Cart;
+use Category;
 use Context;
+use FacebookAds\Object\ServerSide\Content;
+use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
@@ -30,10 +34,21 @@ class FirstCheckoutStepEvent extends AbstractEvent
         }
 
         $user = $this->createSdkUserData($this->context);
+        $cart = $this->context->cart;
+        $idLang = (int) $this->context->language->id;
+        $currency_iso_code = $this->context->currency->iso_code;
+
+        $contents = $this->getProductContent($cart, $idLang);
+
+        $customData = (new CustomData())
+            ->setContents($contents)
+            ->setValue($cart->getOrderTotal(false))
+            ->setCurrency($currency_iso_code);
 
         $event = (new Event())
             ->setEventName('InitiateCheckout')
             ->setEventTime(time())
+            ->setCustomData($customData)
             ->setUserData($user);
 
         $events = [];
@@ -43,5 +58,29 @@ class FirstCheckoutStepEvent extends AbstractEvent
             ->setEvents($events);
 
         return $request->execute();
+    }
+
+    /**
+     * @param Cart $cart
+     * @param $idLang
+     *
+     * @return Content[]
+     */
+    private function getProductContent(Cart $cart, $idLang)
+    {
+        foreach ($cart->getProducts() as $product) {
+            $content = new Content();
+            $content
+                ->setProductId($product['id_product'])
+                ->setTitle(\Tools::replaceAccentedChars($product['name']))
+                ->setCategory((new Category($product['id_category_default']))->getName($idLang))
+                ->setItemPrice($product['price'])
+                ->setQuantity($product['quantity'])
+                ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
+
+            $contents[] = $content;
+        }
+
+        return $contents;
     }
 }
