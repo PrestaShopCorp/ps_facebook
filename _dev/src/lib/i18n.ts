@@ -21,11 +21,12 @@ import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
 
-const {contextPsAccounts} = global;
-const locale = contextPsAccounts.context.i18n.isoCode
-  ? contextPsAccounts.context.i18n.isoCode
-  : '';
+const {translations} = window;
+const {i18nSettings} = window;
+const locale = i18nSettings.isoCode ? i18nSettings.isoCode : '';
+const messages = Object.assign(translations, {}, {});
 
 export default new VueI18n({
   locale,
+  messages,
 });
