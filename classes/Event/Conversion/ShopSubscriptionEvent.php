@@ -15,7 +15,7 @@ class ShopSubscriptionEvent extends AbstractEvent
             ->setContentName(pSQL($params['email']));
 
         $event = (new Event())
-            ->setEventName('ShopSubscription')
+            ->setEventName('Subscribe')
             ->setEventTime(time())
             ->setUserData($user)
             ->setCustomData($customData);
