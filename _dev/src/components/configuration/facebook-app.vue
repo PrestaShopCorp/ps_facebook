@@ -28,33 +28,67 @@
         variant="primary"
       />
     </div>
-    <img v-if="!!logo" :src="logo" alt="app logo" class="logo float-left mr-2 my-1" />
-    <div class="font-weight-bold text-truncate">{{ appName }}</div>
+    <img
+      v-if="!!logo"
+      :src="logo"
+      alt="app logo"
+      class="logo float-left mr-2 my-1"
+    >
+    <div class="font-weight-bold text-truncate">
+      {{ appName }}
+    </div>
 
-    <div v-if="activationSwitch != null" class="float-right mb-3 mt-2 ml-2">
+    <div
+      v-if="activationSwitch != null"
+      class="float-right mb-3 mt-2 ml-2"
+    >
       {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
-      <div class="switch-input switch-input-lg ml-1"
-           :class="switchActivated ? '-checked' : null"
-           @click="switchClick">
-        <input class="switch-input-lg" type="checkbox" :checked="switchActivated">
+      <div
+        class="switch-input switch-input-lg ml-1"
+        :class="switchActivated ? '-checked' : null"
+        @click="switchClick"
+      >
+        <input
+          class="switch-input-lg"
+          type="checkbox"
+          :checked="switchActivated"
+        >
       </div>
     </div>
 
-    <div v-if="!!email" class="small text-truncate">{{ email }}</div>
-    <div v-if="!!appId" class="small text-truncate">{{ appId }}</div>
-    <div v-if="!!likes" class="small">
+    <div
+      v-if="!!email"
+      class="small text-truncate"
+    >
+      {{ email }}
+    </div>
+    <div
+      v-if="!!appId"
+      class="small text-truncate"
+    >
+      {{ appId }}
+    </div>
+    <div
+      v-if="!!likes"
+      class="small"
+    >
       {{ likes }}
       {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
     </div>
-    <div v-if="!!createdAt" class="small">
+    <div
+      v-if="!!createdAt"
+      class="small"
+    >
       {{ $t('configuration.app.createdAt') }}
       {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
     </div>
-    <div v-if="!!lastActive" class="small">
+    <div
+      v-if="!!lastActive"
+      class="small"
+    >
       {{ $t('configuration.app.lastActive') }}
       {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
     </div>
-
   </div>
 </template>
 

@@ -23,8 +23,14 @@
         href="javascript:void(0);"
         class="float-right tooltip-link"
       >
-        <i v-if="folded" class="material-icons fixed-size-small float-right">expand_more</i>
-        <i v-else class="material-icons fixed-size-small float-right">expand_less</i>
+        <i
+          v-if="folded"
+          class="material-icons fixed-size-small float-right"
+        >expand_more</i>
+        <i
+          v-else
+          class="material-icons fixed-size-small float-right"
+        >expand_less</i>
       </a>
       <b-iconstack
         font-scale="1.5"
@@ -32,21 +38,37 @@
         width="20"
         height="20"
       >
-        <b-icon-circle-fill stacked variant="success" />
-        <b-icon-check stacked variant="white" />
+        <b-icon-circle-fill
+          stacked
+          variant="success"
+        />
+        <b-icon-check
+          stacked
+          variant="white"
+        />
       </b-iconstack>
       <h3 class="d-inline">
         {{ $t('configuration.facebook.title') }}
       </h3>
     </b-card-header>
 
-    <b-card-body v-if="!folded" class="description">
-      <img class="mr-3" :src="facebookLogo" alt="colors" />
+    <b-card-body
+      v-if="!folded"
+      class="description"
+    >
+      <img
+        class="mr-3"
+        :src="facebookLogo"
+        alt="colors"
+      >
 
       <div v-if="!!contextPsFacebook">
         {{ $t('configuration.facebook.connected.description') }}
         <br>
-        <span class="font-weight-bold" v-if="!!contextPsFacebook.email">
+        <span
+          class="font-weight-bold"
+          v-if="!!contextPsFacebook.email"
+        >
           {{ contextPsFacebook.email }}
         </span>
       </div>
@@ -60,10 +82,18 @@
       </b-button>
     </b-card-body>
 
-    <b-card-body v-if="!folded" class="py-0 px-1">
+    <b-card-body
+      v-if="!folded"
+      class="py-0 px-1"
+    >
       <b-container fluid>
         <b-row align-v="stretch">
-          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+          <b-col
+            lg="6"
+            md="6"
+            sm="12"
+            class="app pb-3 px-2"
+          >
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
               :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
@@ -74,7 +104,12 @@
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <div class="w-100 d-none d-sm-block d-md-none" />
-          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+          <b-col
+            lg="6"
+            md="6"
+            sm="12"
+            class="app pb-3 px-2"
+          >
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookPixel')"
               :tooltip="$t('configuration.facebook.connected.facebookPixelTooltip')"
@@ -86,7 +121,12 @@
             />
           </b-col>
           <div class="w-100" />
-          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+          <b-col
+            lg="6"
+            md="6"
+            sm="12"
+            class="app pb-3 px-2"
+          >
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookPage')"
               :tooltip="$t('configuration.facebook.connected.facebookPageTooltip')"
@@ -97,7 +137,12 @@
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <div class="w-100 d-none d-sm-block d-md-none" />
-          <b-col lg="6" md="6" sm="12" class="app pb-3 px-2">
+          <b-col
+            lg="6"
+            md="6"
+            sm="12"
+            class="app pb-3 px-2"
+          >
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookAds')"
               :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"

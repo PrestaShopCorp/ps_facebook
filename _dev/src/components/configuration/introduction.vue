@@ -19,25 +19,49 @@
 <template>
   <b-card class="introductionCard">
     <div class="illustration float-right d-none d-md-block">
-      <img  :src="illustration" width="271" height="194" alt="background illustration" />
+      <img
+        :src="illustration"
+        width="271"
+        height="194"
+        alt="background illustration"
+      >
     </div>
 
     <div class="p-3">
       <div class="titleRow">
-        <img class="mr-3 mb-3 float-left" :src="facebook" width="56" height="56" alt="PS Facebook logo" />
+        <img
+          class="mr-3 mb-3 float-left"
+          :src="facebook"
+          width="56"
+          height="56"
+          alt="PS Facebook logo"
+        >
         <h1>PrestaShop <span class="ml-1 text-muted">Facebook</span></h1>
         <h2>{{ $t('configuration.introduction.subTitle') }}</h2>
       </div>
 
-      <b-button class="mb-2 mt-1" variant="primary" @click="onHide">
+      <b-button
+        class="mb-2 mt-1"
+        variant="primary"
+        @click="onHide"
+      >
         {{ $t('configuration.introduction.getStarted') }}
       </b-button>
 
-      <div class="text-muted small-text proPoints" v-html="$t('configuration.introduction.proPoints')" />
-      <hr />
+      <div
+        class="text-muted small-text proPoints"
+        v-html="$t('configuration.introduction.proPoints')"
+      />
+      <hr>
 
       <div class="potatoe">
-        <img class="mx-4 mt-2 mb-4 d-none d-md-block" :src="potatoe" width="192" height="128" alt="A potatoe" />
+        <img
+          class="mx-4 mt-2 mb-4 d-none d-md-block"
+          :src="potatoe"
+          width="192"
+          height="128"
+          alt="A potatoe"
+        >
         <div>
           <h1>{{ $t('configuration.introduction.proPoint1Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint1Description') }}</p>
@@ -45,7 +69,13 @@
       </div>
 
       <div class="potatoe">
-        <img class="mx-4 mt-2 mb-4 d-none d-md-block" :src="potatoe" width="192" height="128" alt="A potatoe" />
+        <img
+          class="mx-4 mt-2 mb-4 d-none d-md-block"
+          :src="potatoe"
+          width="192"
+          height="128"
+          alt="A potatoe"
+        >
         <div>
           <h1>{{ $t('configuration.introduction.proPoint2Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint2Description') }}</p>
@@ -53,7 +83,13 @@
       </div>
 
       <div class="potatoe">
-        <img class="mx-4 mt-2 mb-4 d-none d-md-block" :src="potatoe" width="192" height="128" alt="A potatoe" />
+        <img
+          class="mx-4 mt-2 mb-4 d-none d-md-block"
+          :src="potatoe"
+          width="192"
+          height="128"
+          alt="A potatoe"
+        >
         <div>
           <h1>{{ $t('configuration.introduction.proPoint3Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint3Description') }}</p>
@@ -61,7 +97,13 @@
       </div>
 
       <div class="potatoe">
-        <img class="mx-4 mt-2 mb-4 d-none d-md-block" :src="potatoe" width="192" height="128" alt="A potatoe" />
+        <img
+          class="mx-4 mt-2 mb-4 d-none d-md-block"
+          :src="potatoe"
+          width="192"
+          height="128"
+          alt="A potatoe"
+        >
         <div>
           <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
@@ -69,7 +111,13 @@
       </div>
 
       <div class="potatoe">
-        <img class="mx-4 mt-2 mb-4 d-none d-md-block" :src="potatoe" width="192" height="128" alt="A potatoe" />
+        <img
+          class="mx-4 mt-2 mb-4 d-none d-md-block"
+          :src="potatoe"
+          width="192"
+          height="128"
+          alt="A potatoe"
+        >
         <div>
           <h1>{{ $t('configuration.introduction.proPoint5Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint5Description') }}</p>
@@ -77,14 +125,20 @@
       </div>
 
       {{ $t('configuration.introduction.needMoreFeatures') }}
-      <a href="javascript:void(0);" class="font-weight-bold">
+      <a
+        href="javascript:void(0);"
+        class="font-weight-bold"
+      >
         {{ $t('configuration.introduction.seeDetailedPlans') }}
       </a>
 
-      <hr />
+      <hr>
       <div class="text-center">
         <p>{{ $t('configuration.introduction.resume') }}</p>
-        <b-button variant="primary" @click="onHide">
+        <b-button
+          variant="primary"
+          @click="onHide"
+        >
           {{ $t('configuration.introduction.getStarted') }}
         </b-button>
       </div>

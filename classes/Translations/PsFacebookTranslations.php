@@ -113,7 +113,7 @@ class PsFacebookTranslations
                     'lastActive' => $this->module->l('ConfigurationAppLastActive', 'PsFacebookTranslations'),
                     'activated' => $this->module->l('ConfigurationAppActivated', 'PsFacebookTranslations'),
                     'disabled' => $this->module->l('ConfigurationAppDisabled', 'PsFacebookTranslations'),
-                ]
+                ],
             ],
         ];
 
