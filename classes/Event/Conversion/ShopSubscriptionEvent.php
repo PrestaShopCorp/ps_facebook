@@ -6,17 +6,16 @@ use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 
-class SearchEvent extends AbstractEvent
+class ShopSubscriptionEvent extends AbstractEvent
 {
     public function send($params)
     {
         $user = $this->createSdkUserData($this->context);
         $customData = (new CustomData())
-            ->setSearchString(pSQL($params['searched_query']))
-            ->setItemNumber(pSQL($params['total']));
+            ->setContentName(pSQL($params['email']));
 
         $event = (new Event())
-            ->setEventName('Search')
+            ->setEventName('ShopSubscription')
             ->setEventTime(time())
             ->setUserData($user)
             ->setCustomData($customData);

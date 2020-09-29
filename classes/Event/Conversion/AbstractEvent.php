@@ -42,11 +42,14 @@ abstract class AbstractEvent implements ConversionEventInterface
         $customer = $context->customer;
         $addressId = Address::getFirstCustomerAddressId($customer->id);
         $address = new Address($addressId);
-        $psGender = new PsGender($context->customer->id_gender, $context->language->id);
-        $gender = $psGender->type ? Gender::FEMALE : Gender::MALE;
+        $gender = null;
+        if ($context->customer->id_gender) {
+            $psGender = new PsGender($context->customer->id_gender, $context->language->id);
+            $gender = (int) $psGender->type === 1 ? Gender::FEMALE : Gender::MALE;
+        }
         $country = new Country($address->id_country);
 
-        return (new UserData())
+        $userData = (new UserData())
             ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
             // It is recommended to send Client IP and User Agent for ServerSide API Events.
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
@@ -56,11 +59,16 @@ abstract class AbstractEvent implements ConversionEventInterface
             ->setFirstName(strtolower($customer->firstname))
             ->setLastName(strtolower($customer->lastname))
             ->setPhone(preg_replace('/[^0-9.]+/', '', $address->phone))
-            ->setGender($gender)
             ->setDateOfBirth(preg_replace('/[^0-9.]+/', '', $customer->birthday))
             ->setCity(strtolower($address->city))
             ->setState(strtolower((new State($address->id_state))->iso_code))
             ->setZipCode(preg_replace('/[^0-9.]+/', '', $address->postcode))
             ->setCountryCode(strtolower($country->iso_code));
+
+        if ($gender !== null) {
+            $userData->setGender($gender);
+        }
+
+        return $userData;
     }
 }
