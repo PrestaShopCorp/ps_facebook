@@ -15,7 +15,7 @@ class ps_facebookAjaxModuleFrontController extends ModuleFrontController
         ];
         $pixelId = \Configuration::get('PS_PIXEL_ID');
 
-        (new CustomisationEvent($this->context, $pixelId, new ToolsAdapter()))
+        (new CustomisationEvent($this->context, $pixelId))
             ->send($params);
     }
 }

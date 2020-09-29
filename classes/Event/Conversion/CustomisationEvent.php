@@ -2,25 +2,12 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
-use Attribute;
-use Context;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 
 class CustomisationEvent extends AbstractEvent
 {
-    /**
-     * @var ToolsAdapter
-     */
-    private $toolsAdapter;
-
-    public function __construct(Context $context, $pixelId, ToolsAdapter $toolsAdapter)
-    {
-        parent::__construct($context, $pixelId);
-        $this->toolsAdapter = $toolsAdapter;
-    }
 
     public function send($params)
     {
@@ -50,7 +37,7 @@ class CustomisationEvent extends AbstractEvent
     {
         $attributes = [];
         foreach ($attributeIds as $attributeId) {
-            $attributes[] = (new Attribute($attributeId, $idLang))->name;
+            $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
         }
 
         return (new CustomData())
