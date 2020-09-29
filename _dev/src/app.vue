@@ -20,10 +20,10 @@
   <div id="app">
     <Menu>
       <MenuItem route="/configuration">
-        Configuration
+        {{ $t('general.tabs.configuration') }}
       </MenuItem>
       <MenuItem route="/help">
-        Help
+        {{ $t('general.tabs.help') }}
       </MenuItem>
     </Menu>
 
