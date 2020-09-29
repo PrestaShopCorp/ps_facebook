@@ -66,13 +66,12 @@ export const Default:any = Template.bind({});
 Default.args = {
   contextPsFacebook,
 };
-export const DefaultExpanded:any = Template.bind({});
-DefaultExpanded.args = {
+export const DefaultFolded:any = Template.bind({});
+DefaultFolded.args = {
   contextPsFacebook,
-  startExpanded: true,
+  startExpanded: false,
 };
 export const OverflowData:any = Template.bind({});
 OverflowData.args = {
   contextPsFacebook: contextPsFacebookOverflows,
-  startExpanded: true,
 };

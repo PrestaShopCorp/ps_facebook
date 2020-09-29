@@ -28,7 +28,6 @@
 
     <b-alert
       variant="warning"
-      dismissible
       :show="showSyncCatalogAdvice"
     >
       <p>

@@ -105,12 +105,13 @@ export default defineComponent({
     return {
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
-      showSyncCatalogAdvice: true, // TODO !0: when this should be displayed and hidden ???
+      // TODO !1: show if (this.facebookConnected AND categories matching is not done yet)
+      showSyncCatalogAdvice: false,
     };
   },
   methods: {
     onSyncCatalogAdviceClick() {
-      // TODO !0: what feature ???
+      // TODO !0: what feature ??? should go to corresponding Tab (use VueJS router ?)
     },
     onFbeOnboardClick() {
       // TODO !0: launch FBE onboarding
@@ -119,7 +120,7 @@ export default defineComponent({
       // TODO !0: RE-launch FBE onboarding ?
     },
     onPixelActivation() {
-      // TODO !0
+      // TODO !1
     },
   },
   watch: { }, // TODO !1: does the props.contextPsFacebook can change in time?

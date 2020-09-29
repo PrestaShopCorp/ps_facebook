@@ -42,7 +42,9 @@
       v-if="activationSwitch != null"
       class="float-right mb-3 mt-2 ml-2"
     >
-      {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
+      <span class="d-none d-sm-inline">
+        {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
+      </span>
       <div
         class="switch-input switch-input-lg ml-1"
         :class="switchActivated ? '-checked' : null"

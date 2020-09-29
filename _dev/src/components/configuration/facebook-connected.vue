@@ -52,9 +52,10 @@
       </h3>
     </b-card-header>
 
+    <!-- Large screen -->
     <b-card-body
       v-if="!folded"
-      class="description"
+      class="description d-none d-sm-flex"
     >
       <img
         class="mr-3"
@@ -80,6 +81,37 @@
       >
         {{ $t('configuration.facebook.connected.editButton') }}
       </b-button>
+    </b-card-body>
+
+    <!-- Small screen -->
+    <b-card-body
+      v-if="!folded"
+      class="description d-block d-sm-none"
+    >
+      <img
+        class="mr-3 mb-3"
+        :src="facebookLogo"
+        alt="colors"
+      >
+
+      <b-button
+        variant="outline-secondary"
+        @click="edit"
+        class="ml-4 float-right"
+      >
+        {{ $t('configuration.facebook.connected.editButton') }}
+      </b-button>
+
+      <div v-if="!!contextPsFacebook">
+        {{ $t('configuration.facebook.connected.description') }}
+        <br>
+        <span
+          class="font-weight-bold"
+          v-if="!!contextPsFacebook.email"
+        >
+          {{ contextPsFacebook.email }}
+        </span>
+      </div>
     </b-card-body>
 
     <b-card-body
@@ -198,7 +230,7 @@ export default defineComponent({
     startExpanded: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
   },
   data() {

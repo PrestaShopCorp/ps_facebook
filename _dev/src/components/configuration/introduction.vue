@@ -62,7 +62,7 @@
           height="128"
           alt="A potatoe"
         >
-        <div>
+        <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint1Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint1Description') }}</p>
         </div>
@@ -76,7 +76,7 @@
           height="128"
           alt="A potatoe"
         >
-        <div>
+        <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint2Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint2Description') }}</p>
         </div>
@@ -90,12 +90,13 @@
           height="128"
           alt="A potatoe"
         >
-        <div>
+        <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint3Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint3Description') }}</p>
         </div>
       </div>
 
+      <!--
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
@@ -104,11 +105,12 @@
           height="128"
           alt="A potatoe"
         >
-        <div>
+        <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
         </div>
       </div>
+      -->
 
       <div class="potatoe">
         <img
@@ -118,12 +120,13 @@
           height="128"
           alt="A potatoe"
         >
-        <div>
+        <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint5Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint5Description') }}</p>
         </div>
       </div>
 
+      <!--
       {{ $t('configuration.introduction.needMoreFeatures') }}
       <a
         href="javascript:void(0);"
@@ -131,6 +134,7 @@
       >
         {{ $t('configuration.introduction.seeDetailedPlans') }}
       </a>
+      -->
 
       <hr>
       <div class="text-center">
