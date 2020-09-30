@@ -1,0 +1,21 @@
+/*
+ * NOTICE OF LICENSE
+ *
+ * @author    INVERTUS, UAB www.invertus.eu <support@invertus.eu>
+ * @copyright Copyright (c) permanent, INVERTUS, UAB
+ * @license   Addons PrestaShop license limitation
+ * @see       /LICENSE
+ *
+ * International Registered Trademark & Property of INVERTUS, UAB
+ */
+
+#maintab-Marketing > a > :first-child,  /* for PS1.6 */
+#subtab-Marketing > a > :first-child {
+    background: url('../../img/marketing.png') no-repeat scroll center center / contain transparent;
+    width: 16px;
+}
+
+#maintab-Marketing > a > :first-child:before, /* for PS1.6 */
+#subtab-Marketing > a > :first-child:before {
+    content: '\00a0';
+}

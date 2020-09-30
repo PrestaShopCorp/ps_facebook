@@ -40,7 +40,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 class Ps_facebook extends Module
 {
     const MODULE_ADMIN_CONTROLLERS = [
-        'AdminAjaxPsfacebookController',
+        'AdminAjaxPsfacebook',
+        'AdminPsfacebookModule',
     ];
 
     const FRONT_CONTROLLERS = [
@@ -60,6 +61,7 @@ class Ps_facebook extends Module
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
+        'actionAdminControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -267,6 +269,11 @@ class Ps_facebook extends Module
     public function getFilePath()
     {
         return __FILE__;
+    }
+
+    public function hookActionAdminControllerSetMedia()
+    {
+        $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
     }
 
     public function hookActionCustomerAccountAdd(array $params)
