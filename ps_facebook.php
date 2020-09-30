@@ -70,6 +70,7 @@ class Ps_facebook extends Module
         'fbe_pages',
         'fbe_ad_account_id',
         'fbe_catalog_id',
+        'fbe_event_status'
     ];
 
     /**
@@ -188,7 +189,7 @@ class Ps_facebook extends Module
     public function getContent()
     {
         $this->handleForms();
-
+        Configuration::updateValue('fbe_event_status', true); // TODO this is just for test, we have to make the button
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
 
         $this->context->smarty->assign([
