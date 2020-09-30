@@ -68,6 +68,7 @@ import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import openPopupGenerator from '../lib/fb-login';
 
 export default defineComponent({
   name: 'Configuration',
@@ -107,21 +108,49 @@ export default defineComponent({
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       // TODO !1: show if (this.facebookConnected AND categories matching is not done yet)
       showSyncCatalogAdvice: false,
+      openPopup: openPopupGenerator(
+        window,
+        window.location.href, // TODO !0: dyn all this !
+        'https://lui.ngrok.io',
+        '/index.html',
+        'My Shop name',
+        '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
+        'myJwt',
+        'EUR',
+        'Europe/Paris',
+        'fr-FR',
+        'myCorrelationId',
+        this.onFbeOnboardOpened,
+        this.onFbeOnboardClosed,
+        this.onFbeOnboardResponded,
+      ),
     };
   },
   methods: {
     onSyncCatalogAdviceClick() {
-      // TODO !0: what feature ??? should go to corresponding Tab (use VueJS router ?)
+      // TODO !1: what feature ??? should go to corresponding Tab (use VueJS router ?)
     },
     onFbeOnboardClick() {
-      // TODO !0: launch FBE onboarding
+      this.openPopup();
     },
     onEditClick() {
-      // TODO !0: RE-launch FBE onboarding ?
+      this.openPopup();
     },
     onPixelActivation() {
       // TODO !1
     },
+    onFbeOnboardOpened() {
+      console.log('Popup is opened !');
+      // TODO !0: dark glass on all the document
+    },
+    onFbeOnboardClosed() {
+      console.log('Popup is closed !');
+      // TODO !0: remove dark glass
+    },
+    onFbeOnboardResponded(response) {
+      console.log('response received', response);
+      // TODO !0
+    }
   },
   watch: { }, // TODO !1: does the props.contextPsFacebook can change in time?
 });
