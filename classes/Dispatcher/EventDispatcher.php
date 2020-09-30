@@ -2,9 +2,9 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Dispatcher;
 
+use Configuration;
 use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler;
-use Configuration;
 
 class EventDispatcher
 {
