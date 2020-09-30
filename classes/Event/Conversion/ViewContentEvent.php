@@ -47,7 +47,7 @@ class ViewContentEvent extends AbstractEvent
         }
         $controllerPage = pSQL($controllerPage); // is this really needed ?
 
-        $id_lang = (int)$this->context->language->id;
+        $id_lang = (int) $this->context->language->id;
         $locale = \Tools::strtoupper($this->context->language->iso_code);
         $currency_iso_code = $this->context->currency->iso_code;
         $content_type = 'product';
@@ -137,7 +137,7 @@ class ViewContentEvent extends AbstractEvent
         */
         if ($controllerPage === 'cms') {
             $type = 'ViewCMS';
-            $cms = new \CMS((int)\Tools::getValue('id_cms'), $id_lang);
+            $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
             /** @var \CmsController $controller */
             $controller = $this->context->controller;
