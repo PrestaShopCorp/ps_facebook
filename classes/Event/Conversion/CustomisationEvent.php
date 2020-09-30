@@ -79,7 +79,7 @@ class CustomisationEvent extends AbstractEvent
             ->setContentIds([$psProductId])
             ->setCustomProperties(
                 [
-                    'custom attributes' => $attributes,
+                    'custom_attributes' => $attributes,
                 ]
             );
     }

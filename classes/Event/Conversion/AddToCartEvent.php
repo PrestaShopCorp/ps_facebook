@@ -56,7 +56,6 @@ class AddToCartEvent extends AbstractEvent
         $eventName = 'AddToCart';
         if ($op) {
             $eventName = $op === 'up' ? 'IncreaseProductQuantityInCart' : 'DecreaseProductQuantityInCart';
-            $quantity = 1;
         } elseif ($isDelete) {
             //todo: when removing product from cart this hook gets called twice
             $eventName = 'RemoveProductFromCart';
@@ -66,6 +65,7 @@ class AddToCartEvent extends AbstractEvent
         $productName = Product::getProductName($idProduct, $idProductAttribute);
         $user = $this->createSdkUserData($this->context);
         $customData = (new CustomData())
+            ->setContentIds([$idProduct])
             ->setContentName(pSQL($productName))
             ->setNumItems(pSQL($quantity));
 
