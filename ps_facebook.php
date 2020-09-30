@@ -70,7 +70,7 @@ class Ps_facebook extends Module
         'fbe_pages',
         'fbe_ad_account_id',
         'fbe_catalog_id',
-        'fbe_event_status'
+        'fbe_event_status',
     ];
 
     /**

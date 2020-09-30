@@ -31,8 +31,7 @@ class EventDispatcher
      */
     public function dispatch($name, array $params)
     {
-        if(true === Configuration::get('fbe_event_status'))
-        {
+        if (true === Configuration::get('fbe_event_status')) {
             $this->conversionHandler->handleEvent($name, $params);
             $this->pixelHandler->handleEvent($name, $params);
         }

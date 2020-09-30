@@ -41,6 +41,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         Configuration::updateValue('fbe_ad_account_id', \Tools::getValue('ad_account_id'));
         Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
     }
+
     // TODO: the call of this method
     public function ajaxProcessSwitchStatus()
     {
