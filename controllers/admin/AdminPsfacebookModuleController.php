@@ -1,6 +1,5 @@
 <?php
 
-
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
     public function postProcess()
@@ -11,10 +10,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 true,
                 [],
                 [
-                    'configure' => 'ps_facebook'
+                    'configure' => 'ps_facebook',
                 ]
             )
         );
     }
-
 }
