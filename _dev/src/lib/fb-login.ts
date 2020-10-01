@@ -1,3 +1,5 @@
+import {v4} from 'uuid';
+
 const openPopupGenerator = function (
   window: any,
   returnTo: string, // example, use window.location.href
@@ -49,9 +51,10 @@ const openPopupGenerator = function (
     return true;
   });
 
+  console.log('openPopup() generated');
   return () => {
     const query = `?ebid=${ebid}&jwt=${jwt}&cur=${currency}&tz=${encodeURIComponent(timezone)
-    }&locale=${encodeURIComponent(locale)}&corr=${encodeURIComponent(correlationId)
+    }&locale=${encodeURIComponent(locale)}&corr=${encodeURIComponent(correlationId || v4())
     }&name=${encodeURIComponent(shopName)}&return_to=${encodeURIComponent(returnTo)}`;
     const p = 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=564,height=671';
     popup = window.open(popupDomain + popupPath + query, 'ps_facebook_fbe_onboarding', p);

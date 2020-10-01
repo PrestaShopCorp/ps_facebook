@@ -70,6 +70,33 @@ import FacebookConnected from '../components/configuration/facebook-connected.vu
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import openPopupGenerator from '../lib/fb-login';
 
+const popupUrl = 'https://lui.ngrok.io'; // TODO !0: en fonction de l'env (integ, localhost, production)
+
+const generateOpenPopup = (component) => {
+  const canGeneratePopup = (
+    component.contextPsAccounts.currentShop
+    && component.contextPsAccounts.currentShop.url
+    && component.externalBusinessId
+    && component.psAccountsToken
+  );
+  return canGeneratePopup ? openPopupGenerator(
+    window,
+    component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
+    popupUrl,
+    '/index.html',
+    component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
+    component.externalBusinessId,
+    component.psAccountsToken,
+    component.currency,
+    component.timezone,
+    component.locale,
+    null,
+    component.onFbeOnboardOpened,
+    component.onFbeOnboardClosed,
+    component.onFbeOnboardResponded,
+  ) : () => {};
+};
+
 export default defineComponent({
   name: 'Configuration',
   components: {
@@ -92,6 +119,46 @@ export default defineComponent({
       required: false,
       default: () => global.contextPsFacebook,
     },
+    externalBusinessId: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookExternalBusinessId,
+    },
+    psAccountsToken: {
+      type: String,
+      required: false,
+      default: () => global.psAccountsToken,
+    },
+    currency: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookCurrency || 'EUR',
+    },
+    timezone: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookTimezone || 'Europe/Paris',
+    },
+    locale: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookLocale || 'en-US',
+    },
+    pixelActivationRoute: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookPixelActivationRoute,
+    },
+    fbeOnboardingSaveRoute: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookFbeOnboardingSaveRoute,
+    },
+    psFacebookUiUrl: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookFbeUiUrl,
+    },
   },
   computed: {
     psAccountsOnboarded() {
@@ -106,29 +173,15 @@ export default defineComponent({
     return {
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
-      // TODO !1: show if (this.facebookConnected AND categories matching is not done yet)
-      showSyncCatalogAdvice: false,
-      openPopup: openPopupGenerator(
-        window,
-        window.location.href, // TODO !0: dyn all this !
-        'https://lui.ngrok.io',
-        '/index.html',
-        'My Shop name',
-        '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
-        'myJwt',
-        'EUR',
-        'Europe/Paris',
-        'fr-FR',
-        'myCorrelationId',
-        this.onFbeOnboardOpened,
-        this.onFbeOnboardClosed,
-        this.onFbeOnboardResponded,
-      ),
+      showSyncCatalogAdvice: this.contextPsFacebook
+        && this.contextPsFacebook.categoriesMatching
+        && this.contextPsFacebook.categoriesMatching.sent !== true,
+      openPopup: generateOpenPopup(this),
     };
   },
   methods: {
     onSyncCatalogAdviceClick() {
-      // TODO !1: what feature ??? should go to corresponding Tab (use VueJS router ?)
+      // TODO !1: should go to corresponding Tab (use VueJS router to switch to categ tab)
     },
     onFbeOnboardClick() {
       this.openPopup();
@@ -137,7 +190,7 @@ export default defineComponent({
       this.openPopup();
     },
     onPixelActivation() {
-      // TODO !1
+      // TODO !0: deja fait par Pablo
     },
     onFbeOnboardOpened() {
       console.log('Popup is opened !');
@@ -149,10 +202,16 @@ export default defineComponent({
     },
     onFbeOnboardResponded(response) {
       console.log('response received', response);
-      // TODO !0
-    }
+      // TODO !0: check if response.access_token, sinon ne pas faire l'appel à PHP
+      // TODO !0: send to PHP (ajax ? que faire du retour du call ? adapter props.contextPsFacebook ?)
+    },
   },
-  watch: { }, // TODO !1: does the props.contextPsFacebook can change in time?
+  watch: {
+    //contextPsAccounts
+    //contextPsFacebook
+    //externalBusinessId
+    //psAccountsToken
+  }, // TODO !0: these can change !
 });
 </script>
 

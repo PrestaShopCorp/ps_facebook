@@ -222,8 +222,20 @@ class Ps_facebook extends Module
                   'name' => 'La Fanchonette',
                   'email' => 'fanchonette@ps.com',
                   'createdAt' => 1601283877000
-                ] */
-            ], // TODO !1: need to fill this object !
+                ],
+                'categoriesMatching' => [
+                  'sent': false
+                ]
+                */
+            ], // depuis MySQL quand onboarding effectué
+            'psFacebookExternalBusinessId' => null, // fourni par le call à mon API (POST /account/onboard) a faire avant l'onboarding
+            'psAccountsToken' => null, // fourni par prestashop_accounts_auth PHP lib
+            'psFacebookCurrency' => null, // shop (marchand)
+            'psFacebookTimezone' => null, // shop (marchand)
+            'psFacebookLocale' => null, // shop (marchand)
+            'psFacebookPixelActivationRoute' => null, // route ajax complète
+            'psFacebookFbeOnboardingSaveRoute' => null, // route ajax complète
+            'psFacebookFbeUiUrl' => null, // statique, par défaut celle de prod, mais surchargeable par un fichier .env (cf ps_metrics)
             'translations' => (new PsFacebookTranslations($this))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
