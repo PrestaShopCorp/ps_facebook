@@ -1,4 +1,4 @@
-/**
+<!--**
  * 2007-2020 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
@@ -15,18 +15,35 @@
  * @copyright 2007-2020 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
- */
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+ *-->
+<template>
+  <div id="catalog">
+    TODO
+  </div>
+</template>
 
-Vue.use(VueI18n);
+<script>
+import {defineComponent} from '@vue/composition-api';
 
-const {translations} = window;
-const {i18nSettings} = window;
-const locale = i18nSettings.isoCode ? i18nSettings.isoCode : '';
-const messages = Object.assign(translations, {}, {});
-
-export default new VueI18n({
-  locale,
-  messages,
+export default defineComponent({
+  name: 'Catalog',
+  components: {
+  },
+  mixins: [],
+  props: {
+  },
+  computed: {
+  },
+  data() {
+    return {
+    };
+  },
+  methods: {
+  },
+  watch: {
+  },
 });
+</script>
+
+<style lang="scss" scoped>
+</style>
