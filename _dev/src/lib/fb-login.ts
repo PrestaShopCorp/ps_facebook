@@ -25,10 +25,12 @@ const openPopupGenerator = function (
   }
   // eslint-disable-next-line no-param-reassign
   window.psFacebookOnbooardMessageListener = window.addEventListener('message', (event: MessageEvent): boolean => {
-    if (event.origin !== popupDomain) {
-      console.error('Bad origin message. Ignored.', event);
-      return false;
+    const strippedPopupDomain = popupDomain.replace(/^(https?:\/\/[^/]+)(.*)/, '$1');
+    if (event.origin !== strippedPopupDomain) {
+      console.log('Bad origin message. Ignored.', event, strippedPopupDomain);
+      return true;
     }
+
     switch (event.data) {
       case 'READY':
         openCallback();

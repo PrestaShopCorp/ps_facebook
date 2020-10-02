@@ -55,7 +55,8 @@
           @onPixelActivation="onPixelActivation"
           class="m-4"
         />
-        <div v-if="showGlass" class="glass"></div>
+        <div v-if="showGlass" class="glass" />
+        {{ showGlass ? 'GLASS': 'no glass' }}
       </template>
     </template>
   </div>
@@ -165,7 +166,7 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return !!this.contextPsFacebook;
+      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
     },
   },
   data() {
@@ -190,7 +191,7 @@ export default defineComponent({
       this.openPopup();
     },
     onPixelActivation() {
-      // TODO !0: deja fait par Pablo: appeler une route AJAX et attendre le retour pour updater le context.
+      // TODO !0: appeler une route AJAX et attendre le retour pour updater le context.
     },
     onFbeOnboardOpened() {
       this.showGlass = true;
@@ -209,10 +210,10 @@ export default defineComponent({
     },
   },
   watch: {
-    //contextPsAccounts
-    //contextPsFacebook
-    //externalBusinessId
-    //psAccountsToken
+    // contextPsAccounts
+    // contextPsFacebook
+    // externalBusinessId
+    // psAccountsToken
   }, // TODO !0: these can change !
 });
 </script>
@@ -233,5 +234,6 @@ export default defineComponent({
     top: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
+    z-index: 10000;
   }
 </style>

@@ -59,7 +59,7 @@ NoPsAccountOnboarded.args = {
 export const HalfConnected: any = Template.bind({});
 HalfConnected.args = {
   contextPsAccounts: window.contextPsAccounts,
-  contextPsFacebook: null,
+  contextPsFacebook: {},
   externalBusinessId: '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
   psAccountsToken: 'a-valid-token',
   currency: 'EUR',
