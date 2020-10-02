@@ -53,7 +53,7 @@ NoPsAccountOnboarded.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://lui.ngrok.io',
+  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
 };
 
 export const HalfConnected: any = Template.bind({});
@@ -67,7 +67,7 @@ HalfConnected.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://lui.ngrok.io',
+  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
 };
 
 export const FullConnected: any = Template.bind({});
@@ -107,5 +107,5 @@ FullConnected.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://lui.ngrok.io',
+  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
 };
