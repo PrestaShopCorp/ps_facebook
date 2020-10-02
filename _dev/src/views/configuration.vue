@@ -55,7 +55,6 @@
           @onPixelActivation="onPixelActivation"
           class="m-4"
         />
-        <div v-if="showGlass" class="glass"></div>
       </template>
     </template>
   </div>
@@ -71,7 +70,9 @@ import FacebookConnected from '../components/configuration/facebook-connected.vu
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import openPopupGenerator from '../lib/fb-login';
 
-const generateOpenPopup = (component, popupUrl) => {
+const popupUrl = 'https://lui.ngrok.io'; // TODO !0: en fonction de l'env (integ, localhost, production)
+
+const generateOpenPopup = (component) => {
   const canGeneratePopup = (
     component.contextPsAccounts.currentShop
     && component.contextPsAccounts.currentShop.url
@@ -175,13 +176,11 @@ export default defineComponent({
       showSyncCatalogAdvice: this.contextPsFacebook
         && this.contextPsFacebook.categoriesMatching
         && this.contextPsFacebook.categoriesMatching.sent !== true,
-      openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
-      showGlass: false,
+      openPopup: generateOpenPopup(this),
     };
   },
   methods: {
     onSyncCatalogAdviceClick() {
-      this.$router.push({name: 'Catalog', query: {component: 'matching'}});
       // TODO !1: should go to corresponding Tab (use VueJS router to switch to categ tab)
     },
     onFbeOnboardClick() {
@@ -191,22 +190,20 @@ export default defineComponent({
       this.openPopup();
     },
     onPixelActivation() {
-      // TODO !0: deja fait par Pablo: appeler une route AJAX et attendre le retour pour updater le context.
+      // TODO !0: deja fait par Pablo
     },
     onFbeOnboardOpened() {
-      this.showGlass = true;
+      console.log('Popup is opened !');
+      // TODO !0: dark glass on all the document
     },
     onFbeOnboardClosed() {
-      this.showGlass = false;
+      console.log('Popup is closed !');
+      // TODO !0: remove dark glass
     },
     onFbeOnboardResponded(response) {
-      this.showGlass = false;
       console.log('response received', response);
-      if (!response.access_token) {
-        return;
-      }
-      console.log('TODO !');
-      // TODO !0: send to PHP (ajax ? ou refresh page ? adapter props.contextPsFacebook ?)
+      // TODO !0: check if response.access_token, sinon ne pas faire l'appel à PHP
+      // TODO !0: send to PHP (ajax ? que faire du retour du call ? adapter props.contextPsFacebook ?)
     },
   },
   watch: {
@@ -224,15 +221,5 @@ export default defineComponent({
       border: none;
       border-radius: 3px;
     }
-  }
-</style>
-<style lang="scss" scoped>
-  .glass {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
   }
 </style>
