@@ -17,21 +17,28 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="configuration">
-    <PsAccounts class="m-4" />
-  </div>
+  <li class="nav-item">
+    <router-link
+      active-class="active"
+      class="nav-link"
+      :to="route"
+    >
+      <slot />
+    </router-link>
+  </li>
 </template>
 
-<script>
-import {PsAccounts} from 'prestashop_accounts_vue_components';
-
+<script lang="ts">
 export default {
-  name: 'Configuration',
-  components: {
-    PsAccounts,
+  name: 'MenuItem',
+  props: {
+    route: {
+      type: String,
+      default: '',
+    },
   },
 };
 </script>
 
-<style lang="scss">
+<style scoped>
 </style>

@@ -17,30 +17,33 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <li class="nav-item">
-    <router-link
-      active-class="active"
-      class="nav-link"
-      :to="route"
-    >
-      <slot />
-    </router-link>
-  </li>
+  <div id="catalog">
+    TODO
+  </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'MenuItem',
+<script>
+import {defineComponent} from '@vue/composition-api';
+
+export default defineComponent({
+  name: 'Catalog',
+  components: {
+  },
+  mixins: [],
   props: {
-    route: {
-      type: String,
-      default: '',
-    },
+  },
+  computed: {
+  },
+  data() {
+    return {
+    };
   },
   methods: {
   },
-};
+  watch: {
+  },
+});
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>

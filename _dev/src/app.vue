@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Menu from '@/components/Menu/menu.vue';
-import MenuItem from '@/components/Menu/menu-item.vue';
+import Menu from '@/components/menu/menu.vue';
+import MenuItem from '@/components/menu/menu-item.vue';
 
 export default {
   name: 'Home',

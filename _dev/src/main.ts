@@ -3,7 +3,7 @@ import {BootstrapVue} from 'bootstrap-vue';
 import psAccountsVueComponents from 'prestashop_accounts_vue_components';
 import router from './router';
 import store from './store';
-import App from './App.vue';
+import App from './app.vue';
 import i18n from './lib/i18n';
 
 Vue.config.productionTip = false;
