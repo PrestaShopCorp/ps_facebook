@@ -5,6 +5,7 @@ use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 /*
@@ -60,6 +61,7 @@ class Ps_facebook extends Module
         'displayFooter',
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
+        'backOfficeHeader',
         'displayPersonalInformationTop',
         'actionAdminControllerSetMedia',
     ];
@@ -127,7 +129,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -171,8 +173,8 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
-        return parent::uninstall() &&
-            (new Uninstaller($this))->uninstall();
+        return (new Uninstaller($this, new TabRepository()))->uninstall() &&
+            parent::uninstall();
     }
 
     public function handleForms()
@@ -271,7 +273,7 @@ class Ps_facebook extends Module
         return __FILE__;
     }
 
-    public function hookActionAdminControllerSetMedia()
+    public function hookBackOfficeHeader()
     {
         $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
     }
