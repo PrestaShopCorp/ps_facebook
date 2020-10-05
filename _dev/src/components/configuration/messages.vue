@@ -42,6 +42,23 @@
         </b-button>
       </p>
     </b-alert>
+
+    <b-alert
+      variant="danger"
+      dismissible
+      :show="!!error"
+    >
+      <p>
+        {{ $t(error) }}
+        <br>
+        <b-button
+          class="mt-2"
+          @click="reloadBrowser"
+        >
+          {{ $t('configuration.messages.reloadButton') }}
+        </b-button>
+      </p>
+    </b-alert>
   </div>
 </template>
 
@@ -64,10 +81,18 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    error: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   methods: {
     onSyncCatalogAdviceClick() {
       this.$emit('onSyncCatalogAdviceClick');
+    },
+    reloadBrowser() {
+      window.document.location.reload();
     },
   },
 });

@@ -84,6 +84,8 @@ class PsFacebookTranslations
                     'success' => $this->module->l('ConfigurationMessagesSuccess', 'PsFacebookTranslations'),
                     'syncCatalogAdvice' => $this->module->l('ConfigurationMessagesSyncCatalogAdvice', 'PsFacebookTranslations'),
                     'syncCatalogButton' => $this->module->l('ConfigurationMessagesSyncCatalogButton', 'PsFacebookTranslations'),
+                    'reloadButton' => $this->module->l('ConfigurationMessagesReloadButton', 'PsFacebookTranslations'),
+                    'unknownOnboardingError' => $this->module->l('ConfigurationMessagesUnknownOnboardingError', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
                     'title' => $this->module->l('ConfigurationFacebookTitle', 'PsFacebookTranslations'),

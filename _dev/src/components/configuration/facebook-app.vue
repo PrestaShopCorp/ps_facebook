@@ -162,6 +162,11 @@ export default defineComponent({
       this.$emit('onActivation', this.switchActivated);
     },
   },
+  watch: {
+    activationSwitch(newValue) {
+      this.switchActivated = newValue;
+    },
+  },
 });
 </script>
 

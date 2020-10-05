@@ -22,7 +22,9 @@
       "messages": {
         "success": "PrestaShop Facebook is now activated!",
         "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
-        "syncCatalogButton": "Sync product"
+        "syncCatalogButton": "Sync product",
+        "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
+        "reloadButton": "Reload"
       },
       "facebook": {
         "title": "Connect your store to Facebook",

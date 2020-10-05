@@ -30,6 +30,7 @@
       <messages
         :show-onboard-succeeded="psFacebookJustOnboarded"
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :error="error"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
         class="m-4"
       />
@@ -50,13 +51,15 @@
         />
         <facebook-connected
           v-else
-          :context-ps-facebook="contextPsFacebook"
+          :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
           class="m-4"
         />
-        <div v-if="showGlass" class="glass" />
-        {{ showGlass ? 'GLASS': 'no glass' }}
+        <div
+          v-if="showGlass"
+          class="glass"
+        />
       </template>
     </template>
   </div>
@@ -166,11 +169,12 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+      return (this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.email) || false;
     },
   },
   data() {
     return {
+      dynamicContextPsFacebook: this.contextPsFacebook,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showSyncCatalogAdvice: this.contextPsFacebook
@@ -178,6 +182,7 @@ export default defineComponent({
         && this.contextPsFacebook.categoriesMatching.sent !== true,
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
+      error: null,
     };
   },
   methods: {
@@ -188,10 +193,39 @@ export default defineComponent({
       this.openPopup();
     },
     onEditClick() {
-      this.openPopup();
+      this.onPixelActivation();
+      // this.openPopup();
     },
     onPixelActivation() {
-      // TODO !0: appeler une route AJAX et attendre le retour pour updater le context.
+      const actualState = this.dynamicContextPsFacebook.pixel.activated;
+      const newState = !actualState;
+
+      // TODO !0: fetch(this.pixelActivationRoute, ....)
+      fetch('https://api.chucknorris.io/jokes/random', {
+        method: 'POST',
+        // mode: 'cors', // no-cors, *cors, same-origin
+        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: 'same-origin', // include, *same-origin, omit
+        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade,
+        //   origin, origin-when-cross-origin, same-origin, strict-origin,
+        //   strict-origin-when-cross-origin, unsafe-url
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({pixelActivation: newState}), // TODO !0: voir le format attendu
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.dynamicContextPsFacebook = {
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, activated: newState},
+        };
+      }).catch(() => {
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.dynamicContextPsFacebook = {
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, activated: actualState},
+        };
+      });
     },
     onFbeOnboardOpened() {
       this.showGlass = true;
@@ -200,21 +234,48 @@ export default defineComponent({
       this.showGlass = false;
     },
     onFbeOnboardResponded(response) {
-      this.showGlass = false;
-      console.log('response received', response);
+      // console.log('response received', response);
       if (!response.access_token) {
+        this.showGlass = false;
         return;
       }
-      console.log('TODO !');
-      // TODO !0: send to PHP (ajax ? ou refresh page ? adapter props.contextPsFacebook ?)
+      this.showGlass = true;
+
+      // TODO !0: fetch(this.fbeOnboardingSaveRoute, {})
+      fetch('https://api.chucknorris.io/jokes/random', {
+        method: 'POST',
+        // mode: 'cors', // no-cors, *cors, same-origin
+        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: 'same-origin', // include, *same-origin, omit
+        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade,
+        //   origin, origin-when-cross-origin, same-origin, strict-origin,
+        //   strict-origin-when-cross-origin, unsafe-url
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({onboarding: response}), // TODO !0: voir le format attendu
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        const fakeContextPsFacebook = {}; // TODO !0: get all missing data from res.json()
+        this.dynamicContextPsFacebook = fakeContextPsFacebook;
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.showGlass = false;
+      }).catch(() => {
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.showGlass = false;
+        this.$forceUpdate();
+      });
     },
   },
   watch: {
-    // contextPsAccounts
-    // contextPsFacebook
-    // externalBusinessId
-    // psAccountsToken
-  }, // TODO !0: these can change !
+    contextPsAccounts() {
+      this.$forceUpdate();
+    },
+    contextPsFacebook(newValue) {
+      this.dynamicContextPsFacebook = newValue;
+      this.$forceUpdate();
+    },
+  },
 });
 </script>
 
