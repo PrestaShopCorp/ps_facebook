@@ -5,7 +5,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 use Context;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use Product;
@@ -67,7 +66,8 @@ class AddToCartEvent extends AbstractEvent
         $customData = (new CustomData())
             ->setContentIds([$idProduct])
             ->setContentName(pSQL($productName))
-            ->setNumItems(pSQL($quantity));
+            ->setNumItems(pSQL($quantity))
+            ->setContentType('product');
 
         $event = (new Event())
             ->setEventName($eventName)
@@ -78,9 +78,6 @@ class AddToCartEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }

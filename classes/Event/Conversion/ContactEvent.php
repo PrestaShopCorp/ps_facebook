@@ -3,7 +3,6 @@
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 
 class ContactEvent extends AbstractEvent
 {
@@ -19,9 +18,6 @@ class ContactEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }

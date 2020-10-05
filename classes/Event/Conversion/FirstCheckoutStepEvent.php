@@ -8,7 +8,6 @@ use Context;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 
 class FirstCheckoutStepEvent extends AbstractEvent
@@ -47,6 +46,9 @@ class FirstCheckoutStepEvent extends AbstractEvent
             ->setValue($cart->getOrderTotal(false))
             ->setCurrency($currency_iso_code);
 
+        $customData = (new CustomData())
+            ->setContentType('product');
+
         $event = (new Event())
             ->setEventName('InitiateCheckout')
             ->setEventTime(time())
@@ -56,10 +58,7 @@ class FirstCheckoutStepEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 
     /**

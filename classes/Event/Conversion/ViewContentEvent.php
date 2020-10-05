@@ -7,7 +7,6 @@ use Context;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
@@ -205,9 +204,6 @@ class ViewContentEvent extends AbstractEvent
             return true;
         }
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }
