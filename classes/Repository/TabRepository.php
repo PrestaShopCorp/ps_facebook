@@ -12,8 +12,8 @@ class TabRepository
         $sql = new DbQuery();
         $sql->select('id_tab');
         $sql->from('tab');
-        $sql->where('`id_parent` = "' . (int)$tabId . '"');
+        $sql->where('`id_parent` = "' . (int) $tabId . '"');
 
-        return (bool)Db::getInstance()->getValue($sql);
+        return (bool) Db::getInstance()->getValue($sql);
     }
 }

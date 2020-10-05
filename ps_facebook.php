@@ -129,7 +129,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
