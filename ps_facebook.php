@@ -229,15 +229,17 @@ class Ps_facebook extends Module
                   'sent': false
                 ]
                 */
-            ], // depuis MySQL quand onboarding effectué
-            'psFacebookExternalBusinessId' => null, // fourni par le call à mon API (POST /account/onboard) a faire avant l'onboarding
-            'psAccountsToken' => null, // fourni par prestashop_accounts_auth PHP lib
-            'psFacebookCurrency' => null, // shop (marchand)
-            'psFacebookTimezone' => null, // shop (marchand)
-            'psFacebookLocale' => null, // shop (marchand)
-            'psFacebookPixelActivationRoute' => null, // route ajax complète
-            'psFacebookFbeOnboardingSaveRoute' => null, // route ajax complète
-            'psFacebookFbeUiUrl' => null, // statique, par défaut celle de prod, mais surchargeable par un fichier .env (cf ps_metrics)
+            ], // from MySQL once FB onboarding done
+            // TODO this one given by the API POST /account/onboard:
+            'psFacebookExternalBusinessId' => '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
+            // TODO this one given by \PrestaShop\AccountsAuth\Service\PsAccountsService->getOrRefreshToken()
+            'psAccountsToken' => 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwMTY0NzM0MywiZXhwIjoxNjAxNjUwOTQzLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay10ZHZ0cUBwcmVzdGFzaG9wLXJlYWR5LWludGVncmF0aW9uLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGstdGR2dHFAcHJlc3Rhc2hvcC1yZWFkeS1pbnRlZ3JhdGlvbi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInVpZCI6InVNaFhlS0hqQVNadjlRR3FIVXRyUmNpZk4yMzIifQ.OhQvEze9zB0z3aBO4qwKwAZmvZYT1FvKWa9XqJfcRU56sxfJR-xpY2C1DyBmiU6IUEghtdTIH44tvH98ke9eAMFHcduBaP-YPAj7n-oikpmmImN8ctQ7exyiXJBVsZ712AF9JNvs7jpf12ByFdJ2F3CZ6eF7GPLmLXsAlxsZY_rauNU4OBWmZvv8d_8qQvgnGsDjo5XRReTVY_oNDRgn9LO5PIf3oPxDPfEgR1EA7RB94BqRLuVN2exgStD1MGYirIwf-PADmFfCtRXWAyMtqJ0z4fXOqQJSs2ZbqVj5LjYInYWL0UMm5CKTQankNN8xUdc45Ies1qFdFY-eeOSKiQ',
+            'psFacebookCurrency' => null, // TODO from shop (merchant)
+            'psFacebookTimezone' => null, // TODO from shop (merchant)
+            'psFacebookLocale' => null, // TODO from shop (merchant)
+            'psFacebookPixelActivationRoute' => null, // TODO complete ajax route
+            'psFacebookFbeOnboardingSaveRoute' => null, // TODO complete ajax route
+            'psFacebookFbeUiUrl' => 'https://facebook.psessentials-integration.net', // TODO by default, use the production URL, but can be overridden by integration URL in a .env (cf ps_metrics)
             'translations' => (new PsFacebookTranslations($this))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,

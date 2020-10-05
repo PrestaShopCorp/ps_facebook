@@ -200,7 +200,7 @@ export default defineComponent({
       const actualState = this.dynamicContextPsFacebook.pixel.activated;
       const newState = !actualState;
 
-      // TODO !0: fetch(this.pixelActivationRoute, ....)
+      // TODO !0: fetch(this.pixelActivationRoute, ....) URL to see with Pablo PR
       fetch('https://api.chucknorris.io/jokes/random', {
         method: 'POST',
         // mode: 'cors', // no-cors, *cors, same-origin
@@ -210,7 +210,7 @@ export default defineComponent({
         //   origin, origin-when-cross-origin, same-origin, strict-origin,
         //   strict-origin-when-cross-origin, unsafe-url
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({pixelActivation: newState}), // TODO !0: voir le format attendu
+        body: JSON.stringify({pixelActivation: newState}), // TODO !0: format to see with Pablo PR
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -241,7 +241,8 @@ export default defineComponent({
       }
       this.showGlass = true;
 
-      // TODO !0: fetch(this.fbeOnboardingSaveRoute, {})
+      // TODO !0: fetch(this.fbeOnboardingSaveRoute, ....) I need this route from PHP side, that
+      // will save access_token, fbe?, and more. And gets back contextPsFacebook object in response.
       fetch('https://api.chucknorris.io/jokes/random', {
         method: 'POST',
         // mode: 'cors', // no-cors, *cors, same-origin
@@ -251,7 +252,7 @@ export default defineComponent({
         //   origin, origin-when-cross-origin, same-origin, strict-origin,
         //   strict-origin-when-cross-origin, unsafe-url
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({onboarding: response}), // TODO !0: voir le format attendu
+        body: JSON.stringify({onboarding: response}), // TODO !0: format to see
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
