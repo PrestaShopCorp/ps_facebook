@@ -29,6 +29,7 @@ class FirstCheckoutStepEvent extends AbstractEvent
         $isEditAddress = (bool) $this->toolsAdapter->getValue('editAddress');
         $isEditAddressCancel = (bool) $this->toolsAdapter->getValue('cancelAddress');
 
+        // Checking if address in not edited or canceled to avoid duplicated event calls
         if ($isEditAddress || $isEditAddressCancel) {
             return false;
         }
