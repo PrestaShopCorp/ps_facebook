@@ -107,7 +107,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         /*
         * Triggers ViewContent for cms pages
         */
-        if ($page === 'cms' && \Tools::getValue('action') === 'show') {
+        if ($page === 'cms') {
             $type = 'ViewCMS';
             $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
@@ -128,7 +128,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         /*
         * Triggers InitiateCheckout for checkout page
         */
-        if ($page === 'cart') {
+        if ($page === 'cart' && \Tools::getValue('action') === 'show') {
             $type = 'InitiateCheckout';
 
             $content = [

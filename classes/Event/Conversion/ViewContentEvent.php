@@ -9,6 +9,7 @@ use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
+use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 
 class ViewContentEvent extends AbstractEvent
 {
@@ -29,11 +30,7 @@ class ViewContentEvent extends AbstractEvent
             return;
         }
 
-        // Asset Manager to be sure the JS is loaded
-        /** @var \FrontController|\ProductController|\CategoryController $controller */
-        $controller = $this->context->controller;
-
-        $page = $controller->php_self;
+        $page = $this->context->controller->php_self;
         if (empty($page)) {
             $page = \Tools::getValue('controller');
         }
@@ -51,11 +48,19 @@ class ViewContentEvent extends AbstractEvent
         if ($page === 'product') {
             $type = 'ViewContent';
 
+            /** @var \ProductController $controller */
+            $controller = $this->context->controller;
             $product = $controller->getTemplateVarProduct();
+
+            $fbProductId = ProductCatalogUtility::makeProductId(
+                $product['id_product'],
+                $product['id_product_attribute'],
+                $locale
+            );
 
             $content = new Content();
             $content
-                ->setProductId($product['id_product'])
+                ->setProductId($fbProductId)
                 ->setTitle(\Tools::replaceAccentedChars($product['name']))
                 ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
                 ->setItemPrice($product['price_amount'])
@@ -64,7 +69,8 @@ class ViewContentEvent extends AbstractEvent
             $user = $this->createSdkUserData($this->context);
             $customData = (new CustomData())
                 ->setCurrency($currency_iso_code)
-                ->setContents([$content]);
+                ->setContents([$content])
+                ->setContentType($content_type);
 
             $event = (new Event())
                 ->setEventName($type)
@@ -80,6 +86,10 @@ class ViewContentEvent extends AbstractEvent
         */
         if ($page === 'category' && $controller->controller_type === 'front') {
             $type = 'ViewCategory';
+            $content_type = 'product_group';
+
+            /** @var \CategoryControllerCore $controller */
+            $controller = $this->context->controller;
             $category = $controller->getCategory();
 
             $breadcrumbs = $controller->getBreadcrumbLinks();
@@ -107,7 +117,10 @@ class ViewContentEvent extends AbstractEvent
             $type = 'ViewCMS';
             $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
+            /** @var \CmsController $controller */
+            $controller = $this->context->controller;
             $breadcrumbs = $controller->getBreadcrumbLinks();
+
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
             $user = $this->createSdkUserData($this->context);
@@ -134,9 +147,14 @@ class ViewContentEvent extends AbstractEvent
             $user = $this->createSdkUserData($this->context);
             $contents = [];
             foreach ($cart->getProducts() as $product) {
+                $fbProductId = ProductCatalogUtility::makeProductId(
+                    $product['id_product'],
+                    $product['id_product_attribute'],
+                    $locale
+                );
                 $content = new Content();
                 $content
-                    ->setProductId($product['id_product'])
+                    ->setProductId($fbProductId)
                     ->setTitle(\Tools::replaceAccentedChars($product['name']))
                     ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
                     ->setItemPrice($product['price'])
@@ -148,6 +166,7 @@ class ViewContentEvent extends AbstractEvent
 
             $customData = (new CustomData())
                 ->setContents($contents)
+                ->setContentType($content_type)
                 ->setValue($cart->getOrderTotal(false))
                 ->setCurrency($currency_iso_code);
 
