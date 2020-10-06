@@ -146,6 +146,7 @@ class Ps_facebook extends Module
 
         $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
         $dotenv->load();
+        (new \PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider())->getContext();
     }
 
     /**
