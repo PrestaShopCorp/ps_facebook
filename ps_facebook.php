@@ -63,7 +63,6 @@ class Ps_facebook extends Module
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
-        'actionBeforeAjaxDieProductControllerdisplayAjaxRefresh',
         'displayPersonalInformationTop',
         'actionFrontControllerSetMedia',
     ];
