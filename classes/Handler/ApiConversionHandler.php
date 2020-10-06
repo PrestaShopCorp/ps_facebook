@@ -12,6 +12,7 @@ use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ContactEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\SearchEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ShopSubscriptionEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ViewContentEvent;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 
 class ApiConversionHandler
@@ -70,7 +71,8 @@ class ApiConversionHandler
                     ->send($params);
                 break;
             case 'hookDisplayHeader':
-                // (new ViewContentEvent($this->context))->send($event);
+                (new ViewContentEvent($this->context, $pixelId, new ToolsAdapter()))
+                    ->send($params);
                 break;
 
             default:

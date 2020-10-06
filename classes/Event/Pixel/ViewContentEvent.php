@@ -128,7 +128,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         /*
         * Triggers InitiateCheckout for checkout page
         */
-        if ($page === 'cart') {
+        if ($page === 'cart' && \Tools::getValue('action') === 'show') {
             $type = 'InitiateCheckout';
 
             $content = [
