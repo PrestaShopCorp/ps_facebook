@@ -63,7 +63,6 @@ class Ps_facebook extends Module
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
-        'displayPersonalInformationTop',
         'actionFrontControllerSetMedia',
     ];
 
@@ -193,7 +192,7 @@ class Ps_facebook extends Module
         return __FILE__;
     }
 
-    public function hookBackOfficeHeader()
+    public function hookDisplayBackOfficeHeader()
     {
         $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
     }
