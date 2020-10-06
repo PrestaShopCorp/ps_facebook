@@ -42,6 +42,7 @@ class FirstCheckoutStepEvent extends AbstractEvent
 
         $customData = (new CustomData())
             ->setContents($contents)
+            ->setContentType('product')
             ->setValue($cart->getOrderTotal(false))
             ->setCurrency($currency_iso_code);
 
@@ -62,12 +63,13 @@ class FirstCheckoutStepEvent extends AbstractEvent
 
     /**
      * @param Cart $cart
-     * @param $idLang
+     * @param int $idLang
      *
      * @return Content[]
      */
     private function getProductContent(Cart $cart, $idLang)
     {
+        $contents = [];
         foreach ($cart->getProducts() as $product) {
             $content = new Content();
             $content

@@ -59,7 +59,7 @@ class Ps_facebook extends Module
         'displayFooter',
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
-        'paymentOptions',
+        'displayPersonalInformationTop',
     ];
 
     const CONFIGURATION_LIST = [
