@@ -2,18 +2,36 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
+use Context;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
+use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
+use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 
 class CustomisationEvent extends AbstractEvent
 {
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    public function __construct(
+        Context $context,
+        $pixelId,
+        ProductRepository $productRepository
+    ) {
+        parent::__construct($context, $pixelId);
+        $this->productRepository = $productRepository;
+    }
+
     public function send($params)
     {
         $idLang = (int) $this->context->language->id;
         $productId = $params['productId'];
         $attributeIds = $params['attributeIds'];
-        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
+        $locale = \Tools::strtoupper($this->context->language->iso_code);
+        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds, $locale);
 
         $user = $this->createSdkUserData($this->context);
 
@@ -32,16 +50,33 @@ class CustomisationEvent extends AbstractEvent
         return $request->execute();
     }
 
-    private function getCustomAttributeData($productId, $idLang, $attributeIds)
+    /**
+     * @param int $productId
+     * @param int $idLang
+     * @param int[] $attributeIds
+     * @param string $locale
+     *
+     * @return CustomData
+     *
+     * @throws \PrestaShopException
+     */
+    private function getCustomAttributeData($productId, $idLang, $attributeIds, $locale)
     {
         $attributes = [];
         foreach ($attributeIds as $attributeId) {
             $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
         }
 
+        $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
+            $productId,
+            $attributes
+        );
+
+        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute, $locale);
+
         return (new CustomData())
             ->setContentType('product')
-            ->setItemNumber($productId)
+            ->setContentIds([$psProductId])
             ->setCustomProperties(
                 [
                     'custom attributes' => $attributes,

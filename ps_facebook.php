@@ -290,13 +290,6 @@ class Ps_facebook extends Module
         return $this->templateBuffer->flush();
     }
 
-    public function hookActionBeforeAjaxDieProductControllerdisplayAjaxRefresh(array $params)
-    {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
-    }
-
     /**
      * Tells if we are in the Payment step from the order tunnel.
      * We use the ReflectionObject because it only exists from Prestashop 1.7.7
