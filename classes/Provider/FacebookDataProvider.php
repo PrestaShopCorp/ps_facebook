@@ -8,6 +8,8 @@ use PrestaShop\PrestaShop\Core\Foundation\IoC\Exception;
 
 class FacebookDataProvider
 {
+     const API_URL = 'https://graph.facebook.com';
+
     /**
      * @var string
      */
@@ -29,7 +31,7 @@ class FacebookDataProvider
      * @param string $sdkVersion
      * @param string $accessToken
      */
-    public function __construct($appId, $sdkVersion, $accessToken)
+    public function __construct($appId, $accessToken, $sdkVersion)
     {
         $this->appId = $appId;
         $this->sdkVersion = $sdkVersion;
@@ -39,16 +41,15 @@ class FacebookDataProvider
     /**
      * https://github.com/facebookarchive/php-graph-sdk
      *
-     * @return string
+     * @return array
      */
     public function getContext()
     {
         $client = new Client();
         $response = $client->get(
-            "https://graph.facebook.com/{$this->sdkVersion}/{$this->appId}",
+            self::API_URL . "/{$this->sdkVersion}/{$this->appId}",
             [
                 'headers' =>
-
                     [
                         'access_token' => $this->accessToken
                     ]
@@ -56,10 +57,9 @@ class FacebookDataProvider
         );
 
         if (!$response || !$response->getBody()) {
-            return false;
+            return [];
         }
 
-
-        return $response;
+        return json_decode($response->getBody()->getContents(), true);
     }
 }
