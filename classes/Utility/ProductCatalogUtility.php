@@ -8,6 +8,7 @@ class ProductCatalogUtility
      * @param int $productId
      * @param int|null $productAttributeId
      * @param string $locale
+     *
      * @return string
      */
     public static function makeProductId($productId, $productAttributeId, $locale)
@@ -15,9 +16,9 @@ class ProductCatalogUtility
         return implode(
             '-',
             [
-                (int)$productId,
-                (int)$productAttributeId,
-                $locale
+                (int) $productId,
+                (int) $productAttributeId,
+                $locale,
             ]
         );
     }
