@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Facebook\Facebook;
+use GuzzleHttp\Client;
 use PrestaShop\PrestaShop\Core\Foundation\IoC\Exception;
 
 class FacebookDataProvider
@@ -15,7 +16,7 @@ class FacebookDataProvider
     /**
      * @var string
      */
-    private $appSecret;
+    private $sdkVersion;
 
     /**
      * @var string
@@ -25,38 +26,39 @@ class FacebookDataProvider
     /**
      * FacebookDataProvider constructor.
      * @param string $appId
-     * @param string $appSecret
+     * @param string $sdkVersion
      * @param string $accessToken
      */
-    public function __construct($appId, $appSecret, $accessToken)
+    public function __construct($appId, $sdkVersion, $accessToken)
     {
         $this->appId = $appId;
-        $this->appSecret = $appSecret;
+        $this->sdkVersion = $sdkVersion;
         $this->accessToken = $accessToken;
     }
 
     /**
      * https://github.com/facebookarchive/php-graph-sdk
      *
-     * @return \Facebook\FacebookResponse
+     * @return string
      */
     public function getContext()
     {
-        try {
-            $fb = new Facebook([
-                'app_id' => $this->appId,
-                'app_secret' => $this->appSecret
-            ]);
-            // Returns a `FacebookFacebookResponse` object
-            $response = $fb->get("/{$this->appId}", $this->accessToken);
+        $client = new Client();
+        $response = $client->get(
+            "https://graph.facebook.com/{$this->sdkVersion}/{$this->appId}",
+            [
+                'headers' =>
 
-        } catch (\Exception $e) {
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
-        } catch (Exception $e) {
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+                    [
+                        'access_token' => $this->accessToken
+                    ]
+            ]
+        );
+
+        if (!$response || !$response->getBody()) {
+            return false;
         }
+
 
         return $response;
     }
