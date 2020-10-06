@@ -84,7 +84,7 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers ViewContent for category pages
         */
-        if ($page === 'category' && $controller->controller_type === 'front') {
+        if ($page === 'category' && $this->context->controller->controller_type === 'front') {
             $type = 'ViewCategory';
             $content_type = 'product_group';
 
