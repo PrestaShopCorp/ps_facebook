@@ -6,6 +6,8 @@ use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 /*
  * 2007-2020 PrestaShop.
@@ -146,7 +148,12 @@ class Ps_facebook extends Module
 
         $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
         $dotenv->load();
-        (new \PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider())->getContext();
+        $fbDataProvider = new FacebookDataProvider(
+            Configuration::get('PS_PIXEL_ID'), // 808199653047641
+            'b3f469de46ebc1f94f5b8e3e0db09fc4', // b3f469de46ebc1f94f5b8e3e0db09fc4
+            Configuration::get('PS_FBE_ACCESS_TOKEN') //EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc
+        );
+        $fbDataProvider->getContext();
     }
 
     /**

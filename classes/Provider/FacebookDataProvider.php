@@ -2,19 +2,62 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use FacebookAds\Api;
+use Facebook\Facebook;
+use PrestaShop\PrestaShop\Core\Foundation\IoC\Exception;
 
 class FacebookDataProvider
 {
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $appSecret;
+
+    /**
+     * @var string
+     */
+    private $accessToken;
+
+    /**
+     * FacebookDataProvider constructor.
+     * @param string $appId
+     * @param string $appSecret
+     * @param string $accessToken
+     */
+    public function __construct($appId, $appSecret, $accessToken)
+    {
+        $this->appId = $appId;
+        $this->appSecret = $appSecret;
+        $this->accessToken = $accessToken;
+    }
+
+    /**
+     * https://github.com/facebookarchive/php-graph-sdk
+     *
+     * @return \Facebook\FacebookResponse
+     */
     public function getContext()
     {
-        $api = Api::init(
-            '808199653047641',
-            'b3f469de46ebc1f94f5b8e3e0db09fc4',
-            'EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc'
-        );
+        try {
+            $fb = new Facebook([
+                'app_id' => $this->appId,
+                'app_secret' => $this->appSecret
+            ]);
+            // Returns a `FacebookFacebookResponse` object
+            $response = $fb->get("/{$this->appId}", $this->accessToken);
 
-        $api->getSession();
-        return $api;
+        } catch (\Exception $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch (Exception $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+
+        return $response;
     }
 }
