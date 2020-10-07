@@ -62,14 +62,15 @@ class Installer
                     $tab['parent'],
                     $tab['name'],
                     $tab['module'],
-                    $tab['active']
+                    $tab['active'],
+                    $tab['icon']
                 );
         }
 
         return $installTabCompleted;
     }
 
-    public function installTab($className, $parent, $name, $module, $active = true)
+    public function installTab($className, $parent, $name, $module, $active = true, $icon = '')
     {
         if (Tab::getIdFromClassName($className)) {
             return true;
@@ -82,6 +83,7 @@ class Installer
         $moduleTab->id_parent = $idParent;
         $moduleTab->module = $module;
         $moduleTab->active = $active;
+        $moduleTab->icon = $icon;
 
         $languages = Language::getLanguages(true);
         foreach ($languages as $language) {
@@ -100,6 +102,7 @@ class Installer
                 'name' => 'Marketing',
                 'module' => '',
                 'active' => true,
+                'icon' => 'track_changes'
             ],
             [
                 'className' => 'AdminPsfacebookModule',
@@ -107,6 +110,7 @@ class Installer
                 'name' => 'Facebook',
                 'module' => $this->module->name,
                 'active' => true,
+                'icon' => ''
             ],
             [
                 'className' => 'AdminAjaxPsfacebook',
@@ -114,6 +118,7 @@ class Installer
                 'name' => $this->module->name,
                 'module' => $this->module->name,
                 'active' => true,
+                'icon' => ''
             ],
         ];
     }
