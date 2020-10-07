@@ -102,7 +102,7 @@ class Installer
                 'name' => 'Marketing',
                 'module' => '',
                 'active' => true,
-                'icon' => 'track_changes'
+                'icon' => 'track_changes',
             ],
             [
                 'className' => 'AdminPsfacebookModule',
@@ -110,7 +110,7 @@ class Installer
                 'name' => 'Facebook',
                 'module' => $this->module->name,
                 'active' => true,
-                'icon' => ''
+                'icon' => '',
             ],
             [
                 'className' => 'AdminAjaxPsfacebook',
@@ -118,7 +118,7 @@ class Installer
                 'name' => $this->module->name,
                 'module' => $this->module->name,
                 'active' => true,
-                'icon' => ''
+                'icon' => '',
             ],
         ];
     }
