@@ -57,13 +57,13 @@ class Installer
         $installTabCompleted = true;
 
         foreach ($this->getTabs() as $tab) {
-            $installTabCompleted &= $this->installTab(
-                $tab['className'],
-                $tab['parent'],
-                $tab['name'],
-                $tab['module'],
-                $tab['active']
-            );
+            $installTabCompleted = $installTabCompleted && $this->installTab(
+                    $tab['className'],
+                    $tab['parent'],
+                    $tab['name'],
+                    $tab['module'],
+                    $tab['active']
+                );
         }
 
         return $installTabCompleted;
@@ -88,11 +88,7 @@ class Installer
             $moduleTab->name[$language['id_lang']] = $name;
         }
 
-        if (!$moduleTab->save()) {
-            return false;
-        }
-
-        return true;
+        return $moduleTab->save();
     }
 
     private function getTabs()
