@@ -150,17 +150,17 @@ export default defineComponent({
     pixelActivationRoute: {
       type: String,
       required: true,
-      default: () => global.psFacebookPixelActivationRoute,
+      default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
       required: true,
-      default: () => global.psFacebookFbeOnboardingSaveRoute,
+      default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
       required: true,
-      default: () => global.psFacebookFbeUiUrl,
+      default: () => global.psFacebookFbeUiUrl || null,
     },
   },
   computed: {
@@ -193,15 +193,14 @@ export default defineComponent({
       this.openPopup();
     },
     onEditClick() {
-      this.onPixelActivation();
-      // this.openPopup();
+      this.openPopup();
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.activated;
       const newState = !actualState;
 
-      // TODO !0: fetch(this.pixelActivationRoute, ....) URL to see with Pablo PR
-      fetch('https://api.chucknorris.io/jokes/random', {
+      // Save activation state in PHP side.
+      fetch(this.pixelActivationRoute, {
         method: 'POST',
         // mode: 'cors', // no-cors, *cors, same-origin
         // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -219,7 +218,8 @@ export default defineComponent({
           ...this.dynamicContextPsFacebook,
           pixel: {...this.dynamicContextPsFacebook.pixel, activated: newState},
         };
-      }).catch(() => {
+      }).catch((error) => {
+        console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.dynamicContextPsFacebook = {
           ...this.dynamicContextPsFacebook,
@@ -241,9 +241,8 @@ export default defineComponent({
       }
       this.showGlass = true;
 
-      // TODO !0: fetch(this.fbeOnboardingSaveRoute, ....) I need this route from PHP side, that
-      // will save access_token, fbe?, and more. And gets back contextPsFacebook object in response.
-      fetch('https://api.chucknorris.io/jokes/random', {
+      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook object in response.
+      fetch(this.fbeOnboardingSaveRoute, {
         method: 'POST',
         // mode: 'cors', // no-cors, *cors, same-origin
         // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -261,7 +260,8 @@ export default defineComponent({
         this.dynamicContextPsFacebook = fakeContextPsFacebook;
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
-      }).catch(() => {
+      }).catch((error) => {
+        console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
         this.$forceUpdate();
