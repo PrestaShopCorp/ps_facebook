@@ -40,6 +40,7 @@ class FacebookDataProvider
 
     /**
      * https://github.com/facebookarchive/php-graph-sdk
+     * https://developers.facebook.com/docs/graph-api/changelog/version8.0
      *
      * @return array
      */

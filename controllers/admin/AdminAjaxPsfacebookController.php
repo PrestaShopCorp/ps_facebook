@@ -58,9 +58,23 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             'v8.0'
         );
 
+        $context = Context::getContext();
         $configurationData
             ->setContextPsAccounts($psAccountPresenter->present())
-            ->getContextPsFacebook($fbDataProvider->getContext());
+            ->setContextPsFacebook($fbDataProvider->getContext())
+            ->setPsFacebookExternalBusinessId('0b2f5f57-5190-47e2-8df6-b2f96447ac9f')
+            ->setPsAccountsToken('eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwMTY0NzM0MywiZXhwIjoxNjAxNjUwOTQzLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay10ZHZ0cUBwcmVzdGFzaG9wLXJlYWR5LWludGVncmF0aW9uLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGstdGR2dHFAcHJlc3Rhc2hvcC1yZWFkeS1pbnRlZ3JhdGlvbi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInVpZCI6InVNaFhlS0hqQVNadjlRR3FIVXRyUmNpZk4yMzIifQ.OhQvEze9zB0z3aBO4qwKwAZmvZYT1FvKWa9XqJfcRU56sxfJR-xpY2C1DyBmiU6IUEghtdTIH44tvH98ke9eAMFHcduBaP-YPAj7n-oikpmmImN8ctQ7exyiXJBVsZ712AF9JNvs7jpf12ByFdJ2F3CZ6eF7GPLmLXsAlxsZY_rauNU4OBWmZvv8d_8qQvgnGsDjo5XRReTVY_oNDRgn9LO5PIf3oPxDPfEgR1EA7RB94BqRLuVN2exgStD1MGYirIwf-PADmFfCtRXWAyMtqJ0z4fXOqQJSs2ZbqVj5LjYInYWL0UMm5CKTQankNN8xUdc45Ies1qFdFY-eeOSKiQ')
+            ->setPsFacebookCurrency($context->currency->iso_code)
+            ->setPsFacebookTimezone(Configuration::get('PS_TIMEZONE'))
+            ->setPsFacebookLocale(Configuration::get('PS_LOCALE_LANGUAGE'))
+            ->setPsFacebookPixelActivationRoute('todo')
+            ->setPsFacebookFbeOnboardingSaveRoute('todo')
+            ->setPsFacebookFbeUiUrl('https://facebook.psessentials-integration.net')
+            ->setTranslations((new PsFacebookTranslations($this->module))->getTranslations())
+            ->setIsoCode($context->language->iso_code)
+            ->setLanguageCode($context->language->language_code)
+        ;
+
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'contextPsFacebook' => [
@@ -107,5 +121,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 'languageLocale' => $this->context->language->language_code,
             ],
         ]);
+    }
+
+    public function ajaxProcessActivatePixel()
+    {
+        $test = 1;
     }
 }
