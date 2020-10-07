@@ -69,7 +69,7 @@ class CustomisationEvent extends AbstractEvent
 
         $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
             $productId,
-            $attributes
+            $attributeIds
         );
 
         $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute, $locale);
