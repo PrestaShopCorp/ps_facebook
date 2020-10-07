@@ -66,6 +66,7 @@ class Ps_facebook extends Module
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
+        'actionAdminControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -131,7 +132,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -148,13 +149,6 @@ class Ps_facebook extends Module
 
         $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
         $dotenv->load();
-        $this->context->link->getAdminLink('AdminAjaxPsfacebook', true, [], ['action' => 'test']);
-        //        $fbDataProvider = new FacebookDataProvider(
-//            '726899634800479', // 808199653047641
-//            Configuration::get('PS_FBE_ACCESS_TOKEN'), //EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc
-//            'v8.0'
-//        );
-//        $fbDataProvider->getContext();
     }
 
     /**
@@ -213,6 +207,21 @@ class Ps_facebook extends Module
         ]);
 
         $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
+    }
+
+    public function hookActionAdminControllerSetMedia()
+    {
+        Media::addJsDef(
+            [
+                'ajaxUrl' => $this->context->link->getAdminLink(
+                    'AdminAjaxPsfacebook',
+                    true,
+                    []
+                    ,
+                    ['action' => 'onboard']
+                )
+            ]
+        );
     }
 
     public function hookActionCustomerAccountAdd(array $params)

@@ -333,9 +333,9 @@ class ConfigurationData implements JsonSerializable
 
     public function jsonSerialize()
     {
-        [
+        return [
             'contextPsAccounts' => $this->getContextPsAccounts(),
-            'contextPsFacebook' => $this->getContextPsFacebook()->jsonSerialize(),
+//            'contextPsFacebook' => $this->getContextPsFacebook()->jsonSerialize(),
             'psFacebookExternalBusinessId' => $this->getPsFacebookExternalBusinessId(),
             'psAccountsToken' => $this->getPsAccountsToken(),
             'psFacebookCurrency' => $this->getPsFacebookCurrency(),

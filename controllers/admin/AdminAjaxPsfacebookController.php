@@ -23,6 +23,29 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 {
     public function postProcess()
     {
+        /**
+         *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+         *  TODO: We should use symfony component or copy function from it later on
+         */
+
+
+        $action = Tools::getValue('action');
+
+        switch ($action) {
+            case 'onboard':
+                $inputs = json_decode(file_get_contents("php://input"), true);
+                $this->ajaxProcessConnectToFacebook($inputs);
+                break;
+            case 'activatePixel':
+                $this->ajaxProcessOnboardingSave();
+                break;
+            case 'saveOnboarding':
+                $this->ajaxProcessActivatePixel();
+                break;
+            default:
+                break;
+        }
+
         return parent::postProcess();
     }
 
@@ -47,15 +70,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
     }
 
-    public function ajaxProcessConnectToFacebook()
+    public function ajaxProcessConnectToFacebook(array $inputs)
     {
+        $onboardingParams = $inputs['onboarding'];
+        $this->saveOnboardingConfiguration($onboardingParams);
         $configurationData = new ConfigurationData();
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
 
         $fbDataProvider = new FacebookDataProvider(
             Config::APP_ID, // 808199653047641
-            Configuration::get('PS_FBE_ACCESS_TOKEN'), //EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc
+            $onboardingParams['access_token'], //EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc
             'v8.0'
+        );
+
+        $pixelActivationUrl = $this->context->link->getAdminLink(
+            'AdminAjaxPsfacebook',
+            true,
+            [],
+            ['action' => 'activatePixel']
+        );
+
+        $onboardingSaveUrl = $this->context->link->getAdminLink(
+            'AdminAjaxPsfacebook',
+            true,
+            [],
+            ['action' => 'saveOnboarding']
         );
 
         $context = Context::getContext();
@@ -63,68 +102,39 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             ->setContextPsAccounts($psAccountPresenter->present())
             ->setContextPsFacebook($fbDataProvider->getContext())
             ->setPsFacebookExternalBusinessId('0b2f5f57-5190-47e2-8df6-b2f96447ac9f')
-            ->setPsAccountsToken('eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwMTY0NzM0MywiZXhwIjoxNjAxNjUwOTQzLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay10ZHZ0cUBwcmVzdGFzaG9wLXJlYWR5LWludGVncmF0aW9uLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGstdGR2dHFAcHJlc3Rhc2hvcC1yZWFkeS1pbnRlZ3JhdGlvbi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInVpZCI6InVNaFhlS0hqQVNadjlRR3FIVXRyUmNpZk4yMzIifQ.OhQvEze9zB0z3aBO4qwKwAZmvZYT1FvKWa9XqJfcRU56sxfJR-xpY2C1DyBmiU6IUEghtdTIH44tvH98ke9eAMFHcduBaP-YPAj7n-oikpmmImN8ctQ7exyiXJBVsZ712AF9JNvs7jpf12ByFdJ2F3CZ6eF7GPLmLXsAlxsZY_rauNU4OBWmZvv8d_8qQvgnGsDjo5XRReTVY_oNDRgn9LO5PIf3oPxDPfEgR1EA7RB94BqRLuVN2exgStD1MGYirIwf-PADmFfCtRXWAyMtqJ0z4fXOqQJSs2ZbqVj5LjYInYWL0UMm5CKTQankNN8xUdc45Ies1qFdFY-eeOSKiQ')
+            ->setPsAccountsToken(Configuration::get('PS_ACCOUNTS_FIREBASE_REFRESH_TOKEN'))
             ->setPsFacebookCurrency($context->currency->iso_code)
             ->setPsFacebookTimezone(Configuration::get('PS_TIMEZONE'))
             ->setPsFacebookLocale(Configuration::get('PS_LOCALE_LANGUAGE'))
-            ->setPsFacebookPixelActivationRoute('todo')
-            ->setPsFacebookFbeOnboardingSaveRoute('todo')
+            ->setPsFacebookPixelActivationRoute($pixelActivationUrl)
+            ->setPsFacebookFbeOnboardingSaveRoute($onboardingSaveUrl)
             ->setPsFacebookFbeUiUrl('https://facebook.psessentials-integration.net')
             ->setTranslations((new PsFacebookTranslations($this->module))->getTranslations())
             ->setIsoCode($context->language->iso_code)
-            ->setLanguageCode($context->language->language_code)
-        ;
+            ->setLanguageCode($context->language->language_code);
 
-        Media::addJsDef([
-            'contextPsAccounts' => $psAccountPresenter->present(),
-            'contextPsFacebook' => [
-                /* 'email' => 'him@prestashop.com',
-                'facebookBusinessManager' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'pixel' => [
-                  'name' => 'La Fanchonette Test Pixel',
-                  'id' => '1234567890',
-                  'lastActive' => 1601283877000,
-                  'activated' => true
-                ],
-                'page' => [
-                  'name' => 'La Fanchonette',
-                  'likes' => 42,
-                  'logo' => null
-                ],
-                'ads' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'categoriesMatching' => [
-                  'sent': false
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'configurations' => $configurationData->jsonSerialize()
                 ]
-                */
-            ], // from MySQL once FB onboarding done
-            // TODO this one given by the API POST /account/onboard:
-            'psFacebookExternalBusinessId' => '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
-            // TODO this one given by \PrestaShop\AccountsAuth\Service\PsAccountsService->getOrRefreshToken()
-            'psAccountsToken' => 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwMTY0NzM0MywiZXhwIjoxNjAxNjUwOTQzLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay10ZHZ0cUBwcmVzdGFzaG9wLXJlYWR5LWludGVncmF0aW9uLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGstdGR2dHFAcHJlc3Rhc2hvcC1yZWFkeS1pbnRlZ3JhdGlvbi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInVpZCI6InVNaFhlS0hqQVNadjlRR3FIVXRyUmNpZk4yMzIifQ.OhQvEze9zB0z3aBO4qwKwAZmvZYT1FvKWa9XqJfcRU56sxfJR-xpY2C1DyBmiU6IUEghtdTIH44tvH98ke9eAMFHcduBaP-YPAj7n-oikpmmImN8ctQ7exyiXJBVsZ712AF9JNvs7jpf12ByFdJ2F3CZ6eF7GPLmLXsAlxsZY_rauNU4OBWmZvv8d_8qQvgnGsDjo5XRReTVY_oNDRgn9LO5PIf3oPxDPfEgR1EA7RB94BqRLuVN2exgStD1MGYirIwf-PADmFfCtRXWAyMtqJ0z4fXOqQJSs2ZbqVj5LjYInYWL0UMm5CKTQankNN8xUdc45Ies1qFdFY-eeOSKiQ',
-            'psFacebookCurrency' => null, // TODO from shop (merchant)
-            'psFacebookTimezone' => null, // TODO from shop (merchant)
-            'psFacebookLocale' => null, // TODO from shop (merchant)
-            'psFacebookPixelActivationRoute' => null, // TODO complete ajax route
-            'psFacebookFbeOnboardingSaveRoute' => null, // TODO complete ajax route
-            'psFacebookFbeUiUrl' => 'https://facebook.psessentials-integration.net', // TODO by default, use the production URL, but can be overridden by integration URL in a .env (cf ps_metrics)
-            'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
-            'i18nSettings' => [
-                'isoCode' => $this->context->language->iso_code,
-                'languageLocale' => $this->context->language->language_code,
-            ],
-        ]);
+            )
+        );
+    }
+
+    public function ajaxProcessOnboardingSave()
+    {
+        $test = 1;
     }
 
     public function ajaxProcessActivatePixel()
     {
         $test = 1;
+    }
+
+    private function saveOnboardingConfiguration(array $onboardingParams)
+    {
+        Configuration::updateValue('FB_ACCESS_TOKEN', $onboardingParams['access_token']);
     }
 }
