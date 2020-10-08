@@ -46,6 +46,7 @@ class Ps_facebook extends Module
 
     const FRONT_CONTROLLERS = [
         'FrontAjaxFacebookWebhooks',
+        'FrontAjaxFacebookAjax',
     ];
 
     const HOOK_LIST = [
@@ -61,8 +62,8 @@ class Ps_facebook extends Module
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
-        'actionAdminControllerSetMedia',
         'displayBackOfficeHeader',
+        'actionFrontControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -191,9 +192,18 @@ class Ps_facebook extends Module
         return __FILE__;
     }
 
-    public function hookBackOfficeHeader()
+    public function hookDisplayBackOfficeHeader()
     {
         $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
+    }
+
+    public function hookActionFrontControllerSetMedia()
+    {
+        Media::addJsDef([
+            'ajaxController' => $this->context->link->getModuleLink($this->name, 'Ajax', [], true),
+        ]);
+
+        $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
     }
 
     public function hookActionCustomerAccountAdd(array $params)

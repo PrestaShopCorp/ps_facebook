@@ -58,6 +58,7 @@ class ViewContentEvent extends AbstractEvent
                 $locale
             );
 
+            $productUrl = $this->context->link->getProductLink($product->id);
             $content = new Content();
             $content
                 ->setProductId($fbProductId)
@@ -76,7 +77,8 @@ class ViewContentEvent extends AbstractEvent
                 ->setEventName($type)
                 ->setEventTime(time())
                 ->setUserData($user)
-                ->setCustomData($customData);
+                ->setCustomData($customData)
+                ->setEventSourceUrl($productUrl);
 
             $events[] = $event;
         }
@@ -88,9 +90,10 @@ class ViewContentEvent extends AbstractEvent
             $type = 'ViewCategory';
             $content_type = 'product_group';
 
-            /** @var \CategoryControllerCore $controller */
+            /** @var \CategoryController $controller */
             $controller = $this->context->controller;
             $category = $controller->getCategory();
+            $categoryUrl = $this->context->link->getCategoryLink($category->id);
 
             $breadcrumbs = $controller->getBreadcrumbLinks();
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
@@ -105,7 +108,8 @@ class ViewContentEvent extends AbstractEvent
                 ->setEventName($type)
                 ->setEventTime(time())
                 ->setUserData($user)
-                ->setCustomData($customData);
+                ->setCustomData($customData)
+                ->setEventSourceUrl($categoryUrl);
 
             $events[] = $event;
         }

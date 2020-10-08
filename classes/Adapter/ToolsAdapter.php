@@ -10,4 +10,9 @@ class ToolsAdapter
     {
         return Tools::getValue($id);
     }
+
+    public function isSubmit($id)
+    {
+        return Tools::isSubmit($id);
+    }
 }
