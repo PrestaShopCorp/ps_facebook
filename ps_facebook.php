@@ -62,6 +62,7 @@ class Ps_facebook extends Module
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
         'actionAdminControllerSetMedia',
+        'displayBackOfficeHeader',
     ];
 
     const CONFIGURATION_LIST = [
@@ -188,6 +189,11 @@ class Ps_facebook extends Module
     public function getFilePath()
     {
         return __FILE__;
+    }
+
+    public function hookBackOfficeHeader()
+    {
+        $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
     }
 
     public function hookActionCustomerAccountAdd(array $params)
