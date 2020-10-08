@@ -17,6 +17,7 @@
 use PrestaShop\Module\PrestashopFacebook\Database\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\ConfigurationData;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -38,6 +39,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 break;
             case 'activatePixel':
                 $this->ajaxProcessOnboardingSave();
+                break;
+            case 'retrieveExternalBusinessId':
+                $this->ajaxProcessRetrieveExternalBusinessId();
                 break;
             case 'saveOnboarding':
                 $this->ajaxProcessActivatePixel();
@@ -109,6 +113,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             ->setPsFacebookPixelActivationRoute($pixelActivationUrl)
             ->setPsFacebookFbeOnboardingSaveRoute($onboardingSaveUrl)
             ->setPsFacebookFbeUiUrl('https://facebook.psessentials-integration.net')
+            ->setPsFacebookExternalBusinessId(Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'))
             ->setTranslations((new PsFacebookTranslations($this->module))->getTranslations())
             ->setIsoCode($context->language->iso_code)
             ->setLanguageCode($context->language->language_code);
@@ -131,6 +136,36 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function ajaxProcessActivatePixel()
     {
         $test = 1;
+    }
+
+    private function ajaxProcessRetrieveExternalBusinessId()
+    {
+        $externalBusinessId = Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID');
+        
+        if (empty($externalBusinessId)) {
+            $client = PsApiClient::create($_ENV['PRESTASHOP_FBE_API']);
+            $response = $client->post(
+                '/account/onboard',
+                [
+                    'json' => [
+                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
+                    ]
+                ]
+            );
+
+            dump($response);die;
+
+            $externalBusinessId = $response['some-key'];
+            Configuration::updateValue('PS_FACEBOOK_EXTERNAL_BUSINESS_ID', $externalBusinessId);
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'externalBusinessId' => $externalBusinessId,
+                ]
+            )
+        );
     }
 
     private function saveOnboardingConfiguration(array $onboardingParams)
