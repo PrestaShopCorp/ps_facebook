@@ -7,7 +7,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->bootstrap = true;
+        $this->bootstrap = false;
     }
 
     public function initContent()

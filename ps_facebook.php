@@ -181,16 +181,6 @@ class Ps_facebook extends Module
     }
 
     /**
-     * Load back dependencies.
-     *
-     * @return void
-     */
-    public function loadAsset()
-    {
-        // ¯\_(ツ)_/¯ yet
-    }
-
-    /**
      * return __FILE__
      *
      * @return string

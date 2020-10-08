@@ -70,7 +70,7 @@ class Installer
         return $installTabCompleted;
     }
 
-    public function installTab($className, $parent, $name, $module, $active = true, $icon = '')
+    public function installTab($className, $parent, $name, $module, $active, $icon)
     {
         if (Tab::getIdFromClassName($className)) {
             return true;
@@ -83,7 +83,9 @@ class Installer
         $moduleTab->id_parent = $idParent;
         $moduleTab->module = $module;
         $moduleTab->active = $active;
-        $moduleTab->icon = $icon;
+        if (property_exists($moduleTab, 'icon')) {
+            $moduleTab->icon = $icon;
+        }
 
         $languages = Language::getLanguages(true);
         foreach ($languages as $language) {
@@ -102,7 +104,7 @@ class Installer
                 'name' => 'Marketing',
                 'module' => '',
                 'active' => true,
-                'icon' => 'track_changes',
+                'icon' => 'campaign',
             ],
             [
                 'className' => 'AdminPsfacebookModule',
