@@ -5,7 +5,7 @@ use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 
 /*
  * 2007-2020 PrestaShop.
@@ -40,7 +40,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 class Ps_facebook extends Module
 {
     const MODULE_ADMIN_CONTROLLERS = [
-        'AdminAjaxPsfacebookController',
+        'AdminAjaxPsfacebook',
+        'AdminPsfacebookModule',
     ];
 
     const FRONT_CONTROLLERS = [
@@ -60,6 +61,8 @@ class Ps_facebook extends Module
         'actionNewsletterRegistrationAfter',
         'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
+        'actionAdminControllerSetMedia',
+        'displayBackOfficeHeader',
     ];
 
     const CONFIGURATION_LIST = [
@@ -169,94 +172,13 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
-        return parent::uninstall() &&
-            (new Uninstaller($this))->uninstall();
-    }
-
-    public function handleForms()
-    {
-        $id_pixel = Tools::getValue('PS_PIXEL_ID');
-        if (!empty($id_pixel)) {
-            Configuration::updateValue('PS_PIXEL_ID', $id_pixel);
-        }
-
-        $access_token = Tools::getValue('PS_FBE_ACCESS_TOKEN');
-        if (!empty($access_token)) {
-            Configuration::updateValue('PS_FBE_ACCESS_TOKEN', $access_token);
-        }
+        return (new Uninstaller($this, new TabRepository()))->uninstall() &&
+            parent::uninstall();
     }
 
     public function getContent()
     {
-        $this->handleForms();
-
-        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->name);
-
-        $this->context->smarty->assign([
-            'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
-            'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
-            'pathApp' => $this->_path . 'views/js/app.js',
-            'fbeApp' => $this->_path . 'views/js/main.js',
-            'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
-            'chunkVendor' => $this->_path . 'views/js/chunk-vendors.js',
-        ]);
-
-        Media::addJsDef([
-            'contextPsAccounts' => $psAccountPresenter->present(),
-            'contextPsFacebook' => [
-                /* 'email' => 'him@prestashop.com',
-                'facebookBusinessManager' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'pixel' => [
-                  'name' => 'La Fanchonette Test Pixel',
-                  'id' => '1234567890',
-                  'lastActive' => 1601283877000,
-                  'activated' => true
-                ],
-                'page' => [
-                  'name' => 'La Fanchonette',
-                  'likes' => 42,
-                  'logo' => null
-                ],
-                'ads' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'categoriesMatching' => [
-                  'sent': false
-                ]
-                */
-            ], // depuis MySQL quand onboarding effectué
-            'psFacebookExternalBusinessId' => null, // fourni par le call à mon API (POST /account/onboard) a faire avant l'onboarding
-            'psAccountsToken' => null, // fourni par prestashop_accounts_auth PHP lib
-            'psFacebookCurrency' => null, // shop (marchand)
-            'psFacebookTimezone' => null, // shop (marchand)
-            'psFacebookLocale' => null, // shop (marchand)
-            'psFacebookPixelActivationRoute' => null, // route ajax complète
-            'psFacebookFbeOnboardingSaveRoute' => null, // route ajax complète
-            'psFacebookFbeUiUrl' => null, // statique, par défaut celle de prod, mais surchargeable par un fichier .env (cf ps_metrics)
-            'translations' => (new PsFacebookTranslations($this))->getTranslations(),
-            'i18nSettings' => [
-                'isoCode' => $this->context->language->iso_code,
-                'languageLocale' => $this->context->language->language_code,
-            ],
-        ]);
-
-        return $this->display(__FILE__, '/views/templates/admin/app.tpl');
-    }
-
-    /**
-     * Load back dependencies.
-     *
-     * @return void
-     */
-    public function loadAsset()
-    {
-        // ¯\_(ツ)_/¯ yet
+        Tools::redirectAdmin($this->context->link->getAdminLink('AdminPsfacebookModule'));
     }
 
     /**
@@ -267,6 +189,11 @@ class Ps_facebook extends Module
     public function getFilePath()
     {
         return __FILE__;
+    }
+
+    public function hookBackOfficeHeader()
+    {
+        $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
     }
 
     public function hookActionCustomerAccountAdd(array $params)
