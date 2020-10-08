@@ -6,6 +6,8 @@ use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 /*
  * 2007-2020 PrestaShop.
@@ -64,6 +66,7 @@ class Ps_facebook extends Module
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
+        'actionAdminControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -129,7 +132,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -204,6 +207,21 @@ class Ps_facebook extends Module
         ]);
 
         $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
+    }
+
+    public function hookActionAdminControllerSetMedia()
+    {
+        Media::addJsDef(
+            [
+                'ajaxUrl' => $this->context->link->getAdminLink(
+                    'AdminAjaxPsfacebook',
+                    true,
+                    []
+                    ,
+                    ['action' => 'onboard']
+                )
+            ]
+        );
     }
 
     public function hookActionCustomerAccountAdd(array $params)
