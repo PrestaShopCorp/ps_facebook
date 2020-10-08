@@ -183,6 +183,7 @@ export default defineComponent({
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
       error: null,
+      popupReceptionDuplicate: false,
     };
   },
   methods: {
@@ -209,7 +210,7 @@ export default defineComponent({
         //   origin, origin-when-cross-origin, same-origin, strict-origin,
         //   strict-origin-when-cross-origin, unsafe-url
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({pixelActivation: newState}), // TODO !0: format to see with Pablo PR
+        body: JSON.stringify({event_status: newState}), // TODO !0: format to see with Pablo PR
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -234,14 +235,20 @@ export default defineComponent({
       this.showGlass = false;
     },
     onFbeOnboardResponded(response) {
-      // console.log('response received', response);
+      if (this.popupReceptionDuplicate) {
+        console.log('duplicated response received');
+        return;
+      }
+      this.popupReceptionDuplicate = true;
+      console.log('response received', response);
+
       if (!response.access_token) {
         this.showGlass = false;
         return;
       }
       this.showGlass = true;
 
-      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook object in response.
+      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
       fetch(this.fbeOnboardingSaveRoute, {
         method: 'POST',
         // mode: 'cors', // no-cors, *cors, same-origin
@@ -256,14 +263,33 @@ export default defineComponent({
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
-        const fakeContextPsFacebook = {}; // TODO !0: get all missing data from res.json()
+        const fakeContextPsFacebook = {
+          email: 'him@prestashop.com',
+          facebookBusinessManager: {
+            name: 'La Fanchonette',
+            email: 'fanchonette@ps.com',
+            createdAt: Date.now(),
+          },
+          pixel: {
+            name: 'La Fanchonette Test Pixel',
+            id: '1234567890',
+            lastActive: Date.now(),
+            activated: true,
+          },
+          page: {},
+          ads: {},
+          categoriesMatching: {
+            sent: false,
+          },
+        }; // TODO !0: get all missing data from res.json()
         this.dynamicContextPsFacebook = fakeContextPsFacebook;
-        this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
+        this.popupReceptionDuplicate = false;
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
+        this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
     },
