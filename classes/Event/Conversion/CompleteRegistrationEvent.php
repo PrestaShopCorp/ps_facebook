@@ -5,7 +5,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 use Context;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 
 class CompleteRegistrationEvent extends AbstractEvent
 {
@@ -29,9 +28,6 @@ class CompleteRegistrationEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }

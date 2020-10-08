@@ -2,22 +2,18 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
-use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 
-class ShopSubscriptionEvent extends AbstractEvent
+class ContactEvent extends AbstractEvent
 {
     public function send($params)
     {
         $user = $this->createSdkUserData($this->context);
-        $customData = (new CustomData())
-            ->setContentName(pSQL($params['email']));
 
         $event = (new Event())
-            ->setEventName('Subscribe')
+            ->setEventName('Contact')
             ->setEventTime(time())
-            ->setUserData($user)
-            ->setCustomData($customData);
+            ->setUserData($user);
 
         $events = [];
         $events[] = $event;

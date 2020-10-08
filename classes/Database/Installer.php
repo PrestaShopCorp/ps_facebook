@@ -2,6 +2,9 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
+use Language;
+use Tab;
+
 class Installer
 {
     private $module;
@@ -31,12 +34,12 @@ class Installer
             foreach (\Ps_facebook::CONFIGURATION_LIST as $name => $value) {
                 if (false === \Configuration::hasKey((string) $name, null, null, (int) $shopId)) {
                     $result = $result && \Configuration::updateValue(
-                        (string) $name,
-                        $value,
-                        false,
-                        null,
-                        (int) $shopId
-                    );
+                            (string) $name,
+                            $value,
+                            false,
+                            null,
+                            (int) $shopId
+                        );
                 }
             }
         }
@@ -53,23 +56,72 @@ class Installer
     {
         $installTabCompleted = true;
 
-        foreach (\Ps_facebook::MODULE_ADMIN_CONTROLLERS as $controllerName) {
-            if (\Tab::getIdFromClassName($controllerName)) {
-                continue;
-            }
-
-            $tab = new \Tab();
-            $tab->class_name = $controllerName;
-            $tab->active = true;
-            $tab->name = array_fill_keys(
-                \Language::getIDs(false),
-                $this->module->displayName
-            );
-            $tab->id_parent = -1;
-            $tab->module = $this->module->name;
-            $installTabCompleted = $installTabCompleted && $tab->add();
+        foreach ($this->getTabs() as $tab) {
+            $installTabCompleted = $installTabCompleted && $this->installTab(
+                    $tab['className'],
+                    $tab['parent'],
+                    $tab['name'],
+                    $tab['module'],
+                    $tab['active'],
+                    $tab['icon']
+                );
         }
 
         return $installTabCompleted;
+    }
+
+    public function installTab($className, $parent, $name, $module, $active, $icon)
+    {
+        if (Tab::getIdFromClassName($className)) {
+            return true;
+        }
+
+        $idParent = is_int($parent) ? $parent : Tab::getIdFromClassName($parent);
+
+        $moduleTab = new Tab();
+        $moduleTab->class_name = $className;
+        $moduleTab->id_parent = $idParent;
+        $moduleTab->module = $module;
+        $moduleTab->active = $active;
+        if (property_exists($moduleTab, 'icon')) {
+            $moduleTab->icon = $icon;
+        }
+
+        $languages = Language::getLanguages(true);
+        foreach ($languages as $language) {
+            $moduleTab->name[$language['id_lang']] = $name;
+        }
+
+        return $moduleTab->save();
+    }
+
+    private function getTabs()
+    {
+        return [
+            [
+                'className' => 'Marketing',
+                'parent' => 'IMPROVE',
+                'name' => 'Marketing',
+                'module' => '',
+                'active' => true,
+                'icon' => 'campaign',
+            ],
+            [
+                'className' => 'AdminPsfacebookModule',
+                'parent' => 'Marketing',
+                'name' => 'Facebook',
+                'module' => $this->module->name,
+                'active' => true,
+                'icon' => '',
+            ],
+            [
+                'className' => 'AdminAjaxPsfacebook',
+                'parent' => -1,
+                'name' => $this->module->name,
+                'module' => $this->module->name,
+                'active' => true,
+                'icon' => '',
+            ],
+        ];
     }
 }

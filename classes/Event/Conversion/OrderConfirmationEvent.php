@@ -7,7 +7,6 @@ use Context;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
 use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 
@@ -45,10 +44,12 @@ class OrderConfirmationEvent extends AbstractEvent
 
             $contents[] = $content;
         }
+
         $customData = (new CustomData())
             ->setCurrency($currencyIsoCode)
             ->setValue($order->total_paid)
-            ->setContents($contents);
+            ->setContents($contents)
+            ->setContentType('product');
 
         $event = (new Event())
             ->setEventName('Purchase')
@@ -59,9 +60,6 @@ class OrderConfirmationEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }
