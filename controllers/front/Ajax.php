@@ -7,6 +7,14 @@ class ps_facebookAjaxModuleFrontController extends ModuleFrontController
 {
     public function postProcess()
     {
+        if ('CustomizeProduct' === Tools::getValue('action')) {
+            return $this->postProcessCustomizeProduct();
+        }
+    }
+
+    private function postProcessCustomizeProduct()
+    {
+        // ToDo : Add validator for these parameters
         $productId = Tools::getValue('id_product');
         $attributeIds = Tools::getValue('attribute_ids');
         $params = [

@@ -90,7 +90,7 @@ class ViewContentEvent extends AbstractEvent
             $type = 'ViewCategory';
             $content_type = 'product_group';
 
-            /** @var \CategoryControllerCore $controller */
+            /** @var \CategoryController $controller */
             $controller = $this->context->controller;
             $category = $controller->getCategory();
             $categoryUrl = $this->context->link->getCategoryLink($category->id);
