@@ -7,7 +7,7 @@ use Context;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
-use FacebookAds\Object\ServerSide\EventRequest;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 
@@ -18,10 +18,20 @@ class ViewContentEvent extends AbstractEvent
      */
     private $toolsAdapter;
 
-    public function __construct(Context $context, $pixelId, ToolsAdapter $toolsAdapter)
-    {
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct(
+        Context $context,
+        $pixelId,
+        ToolsAdapter $toolsAdapter,
+        ConfigurationAdapter $configurationAdapter
+    ) {
         parent::__construct($context, $pixelId);
         $this->toolsAdapter = $toolsAdapter;
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     public function send($params)
@@ -30,11 +40,11 @@ class ViewContentEvent extends AbstractEvent
             return;
         }
 
-        $page = $this->context->controller->php_self;
-        if (empty($page)) {
-            $page = \Tools::getValue('controller');
+        $controllerPage = $this->context->controller->php_self;
+        if (empty($controllerPage)) {
+            $controllerPage = \Tools::getValue('controller');
         }
-        $page = pSQL($page); // is this really needed ?
+        $controllerPage = pSQL($controllerPage); // is this really needed ?
 
         $id_lang = (int) $this->context->language->id;
         $locale = \Tools::strtoupper($this->context->language->iso_code);
@@ -45,7 +55,7 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers ViewContent product pages
         */
-        if ($page === 'product') {
+        if ($controllerPage === 'product') {
             $type = 'ViewContent';
 
             /** @var \ProductController $controller */
@@ -58,6 +68,7 @@ class ViewContentEvent extends AbstractEvent
                 $locale
             );
 
+            // todo: url is generated without attribute and doesn't match with pixel url
             $productUrl = $this->context->link->getProductLink($product->id);
             $content = new Content();
             $content
@@ -86,13 +97,18 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers ViewContent for category pages
         */
-        if ($page === 'category' && $this->context->controller->controller_type === 'front') {
+        if ($controllerPage === 'category' && $this->context->controller->controller_type === 'front') {
             $type = 'ViewCategory';
             $content_type = 'product_group';
 
             /** @var \CategoryController $controller */
             $controller = $this->context->controller;
             $category = $controller->getCategory();
+
+            $page = $this->toolsAdapter->getValue('page');
+            $resultsPerPage = $this->configurationAdapter->get('PS_PRODUCTS_PER_PAGE');
+
+            $prods = $category->getProducts($id_lang, $page, $resultsPerPage);
             $categoryUrl = $this->context->link->getCategoryLink($category->id);
 
             $breadcrumbs = $controller->getBreadcrumbLinks();
@@ -102,7 +118,8 @@ class ViewContentEvent extends AbstractEvent
             $customData = (new CustomData())
                 ->setContentName(\Tools::replaceAccentedChars($category->name) . ' ' . $locale)
                 ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb))
-                ->setContentType($content_type);
+                ->setContentType($content_type)
+                ->setContentIds(array_column($prods, 'id_product'));
 
             $event = (new Event())
                 ->setEventName($type)
@@ -117,7 +134,7 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers ViewContent for cms pages
         */
-        if ($page === 'cms') {
+        if ($controllerPage === 'cms') {
             $type = 'ViewCMS';
             $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
 
@@ -144,7 +161,7 @@ class ViewContentEvent extends AbstractEvent
         /*
         * Triggers InitiateCheckout for checkout page
         */
-        if ($page === 'cart' && $this->toolsAdapter->getValue('action') === 'show') {
+        if ($controllerPage === 'cart' && $this->toolsAdapter->getValue('action') === 'show') {
             $type = 'InitiateCheckout';
             $cart = $this->context->cart;
 
@@ -187,9 +204,6 @@ class ViewContentEvent extends AbstractEvent
             return true;
         }
 
-        $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
-
-        return $request->execute();
+        return $this->sendEvents($events);
     }
 }

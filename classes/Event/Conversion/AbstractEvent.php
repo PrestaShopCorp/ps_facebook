@@ -5,6 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 use Address;
 use Context;
 use Country;
+use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\Gender;
 use FacebookAds\Object\ServerSide\UserData;
 use Gender as PsGender;
@@ -70,5 +71,18 @@ abstract class AbstractEvent implements ConversionEventInterface
         }
 
         return $userData;
+    }
+
+    /**
+     * @param array $events
+     *
+     * @return \FacebookAds\Object\ServerSide\EventResponse
+     */
+    protected function sendEvents(array $events)
+    {
+        $request = (new EventRequest($this->pixelId))
+            ->setEvents($events);
+
+        return $request->execute();
     }
 }

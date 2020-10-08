@@ -58,7 +58,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
                     'content_name' => \Tools::replaceAccentedChars($prods['name']) . ' ' . $locale,
                     'content_ids' => $prods['id_product'],
                     'content_type' => $content_type,
-                    'value' => (float) $prods['price_amount'],
+                    'value' => (float) $prods['price_tax_exc'],
                     'currency' => $currency_iso_code,
                 ];
             }
@@ -71,7 +71,10 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             $type = 'ViewCategory';
             $category = $controller->getCategory();
             $track = 'trackCustom';
-            $prods = $category->getProducts($id_lang, 1, 10);
+
+            $page = \Tools::getValue('page');
+            $resultsPerPage = \Configuration::get('PS_PRODUCTS_PER_PAGE');
+            $prods = $category->getProducts($id_lang, $page, $resultsPerPage);
 
             if (true === $this->module->psVersionIs17) {
                 $breadcrumbs = $controller->getBreadcrumbLinks();
@@ -127,6 +130,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
 
         /*
         * Triggers InitiateCheckout for checkout page
+         * //todo: its triggered in cart page not in checkout
         */
         if ($page === 'cart' && \Tools::getValue('action') === 'show') {
             $type = 'InitiateCheckout';
@@ -135,7 +139,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
                 'num_items' => $this->context->cart->nbProducts(),
                 'content_ids' => array_column($this->context->cart->getProducts(), 'id_product'),
                 'content_type' => $content_type,
-                'value' => (float) $this->context->cart->getOrderTotal(),
+                'value' => (float) $this->context->cart->getOrderTotal(false),
                 'currency' => $currency_iso_code,
             ];
         }

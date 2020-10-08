@@ -5,6 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 use Context;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\AddToCartEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CompleteRegistrationEvent;
@@ -76,10 +77,9 @@ class ApiConversionHandler
                     ->send($params);
                 break;
             case 'hookDisplayHeader':
-                (new ViewContentEvent($this->context, $pixelId, new ToolsAdapter()))
+                (new ViewContentEvent($this->context, $pixelId, new ToolsAdapter(), new ConfigurationAdapter()))
                     ->send($params);
                 break;
-
             default:
                 // unsupported event
                 break;
