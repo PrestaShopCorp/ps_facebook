@@ -79,7 +79,7 @@ const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
     component.contextPsAccounts.currentShop
     && component.contextPsAccounts.currentShop.url
-    && component.externalBusinessId
+    && component.dynamicExternalBusinessId
     && component.psAccountsToken
   );
   return canGeneratePopup ? openPopupGenerator(
@@ -88,7 +88,7 @@ const generateOpenPopup = (component, popupUrl) => {
     popupUrl,
     '/index.html',
     component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
-    component.externalBusinessId,
+    component.dynamicExternalBusinessId,
     component.psAccountsToken,
     component.currency,
     component.timezone,
@@ -97,7 +97,7 @@ const generateOpenPopup = (component, popupUrl) => {
     component.onFbeOnboardOpened,
     component.onFbeOnboardClosed,
     component.onFbeOnboardResponded,
-  ) : () => {};
+  ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
 };
 
 export default defineComponent({
@@ -162,6 +162,11 @@ export default defineComponent({
       required: true,
       default: () => global.psFacebookFbeUiUrl || null,
     },
+    psFacebookRetrieveExternalBusinessId: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookRetrieveExternalBusinessId || null,
+    },
   },
   computed: {
     psAccountsOnboarded() {
@@ -175,6 +180,7 @@ export default defineComponent({
   data() {
     return {
       dynamicContextPsFacebook: this.contextPsFacebook,
+      dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showSyncCatalogAdvice: this.contextPsFacebook
@@ -292,6 +298,32 @@ export default defineComponent({
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        fetch(this.psFacebookRetrieveExternalBusinessId, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        }).then((res) => {
+          if (!res.externalBusinessId) {
+            throw new Error('Cannot retrieve ExternalBusinessId.');
+          }
+          this.dynamicExternalBusinessId = res.externalBusinessId;
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          this.openPopup();
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
+          this.showGlass = false;
+          this.popupReceptionDuplicate = false;
+          this.$forceUpdate();
+        });
+      }
     },
   },
   watch: {

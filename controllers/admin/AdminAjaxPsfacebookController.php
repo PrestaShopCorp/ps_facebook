@@ -141,21 +141,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     private function ajaxProcessRetrieveExternalBusinessId()
     {
         $externalBusinessId = Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID');
-        
         if (empty($externalBusinessId)) {
-            $client = PsApiClient::create($_ENV['PRESTASHOP_FBE_API']);
+            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
             $response = $client->post(
                 '/account/onboard',
                 [
                     'json' => [
+                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
                         'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
                     ]
                 ]
-            );
+            )->json();
 
-            dump($response);die;
-
-            $externalBusinessId = $response['some-key'];
+            $externalBusinessId = $response['externalBusinessId'];
             Configuration::updateValue('PS_FACEBOOK_EXTERNAL_BUSINESS_ID', $externalBusinessId);
         }
 

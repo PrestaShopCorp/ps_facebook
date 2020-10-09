@@ -1,6 +1,8 @@
 <?php
 
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -12,7 +14,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
-        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
+        $psAccountPresenter = new PsAccountsPresenter($this->module->name);
+        $psAccountsService = new PsAccountsService();
 
         $this->context->smarty->assign([
             'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
@@ -25,6 +28,18 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
+            'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+
+            // TODO Get from DTO
+            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
+            // If previous is null, can be generated with the Ajax Admin Controller available here:
+            'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'retrieveExternalBusinessId']
+            ),
+
             'contextPsFacebook' => [
                 /* 'email' => 'him@prestashop.com',
                 'facebookBusinessManager' => [
@@ -53,18 +68,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ]
                 */
             ],
-            // If null, can be generated with the Ajax Admin Controller
-            // TODO Get from DTO
-            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
-            // TODO Remove me when using DTO
-            'onboardingFbeUrl' => $this->context->link->getAdminLink(
-              'AdminAjaxPsfacebook',
-              true,
-              [],
-              ['action' => 'retrieveExternalBusinessId']
-            ),
-            // TODO this one given by \PrestaShop\AccountsAuth\Service\PsAccountsService->getOrRefreshToken()
-            'psAccountsToken' => 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTYwMTY0NzM0MywiZXhwIjoxNjAxNjUwOTQzLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay10ZHZ0cUBwcmVzdGFzaG9wLXJlYWR5LWludGVncmF0aW9uLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGstdGR2dHFAcHJlc3Rhc2hvcC1yZWFkeS1pbnRlZ3JhdGlvbi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInVpZCI6InVNaFhlS0hqQVNadjlRR3FIVXRyUmNpZk4yMzIifQ.OhQvEze9zB0z3aBO4qwKwAZmvZYT1FvKWa9XqJfcRU56sxfJR-xpY2C1DyBmiU6IUEghtdTIH44tvH98ke9eAMFHcduBaP-YPAj7n-oikpmmImN8ctQ7exyiXJBVsZ712AF9JNvs7jpf12ByFdJ2F3CZ6eF7GPLmLXsAlxsZY_rauNU4OBWmZvv8d_8qQvgnGsDjo5XRReTVY_oNDRgn9LO5PIf3oPxDPfEgR1EA7RB94BqRLuVN2exgStD1MGYirIwf-PADmFfCtRXWAyMtqJ0z4fXOqQJSs2ZbqVj5LjYInYWL0UMm5CKTQankNN8xUdc45Ies1qFdFY-eeOSKiQ',
+
             'psFacebookCurrency' => null, // TODO from shop (merchant)
             'psFacebookTimezone' => null, // TODO from shop (merchant)
             'psFacebookLocale' => null, // TODO from shop (merchant)
