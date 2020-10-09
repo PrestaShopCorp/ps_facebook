@@ -19,7 +19,7 @@ $(document).ready(function () {
     function ajaxProductCombinationChange(productId, attributes) {
         $.ajax({
             type: 'POST',
-            url: ajaxController,
+            url: prestashopFacebookAjaxController,
             data: {
                 action: 'CustomizeProduct',
                 ajax: true,

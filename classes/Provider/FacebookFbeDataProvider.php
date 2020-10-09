@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Message\ResponseInterface;
 
 class FacebookFbeDataProvider extends FacebookDataProvider
 {
@@ -25,30 +26,31 @@ class FacebookFbeDataProvider extends FacebookDataProvider
 
     /**
      * https://developers.facebook.com/docs/marketing-api/fbe/fbe2/guides/get-features/#fbe-installation-api
-     * 
+     *
      * This allow the module to retrieve all the assigned IDs during the FBE onboarding
-     * 
+     *
      * @return array
      */
     public function getFbeInstallationContext()
     {
         $client = new Client();
+        /** @var ResponseInterface|null */
         $response = $client->get(
             self::API_URL . '/' . $this->sdkVersion . '/fbe_business/fbe_installs',
             [
-                'query' =>
-                    [
+                'query' => [
                         'fbe_external_business_id' => $this->externalBusinessId,
                         'access_token' => $this->accessToken,
-                    ]
+                    ],
             ]
         );
 
-        if (!$response || !$response->getBody()) {
+        if (null === $response || !$response->getBody()) {
             return [];
         }
 
         $data = json_decode($response->getBody()->getContents(), true);
+
         return reset($data['data']);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use Configuration;
 use Link;
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;

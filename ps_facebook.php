@@ -5,6 +5,7 @@ use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 
 /*
@@ -206,7 +207,7 @@ class Ps_facebook extends Module
     public function hookActionFrontControllerSetMedia()
     {
         Media::addJsDef([
-            'ajaxController' => $this->context->link->getModuleLink($this->name, 'Ajax', [], true),
+            'prestashopFacebookAjaxController' => $this->context->link->getModuleLink($this->name, 'Ajax', [], true),
         ]);
 
         $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
@@ -280,7 +281,14 @@ class Ps_facebook extends Module
 
     public function hookDisplayFooter()
     {
-        return $this->templateBuffer->flush();
+        $content = '';
+        $messengerHandler = new MessengerHandler();
+        if ($messengerHandler->isReady()) {
+            $this->context->smarty->assign($messengerHandler->handle());
+            $content .= $this->context->smarty->fetch('module:ps_facebook/views/templates/hook/messenger.tpl');
+        }
+
+        return $content . $this->templateBuffer->flush();
     }
 
     public function hookDisplayPersonalInformationTop(array $params)
