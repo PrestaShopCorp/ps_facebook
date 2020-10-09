@@ -31,7 +31,6 @@
 
 <script src="{$chunkVendor|escape:'htmlall':'UTF-8'}"></script>
 <script src="{$pathApp|escape:'htmlall':'UTF-8'}"></script>
-<script src="{$fbeApp|escape:'htmlall':'UTF-8'}"></script>
 
 <style>
   /** Hide native multistore module activation panel, because of visual regressions on non-bootstrap content */

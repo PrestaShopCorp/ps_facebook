@@ -21,7 +21,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
             'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
-            'fbeApp' => $this->module->getPathUri() . 'views/js/main.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
         ]);
