@@ -77,6 +77,7 @@ class ConfigurationHandler
             ->setPsFacebookPixelActivationRoute($pixelActivationUrl)
             ->setPsFacebookFbeOnboardingSaveRoute($onboardingSaveUrl)
             ->setPsFacebookFbeUiUrl('https://facebook.psessentials-integration.net')
+            ->setPsFacebookExternalBusinessId(Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'))
             ->setTranslations($this->facebookTranslations->getTranslations())
             ->setIsoCode($this->languageIso)
             ->setLanguageCode($this->languageCode);
