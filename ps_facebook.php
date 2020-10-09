@@ -66,7 +66,6 @@ class Ps_facebook extends Module
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
-        'actionAdminControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -212,21 +211,6 @@ class Ps_facebook extends Module
         ]);
 
         $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
-    }
-
-    public function hookActionAdminControllerSetMedia()
-    {
-        Media::addJsDef(
-            [
-                'ajaxUrl' => $this->context->link->getAdminLink(
-                    'AdminAjaxPsfacebook',
-                    true,
-                    []
-                    ,
-                    ['action' => 'onboard']
-                )
-            ]
-        );
     }
 
     public function hookActionCustomerAccountAdd(array $params)

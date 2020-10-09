@@ -33,7 +33,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $action = Tools::getValue('action');
 
         switch ($action) {
-            case 'onboard':
+            case 'saveOnboarding':
                 $inputs = json_decode(file_get_contents("php://input"), true);
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
@@ -42,9 +42,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 break;
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
-                break;
-            case 'saveOnboarding':
-                $this->ajaxProcessOnboardingSave();
                 break;
             default:
                 break;
@@ -74,7 +71,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
     }
 
-    // TODO : when this method is used ? to do what ?
+    /**
+     * Receive the Facebook access token, store it in DB then regerate app data
+     */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
         $onboardingParams = $inputs['onboarding'];
@@ -106,7 +105,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationData
             ->setContextPsAccounts($psAccountPresenter->present())
             ->setContextPsFacebook($fbDataProvider->getContext())
-            ->setPsFacebookExternalBusinessId('0b2f5f57-5190-47e2-8df6-b2f96447ac9f')
             ->setPsAccountsToken(Configuration::get('PS_ACCOUNTS_FIREBASE_REFRESH_TOKEN'))
             ->setPsFacebookCurrency($context->currency->iso_code)
             ->setPsFacebookTimezone(Configuration::get('PS_TIMEZONE'))
@@ -127,11 +125,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )
         );
-    }
-
-    public function ajaxProcessOnboardingSave()
-    {
-        $test = 1;
     }
 
     public function ajaxProcessActivatePixel()
@@ -170,5 +163,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     private function saveOnboardingConfiguration(array $onboardingParams)
     {
         Configuration::updateValue('FB_ACCESS_TOKEN', $onboardingParams['access_token']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function ajaxDie($value = null, $controller = null, $method = null)
+    {
+        header('Content-Type: application/json');
+        parent::ajaxDie($value, $controller, $method);
     }
 }
