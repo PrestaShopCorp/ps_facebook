@@ -29,17 +29,34 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
-
-            // TODO Get from DTO
-            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
-            // If previous is null, can be generated with the Ajax Admin Controller available here:
+            'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
                 ['action' => 'retrieveExternalBusinessId']
             ),
+            'psFacebookPixelActivationRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'activatePixel']
+            ),
+            'psFacebookFbeOnboardingSaveRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'saveOnboarding']
+            ),
+            'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
+            'i18nSettings' => [
+                'isoCode' => $this->context->language->iso_code,
+                'languageLocale' => $this->context->language->language_code,
+            ],
 
+            // TODO : to rework from here !
+            // TODO Get from DTO
+            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
             'contextPsFacebook' => [
                 /* 'email' => 'him@prestashop.com',
                 'facebookBusinessManager' => [
@@ -68,18 +85,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ]
                 */
             ],
-
             'psFacebookCurrency' => null, // TODO from shop (merchant)
             'psFacebookTimezone' => null, // TODO from shop (merchant)
             'psFacebookLocale' => null, // TODO from shop (merchant)
-            'psFacebookPixelActivationRoute' => null, // TODO complete ajax route
-            'psFacebookFbeOnboardingSaveRoute' => null, // TODO complete ajax route
-            'psFacebookFbeUiUrl' => 'https://facebook.psessentials-integration.net', // TODO by default, use the production URL, but can be overridden by integration URL in a .env (cf ps_metrics)
-            'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
-            'i18nSettings' => [
-                'isoCode' => $this->context->language->iso_code,
-                'languageLocale' => $this->context->language->language_code,
-            ],
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 

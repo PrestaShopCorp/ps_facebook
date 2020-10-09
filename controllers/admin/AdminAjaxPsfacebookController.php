@@ -38,13 +38,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
-                $this->ajaxProcessOnboardingSave();
+                $this->ajaxProcessActivatePixel();
                 break;
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
                 break;
             case 'saveOnboarding':
-                $this->ajaxProcessActivatePixel();
+                $this->ajaxProcessOnboardingSave();
                 break;
             default:
                 break;
@@ -74,6 +74,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
     }
 
+    // TODO : when this method is used ? to do what ?
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
         $onboardingParams = $inputs['onboarding'];
