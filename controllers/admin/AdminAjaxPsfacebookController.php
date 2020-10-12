@@ -28,13 +28,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
          *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
          *  TODO: We should use symfony component or copy function from it later on
          */
-
-
         $action = Tools::getValue('action');
 
         switch ($action) {
             case 'saveOnboarding':
-                $inputs = json_decode(file_get_contents("php://input"), true);
+                $inputs = json_decode(file_get_contents('php://input'), true);
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
@@ -121,15 +119,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'success' => true,
-                    'configurations' => $configurationData->jsonSerialize()
+                    'configurations' => $configurationData->jsonSerialize(),
                 ]
             )
         );
     }
 
+    /**
+     * Store in database a boolean for know if customer activate pixel
+     */
     public function ajaxProcessActivatePixel()
     {
-        $test = 1;
+        Configuration::updateValue('fbe_event_status', \Tools::getValue('event_status'));
+
+        $this->ajaxDie(json_encode(['success' => true]));
     }
 
     private function ajaxProcessRetrieveExternalBusinessId()
@@ -142,8 +145,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'json' => [
                         // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
-                    ]
+                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                    ],
                 ]
             )->json();
 
