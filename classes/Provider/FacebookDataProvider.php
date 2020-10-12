@@ -61,7 +61,6 @@ class FacebookDataProvider
             return [];
         }
 
-
         if ($response->getStatusCode() !== 200) {
             // todo: handle wrong call
             return [];
