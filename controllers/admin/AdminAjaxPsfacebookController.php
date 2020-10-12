@@ -137,7 +137,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $this->ajaxDie(json_encode(['success' => true]));
         }
 
-http_response_code(400);
+        http_response_code(400);
         $this->ajaxDie(json_encode(['success' => false]));
     }
 

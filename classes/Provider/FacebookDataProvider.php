@@ -4,14 +4,13 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Facebook\Facebook;
 use GuzzleHttp\Client;
-use PrestaShop\PrestaShop\Core\Foundation\IoC\Exception;
 
 class FacebookDataProvider
 {
-     const API_URL = 'https://graph.facebook.com';
+    const API_URL = 'https://graph.facebook.com';
 
     /**
-     * @var string
+     * @var int
      */
     private $appId;
 
@@ -27,7 +26,8 @@ class FacebookDataProvider
 
     /**
      * FacebookDataProvider constructor.
-     * @param string $appId
+     *
+     * @param int $appId
      * @param string $sdkVersion
      * @param string $accessToken
      */
@@ -50,14 +50,13 @@ class FacebookDataProvider
         $response = $client->get(
             self::API_URL . "/{$this->sdkVersion}/{$this->appId}",
             [
-                'headers' =>
-                    [
-                        'access_token' => $this->accessToken
-                    ]
+                'headers' => [
+                        'access_token' => $this->accessToken,
+                    ],
             ]
         );
 
-        if (!$response || !$response->getBody()) {
+        if (empty($response) || !$response->getBody()) {
             return [];
         }
 

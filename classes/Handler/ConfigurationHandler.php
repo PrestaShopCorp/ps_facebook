@@ -11,7 +11,6 @@ use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class ConfigurationHandler
 {
-
     /**
      * @var PsAccountsPresenter
      */
@@ -84,8 +83,7 @@ class ConfigurationHandler
 
         return [
             'success' => true,
-            'configurations' => $configurationData->jsonSerialize()
+            'configurations' => $configurationData->jsonSerialize(),
         ];
     }
-
 }
