@@ -3,8 +3,12 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Exception;
-use Facebook\Facebook;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
+use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
+use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Page;
+use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 
 class FacebookDataProvider
 {
@@ -42,39 +46,121 @@ class FacebookDataProvider
     /**
      * https://github.com/facebookarchive/php-graph-sdk
      * https://developers.facebook.com/docs/graph-api/changelog/version8.0
+     **
+     * @param array $fbe
      *
-     * @return array
+     * @return ContextPsFacebook
      */
     public function getContext(array $fbe)
     {
         if (isset($fbe['error'])) {
-            return [];
+            return null;
         }
 
-        $apps = [];
-        $client = new Client();
-        foreach ($fbe as $item) {
-            try {
-                $response = $client->get(
-                    self::API_URL . "/{$this->sdkVersion}/{$item['id']}",
-                    [
-                        'query' => [
-                            'access_token' => $this->accessToken,
-                        ],
-                    ]
-                );
-            } catch (Exception $e) {
-                $apps[] = [
-                    'id' => $item['id'],
-                    'statusCode' => $e->getCode(),
-                    'errorMessage' => $e->getMessage(),
-                ];
-                continue;
+        $businessManager = $this->handleBusinessManager($fbe['business_manager_id']);
+        $pixel = $this->handlePixel($fbe['pixel_id']);
+        $pages = $this->handlePages($fbe['pages']);
+        $ads = $this->handleAds($fbe['business_manager_id']);
+        $isCategoriesMatching = $this->handleCategoriesMatching($fbe['catalog_id']);
+
+        return new ContextPsFacebook(
+            $businessManager,
+            $pixel,
+            $pages,
+            $ads,
+            $isCategoriesMatching
+        );
+    }
+
+    private function handleBusinessManager($businessManagerId)
+    {
+        $responseContent = $this->handleAPICall($businessManagerId);
+        if (!$responseContent) {
+            return null;
+        }
+
+        return new FacebookBusinessManager(
+            isset($responseContent['name']) ? $responseContent['name'] : '',
+            isset($responseContent['email']) ? $responseContent['email'] : '',
+            isset($responseContent['createdAt']) ? $responseContent['createdAt'] : 0
+        );
+    }
+
+    private function handlePixel($pixelId)
+    {
+        $responseContent = $this->handleAPICall($pixelId);
+        if (!$responseContent) {
+            return null;
+        }
+
+        return new Pixel(
+            isset($responseContent['name']) ? $responseContent['name'] : '',
+            isset($responseContent['id']) ? $responseContent['id'] : '',
+            isset($responseContent['lastActive']) ? $responseContent['lastActive'] : 0,
+            isset($responseContent['activated']) ? $responseContent['activated'] : 0
+        );
+    }
+
+    private function handlePages($pageIds)
+    {
+        $pages = [];
+        foreach ($pageIds as $pageId) {
+            $responseContent = $this->handleAPICall($pageId);
+            if (!$responseContent) {
+                return null;
             }
 
-            $apps[] = json_decode($response->getBody()->getContents(), true);
+            $page = new Page(
+                $responseContent['page'],
+                $responseContent['likes'],
+                $responseContent['logo']
+            );
+            $pages[] = $page;
         }
 
-        return $apps;
+        return $pages;
+    }
+
+    private function handleAds($adsId)
+    {
+        $responseContent = $this->handleAPICall($adsId);
+        if (!$responseContent) {
+            return null;
+        }
+
+        return new Ads(
+            isset($responseContent['name']) ? $responseContent['name'] : '',
+            isset($responseContent['email']) ? $responseContent['email'] : '',
+            isset($responseContent['createdAt']) ? $responseContent['createdAt'] : 0
+        );
+    }
+
+    private function handleCategoriesMatching($catalogId)
+    {
+        return false;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return false|array
+     */
+    private function handleAPICall($id)
+    {
+        $client = new Client();
+        try {
+            $response = $client->get(
+                self::API_URL . "/{$this->sdkVersion}/{$id}",
+                [
+                    'query' => [
+                        'access_token' => $this->accessToken,
+                    ],
+                ]
+            );
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

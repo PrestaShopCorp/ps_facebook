@@ -3,6 +3,9 @@
 use PHPUnit\Framework\TestCase;
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
+use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
+use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
@@ -286,12 +289,17 @@ class FacebookDataProviderTest extends TestCase
                         'expires_in' => '3644',
                         'state' => 'state',
                         'fbe' => [
-                            'pixel' => [
-                                'id' => 808199653047641,
+                            'business_manager_id' => '123433395433607',
+                            'catalog_id' => '337779857455531',
+                            'profiles' => [
+                                '102085044995399',
                             ],
-                            'social media' => [
-                                'id' => 3531631736883040,
+                            'pages' => [
+                                '102085044995399',
                             ],
+                            'install_time' => '1601023201',
+                            'pixel_id' => '808199653047641',
+                            'onsite_eligible' => false,
                         ],
                     ],
                 ],
@@ -513,19 +521,13 @@ class FacebookDataProviderTest extends TestCase
                             'isoCode' => 'en',
                             'languageLocale' => 'en-us',
                         ],
-                        'contextPsFacebook' => [
-                            0 => [
-                                'id' => 808199653047641,
-                                'statusCode' => 400,
-                                'errorMessage' => 'Client error response [url] https://graph.facebook.com/v8.0/808199653047641?access_token=EAAKVHIKFB18BAFxOQUZAIljsU3PO0fbiUAwpxhUSlIOKAOGS4obloLMts5yxwKo3gGhO2PPP62MnjwSy4iOoQhqhiu2ZCR7AndPlpJUCR8gkfcoMDNE2FtlErkpbnJDUNws1s0b3ruQznFAuJUkgJzRZBCIcZCmsQOQ1xyS500Tp9CM9QEVxQWSQZB6c65NCuBDCLp1EaQ1tepL1ewej8 [status code] 400 [reason phrase] Bad Request',
-                            ],
-                            1 => [
-                                'category' => 'Business',
-                                'link' => 'https://www.facebook.com/games/?app_id=3531631736883040',
-                                'name' => 'PrestaShop Social Media - Dev lh',
-                                'id' => '3531631736883040',
-                            ],
-                        ],
+                        'contextPsFacebook' => new ContextPsFacebook(
+                            new FacebookBusinessManager('PrestaShop', '', 0),
+                            null,
+                            null,
+                            new Ads('PrestaShop', '', 0),
+                            false
+                        ),
                     ],
                 ],
             ],

@@ -71,6 +71,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     /**
      * Receive the Facebook access token, store it in DB then regerate app data
+     *
+     * @param array $inputs
+     *
+     * @throws PrestaShopException
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {

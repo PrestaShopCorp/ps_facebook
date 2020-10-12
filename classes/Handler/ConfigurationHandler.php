@@ -23,12 +23,6 @@ class ConfigurationHandler
      */
     private $facebookTranslations;
 
-    private $currencyIso;
-
-    private $languageIso;
-
-    private $languageCode;
-
     /**
      * @var Link
      */
@@ -38,6 +32,21 @@ class ConfigurationHandler
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
+
+    /**
+     * @var string
+     */
+    private $currencyIso;
+
+    /**
+     * @var string
+     */
+    private $languageIso;
+
+    /**
+     * @var string
+     */
+    private $languageCode;
 
     public function __construct(
         PsAccountsPresenter $accountsPresenter,

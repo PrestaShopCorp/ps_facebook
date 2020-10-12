@@ -12,7 +12,7 @@ class ConfigurationData implements JsonSerializable
     private $contextPsAccounts;
 
     /**
-     * @var array
+     * @var ContextPsFacebook
      */
     private $contextPsFacebook;
 
@@ -92,7 +92,7 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @return array
+     * @return ContextPsFacebook
      */
     public function getContextPsFacebook()
     {
@@ -100,7 +100,7 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @param array $contextPsFacebook
+     * @param ContextPsFacebook $contextPsFacebook
      *
      * @return ConfigurationData
      */
