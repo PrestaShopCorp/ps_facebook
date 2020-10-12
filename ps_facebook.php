@@ -66,7 +66,6 @@ class Ps_facebook extends Module
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
-        'actionAdminControllerSetMedia',
     ];
 
     const CONFIGURATION_LIST = [
@@ -182,7 +181,12 @@ class Ps_facebook extends Module
 
     public function getContent()
     {
-        Tools::redirectAdmin($this->context->link->getAdminLink('AdminPsfacebookModule'));
+        // With the version prestashop/prestashop-accounts-auth:2.1.9, a successful login will redirect
+        // to the module configuration page with extra parameters.
+        // We filter the default parameters so the extra ones remain present on the controller we redirect to.
+        unset($_GET['controller'], $_GET['configure'], $_GET['token'], $_GET['controllerUri']);
+
+        Tools::redirectAdmin($this->context->link->getAdminLink('AdminPsfacebookModule') . '&' . http_build_query($_GET));
     }
 
     /**
@@ -207,21 +211,6 @@ class Ps_facebook extends Module
         ]);
 
         $this->context->controller->addJS("{$this->_path}views/js/front/conversion-api.js");
-    }
-
-    public function hookActionAdminControllerSetMedia()
-    {
-        Media::addJsDef(
-            [
-                'ajaxUrl' => $this->context->link->getAdminLink(
-                    'AdminAjaxPsfacebook',
-                    true,
-                    []
-                    ,
-                    ['action' => 'onboard']
-                )
-            ]
-        );
     }
 
     public function hookActionCustomerAccountAdd(array $params)
