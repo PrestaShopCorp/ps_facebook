@@ -133,7 +133,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $pixelStatus = \Tools::getValue('event_status');
 
         if (!empty($pixelStatus)) {
-            Configuration::updateValue('fbe_event_status', $pixelStatus);
+            Configuration::updateValue('FBE_EVENT_STATUS', $pixelStatus);
             $this->ajaxDie(json_encode(['success' => true]));
         }
 
