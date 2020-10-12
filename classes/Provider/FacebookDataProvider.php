@@ -49,7 +49,7 @@ class FacebookDataProvider
      **
      * @param array $fbe
      *
-     * @return ContextPsFacebook
+     * @return ContextPsFacebook|null
      */
     public function getContext(array $fbe)
     {
@@ -74,7 +74,7 @@ class FacebookDataProvider
 
     private function handleBusinessManager($businessManagerId)
     {
-        $responseContent = $this->handleAPICall($businessManagerId);
+        $responseContent = $this->handleAPICall((int) $businessManagerId);
         if (!$responseContent) {
             return null;
         }
@@ -88,7 +88,7 @@ class FacebookDataProvider
 
     private function handlePixel($pixelId)
     {
-        $responseContent = $this->handleAPICall($pixelId);
+        $responseContent = $this->handleAPICall((int) $pixelId);
         if (!$responseContent) {
             return null;
         }
@@ -105,7 +105,7 @@ class FacebookDataProvider
     {
         $pages = [];
         foreach ($pageIds as $pageId) {
-            $responseContent = $this->handleAPICall($pageId);
+            $responseContent = $this->handleAPICall((int) $pageId);
             if (!$responseContent) {
                 return null;
             }
@@ -123,7 +123,7 @@ class FacebookDataProvider
 
     private function handleAds($adsId)
     {
-        $responseContent = $this->handleAPICall($adsId);
+        $responseContent = $this->handleAPICall((int) $adsId);
         if (!$responseContent) {
             return null;
         }
@@ -141,7 +141,7 @@ class FacebookDataProvider
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return false|array
      */
