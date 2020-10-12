@@ -130,9 +130,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessActivatePixel()
     {
-        Configuration::updateValue('fbe_event_status', \Tools::getValue('event_status'));
+        $pixelStatus = \Tools::getValue('event_status');
 
-        $this->ajaxDie(json_encode(['success' => true]));
+        if (!empty($pixelStatus)) {
+            Configuration::updateValue('fbe_event_status', $pixelStatus);
+            $this->ajaxDie(json_encode(['success' => true]));
+        }
+
+        $this->ajaxDie(json_encode(['success' => false]));
     }
 
     private function ajaxProcessRetrieveExternalBusinessId()
