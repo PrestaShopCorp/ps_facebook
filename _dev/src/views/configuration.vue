@@ -209,13 +209,7 @@ export default defineComponent({
       // Save activation state in PHP side.
       fetch(this.pixelActivationRoute, {
         method: 'POST',
-        // mode: 'cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
-        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade,
-        //   origin, origin-when-cross-origin, same-origin, strict-origin,
-        //   strict-origin-when-cross-origin, unsafe-url
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({event_status: newState}), // TODO !0: format to see with Pablo PR
       }).then((res) => {
         if (!res.ok) {
@@ -257,13 +251,7 @@ export default defineComponent({
       // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
       fetch(this.fbeOnboardingSaveRoute, {
         method: 'POST',
-        // mode: 'cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
-        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade,
-        //   origin, origin-when-cross-origin, same-origin, strict-origin,
-        //   strict-origin-when-cross-origin, unsafe-url
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({onboarding: response}), // TODO !0: format to see
       }).then((res) => {
         if (!res.ok) {
