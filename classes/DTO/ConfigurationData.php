@@ -100,7 +100,7 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @param FacebookBusinessManager $contextPsFacebook
+     * @param FacebookBusinessManager|array $contextPsFacebook
      *
      * @return ConfigurationData
      */
