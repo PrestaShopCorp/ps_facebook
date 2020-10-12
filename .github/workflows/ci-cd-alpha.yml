@@ -29,6 +29,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.0.0
 
+      - name: Gcloud auth and write env file
+        run: |
+          echo $GOOGLE_APPLICATION_CREDENTIALS > $GCLOUD_TOKEN_PATH
+          gcloud auth activate-service-account --key-file=$GCLOUD_TOKEN_PATH
+          gcloud container clusters get-credentials $GCLOUD_CLUSTER \
+          --zone europe-west1-c --project $GCLOUD_PROJECT
+          gcloud beta secrets versions access latest --project=$GCLOUD_PROJECT --secret="facebook-module" > .env
+          rm $GCLOUD_TOKEN_PATH
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIAL_INTEGRATION }}
+          GCLOUD_TOKEN_PATH: ${{ env.GCLOUD_TOKEN_PATH }}
+          GCLOUD_CLUSTER: ${{ secrets.GCLOUD_CLUSTER }}
+          GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT_INTEGRATION }}
+
       - name: Build JS dependencies
         uses: PrestaShopCorp/github-action-build-js/12@v1.0
         with:
@@ -50,6 +64,16 @@ jobs:
           source: "."
           target: ps_facebook
 
+      - name: Delete old modules 1.7
+        continue-on-error: true
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_INTEGRATION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") rm -rf modules/ps_facebook'
+
       - name: Move modules
         uses: appleboy/ssh-action@master
         with:
@@ -57,8 +81,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'cp -R build/ps_facebook ${{ secrets.MODULE_PATH }}'
-            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_accounts'
+            sudo su -c 'cp -R ps_facebook ${{ secrets.MODULE_PATH }}/ps_facebook'
+            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_facebook'
+
       - name: Install modules
         uses: appleboy/ssh-action@master
         with:
@@ -68,6 +93,7 @@ jobs:
           script: |
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
+
       - name: Clear cache
         uses: appleboy/ssh-action@master
         with:
@@ -77,3 +103,11 @@ jobs:
           script: |
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console cache:cl'
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") chmod -R 777 var/cache var/logs'
+
+      - name: Delete tmp module
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_INTEGRATION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: rm -rf ps_facebook
