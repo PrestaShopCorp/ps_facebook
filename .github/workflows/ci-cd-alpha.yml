@@ -50,6 +50,16 @@ jobs:
           source: "."
           target: ps_facebook
 
+      - name: Delete old modules 1.7
+        continue-on-error: true
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_INTEGRATION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") rm -rf modules/ps_facebook'
+
       - name: Move modules
         uses: appleboy/ssh-action@master
         with:
@@ -57,8 +67,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'cp -R build/ps_facebook ${{ secrets.MODULE_PATH }}'
-            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_accounts'
+            sudo su -c 'cp -R ps_facebook ${{ secrets.MODULE_PATH }}/ps_facebook'
+            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_facebook'
+
       - name: Install modules
         uses: appleboy/ssh-action@master
         with:
@@ -68,6 +79,7 @@ jobs:
           script: |
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
+
       - name: Clear cache
         uses: appleboy/ssh-action@master
         with:
