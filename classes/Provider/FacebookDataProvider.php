@@ -56,7 +56,7 @@ class FacebookDataProvider
             ]
         );
 
-        if (!$response || !$response->getBody()) {
+        if (!$response) {
             return [];
         }
 
