@@ -48,7 +48,7 @@ class FacebookDataProvider
     public function getContext(array $fbe)
     {
         if (isset($fbe['error'])) {
-            return null;
+            return [];
         }
 
         $apps = [];
