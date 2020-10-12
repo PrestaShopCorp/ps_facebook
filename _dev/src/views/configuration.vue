@@ -210,9 +210,12 @@ export default defineComponent({
       fetch(this.pixelActivationRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({event_status: newState}), // TODO !0: format to see with Pablo PR
+        body: JSON.stringify({event_status: newState}),
       }).then((res) => {
         if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        if (!res.json().success) {
           throw new Error(res.statusText || res.status);
         }
         this.dynamicContextPsFacebook = {
