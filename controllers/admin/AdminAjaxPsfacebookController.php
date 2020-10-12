@@ -28,14 +28,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
          *  TODO: We should use symfony component or copy function from it later on
          */
         $action = Tools::getValue('action');
+        $inputs = json_decode(file_get_contents('php://input'), true);
 
         switch ($action) {
             case 'saveOnboarding':
-                $inputs = json_decode(file_get_contents('php://input'), true);
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
-                $inputs = json_decode(file_get_contents('php://input'), true);
                 $this->ajaxProcessActivatePixel($inputs);
                 break;
             case 'retrieveExternalBusinessId':
