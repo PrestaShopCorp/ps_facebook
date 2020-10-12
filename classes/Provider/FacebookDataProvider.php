@@ -75,29 +75,6 @@ class FacebookDataProvider
             $apps[] = json_decode($response->getBody()->getContents(), true);
         }
 
-//        $client = new Client();
-//        try {
-//            $response = $client->get(
-//                self::API_URL . "/{$this->sdkVersion}/{$this->appId}",
-//                [
-//                    'headers' => [
-//                        'access_token' => $this->accessToken,
-//                        'fields' => [
-//                            'app_name',
-//                        ],
-//                    ],
-//                ]
-//            );
-//        } catch (\Exception $e) {
-//            // todo: handle exception
-//            return [];
-//        }
-//
-//        if ($response->getStatusCode() !== 200) {
-//            // todo: handle wrong call
-//            return [];
-//        }
-
         return $apps;
     }
 }
