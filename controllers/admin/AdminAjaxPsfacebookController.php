@@ -15,8 +15,7 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Database\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\ConfigurationData;
-use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
@@ -28,17 +27,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
          *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
          *  TODO: We should use symfony component or copy function from it later on
          */
-
-
         $action = Tools::getValue('action');
 
         switch ($action) {
             case 'saveOnboarding':
-                $inputs = json_decode(file_get_contents("php://input"), true);
+                $inputs = json_decode(file_get_contents('php://input'), true);
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
-                $this->ajaxProcessActivatePixel();
+                $inputs = json_decode(file_get_contents('php://input'), true);
+                $this->ajaxProcessActivatePixel($inputs);
                 break;
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
@@ -76,60 +74,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
-        $onboardingParams = $inputs['onboarding'];
-        $this->saveOnboardingConfiguration($onboardingParams);
-        $configurationData = new ConfigurationData();
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
-
-        $fbDataProvider = new FacebookDataProvider(
-            Config::APP_ID, // 808199653047641
-            $onboardingParams['access_token'], //EAAKVHIKFB18BAJ3DDZBPcZBxY9UV3st26azZA7KZCQl48lgVdRh2G4IDwOWX7H6tVMg8qE0WzZC29bhJzmUTO9ZAAtsPXmzZA9gu3bjnilBUL8LsLQUPdxZChKa5QPWx82esxE9O9MZCIh6LrLqIDvxH7D3ZCppqZAmBSiFb2om8D4y02JbRX2rLkTc
-            'v8.0'
-        );
-
-        $pixelActivationUrl = $this->context->link->getAdminLink(
-            'AdminAjaxPsfacebook',
-            true,
-            [],
-            ['action' => 'activatePixel']
-        );
-
-        $onboardingSaveUrl = $this->context->link->getAdminLink(
-            'AdminAjaxPsfacebook',
-            true,
-            [],
-            ['action' => 'saveOnboarding']
-        );
-
+        $facebookTranslations = new PsFacebookTranslations($this->module);
         $context = Context::getContext();
-        $configurationData
-            ->setContextPsAccounts($psAccountPresenter->present())
-            ->setContextPsFacebook($fbDataProvider->getContext())
-            ->setPsAccountsToken(Configuration::get('PS_ACCOUNTS_FIREBASE_REFRESH_TOKEN'))
-            ->setPsFacebookCurrency($context->currency->iso_code)
-            ->setPsFacebookTimezone(Configuration::get('PS_TIMEZONE'))
-            ->setPsFacebookLocale(Configuration::get('PS_LOCALE_LANGUAGE'))
-            ->setPsFacebookPixelActivationRoute($pixelActivationUrl)
-            ->setPsFacebookFbeOnboardingSaveRoute($onboardingSaveUrl)
-            ->setPsFacebookFbeUiUrl('https://facebook.psessentials-integration.net')
-            ->setPsFacebookExternalBusinessId(Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'))
-            ->setTranslations((new PsFacebookTranslations($this->module))->getTranslations())
-            ->setIsoCode($context->language->iso_code)
-            ->setLanguageCode($context->language->language_code);
+        $configurationHandler = new ConfigurationHandler(
+            $psAccountPresenter,
+            $facebookTranslations,
+            $context->link,
+            $context->currency->iso_code,
+            $context->language->iso_code,
+            $context->language->language_code
+        );
+
+        $response = $configurationHandler->handle($inputs['onboarding']);
 
         $this->ajaxDie(
-            json_encode(
-                [
-                    'success' => true,
-                    'configurations' => $configurationData->jsonSerialize()
-                ]
-            )
+            json_encode($response)
         );
     }
 
-    public function ajaxProcessActivatePixel()
+    public function ajaxProcessActivatePixel(array $input)
     {
-        $test = 1;
+        $isPixelActivated = $input['event_status'];
+        Configuration::updateValue(Config::PS_PIXEL_ID, $isPixelActivated);
+
+        $this->ajaxDie();
     }
 
     private function ajaxProcessRetrieveExternalBusinessId()
@@ -142,8 +111,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'json' => [
                         // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
-                    ]
+                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                    ],
                 ]
             )->json();
 

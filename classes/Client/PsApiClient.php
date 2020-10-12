@@ -44,7 +44,7 @@ class PsApiClient extends Client
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . (new PsAccountsService())->getOrRefreshToken(),
-                ]
+                ],
             ],
         ]);
     }

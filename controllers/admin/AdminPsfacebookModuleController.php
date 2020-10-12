@@ -1,8 +1,8 @@
 <?php
 
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
-use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
+use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
