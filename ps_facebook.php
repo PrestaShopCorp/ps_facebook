@@ -74,7 +74,7 @@ class Ps_facebook extends Module
         'fbe_profiles',
         'fbe_pages',
         'fbe_ad_account_id',
-        'FBE_EVENT_STATUS',
+        'PS_FACEBOOK_EVENT_STATUS',
         'fbe_catalog_id',
     ];
 
