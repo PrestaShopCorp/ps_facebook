@@ -47,16 +47,23 @@ class FacebookDataProvider
     public function getContext()
     {
         $client = new Client();
-        $response = $client->get(
-            self::API_URL . "/{$this->sdkVersion}/{$this->appId}",
-            [
-                'headers' => [
+        try {
+            $response = $client->get(
+                self::API_URL . "/{$this->sdkVersion}/{$this->appId}",
+                [
+                    'headers' => [
                         'access_token' => $this->accessToken,
                     ],
-            ]
-        );
+                ]
+            );
+        } catch (\Exception $e) {
+            // todo: handle exception
+            return [];
+        }
 
-        if (!$response) {
+
+        if ($response->getStatusCode() !== 200) {
+            // todo: handle wrong call
             return [];
         }
 
