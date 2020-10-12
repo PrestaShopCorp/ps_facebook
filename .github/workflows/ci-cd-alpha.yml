@@ -77,3 +77,11 @@ jobs:
           script: |
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console cache:cl'
             sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") chmod -R 777 var/cache var/logs'
+
+      - name: Delete tmp module
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_INTEGRATION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: rm -rf ps_facebook
