@@ -12,7 +12,6 @@ env:
   GCLOUD_TOKEN_PATH: ./token.json
 
 jobs:
-
   build_push_inte:
     name: CI/CD integration ps_facebook
     runs-on: ubuntu-latest
