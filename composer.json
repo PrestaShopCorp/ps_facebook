@@ -19,7 +19,8 @@
         "facebook/graph-sdk": "^5.7"
     },
     "require-dev": {
-        "prestashop/php-dev-tools": "^3.0"
+        "prestashop/php-dev-tools": "^3.0",
+        "phpunit/phpunit": "^5.7"
     },
     "autoload": {
         "psr-4": {

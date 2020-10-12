@@ -12,7 +12,7 @@ class ConfigurationData implements JsonSerializable
     private $contextPsAccounts;
 
     /**
-     * @var FacebookBusinessManager
+     * @var array
      */
     private $contextPsFacebook;
 
@@ -92,7 +92,7 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @return FacebookBusinessManager
+     * @return array
      */
     public function getContextPsFacebook()
     {
@@ -100,7 +100,7 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @param FacebookBusinessManager $contextPsFacebook
+     * @param array $contextPsFacebook
      *
      * @return ConfigurationData
      */
@@ -335,7 +335,7 @@ class ConfigurationData implements JsonSerializable
     {
         return [
             'contextPsAccounts' => $this->getContextPsAccounts(),
-//            'contextPsFacebook' => $this->getContextPsFacebook()->jsonSerialize(),
+            'contextPsFacebook' => $this->getContextPsFacebook(),
             'psFacebookExternalBusinessId' => $this->getPsFacebookExternalBusinessId(),
             'psAccountsToken' => $this->getPsAccountsToken(),
             'psFacebookCurrency' => $this->getPsFacebookCurrency(),

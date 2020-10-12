@@ -14,6 +14,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Database\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
@@ -75,10 +76,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
         $facebookTranslations = new PsFacebookTranslations($this->module);
+        $configurationAdapter = new ConfigurationAdapter();
         $context = Context::getContext();
         $configurationHandler = new ConfigurationHandler(
             $psAccountPresenter,
             $facebookTranslations,
+            $configurationAdapter,
             $context->link,
             $context->currency->iso_code,
             $context->language->iso_code,
@@ -126,11 +129,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )
         );
-    }
-
-    private function saveOnboardingConfiguration(array $onboardingParams)
-    {
-        Configuration::updateValue('FB_ACCESS_TOKEN', $onboardingParams['access_token']);
     }
 
     /**
