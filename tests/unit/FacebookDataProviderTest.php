@@ -12,6 +12,8 @@ use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 class FacebookDataProviderTest extends TestCase
 {
     /**
+     * Need to add access_token to unit/.env file
+     *
      * @dataProvider getContextDataProvider
      */
     public function testGetContext(
