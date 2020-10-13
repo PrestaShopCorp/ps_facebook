@@ -15,7 +15,6 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\Database\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
@@ -36,7 +35,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
-                $this->ajaxProcessActivatePixel($inputs);
+                $this->ajaxProcessActivatePixel();
                 break;
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
