@@ -99,12 +99,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
-    public function ajaxProcessActivatePixel(array $input)
+    /**
+     * Store in database a boolean for know if customer activate pixel
+     */
+    public function ajaxProcessActivatePixel()
     {
-        $isPixelActivated = $input['event_status'];
-        Configuration::updateValue(Config::PS_PIXEL_ID, $isPixelActivated);
+        $pixelStatus = \Tools::getValue('event_status');
 
-        $this->ajaxDie();
+        if (!empty($pixelStatus)) {
+            Configuration::updateValue('PS_FACEBOOK_EVENT_STATUS', $pixelStatus);
+            $this->ajaxDie(json_encode(['success' => true]));
+        }
+
+        http_response_code(400);
+        $this->ajaxDie(json_encode(['success' => false]));
     }
 
     private function ajaxProcessRetrieveExternalBusinessId()
