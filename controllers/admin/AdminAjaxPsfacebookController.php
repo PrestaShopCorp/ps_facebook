@@ -14,10 +14,36 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
     public function postProcess()
     {
+        /**
+         *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+         *  TODO: We should use symfony component or copy function from it later on
+         */
+        $action = Tools::getValue('action');
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
+        switch ($action) {
+            case 'saveOnboarding':
+                $this->ajaxProcessConnectToFacebook($inputs);
+                break;
+            case 'activatePixel':
+                $this->ajaxProcessActivatePixel();
+                break;
+            case 'retrieveExternalBusinessId':
+                $this->ajaxProcessRetrieveExternalBusinessId();
+                break;
+            default:
+                break;
+        }
+
         return parent::postProcess();
     }
 
@@ -40,5 +66,88 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         Configuration::updateValue('fbe_pages', \Tools::getValue('pages'));
         Configuration::updateValue('fbe_ad_account_id', \Tools::getValue('ad_account_id'));
         Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
+    }
+
+    /**
+     * Receive the Facebook access token, store it in DB then regerate app data
+     *
+     * @param array $inputs
+     *
+     * @throws PrestaShopException
+     */
+    public function ajaxProcessConnectToFacebook(array $inputs)
+    {
+        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
+        $facebookTranslations = new PsFacebookTranslations($this->module);
+        $configurationAdapter = new ConfigurationAdapter();
+        $context = Context::getContext();
+        $configurationHandler = new ConfigurationHandler(
+            $psAccountPresenter,
+            $facebookTranslations,
+            $configurationAdapter,
+            $context->link,
+            $context->currency->iso_code,
+            $context->language->iso_code,
+            $context->language->language_code
+        );
+
+        $response = $configurationHandler->handle($inputs['onboarding']);
+
+        $this->ajaxDie(
+            json_encode($response)
+        );
+    }
+
+    /**
+     * Store in database a boolean for know if customer activate pixel
+     */
+    public function ajaxProcessActivatePixel()
+    {
+        $pixelStatus = \Tools::getValue('event_status');
+
+        if (!empty($pixelStatus)) {
+            Configuration::updateValue('PS_FACEBOOK_EVENT_STATUS', $pixelStatus);
+            $this->ajaxDie(json_encode(['success' => true]));
+        }
+
+        http_response_code(400);
+        $this->ajaxDie(json_encode(['success' => false]));
+    }
+
+    private function ajaxProcessRetrieveExternalBusinessId()
+    {
+        $externalBusinessId = Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID');
+        if (empty($externalBusinessId)) {
+            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+            $response = $client->post(
+                '/account/onboard',
+                [
+                    'json' => [
+                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                    ],
+                ]
+            )->json();
+
+            $externalBusinessId = $response['externalBusinessId'];
+            Configuration::updateValue('PS_FACEBOOK_EXTERNAL_BUSINESS_ID', $externalBusinessId);
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'externalBusinessId' => $externalBusinessId,
+                ]
+            )
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function ajaxDie($value = null, $controller = null, $method = null)
+    {
+        header('Content-Type: application/json');
+        parent::ajaxDie($value, $controller, $method);
     }
 }

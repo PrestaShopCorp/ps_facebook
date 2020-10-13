@@ -50,7 +50,7 @@
 
       <div
         class="text-muted small-text proPoints"
-        v-html="$t('configuration.introduction.proPoints')"
+        v-html="md2html($t('configuration.introduction.proPoints'))"
       />
       <hr>
 
@@ -153,6 +153,7 @@
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {BCard, BButton} from 'bootstrap-vue';
+import showdown from 'showdown';
 import illustration from '../../assets/illustration.png';
 import facebook from '../../assets/facebook_logo.svg';
 import potatoe from '../../assets/Oval.png';
@@ -169,6 +170,7 @@ export default defineComponent({
     onHide() {
       this.$emit('onHide');
     },
+    md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>

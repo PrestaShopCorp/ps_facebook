@@ -1,5 +1,7 @@
 <?php
 
+use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
+use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -12,7 +14,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
-        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
+        $psAccountPresenter = new PsAccountsPresenter($this->module->name);
+        $psAccountsService = new PsAccountsService();
 
         $this->context->smarty->assign([
             'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
@@ -25,11 +28,66 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
+            'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
+            'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'retrieveExternalBusinessId']
+            ),
+            'psFacebookPixelActivationRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'activatePixel']
+            ),
+            'psFacebookFbeOnboardingSaveRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                ['action' => 'saveOnboarding']
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,
             ],
+
+            // TODO : to rework from here !
+            // TODO Get from DTO
+            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
+            'contextPsFacebook' => [
+                /* 'email' => 'him@prestashop.com',
+                'facebookBusinessManager' => [
+                  'name' => 'La Fanchonette',
+                  'email' => 'fanchonette@ps.com',
+                  'createdAt' => 1601283877000
+                ],
+                'pixel' => [
+                  'name' => 'La Fanchonette Test Pixel',
+                  'id' => '1234567890',
+                  'lastActive' => 1601283877000,
+                  'activated' => true
+                ],
+                'page' => [
+                  'name' => 'La Fanchonette',
+                  'likes' => 42,
+                  'logo' => null
+                ],
+                'ads' => [
+                  'name' => 'La Fanchonette',
+                  'email' => 'fanchonette@ps.com',
+                  'createdAt' => 1601283877000
+                ],
+                'categoriesMatching' => [
+                  'sent': false
+                ]
+                */
+            ],
+            'psFacebookCurrency' => null, // TODO from shop (merchant)
+            'psFacebookTimezone' => null, // TODO from shop (merchant)
+            'psFacebookLocale' => null, // TODO from shop (merchant)
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 

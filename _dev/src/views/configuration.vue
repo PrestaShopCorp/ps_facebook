@@ -30,6 +30,7 @@
       <messages
         :show-onboard-succeeded="psFacebookJustOnboarded"
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :error="error"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
         class="m-4"
       />
@@ -50,13 +51,15 @@
         />
         <facebook-connected
           v-else
-          :context-ps-facebook="contextPsFacebook"
+          :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
           class="m-4"
         />
-        <div v-if="showGlass" class="glass" />
-        {{ showGlass ? 'GLASS': 'no glass' }}
+        <div
+          v-if="showGlass"
+          class="glass"
+        />
       </template>
     </template>
   </div>
@@ -76,7 +79,7 @@ const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
     component.contextPsAccounts.currentShop
     && component.contextPsAccounts.currentShop.url
-    && component.externalBusinessId
+    && component.dynamicExternalBusinessId
     && component.psAccountsToken
   );
   return canGeneratePopup ? openPopupGenerator(
@@ -85,7 +88,7 @@ const generateOpenPopup = (component, popupUrl) => {
     popupUrl,
     '/index.html',
     component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
-    component.externalBusinessId,
+    component.dynamicExternalBusinessId,
     component.psAccountsToken,
     component.currency,
     component.timezone,
@@ -94,7 +97,7 @@ const generateOpenPopup = (component, popupUrl) => {
     component.onFbeOnboardOpened,
     component.onFbeOnboardClosed,
     component.onFbeOnboardResponded,
-  ) : () => {};
+  ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
 };
 
 export default defineComponent({
@@ -147,17 +150,22 @@ export default defineComponent({
     pixelActivationRoute: {
       type: String,
       required: true,
-      default: () => global.psFacebookPixelActivationRoute,
+      default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
       required: true,
-      default: () => global.psFacebookFbeOnboardingSaveRoute,
+      default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
       required: true,
-      default: () => global.psFacebookFbeUiUrl,
+      default: () => global.psFacebookFbeUiUrl || null,
+    },
+    psFacebookRetrieveExternalBusinessId: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
   },
   computed: {
@@ -166,11 +174,13 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+      return (this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.email) || false;
     },
   },
   data() {
     return {
+      dynamicContextPsFacebook: this.contextPsFacebook,
+      dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showSyncCatalogAdvice: this.contextPsFacebook
@@ -178,6 +188,8 @@ export default defineComponent({
         && this.contextPsFacebook.categoriesMatching.sent !== true,
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
+      error: null,
+      popupReceptionDuplicate: false,
     };
   },
   methods: {
@@ -191,7 +203,33 @@ export default defineComponent({
       this.openPopup();
     },
     onPixelActivation() {
-      // TODO !0: appeler une route AJAX et attendre le retour pour updater le context.
+      const actualState = this.dynamicContextPsFacebook.pixel.activated;
+      const newState = !actualState;
+
+      // Save activation state in PHP side.
+      fetch(this.pixelActivationRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({event_status: newState}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        if (!res.json().success) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.dynamicContextPsFacebook = {
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, activated: newState},
+        };
+      }).catch((error) => {
+        console.error(error);
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.dynamicContextPsFacebook = {
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, activated: actualState},
+        };
+      });
     },
     onFbeOnboardOpened() {
       this.showGlass = true;
@@ -200,21 +238,94 @@ export default defineComponent({
       this.showGlass = false;
     },
     onFbeOnboardResponded(response) {
-      this.showGlass = false;
-      console.log('response received', response);
-      if (!response.access_token) {
+      if (this.popupReceptionDuplicate) {
+        console.log('duplicated response received');
         return;
       }
-      console.log('TODO !');
-      // TODO !0: send to PHP (ajax ? ou refresh page ? adapter props.contextPsFacebook ?)
+      this.popupReceptionDuplicate = true;
+      console.log('response received', response);
+
+      if (!response.access_token) {
+        this.showGlass = false;
+        return;
+      }
+      this.showGlass = true;
+
+      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
+      fetch(this.fbeOnboardingSaveRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({onboarding: response}), // TODO !0: format to see
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        const fakeContextPsFacebook = {
+          email: 'him@prestashop.com',
+          facebookBusinessManager: {
+            name: 'La Fanchonette',
+            email: 'fanchonette@ps.com',
+            createdAt: Date.now(),
+          },
+          pixel: {
+            name: 'La Fanchonette Test Pixel',
+            id: '1234567890',
+            lastActive: Date.now(),
+            activated: true,
+          },
+          page: {},
+          ads: {},
+          categoriesMatching: {
+            sent: false,
+          },
+        }; // TODO !0: get all missing data from res.json()
+        this.dynamicContextPsFacebook = fakeContextPsFacebook;
+        this.showGlass = false;
+        this.popupReceptionDuplicate = false;
+      }).catch((error) => {
+        console.error(error);
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.showGlass = false;
+        this.popupReceptionDuplicate = false;
+        this.$forceUpdate();
+      });
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        fetch(this.psFacebookRetrieveExternalBusinessId, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        }).then((res) => {
+          if (!res.externalBusinessId) {
+            throw new Error('Cannot retrieve ExternalBusinessId.');
+          }
+          this.dynamicExternalBusinessId = res.externalBusinessId;
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          this.openPopup();
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
+          this.showGlass = false;
+          this.popupReceptionDuplicate = false;
+          this.$forceUpdate();
+        });
+      }
     },
   },
   watch: {
-    // contextPsAccounts
-    // contextPsFacebook
-    // externalBusinessId
-    // psAccountsToken
-  }, // TODO !0: these can change !
+    contextPsAccounts() {
+      this.$forceUpdate();
+    },
+    contextPsFacebook(newValue) {
+      this.dynamicContextPsFacebook = newValue;
+      this.$forceUpdate();
+    },
+  },
 });
 </script>
 

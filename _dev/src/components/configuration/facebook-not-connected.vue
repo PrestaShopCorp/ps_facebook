@@ -48,7 +48,7 @@
           <br>
           <p
             class="facebook-not-connected-details small-text text-muted"
-            v-html="$t('configuration.facebook.notConnected.details')"
+            v-html="md2html($t('configuration.facebook.notConnected.details'))"
           />
         </div>
       </div>
@@ -59,6 +59,7 @@
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {BCard, BCardBody} from 'bootstrap-vue';
+import showdown from 'showdown';
 import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
@@ -73,6 +74,7 @@ export default defineComponent({
     onFbeOnboardClick() {
       this.$emit('onFbeOnboardClick');
     },
+    md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>
