@@ -15,6 +15,7 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\Database\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
@@ -50,22 +51,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function ajaxProcessSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
-        $response = Configuration::updateValue('fbe_access_token', $token);
+        $response = Configuration::updateValue(Config::FB_ACCESS_TOKEN, $token);
 
         $this->ajaxDie(json_encode($response));
-    }
-
-    public function ajaxProcessFacebookWebhooks()
-    {
-        // TODO: add some checks
-        Configuration::updateValue('fbe_pixel_id', \Tools::getValue('pixel_id'));
-        Configuration::updateValue('fbe_business_id', \Tools::getValue('business_id'));
-        Configuration::updateValue('fbe_business_manager_id', \Tools::getValue('business_manager_id'));
-        Configuration::updateValue('fbe_access_token', \Tools::getValue('access_token'));
-        Configuration::updateValue('fbe_profiles', \Tools::getValue('profiles'));
-        Configuration::updateValue('fbe_pages', \Tools::getValue('pages'));
-        Configuration::updateValue('fbe_ad_account_id', \Tools::getValue('ad_account_id'));
-        Configuration::updateValue('fbe_catalog_id', \Tools::getValue('catalog_id'));
     }
 
     /**

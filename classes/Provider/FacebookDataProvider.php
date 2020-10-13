@@ -17,17 +17,17 @@ class FacebookDataProvider
     /**
      * @var int
      */
-    private $appId;
+    protected $appId;
 
     /**
      * @var string
      */
-    private $sdkVersion;
+    protected $sdkVersion;
 
     /**
      * @var string
      */
-    private $accessToken;
+    protected $accessToken;
 
     /**
      * FacebookDataProvider constructor.
