@@ -36,7 +36,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $this->ajaxProcessConnectToFacebook($inputs);
                 break;
             case 'activatePixel':
-                $this->ajaxProcessActivatePixel();
+                $this->ajaxProcessActivatePixel($inputs);
                 break;
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
@@ -89,11 +89,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * Store in database a boolean for know if customer activate pixel
      */
-    public function ajaxProcessActivatePixel()
+    public function ajaxProcessActivatePixel(array $inputs)
     {
-        $pixelStatus = \Tools::getValue('event_status');
-
-        if (!empty($pixelStatus)) {
+        if (isset($inputs['event_status'])) {
+            $pixelStatus = $inputs['event_status'];
             Configuration::updateValue('PS_FACEBOOK_EVENT_STATUS', $pixelStatus);
             $this->ajaxDie(json_encode(['success' => true]));
         }
