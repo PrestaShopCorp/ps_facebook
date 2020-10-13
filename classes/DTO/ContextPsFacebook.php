@@ -7,35 +7,42 @@ use JsonSerializable;
 class ContextPsFacebook implements JsonSerializable
 {
     /**
-     * @var Pixel
+     * @var FacebookBusinessManager|null
+     */
+    private $facebookBusinessManager;
+
+    /**
+     * @var Pixel|null
      */
     private $pixel;
 
     /**
-     * @var Page
+     * @var Page[]|null
      */
     private $page;
 
     /**
-     * @var Ads
+     * @var Ads|null
      */
     private $ads;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     private $categoriesMatching;
 
     /**
      * ContextPsFacebook constructor.
      *
-     * @param Pixel $pixel
-     * @param Page $page
-     * @param Ads $ads
-     * @param bool $categoriesMatching
+     * @param FacebookBusinessManager|null $facebookBusinessManager
+     * @param Pixel|null $pixel
+     * @param Page[]|null $page
+     * @param Ads|null $ads
+     * @param bool|null $categoriesMatching
      */
-    public function __construct(Pixel $pixel, Page $page, Ads $ads, $categoriesMatching)
+    public function __construct($facebookBusinessManager, $pixel, $page, $ads, $categoriesMatching)
     {
+        $this->facebookBusinessManager = $facebookBusinessManager;
         $this->pixel = $pixel;
         $this->page = $page;
         $this->ads = $ads;
@@ -43,7 +50,27 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Pixel
+     * @return FacebookBusinessManager|null
+     */
+    public function getFacebookBusinessManager()
+    {
+        return $this->facebookBusinessManager;
+    }
+
+    /**
+     * @param FacebookBusinessManager|null $facebookBusinessManager
+     *
+     * @return ContextPsFacebook
+     */
+    public function setFacebookBusinessManager($facebookBusinessManager)
+    {
+        $this->facebookBusinessManager = $facebookBusinessManager;
+
+        return $this;
+    }
+
+    /**
+     * @return Pixel|null
      */
     public function getPixel()
     {
@@ -51,7 +78,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param Pixel $pixel
+     * @param Pixel|null $pixel
      *
      * @return ContextPsFacebook
      */
@@ -63,7 +90,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Page
+     * @return Page[]|null
      */
     public function getPage()
     {
@@ -71,7 +98,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param Page $page
+     * @param Page[]|null $page
      *
      * @return ContextPsFacebook
      */
@@ -83,7 +110,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Ads
+     * @return Ads|null
      */
     public function getAds()
     {
@@ -91,7 +118,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param Ads $ads
+     * @param Ads|null $ads
      *
      * @return ContextPsFacebook
      */
@@ -103,15 +130,15 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isCategoriesMatching()
+    public function getCategoriesMatching()
     {
         return $this->categoriesMatching;
     }
 
     /**
-     * @param bool $categoriesMatching
+     * @param bool|null $categoriesMatching
      *
      * @return ContextPsFacebook
      */
@@ -125,10 +152,10 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'pixel' => $this->getPixel()->jsonSerialize(),
-            'page' => $this->getPage()->jsonSerialize(),
-            'ads' => $this->getAds()->jsonSerialize(),
-            'categoriesMatching' => $this->isCategoriesMatching(),
+            'pixel' => $this->getPixel(),
+            'page' => $this->getPage(),
+            'ads' => $this->getAds(),
+            'categoriesMatching' => $this->getCategoriesMatching(),
         ];
     }
 }
