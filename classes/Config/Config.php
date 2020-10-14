@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Database;
+namespace PrestaShop\Module\PrestashopFacebook\Config;
 
 class Config
 {

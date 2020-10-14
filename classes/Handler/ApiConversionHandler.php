@@ -7,6 +7,7 @@ use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\AddToCartEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CompleteRegistrationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ContactEvent;
@@ -34,7 +35,7 @@ class ApiConversionHandler
         Api::init(
             null, // app_id
             null, // app_secret
-            \Configuration::get('PS_FBE_ACCESS_TOKEN') // access_token
+            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
         );
 
         $this->facebookBusinessSDK = Api::instance();

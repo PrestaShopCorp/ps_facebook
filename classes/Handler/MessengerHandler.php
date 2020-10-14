@@ -3,7 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use Configuration;
-use PrestaShop\Module\PrestashopFacebook\Database\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class MessengerHandler
 {

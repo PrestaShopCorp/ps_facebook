@@ -46,9 +46,6 @@ class FirstCheckoutStepEvent extends AbstractEvent
             ->setValue($cart->getOrderTotal(false))
             ->setCurrency($currency_iso_code);
 
-        $customData = (new CustomData())
-            ->setContentType('product');
-
         $event = (new Event())
             ->setEventName('InitiateCheckout')
             ->setEventTime(time())

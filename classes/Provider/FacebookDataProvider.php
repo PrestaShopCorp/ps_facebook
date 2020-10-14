@@ -111,9 +111,9 @@ class FacebookDataProvider
             }
 
             $page = new Page(
-                $responseContent['page'],
-                $responseContent['likes'],
-                $responseContent['logo']
+                isset($responseContent['name']) ? $responseContent['name'] : '',
+                isset($responseContent['likes']) ? $responseContent['likes'] : 0,
+                isset($responseContent['logo']) ? $responseContent['logo'] : ''
             );
             $pages[] = $page;
         }
