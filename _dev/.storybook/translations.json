@@ -55,6 +55,12 @@
         "activated": "Activated",
         "disabled": "Disabled"
       }
+    },
+    "categoryMatching": {
+      "autocomplete": {
+        "typeToFilter": "Type to filter",
+        "select": "Select"
+      }
     }
   }
 }
