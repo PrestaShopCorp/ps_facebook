@@ -9,7 +9,7 @@ class SearchEvent extends AbstractEvent
 {
     public function send($params)
     {
-        $user = $this->createSdkUserData($this->context);
+        $user = $this->createSdkUserData();
         $customData = (new CustomData())
             ->setSearchString(pSQL($params['searched_query']))
             ->setItemNumber(pSQL($params['total']));
@@ -23,6 +23,6 @@ class SearchEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }

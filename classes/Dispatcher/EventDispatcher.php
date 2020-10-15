@@ -36,5 +36,7 @@ class EventDispatcher
             $this->conversionHandler->handleEvent($name, $params);
             $this->pixelHandler->handleEvent($name, $params);
         }
+        $this->conversionHandler->handleEvent($name, $params);
+        $this->pixelHandler->handleEvent($name, $params);
     }
 }

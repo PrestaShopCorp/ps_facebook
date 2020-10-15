@@ -78,7 +78,7 @@ class ViewContentEvent extends AbstractEvent
                 ->setItemPrice($product['price_amount'])
                 ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setCurrency($currency_iso_code)
                 ->setContents([$content])
@@ -114,7 +114,7 @@ class ViewContentEvent extends AbstractEvent
             $breadcrumbs = $controller->getBreadcrumbLinks();
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setContentName(\Tools::replaceAccentedChars($category->name) . ' ' . $locale)
                 ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb))
@@ -144,7 +144,7 @@ class ViewContentEvent extends AbstractEvent
 
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setContentName(\Tools::replaceAccentedChars($cms->meta_title) . ' ' . $locale)
                 ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb));
@@ -165,7 +165,7 @@ class ViewContentEvent extends AbstractEvent
             $type = 'InitiateCheckout';
             $cart = $this->context->cart;
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $contents = [];
             foreach ($cart->getProducts() as $product) {
                 $fbProductId = ProductCatalogUtility::makeProductId(
@@ -204,6 +204,6 @@ class ViewContentEvent extends AbstractEvent
             return true;
         }
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }
