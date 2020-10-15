@@ -23,3 +23,21 @@ Default.args = {
   initialSubcategoryName: 'My initial subcategory',
   initialSubcategoryId: 68,
 };
+export const Void: any = Template.bind({});
+Void.args = {
+  language: 'en-US',
+  shopCategoryId: '42',
+  initialCategoryName: null,
+  initialCategoryId: null,
+  initialSubcategoryName: null,
+  initialSubcategoryId: null,
+};
+export const Void2: any = Template.bind({});
+Void2.args = {
+  language: 'en-US',
+  shopCategoryId: '42',
+  initialCategoryName: 'My initial category',
+  initialCategoryId: 7,
+  initialSubcategoryName: null,
+  initialSubcategoryId: null,
+};

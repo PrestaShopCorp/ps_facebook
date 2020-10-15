@@ -100,6 +100,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    parentCategoryId: {
+      type: Number,
+      required: false,
+      default: null,
+    },
   },
   data() {
     return {
@@ -134,7 +139,7 @@ export default defineComponent({
       this.loading = true;
       const q = `s=${encodeURIComponent(this.currentFilter)}&l=${this.language}`;
 
-      // TODO !0: appeler l'API pour recharger le contenu de this.categories
+      // TODO !0: appeler l'API pour recharger le contenu de this.categories (utiliser this.parentCategoryId aussi !)
       console.log('####', q);
       setTimeout(() => {
         this.categories = [

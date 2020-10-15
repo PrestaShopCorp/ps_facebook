@@ -23,11 +23,22 @@
       <category-autocomplete
         :language="language"
         :shopCategoryId="shopCategoryId"
-        :initialCategoryName="initialCategoryName"
-        :initialCategoryId="initialCategoryId"
+        :initialCategoryName="currentCategoryName"
+        :initialCategoryId="currentCategoryId"
+        @onCategorySelected="categoryChanged"
       />
     </b-td>
-    <b-td>Test</b-td>
+    <b-td>[x]</b-td>
+    <b-td>
+      <category-autocomplete
+        :language="language"
+        :shopCategoryId="shopCategoryId"
+        :initialCategoryName="currentSubcategoryName"
+        :initialCategoryId="currentSubcategoryId"
+        @onCategorySelected="subcategoryChanged"
+      />
+    </b-td>
+    <b-td>X</b-td>
   </b-tr>
 </template>
 <script lang="ts">
@@ -79,10 +90,15 @@ export default defineComponent({
   },
   data() {
     return {
-
+      currentCategoryName: this.initialCategoryName,
+      currentCategoryId: this.initialCategoryId,
+      currentSubcategoryName: this.initialSubcategoryName,
+      currentSubcategoryId: this.initialSubcategoryId,
     };
   },
   methods: {
+    categoryChanged(categoryId) {},
+    subcategoryChanged(categoryId) {},
   },
 });
 </script>
