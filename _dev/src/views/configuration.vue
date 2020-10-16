@@ -180,7 +180,7 @@ export default defineComponent({
   data() {
     return {
       dynamicContextPsFacebook: this.contextPsFacebook,
-      dynamicExternalBusinessId: this.externalBusinessId,
+      dynamicExternalBusinessId: this.psFacebookExternalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showSyncCatalogAdvice: this.contextPsFacebook
@@ -192,7 +192,18 @@ export default defineComponent({
       popupReceptionDuplicate: false,
     };
   },
+  created() {
+    this.fetchData();
+  },
   methods: {
+    fetchData() {
+      fetch(global.psFacebookLoadConfigurationRoute)
+        .then((response) => response.json())
+        .then((json) => {
+          global.contextPsFacebook = json.contextPsFacebook;
+          global.psFacebookExternalBusinessId = json.psFacebookExternalBusinessId;
+        });
+    },
     onSyncCatalogAdviceClick() {
       this.$router.push({name: 'Catalog', query: {component: 'matching'}});
     },

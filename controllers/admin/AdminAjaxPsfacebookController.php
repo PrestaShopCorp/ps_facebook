@@ -14,6 +14,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -124,6 +125,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'externalBusinessId' => $externalBusinessId,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxConfiguration()
+    {
+        $psAccountPresenter = new PsAccountsPresenter($this->module->name);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'contextPsAccounts' => $psAccountPresenter->present(),
+                    'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
+                    'contextPsFacebook' => [
+                    ],
                 ]
             )
         );
