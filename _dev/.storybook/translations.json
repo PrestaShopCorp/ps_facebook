@@ -59,7 +59,10 @@
     "categoryMatching": {
       "autocomplete": {
         "typeToFilter": "Type to filter",
-        "select": "Select"
+        "select": "Select",
+        "noResult": "No result for your search",
+        "tooManyResults": "Too many results, please complete your search.",
+        "fetchError": "An error occurred during search process."
       }
     }
   }

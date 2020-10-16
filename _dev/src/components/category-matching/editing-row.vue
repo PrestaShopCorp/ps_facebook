@@ -25,20 +25,39 @@
         :shopCategoryId="shopCategoryId"
         :initialCategoryName="currentCategoryName"
         :initialCategoryId="currentCategoryId"
+        :autocompletionApi="autocompletionApi"
         @onCategorySelected="categoryChanged"
       />
     </b-td>
-    <b-td>[x]</b-td>
+    <b-td>
+      <div v-if="initialPropagation === true || initialPropagation === false" class="propagate">
+        <b-checkbox
+          :checked="currentPropagation"
+          @change="changePropagation"
+          :disabled="currentCategoryId <= 0 || currentCategoryId === null" />
+      </div>
+    </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
         :shopCategoryId="shopCategoryId"
         :initialCategoryName="currentSubcategoryName"
         :initialCategoryId="currentSubcategoryId"
+        :parentCategoryId="currentCategoryId"
+        :autocompletionApi="autocompletionApi"
         @onCategorySelected="subcategoryChanged"
       />
     </b-td>
-    <b-td>X</b-td>
+    <b-td>
+      <div v-if="loading === true" class="spinner" />
+      <div v-if="loading === false" class="saved">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark__check" fill="none" stroke-width="4" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <div v-if="error" class="error"><i class="material-icons">error</i></div>
+    </b-td>
   </b-tr>
 </template>
 <script lang="ts">
@@ -87,21 +106,171 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    initialPropagation: {
+      type: Boolean,
+      required: false,
+      default: undefined,
+    },
+    saveMatchingCallback: {
+      type: Function,
+      required: false,
+      default: () => new Promise((resolve, reject) => {
+        setTimeout(() => reject(new Error('No callback given!')), 1000);
+      }),
+    },
+    autocompletionApi: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      currentCategoryName: this.initialCategoryName,
-      currentCategoryId: this.initialCategoryId,
-      currentSubcategoryName: this.initialSubcategoryName,
-      currentSubcategoryId: this.initialSubcategoryId,
+      currentCategoryName: this.initialCategoryName as string | null,
+      currentCategoryId: +this.initialCategoryId as number | null,
+      currentSubcategoryName: this.initialSubcategoryName as string | null,
+      currentSubcategoryId: +this.initialSubcategoryId as number | null,
+      currentPropagation: !!this.initialPropagation,
+      loading: null as boolean | null, // init at null : no green checkmark
+      error: null,
     };
   },
   methods: {
-    categoryChanged(categoryId) {},
-    subcategoryChanged(categoryId) {},
+    changePropagation(checked) {
+      this.currentPropagation = checked;
+    },
+    categoryChanged(categoryId, categoryName) {
+      if (this.currentCategoryId !== categoryId) {
+        this.currentCategoryId = categoryId;
+        this.currentCategoryName = categoryName;
+        this.currentSubcategoryId = null;
+        this.currentSubcategoryName = null;
+      }
+    },
+    subcategoryChanged(subcategoryId, subcategoryName) {
+      this.loading = true;
+      this.error = null;
+      this.currentSubcategoryId = subcategoryId;
+      this.currentSubcategoryName = subcategoryName;
+      const result = {
+        id: subcategoryId,
+        name: subcategoryName,
+        propagate: !!this.currentPropagation,
+      };
+      this.$emit('onCategoryMatched', result);
+      this.saveMatchingCallback(result)
+        .then(() => {
+          this.loading = false;
+          this.error = null;
+        })
+        .catch((error) => {
+          this.loading = null;
+          this.error = error;
+        });
+    },
   },
 });
 </script>
 <style lang="scss" scoped>
+  .spinner {
+    color: #fff;
+    background-color: #fff;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 2.5rem;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+  }
 
+  .saved {
+    animation: temporary 3s linear normal;
+    opacity: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: inline-block;
+
+    & > * {
+      zoom: 0.35;
+    }
+  }
+
+  .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #70B580;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  }
+
+  .checkmark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    margin: 10% auto;
+    box-shadow: inset 0px 0px 0px #70B580;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+  }
+
+  .checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+  }
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 30px #70B580;
+    }
+  }
+  @keyframes temporary {
+    0%, 100% {
+      opacity: 0;
+    }
+    1%, 90% {
+      opacity: 1;
+    }
+  }
+
+  .error {
+    font-family: Material Icons;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    font-size: 1.5rem;
+    display: inline-block;
+    line-height: 1;
+    color: #c05c67;
+  }
+
+  .propagate > * {
+    zoom: 1.2;
+  }
 </style>

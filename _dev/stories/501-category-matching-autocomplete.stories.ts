@@ -7,7 +7,7 @@ export default {
 
 const params = ':language="language" :shopCategoryId="shopCategoryId" '
   + ':initialCategoryName="initialCategoryName" :initialCategoryId="initialCategoryId" '
-  + ':parentCategoryId="parentCategoryId"';
+  + ':parentCategoryId="parentCategoryId" :autocompletionApi="autocompletionApi" ';
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {CategoryAutocomplete},
@@ -21,6 +21,7 @@ Default.args = {
   initialCategoryName: 'My initial category',
   initialCategoryId: 7,
   parentCategoryId: null,
+  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
 };
 
 export const Void: any = Template.bind({});
@@ -30,6 +31,7 @@ Void.args = {
   initialCategoryName: null,
   initialCategoryId: null,
   parentCategoryId: null,
+  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
 };
 
 export const French: any = Template.bind({});
@@ -39,13 +41,15 @@ French.args = {
   initialCategoryName: null,
   initialCategoryId: null,
   parentCategoryId: null,
+  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
 };
 
 export const Subcategory: any = Template.bind({});
 Subcategory.args = {
   language: 'en-US',
   shopCategoryId: '42',
-  initialCategoryName: 'My initial category',
-  initialCategoryId: 7,
+  initialCategoryName: null,
+  initialCategoryId: null,
   parentCategoryId: 1,
+  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
 };

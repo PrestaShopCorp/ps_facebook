@@ -32,11 +32,15 @@
   >
     <template v-slot:button-content>
       <template v-if="currentCategoryName">{{ currentCategoryName }}</template>
-      <span v-else class="text-muted select-title">{{ $t('categoryMatching.autocomplete.select') }}</span>
+      <span v-else class="text-muted select-title">
+        {{ $t('categoryMatching.autocomplete.select') }}
+      </span>
     </template>
     <b-dropdown-item tabindex="-1">
       <template v-if="currentCategoryName">{{ currentCategoryName }}</template>
-      <span v-else class="text-muted select-title">{{ $t('categoryMatching.autocomplete.select') }}</span>
+      <span v-else class="text-muted select-title">
+        {{ $t('categoryMatching.autocomplete.select') }}
+      </span>
     </b-dropdown-item>
     <li>
       <b-form-input
@@ -48,9 +52,16 @@
       />
       <div v-if="loading" class="spinner" />
     </li>
+    <b-dropdown-item v-if="tooManyProposals" disabled>
+      {{ $t('categoryMatching.autocomplete.tooManyResults') }}
+    </b-dropdown-item>
+    <b-dropdown-item v-if="fetchError" disabled>
+      {{ $t('categoryMatching.autocomplete.fetchError') }}
+    </b-dropdown-item>
     <b-dropdown-item
       v-for="category in categories || [{id: -1, name: '...'}]"
       :key="category.id"
+      :disabled="category.id === -1"
       @click="() => categoryChosen(category.id, category.name)"
     >
       {{ category.name }}
@@ -60,6 +71,7 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
+import {debounce} from 'debounce';
 import {
   BDropdown,
   BDropdownItem,
@@ -105,6 +117,10 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    autocompletionApi: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -113,6 +129,9 @@ export default defineComponent({
       currentFilter: null, // init value null, forces to load full list first time opened.
       categories: null, // init value null, to display loader before full list is loaded.
       loading: false,
+      tooManyProposals: false,
+      fetchError: null,
+      debouncedFetchCategories: debounce(this.fetchCategories.bind(this), 2000, false),
     };
   },
   methods: {
@@ -129,7 +148,7 @@ export default defineComponent({
     },
     afterDropdownHidden() {
       if (this.currentCategoryId > 0) {
-        this.$emit('onCategorySelected', this.currentCategoryId);
+        this.$emit('onCategorySelected', this.currentCategoryId, this.currentCategoryName);
       }
     },
     filterChange(value) {
@@ -137,27 +156,52 @@ export default defineComponent({
     },
     fetchCategories() {
       this.loading = true;
-      const q = `s=${encodeURIComponent(this.currentFilter)}&l=${this.language}`;
+      this.fetchError = null;
+      const url = new URL(
+        `/taxonomy/${(this.parentCategoryId && (`${this.parentCategoryId}/subcategories`)) || ''}`,
+        this.autocompletionApi,
+      );
+      url.search = `s=${encodeURIComponent(this.currentFilter)}&l=${this.language}`;
 
-      // TODO !0: appeler l'API pour recharger le contenu de this.categories (utiliser this.parentCategoryId aussi !)
-      console.log('####', q);
-      setTimeout(() => {
-        this.categories = [
-          {id: 0, name: 'Category 1'},
-          {id: 1, name: 'Category really too long to keep only one line in the row !'},
-          {id: 2, name: 'Category really too long to keep only one line in the row !'},
-          {id: 3, name: 'Category really too long to keep only one line in the row !'},
-          {id: 4, name: q},
-        ];
-        this.loading = false;
-      }, 1000);
+      fetch(url.toString())
+        .then((result) => {
+          if (!result.ok) {
+            throw new Error(result.statusText || result.status);
+          }
+          return result.json();
+        })
+        .then((result) => {
+          if (result.length === 0) {
+            this.categories = [{id: -1, name: this.$t('categoryMatching.autocomplete.noResult')}];
+            this.tooManyProposals = false;
+          } else {
+            this.categories = result.map(({id, name}) => ({id, name})); // keep only id and name
+            this.tooManyProposals = (this.categories.length >= 50);
+          }
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.error(error);
+          this.fetchError = error;
+        });
     },
   },
   watch: {
     currentFilter(newValue, oldValue) {
       if (newValue !== oldValue) {
-        // TODO !0: add a debouncer (lasting), 2secs
-        this.fetchCategories();
+        this.loading = true;
+        this.debouncedFetchCategories();
+      }
+    },
+    initialCategoryId(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.currentCategoryId = newValue;
+      }
+    },
+    initialCategoryName(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.currentCategoryName = newValue;
       }
     },
   },
@@ -253,6 +297,10 @@ export default defineComponent({
 
         & > a {
           white-space: normal;
+
+          &.disabled {
+            font-style: italic;
+          }
         }
       }
 
