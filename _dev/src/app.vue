@@ -20,7 +20,7 @@
   <div id="app">
     <Menu :contextPsFacebook="contextPsFacebook">
       <MenuItem
-        on-boarding-required="true"
+        onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}

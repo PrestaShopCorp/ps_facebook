@@ -19,7 +19,7 @@
 <template>
   <li
     class="nav-item"
-    v-if="!onBoardingRequired || this.$parent.facebookConnected"
+    v-if="!onboardingRequired || this.$parent.facebookConnected"
   >
     <router-link
       active-class="active"
@@ -39,13 +39,10 @@ export default {
       type: String,
       default: '',
     },
-    onBoardingRequired: {
+    onboardingRequired: {
       type: Boolean,
       default: false,
     },
   },
 };
 </script>
-
-<style scoped>
-</style>

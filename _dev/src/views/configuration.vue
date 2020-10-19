@@ -176,7 +176,8 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.email) || false;
+      const context = this.contextPsFacebook;
+      return (context && context.email && context.email.email) || false;
     },
   },
   data() {

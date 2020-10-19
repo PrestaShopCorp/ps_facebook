@@ -190,7 +190,7 @@ export default defineComponent({
 
   .titleRow {
     > h1 {
-      font-size: 2em;
+      font-size: 2.2em;
       font-weight: 600;
       color: #231768;
       padding-top: 0.7rem;
@@ -198,7 +198,7 @@ export default defineComponent({
 
       > span {
         text-transform: uppercase;
-        font-size: 0.9em;
+        font-size: 0.85em;
         color: #89909D;
       }
     }

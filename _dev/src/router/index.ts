@@ -16,6 +16,10 @@ const routes: Array<RouteConfig> = [
     name: 'Catalog',
     component: Catalog,
   },
+  {
+    path: '/',
+    redirect: '/configuration',
+  },
 ];
 
 const router = new VueRouter({
