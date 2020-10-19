@@ -68,9 +68,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.email && !!contextPsFacebook.email.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.email ? contextPsFacebook.email.email : '' }}
         </span>
       </div>
 
@@ -107,9 +107,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.email && !!contextPsFacebook.email.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.email ? contextPsFacebook.email.email : '' }}
         </span>
       </div>
     </b-card-body>
@@ -129,9 +129,9 @@
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
               :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
-              :app-name="contextPsFacebook.facebookBusinessManager.name"
-              :email="contextPsFacebook.facebookBusinessManager.email"
-              :created-at="contextPsFacebook.facebookBusinessManager.createdAt"
+              :app-name="fbm.name"
+              :email="fbm.email ? fbm.email.email : ''"
+              :created-at="fbm.createdAt"
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -148,7 +148,7 @@
               :app-name="contextPsFacebook.pixel.name"
               :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
               :last-active="Date.now()"
-              :activation-switch="contextPsFacebook.pixel.activated"
+              :activation-switch="contextPsFacebook.pixel.isActive"
               @onActivation="pixelActivation"
             />
           </b-col>
@@ -162,7 +162,7 @@
             <facebook-app
               :app-type="$t('configuration.facebook.connected.facebookPage')"
               :tooltip="$t('configuration.facebook.connected.facebookPageTooltip')"
-              :app-name="contextPsFacebook.page.name"
+              :app-name="contextPsFacebook.page.page"
               :likes="contextPsFacebook.page.likes"
               :logo="contextPsFacebook.page.logo"
             />
@@ -238,6 +238,20 @@ export default defineComponent({
       facebookLogo,
       folded: !this.startExpanded,
     };
+  },
+  computed: {
+    fbm() {
+      if (!this.contextPsFacebook.facebookBusinessManager) {
+        return {
+          name: '',
+          email: this.contextPsFacebook.email,
+        };
+      }
+      return {
+        name: this.contextPsFacebook.facebookBusinessManager.name,
+        email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
+      };
+    },
   },
   methods: {
     fold() {
