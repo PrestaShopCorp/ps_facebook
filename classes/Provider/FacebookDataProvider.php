@@ -153,8 +153,8 @@ class FacebookDataProvider
 
     /**
      * @param int $id
-     *
      * @param array $fields
+     *
      * @return false|array
      */
     private function handleAPICall($id, array $fields = [])
@@ -166,7 +166,7 @@ class FacebookDataProvider
                 [
                     'query' => [
                         'access_token' => $this->accessToken,
-                        'fields' => implode(',', $fields)
+                        'fields' => implode(',', $fields),
                     ],
                 ]
             );

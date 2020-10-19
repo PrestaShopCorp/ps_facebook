@@ -65,6 +65,7 @@ class ContextPsFacebook implements JsonSerializable
 
     /**
      * @param string $email
+     *
      * @return ContextPsFacebook
      */
     public function setEmail($email)
