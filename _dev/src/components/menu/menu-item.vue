@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <li class="nav-item">
+  <li class="nav-item" v-if="!onBoardingRequired || this.$parent.facebookConnected">
     <router-link
       active-class="active"
       class="nav-link"
@@ -35,6 +35,10 @@ export default {
     route: {
       type: String,
       default: '',
+    },
+    onBoardingRequired: {
+      type: Boolean,
+      default: false,
     },
   },
 };

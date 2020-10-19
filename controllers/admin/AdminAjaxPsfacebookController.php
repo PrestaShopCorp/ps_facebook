@@ -137,7 +137,27 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
+                    /**
+                     * @TODO Add facebook context
+                     */
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+                    'contextPsFacebook' => [],
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxGetFbContext()
+    {
+        $this->ajaxDie(
+            json_encode(
+                [
+                    /**
+                     * @TODO Add facebook context
+                     */
                     'contextPsFacebook' => [],
                 ]
             )
