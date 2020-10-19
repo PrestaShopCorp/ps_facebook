@@ -38,7 +38,7 @@ class ContextPsFacebook implements JsonSerializable
     /**
      * ContextPsFacebook constructor.
      *
-     * @param $email
+     * @param string $email
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
      * @param Page[]|null $page
