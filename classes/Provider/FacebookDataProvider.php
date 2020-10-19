@@ -152,7 +152,7 @@ class FacebookDataProvider
     }
 
     /**
-     * @param int $id
+     * @param int|string $id
      * @param array $fields
      *
      * @return false|array
