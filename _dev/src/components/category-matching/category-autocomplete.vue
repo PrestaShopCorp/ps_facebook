@@ -26,6 +26,7 @@
     class="m-2 category-matching-dropdown"
     boundary="scrollParent"
     menu-class="w-100"
+    :disabled="disabled"
     @show="beforeDropdownShown"
     @shown="afterDropdownShown"
     @hidden="afterDropdownHidden"
@@ -51,17 +52,15 @@
         @input="filterChange"
       />
       <div v-if="loading" class="spinner" />
+
+      <i v-if="tooManyProposals">{{ $t('categoryMatching.autocomplete.tooManyResults') }}</i>
+      <i v-if="fetchError">{{ $t('categoryMatching.autocomplete.fetchError') }}</i>
     </li>
-    <b-dropdown-item v-if="tooManyProposals" disabled>
-      {{ $t('categoryMatching.autocomplete.tooManyResults') }}
-    </b-dropdown-item>
-    <b-dropdown-item v-if="fetchError" disabled>
-      {{ $t('categoryMatching.autocomplete.fetchError') }}
-    </b-dropdown-item>
     <b-dropdown-item
       v-for="category in categories || [{id: -1, name: '...'}]"
       :key="category.id"
       :disabled="category.id === -1"
+      variant="inverse"
       @click="() => categoryChosen(category.id, category.name)"
     >
       {{ category.name }}
@@ -121,13 +120,18 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       currentCategoryName: this.initialCategoryName,
       currentCategoryId: this.initialCategoryId,
-      currentFilter: null, // init value null, forces to load full list first time opened.
-      categories: null, // init value null, to display loader before full list is loaded.
+      currentFilter: null as String | null, // init null: forces to load full list first time opened
+      categories: null, // init value null, to display loader before full list is loaded
       loading: false,
       tooManyProposals: false,
       fetchError: null,
@@ -140,7 +144,9 @@ export default defineComponent({
     },
     afterDropdownShown() {
       const input = document.getElementById(`dropdown-category-input-${this.shopCategoryId}`);
-      input.focus();
+      if (input) {
+        input.focus();
+      }
     },
     categoryChosen(categoryId, categoryName) {
       this.currentCategoryName = categoryName;
@@ -240,13 +246,45 @@ export default defineComponent({
     & > button {
       text-overflow: ellipsis;
       overflow: hidden;
+      direction: rtl;
+      text-align: end;
+
+      &::after {
+        content: "";
+      }
+      &::before {
+        text-align: start;
+        margin-left: .625rem;
+        margin-right: 0;
+        font-family: Material Icons;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.5rem;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: "liga";
+        content: "expand_more";
+        border: none;
+        display: inline-block;
+        vertical-align: middle;
+        width: auto;
+        line-height: 1;
+        float: right;
+        box-sizing: border-box;
+      }
     }
 
     & > ul {
       top: -2.4rem !important;
       padding: 0.4rem;
       border: 2px solid #3ed2f0;
-      box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+      box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.175);
       max-height: 25rem;
       overflow-y: auto;
 
@@ -300,7 +338,18 @@ export default defineComponent({
 
           &.disabled {
             font-style: italic;
+            font-size: 0.85em;
+            background-color: white;
           }
+
+          &:not(.disabled):hover {
+            background-color: #25b9d7;
+            color: white;
+          }
+        }
+
+        &:nth-of-type(even) {
+          background-color: #eff1f2;
         }
       }
 
@@ -309,7 +358,12 @@ export default defineComponent({
         padding: 0.4rem;
         position: sticky;
         top: -0.5rem;
-        background: white;
+        background-color: white !important;
+
+        & > i {
+          font-size: 0.85em;
+          background-color: white;
+        }
       }
     }
   }

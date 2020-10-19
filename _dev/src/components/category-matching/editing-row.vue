@@ -32,6 +32,7 @@
     <b-td>
       <div v-if="initialPropagation === true || initialPropagation === false" class="propagate">
         <b-checkbox
+          :id="`propagation-${shopCategoryId}`"
           :checked="currentPropagation"
           @change="changePropagation"
           :disabled="currentCategoryId <= 0 || currentCategoryId === null" />
@@ -45,6 +46,7 @@
         :initialCategoryId="currentSubcategoryId"
         :parentCategoryId="currentCategoryId"
         :autocompletionApi="autocompletionApi"
+        :disabled="!currentCategoryId"
         @onCategorySelected="subcategoryChanged"
       />
     </b-td>
@@ -56,7 +58,7 @@
           <path class="checkmark__check" fill="none" stroke-width="4" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
       </div>
-      <div v-if="error" class="error"><i class="material-icons">error</i></div>
+      <div v-if="error" class="error" :title="error"><i class="material-icons">error</i></div>
     </b-td>
   </b-tr>
 </template>
@@ -144,6 +146,10 @@ export default defineComponent({
         this.currentCategoryName = categoryName;
         this.currentSubcategoryId = null;
         this.currentSubcategoryName = null;
+      }
+      const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
+      if (checkbox) {
+        checkbox.focus();
       }
     },
     subcategoryChanged(subcategoryId, subcategoryName) {

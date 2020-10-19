@@ -118,6 +118,15 @@ class PsFacebookTranslations
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
                 ],
             ],
+            'categoryMatching' => [
+                'autocomplete' => [
+                    'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
+                    'select' => $this->module->l('Select', 'PsFacebookTranslations'),
+                    'noResult' => $this->module->l('No result for your search', 'PsFacebookTranslations'),
+                    'tooManyResults' => $this->module->l('Too many results, please complete your search.', 'PsFacebookTranslations'),
+                    'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
+                ],
+            ],
         ];
 
         return $translations;

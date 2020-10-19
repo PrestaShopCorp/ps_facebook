@@ -19,9 +19,9 @@
 <template>
   <div id="app">
     <Menu>
-      <MenuItem route="/catalog">
+      <!--<MenuItem route="/catalog">
         {{ $t('general.tabs.catalog') }}
-      </MenuItem>
+      </MenuItem>-->
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}
       </MenuItem>
