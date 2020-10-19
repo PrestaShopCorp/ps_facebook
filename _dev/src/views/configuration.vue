@@ -200,8 +200,11 @@ export default defineComponent({
       fetch(global.psFacebookLoadConfigurationRoute)
         .then((response) => response.json())
         .then((json) => {
-          global.contextPsFacebook = json.contextPsFacebook;
-          global.psFacebookExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.dynamicContextPsFacebook = json.contextPsFacebook;
+          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
         });
     },
     onSyncCatalogAdviceClick() {

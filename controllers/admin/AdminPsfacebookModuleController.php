@@ -47,6 +47,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 ['action' => 'saveOnboarding']
             ),
+            'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'Configuration',
+                    'ajax' => 1
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -56,8 +65,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             // TODO : to rework from here !
             // TODO Get from DTO
             'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
-            'contextPsFacebook' => [
-                /* 'email' => 'him@prestashop.com',
+            /*'contextPsFacebook' => [
+                'email' => 'him@prestashop.com',
                 'facebookBusinessManager' => [
                   'name' => 'La Fanchonette',
                   'email' => 'fanchonette@ps.com',
@@ -82,8 +91,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'categoriesMatching' => [
                   'sent': false
                 ]
-                */
-            ],
+
+            ],*/
             'psFacebookCurrency' => null, // TODO from shop (merchant)
             'psFacebookTimezone' => null, // TODO from shop (merchant)
             'psFacebookLocale' => null, // TODO from shop (merchant)
