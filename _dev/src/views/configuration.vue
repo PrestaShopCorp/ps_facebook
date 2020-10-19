@@ -180,7 +180,7 @@ export default defineComponent({
   data() {
     return {
       dynamicContextPsFacebook: this.contextPsFacebook,
-      dynamicExternalBusinessId: this.psFacebookExternalBusinessId,
+      dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showSyncCatalogAdvice: this.contextPsFacebook
@@ -198,7 +198,12 @@ export default defineComponent({
   methods: {
     fetchData() {
       fetch(global.psFacebookLoadConfigurationRoute)
-        .then((response) => response.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
         .then((json) => {
           this.dynamicContextPsFacebook = json.contextPsFacebook;
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;

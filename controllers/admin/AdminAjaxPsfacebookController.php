@@ -130,6 +130,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    /**
+     * @throws PrestaShopException
+     */
     public function displayAjaxConfiguration()
     {
         $this->ajaxDie(
