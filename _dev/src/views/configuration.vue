@@ -192,7 +192,26 @@ export default defineComponent({
       popupReceptionDuplicate: false,
     };
   },
+  created() {
+    this.fetchData();
+  },
   methods: {
+    fetchData() {
+      fetch(global.psFacebookLoadConfigurationRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.dynamicContextPsFacebook = json.contextPsFacebook;
+          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
+        });
+    },
     onSyncCatalogAdviceClick() {
       this.$router.push({name: 'Catalog', query: {component: 'matching'}});
     },

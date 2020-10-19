@@ -19,7 +19,10 @@
 <template>
   <div id="app">
     <Menu>
-      <MenuItem route="/catalog">
+      <MenuItem
+        on-boarding-required="true"
+        route="/catalog"
+      >
         {{ $t('general.tabs.catalog') }}
       </MenuItem>
       <MenuItem route="/configuration">
