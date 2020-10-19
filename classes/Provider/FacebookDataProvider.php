@@ -31,7 +31,7 @@ class FacebookDataProvider
             return null;
         }
 
-        $email = $this->facebookClient->getUserEmail();
+        $user = $this->facebookClient->getUserEmail();
         $businessManager = $this->facebookClient->getBusinessManager($fbe['business_manager_id']);
         $pixel = $this->facebookClient->getPixel($fbe['pixel_id']);
         $pages = $this->facebookClient->getPage($fbe['pages']);
@@ -39,7 +39,7 @@ class FacebookDataProvider
         $isCategoriesMatching = $this->facebookClient->getCategoriesMatching($fbe['catalog_id']);
 
         return new ContextPsFacebook(
-            $email,
+            $user,
             $businessManager,
             $pixel,
             $pages,
