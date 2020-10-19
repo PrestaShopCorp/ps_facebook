@@ -15,8 +15,10 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -122,14 +124,29 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxConfiguration()
     {
+        $facebookClient = new FacebookClient(
+            Config::APP_ID,
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION
+        );
+        $fbDataProvider = new FacebookDataProvider($facebookClient);
+
+        $fbe = [
+            'pixel_id' => Configuration::get(Config::PS_PIXEL_ID),
+            'profiles' => Configuration::get(Config::PS_FACEBOOK_PROFILES),
+            'pages' => [
+                Configuration::get(Config::PS_FACEBOOK_PAGES),
+            ],
+            'business_manager_id' => Configuration::get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID),
+            'catalog_id' => Configuration::get(Config::PS_FACEBOOK_CATALOG_ID),
+        ];
+        $facebookContext = $fbDataProvider->getContext($fbe);
+
         $this->ajaxDie(
             json_encode(
                 [
-                    /*
-                     * @TODO Add facebook context
-                     */
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => [],
+                    'contextPsFacebook' => $facebookContext,
                 ]
             )
         );
@@ -140,13 +157,29 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFbContext()
     {
+        $facebookClient = new FacebookClient(
+            Config::APP_ID,
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION
+        );
+        $fbDataProvider = new FacebookDataProvider($facebookClient);
+
+        $fbe = [
+            'pixel_id' => Configuration::get(Config::PS_PIXEL_ID),
+            'profiles' => Configuration::get(Config::PS_FACEBOOK_PROFILES),
+            'pages' => [
+                Configuration::get(Config::PS_FACEBOOK_PAGES),
+            ],
+            'business_manager_id' => Configuration::get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID),
+            'catalog_id' => Configuration::get(Config::PS_FACEBOOK_CATALOG_ID),
+        ];
+        $facebookContext = $fbDataProvider->getContext($fbe);
+
         $this->ajaxDie(
             json_encode(
                 [
-                    /*
-                     * @TODO Add facebook context
-                     */
-                    'contextPsFacebook' => [],
+                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+                    'contextPsFacebook' => $facebookContext,
                 ]
             )
         );
