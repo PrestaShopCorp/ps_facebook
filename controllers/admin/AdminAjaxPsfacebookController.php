@@ -14,7 +14,6 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
-use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;

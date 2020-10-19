@@ -53,7 +53,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'Configuration',
-                    'ajax' => 1
+                    'ajax' => 1,
                 ]
             ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
