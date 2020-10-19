@@ -45,12 +45,12 @@ abstract class BaseEvent
 
         $arrayReturned = [];
         $arrayReturned['ct'] = $customerInformation['city'];
-        $arrayReturned['country'] = $customerInformation['country_iso'];
-        $arrayReturned['zp'] = $customerInformation['postcode'];
+        $arrayReturned['country'] = $customerInformation['countryIso'];
+        $arrayReturned['zp'] = $customerInformation['postCode'];
         $arrayReturned['ph'] = $customerInformation['phone'];
         $arrayReturned['gender'] = $customerInformation['gender'];
-        $arrayReturned['fn'] = $customerInformation['first_name'];
-        $arrayReturned['ln'] = $customerInformation['last_name'];
+        $arrayReturned['fn'] = $customerInformation['firstname'];
+        $arrayReturned['ln'] = $customerInformation['lastname'];
         $arrayReturned['em'] = $customerInformation['email'];
 
         // data structured for pixel

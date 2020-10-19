@@ -43,19 +43,6 @@ abstract class AbstractEvent implements ConversionEventInterface
     {
         $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
-        $customer = $this->context->customer;
-        $addressId = Address::getFirstCustomerAddressId($customer->id);
-        $address = new Address($addressId);
-//        $simpleAddresses = $this->context->customer->getSimpleAddresses();
-//        if (count($simpleAddresses) > 0) {
-//        }
-        $gender = null;
-        if ($this->context->customer->id_gender) {
-            $psGender = new PsGender($this->context->customer->id_gender, $this->context->language->id);
-            $gender = (int) $psGender->type === 1 ? Gender::FEMALE : Gender::MALE;
-        }
-        $country = new Country($address->id_country);
-
         $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 
@@ -65,19 +52,16 @@ abstract class AbstractEvent implements ConversionEventInterface
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
             ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
             ->setFbp($fbp)
-            ->setEmail(strtolower($customer->email))
-            ->setFirstName(strtolower($customer->firstname))
-            ->setLastName(strtolower($customer->lastname))
-            ->setPhone(preg_replace('/[^0-9.]+/', '', $address->phone))
-            ->setDateOfBirth(preg_replace('/[^0-9.]+/', '', $customer->birthday))
-            ->setCity(strtolower($address->city))
-            ->setState(strtolower((new State($address->id_state))->iso_code))
-            ->setZipCode(preg_replace('/[^0-9.]+/', '', $address->postcode))
-            ->setCountryCode(strtolower($country->iso_code));
-
-        if ($gender !== null) {
-            $userData->setGender($gender);
-        }
+            ->setEmail($customerInformation['email'])
+            ->setFirstName($customerInformation['firstname'])
+            ->setLastName($customerInformation['lastname'])
+            ->setPhone($customerInformation['phone'])
+            ->setDateOfBirth($customerInformation['birthday'])
+            ->setCity($customerInformation['city'])
+            ->setState($customerInformation['stateIso'])
+            ->setZipCode($customerInformation['postCode'])
+            ->setCountryCode($customerInformation['countryIso'])
+            ->setGender($customerInformation['gender']);
 
         return $userData;
     }

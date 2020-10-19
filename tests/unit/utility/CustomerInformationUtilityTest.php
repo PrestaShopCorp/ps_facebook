@@ -1,11 +1,9 @@
 <?php
 
-namespace utility;
-
-use Customer;
+use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
-class CustomerInformationUtilityTest extends \PHPUnit_Framework_TestCase
+class CustomerInformationUtilityTest extends TestCase
 {
     /**
      * @dataProvider getCustomerInformationForPixelDataProvider
@@ -46,7 +44,7 @@ class CustomerInformationUtilityTest extends \PHPUnit_Framework_TestCase
         $email = 'test@gmail.com';
 
         return [
-            'case1' => [
+            'with simple address' => [
                 'simpleAddresses' => [
                     9 => [
                         'id' => '9',
@@ -78,16 +76,57 @@ class CustomerInformationUtilityTest extends \PHPUnit_Framework_TestCase
                 'email' => $email,
                 'result' => [
                     'city' => 'kaunas',
-                    'country_iso' => 'lv',
-                    'postcode' => '3003',
                     'phone' => '12345678',
                     'gender' => 'm',
                     'birthday' => strtolower($birthday),
-                    'first_name' => strtolower($firstName),
-                    'last_name' => strtolower($lastName),
+                    'firstname' => strtolower($firstName),
+                    'lastname' => strtolower($lastName),
                     'email' => strtolower($email),
+                    'countryIso' => 'lv',
+                    'postCode' => '3003',
+                    'stateIso' => '',
                 ],
             ],
+            'without simple address' => [
+                'simpleAddresses' => [],
+                'genderId' => 1,
+                'birthday' => $birthdayFormatted,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'result' => [
+                    'city' => null,
+                    'phone' => null,
+                    'gender' => 'm',
+                    'birthday' => '19960224',
+                    'firstname' => 'firstnametest',
+                    'lastname' => 'lastnametest',
+                    'email' => 'test@gmail.com',
+                    'countryIso' => null,
+                    'postCode' => null,
+                    'stateIso' => null,
+                ],
+            ],
+            'no customer' => [
+                'simpleAddresses' => [],
+                'genderId' => 0,
+                'birthday' => null,
+                'first_name' => null,
+                'last_name' => null,
+                'email' => null,
+                'result' => [
+                    'city' => null,
+                    'phone' => null,
+                    'gender' => null,
+                    'birthday' => null,
+                    'firstname' => null,
+                    'lastname' => null,
+                    'email' => null,
+                    'countryIso' => null,
+                    'postCode' => null,
+                    'stateIso' => null,
+                ],
+            ]
         ];
     }
 }

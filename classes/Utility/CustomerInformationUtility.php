@@ -13,24 +13,23 @@ class CustomerInformationUtility
 
         if (count($simpleAddresses) > 0) {
             $address = reset($simpleAddresses);
-            if ($address['city'] != null) {
-                $arrayReturned['city'] = strtolower($address['city']);
-            }
-            if ($address['country_iso'] != null) {
-                $arrayReturned['country_iso'] = strtolower($address['country_iso']);
-            }
-            if ($address['postcode'] != null) {
-                $arrayReturned['postcode'] = preg_replace('/[^0-9.]+/', '', $address['postcode']);
-            }
-            if ($address['phone'] != null) {
-                $arrayReturned['phone'] = preg_replace('/[^0-9.]+/', '', $address['phone']);
-            }
+            $arrayReturned['city'] = strtolower($address['city']);
+            $arrayReturned['countryIso'] = strtolower($address['country_iso']);
+            $arrayReturned['postCode'] = preg_replace('/[^0-9.]+/', '', $address['postcode']);
+            $arrayReturned['phone'] = preg_replace('/[^0-9.]+/', '', $address['phone']);
+            $arrayReturned['stateIso'] = strtolower($address['state_iso']);
+        } else {
+            $arrayReturned['city'] = null;
+            $arrayReturned['countryIso'] = null;
+            $arrayReturned['postCode'] = null;
+            $arrayReturned['phone'] = null;
+            $arrayReturned['stateIso'] = null;
         }
 
         $gender = null;
-        if ($customer->id_gender !== null) {
+        if ($customer->id_gender !== 0) {
             //todo: better to check gender type
-            $gender = (int) $customer->id_gender === 1 ? Gender::MALE : Gender::FEMALE;
+            $gender = (int)$customer->id_gender === 1 ? Gender::MALE : Gender::FEMALE;
         }
 
         $arrayReturned['gender'] = $gender;
@@ -38,11 +37,13 @@ class CustomerInformationUtility
         $birthDate = \DateTime::createFromFormat('Y-m-d', $customer->birthday);
         if ($birthDate instanceof \DateTime) {
             $arrayReturned['birthday'] = $birthDate->format('Ymd');
+        } else {
+            $arrayReturned['birthday'] = null;
         }
 
-        $arrayReturned['first_name'] = strtolower($customer->firstname);
-        $arrayReturned['last_name'] = strtolower($customer->lastname);
-        $arrayReturned['email'] = strtolower($customer->email);
+        $arrayReturned['firstname'] = $customer->firstname ? strtolower($customer->firstname) : null;
+        $arrayReturned['lastname'] = $customer->firstname ? strtolower($customer->lastname) : null;
+        $arrayReturned['email'] = $customer->firstname ? strtolower($customer->email) : null;
 
         return $arrayReturned;
     }
