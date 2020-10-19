@@ -13,7 +13,7 @@ const contextPsFacebook = {
     name: 'La Fanchonette Test Pixel',
     id: '1234567890',
     lastActive: Date.now(),
-    activated: true,
+    isActive: true,
   },
   page: {
     name: 'La Fanchonette',
@@ -38,7 +38,7 @@ const contextPsFacebookOverflows = {
     name: 'La Fanchonette qui s\'étend sur la longueur Test Pixel',
     id: '123456789012345678901234567890',
     lastActive: Date.now(),
-    activated: true,
+    isActive: true,
   },
   page: {
     name: 'La Fanchonette qui s\'étend sur la longueur',

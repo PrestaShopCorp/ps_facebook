@@ -84,10 +84,10 @@ FullConnected.args = {
       name: 'La Fanchonette Test Pixel',
       id: '1234567890',
       lastActive: Date.now(),
-      activated: true,
+      isActive: true,
     },
     page: {
-      name: 'La Fanchonette',
+      page: 'La Fanchonette',
       likes: 42,
       logo: null,
     },

@@ -203,9 +203,8 @@ export default defineComponent({
       this.openPopup();
     },
     onPixelActivation() {
-      const actualState = this.dynamicContextPsFacebook.pixel.activated;
+      const actualState = this.dynamicContextPsFacebook.pixel.isActive;
       const newState = !actualState;
-
       // Save activation state in PHP side.
       fetch(this.pixelActivationRoute, {
         method: 'POST',
@@ -215,19 +214,21 @@ export default defineComponent({
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
-        if (!res.json().success) {
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
           throw new Error(res.statusText || res.status);
         }
         this.dynamicContextPsFacebook = {
           ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, activated: newState},
+          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: newState},
         };
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.dynamicContextPsFacebook = {
           ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, activated: actualState},
+          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
         };
       });
     },
@@ -255,31 +256,17 @@ export default defineComponent({
       fetch(this.fbeOnboardingSaveRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({onboarding: response}), // TODO !0: format to see
+        body: JSON.stringify({onboarding: response}),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
-        const fakeContextPsFacebook = {
-          email: 'him@prestashop.com',
-          facebookBusinessManager: {
-            name: 'La Fanchonette',
-            email: 'fanchonette@ps.com',
-            createdAt: Date.now(),
-          },
-          pixel: {
-            name: 'La Fanchonette Test Pixel',
-            id: '1234567890',
-            lastActive: Date.now(),
-            activated: true,
-          },
-          page: {},
-          ads: {},
-          categoriesMatching: {
-            sent: false,
-          },
-        }; // TODO !0: get all missing data from res.json()
-        this.dynamicContextPsFacebook = fakeContextPsFacebook;
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error('Error!');
+        }
+        this.dynamicContextPsFacebook = res.contextPsFacebook;
         this.showGlass = false;
         this.popupReceptionDuplicate = false;
       }).catch((error) => {
