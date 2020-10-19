@@ -3,8 +3,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
-use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Message\ResponseInterface;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
