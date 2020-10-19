@@ -103,7 +103,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     private function ajaxProcessRetrieveExternalBusinessId()
     {
-        $externalBusinessId = Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID');
+        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
             $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
             $response = $client->post(
@@ -117,7 +117,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             )->json();
 
             $externalBusinessId = $response['externalBusinessId'];
-            Configuration::updateValue('PS_FACEBOOK_EXTERNAL_BUSINESS_ID', $externalBusinessId);
+            Configuration::updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }
 
         $this->ajaxDie(
@@ -137,7 +137,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
+                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
                     'contextPsFacebook' => [],
                 ]
             )
