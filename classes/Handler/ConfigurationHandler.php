@@ -14,7 +14,8 @@ class ConfigurationHandler
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter) {
+    public function __construct(ConfigurationAdapter $configurationAdapter)
+    {
         $this->configurationAdapter = $configurationAdapter;
     }
 
