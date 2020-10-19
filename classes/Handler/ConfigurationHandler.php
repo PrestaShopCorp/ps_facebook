@@ -3,9 +3,9 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
-use PrestaShop\Module\PrestashopFacebook\Provider\FacebookFbeDataProvider;
 
 class ConfigurationHandler
 {
@@ -24,11 +24,12 @@ class ConfigurationHandler
         $this->addFbeAttributeIfMissing($onboardingInputs);
         $this->saveOnboardingConfiguration($onboardingInputs);
 
-        $fbDataProvider = new FacebookDataProvider(
+        $facebookClient = new FacebookClient(
             Config::APP_ID,
             $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN),
             Config::API_VERSION
         );
+        $fbDataProvider = new FacebookDataProvider($facebookClient);
 
         $facebookContext = $fbDataProvider->getContext($onboardingInputs['fbe']);
 
@@ -44,12 +45,13 @@ class ConfigurationHandler
             return;
         }
 
-        $onboardingParams['fbe'] = (new FacebookFbeDataProvider(
-                Config::APP_ID,
-                $onboardingParams['access_token'],
-                Config::API_VERSION,
-                $this->configurationAdapter->get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID')
-            ))->getFbeInstallationContext();
+        $facebookClient = new FacebookClient(
+            Config::APP_ID,
+            $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION
+        );
+
+        $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'));
     }
 
     private function saveOnboardingConfiguration(array $onboardingParams)

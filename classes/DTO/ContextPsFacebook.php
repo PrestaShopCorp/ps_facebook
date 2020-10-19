@@ -21,7 +21,7 @@ class ContextPsFacebook implements JsonSerializable
     private $pixel;
 
     /**
-     * @var Page[]|null
+     * @var Page|null
      */
     private $page;
 
@@ -41,7 +41,7 @@ class ContextPsFacebook implements JsonSerializable
      * @param string $email
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
-     * @param Page[]|null $page
+     * @param Page|null $page
      * @param Ads|null $ads
      * @param bool|null $categoriesMatching
      */
@@ -116,7 +116,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Page[]|null
+     * @return Page|null
      */
     public function getPage()
     {
@@ -124,7 +124,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param Page[]|null $page
+     * @param Page|null $page
      *
      * @return ContextPsFacebook
      */
