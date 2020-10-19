@@ -14,5 +14,19 @@ new Vue({
   router,
   store,
   i18n,
-  render: (h) => h(App),
+  template: '<App :contextPsFacebook="contextPsFacebook" />',
+  components: {App},
+  data() {
+    return {
+      // @ts-ignore
+      contextPsFacebook: global.contextPsFacebook,
+    };
+  },
+  methods: {
+    refreshContextPsFacebook(context) {
+      this.contextPsFacebook = context;
+      // @ts-ignore
+      global.contextPsFacebook = context;
+    },
+  },
 }).$mount('#app');

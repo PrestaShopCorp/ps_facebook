@@ -32,39 +32,9 @@ export default {
       default: () => global.contextPsFacebook,
     },
   },
-  created() {
-    this.getFbContext();
-  },
-  data() {
-    return {
-      dynamicContextPsFacebook: this.contextPsFacebook,
-    };
-  },
   computed: {
     facebookConnected() {
-      return (this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.email) || false;
-    },
-  },
-  watch: {
-    contextPsFacebook(newValue) {
-      this.dynamicContextPsFacebook = newValue;
-      this.$forceUpdate();
-    },
-  },
-  methods: {
-    getFbContext() {
-      fetch(global.psFacebookGetFbContextRoute)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        })
-        .then((json) => {
-          this.dynamicContextPsFacebook = json.contextPsFacebook;
-        }).catch((error) => {
-          console.error(error);
-        });
+      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
     },
   },
 };

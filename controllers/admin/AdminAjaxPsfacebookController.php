@@ -129,7 +129,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                      * @TODO Add facebook context
                      */
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => [],
+                    'contextPsFacebook' => [], // TODO !0: URGENT !
                 ]
             )
         );
@@ -146,7 +146,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     /*
                      * @TODO Add facebook context
                      */
-                    'contextPsFacebook' => [],
+                    'contextPsFacebook' => [], // TODO !0: URGENT !
                 ]
             )
         );

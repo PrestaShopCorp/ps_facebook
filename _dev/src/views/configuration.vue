@@ -238,17 +238,17 @@ export default defineComponent({
         if (!res.success) {
           throw new Error(res.statusText || res.status);
         }
-        this.dynamicContextPsFacebook = {
+        this.$root.refreshContextPsFacebook({
           ...this.dynamicContextPsFacebook,
           pixel: {...this.dynamicContextPsFacebook.pixel, isActive: newState},
-        };
+        });
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
-        this.dynamicContextPsFacebook = {
+        this.$root.refreshContextPsFacebook({
           ...this.dynamicContextPsFacebook,
           pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
-        };
+        });
       });
     },
     onFbeOnboardOpened() {
@@ -285,7 +285,7 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error!');
         }
-        this.dynamicContextPsFacebook = res.contextPsFacebook;
+        this.$root.refreshContextPsFacebook(res.contextPsFacebook);
         this.showGlass = false;
         this.popupReceptionDuplicate = false;
       }).catch((error) => {
