@@ -47,7 +47,7 @@ class ConfigurationHandler
 
         $facebookClient = new FacebookClient(
             Config::APP_ID,
-            $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN),
+            $onboardingParams['access_token'],
             Config::API_VERSION
         );
 
