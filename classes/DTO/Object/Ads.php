@@ -17,7 +17,7 @@ class Ads implements JsonSerializable
     private $email;
 
     /**
-     * @var int
+     * @var string
      */
     private $createdAt;
 
@@ -26,7 +26,7 @@ class Ads implements JsonSerializable
      *
      * @param string $name
      * @param string $email
-     * @param int $createdAt
+     * @param string $createdAt
      */
     public function __construct($name, $email, $createdAt)
     {
@@ -52,7 +52,7 @@ class Ads implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getCreatedAt()
     {

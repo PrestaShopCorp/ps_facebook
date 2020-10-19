@@ -57,6 +57,7 @@ class FacebookDataProvider
             return null;
         }
 
+        $email = $this->handleUserInformation();
         $businessManager = $this->handleBusinessManager($fbe['business_manager_id']);
         $pixel = $this->handlePixel($fbe['pixel_id']);
         $pages = $this->handlePages($fbe['pages']);
@@ -64,6 +65,7 @@ class FacebookDataProvider
         $isCategoriesMatching = $this->handleCategoriesMatching($fbe['catalog_id']);
 
         return new ContextPsFacebook(
+            $email,
             $businessManager,
             $pixel,
             $pages,
@@ -72,32 +74,39 @@ class FacebookDataProvider
         );
     }
 
+    public function handleUserInformation()
+    {
+        $responseContent = $this->handleAPICall('me', ['email']);
+
+        return $responseContent['email'];
+    }
+
     private function handleBusinessManager($businessManagerId)
     {
-        $responseContent = $this->handleAPICall((int) $businessManagerId);
+        $responseContent = $this->handleAPICall((int) $businessManagerId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
 
         return new FacebookBusinessManager(
-            isset($responseContent['name']) ? $responseContent['name'] : '',
-            isset($responseContent['email']) ? $responseContent['email'] : '',
-            isset($responseContent['createdAt']) ? $responseContent['createdAt'] : 0
+            isset($responseContent['name']) ? $responseContent['name'] : null,
+            isset($responseContent['email']) ? $responseContent['email'] : null,
+            isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
 
     private function handlePixel($pixelId)
     {
-        $responseContent = $this->handleAPICall((int) $pixelId);
+        $responseContent = $this->handleAPICall((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
         if (!$responseContent) {
             return null;
         }
 
         return new Pixel(
-            isset($responseContent['name']) ? $responseContent['name'] : '',
-            isset($responseContent['id']) ? $responseContent['id'] : '',
-            isset($responseContent['lastActive']) ? $responseContent['lastActive'] : 0,
-            isset($responseContent['activated']) ? $responseContent['activated'] : 0
+            isset($responseContent['name']) ? $responseContent['name'] : null,
+            isset($responseContent['id']) ? $responseContent['id'] : null,
+            isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
+            isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false
         );
     }
 
@@ -105,15 +114,17 @@ class FacebookDataProvider
     {
         $pages = [];
         foreach ($pageIds as $pageId) {
-            $responseContent = $this->handleAPICall((int) $pageId);
+            $responseContent = $this->handleAPICall((int) $pageId, ['name', 'fan_count']);
             if (!$responseContent) {
                 return null;
             }
 
+            $logoResponse = $this->handleAPICall($pageId . '/photos', ['picture']);
+            $logo = reset($logoResponse['data']);
             $page = new Page(
-                isset($responseContent['name']) ? $responseContent['name'] : '',
-                isset($responseContent['likes']) ? $responseContent['likes'] : 0,
-                isset($responseContent['logo']) ? $responseContent['logo'] : ''
+                isset($responseContent['name']) ? $responseContent['name'] : null,
+                isset($responseContent['fan_count']) ? $responseContent['fan_count'] : null,
+                isset($logo['picture']) ? $logo['picture'] : null
             );
             $pages[] = $page;
         }
@@ -123,15 +134,15 @@ class FacebookDataProvider
 
     private function handleAds($adsId)
     {
-        $responseContent = $this->handleAPICall((int) $adsId);
+        $responseContent = $this->handleAPICall((int) $adsId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
 
         return new Ads(
-            isset($responseContent['name']) ? $responseContent['name'] : '',
-            isset($responseContent['email']) ? $responseContent['email'] : '',
-            isset($responseContent['createdAt']) ? $responseContent['createdAt'] : 0
+            isset($responseContent['name']) ? $responseContent['name'] : null,
+            isset($responseContent['email']) ? $responseContent['email'] : null,
+            isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
 
@@ -143,9 +154,10 @@ class FacebookDataProvider
     /**
      * @param int $id
      *
+     * @param array $fields
      * @return false|array
      */
-    private function handleAPICall($id)
+    private function handleAPICall($id, array $fields = [])
     {
         $client = new Client();
         try {
@@ -154,6 +166,7 @@ class FacebookDataProvider
                 [
                     'query' => [
                         'access_token' => $this->accessToken,
+                        'fields' => implode(',', $fields)
                     ],
                 ]
             );

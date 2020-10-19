@@ -1,13 +1,11 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
 use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class FacebookDataProviderTest extends TestCase
 {
@@ -16,30 +14,10 @@ class FacebookDataProviderTest extends TestCase
      *
      * @dataProvider getContextDataProvider
      */
-    public function testGetContext(
-        $inputs,
-        $psAccountsPresenterMock,
-        $psFacebookTranslationsMock,
-        $linkMock,
-        $currencyIso,
-        $isoCode,
-        $languageLocale,
-        $result
-    ) {
-        $psAccountsPresenter = $this->getAccountPresenterMock($psAccountsPresenterMock);
-        $psFacebookTranslations = $this->getFacebookTranslationsMock($psFacebookTranslationsMock);
-        $link = $this->getLinkMock($linkMock);
-
+    public function testGetContext($inputs, $result)
+    {
         $configurationAdapter = new ConfigurationAdapter();
-        $configurationHandler = new ConfigurationHandler(
-            $psAccountsPresenter,
-            $psFacebookTranslations,
-            $configurationAdapter,
-            $link,
-            $currencyIso,
-            $isoCode,
-            $languageLocale
-        );
+        $configurationHandler = new ConfigurationHandler($configurationAdapter);
 
         $response = $configurationHandler->handle($inputs['onboarding']);
 
@@ -48,6 +26,8 @@ class FacebookDataProviderTest extends TestCase
 
     public function getContextDataProvider()
     {
+        $email = 'marius.gudauskis@invertus.eu';
+
         return [
             'without fbe' => [
                 'input' => [
@@ -61,117 +41,6 @@ class FacebookDataProviderTest extends TestCase
                         ],
                     ],
                 ],
-                'PsAccountsPresenterMock' => [
-                    'function' => 'present',
-                    'return' => [
-                        'psIs17' => true,
-                        'psAccountsInstallLink' => null,
-                        'psAccountsEnableLink' => null,
-                        'psAccountsIsInstalled' => true,
-                        'psAccountsIsEnabled' => true,
-                        'onboardingLink' => 'https://accounts.psessentials-integration.net/shop/account/link/https/5b977a19cc2b.ngrok.io/https/5b977a19cc2b.ngrok.io/ps_facebook?bo=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminModules%26token%3D532728209b1bc373f5fadb089a79b71e%26configure%3Dps_facebook&pubKey=-----BEGIN+RSA+PUBLIC+KEY-----%0D%0AMIGJAoGBANDq2hDEfn%2F5q4fGhVefkCUNGP%2Fm3k29Uxtjim6uqnc6Z%2F%2FjWswmnpqK%0D%0AhPMZTK9fQ8OAAc9AmKMD%2Fky%2FwKb1bW2dD6rOohuMIC72BRo1u2l1RUy3Z%2F19GmEC%0D%0Ah9kSzujMkGGxIYi39UsvAcGM35DuwfkY8jCKOATz0FFjWXHQlqtVAgMBAAE%3D%0D%0A-----END+RSA+PUBLIC+KEY-----&next=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminConfigureHmacPsAccounts%26token%3Df4563b6038ecec5b40c94631bef8e215&name=facebookModule&lang=en',
-                        'user' => [
-                            'email' => 'marius.gudauskis@invertus.eu',
-                            'emailIsValidated' => true,
-                            'isSuperAdmin' => true,
-                        ],
-                        'currentShop' => [
-                            'id' => '1',
-                            'name' => 'facebookModule',
-                            'domain' => '5b977a19cc2b.ngrok.io',
-                            'domainSsl' => '5b977a19cc2b.ngrok.io',
-                            'url' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminModules&configure=ps_facebook&setShopContext=s-1&token=532728209b1bc373f5fadb089a79b71e',
-                        ],
-                        'shops' => [
-                        ],
-                        'superAdminEmail' => 'marius.gudauskis@invertus.eu',
-                        'ssoResendVerificationEmail' => 'https://prestashop-newsso-staging.appspot.com/account/send-verification-email',
-                        'manageAccountLink' => 'https://prestashop-newsso-staging.appspot.com/login?lang=en',
-                    ],
-                ],
-                'psFacebookTranslationsMock' => [
-                    'function' => 'getTranslations',
-                    'return' => [
-                        'en' => [
-                            'general' => [
-                                'tabs' => [
-                                    'configuration' => 'Configure',
-                                    'catalog' => 'Export product catalog',
-                                    'help' => 'Help',
-                                ],
-                            ],
-                            'configuration' => [
-                                'introduction' => [
-                                    'getStarted' => 'Get started',
-                                    'subTitle' => 'Build your business presence into Facebook community easily and quickly!',
-                                    'proPoints' => '- No credit card required - Easy setup - Cancel anytime',
-                                    'resume' => 'Make your first steps with PrestaShop Facebook!',
-                                    'proPoint1Title' => 'Manage your business',
-                                    'proPoint1Description' => 'Control your ad settings and business tools from one place.',
-                                    'proPoint2Title' => 'Manage your ad account',
-                                    'proPoint2Description' => 'Choose the account where you store ad payment information for your business.',
-                                    'proPoint3Title' => 'Understand your traffic',
-                                    'proPoint3Description' => 'Use data from Facebook Pixel* to understand actions people take on your website.',
-                                    'proPoint4Title' => 'Build and manage inventory',
-                                    'proPoint4Description' => 'Manage your product catalog and unlock the power of ads.',
-                                    'proPoint5Title' => 'Reach more people',
-                                    'proPoint5Description' => 'Help people find your products on Instagram and Facebook.',
-                                    'needMoreFeatures' => 'Need more features?',
-                                    'seeDetailedPlans' => 'See detailed plans',
-                                ],
-                                'messages' => [
-                                    'success' => 'PrestaShop Facebook is now activated!',
-                                    'syncCatalogAdvice' => 'You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.',
-                                    'syncCatalogButton' => 'Sync product',
-                                    'reloadButton' => 'Reload',
-                                    'unknownOnboardingError' => 'An unknown error occurred during onboarding process. Please reload and try again.',
-                                ],
-                                'facebook' => [
-                                    'title' => 'Connect your store to Facebook',
-                                    'notConnected' => [
-                                        'intro' => 'Integrate your shop with Facebook.',
-                                        'connectButton' => 'Connect to Facebook',
-                                        'description' => 'With Facebook Business Manager, Facebook Page, Facebook Ads account, Facebook Pixel, Instagram Business account and products, you’ll be able to:',
-                                        'details' => '- Create catalog - Sync your catalog automatically and in real time - Create Shop on Facebook Page &amp; Instagram Shopping - Add Messenger plugin in your shop - Customize your Facebook Page with call-to-action',
-                                    ],
-                                    'connected' => [
-                                        'description' => 'You authorize this Facebook account to connect to your store:',
-                                        'editButton' => 'Edit',
-                                        'facebookBusinessManager' => 'Facebook Business Manager',
-                                        'facebookBusinessManagerTooltip' => 'Facebook Business Manager',
-                                        'facebookPixel' => 'Facebook Pixel',
-                                        'facebookPixelTooltip' => 'Facebook Pixel',
-                                        'facebookPage' => 'Facebook Page',
-                                        'facebookPageTooltip' => 'Facebook Page',
-                                        'facebookAds' => 'Facebook Ads',
-                                        'facebookAdsTooltip' => 'Facebook Ads',
-                                    ],
-                                ],
-                                'app' => [
-                                    'like' => 'like',
-                                    'likes' => 'likes',
-                                    'createdAt' => 'Created',
-                                    'lastActive' => 'Last active',
-                                    'activated' => 'Activated',
-                                    'disabled' => 'Disabled',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'linkMock' => [
-                    0 => [
-                        'function' => 'getAdminLink',
-                        'return' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminAjaxPsfacebook&action=activatePixel&token=8e0378da708f02c24d79273fe6f50fe0',
-                    ],
-                    1 => [
-                        'function' => 'getAdminLink',
-                        'return' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminAjaxPsfacebook&action=saveOnboarding&token=8e0378da708f02c24d79273fe6f50fe0',
-                    ],
-                ],
-                'currencyIso' => 'EUR',
-                'isoCode' => 'en',
-                'languageLocale' => 'en-us',
                 'result' => [
                     'success' => true,
                     'configurations' => [
@@ -183,7 +52,7 @@ class FacebookDataProviderTest extends TestCase
                             'psAccountsIsEnabled' => true,
                             'onboardingLink' => 'https://accounts.psessentials-integration.net/shop/account/link/https/5b977a19cc2b.ngrok.io/https/5b977a19cc2b.ngrok.io/ps_facebook?bo=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminModules%26token%3D532728209b1bc373f5fadb089a79b71e%26configure%3Dps_facebook&pubKey=-----BEGIN+RSA+PUBLIC+KEY-----%0D%0AMIGJAoGBANDq2hDEfn%2F5q4fGhVefkCUNGP%2Fm3k29Uxtjim6uqnc6Z%2F%2FjWswmnpqK%0D%0AhPMZTK9fQ8OAAc9AmKMD%2Fky%2FwKb1bW2dD6rOohuMIC72BRo1u2l1RUy3Z%2F19GmEC%0D%0Ah9kSzujMkGGxIYi39UsvAcGM35DuwfkY8jCKOATz0FFjWXHQlqtVAgMBAAE%3D%0D%0A-----END+RSA+PUBLIC+KEY-----&next=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminConfigureHmacPsAccounts%26token%3Df4563b6038ecec5b40c94631bef8e215&name=facebookModule&lang=en',
                             'user' => [
-                                'email' => 'marius.gudauskis@invertus.eu',
+                                'email' => $email,
                                 'emailIsValidated' => true,
                                 'isSuperAdmin' => true,
                             ],
@@ -196,7 +65,7 @@ class FacebookDataProviderTest extends TestCase
                             ],
                             'shops' => [
                             ],
-                            'superAdminEmail' => 'marius.gudauskis@invertus.eu',
+                            'superAdminEmail' => $email,
                             'ssoResendVerificationEmail' => 'https://prestashop-newsso-staging.appspot.com/account/send-verification-email',
                             'manageAccountLink' => 'https://prestashop-newsso-staging.appspot.com/login?lang=en',
                         ],
@@ -305,117 +174,6 @@ class FacebookDataProviderTest extends TestCase
                         ],
                     ],
                 ],
-                'PsAccountsPresenterMock' => [
-                    'function' => 'present',
-                    'return' => [
-                        'psIs17' => true,
-                        'psAccountsInstallLink' => null,
-                        'psAccountsEnableLink' => null,
-                        'psAccountsIsInstalled' => true,
-                        'psAccountsIsEnabled' => true,
-                        'onboardingLink' => 'https://accounts.psessentials-integration.net/shop/account/link/https/5b977a19cc2b.ngrok.io/https/5b977a19cc2b.ngrok.io/ps_facebook?bo=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminModules%26token%3D532728209b1bc373f5fadb089a79b71e%26configure%3Dps_facebook&pubKey=-----BEGIN+RSA+PUBLIC+KEY-----%0D%0AMIGJAoGBANDq2hDEfn%2F5q4fGhVefkCUNGP%2Fm3k29Uxtjim6uqnc6Z%2F%2FjWswmnpqK%0D%0AhPMZTK9fQ8OAAc9AmKMD%2Fky%2FwKb1bW2dD6rOohuMIC72BRo1u2l1RUy3Z%2F19GmEC%0D%0Ah9kSzujMkGGxIYi39UsvAcGM35DuwfkY8jCKOATz0FFjWXHQlqtVAgMBAAE%3D%0D%0A-----END+RSA+PUBLIC+KEY-----&next=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminConfigureHmacPsAccounts%26token%3Df4563b6038ecec5b40c94631bef8e215&name=facebookModule&lang=en',
-                        'user' => [
-                            'email' => 'marius.gudauskis@invertus.eu',
-                            'emailIsValidated' => true,
-                            'isSuperAdmin' => true,
-                        ],
-                        'currentShop' => [
-                            'id' => '1',
-                            'name' => 'facebookModule',
-                            'domain' => '5b977a19cc2b.ngrok.io',
-                            'domainSsl' => '5b977a19cc2b.ngrok.io',
-                            'url' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminModules&configure=ps_facebook&setShopContext=s-1&token=532728209b1bc373f5fadb089a79b71e',
-                        ],
-                        'shops' => [
-                        ],
-                        'superAdminEmail' => 'marius.gudauskis@invertus.eu',
-                        'ssoResendVerificationEmail' => 'https://prestashop-newsso-staging.appspot.com/account/send-verification-email',
-                        'manageAccountLink' => 'https://prestashop-newsso-staging.appspot.com/login?lang=en',
-                    ],
-                ],
-                'psFacebookTranslationsMock' => [
-                    'function' => 'getTranslations',
-                    'return' => [
-                        'en' => [
-                            'general' => [
-                                'tabs' => [
-                                    'configuration' => 'Configure',
-                                    'catalog' => 'Export product catalog',
-                                    'help' => 'Help',
-                                ],
-                            ],
-                            'configuration' => [
-                                'introduction' => [
-                                    'getStarted' => 'Get started',
-                                    'subTitle' => 'Build your business presence into Facebook community easily and quickly!',
-                                    'proPoints' => '- No credit card required - Easy setup - Cancel anytime',
-                                    'resume' => 'Make your first steps with PrestaShop Facebook!',
-                                    'proPoint1Title' => 'Manage your business',
-                                    'proPoint1Description' => 'Control your ad settings and business tools from one place.',
-                                    'proPoint2Title' => 'Manage your ad account',
-                                    'proPoint2Description' => 'Choose the account where you store ad payment information for your business.',
-                                    'proPoint3Title' => 'Understand your traffic',
-                                    'proPoint3Description' => 'Use data from Facebook Pixel* to understand actions people take on your website.',
-                                    'proPoint4Title' => 'Build and manage inventory',
-                                    'proPoint4Description' => 'Manage your product catalog and unlock the power of ads.',
-                                    'proPoint5Title' => 'Reach more people',
-                                    'proPoint5Description' => 'Help people find your products on Instagram and Facebook.',
-                                    'needMoreFeatures' => 'Need more features?',
-                                    'seeDetailedPlans' => 'See detailed plans',
-                                ],
-                                'messages' => [
-                                    'success' => 'PrestaShop Facebook is now activated!',
-                                    'syncCatalogAdvice' => 'You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.',
-                                    'syncCatalogButton' => 'Sync product',
-                                    'reloadButton' => 'Reload',
-                                    'unknownOnboardingError' => 'An unknown error occurred during onboarding process. Please reload and try again.',
-                                ],
-                                'facebook' => [
-                                    'title' => 'Connect your store to Facebook',
-                                    'notConnected' => [
-                                        'intro' => 'Integrate your shop with Facebook.',
-                                        'connectButton' => 'Connect to Facebook',
-                                        'description' => 'With Facebook Business Manager, Facebook Page, Facebook Ads account, Facebook Pixel, Instagram Business account and products, you’ll be able to:',
-                                        'details' => '- Create catalog - Sync your catalog automatically and in real time - Create Shop on Facebook Page &amp; Instagram Shopping - Add Messenger plugin in your shop - Customize your Facebook Page with call-to-action',
-                                    ],
-                                    'connected' => [
-                                        'description' => 'You authorize this Facebook account to connect to your store:',
-                                        'editButton' => 'Edit',
-                                        'facebookBusinessManager' => 'Facebook Business Manager',
-                                        'facebookBusinessManagerTooltip' => 'Facebook Business Manager',
-                                        'facebookPixel' => 'Facebook Pixel',
-                                        'facebookPixelTooltip' => 'Facebook Pixel',
-                                        'facebookPage' => 'Facebook Page',
-                                        'facebookPageTooltip' => 'Facebook Page',
-                                        'facebookAds' => 'Facebook Ads',
-                                        'facebookAdsTooltip' => 'Facebook Ads',
-                                    ],
-                                ],
-                                'app' => [
-                                    'like' => 'like',
-                                    'likes' => 'likes',
-                                    'createdAt' => 'Created',
-                                    'lastActive' => 'Last active',
-                                    'activated' => 'Activated',
-                                    'disabled' => 'Disabled',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'linkMock' => [
-                    0 => [
-                        'function' => 'getAdminLink',
-                        'return' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminAjaxPsfacebook&action=activatePixel&token=8e0378da708f02c24d79273fe6f50fe0',
-                    ],
-                    1 => [
-                        'function' => 'getAdminLink',
-                        'return' => 'https://5b977a19cc2b.ngrok.io/facebookModule/admin1/index.php?controller=AdminAjaxPsfacebook&action=saveOnboarding&token=8e0378da708f02c24d79273fe6f50fe0',
-                    ],
-                ],
-                'currencyIso' => 'EUR',
-                'isoCode' => 'en',
-                'languageLocale' => 'en-us',
                 'result' => [
                     'success' => true,
                     'configurations' => [
@@ -427,7 +185,7 @@ class FacebookDataProviderTest extends TestCase
                             'psAccountsIsEnabled' => true,
                             'onboardingLink' => 'https://accounts.psessentials-integration.net/shop/account/link/https/5b977a19cc2b.ngrok.io/https/5b977a19cc2b.ngrok.io/ps_facebook?bo=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminModules%26token%3D532728209b1bc373f5fadb089a79b71e%26configure%3Dps_facebook&pubKey=-----BEGIN+RSA+PUBLIC+KEY-----%0D%0AMIGJAoGBANDq2hDEfn%2F5q4fGhVefkCUNGP%2Fm3k29Uxtjim6uqnc6Z%2F%2FjWswmnpqK%0D%0AhPMZTK9fQ8OAAc9AmKMD%2Fky%2FwKb1bW2dD6rOohuMIC72BRo1u2l1RUy3Z%2F19GmEC%0D%0Ah9kSzujMkGGxIYi39UsvAcGM35DuwfkY8jCKOATz0FFjWXHQlqtVAgMBAAE%3D%0D%0A-----END+RSA+PUBLIC+KEY-----&next=%2FfacebookModule%2Fadmin1%2Findex.php%3Fcontroller%3DAdminConfigureHmacPsAccounts%26token%3Df4563b6038ecec5b40c94631bef8e215&name=facebookModule&lang=en',
                             'user' => [
-                                'email' => 'marius.gudauskis@invertus.eu',
+                                'email' => $email,
                                 'emailIsValidated' => true,
                                 'isSuperAdmin' => true,
                             ],
@@ -440,7 +198,7 @@ class FacebookDataProviderTest extends TestCase
                             ],
                             'shops' => [
                             ],
-                            'superAdminEmail' => 'marius.gudauskis@invertus.eu',
+                            'superAdminEmail' => $email,
                             'ssoResendVerificationEmail' => 'https://prestashop-newsso-staging.appspot.com/account/send-verification-email',
                             'manageAccountLink' => 'https://prestashop-newsso-staging.appspot.com/login?lang=en',
                         ],
@@ -524,6 +282,7 @@ class FacebookDataProviderTest extends TestCase
                             'languageLocale' => 'en-us',
                         ],
                         'contextPsFacebook' => new ContextPsFacebook(
+                            $email,
                             new FacebookBusinessManager('PrestaShop', '', 0),
                             null,
                             null,
@@ -534,37 +293,5 @@ class FacebookDataProviderTest extends TestCase
                 ],
             ],
         ];
-    }
-
-    private function getAccountPresenterMock(array $psAccountsPresenterMock)
-    {
-        $psAccountsPresenter = $this->getMockBuilder(PsAccountsPresenter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $psAccountsPresenter->method($psAccountsPresenterMock['function'])->willReturn($psAccountsPresenterMock['return']);
-
-        return $psAccountsPresenter;
-    }
-
-    private function getFacebookTranslationsMock(array $psFacebookTranslationsMock)
-    {
-        $psFacebookTranslations = $this->getMockBuilder(PsFacebookTranslations::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $psFacebookTranslations->method($psFacebookTranslationsMock['function'])->willReturn($psFacebookTranslationsMock['return']);
-
-        return $psFacebookTranslations;
-    }
-
-    private function getLinkMock(array $linkMock)
-    {
-        $link = $this->getMockBuilder(Link::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        foreach ($linkMock as $key => $mock) {
-            $link->expects(self::at($key))->method($mock['function'])->willReturn($mock['return']);
-        }
-
-        return $link;
     }
 }
