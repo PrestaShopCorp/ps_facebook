@@ -17,7 +17,7 @@ class Pixel implements JsonSerializable
     private $id;
 
     /**
-     * @var int
+     * @var string
      */
     private $lastActive;
 
@@ -31,7 +31,7 @@ class Pixel implements JsonSerializable
      *
      * @param string $name
      * @param string $id
-     * @param int $lastActive
+     * @param string $lastActive
      * @param bool $activated
      */
     public function __construct($name, $id, $lastActive, $activated)
@@ -59,7 +59,7 @@ class Pixel implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getLastActive()
     {

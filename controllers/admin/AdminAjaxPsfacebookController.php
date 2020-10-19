@@ -18,7 +18,6 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -65,19 +64,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
-        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
-        $facebookTranslations = new PsFacebookTranslations($this->module);
         $configurationAdapter = new ConfigurationAdapter();
-        $context = Context::getContext();
-        $configurationHandler = new ConfigurationHandler(
-            $psAccountPresenter,
-            $facebookTranslations,
-            $configurationAdapter,
-            $context->link,
-            $context->currency->iso_code,
-            $context->language->iso_code,
-            $context->language->language_code
-        );
+        $configurationHandler = new ConfigurationHandler($configurationAdapter);
 
         $response = $configurationHandler->handle($inputs['onboarding']);
 

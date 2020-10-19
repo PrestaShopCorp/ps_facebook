@@ -7,6 +7,10 @@ use JsonSerializable;
 class ContextPsFacebook implements JsonSerializable
 {
     /**
+     * @var string
+     */
+    private $email;
+    /**
      * @var FacebookBusinessManager|null
      */
     private $facebookBusinessManager;
@@ -34,19 +38,40 @@ class ContextPsFacebook implements JsonSerializable
     /**
      * ContextPsFacebook constructor.
      *
+     * @param $email
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
      * @param Page[]|null $page
      * @param Ads|null $ads
      * @param bool|null $categoriesMatching
      */
-    public function __construct($facebookBusinessManager, $pixel, $page, $ads, $categoriesMatching)
+    public function __construct($email, $facebookBusinessManager, $pixel, $page, $ads, $categoriesMatching)
     {
+        $this->email = $email;
         $this->facebookBusinessManager = $facebookBusinessManager;
         $this->pixel = $pixel;
         $this->page = $page;
         $this->ads = $ads;
         $this->categoriesMatching = $categoriesMatching;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return ContextPsFacebook
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -152,6 +177,7 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'email' => $this->getEmail(),
             'pixel' => $this->getPixel(),
             'page' => $this->getPage(),
             'ads' => $this->getAds(),
