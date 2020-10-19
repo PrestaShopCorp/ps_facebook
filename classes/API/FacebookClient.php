@@ -7,9 +7,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Message\ResponseInterface;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
-use PrestaShop\Module\PrestashopFacebook\DTO\user;
 
 class FacebookClient
 {
