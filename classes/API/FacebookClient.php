@@ -16,11 +16,6 @@ class FacebookClient
     const API_URL = 'https://graph.facebook.com';
 
     /**
-     * @var int
-     */
-    private $appId;
-
-    /**
      * @var string
      */
     private $accessToken;
@@ -31,17 +26,21 @@ class FacebookClient
     private $sdkVersion;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * FacebookDataProvider constructor.
      *
-     * @param int $appId
      * @param string $sdkVersion
      * @param string $accessToken
      */
-    public function __construct($appId, $accessToken, $sdkVersion)
+    public function __construct($accessToken, $sdkVersion, Client $client)
     {
-        $this->appId = $appId;
         $this->accessToken = $accessToken;
         $this->sdkVersion = $sdkVersion;
+        $this->client = $client;
     }
 
     public function getUserEmail()
@@ -119,9 +118,8 @@ class FacebookClient
 
     public function getFbeAttribute($externalBusinessId)
     {
-        $client = new Client();
         /** @var ResponseInterface|null */
-        $response = $client->get(
+        $response = $this->client->get(
             self::API_URL . '/' . $this->sdkVersion . '/fbe_business/fbe_installs',
             [
                 'query' => [
@@ -148,9 +146,8 @@ class FacebookClient
      */
     public function call($id, array $fields = [])
     {
-        $client = new Client();
         try {
-            $response = $client->get(
+            $response = $this->client->get(
                 self::API_URL . "/{$this->sdkVersion}/{$id}",
                 [
                     'query' => [

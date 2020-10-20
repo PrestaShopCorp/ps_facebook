@@ -17,7 +17,10 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="spinner" />
+  <div
+    v-if="loading"
+    class="spinner"
+  />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"

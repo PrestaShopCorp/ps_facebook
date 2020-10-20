@@ -14,6 +14,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -68,9 +69,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
         $facebookClient = new FacebookClient(
-            Config::APP_ID,
             Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION
+            Config::API_VERSION,
+            new Client()
         );
         $fbDataProvider = new FacebookDataProvider($facebookClient);
 
@@ -133,9 +134,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxConfiguration()
     {
         $facebookClient = new FacebookClient(
-            Config::APP_ID,
             Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION
+            Config::API_VERSION,
+            new Client()
         );
         $facebookDataProvider = new FacebookDataProvider($facebookClient);
 
@@ -159,9 +160,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxGetFbContext()
     {
         $facebookClient = new FacebookClient(
-            Config::APP_ID,
             Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION
+            Config::API_VERSION,
+            new Client()
         );
         $facebookDataProvider = new FacebookDataProvider($facebookClient);
 

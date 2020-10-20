@@ -17,8 +17,14 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="spinner" />
-  <div v-else id="catalog">
+  <div
+    v-if="loading"
+    class="spinner"
+  />
+  <div
+    v-else
+    id="catalog"
+  >
     TODO
   </div>
 </template>

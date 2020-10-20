@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
+use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -47,9 +48,9 @@ class ConfigurationHandler
         }
 
         $facebookClient = new FacebookClient(
-            Config::APP_ID,
             $onboardingParams['access_token'],
-            Config::API_VERSION
+            Config::API_VERSION,
+            new Client()
         );
 
         $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'));

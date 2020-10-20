@@ -18,7 +18,7 @@
  *-->
 <template>
   <div id="app">
-    <Menu :contextPsFacebook="contextPsFacebook">
+    <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
         onboarding-required="true"
         route="/catalog"
@@ -36,7 +36,7 @@
     <div class="pt-5" />
     <div class="pt-3" />
 
-    <router-view :contextPsFacebook="contextPsFacebook" />
+    <router-view :context-ps-facebook="contextPsFacebook" />
   </div>
 </template>
 
