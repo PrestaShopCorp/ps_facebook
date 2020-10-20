@@ -124,6 +124,17 @@ class FacebookClient
         return reset($responseContent['data']);
     }
 
+    public function getFbeFeatures($externalBusinessId)
+    {
+        return $this->call(
+            '/fbe_business',
+            [],
+            [
+                'fbe_external_business_id' => $externalBusinessId,
+            ]
+        );
+    }
+
     /**
      * @param int|string $id
      * @param array $fields
