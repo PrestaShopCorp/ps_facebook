@@ -19,6 +19,7 @@ use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -66,8 +67,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
+        $facebookClient = new FacebookClient(
+            Config::APP_ID,
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION
+        );
+        $fbDataProvider = new FacebookDataProvider($facebookClient);
+
         $configurationAdapter = new ConfigurationAdapter();
-        $configurationHandler = new ConfigurationHandler($configurationAdapter);
+        $configurationHandler = new ConfigurationHandler($configurationAdapter, $fbDataProvider);
 
         $response = $configurationHandler->handle($inputs['onboarding']);
 
@@ -129,18 +137,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             Configuration::get(Config::FB_ACCESS_TOKEN),
             Config::API_VERSION
         );
-        $fbDataProvider = new FacebookDataProvider($facebookClient);
+        $facebookDataProvider = new FacebookDataProvider($facebookClient);
 
-        $fbe = [
-            'pixel_id' => Configuration::get(Config::PS_PIXEL_ID),
-            'profiles' => Configuration::get(Config::PS_FACEBOOK_PROFILES),
-            'pages' => [
-                Configuration::get(Config::PS_FACEBOOK_PAGES),
-            ],
-            'business_manager_id' => Configuration::get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID),
-            'catalog_id' => Configuration::get(Config::PS_FACEBOOK_CATALOG_ID),
-        ];
-        $facebookContext = $fbDataProvider->getContext($fbe);
+        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+
+        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
         $this->ajaxDie(
             json_encode(
@@ -162,18 +163,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             Configuration::get(Config::FB_ACCESS_TOKEN),
             Config::API_VERSION
         );
-        $fbDataProvider = new FacebookDataProvider($facebookClient);
+        $facebookDataProvider = new FacebookDataProvider($facebookClient);
 
-        $fbe = [
-            'pixel_id' => Configuration::get(Config::PS_PIXEL_ID),
-            'profiles' => Configuration::get(Config::PS_FACEBOOK_PROFILES),
-            'pages' => [
-                Configuration::get(Config::PS_FACEBOOK_PAGES),
-            ],
-            'business_manager_id' => Configuration::get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID),
-            'catalog_id' => Configuration::get(Config::PS_FACEBOOK_CATALOG_ID),
-        ];
-        $facebookContext = $fbDataProvider->getContext($fbe);
+        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+
+        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
         $this->ajaxDie(
             json_encode(

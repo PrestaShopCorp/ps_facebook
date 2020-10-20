@@ -14,9 +14,18 @@ class ConfigurationHandler
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter)
+    /**
+     * @var FacebookDataProvider
+     */
+    private $facebookDataProvider;
+
+    public function __construct(
+        ConfigurationAdapter $configurationAdapter,
+        FacebookDataProvider $facebookDataProvider
+    )
     {
         $this->configurationAdapter = $configurationAdapter;
+        $this->facebookDataProvider = $facebookDataProvider;
     }
 
     public function handle($onboardingInputs)
@@ -24,14 +33,7 @@ class ConfigurationHandler
         $this->addFbeAttributeIfMissing($onboardingInputs);
         $this->saveOnboardingConfiguration($onboardingInputs);
 
-        $facebookClient = new FacebookClient(
-            Config::APP_ID,
-            $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION
-        );
-        $fbDataProvider = new FacebookDataProvider($facebookClient);
-
-        $facebookContext = $fbDataProvider->getContext($onboardingInputs['fbe']);
+        $facebookContext = $this->facebookDataProvider->getContext($onboardingInputs['fbe']);
 
         return [
             'success' => true,
