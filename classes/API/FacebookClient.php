@@ -52,7 +52,7 @@ class FacebookClient
 
     public function getBusinessManager($businessManagerId)
     {
-        $responseContent = $this->call((int) $businessManagerId, ['name', 'created_time']);
+        $responseContent = $this->call((int)$businessManagerId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -66,7 +66,7 @@ class FacebookClient
 
     public function getPixel($pixelId)
     {
-        $responseContent = $this->call((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
+        $responseContent = $this->call((int)$pixelId, ['name', 'last_fired_time', 'is_unavailable']);
         if (!$responseContent) {
             return null;
         }
@@ -82,7 +82,7 @@ class FacebookClient
     public function getPage($pageIds)
     {
         $pageId = reset($pageIds);
-        $responseContent = $this->call((int) $pageId, ['name', 'fan_count']);
+        $responseContent = $this->call((int)$pageId, ['name', 'fan_count']);
         if (!$responseContent) {
             return null;
         }
@@ -99,7 +99,7 @@ class FacebookClient
 
     public function getAds($adsId)
     {
-        $responseContent = $this->call((int) $adsId, ['name', 'created_time']);
+        $responseContent = $this->call((int)$adsId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -118,42 +118,39 @@ class FacebookClient
 
     public function getFbeAttribute($externalBusinessId)
     {
-        /** @var ResponseInterface|null */
-        $response = $this->client->get(
-            self::API_URL . '/' . $this->sdkVersion . '/fbe_business/fbe_installs',
+        $responseContent = $this->call(
+            '/fbe_business/fbe_installs',
+            [],
             [
-                'query' => [
-                    'fbe_external_business_id' => $externalBusinessId,
-                    'access_token' => $this->accessToken,
-                ],
+                'fbe_external_business_id' => $externalBusinessId
             ]
         );
 
-        if (null === $response || !$response->getBody()) {
-            return [];
-        }
-
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        return reset($data['data']);
+        return reset($responseContent['data']);
     }
 
     /**
      * @param int|string $id
      * @param array $fields
      *
+     * @param array $query
      * @return false|array
      */
-    public function call($id, array $fields = [])
+    public function call($id, array $fields = [], array $query = [])
     {
+        $query = array_merge(
+            [
+                'access_token' => $this->accessToken,
+                'fields' => implode(',', $fields),
+            ],
+            $query
+        );
+
         try {
             $response = $this->client->get(
                 self::API_URL . "/{$this->sdkVersion}/{$id}",
                 [
-                    'query' => [
-                        'access_token' => $this->accessToken,
-                        'fields' => implode(',', $fields),
-                    ],
+                    'query' => $query,
                 ]
             );
         } catch (Exception $e) {
