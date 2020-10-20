@@ -68,8 +68,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
+        $onboardingData = $inputs['onboarding'];
         $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
+            $onboardingData['access_token'],
             Config::API_VERSION,
             new Client()
         );
@@ -78,7 +79,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationAdapter = new ConfigurationAdapter();
         $configurationHandler = new ConfigurationHandler($configurationAdapter, $fbDataProvider);
 
-        $response = $configurationHandler->handle($inputs['onboarding']);
+        $response = $configurationHandler->handle($onboardingData);
 
         $this->ajaxDie(
             json_encode($response)
