@@ -2,16 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
-use Address;
 use Context;
-use Country;
 use FacebookAds\Object\ServerSide\EventRequest;
-use FacebookAds\Object\ServerSide\Gender;
 use FacebookAds\Object\ServerSide\UserData;
-use Gender as PsGender;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
-use State;
 
 abstract class AbstractEvent implements ConversionEventInterface
 {

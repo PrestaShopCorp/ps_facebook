@@ -126,7 +126,7 @@ class CustomerInformationUtilityTest extends TestCase
                     'postCode' => null,
                     'stateIso' => null,
                 ],
-            ]
+            ],
         ];
     }
 }
