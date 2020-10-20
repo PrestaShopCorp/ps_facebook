@@ -68,9 +68,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email && !!contextPsFacebook.email.email"
+          v-if="!!contextPsFacebook.email"
         >
-          {{ contextPsFacebook.email ? contextPsFacebook.email.email : '' }}
+          {{ contextPsFacebook.email }}
         </span>
       </div>
 
@@ -107,9 +107,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email && !!contextPsFacebook.email.email"
+          v-if="!!contextPsFacebook.email"
         >
-          {{ contextPsFacebook.email ? contextPsFacebook.email.email : '' }}
+          {{ contextPsFacebook.email }}
         </span>
       </div>
     </b-card-body>
@@ -130,7 +130,7 @@
               :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
               :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
               :app-name="fbm.name"
-              :email="fbm.email ? fbm.email.email : ''"
+              :email="fbm.email || ''"
               :created-at="fbm.createdAt"
             />
           </b-col>

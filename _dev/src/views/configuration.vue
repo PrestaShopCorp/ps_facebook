@@ -180,7 +180,7 @@ export default defineComponent({
     },
     facebookConnected() {
       const context = this.contextPsFacebook;
-      return (context && context.email && context.email.email) || false;
+      return (context && context.email) || false;
     },
   },
   data() {
