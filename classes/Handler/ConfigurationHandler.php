@@ -22,8 +22,7 @@ class ConfigurationHandler
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
         FacebookDataProvider $facebookDataProvider
-    )
-    {
+    ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->facebookDataProvider = $facebookDataProvider;
     }
