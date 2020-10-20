@@ -98,9 +98,9 @@ class FacebookClient
         );
     }
 
-    public function getAds($adsId)
+    public function getAd($adId)
     {
-        $responseContent = $this->call((int) $adsId, ['name', 'created_time']);
+        $responseContent = $this->call((int) $adId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }

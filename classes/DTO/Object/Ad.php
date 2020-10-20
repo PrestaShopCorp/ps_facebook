@@ -22,8 +22,6 @@ class Ad implements JsonSerializable
     private $createdAt;
 
     /**
-     * Ads constructor.
-     *
      * @param string $name
      * @param string $email
      * @param string $createdAt
