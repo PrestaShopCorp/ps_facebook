@@ -31,7 +31,7 @@ class EventDispatcher
      */
     public function dispatch($name, array $params)
     {
-        if (true == \Configuration::get('PS_FACEBOOK_EVENT_STATUS')) {
+        if (true == \Configuration::get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
             $this->conversionHandler->handleEvent($name, $params);
             $this->pixelHandler->handleEvent($name, $params);
         }

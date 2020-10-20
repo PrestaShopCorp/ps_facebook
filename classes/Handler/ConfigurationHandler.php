@@ -53,7 +53,7 @@ class ConfigurationHandler
             new Client()
         );
 
-        $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'));
+        $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
     }
 
     private function saveOnboardingConfiguration(array $onboardingParams)
@@ -65,6 +65,6 @@ class ConfigurationHandler
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID, isset($onboardingParams['fbe']['business_manager_id']) ? $onboardingParams['fbe']['business_manager_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_AD_ACCOUNT_ID, isset($onboardingParams['fbe']['ad_account_id']) ? $onboardingParams['fbe']['ad_account_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_CATALOG_ID, isset($onboardingParams['fbe']['catalog_id']) ? $onboardingParams['fbe']['catalog_id'] : '');
-        $this->configurationAdapter->updateValue('PS_FACEBOOK_EVENT_STATUS', true);
+        $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
     }
 }

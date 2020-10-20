@@ -4,7 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
-use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
+use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
@@ -30,8 +30,6 @@ class FacebookClient
     private $client;
 
     /**
-     * FacebookDataProvider constructor.
-     *
      * @param string $sdkVersion
      * @param string $accessToken
      */
@@ -103,7 +101,7 @@ class FacebookClient
             return null;
         }
 
-        return new Ads(
+        return new Ad(
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null

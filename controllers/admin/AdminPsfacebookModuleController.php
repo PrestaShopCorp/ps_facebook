@@ -2,6 +2,7 @@
 
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -83,14 +84,14 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function postProcess()
     {
-        $id_pixel = Tools::getValue('PS_PIXEL_ID');
+        $id_pixel = Tools::getValue(Config::PS_PIXEL_ID);
         if (!empty($id_pixel)) {
-            Configuration::updateValue('PS_PIXEL_ID', $id_pixel);
+            Configuration::updateValue(Config::PS_PIXEL_ID, $id_pixel);
         }
 
-        $access_token = Tools::getValue('PS_FBE_ACCESS_TOKEN');
+        $access_token = Tools::getValue(Config::FB_ACCESS_TOKEN);
         if (!empty($access_token)) {
-            Configuration::updateValue('PS_FBE_ACCESS_TOKEN', $access_token);
+            Configuration::updateValue(Config::FB_ACCESS_TOKEN, $access_token);
         }
     }
 }

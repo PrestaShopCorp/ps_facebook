@@ -4,7 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 use JsonSerializable;
 
-class Ads implements JsonSerializable
+class Ad implements JsonSerializable
 {
     /**
      * @var string

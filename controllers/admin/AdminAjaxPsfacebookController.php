@@ -92,7 +92,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
-            Configuration::updateValue('PS_FACEBOOK_EVENT_STATUS', $pixelStatus);
+            Configuration::updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
             $this->ajaxDie(json_encode(['success' => true]));
         }
 
