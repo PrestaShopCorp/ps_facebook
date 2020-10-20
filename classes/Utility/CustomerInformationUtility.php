@@ -13,11 +13,18 @@ class CustomerInformationUtility
 
         if (count($simpleAddresses) > 0) {
             $address = reset($simpleAddresses);
-            $arrayReturned['city'] = strtolower($address['city']);
-            $arrayReturned['countryIso'] = strtolower($address['country_iso']);
-            $arrayReturned['postCode'] = preg_replace('/[^0-9.]+/', '', $address['postcode']);
-            $arrayReturned['phone'] = preg_replace('/[^0-9.]+/', '', $address['phone']);
-            $arrayReturned['stateIso'] = strtolower($address['state_iso']);
+            $arrayReturned['city'] = $address['city'] ? strtolower($address['city']) : null;
+            $arrayReturned['countryIso'] = $address['country_iso'] ? strtolower($address['country_iso']) : null;
+
+            $arrayReturned['postCode'] = $address['postcode'] ?
+                preg_replace('/[^0-9.]+/', '', $address['postcode'])
+                : null;
+
+            $arrayReturned['phone'] = $address['phone'] ?
+                preg_replace('/[^0-9.]+/', '', $address['phone'])
+                : null;
+
+            $arrayReturned['stateIso'] = $address['state_iso'] ? strtolower($address['state_iso']) : null;
         } else {
             $arrayReturned['city'] = null;
             $arrayReturned['countryIso'] = null;

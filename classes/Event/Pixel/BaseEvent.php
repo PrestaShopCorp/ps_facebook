@@ -53,7 +53,7 @@ abstract class BaseEvent
         $arrayReturned['ln'] = $customerInformation['lastname'];
         $arrayReturned['em'] = $customerInformation['email'];
         $arrayReturned['bd'] = $customerInformation['birthday'];
-        $arrayReturned['st'] = $customerInformation['stateIso'];
+//        $arrayReturned['st'] = $customerInformation['stateIso'];
 
         // data structured for pixel
         return $arrayReturned;

@@ -158,48 +158,6 @@ class ViewContentEvent extends AbstractEvent
             $events[] = $event;
         }
 
-        /*
-        * Triggers InitiateCheckout for checkout page
-        */
-        if ($controllerPage === 'cart' && $this->toolsAdapter->getValue('action') === 'show') {
-            $type = 'InitiateCheckout';
-            $cart = $this->context->cart;
-
-            $user = $this->createSdkUserData();
-            $contents = [];
-            foreach ($cart->getProducts() as $product) {
-                $fbProductId = ProductCatalogUtility::makeProductId(
-                    $product['id_product'],
-                    $product['id_product_attribute'],
-                    $locale
-                );
-                $content = new Content();
-                $content
-                    ->setProductId($fbProductId)
-                    ->setTitle(\Tools::replaceAccentedChars($product['name']))
-                    ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
-                    ->setItemPrice($product['price'])
-                    ->setQuantity($product['quantity'])
-                    ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
-
-                $contents[] = $content;
-            }
-
-            $customData = (new CustomData())
-                ->setContents($contents)
-                ->setContentType($content_type)
-                ->setValue($cart->getOrderTotal(false))
-                ->setCurrency($currency_iso_code);
-
-            $event = (new Event())
-                ->setEventName($type)
-                ->setEventTime(time())
-                ->setUserData($user)
-                ->setCustomData($customData);
-
-            $events[] = $event;
-        }
-
         if (empty($event)) {
             return true;
         }
