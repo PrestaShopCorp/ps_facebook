@@ -85,12 +85,16 @@ class FacebookClient
         }
 
         $logoResponse = $this->call($pageId . '/photos', ['picture']);
-        $logo = reset($logoResponse['data']);
+
+        $logo = null;
+        if (is_array($logoResponse)) {
+            $logo = reset($logoResponse['data'])['picture'];
+        }
 
         return new Page(
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['fan_count']) ? $responseContent['fan_count'] : null,
-            isset($logo['picture']) ? $logo['picture'] : null
+            $logo
         );
     }
 
