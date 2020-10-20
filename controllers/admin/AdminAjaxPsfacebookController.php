@@ -185,6 +185,28 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     }
 
     /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxGetFeatures()
+    {
+        $facebookClient = new FacebookClient(
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION,
+            new Client()
+        );
+
+        $fbeFeatures = $facebookClient->getFbeFeatures(Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'fbeFeatures' => $fbeFeatures,
+                ]
+            )
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function ajaxDie($value = null, $controller = null, $method = null)
