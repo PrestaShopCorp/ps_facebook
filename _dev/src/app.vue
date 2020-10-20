@@ -18,9 +18,9 @@
  *-->
 <template>
   <div id="app">
-    <Menu>
+    <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
-        on-boarding-required="true"
+        onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}
@@ -36,7 +36,7 @@
     <div class="pt-5" />
     <div class="pt-3" />
 
-    <router-view />
+    <router-view :context-ps-facebook="contextPsFacebook" />
   </div>
 </template>
 
@@ -49,6 +49,37 @@ export default {
   components: {
     Menu,
     MenuItem,
+  },
+  props: {
+    contextPsFacebook: {
+      type: Object,
+      required: false,
+      default: () => global.contextPsFacebook,
+    },
+    psFacebookGetFbContextRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetFbContextRoute,
+    },
+  },
+  created() {
+    this.getFbContext();
+  },
+  methods: {
+    getFbContext() {
+      fetch(this.psFacebookGetFbContextRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+        }).catch((error) => {
+          console.error(error);
+        });
+    },
   },
 };
 </script>

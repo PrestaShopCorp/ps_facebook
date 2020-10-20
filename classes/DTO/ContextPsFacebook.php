@@ -3,9 +3,15 @@
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 use JsonSerializable;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 
 class ContextPsFacebook implements JsonSerializable
 {
+    /**
+     * @var User
+     */
+    private $user;
+
     /**
      * @var FacebookBusinessManager|null
      */
@@ -17,14 +23,14 @@ class ContextPsFacebook implements JsonSerializable
     private $pixel;
 
     /**
-     * @var Page[]|null
+     * @var Page|null
      */
     private $page;
 
     /**
-     * @var Ads|null
+     * @var Ad|null
      */
-    private $ads;
+    private $ad;
 
     /**
      * @var bool|null
@@ -34,19 +40,41 @@ class ContextPsFacebook implements JsonSerializable
     /**
      * ContextPsFacebook constructor.
      *
+     * @param User $user
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
-     * @param Page[]|null $page
-     * @param Ads|null $ads
+     * @param Page|null $page
+     * @param Ad|null $ad
      * @param bool|null $categoriesMatching
      */
-    public function __construct($facebookBusinessManager, $pixel, $page, $ads, $categoriesMatching)
+    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching)
     {
+        $this->user = $user;
         $this->facebookBusinessManager = $facebookBusinessManager;
         $this->pixel = $pixel;
         $this->page = $page;
-        $this->ads = $ads;
+        $this->ad = $ad;
         $this->categoriesMatching = $categoriesMatching;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return ContextPsFacebook
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -90,7 +118,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Page[]|null
+     * @return Page|null
      */
     public function getPage()
     {
@@ -98,7 +126,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param Page[]|null $page
+     * @param Page|null $page
      *
      * @return ContextPsFacebook
      */
@@ -110,21 +138,21 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return Ads|null
+     * @return Ad|null
      */
-    public function getAds()
+    public function getAd()
     {
-        return $this->ads;
+        return $this->ad;
     }
 
     /**
-     * @param Ads|null $ads
+     * @param Ad|null $ad
      *
      * @return ContextPsFacebook
      */
-    public function setAds($ads)
+    public function setAd($ad)
     {
-        $this->ads = $ads;
+        $this->ad = $ad;
 
         return $this;
     }
@@ -152,9 +180,11 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'email' => $this->getUser()->getEmail(),
             'pixel' => $this->getPixel(),
+            'facebookBusinessManager' => $this->getFacebookBusinessManager(),
             'page' => $this->getPage(),
-            'ads' => $this->getAds(),
+            'ads' => $this->getAd(),
             'categoriesMatching' => $this->getCategoriesMatching(),
         ];
     }

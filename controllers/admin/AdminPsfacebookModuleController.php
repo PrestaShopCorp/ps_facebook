@@ -2,6 +2,7 @@
 
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -71,37 +72,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'languageLocale' => $this->context->language->language_code,
             ],
 
-            // TODO : to rework from here !
-            // TODO Get from DTO
-            'psFacebookExternalBusinessId' => Configuration::get('PS_FACEBOOK_EXTERNAL_BUSINESS_ID'),
-            /*'contextPsFacebook' => [
-                'email' => 'him@prestashop.com',
-                'facebookBusinessManager' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'pixel' => [
-                  'name' => 'La Fanchonette Test Pixel',
-                  'id' => '1234567890',
-                  'lastActive' => 1601283877000,
-                  'activated' => true
-                ],
-                'page' => [
-                  'name' => 'La Fanchonette',
-                  'likes' => 42,
-                  'logo' => null
-                ],
-                'ads' => [
-                  'name' => 'La Fanchonette',
-                  'email' => 'fanchonette@ps.com',
-                  'createdAt' => 1601283877000
-                ],
-                'categoriesMatching' => [
-                  'sent': false
-                ]
-
-            ],*/
+            // TODO !0: URGENT !
             'psFacebookCurrency' => null, // TODO from shop (merchant)
             'psFacebookTimezone' => null, // TODO from shop (merchant)
             'psFacebookLocale' => null, // TODO from shop (merchant)
@@ -113,14 +84,14 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function postProcess()
     {
-        $id_pixel = Tools::getValue('PS_PIXEL_ID');
+        $id_pixel = Tools::getValue(Config::PS_PIXEL_ID);
         if (!empty($id_pixel)) {
-            Configuration::updateValue('PS_PIXEL_ID', $id_pixel);
+            Configuration::updateValue(Config::PS_PIXEL_ID, $id_pixel);
         }
 
-        $access_token = Tools::getValue('PS_FBE_ACCESS_TOKEN');
+        $access_token = Tools::getValue(Config::FB_ACCESS_TOKEN);
         if (!empty($access_token)) {
-            Configuration::updateValue('PS_FBE_ACCESS_TOKEN', $access_token);
+            Configuration::updateValue(Config::FB_ACCESS_TOKEN, $access_token);
         }
     }
 }

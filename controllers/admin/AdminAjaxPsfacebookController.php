@@ -14,11 +14,14 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -65,21 +68,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function ajaxProcessConnectToFacebook(array $inputs)
     {
-        $psAccountPresenter = new PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter($this->module->name);
-        $facebookTranslations = new PsFacebookTranslations($this->module);
-        $configurationAdapter = new ConfigurationAdapter();
-        $context = Context::getContext();
-        $configurationHandler = new ConfigurationHandler(
-            $psAccountPresenter,
-            $facebookTranslations,
-            $configurationAdapter,
-            $context->link,
-            $context->currency->iso_code,
-            $context->language->iso_code,
-            $context->language->language_code
+        $onboardingData = $inputs['onboarding'];
+        $facebookClient = new FacebookClient(
+            $onboardingData['access_token'],
+            Config::API_VERSION,
+            new Client()
         );
+        $fbDataProvider = new FacebookDataProvider($facebookClient);
 
-        $response = $configurationHandler->handle($inputs['onboarding']);
+        $configurationAdapter = new ConfigurationAdapter();
+        $configurationHandler = new ConfigurationHandler($configurationAdapter, $fbDataProvider);
+
+        $response = $configurationHandler->handle($onboardingData);
 
         $this->ajaxDie(
             json_encode($response)
@@ -93,7 +93,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
-            Configuration::updateValue('PS_FACEBOOK_EVENT_STATUS', $pixelStatus);
+            Configuration::updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
             $this->ajaxDie(json_encode(['success' => true]));
         }
 
@@ -134,14 +134,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxConfiguration()
     {
+        $facebookClient = new FacebookClient(
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION,
+            new Client()
+        );
+        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+
+        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+
+        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
+
         $this->ajaxDie(
             json_encode(
                 [
-                    /*
-                     * @TODO Add facebook context
-                     */
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => [],
+                    'contextPsFacebook' => $facebookContext,
                 ]
             )
         );
@@ -152,13 +160,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFbContext()
     {
+        $facebookClient = new FacebookClient(
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION,
+            new Client()
+        );
+        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+
+        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+
+        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
+
         $this->ajaxDie(
             json_encode(
                 [
-                    /*
-                     * @TODO Add facebook context
-                     */
-                    'contextPsFacebook' => [],
+                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+                    'contextPsFacebook' => $facebookContext,
                 ]
             )
         );

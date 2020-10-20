@@ -2,6 +2,7 @@
 
 use Dotenv\Dotenv;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
@@ -68,15 +69,15 @@ class Ps_facebook extends Module
     ];
 
     const CONFIGURATION_LIST = [
-        'fbe_pixel_id',
-        'fbe_business_id',
-        'fbe_business_manager_id',
-        'fbe_access_token',
-        'fbe_profiles',
-        'fbe_pages',
-        'fbe_ad_account_id',
-        'PS_FACEBOOK_EVENT_STATUS',
-        'fbe_catalog_id',
+        Config::PS_PIXEL_ID,
+        Config::FB_ACCESS_TOKEN,
+        Config::PS_FACEBOOK_PROFILES,
+        Config::PS_FACEBOOK_PAGES,
+        Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,
+        Config::PS_FACEBOOK_AD_ACCOUNT_ID,
+        Config::PS_FACEBOOK_CATALOG_ID,
+        Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID,
+        Config::PS_FACEBOOK_PIXEL_ENABLED,
     ];
 
     /**
