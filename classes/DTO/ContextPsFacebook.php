@@ -3,13 +3,15 @@
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 use JsonSerializable;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 
 class ContextPsFacebook implements JsonSerializable
 {
     /**
-     * @var string
+     * @var User
      */
-    private $email;
+    private $user;
+
     /**
      * @var FacebookBusinessManager|null
      */
@@ -38,16 +40,16 @@ class ContextPsFacebook implements JsonSerializable
     /**
      * ContextPsFacebook constructor.
      *
-     * @param string $email
+     * @param User $user
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
      * @param Page|null $page
      * @param Ad|null $ad
      * @param bool|null $categoriesMatching
      */
-    public function __construct($email, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching)
+    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching)
     {
-        $this->email = $email;
+        $this->user = $user;
         $this->facebookBusinessManager = $facebookBusinessManager;
         $this->pixel = $pixel;
         $this->page = $page;
@@ -56,21 +58,21 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return User
      */
-    public function getEmail()
+    public function getUser()
     {
-        return $this->email;
+        return $this->user;
     }
 
     /**
-     * @param string $email
+     * @param User $user
      *
      * @return ContextPsFacebook
      */
-    public function setEmail($email)
+    public function setUser($user)
     {
-        $this->email = $email;
+        $this->user = $user;
 
         return $this;
     }
@@ -178,7 +180,7 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'email' => $this->getEmail(),
+            'email' => $this->getUser()->getEmail(),
             'pixel' => $this->getPixel(),
             'facebookBusinessManager' => $this->getFacebookBusinessManager(),
             'page' => $this->getPage(),

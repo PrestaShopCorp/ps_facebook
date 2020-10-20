@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Dispatcher;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler;
 
