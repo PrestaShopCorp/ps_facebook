@@ -18,5 +18,6 @@ export default {
 <style lang="scss" scoped>
   li {
     list-style: none;
+    padding-bottom: 15px;
   }
 </style>

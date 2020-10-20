@@ -21,6 +21,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -195,7 +196,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             new Client()
         );
 
-        $fbeFeatures = $facebookClient->getFbeFeatures(Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
+        $fbeFeatureDataProvider = new FbeFeatureDataProvider($facebookClient);
+
+        $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
 
         $this->ajaxDie(
             json_encode(

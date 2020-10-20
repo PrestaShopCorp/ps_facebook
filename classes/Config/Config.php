@@ -16,4 +16,7 @@ class Config
     const PS_FACEBOOK_CATALOG_ID = 'PS_FACEBOOK_CATALOG_ID';
     const PS_FACEBOOK_EXTERNAL_BUSINESS_ID = 'PS_FACEBOOK_EXTERNAL_BUSINESS_ID';
     const PS_FACEBOOK_PIXEL_ENABLED = 'PS_FACEBOOK_PIXEL_ENABLED';
+
+    const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop', 'ig_shopping'];
+    const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
 }
