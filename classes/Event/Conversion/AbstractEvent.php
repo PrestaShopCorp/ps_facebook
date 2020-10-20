@@ -37,11 +37,10 @@ abstract class AbstractEvent implements ConversionEventInterface
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 
         $userData = (new UserData())
+            ->setFbp($fbp)
             ->setFbc($fbc)
-            // It is recommended to send Client IP and User Agent for ServerSide API Events.
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
             ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setFbp($fbp)
             ->setEmail($customerInformation['email'])
             ->setFirstName($customerInformation['firstname'])
             ->setLastName($customerInformation['lastname'])
