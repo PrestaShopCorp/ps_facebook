@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\ResponseInterface;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ads;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
@@ -52,7 +51,7 @@ class FacebookClient
 
     public function getBusinessManager($businessManagerId)
     {
-        $responseContent = $this->call((int)$businessManagerId, ['name', 'created_time']);
+        $responseContent = $this->call((int) $businessManagerId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -66,7 +65,7 @@ class FacebookClient
 
     public function getPixel($pixelId)
     {
-        $responseContent = $this->call((int)$pixelId, ['name', 'last_fired_time', 'is_unavailable']);
+        $responseContent = $this->call((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
         if (!$responseContent) {
             return null;
         }
@@ -82,7 +81,7 @@ class FacebookClient
     public function getPage($pageIds)
     {
         $pageId = reset($pageIds);
-        $responseContent = $this->call((int)$pageId, ['name', 'fan_count']);
+        $responseContent = $this->call((int) $pageId, ['name', 'fan_count']);
         if (!$responseContent) {
             return null;
         }
@@ -99,7 +98,7 @@ class FacebookClient
 
     public function getAds($adsId)
     {
-        $responseContent = $this->call((int)$adsId, ['name', 'created_time']);
+        $responseContent = $this->call((int) $adsId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -122,7 +121,7 @@ class FacebookClient
             '/fbe_business/fbe_installs',
             [],
             [
-                'fbe_external_business_id' => $externalBusinessId
+                'fbe_external_business_id' => $externalBusinessId,
             ]
         );
 
@@ -132,8 +131,8 @@ class FacebookClient
     /**
      * @param int|string $id
      * @param array $fields
-     *
      * @param array $query
+     *
      * @return false|array
      */
     public function call($id, array $fields = [], array $query = [])
