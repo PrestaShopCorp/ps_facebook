@@ -60,6 +60,7 @@ class PsFacebookTranslations
                     'configuration' => $this->module->l('Configure', 'PsFacebookTranslations'),
                     'catalog' => $this->module->l('Export product catalog', 'PsFacebookTranslations'),
                     'help' => $this->module->l('Help', 'PsFacebookTranslations'),
+                    'integrate' => $this->module->l('Integrate', 'PsFacebookTranslations'),
                 ],
             ],
             'configuration' => [

@@ -44,6 +44,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
                 break;
+            case 'activateFeature':
+                $this->ajaxProcessActivateFeature($inputs);
+                break;
             default:
                 break;
         }
@@ -188,5 +191,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         header('Content-Type: application/json');
         parent::ajaxDie($value, $controller, $method);
+    }
+
+    private function ajaxProcessActivateFeature($inputs)
+    {
     }
 }

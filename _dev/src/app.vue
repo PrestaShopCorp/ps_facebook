@@ -25,6 +25,9 @@
       >
         {{ $t('general.tabs.catalog') }}
       </MenuItem>
+      <MenuItem route="/integrate">
+        {{ $t('general.tabs.integrate') }}
+      </MenuItem>
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}
       </MenuItem>
