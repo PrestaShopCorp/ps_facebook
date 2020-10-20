@@ -21,7 +21,7 @@ Default.args = {
   initialCategoryName: 'My initial category',
   initialCategoryId: 7,
   parentCategoryId: null,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const Void: any = Template.bind({});
@@ -31,7 +31,7 @@ Void.args = {
   initialCategoryName: null,
   initialCategoryId: null,
   parentCategoryId: null,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const French: any = Template.bind({});
@@ -41,7 +41,7 @@ French.args = {
   initialCategoryName: null,
   initialCategoryId: null,
   parentCategoryId: null,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const Subcategory: any = Template.bind({});
@@ -51,5 +51,5 @@ Subcategory.args = {
   initialCategoryName: null,
   initialCategoryId: null,
   parentCategoryId: 1,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };

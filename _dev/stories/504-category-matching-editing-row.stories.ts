@@ -27,7 +27,7 @@ Default.args = {
   initialSubcategoryName: 'Pet Supplies > Bird Supplies > Bird Cage Accessories',
   initialSubcategoryId: 7385,
   initialPropagation: false,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const Void: any = Template.bind({});
@@ -39,7 +39,7 @@ Void.args = {
   initialSubcategoryName: null,
   initialSubcategoryId: null,
   initialPropagation: null,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const Void2: any = Template.bind({});
@@ -51,7 +51,7 @@ Void2.args = {
   initialSubcategoryName: null,
   initialSubcategoryId: null,
   initialPropagation: true,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
 
 export const Void3: any = Template.bind({});
@@ -63,5 +63,5 @@ Void3.args = {
   initialSubcategoryName: null,
   initialSubcategoryId: null,
   initialPropagation: true,
-  autocompletionApi: 'https://facebook-api.psessentials-integration.net/taxonomy/',
+  autocompletionApi: 'https://facebook-api.psessentials.net/taxonomy/',
 };
