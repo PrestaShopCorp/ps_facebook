@@ -7,7 +7,7 @@
             <h3>
               <img
                 class="mr-1"
-                :src=image
+                :src="image"
                 width="50"
               >
               {{ $t(`integrate.features.${featureName}.name`) }}

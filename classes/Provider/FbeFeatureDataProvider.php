@@ -41,6 +41,7 @@ class FbeFeatureDataProvider
         return [
             'enabledFeatures' => $enabledFeatures,
             'disabledFeatures' => $disabledFeatures,
+            //TODO: make check if products are synced to know if some features can be enabled
             'unavailableFeatures' => [],
         ];
     }

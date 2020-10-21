@@ -5,15 +5,15 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo"
-            :src=image
+            :src="image"
             width="50"
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
-              {{ name }}
+              {{ $t(`integrate.features.${featureName}.name`) }}
             </h3>
             <p class="small-text text-muted">
-              {{ description }}
+              {{ $t(`integrate.features.${featureName}.description`) }}
             </p>
           </div>
           <b-button
@@ -38,11 +38,6 @@ export default {
       required: false,
       default: () => '',
     },
-    description: {
-      type: String,
-      required: false,
-      default: () => '',
-    },
     image: {
       type: String,
       required: false,
@@ -52,7 +47,6 @@ export default {
   data() {
     return {
       featureName: this.name,
-      featureDescription: this.description,
       featureImage: this.image,
     };
   },

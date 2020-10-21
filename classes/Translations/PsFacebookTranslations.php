@@ -158,18 +158,21 @@ class PsFacebookTranslations
             'integrate' => [
                 'buttons' => [
                     'add' => $this->module->l('Add', 'PsFacebookTranslations'),
-                    'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations')
+                    'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations'),
                 ],
                 'features' => [
                     'ig_shopping' => [
                         'name' => $this->module->l('Instagram shopping', 'PsFacebookTranslations'),
-                        'description' => $this->module->l("Tag your products in the publications to redirect traffic to your e-commerce site.", 'PsFacebookTranslations'),
-                    ]
+                        'description' => $this->module->l('Tag your products in the publications to redirect traffic to your e-commerce site.', 'PsFacebookTranslations'),
+                    ],
                 ],
                 'headings' => [
                     'disabledFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
                     'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
-                ]
+                ],
+                'warning' => [
+                    'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
+                ],
             ],
         ];
 

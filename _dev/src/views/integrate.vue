@@ -20,19 +20,27 @@
   <div id="integrate">
     <spinner v-if="loading" />
     <div v-else>
-      <div id="enabled-features" v-if="dynamicEnabledFeatures">
+      <div
+        id="enabled-features"
+        v-if="dynamicEnabledFeatures"
+      >
         <feature-list>
           <app-item
             v-for="(properties, featureName) in dynamicEnabledFeatures"
-            :key="featureName"
             :name="featureName"
             :image="properties.image"
+            :key="featureName"
           />
         </feature-list>
       </div>
 
-      <div id="disabled-features" v-if="dynamicDisabledFeatures">
-        <h3 class="ml-3">{{ $t('integrate.headings.disabledFeatures') }}</h3>
+      <div
+        id="disabled-features"
+        v-if="dynamicDisabledFeatures"
+      >
+        <h3 class="ml-3">
+          {{ $t('integrate.headings.disabledFeatures') }}
+        </h3>
         <feature-list>
           <disabled-feature
             v-for="(properties, featureName) in dynamicDisabledFeatures"
@@ -43,8 +51,14 @@
         </feature-list>
       </div>
 
-      <div id="unavailable-features" v-if="dynamicUnavailableFeatures">
-        <h3 class="ml-3">{{ $t('integrate.headings.unavailableFeatures') }}</h3>
+      <div
+        id="unavailable-features"
+        v-if="dynamicUnavailableFeatures"
+      >
+        <h3 class="ml-3">
+          {{ $t('integrate.headings.unavailableFeatures') }}
+        </h3>
+        <products-not-synced-warning />
         <feature-list>
           <unavailable-feature
             v-for="(properties, featureName) in dynamicUnavailableFeatures"
@@ -64,10 +78,12 @@ import AppItem from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import DisabledFeature from '../components/features/disabled-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
+import ProductsNotSyncedWarning from '../components/features/products-not-synced-warning.vue';
 
 export default {
   name: 'Integrate',
   components: {
+    ProductsNotSyncedWarning,
     Spinner,
     AppItem,
     FeatureList,

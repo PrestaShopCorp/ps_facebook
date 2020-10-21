@@ -5,7 +5,7 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo"
-            :src=image
+            :src="image"
             width="50"
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
@@ -18,11 +18,11 @@
           </div>
           <a
             class="align-self-center"
-            :href=featureManageRoute
+            :href="featureManageRoute"
             target="_blank"
           >
             <b-button
-              variant="primary"
+              variant="outline-primary"
               class="ml-4 align-self-center"
             >
               {{ $t('integrate.buttons.add') }}

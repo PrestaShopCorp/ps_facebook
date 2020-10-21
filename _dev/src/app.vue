@@ -20,14 +20,15 @@
   <div id="app">
     <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
-        v-bind:onboarding-required="true"
+        :onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}
       </MenuItem>
       <MenuItem
-        v-bind:onboarding-required="true"
-        route="/integrate">
+        :onboarding-required="true"
+        route="/integrate"
+      >
         {{ $t('general.tabs.integrate') }}
       </MenuItem>
       <MenuItem route="/configuration">

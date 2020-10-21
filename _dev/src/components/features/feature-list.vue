@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="p-3">
     <slot />
   </ul>
 </template>
@@ -12,7 +12,6 @@ export default {
 
 <style lang="scss" scoped>
   ul {
-    padding: 15px;
     li {
       list-style: none;
       padding-bottom: 15px;
