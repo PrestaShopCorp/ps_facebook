@@ -29,32 +29,7 @@ abstract class BaseEvent
      */
     protected function formatPixel($params)
     {
-        // TODO: might need some refacto/clean ? this look like a manual jsonEncode()
-        if (!empty($params)) {
-            $format = '{';
-            foreach ($params as $key => &$val) {
-                if (gettype($val) === 'string') {
-                    $format .= $key . ': \'' . addslashes($val) . '\', ';
-                } elseif (gettype($val) === 'array') {
-                    $format .= $key . ': [\'';
-                    foreach ($val as &$id) {
-                        $format .= (int) $id . "', '";
-                    }
-                    unset($id);
-                    $format = \Tools::substr($format, 0, -4);
-                    $format .= '\'], ';
-                } else {
-                    $format .= $key . ': ' . addslashes($val) . ', ';
-                }
-            }
-
-            $format = \Tools::substr($format, 0, -2);
-            $format .= '}';
-
-            return $format;
-        }
-
-        return false;
+        return json_encode($params);
     }
 
     /**

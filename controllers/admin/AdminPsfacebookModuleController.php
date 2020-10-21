@@ -26,7 +26,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
         ]);
 
-        $defaultCurrency = new CUrrency(Configuration::get('PS_CURRENCY_DEFAULT'));
+        $defaultCurrency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
+        $defaultLanguage = $this->context->language;
+
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
@@ -74,7 +76,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ],
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
-            'psFacebookLocale' => Configuration::get('PS_LOCALE_LANGUAGE'),
+            'psFacebookLocale' => $defaultLanguage->getLocale(),
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
