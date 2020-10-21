@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Configuration},
-  template: '<configuration :contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" :externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" :currency="currency" :timezone="timezone" :locale="locale" :pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" :psFacebookUiUrl="psFacebookUiUrl" />',
+  template: '<configuration :contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" :externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" :currency="currency" :timezone="timezone" :locale="locale" :pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" :psFacebookUiUrl="psFacebookUiUrl" :psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" />',
 });
 
 export const NoPsAccountOnboarded: any = Template.bind({});
@@ -53,7 +53,8 @@ NoPsAccountOnboarded.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
+  psFacebookUiUrl: 'https://facebook.psessentials.net/index.html',
+  psFacebookRetrieveExternalBusinessId: 'http://perdu.com',
 };
 
 export const HalfConnected: any = Template.bind({});
@@ -67,7 +68,8 @@ HalfConnected.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
+  psFacebookUiUrl: 'https://facebook.psessentials.net/index.html',
+  psFacebookRetrieveExternalBusinessId: 'http://perdu.com',
 };
 
 export const FullConnected: any = Template.bind({});
@@ -107,5 +109,6 @@ FullConnected.args = {
   locale: 'fr-FR',
   pixelActivationRoute: 'http://perdu.com',
   fbeOnboardingSaveRoute: 'http://perdu.com',
-  psFacebookUiUrl: 'https://facebook.psessentials-integration.net/index.html',
+  psFacebookUiUrl: 'https://facebook.psessentials.net/index.html',
+  psFacebookRetrieveExternalBusinessId: 'http://perdu.com',
 };

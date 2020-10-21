@@ -61,6 +61,7 @@ const openPopupGenerator = function (
     const p = 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=564,height=671';
     popup = window.open(popupDomain + popupPath + query, 'ps_facebook_fbe_onboarding', p);
     popup.focus();
+    return popup;
   };
 };
 
