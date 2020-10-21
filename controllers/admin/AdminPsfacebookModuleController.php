@@ -100,7 +100,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetFeatures' => $this->context->link->getAdminLink(
+            'psFacebookGetFeaturesRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
@@ -109,7 +109,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookManageFeatures' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
+            'facebookManageFeaturesRoute' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,

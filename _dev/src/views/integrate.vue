@@ -20,36 +20,50 @@
   <div id="integrate">
     <spinner v-if="loading" />
     <div v-else>
-      <feature-list>
-        <app-item
-          v-for="(properties, featureName) in dynamicEnabledFeatures"
-          :key="featureName"
-        />
-      </feature-list>
+      <div id="enabled-features" v-if="dynamicEnabledFeatures">
+        <feature-list>
+          <app-item
+            v-for="(properties, featureName) in dynamicEnabledFeatures"
+            :key="featureName"
+            :name="featureName"
+            :image="properties.image"
+          />
+        </feature-list>
+      </div>
 
-      <feature-list>
-        <disabled-feature
-          v-for="(properties, featureName) in dynamicDisabledFeatures"
-          :key="featureName"
-        />
-      </feature-list>
+      <div id="disabled-features" v-if="dynamicDisabledFeatures">
+        <h3 class="ml-3">{{ $t('integrate.headings.disabledFeatures') }}</h3>
+        <feature-list>
+          <disabled-feature
+            v-for="(properties, featureName) in dynamicDisabledFeatures"
+            :name="featureName"
+            :image="properties.image"
+            :key="featureName"
+          />
+        </feature-list>
+      </div>
 
-      <feature-list>
-        <unavailable-feature
-          v-for="(properties, featureName) in dynamicUnavailableFeatures"
-          :key="featureName"
-        />
-      </feature-list>
+      <div id="unavailable-features" v-if="dynamicUnavailableFeatures">
+        <h3 class="ml-3">{{ $t('integrate.headings.unavailableFeatures') }}</h3>
+        <feature-list>
+          <unavailable-feature
+            v-for="(properties, featureName) in dynamicUnavailableFeatures"
+            :name="featureName"
+            :image="properties.image"
+            :key="featureName"
+          />
+        </feature-list>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import FeatureList from '../components/apps/feature-list.vue';
-import AppItem from '../components/apps/enabled-feature.vue';
+import FeatureList from '../components/features/feature-list.vue';
+import AppItem from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
-import DisabledFeature from '../components/apps/disabled-feature.vue';
-import UnavailableFeature from '../components/apps/unavailable-feature.vue';
+import DisabledFeature from '../components/features/disabled-feature.vue';
+import UnavailableFeature from '../components/features/unavailable-feature.vue';
 
 export default {
   name: 'Integrate',
@@ -92,7 +106,7 @@ export default {
   methods: {
     fetchData() {
       this.loading = true;
-      fetch(global.psFacebookGetFeatures)
+      fetch(global.psFacebookGetFeaturesRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

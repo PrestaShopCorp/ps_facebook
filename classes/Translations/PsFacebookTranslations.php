@@ -156,7 +156,20 @@ class PsFacebookTranslations
                 ],
             ],
             'integrate' => [
-                'add' => $this->module->l('Add', 'PsFacebookTranslations'),
+                'buttons' => [
+                    'add' => $this->module->l('Add', 'PsFacebookTranslations'),
+                    'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations')
+                ],
+                'features' => [
+                    'ig_shopping' => [
+                        'name' => $this->module->l('Instagram shopping', 'PsFacebookTranslations'),
+                        'description' => $this->module->l("Tag your products in the publications to redirect traffic to your e-commerce site.", 'PsFacebookTranslations'),
+                    ]
+                ],
+                'headings' => [
+                    'disabledFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
+                    'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
+                ]
             ],
         ];
 

@@ -10,18 +10,24 @@
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
-              {{ name }}
+              {{ $t(`integrate.features.${featureName}.name`) }}
             </h3>
             <p class="small-text text-muted">
-              {{ description }}
+              {{ $t(`integrate.features.${featureName}.description`) }}
             </p>
           </div>
-          <b-button
-            variant="disabled"
-            class="ml-4 align-self-center"
+          <a
+            class="align-self-center"
+            :href=featureManageRoute
+            target="_blank"
           >
-            {{ $t('integrate.add') }}
-          </b-button>
+            <b-button
+              variant="primary"
+              class="ml-4 align-self-center"
+            >
+              {{ $t('integrate.buttons.add') }}
+            </b-button>
+          </a>
         </div>
       </b-card-body>
     </b-card>
@@ -38,22 +44,22 @@ export default {
       required: false,
       default: () => '',
     },
-    description: {
-      type: String,
-      required: false,
-      default: () => '',
-    },
     image: {
       type: String,
       required: false,
       default: () => '',
     },
+    manageRoute: {
+      type: String,
+      required: false,
+      default: () => global.facebookManageFeaturesRoute,
+    },
   },
   data() {
     return {
       featureName: this.name,
-      featureDescription: this.description,
       featureImage: this.image,
+      featureManageRoute: this.manageRoute,
     };
   },
 };
