@@ -64,7 +64,21 @@
         <div
           v-if="showGlass"
           class="glass"
-        />
+          @click="glassClicked"
+        >
+          <div>
+            <img
+              class="m-3"
+              :src="facebook"
+              width="56"
+              height="56"
+              alt="PS Facebook logo"
+            >
+            <p>{{ $t('configuration.glass.text') }}</p>
+            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+          </div>
+
+        </div>
       </template>
     </template>
   </div>
@@ -79,6 +93,7 @@ import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import openPopupGenerator from '../lib/fb-login';
+import facebook from '../assets/facebook_white_logo.svg';
 
 const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
@@ -197,6 +212,8 @@ export default defineComponent({
       error: null,
       loading: true,
       popupReceptionDuplicate: false,
+      facebook, // white logo for glass
+      openedPopup: null,
     };
   },
   created() {
@@ -225,10 +242,12 @@ export default defineComponent({
       this.$router.push({name: 'Catalog', query: {component: 'matching'}});
     },
     onFbeOnboardClick() {
-      this.openPopup();
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onEditClick() {
-      this.openPopup();
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;
@@ -265,6 +284,7 @@ export default defineComponent({
     },
     onFbeOnboardClosed() {
       this.showGlass = false;
+      this.openedPopup = null;
     },
     onFbeOnboardResponded(response) {
       if (this.popupReceptionDuplicate) {
@@ -276,6 +296,7 @@ export default defineComponent({
 
       if (!response.access_token) {
         this.showGlass = false;
+        this.openedPopup = null;
         return;
       }
       this.showGlass = true;
@@ -296,11 +317,13 @@ export default defineComponent({
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
         this.showGlass = false;
+        this.openedPopup = null;
         this.popupReceptionDuplicate = false;
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
+        this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
@@ -321,14 +344,22 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
-          this.openPopup();
+          this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
           this.showGlass = false;
+          this.openedPopup = null;
           this.popupReceptionDuplicate = false;
           this.$forceUpdate();
         });
+      }
+    },
+    glassClicked() {
+      if (this.openedPopup) {
+        this.openedPopup.focus();
+      } else {
+        this.openedPopup = this.openPopup();
       }
     },
   },
@@ -361,6 +392,34 @@ export default defineComponent({
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 10000;
+
+    & > div {
+      text-align: center;
+      margin-top: 25vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & > img {
+        box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+      }
+
+      & > p, & > a {
+        font-family: "Open Sans";
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 21px;
+        text-align: center;
+        text-shadow: 3px 5px 10px rgba(0,0,0,0.4);
+        max-width: 460px;
+      }
+
+      & > a {
+        font-weight: 600;
+      }
+    }
   }
 
   .spinner {
