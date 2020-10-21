@@ -76,7 +76,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ],
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
-            'psFacebookLocale' => $defaultLanguage->getLocale(),
+            'psFacebookLocale' => $defaultLanguage->locale,
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
