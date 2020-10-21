@@ -20,38 +20,46 @@
   <div id="integrate">
     <spinner v-if="loading" />
     <div v-else>
-      <app-list>
+      <feature-list>
         <app-item
           v-for="(properties, featureName) in dynamicEnabledFeatures"
           :key="featureName"
         />
-      </app-list>
+      </feature-list>
 
-      <app-list>
-        <app-item
+      <feature-list>
+        <disabled-feature
           v-for="(properties, featureName) in dynamicDisabledFeatures"
           :key="featureName"
         />
-      </app-list>
+      </feature-list>
 
-      <app-list>
-        <app-item
-          v-for="(properties, featureName) in dynamicDisabledFeatures"
+      <feature-list>
+        <unavailable-feature
+          v-for="(properties, featureName) in dynamicUnavailableFeatures"
           :key="featureName"
         />
-      </app-list>
+      </feature-list>
     </div>
   </div>
 </template>
 
 <script>
-import AppList from '../components/apps/app-list.vue';
-import AppItem from '../components/apps/app-item.vue';
+import FeatureList from '../components/apps/feature-list.vue';
+import AppItem from '../components/apps/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
+import DisabledFeature from '../components/apps/disabled-feature.vue';
+import UnavailableFeature from '../components/apps/unavailable-feature.vue';
 
 export default {
   name: 'Integrate',
-  components: {Spinner, AppItem, AppList},
+  components: {
+    Spinner,
+    AppItem,
+    FeatureList,
+    UnavailableFeature,
+    DisabledFeature,
+  },
   mixins: [],
   props: {
     enabledFeatures: {
@@ -94,7 +102,7 @@ export default {
         .then((json) => {
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
           this.dynamicDisabledFeatures = json.fbeFeatures.disabledFeatures;
-          this.unavailableFeatures = json.fbeFeatures.unavailableFeatures;
+          this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
           this.loading = false;
         }).catch((error) => {
           console.error(error);

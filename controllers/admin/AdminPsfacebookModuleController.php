@@ -18,6 +18,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
+        $appId = Config::APP_ID;
+        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
             'id_pixel' => pSQL(Configuration::get(Config::PS_PIXEL_ID)),
@@ -107,6 +109,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookManageFeatures' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,

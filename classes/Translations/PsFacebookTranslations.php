@@ -155,6 +155,9 @@ class PsFacebookTranslations
                     'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
                 ],
             ],
+            'integrate' => [
+                'add' => $this->module->l('Add', 'PsFacebookTranslations'),
+            ],
         ];
 
         return $translations;

@@ -11,13 +11,9 @@
 <script>
 
 export default {
-  name: 'AppItem',
+  name: 'EnabledFeature',
 };
 </script>
 
 <style lang="scss" scoped>
-  li {
-    list-style: none;
-    padding-bottom: 15px;
-  }
 </style>

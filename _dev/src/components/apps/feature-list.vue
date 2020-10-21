@@ -6,12 +6,16 @@
 
 <script>
 export default {
-  name: 'AppList',
+  name: 'FeatureList',
 };
 </script>
 
 <style lang="scss" scoped>
   ul {
     padding: 15px;
+    li {
+      list-style: none;
+      padding-bottom: 15px;
+    }
   }
 </style>
