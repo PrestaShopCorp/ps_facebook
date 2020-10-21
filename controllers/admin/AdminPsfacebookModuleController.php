@@ -26,7 +26,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
         ]);
 
-        $defaultCurrency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
+        $defaultCurrency = $this->context->currency;
         $defaultLanguage = $this->context->language;
 
         Media::addJsDef([
