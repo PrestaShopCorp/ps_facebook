@@ -28,8 +28,10 @@ class FacebookCategoryClient
 
     public function getGoogleCategories()
     {
+        $googleCategoryIds = [];
         $categories = $this->call('taxonomy');
         foreach ($categories as $category) {
+            $googleCategoryIds[] = $category['id'];
             $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByGoogleCategoryId($category['id']);
 
             $googleCategory = new \FBGoogleCategory($googleCategoryId);
@@ -40,6 +42,8 @@ class FacebookCategoryClient
 
             $googleCategory->save();
         }
+
+        $this->googleCategoryRepository->deleteNotExistingGoogleCategories($googleCategoryIds);
     }
 
     protected function call($id, array $fields = [], array $query = [])

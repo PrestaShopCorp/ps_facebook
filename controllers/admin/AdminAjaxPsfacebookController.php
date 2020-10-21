@@ -166,17 +166,21 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $facebookCategoryClient->getGoogleCategories();
         } catch (Exception $e) {
             $this->ajaxDie(
-                [
-                    'success' => false,
-                    'message' => $e->getMessage(),
-                ]
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                    ]
+                )
             );
         }
 
         $this->ajaxDie(
-            [
-                'success' => true,
-            ]
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
         );
     }
 
