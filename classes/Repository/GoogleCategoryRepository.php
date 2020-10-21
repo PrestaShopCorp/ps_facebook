@@ -10,7 +10,7 @@ class GoogleCategoryRepository
     /**
      * @param int $googleCategoryId
      *
-     * @return false|string|null
+     * @return int
      */
     public function getGoogleCategoryIdByGoogleCategoryId($googleCategoryId)
     {
@@ -19,7 +19,7 @@ class GoogleCategoryRepository
         $sql->from('fb_google_category');
         $sql->where('`google_category_id` = "' . (int) $googleCategoryId . '"');
 
-        return Db::getInstance()->getValue($sql);
+        return (int) Db::getInstance()->getValue($sql);
     }
 
     public function deleteNotExistingGoogleCategories(array $googleCategoryIds)
