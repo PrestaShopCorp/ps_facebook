@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Db;
 use DbQuery;
+use PrestaShopCollection;
 
 class GoogleCategoryRepository
 {
@@ -32,6 +33,52 @@ class GoogleCategoryRepository
         Db::getInstance()->delete(
             'fb_category_match',
             'google_category_id NOT IN (' . implode(', ', $googleCategoryIds) . ')'
+        );
+    }
+
+    /**
+     * @param int $categoryId
+     * @param int $googleCategoryId
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function updateCategoryMatch($categoryId, $googleCategoryId)
+    {
+        Db::getInstance()->insert(
+            'fb_category_match',
+            [
+                'id_category' => (int) $categoryId,
+                'google_category_id' => (int) $googleCategoryId,
+            ],
+            false,
+            true,
+            DB::REPLACE
+        );
+    }
+
+    /**
+     * @param PrestaShopCollection $childCategories
+     * @param int $googleCategoryId
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function updateCategoryChildrenMatch(PrestaShopCollection $childCategories, $googleCategoryId)
+    {
+        $data = [];
+        /** @var \Category $categoryId */
+        foreach ($childCategories as $category) {
+            $data[] = [
+                'id_category' => (int) $category->id,
+                'google_category_id' => (int) $googleCategoryId,
+            ];
+        }
+
+        Db::getInstance()->insert(
+            'fb_category_match',
+            $data,
+            false,
+            true,
+            DB::REPLACE
         );
     }
 }

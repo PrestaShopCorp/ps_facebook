@@ -12,7 +12,7 @@ $sql[] = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'fb_google_category` (
 			)';
 
 $sql[] = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'fb_category_match` (
-				`id_category` INT(64)  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+				`id_category` INT(64)  NOT NULL PRIMARY KEY,
 				`google_category_id` INT(64) NOT NULL,
 				 INDEX (id_category, google_category_id)
 			)';

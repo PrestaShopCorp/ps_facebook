@@ -26,7 +26,7 @@ class FacebookCategoryClient
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
 
-    public function getGoogleCategories()
+    public function updateGoogleCategories()
     {
         $googleCategoryIds = [];
         $categories = $this->call('taxonomy');

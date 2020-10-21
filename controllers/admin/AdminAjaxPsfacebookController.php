@@ -19,6 +19,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
@@ -163,7 +164,33 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $facebookCategoryClient = new FacebookCategoryClient(new Client(), new GoogleCategoryRepository());
         try {
-            $facebookCategoryClient->getGoogleCategories();
+            $facebookCategoryClient->updateGoogleCategories();
+        } catch (Exception $e) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                    ]
+                )
+            );
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxUpdateCategoryMatch()
+    {
+        $categoryMatchHandler = new CategoryMatchHandler(new GoogleCategoryRepository());
+        try {
+            /* todo: change to data from ajax */
+            $categoryMatchHandler->updateCategoryMatch(3, 8, true);
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
