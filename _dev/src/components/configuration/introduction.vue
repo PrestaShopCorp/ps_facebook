@@ -57,7 +57,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="potatoe"
+          :src="manageBusinessIllustration"
           width="192"
           height="128"
           alt="A potatoe"
@@ -71,7 +71,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="potatoe"
+          :src="adAccountIllustration"
           width="192"
           height="128"
           alt="A potatoe"
@@ -85,7 +85,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="potatoe"
+          :src="understandTrafficIllustration"
           width="192"
           height="128"
           alt="A potatoe"
@@ -115,7 +115,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="potatoe"
+          :src="reachPeopleIllustration"
           width="192"
           height="128"
           alt="A potatoe"
@@ -157,13 +157,23 @@ import showdown from 'showdown';
 import illustration from '../../assets/illustration.png';
 import facebook from '../../assets/facebook_logo.svg';
 import potatoe from '../../assets/Oval.png';
+import adAccountIllustration from '../../assets/ad_account_illustration.png';
+import manageBusinessIllustration from '../../assets/manage_business_illustration.png';
+import reachPeopleIllustration from '../../assets/reach_people_illustration.png';
+import understandTrafficIllustration from '../../assets/understand_traffic_illustration.png';
 
 export default defineComponent({
   name: 'Introduction',
   components: {BCard, BButton},
   data() {
     return {
-      illustration, facebook, potatoe,
+      illustration,
+      facebook,
+      potatoe,
+      adAccountIllustration,
+      manageBusinessIllustration,
+      reachPeopleIllustration,
+      understandTrafficIllustration,
     };
   },
   methods: {
