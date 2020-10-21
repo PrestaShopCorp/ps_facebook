@@ -64,9 +64,12 @@
       "categoryMatching": "Category matching",
       "categoryMatchingIntro": "Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.",
       "matchCategoriesButton": "Match categories",
-      "viewButton": "View"
+      "viewButton": "View",
+      "backButton": "Back"
     },
     "categoryMatching": {
+      "intro": "Match your own categories with official Facebook categories to improve catalog quality and ad performance.",
+      "counterSubTitle": "specified parent categories",
       "autocomplete": {
         "typeToFilter": "Type to filter",
         "select": "Select",

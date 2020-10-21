@@ -128,8 +128,11 @@ class PsFacebookTranslations
                 'categoryMatchingIntro' => $this->module->l('Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.', 'PsFacebookTranslations'),
                 'matchCategoriesButton' => $this->module->l('Match categories', 'PsFacebookTranslations'),
                 'viewButton' => $this->module->l('View', 'PsFacebookTranslations'),
+                'backButton' => $this->module->l('Back', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
+                'intro' => $this->module->l('Match your own categories with official Facebook categories to improve catalog quality and ad performance.', 'PsFacebookTranslations'),
+                'counterSubTitle' => $this->module->l('specified parent categories', 'PsFacebookTranslations'),
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
                     'select' => $this->module->l('Select', 'PsFacebookTranslations'),

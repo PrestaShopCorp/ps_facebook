@@ -18,30 +18,59 @@
  *-->
 <template>
   <div v-if="loading" class="page-spinner" />
-  <div v-else id="catalogCategoryMatchingEdit">
-    TODO : CatalogCategoryMatchingEdit
-    <br />
-    <b-button @click="$parent.back">BACK</b-button>
-  </div>
+  <b-card class="card m-2" v-else id="catalogCategoryMatchingEdit">
+    <b-button
+      class="float-left mr-3"
+      variant="outline-secondary"
+      @click="$parent.back"
+    >
+      <i class="material-icons">keyboard_backspace</i>
+      {{ $t('catalogSummary.backButton') }}
+    </b-button>
+    <div class="counter float-right ml-5">
+      <h3>
+        {{matchingProgress.matched}} / {{matchingProgress.total}}
+        <br />
+        <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
+      </h3>
+    </div>
+    <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+
+    <p class="py-3">
+      {{ $t('categoryMatching.intro') }}
+    </p>
+
+    <p>
+      [TODO: filter]
+    </p>
+
+    [TODO : table component to insert here]
+  </b-card>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BButton, BCard} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'CatalogCategoryMatchingEdit',
   components: {
     BButton,
+    BCard,
   },
-  mixins: [],
   props: {
+    data: {
+      type: Object,
+      required: false,
+      default: null,
+    },
   },
   computed: {
   },
   data() {
     return {
       loading: true,
+      matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
   created() {
@@ -59,4 +88,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .card {
+    border: none;
+    border-radius: 3px;
+    overflow: hidden;
+
+    & > .card-body {
+      padding: 1rem;
+    }
+
+    & h1 {
+      margin-top: 0.2rem;
+    }
+  }
+
+  .counter {
+    text-align: right;
+
+    & > h3 {
+      color: #CD9321;
+      line-height: 1;
+
+      & > span {
+        font-size: x-small;
+        font-weight: normal;
+        color: #363A41;
+      }
+    }
+  }
 </style>
