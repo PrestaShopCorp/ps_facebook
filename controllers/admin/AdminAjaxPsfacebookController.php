@@ -27,10 +27,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 {
     public function postProcess()
     {
-        /**
-         *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-         *  TODO: We should use symfony component or copy function from it later on
-         */
         $action = Tools::getValue('action');
         $inputs = json_decode(file_get_contents('php://input'), true);
 

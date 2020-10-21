@@ -144,35 +144,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             ];
         }
 
-        // TODO: refaco this from Quickview
-        // // Decode Product Object
-        // $value = Tools::jsonDecode($params['value']);
-        // $locale = pSQL(Tools::strtoupper($this->context->language->iso_code));
-        // $iso_code = pSQL($this->context->currency->iso_code);
-
-        // $content = array(
-        // 'content_name' => Tools::replaceAccentedChars($value->product->name) .' '.$locale,
-        // 'content_ids' => array($value->product->id_product),
-        // 'content_type' => 'product',
-        // 'value' => (float)$value->product->price_amount,
-        // 'currency' => $iso_code,
-        // );
-        // $content = $this->formatPixel($content);
-
-        // $this->context->smarty->assign(array(
-        // 'type' => 'ViewContent',
-        // 'content' => $content,
-        // ));
-
-        // $value->quickview_html .= $this->context->smarty->fetch(
-        //     $this->local_path.'views/templates/hook/displaypixel.tpl'
-        // );
-
-        // // Recode Product Object
-        // $params['value'] = Tools::jsonEncode($value);
-
-        // die($params['value']);
-
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
