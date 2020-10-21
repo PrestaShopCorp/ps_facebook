@@ -243,9 +243,11 @@ export default defineComponent({
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onEditClick() {
       this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;
