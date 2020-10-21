@@ -65,7 +65,7 @@ class GoogleCategoryRepository
     public function updateCategoryChildrenMatch(PrestaShopCollection $childCategories, $googleCategoryId)
     {
         $data = [];
-        /** @var \Category $categoryId */
+
         foreach ($childCategories as $category) {
             $data[] = [
                 'id_category' => (int) $category->id,
