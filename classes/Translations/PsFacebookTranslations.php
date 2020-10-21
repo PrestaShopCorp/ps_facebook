@@ -165,6 +165,18 @@ class PsFacebookTranslations
                         'name' => $this->module->l('Instagram shopping', 'PsFacebookTranslations'),
                         'description' => $this->module->l('Tag your products in the publications to redirect traffic to your e-commerce site.', 'PsFacebookTranslations'),
                     ],
+                    'messenger_chat' => [
+                        'name' => $this->module->l('Messenger Chat Plugin', 'PsFacebookTranslations'),
+                        'description' => $this->module->l('Allows people to start a conversation with you on your website and continue in Messenger.', 'PsFacebookTranslations'),
+                    ],
+                    'page_shop' => [
+                        'name' => $this->module->l('Facebook Shop', 'PsFacebookTranslations'),
+                        'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
+                    ],
+                    'page_cta' => [
+                        'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
+                        'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
+                    ],
                 ],
                 'headings' => [
                     'disabledFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
