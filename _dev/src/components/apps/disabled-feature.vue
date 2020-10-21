@@ -5,19 +5,19 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo"
-            src="../../assets/logo.png"
+            :src=image
             width="50"
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
-              SOME NAME
+              {{ name }}
             </h3>
             <p class="small-text text-muted">
-              DESC
+              {{ description }}
             </p>
           </div>
           <b-button
-            variant="primary"
+            variant="disabled"
             class="ml-4 align-self-center"
           >
             {{ $t('integrate.add') }}
@@ -31,6 +31,31 @@
 <script>
 export default {
   name: 'DisabledFeature',
+  mixins: [],
+  props: {
+    name: {
+      type: String,
+      required: false,
+      default: () => '',
+    },
+    description: {
+      type: String,
+      required: false,
+      default: () => '',
+    },
+    image: {
+      type: String,
+      required: false,
+      default: () => '',
+    },
+  },
+  data() {
+    return {
+      featureName: this.name,
+      featureDescription: this.description,
+      featureImage: this.image,
+    };
+  },
 };
 </script>
 
