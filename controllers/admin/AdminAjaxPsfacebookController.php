@@ -16,42 +16,18 @@
 
 use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
-    public function postProcess()
-    {
-        /**
-         *  \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-         *  TODO: We should use symfony component or copy function from it later on
-         */
-        $action = Tools::getValue('action');
-        $inputs = json_decode(file_get_contents('php://input'), true);
-
-        switch ($action) {
-            case 'saveOnboarding':
-                $this->ajaxProcessConnectToFacebook($inputs);
-                break;
-            case 'activatePixel':
-                $this->ajaxProcessActivatePixel($inputs);
-                break;
-            case 'retrieveExternalBusinessId':
-                $this->ajaxProcessRetrieveExternalBusinessId();
-                break;
-            default:
-                break;
-        }
-
-        return parent::postProcess();
-    }
-
-    public function ajaxProcessSaveTokenFbeAccount()
+    public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
         $response = Configuration::updateValue(Config::FB_ACCESS_TOKEN, $token);
@@ -62,12 +38,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * Receive the Facebook access token, store it in DB then regerate app data
      *
-     * @param array $inputs
-     *
      * @throws PrestaShopException
      */
-    public function ajaxProcessConnectToFacebook(array $inputs)
+    public function displayAjaxConnectToFacebook()
     {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
         $onboardingData = $inputs['onboarding'];
         $facebookClient = new FacebookClient(
             $onboardingData['access_token'],
@@ -89,8 +65,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * Store in database a boolean for know if customer activate pixel
      */
-    public function ajaxProcessActivatePixel(array $inputs)
+    public function displayAjaxActivatePixel()
     {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
             Configuration::updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
@@ -101,7 +79,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode(['success' => false]));
     }
 
-    private function ajaxProcessRetrieveExternalBusinessId()
+    public function displayAjaxRetrieveExternalBusinessId()
     {
         $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
@@ -178,6 +156,27 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'contextPsFacebook' => $facebookContext,
                 ]
             )
+        );
+    }
+
+    public function displayAjaxUpdateGoogleCategories()
+    {
+        $facebookCategoryClient = new FacebookCategoryClient(new Client(), new GoogleCategoryRepository());
+        try {
+            $facebookCategoryClient->getGoogleCategories();
+        } catch (Exception $e) {
+            $this->ajaxDie(
+                [
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ]
+            );
+        }
+
+        $this->ajaxDie(
+            [
+                'success' => true,
+            ]
         );
     }
 

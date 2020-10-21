@@ -18,7 +18,8 @@ class Installer
     {
         return $this->installConfiguration() &&
             $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&
-            $this->installTabs();
+            $this->installTabs() &&
+            $this->installTables();
     }
 
     /**
@@ -93,6 +94,17 @@ class Installer
         }
 
         return $moduleTab->save();
+    }
+
+    public function installTables()
+    {
+        try {
+            include dirname(__FILE__) . '/../../sql/install.php';
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     private function getTabs()
