@@ -43,19 +43,18 @@ abstract class BaseEvent
     {
         $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
-        $arrayReturned = [];
-        $arrayReturned['ct'] = $customerInformation['city'];
-        $arrayReturned['country'] = $customerInformation['countryIso'];
-        $arrayReturned['zp'] = $customerInformation['postCode'];
-        $arrayReturned['ph'] = $customerInformation['phone'];
-        $arrayReturned['gender'] = $customerInformation['gender'];
-        $arrayReturned['fn'] = $customerInformation['firstname'];
-        $arrayReturned['ln'] = $customerInformation['lastname'];
-        $arrayReturned['em'] = $customerInformation['email'];
-        $arrayReturned['bd'] = $customerInformation['birthday'];
-        $arrayReturned['st'] = $customerInformation['stateIso'];
-
         // data structured for pixel
-        return $arrayReturned;
+        return [
+            'ct' => $customerInformation['city'],
+            'country' => $customerInformation['countryIso'],
+            'zp' => $customerInformation['postCode'],
+            'ph' => $customerInformation['phone'],
+            'gender' => $customerInformation['gender'],
+            'fn' => $customerInformation['firstname'],
+            'ln' => $customerInformation['lastname'],
+            'em' => $customerInformation['email'],
+            'bd' => $customerInformation['birthday'],
+            'st' => $customerInformation['stateIso'],
+        ];
     }
 }
