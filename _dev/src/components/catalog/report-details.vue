@@ -20,7 +20,7 @@
   <div v-if="loading" class="page-spinner" />
   <div v-else id="catalogReportDetails">
     TODO : CatalogReportDetails
-    <br />
+    <br /><br />
     <b-button @click="$parent.back">BACK</b-button>
   </div>
 </template>

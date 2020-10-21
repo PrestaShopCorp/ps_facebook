@@ -18,13 +18,25 @@
  *-->
 <template>
   <div>
-    [TODO : ExportCatalog block, when never exported before]
+    <div class="illustration float-left mr-3 d-none d-md-block">
+      <img
+        :src="illustration"
+        width="112"
+        height="134"
+        alt="background illustration"
+      >
+    </div>
+
+    <h3 class="title">[Product catalog export]</h3>
+    [TODO : when never exported before]
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
+
+import illustration from '../../../assets/catalog_export_illustration.png';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -38,6 +50,7 @@ export default defineComponent({
   },
   data() {
     return {
+      illustration,
     };
   },
   methods: {
@@ -48,4 +61,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .illustration {
+    margin-bottom: -10px;
+  }
+  .title {
+    font-weight: 600;
+  }
 </style>

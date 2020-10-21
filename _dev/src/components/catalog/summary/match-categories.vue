@@ -18,8 +18,25 @@
  *-->
 <template>
   <div>
-    [TODO : MatchCategories block, when never matched before]
-    <b-button @click="$parent.goto($parent.PAGES.categoryMatchingEdit)">EDIT</b-button>
+    <div class="illustration float-left mr-3 d-none d-md-block">
+      <img
+        :src="illustration"
+        width="112"
+        height="102"
+        alt="background illustration"
+      >
+    </div>
+
+    <h3 class="title">{{ $t('catalogSummary.categoryMatching') }}</h3>
+    <b-button
+      class="float-right ml-3"
+      variant="outline-secondary"
+      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
+    >
+      {{ $t('catalogSummary.matchCategoriesButton') }}
+    </b-button>
+    <p>{{ $t('catalogSummary.categoryMatchingIntro') }}</p>
+
   </div>
 </template>
 
@@ -27,26 +44,23 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
 
+import illustration from '../../../assets/category_matching_illustration.png';
+
 export default defineComponent({
   name: 'MatchCategories',
   components: {
     BButton,
   },
-  mixins: [],
-  props: {
-  },
-  computed: {
-  },
   data() {
     return {
+      illustration,
     };
-  },
-  methods: {
-  },
-  watch: {
   },
 });
 </script>
 
 <style lang="scss" scoped>
+  .title {
+    font-weight: 600;
+  }
 </style>

@@ -37,8 +37,9 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton, BCard} from 'bootstrap-vue';
+import {BCard} from 'bootstrap-vue';
 
+import PAGES from './pages';
 import ExportCatalog from './summary/export-catalog.vue';
 import CatalogExported from './summary/catalog-exported.vue';
 import MatchCategories from './summary/match-categories.vue';
@@ -48,7 +49,6 @@ import Reporting from './summary/reporting.vue';
 export default defineComponent({
   name: 'CatalogSummary',
   components: {
-    BButton,
     BCard,
     ExportCatalog,
     CatalogExported,
@@ -56,18 +56,29 @@ export default defineComponent({
     CategoriesMatched,
     Reporting,
   },
+  props: {
+    data: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return {
-      PAGES: this.$parent.PAGES,
+      PAGES,
       loading: true,
-      exportDone: false,
-      matchingDone: false,
-      matchingProgress: null,
-      reporting: null,
+      exportDone: this.data ? this.data.exportDone : false,
+      matchingDone: this.data ? this.data.matchingDone : false,
+      matchingProgress: this.data ? this.data.matchingProgress : null,
+      reporting: this.data ? this.data.reporting : null,
     };
   },
   created() {
-    this.fetchData();
+    if (!this.data) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {
@@ -76,10 +87,10 @@ export default defineComponent({
       this.loading = false;
     },
     goto(page) {
-      this.$parent.goto(page);
+      return this.$parent && this.$parent.goto(page);
     },
     back() {
-      this.$parent.back();
+      return this.$parent && this.$parent.back();
     },
   },
 });
@@ -90,5 +101,9 @@ export default defineComponent({
     border: none;
     border-radius: 3px;
     overflow: hidden;
+
+    & > .card-body {
+      padding: 1rem;
+    }
   }
 </style>

@@ -28,17 +28,12 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 
+import PAGES from '../components/catalog/pages';
 import CatalogSummary from '../components/catalog/summary.vue';
 import CatalogCategoryMatchingEdit from '../components/catalog/category-matching-edit.vue';
 import CatalogCategoryMatchingView from '../components/catalog/category-matching-view.vue';
 import CatalogReportDetails from '../components/catalog/report-details.vue';
 
-const PAGES = {
-  summary: 'summary',
-  categoryMatchingView: 'categoryMatchingView',
-  categoryMatchingEdit: 'categoryMatchingEdit',
-  reportDetails: 'reportDetails',
-};
 export default defineComponent({
   name: 'Catalog',
   components: {
@@ -81,6 +76,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-</style>

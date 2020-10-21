@@ -46,7 +46,7 @@ NoPsAccountOnboarded.args = {
     manageAccountLink: 'https://perdu.com',
   },
   contextPsFacebook: null,
-  externalBusinessId: '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
+  externalBusinessId: null,
   psAccountsToken: null,
   currency: 'EUR',
   timezone: 'Europe/Paris',

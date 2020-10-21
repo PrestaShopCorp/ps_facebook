@@ -18,21 +18,26 @@
  *-->
 <template>
   <div>
-    [TODO : Reporting block]
-    <b-button @click="$parent.goto($parent.PAGES.reportDetails)">DETAILS</b-button>
+    <h1>[Product sync report]</h1>
+    [TODO]
+    <b-link
+      class="view-button float-right ml-3"
+      @click="$parent.goto($parent.PAGES.reportDetails)"
+    >
+      [DETAILS]
+    </b-link>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BLink} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'Reporting',
   components: {
-    BButton,
+    BLink,
   },
-  mixins: [],
   props: {
     reporting: {
       type: Object,
@@ -53,4 +58,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .view-button {
+    font-weight: 700;
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
+  }
 </style>

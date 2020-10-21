@@ -118,6 +118,13 @@ class PsFacebookTranslations
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
                 ],
             ],
+
+            'catalogSummary' => [
+                'categoryMatching' => $this->module->l('Category matching', 'PsFacebookTranslations'),
+                'categoryMatchingIntro' => $this->module->l('Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.', 'PsFacebookTranslations'),
+                'matchCategoriesButton' => $this->module->l('Match categories', 'PsFacebookTranslations'),
+                'viewButton' => $this->module->l('View', 'PsFacebookTranslations'),
+            ],
             'categoryMatching' => [
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),

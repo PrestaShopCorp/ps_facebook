@@ -56,6 +56,12 @@
         "disabled": "Disabled"
       }
     },
+    "catalogSummary":  {
+      "categoryMatching": "Category matching",
+      "categoryMatchingIntro": "Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.",
+      "matchCategoriesButton": "Match categories",
+      "viewButton": "View"
+    },
     "categoryMatching": {
       "autocomplete": {
         "typeToFilter": "Type to filter",

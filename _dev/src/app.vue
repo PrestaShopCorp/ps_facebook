@@ -54,7 +54,7 @@ export default {
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: () => global.contextPsFacebook,
+      default: () => global.contextPsFacebook || null, // avoid undefined
     },
     psFacebookGetFbContextRoute: {
       type: String,

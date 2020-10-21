@@ -154,22 +154,22 @@ export default defineComponent({
     },
     pixelActivationRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
     psFacebookRetrieveExternalBusinessId: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
   },
@@ -200,7 +200,11 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
+    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {

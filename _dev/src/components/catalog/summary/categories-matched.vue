@@ -18,19 +18,27 @@
  *-->
 <template>
   <div>
-    [TODO : CategoriesMatched block, when matching done or in progress]
-    <b-button @click="$parent.goto($parent.PAGES.categoryMatchingView)">VIEW</b-button>
+    <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+
+    <b-link
+      class="view-button float-right ml-3"
+      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+    >
+      {{ $t('catalogSummary.viewButton') }}
+    </b-link>
+
+    [TODO : when matching done or in progress]
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BLink} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'CategoriesMatched',
   components: {
-    BButton,
+    BLink,
   },
   mixins: [],
   props: {
@@ -53,4 +61,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .view-button {
+    font-weight: 700;
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
+  }
 </style>

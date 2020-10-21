@@ -18,7 +18,8 @@
  *-->
 <template>
   <div>
-    [TODO : ExportCatalog block, when export is launched or done]
+    <h1>[Product catalog export]</h1>
+    [TODO : when export is in progress or done]
   </div>
 </template>
 
