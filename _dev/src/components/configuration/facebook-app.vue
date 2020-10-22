@@ -78,6 +78,12 @@
       {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
     </div>
     <div
+      v-if="!!url"
+      class="small"
+    >
+      <b-link :href="url">[GO to Pixel dashboard]</b-link>
+    </div>
+    <div
       v-if="!!createdAt"
       class="small"
     >
@@ -96,11 +102,11 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BFormCheckbox, BIconInfoCircle} from 'bootstrap-vue';
+import {BFormCheckbox, BIconInfoCircle, BLink} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'FacebookApp',
-  components: {BFormCheckbox, BIconInfoCircle},
+  components: {BFormCheckbox, BIconInfoCircle, BLink},
   props: {
     appType: {
       type: String,
@@ -122,6 +128,11 @@ export default defineComponent({
     },
     likes: {
       type: Number,
+      required: false,
+      default: null,
+    },
+    url: {
+      type: String,
       required: false,
       default: null,
     },

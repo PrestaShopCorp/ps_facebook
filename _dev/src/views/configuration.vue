@@ -19,7 +19,7 @@
 <template>
   <div
     v-if="loading"
-    class="spinner"
+    class="page-spinner"
   />
   <div
     id="configuration"
@@ -56,6 +56,8 @@
         />
         <facebook-connected
           v-else
+          :ps-facebook-app-id="psFacebookAppId"
+          :external-business-id="dynamicExternalBusinessId"
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
@@ -66,7 +68,7 @@
           class="glass"
           @click="glassClicked"
         >
-          <div>
+          <div class="refocus">
             <img
               class="m-3"
               :src="facebook"
@@ -77,7 +79,9 @@
             <p>{{ $t('configuration.glass.text') }}</p>
             <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
           </div>
-
+          <div class="closeCross p-1 m-4" @click="closePopup">
+            <i class="material-icons">close</i>
+          </div>
         </div>
       </template>
     </template>
@@ -140,7 +144,12 @@ export default defineComponent({
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: () => global.contextPsFacebook,
+      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
+    },
+    psFacebookAppId: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookAppId,
     },
     externalBusinessId: {
       type: String,
@@ -169,22 +178,22 @@ export default defineComponent({
     },
     pixelActivationRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
     psFacebookRetrieveExternalBusinessId: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
   },
@@ -194,8 +203,7 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      const context = this.contextPsFacebook;
-      return (context && context.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
     },
   },
   data() {
@@ -217,7 +225,11 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
+    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {
@@ -362,12 +374,22 @@ export default defineComponent({
         this.openedPopup = this.openPopup();
       }
     },
+    closePopup(event) {
+      event.stopPropagation(); // avoid popup to be focused before close
+      if (this.openedPopup) {
+        this.openedPopup.close();
+      }
+    },
   },
   watch: {
     contextPsAccounts() {
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
+      const oldValue = this.dynamicContextPsFacebook;
+      if (oldValue && !oldValue.email && newValue && newValue.email) {
+        this.psFacebookJustOnboarded = true;
+      }
       this.dynamicContextPsFacebook = newValue;
       this.$forceUpdate();
     },
@@ -393,7 +415,7 @@ export default defineComponent({
     background-color: rgba(0,0,0,0.5);
     z-index: 10000;
 
-    & > div {
+    & > .refocus {
       text-align: center;
       margin-top: 25vh;
       color: white;
@@ -420,27 +442,17 @@ export default defineComponent({
         font-weight: 600;
       }
     }
-  }
+    & > .closeCross {
+      position: fixed;
+      right: 0;
+      top: 0;
+      color: white;
+      text-shadow: 3px 5px 10px rgba(0,0,0,.4);
 
-  .spinner {
-    color: #fff;
-    background-color: inherit !important;
-    width: 8rem !important;
-    height: 8rem !important;
-    border-radius: 4rem !important;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-    position: relative;
-    left: calc(50% - 4rem);
-    top: 6rem;
+      & > i {
+        color: #fff;
+        font-size: 2.6em !important;
+      }
+    }
   }
 </style>

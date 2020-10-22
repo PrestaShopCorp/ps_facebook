@@ -74,6 +74,13 @@
         </span>
       </div>
 
+      <b-link
+        :href="fbeUrl"
+        class="ml-4 float-right"
+      >
+        [Go to FBE]
+      </b-link>
+
       <b-button
         variant="outline-secondary"
         @click="edit"
@@ -93,6 +100,13 @@
         :src="facebookLogo"
         alt="colors"
       >
+
+      <b-link
+        :href="fbeUrl"
+        class="ml-4 float-right"
+      >
+        [Go to FBE]
+      </b-link>
 
       <b-button
         variant="outline-secondary"
@@ -148,6 +162,7 @@
               :app-name="contextPsFacebook.pixel.name"
               :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
               :last-active="Date.now()"
+              :url="pixelUrl"
               :activation-switch="contextPsFacebook.pixel.isActive"
               @onActivation="pixelActivation"
             />
@@ -202,6 +217,7 @@ import {
   BContainer,
   BRow,
   BCol,
+  BLink,
 } from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 import facebookLogo from '../../assets/facebook_logo.svg';
@@ -220,8 +236,17 @@ export default defineComponent({
     BRow,
     BCol,
     BCardHeader,
+    BLink,
   },
   props: {
+    psFacebookAppId: {
+      type: String,
+      required: true,
+    },
+    externalBusinessId: {
+      type: String,
+      required: true,
+    },
     contextPsFacebook: {
       type: Object,
       required: false,
@@ -251,6 +276,17 @@ export default defineComponent({
         name: this.contextPsFacebook.facebookBusinessManager.name,
         email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
       };
+    },
+    fbeUrl() {
+      const q = `?app_id=${this.psFacebookAppId}&external_business_id=${this.externalBusinessId}`;
+      return `https://www.facebook.com/facebook_business_extension/management/${q}`;
+    },
+    pixelUrl() {
+      if (!this.contextPsFacebook || !this.contextPsFacebook.pixel) {
+        return '#';
+      }
+      const pixId = this.contextPsFacebook.pixel.id;
+      return `https://business.facebook.com/events_manager2/list/pixel/${pixId}/overview`;
     },
   },
   methods: {

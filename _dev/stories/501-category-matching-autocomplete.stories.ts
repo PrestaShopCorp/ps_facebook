@@ -1,7 +1,7 @@
 import CategoryAutocomplete from '../src/components/category-matching/category-autocomplete.vue';
 
 export default {
-  title: 'Category matching/CategoryAutocomplete component',
+  title: 'Catalog/Category matching edit page/CategoryAutocomplete component',
   component: CategoryAutocomplete,
 };
 
