@@ -147,8 +147,18 @@ class Ps_facebook extends Module
         $this->templateBuffer = new TemplateBuffer();
         $this->eventDispatcher = new EventDispatcher($this);
 
-        $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
-        $dotenv->load();
+        $this->loadEnv();
+    }
+
+    private function loadEnv()
+    {
+        if (file_exists(_PS_MODULE_DIR_ . 'ps_facebook/.env')) {
+            $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
+            $dotenv->load();
+        }
+
+        $dotenvDist = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/', '.env.dist');
+        $dotenvDist->load();
     }
 
     /**
