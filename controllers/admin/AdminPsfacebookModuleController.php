@@ -32,7 +32,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
-            'psFacebookAppId' => '726899634800479', // TODO !0: urgent, should comes from env file
+            'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
