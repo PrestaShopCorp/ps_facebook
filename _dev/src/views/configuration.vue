@@ -144,7 +144,7 @@ export default defineComponent({
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: () => global.contextPsFacebook || {},
+      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
     },
     psFacebookAppId: {
       type: String,
@@ -386,11 +386,8 @@ export default defineComponent({
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
-      if (
-        (this.dynamicContextPsFacebook && !this.dynamicContextPsFacebook.email)
-        && newValue
-        && newValue.email
-      ) {
+      const oldValue = this.dynamicContextPsFacebook;
+      if (oldValue && !oldValue.email && newValue && newValue.email) {
         this.psFacebookJustOnboarded = true;
       }
       this.dynamicContextPsFacebook = newValue;

@@ -130,13 +130,13 @@ export default defineComponent({
       text-align: right;
     }
     & > h3 {
-      color: #CD9321;
+      color: #CD9321 !important;
       line-height: 1;
 
       & > span {
         font-size: x-small;
         font-weight: normal;
-        color: #363A41;
+        color: #363A41 !important;
       }
     }
   }

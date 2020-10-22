@@ -19,18 +19,18 @@
 <template>
   <div id="app">
     <Menu :context-ps-facebook="contextPsFacebook">
-      <MenuItem
+      <!--<MenuItem
         onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}
-      </MenuItem>
+      </MenuItem>-->
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}
       </MenuItem>
-      <MenuItem route="/help">
+      <!--<MenuItem route="/help">
         {{ $t('general.tabs.help') }}
-      </MenuItem>
+      </MenuItem>-->
     </Menu>
 
     <div class="pt-5" />
