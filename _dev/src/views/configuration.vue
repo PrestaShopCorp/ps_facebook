@@ -1,0 +1,446 @@
+<!--**
+ * 2007-2020 PrestaShop and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA <contact@prestashop.com>
+ * @copyright 2007-2020 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * International Registered Trademark & Property of PrestaShop SA
+ *-->
+<template>
+  <div
+    v-if="loading"
+    class="spinner"
+  />
+  <div
+    id="configuration"
+    class="ps-facebook-configuration-tab"
+    v-else
+  >
+    <introduction
+      v-if="!psAccountsOnboarded && showIntroduction"
+      @onHide="showIntroduction = false"
+      class="m-4"
+    />
+    <template v-else>
+      <messages
+        :show-onboard-succeeded="psFacebookJustOnboarded"
+        :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :error="error"
+        @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+        class="m-4"
+      />
+      <ps-accounts
+        :context="contextPsAccounts"
+        class="m-4"
+      />
+
+      <no-config
+        v-if="!psAccountsOnboarded"
+        class="m-4"
+      />
+      <template v-else>
+        <facebook-not-connected
+          v-if="!facebookConnected"
+          @onFbeOnboardClick="onFbeOnboardClick"
+          class="m-4"
+        />
+        <facebook-connected
+          v-else
+          :context-ps-facebook="dynamicContextPsFacebook"
+          @onEditClick="onEditClick"
+          @onPixelActivation="onPixelActivation"
+          class="m-4"
+        />
+        <div
+          v-if="showGlass"
+          class="glass"
+          @click="glassClicked"
+        >
+          <div>
+            <img
+              class="m-3"
+              :src="facebook"
+              width="56"
+              height="56"
+              alt="PS Facebook logo"
+            >
+            <p>{{ $t('configuration.glass.text') }}</p>
+            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+          </div>
+
+        </div>
+      </template>
+    </template>
+  </div>
+</template>
+
+<script>
+import {defineComponent} from '@vue/composition-api';
+import {PsAccounts} from 'prestashop_accounts_vue_components';
+import Introduction from '../components/configuration/introduction.vue';
+import Messages from '../components/configuration/messages.vue';
+import NoConfig from '../components/configuration/no-config.vue';
+import FacebookConnected from '../components/configuration/facebook-connected.vue';
+import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import openPopupGenerator from '../lib/fb-login';
+import facebook from '../assets/facebook_white_logo.svg';
+
+const generateOpenPopup = (component, popupUrl) => {
+  const canGeneratePopup = (
+    component.contextPsAccounts.currentShop
+    && component.contextPsAccounts.currentShop.url
+    && component.dynamicExternalBusinessId
+    && component.psAccountsToken
+  );
+  return canGeneratePopup ? openPopupGenerator(
+    window,
+    component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
+    popupUrl,
+    '/index.html',
+    component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
+    component.dynamicExternalBusinessId,
+    component.psAccountsToken,
+    component.currency,
+    component.timezone,
+    component.locale,
+    null,
+    component.onFbeOnboardOpened,
+    component.onFbeOnboardClosed,
+    component.onFbeOnboardResponded,
+  ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
+};
+
+export default defineComponent({
+  name: 'Configuration',
+  components: {
+    Introduction,
+    Messages,
+    PsAccounts,
+    NoConfig,
+    FacebookNotConnected,
+    FacebookConnected,
+  },
+  mixins: [],
+  props: {
+    contextPsAccounts: {
+      type: Object,
+      required: false,
+      default: () => global.contextPsAccounts,
+    },
+    contextPsFacebook: {
+      type: Object,
+      required: false,
+      default: () => global.contextPsFacebook,
+    },
+    externalBusinessId: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookExternalBusinessId,
+    },
+    psAccountsToken: {
+      type: String,
+      required: false,
+      default: () => global.psAccountsToken,
+    },
+    currency: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookCurrency || 'EUR',
+    },
+    timezone: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookTimezone || 'Europe/Paris',
+    },
+    locale: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookLocale || 'en-US',
+    },
+    pixelActivationRoute: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookPixelActivationRoute || null,
+    },
+    fbeOnboardingSaveRoute: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookFbeOnboardingSaveRoute || null,
+    },
+    psFacebookUiUrl: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookFbeUiUrl || null,
+    },
+    psFacebookRetrieveExternalBusinessId: {
+      type: String,
+      required: true,
+      default: () => global.psFacebookRetrieveExternalBusinessId || null,
+    },
+  },
+  computed: {
+    psAccountsOnboarded() {
+      return this.contextPsAccounts.user.email !== null
+        && this.contextPsAccounts.user.emailIsValidated;
+    },
+    facebookConnected() {
+      const context = this.contextPsFacebook;
+      return (context && context.email) || false;
+    },
+  },
+  data() {
+    return {
+      dynamicContextPsFacebook: this.contextPsFacebook,
+      dynamicExternalBusinessId: this.externalBusinessId,
+      showIntroduction: true, // Initialized to true except if a props should avoid the introduction
+      psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
+      showSyncCatalogAdvice: this.contextPsFacebook
+        && this.contextPsFacebook.categoriesMatching
+        && this.contextPsFacebook.categoriesMatching.sent !== true,
+      openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
+      showGlass: false,
+      error: null,
+      loading: true,
+      popupReceptionDuplicate: false,
+      facebook, // white logo for glass
+      openedPopup: null,
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.loading = true;
+      fetch(global.psFacebookLoadConfigurationRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.loading = false;
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
+        });
+    },
+    onSyncCatalogAdviceClick() {
+      this.$router.push({name: 'Catalog', query: {component: 'matching'}});
+    },
+    onFbeOnboardClick() {
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
+    },
+    onEditClick() {
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
+    },
+    onPixelActivation() {
+      const actualState = this.dynamicContextPsFacebook.pixel.isActive;
+      const newState = !actualState;
+      // Save activation state in PHP side.
+      fetch(this.pixelActivationRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({event_status: newState}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.$root.refreshContextPsFacebook({
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: newState},
+        });
+      }).catch((error) => {
+        console.error(error);
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.$root.refreshContextPsFacebook({
+          ...this.dynamicContextPsFacebook,
+          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
+        });
+      });
+    },
+    onFbeOnboardOpened() {
+      this.showGlass = true;
+    },
+    onFbeOnboardClosed() {
+      this.showGlass = false;
+      this.openedPopup = null;
+    },
+    onFbeOnboardResponded(response) {
+      if (this.popupReceptionDuplicate) {
+        console.log('duplicated response received');
+        return;
+      }
+      this.popupReceptionDuplicate = true;
+      console.log('response received', response);
+
+      if (!response.access_token) {
+        this.showGlass = false;
+        this.openedPopup = null;
+        return;
+      }
+      this.showGlass = true;
+
+      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
+      fetch(this.fbeOnboardingSaveRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({onboarding: response}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error('Error!');
+        }
+        this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+        this.showGlass = false;
+        this.openedPopup = null;
+        this.popupReceptionDuplicate = false;
+      }).catch((error) => {
+        console.error(error);
+        this.error = 'configuration.messages.unknownOnboardingError';
+        this.showGlass = false;
+        this.openedPopup = null;
+        this.popupReceptionDuplicate = false;
+        this.$forceUpdate();
+      });
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        fetch(this.psFacebookRetrieveExternalBusinessId, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        }).then((res) => {
+          if (!res.externalBusinessId) {
+            throw new Error('Cannot retrieve ExternalBusinessId.');
+          }
+          this.dynamicExternalBusinessId = res.externalBusinessId;
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          this.openedPopup = this.openPopup();
+        }).catch((error) => {
+          console.error(error);
+          this.error = 'configuration.messages.unknownOnboardingError';
+          this.showGlass = false;
+          this.openedPopup = null;
+          this.popupReceptionDuplicate = false;
+          this.$forceUpdate();
+        });
+      }
+    },
+    glassClicked() {
+      if (this.openedPopup) {
+        this.openedPopup.focus();
+      } else {
+        this.openedPopup = this.openPopup();
+      }
+    },
+  },
+  watch: {
+    contextPsAccounts() {
+      this.$forceUpdate();
+    },
+    contextPsFacebook(newValue) {
+      this.dynamicContextPsFacebook = newValue;
+      this.$forceUpdate();
+    },
+  },
+});
+</script>
+
+<style lang="scss">
+  .ps-facebook-configuration-tab {
+    div.card {
+      border: none;
+      border-radius: 3px;
+    }
+  }
+</style>
+<style lang="scss" scoped>
+  .glass {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10000;
+
+    & > div {
+      text-align: center;
+      margin-top: 25vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & > img {
+        box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+      }
+
+      & > p, & > a {
+        font-family: "Open Sans";
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 21px;
+        text-align: center;
+        text-shadow: 3px 5px 10px rgba(0,0,0,0.4);
+        max-width: 460px;
+      }
+
+      & > a {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .spinner {
+    color: #fff;
+    background-color: inherit !important;
+    width: 8rem !important;
+    height: 8rem !important;
+    border-radius: 4rem !important;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    position: relative;
+    left: calc(50% - 4rem);
+    top: 6rem;
+  }
+</style>

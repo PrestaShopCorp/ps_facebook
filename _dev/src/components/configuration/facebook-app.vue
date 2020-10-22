@@ -1,0 +1,189 @@
+<!--**
+ * 2007-2020 PrestaShop and Contributors
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA <contact@prestashop.com>
+ * @copyright 2007-2020 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * International Registered Trademark & Property of PrestaShop SA
+ *-->
+<template>
+  <div class="app pt-1 pb-3 px-2">
+    <div class="text-uppercase text-muted">
+      {{ appType }}
+      <b-icon-info-circle
+        v-if="!!tooltip"
+        v-b-tooltip.hover
+        :title="tooltip"
+        class="iconInfo ml-2"
+        variant="primary"
+      />
+    </div>
+    <img
+      v-if="!!logo"
+      :src="logo"
+      alt="app logo"
+      class="logo float-left mr-2 my-1"
+    >
+    <div class="font-weight-bold text-truncate">
+      {{ appName }}
+    </div>
+
+    <div
+      v-if="activationSwitch != null"
+      class="float-right mb-3 mt-2 ml-2"
+    >
+      <span class="d-none d-sm-inline">
+        {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
+      </span>
+      <div
+        class="switch-input switch-input-lg ml-1"
+        :class="switchActivated ? '-checked' : null"
+        @click="switchClick"
+      >
+        <input
+          class="switch-input-lg"
+          type="checkbox"
+          :checked="switchActivated"
+        >
+      </div>
+    </div>
+
+    <div
+      v-if="!!email"
+      class="small text-truncate"
+    >
+      {{ email }}
+    </div>
+    <div
+      v-if="!!appId"
+      class="small text-truncate"
+    >
+      {{ appId }}
+    </div>
+    <div
+      v-if="!!likes"
+      class="small"
+    >
+      {{ likes }}
+      {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
+    </div>
+    <div
+      v-if="!!createdAt"
+      class="small"
+    >
+      {{ $t('configuration.app.createdAt') }}
+      {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+    </div>
+    <div
+      v-if="!!lastActive"
+      class="small"
+    >
+      {{ $t('configuration.app.lastActive') }}
+      {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import {defineComponent} from '@vue/composition-api';
+import {BFormCheckbox, BIconInfoCircle} from 'bootstrap-vue';
+
+export default defineComponent({
+  name: 'FacebookApp',
+  components: {BFormCheckbox, BIconInfoCircle},
+  props: {
+    appType: {
+      type: String,
+      required: true,
+    },
+    appName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    appId: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    likes: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    createdAt: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    lastActive: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    activationSwitch: {
+      type: Boolean,
+      required: false,
+      default: null,
+    },
+    tooltip: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    logo: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      switchActivated: this.activationSwitch,
+    };
+  },
+  methods: {
+    switchClick() {
+      this.switchActivated = !this.switchActivated;
+      this.$emit('onActivation', this.switchActivated);
+    },
+  },
+  watch: {
+    activationSwitch(newValue) {
+      this.switchActivated = newValue;
+    },
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+  .app {
+    background-color: #fafbfc;
+    border-radius: 3px;
+    height: 100%;
+
+    .iconInfo {
+      position: relative;
+      top: 0.1em;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+{
+  "en": {
+    "configuration": {
+      "introduction": {
+        "getStarted": "Get started",
+        "subTitle": "Build your business presence into Facebook community easily and quickly!",
+        "proPoints": "- No credit card required \n- Easy setup \n- Cancel anytime",
+        "resume": "Make your first steps with PrestaShop Facebook!",
+        "proPoint1Title": "Manage your business",
+        "proPoint1Description": "Control your ad settings and business tools \nfrom one place.",
+        "proPoint2Title": "Manage your ad account",
+        "proPoint2Description": "Choose the account where you store ad payment information for your business.",
+        "proPoint3Title": "Understand your traffic",
+        "proPoint3Description": "Use data from Facebook Pixel* to understand actions people take on your website.",
+        "proPoint4Title": "Build and manage inventory",
+        "proPoint4Description": "Manage your product catalog and \nunlock the power of ads.",
+        "proPoint5Title": "Reach more people",
+        "proPoint5Description": "Help people find your products on Instagram \nand Facebook.",
+        "needMoreFeatures": "Need more features?",
+        "seeDetailedPlans": "See detailed plans"
+      },
+      "messages": {
+        "success": "PrestaShop Facebook is now activated!",
+        "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
+        "syncCatalogButton": "Sync product",
+        "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
+        "reloadButton": "Reload"
+      },
+      "facebook": {
+        "title": "Connect your store to Facebook",
+        "notConnected": {
+          "intro": "Integrate your shop with Facebook.",
+          "connectButton": "Connect to Facebook",
+          "description": "With Facebook Business Manager, Facebook Page, Facebook Ads account, Facebook Pixel, Instagram Business account and products, you’ll be able to:",
+          "details": "- Create catalog \n- Sync your catalog automatically and in real time \n- Create Shop on Facebook Page & Instagram Shopping \n- Add Messenger plugin in your shop \n- Customize your Facebook Page with call-to-action"
+        },
+        "connected": {
+          "description": "You authorize this Facebook account to connect to your store:",
+          "editButton": "Edit",
+          "facebookBusinessManager": "Facebook Business Manager",
+          "facebookBusinessManagerTooltip": "Facebook Business Manager",
+          "facebookPixel": "Facebook Pixel",
+          "facebookPixelTooltip": "Facebook Pixel",
+          "facebookPage": "Facebook Page",
+          "facebookPageTooltip": "Facebook Page",
+          "facebookAds": "Facebook Ads",
+          "facebookAdsTooltip": "Facebook Ads"
+        }
+      },
+      "app": {
+        "like": "like",
+        "likes": "likes",
+        "createdAt": "Created",
+        "lastActive": "Last active",
+        "activated": "Activated",
+        "disabled": "Disabled"
+      },
+      "glass": {
+        "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
+        "link": "Continue"
+      }
+    },
+    "categoryMatching": {
+      "autocomplete": {
+        "typeToFilter": "Type to filter",
+        "select": "Select",
+        "noResult": "No result for your search",
+        "tooManyResults": "Too many results, please complete your search.",
+        "fetchError": "An error occurred during search process."
+      }
+    }
+  }
+}
