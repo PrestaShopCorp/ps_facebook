@@ -45,7 +45,7 @@ class ApiConversionHandler
 
     public function handleEvent($eventName, $params)
     {
-        $pixelId = \Configuration::get('PS_PIXEL_ID');
+        $pixelId = \Configuration::get(Config::PS_PIXEL_ID);
 
         switch ($eventName) {
             case 'hookActionSearch':

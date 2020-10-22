@@ -2,13 +2,14 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
             return;
         }

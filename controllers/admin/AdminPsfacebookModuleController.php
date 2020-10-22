@@ -19,7 +19,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $psAccountsService = new PsAccountsService();
 
         $this->context->smarty->assign([
-            'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => pSQL(Configuration::get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),

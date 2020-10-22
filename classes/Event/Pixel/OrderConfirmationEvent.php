@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
@@ -20,7 +21,7 @@ class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
 
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
-            'id_pixel' => pSQL(\Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => pSQL(\Configuration::get(Config::PS_PIXEL_ID)),
             'type' => $type,
             'content' => $content,
             'track' => $track,
