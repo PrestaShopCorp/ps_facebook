@@ -13,6 +13,29 @@
               {{ $t(`integrate.features.${name}.name`) }}
             </h3>
           </div>
+          <div>
+            <span class="d-none d-sm-inline">
+              {{
+                $t(switchActivated ?
+                  'configuration.app.activated' :
+                  'configuration.app.disabled')
+              }}
+            </span>
+            <div
+              class="switch-input switch-input-lg ml-1"
+              :class="switchActivated ? '-checked' : null"
+              @click="switchClick"
+            >
+              <input
+                class="switch-input-lg"
+                type="checkbox"
+                :checked="switchActivated"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="d-flex">
+          content
         </div>
       </b-card-body>
     </b-card>
@@ -35,6 +58,27 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => '',
+    },
+    activationSwitch: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      switchActivated: this.activationSwitch,
+    };
+  },
+  methods: {
+    switchClick() {
+      this.switchActivated = !this.switchActivated;
+      this.$emit('onActivation', this.switchActivated);
+    },
+  },
+  watch: {
+    activationSwitch(newValue) {
+      this.switchActivated = newValue;
     },
   },
 });

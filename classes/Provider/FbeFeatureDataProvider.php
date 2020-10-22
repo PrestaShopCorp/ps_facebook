@@ -52,7 +52,6 @@ class FbeFeatureDataProvider
             }, ARRAY_FILTER_USE_KEY);
         }
 
-
         return [
             'enabledFeatures' => $enabledFeatures,
             'disabledFeatures' => $disabledFeatures,
