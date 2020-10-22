@@ -30,10 +30,15 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
+import {BCard, BCardBody} from 'bootstrap-vue';
 
 export default defineComponent({
-  mixins: [],
   name: 'UnavailableFeature',
+  components: {
+    BCard,
+    BCardBody,
+  },
+  mixins: [],
   props: {
     name: {
       type: String,

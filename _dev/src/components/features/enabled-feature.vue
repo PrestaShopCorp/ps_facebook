@@ -20,9 +20,15 @@
 </template>
 
 <script>
+import {defineComponent} from '@vue/composition-api';
+import {BCard, BCardBody} from 'bootstrap-vue';
 
-export default {
+export default defineComponent({
   name: 'EnabledFeature',
+  components: {
+    BCard,
+    BCardBody,
+  },
   mixins: [],
   props: {
     name: {
@@ -31,7 +37,7 @@ export default {
       default: () => '',
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
