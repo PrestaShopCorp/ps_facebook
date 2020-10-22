@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Configuration},
-  template: '<configuration :contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" :externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" :currency="currency" :timezone="timezone" :locale="locale" :pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" :psFacebookUiUrl="psFacebookUiUrl" :psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" />',
+  template: '<configuration :contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" :externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" :currency="currency" :timezone="timezone" :locale="locale" :pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" :psFacebookUiUrl="psFacebookUiUrl" :psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" :psFacebookAppId="psFacebookAppId" />',
 });
 
 export const NoPsAccountOnboarded: any = Template.bind({});
@@ -46,6 +46,7 @@ NoPsAccountOnboarded.args = {
     manageAccountLink: 'https://perdu.com',
   },
   contextPsFacebook: null,
+  psFacebookAppId: '1234567890',
   externalBusinessId: null,
   psAccountsToken: null,
   currency: 'EUR',
@@ -61,6 +62,7 @@ export const HalfConnected: any = Template.bind({});
 HalfConnected.args = {
   contextPsAccounts: window.contextPsAccounts,
   contextPsFacebook: {},
+  psFacebookAppId: '1234567890',
   externalBusinessId: '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
   psAccountsToken: 'a-valid-token',
   currency: 'EUR',
@@ -102,6 +104,7 @@ FullConnected.args = {
       sent: false,
     },
   },
+  psFacebookAppId: '1234567890',
   externalBusinessId: '0b2f5f57-5190-47e2-8df6-b2f96447ac9f',
   psAccountsToken: 'a-valid-token',
   currency: 'EUR',

@@ -20,13 +20,13 @@
   <div v-if="loading" class="page-spinner" />
   <div v-else id="catalogSummary">
     <b-card class="card m-2">
-      <catalog-exported v-if="exportDone" />
-      <export-catalog v-else />
+      <categories-matched v-if="matchingDone" :matchingProgress="matchingProgress" />
+      <match-categories v-else />
     </b-card>
 
     <b-card class="card m-2">
-      <categories-matched v-if="matchingDone" :matchingProgress="matchingProgress" />
-      <match-categories v-else />
+      <catalog-exported v-if="exportDone" />
+      <export-catalog v-else />
     </b-card>
 
     <b-card class="card m-2">

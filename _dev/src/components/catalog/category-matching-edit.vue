@@ -19,22 +19,45 @@
 <template>
   <div v-if="loading" class="page-spinner" />
   <b-card class="card m-2" v-else id="catalogCategoryMatchingEdit">
-    <b-button
-      class="float-left mr-3"
-      variant="outline-secondary"
-      @click="$parent.back"
-    >
-      <i class="material-icons">keyboard_backspace</i>
-      {{ $t('catalogSummary.backButton') }}
-    </b-button>
-    <div class="counter float-right ml-5">
-      <h3>
-        {{matchingProgress.matched}} / {{matchingProgress.total}}
-        <br />
-        <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
-      </h3>
+    <!-- Large screen -->
+    <div class="d-none d-md-block">
+      <b-button
+        class="float-left mr-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
+      </b-button>
+      <div class="counter float-right ml-5">
+        <h3>
+          {{matchingProgress.matched}} / {{matchingProgress.total}}
+          <br />
+          <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
+        </h3>
+      </div>
+      <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
     </div>
-    <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+
+    <!-- Small screen -->
+    <div class="d-block d-md-none">
+      <b-button
+        class="w-auto mb-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
+      </b-button>
+      <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+      <div class="counter">
+        <h3>
+          {{matchingProgress.matched}} / {{matchingProgress.total}}
+          <br />
+          <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
+        </h3>
+      </div>
+    </div>
 
     <p class="py-3">
       {{ $t('categoryMatching.intro') }}
@@ -103,8 +126,9 @@ export default defineComponent({
   }
 
   .counter {
-    text-align: right;
-
+    &.float-right {
+      text-align: right;
+    }
     & > h3 {
       color: #CD9321;
       line-height: 1;
