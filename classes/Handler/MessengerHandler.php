@@ -30,7 +30,7 @@ class MessengerHandler
     {
         return [
             'ps_facebook_messenger_api_version' => Config::API_VERSION,
-            'ps_facebook_messenger_app_id' => Config::APP_ID,
+            'ps_facebook_messenger_app_id' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'ps_facebook_messenger_page_id' => $this->pageId,
         ];
     }
