@@ -4,21 +4,21 @@
       <b-card-body>
         <div class="d-flex">
           <img
-            class="mr-2 align-self-center logo"
-            :src="image"
-            width="50"
+            class="mr-2 align-self-center logo d-none d-md-block"
+            :src="require(`../../assets/${name}.png`)"
+            width="80"
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
-              {{ $t(`integrate.features.${featureName}.name`) }}
+              {{ $t(`integrate.features.${name}.name`) }}
             </h3>
             <p class="small-text text-muted">
-              {{ $t(`integrate.features.${featureName}.description`) }}
+              {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
           <a
             class="align-self-center"
-            :href="featureManageRoute"
+            :href="manageRoute"
             target="_blank"
           >
             <b-button
@@ -35,16 +35,13 @@
 </template>
 
 <script>
-export default {
+import {defineComponent} from '@vue/composition-api';
+
+export default defineComponent({
   name: 'DisabledFeature',
   mixins: [],
   props: {
     name: {
-      type: String,
-      required: false,
-      default: () => '',
-    },
-    image: {
       type: String,
       required: false,
       default: () => '',
@@ -55,14 +52,7 @@ export default {
       default: () => global.facebookManageFeaturesRoute,
     },
   },
-  data() {
-    return {
-      featureName: this.name,
-      featureImage: this.image,
-      featureManageRoute: this.manageRoute,
-    };
-  },
-};
+});
 </script>
 
 <style lang="scss" scoped>

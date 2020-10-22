@@ -7,10 +7,10 @@
             <h3>
               <img
                 class="mr-1"
-                :src="image"
-                width="50"
+                :src="require(`@/assets/${name}.png`)"
+                width="40"
               >
-              {{ $t(`integrate.features.${featureName}.name`) }}
+              {{ $t(`integrate.features.${name}.name`) }}
             </h3>
           </div>
         </div>
@@ -30,17 +30,6 @@ export default {
       required: false,
       default: () => '',
     },
-    image: {
-      type: String,
-      required: false,
-      default: () => '',
-    },
-  },
-  data() {
-    return {
-      featureName: this.name,
-      featureImage: this.image,
-    };
   },
 };
 </script>

@@ -28,7 +28,6 @@
           <app-item
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
-            :image="properties.image"
             :key="featureName"
           />
         </feature-list>
@@ -45,7 +44,6 @@
           <disabled-feature
             v-for="(properties, featureName) in dynamicDisabledFeatures"
             :name="featureName"
-            :image="properties.image"
             :key="featureName"
           />
         </feature-list>
@@ -63,7 +61,6 @@
           <unavailable-feature
             v-for="(properties, featureName) in dynamicUnavailableFeatures"
             :name="featureName"
-            :image="properties.image"
             :key="featureName"
           />
         </feature-list>
@@ -73,6 +70,7 @@
 </template>
 
 <script>
+import {defineComponent} from '@vue/composition-api';
 import FeatureList from '../components/features/feature-list.vue';
 import AppItem from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
@@ -80,7 +78,7 @@ import DisabledFeature from '../components/features/disabled-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
 import ProductsNotSyncedWarning from '../components/features/products-not-synced-warning.vue';
 
-export default {
+export default defineComponent({
   name: 'Integrate',
   components: {
     ProductsNotSyncedWarning,
@@ -140,7 +138,7 @@ export default {
         });
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

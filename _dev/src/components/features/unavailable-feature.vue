@@ -4,23 +4,23 @@
       <b-card-body>
         <div class="d-flex">
           <img
-            class="mr-2 align-self-center logo"
-            :src="image"
-            width="50"
+            class="mr-2 align-self-center logo d-none d-md-block"
+            :src="require(`@/assets/${name}_disabled.png`)"
+            width="80"
           >
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
-              {{ $t(`integrate.features.${featureName}.name`) }}
+              {{ $t(`integrate.features.${name}.name`) }}
             </h3>
             <p class="small-text text-muted">
-              {{ $t(`integrate.features.${featureName}.description`) }}
+              {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
           <b-button
             variant="disabled"
             class="ml-4 align-self-center"
           >
-            {{ $t('integrate.add') }}
+            {{ $t('integrate.buttons.add') }}
           </b-button>
         </div>
       </b-card-body>
@@ -29,28 +29,19 @@
 </template>
 
 <script>
-export default {
-  name: 'UnavailableFeature',
+import {defineComponent} from '@vue/composition-api';
+
+export default defineComponent({
   mixins: [],
+  name: 'UnavailableFeature',
   props: {
     name: {
       type: String,
       required: false,
       default: () => '',
     },
-    image: {
-      type: String,
-      required: false,
-      default: () => '',
-    },
   },
-  data() {
-    return {
-      featureName: this.name,
-      featureImage: this.image,
-    };
-  },
-};
+});
 </script>
 
 <style lang="scss" scoped>
