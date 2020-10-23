@@ -22,7 +22,7 @@
       "messages": {
         "success": "PrestaShop Facebook is now activated!",
         "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
-        "syncCatalogButton": "Sync product",
+        "syncCatalogButton": "Match categories",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
       },
@@ -44,7 +44,8 @@
           "facebookPage": "Facebook Page",
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
-          "facebookAdsTooltip": "Facebook Ads"
+          "facebookAdsTooltip": "Facebook Ads",
+          "manageFbeButton": "Manage"
         }
       },
       "app": {
@@ -53,7 +54,8 @@
         "createdAt": "Created",
         "lastActive": "Last active",
         "activated": "Activated",
-        "disabled": "Disabled"
+        "disabled": "Disabled",
+        "viewStats": "View stats"
       },
       "glass": {
         "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",

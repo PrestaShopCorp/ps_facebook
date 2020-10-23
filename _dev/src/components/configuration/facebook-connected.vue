@@ -74,20 +74,18 @@
         </span>
       </div>
 
-      <b-link
-        :href="fbeUrl"
+      <b-dropdown
+        variant="primary"
+        split right
+        :text="$t('configuration.facebook.connected.manageFbeButton')"
+        @click="openManageFbe"
         class="ml-4 float-right"
       >
-        [Go to FBE]
-      </b-link>
-
-      <b-button
-        variant="outline-secondary"
-        @click="edit"
-        class="ml-4"
-      >
-        {{ $t('configuration.facebook.connected.editButton') }}
-      </b-button>
+        <b-dropdown-item @click="edit">
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </b-dropdown-item>
+        <b-dropdown-item disabled>Unlink</b-dropdown-item>
+      </b-dropdown>
     </b-card-body>
 
     <!-- Small screen -->
@@ -101,20 +99,18 @@
         alt="colors"
       >
 
-      <b-link
-        :href="fbeUrl"
+      <b-dropdown
+        variant="primary"
+        split right
+        :text="$t('configuration.facebook.connected.manageFbeButton')"
+        @click="openManageFbe"
         class="ml-4 float-right"
       >
-        [Go to FBE]
-      </b-link>
-
-      <b-button
-        variant="outline-secondary"
-        @click="edit"
-        class="ml-4 float-right"
-      >
-        {{ $t('configuration.facebook.connected.editButton') }}
-      </b-button>
+        <b-dropdown-item @click="edit">
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </b-dropdown-item>
+        <b-dropdown-item disabled>Unlink</b-dropdown-item>
+      </b-dropdown>
 
       <div v-if="!!contextPsFacebook">
         {{ $t('configuration.facebook.connected.description') }}
@@ -217,7 +213,8 @@ import {
   BContainer,
   BRow,
   BCol,
-  BLink,
+  BDropdown,
+  BDropdownItem,
 } from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 import facebookLogo from '../../assets/facebook_logo.svg';
@@ -236,7 +233,8 @@ export default defineComponent({
     BRow,
     BCol,
     BCardHeader,
-    BLink,
+    BDropdown,
+    BDropdownItem,
   },
   props: {
     psFacebookAppId: {
@@ -299,6 +297,9 @@ export default defineComponent({
     pixelActivation(activated: boolean) {
       this.$emit('onPixelActivation', activated);
     },
+    openManageFbe() {
+      window.open(this.fbeUrl, '_blank');
+    },
   },
 });
 </script>
@@ -309,7 +310,7 @@ export default defineComponent({
     flex-direction: row;
     align-items: flex-start;
 
-    > div {
+    > div:first-of-type {
       flex-grow: 1;
       flex-shrink: 1;
 
