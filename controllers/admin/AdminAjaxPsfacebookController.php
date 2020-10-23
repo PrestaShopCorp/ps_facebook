@@ -217,6 +217,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxUpdateFeature()
     {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
         $facebookClient = new FacebookClient(
             Configuration::get(Config::FB_ACCESS_TOKEN),
             Config::API_VERSION,
@@ -228,11 +230,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $facebookClient
         );
 
+        $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
+
         $this->ajaxDie(
             json_encode(
-                [
-                    'success' => 1,
-                ]
+                $response
             )
         );
     }

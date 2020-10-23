@@ -23,20 +23,26 @@ class FbeFeatureManager
         $this->facebookClient = $facebookClient;
     }
 
-    public function enableFeature($featureName)
+    /**
+     * @param string $featureName
+     * @param bool $state
+     * @return false
+     */
+    public function updateFeature($featureName, $state)
     {
         $featureConfiguration = $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName);
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         if (!$featureConfiguration) {
             return false;
         }
 
         $featureConfiguration = json_decode($featureConfiguration);
-        $featureConfiguration['enabled'] = true;
+        $featureConfiguration->enabled = (bool) $state;
         $configuration = [
             $featureName => $featureConfiguration,
         ];
 
-        $this->facebookClient->updateFeature();
+        return $this->facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
     }
 }

@@ -91,13 +91,16 @@ export default defineComponent({
       fetch(this.updateFeatureRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({featureName: this.name, enabled: this.active}),
+        body: JSON.stringify({featureName: this.name, enabled: this.switchActivated}),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
         return res.json();
       }).then((res) => {
+        if (res.success === 1) {
+          alert('SUCCESS');
+        }
         this.isLoading = false;
       }).catch((error) => {
         console.error(error);

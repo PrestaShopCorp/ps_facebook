@@ -135,9 +135,17 @@ class FacebookClient
         );
     }
 
-    public function updateFeature($externalBusinessId)
+    public function updateFeature($externalBusinessId, $configuration)
     {
-
+        $body = [
+            'fbe_external_business_id' => $externalBusinessId,
+            'business_config' => $configuration
+        ];
+        return $this->post(
+            'fbe_business',
+            [],
+            $body
+        );
     }
 
     /**
@@ -181,22 +189,22 @@ class FacebookClient
      *
      * @return false|array
      */
-    public function post($id, array $fields = [], array $query = [])
+    public function post($id, array $headers = [], array $body = [])
     {
-        $query = array_merge(
-            [
-                'access_token' => $this->accessToken,
-                'fields' => implode(',', $fields),
-            ],
-            $query
-        );
+        $options = [
+            'headers' => $headers,
+            'body' => array_merge(
+                [
+                    'access_token' => $this->accessToken,
+                ],
+                $body
+            ),
+        ];
 
         try {
             $response = $this->client->post(
                 self::API_URL . "/{$this->sdkVersion}/{$id}",
-                [
-                    'query' => $query,
-                ]
+                $options
             );
         } catch (Exception $e) {
             return false;
