@@ -189,8 +189,10 @@ export default defineComponent({
       this.currentSubcategoryId = subcategoryId;
       this.currentSubcategoryName = subcategoryName;
       const result = {
-        id: subcategoryId,
-        name: subcategoryName,
+        shopCategoryId: this.shopCategoryId,
+        fbCategoryId: this.currentCategoryId,
+        fbSubcategoryId: subcategoryId,
+        fbSubcategoryName: subcategoryName,
         propagate: !!this.currentPropagation,
       };
       this.$emit('onCategoryMatched', result);

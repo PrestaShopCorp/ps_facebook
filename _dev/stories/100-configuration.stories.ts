@@ -100,8 +100,9 @@ FullConnected.args = {
       email: 'fanchonette@ps.com',
       createdAt: Date.now(),
     },
-    categoriesMatching: {
-      sent: false,
+    catalog: {
+      categoryMatchingStarted: false,
+      productSyncStarted: false,
     },
   },
   psFacebookAppId: '1234567890',

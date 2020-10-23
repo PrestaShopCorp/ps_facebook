@@ -50,10 +50,12 @@ export default defineComponent({
     },
   },
   data() {
+    const forcePage = (this.$route.query && this.$route.query.page) || this.forcePage;
+    window.location.hash = '/catalog'; // consume forcePage query
     return {
       PAGES,
-      currentPage: this.forcePage || PAGES.summary,
-      historyStack: (this.forcePage && this.forcePage !== PAGES.summary)
+      currentPage: forcePage || PAGES.summary,
+      historyStack: (forcePage && forcePage !== PAGES.summary)
         ? [PAGES.summary, this.forcePage]
         : [PAGES.summary],
     };

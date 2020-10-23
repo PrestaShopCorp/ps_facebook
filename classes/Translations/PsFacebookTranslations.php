@@ -83,7 +83,11 @@ class PsFacebookTranslations
                 ],
                 'messages' => [
                     'success' => $this->module->l('PrestaShop Facebook is now activated!', 'PsFacebookTranslations'),
-                    'syncCatalogAdvice' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
+                    'syncCatalogAdvice' => $this->module->l('One more thing: Match your categories and import your product catalog to set up Facebook Shop, Instagram Shopping and create ad campaigns.', 'PsFacebookTranslations'),
+                    'stepPsAccount' => $this->module->l('Connect your PrestaShop account', 'PsFacebookTranslations'),
+                    'stepPsFacebook' => $this->module->l('Connect your store to Facebook', 'PsFacebookTranslations'),
+                    'stepCategoryMatching' => $this->module->l('Match categories', 'PsFacebookTranslations'),
+                    'stepProductSync' => $this->module->l('Import your product catalog', 'PsFacebookTranslations'),
                     'syncCatalogButton' => $this->module->l('Match categories', 'PsFacebookTranslations'),
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
@@ -98,7 +102,7 @@ class PsFacebookTranslations
                     ],
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
-                        'editButton' => $this->module->l('Edit', 'PsFacebookTranslations'),
+                        'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookPixel' => $this->module->l('Facebook Pixel', 'PsFacebookTranslations'),
@@ -107,7 +111,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Facebook Page', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
-                        'manageFbeButton' => $this->module->l('Manage', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Advanced settings', 'PsFacebookTranslations'),
                     ],
                 ],
                 'app' => [
