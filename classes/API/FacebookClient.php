@@ -126,13 +126,18 @@ class FacebookClient
 
     public function getFbeFeatures($externalBusinessId)
     {
-        return $this->call(
+        return $this->get(
             '/fbe_business',
             [],
             [
                 'fbe_external_business_id' => $externalBusinessId,
             ]
         );
+    }
+
+    public function updateFeature($externalBusinessId)
+    {
+
     }
 
     /**
@@ -162,6 +167,37 @@ class FacebookClient
             );
 
             $response = $this->client->send($request);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param int|string $id
+     * @param array $fields
+     * @param array $query
+     *
+     * @return false|array
+     */
+    public function post($id, array $fields = [], array $query = [])
+    {
+        $query = array_merge(
+            [
+                'access_token' => $this->accessToken,
+                'fields' => implode(',', $fields),
+            ],
+            $query
+        );
+
+        try {
+            $response = $this->client->post(
+                self::API_URL . "/{$this->sdkVersion}/{$id}",
+                [
+                    'query' => $query,
+                ]
+            );
         } catch (Exception $e) {
             return false;
         }

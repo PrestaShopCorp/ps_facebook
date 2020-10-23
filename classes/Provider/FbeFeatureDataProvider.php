@@ -2,7 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use Configuration;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
@@ -12,15 +12,21 @@ class FbeFeatureDataProvider
      * @var FacebookClient
      */
     private $facebookClient;
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
 
-    public function __construct(FacebookClient $facebookClient)
+    public function __construct(FacebookClient $facebookClient, ConfigurationAdapter $configurationAdapter)
     {
         $this->facebookClient = $facebookClient;
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     public function getFbeFeatures()
     {
-        $features = $this->facebookClient->getFbeFeatures(Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $features = $this->facebookClient->getFbeFeatures($externalBusinessId);
         $unavailableFeatures = [];
 
         //TODO: Implement check if products are synchronized
@@ -34,13 +40,19 @@ class FbeFeatureDataProvider
             return in_array($key, Config::AVAILABLE_FBE_FEATURES);
         }, ARRAY_FILTER_USE_KEY);
 
-        $enabledFeatures = array_filter($features, function ($feature) {
-            return $feature['enabled'];
-        });
+        foreach ($features as $featureName => $feature) {
+            if ($feature['enabled']) {
+                $this->configurationAdapter->updateValue(Config::FBE_FEATURE_CONFIGURATION . $featureName, json_encode($feature));
+            }
+        }
 
-        $disabledFeatures = array_filter($features, function ($feature) {
-            return !$feature['enabled'];
-        });
+        $enabledFeatures = array_filter($features, function ($featureName) {
+            return $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) !== false;
+        }, ARRAY_FILTER_USE_KEY);
+
+        $disabledFeatures = array_filter($features, function ($featureName) {
+            return $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) === false;
+        }, ARRAY_FILTER_USE_KEY);
 
         if (!$productsSynced) {
             $unavailableFeatures = array_filter($features, function ($key) {
@@ -55,7 +67,6 @@ class FbeFeatureDataProvider
         return [
             'enabledFeatures' => $enabledFeatures,
             'disabledFeatures' => $disabledFeatures,
-            //TODO: make check if products are synced to know if some features can be enabled
             'unavailableFeatures' => $unavailableFeatures,
         ];
     }

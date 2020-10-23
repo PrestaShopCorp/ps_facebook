@@ -17,6 +17,7 @@
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
@@ -198,7 +199,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             new Client()
         );
 
-        $fbeFeatureDataProvider = new FbeFeatureDataProvider($facebookClient);
+        $fbeFeatureDataProvider = new FbeFeatureDataProvider($facebookClient , new ConfigurationAdapter());
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
 
@@ -206,6 +207,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'fbeFeatures' => $fbeFeatures,
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxUpdateFeature()
+    {
+        $facebookClient = new FacebookClient(
+            Configuration::get(Config::FB_ACCESS_TOKEN),
+            Config::API_VERSION,
+            new Client()
+        );
+
+        $featureManager = new FbeFeatureManager(
+            new ConfigurationAdapter(),
+            $facebookClient
+        );
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => 1,
                 ]
             )
         );

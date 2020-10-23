@@ -25,10 +25,11 @@
         v-if="dynamicEnabledFeatures"
       >
         <feature-list>
-          <app-item
+          <enabled-feature
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
             :key="featureName"
+            v-bind:active="properties.enabled"
           />
         </feature-list>
       </div>
@@ -72,7 +73,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import FeatureList from '../components/features/feature-list.vue';
-import AppItem from '../components/features/enabled-feature.vue';
+import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import DisabledFeature from '../components/features/disabled-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
@@ -83,7 +84,7 @@ export default defineComponent({
   components: {
     ProductsNotSyncedWarning,
     Spinner,
-    AppItem,
+    EnabledFeature,
     FeatureList,
     UnavailableFeature,
     DisabledFeature,

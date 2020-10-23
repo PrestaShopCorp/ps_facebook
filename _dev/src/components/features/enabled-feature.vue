@@ -34,9 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="d-flex">
-          content
-        </div>
+        <div class="d-flex" />
       </b-card-body>
     </b-card>
   </li>
@@ -56,28 +54,59 @@ export default defineComponent({
   props: {
     name: {
       type: String,
-      required: false,
+      required: true,
       default: () => '',
     },
-    activationSwitch: {
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+    loading: {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
+    },
+    updateFeatureRoute: {
+      type: String,
+      required: false,
+      default: global.psFacebookUpdateFeatureRoute,
     },
   },
   data() {
     return {
-      switchActivated: this.activationSwitch,
+      switchActivated: this.active,
+      isLoading: this.loading,
     };
   },
   methods: {
     switchClick() {
-      this.switchActivated = !this.switchActivated;
-      this.$emit('onActivation', this.switchActivated);
+      if (!this.isLoading) {
+        this.isLoading = true;
+        this.switchActivated = !this.switchActivated;
+        this.updateFeatureState();
+      }
+    },
+    updateFeatureState() {
+      fetch(this.updateFeatureRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({featureName: this.name, enabled: this.active}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        this.isLoading = false;
+      }).catch((error) => {
+        console.error(error);
+        this.error = 'configuration.messages.unknownOnboardingError';
+      });
     },
   },
   watch: {
-    activationSwitch(newValue) {
+    active(newValue) {
       this.switchActivated = newValue;
     },
   },
