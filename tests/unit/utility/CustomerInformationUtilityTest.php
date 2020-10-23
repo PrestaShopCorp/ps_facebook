@@ -83,7 +83,7 @@ class CustomerInformationUtilityTest extends TestCase
                     'lastname' => strtolower($lastName),
                     'email' => strtolower($email),
                     'countryIso' => 'lv',
-                    'postCode' => 'LV-3003',
+                    'postCode' => '3003',
                     'stateIso' => '',
                 ],
             ],

@@ -43,7 +43,6 @@ abstract class BaseEvent
     {
         $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
-        // data structured for pixel
         return [
             'ct' => $customerInformation['city'],
             'country' => $customerInformation['countryIso'],

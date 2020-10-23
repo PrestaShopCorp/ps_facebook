@@ -15,7 +15,10 @@ class CustomerInformationUtility
             $address = reset($simpleAddresses);
             $arrayReturned['city'] = $address['city'] ? strtolower($address['city']) : null;
             $arrayReturned['countryIso'] = $address['country_iso'] ? strtolower($address['country_iso']) : null;
-            $arrayReturned['postCode'] = $address['postcode'] ?: null;
+
+            $arrayReturned['postCode'] = $address['postcode'] ?
+                preg_replace('/[^0-9.]+/', '', $address['postcode'])
+                : null;
 
             $arrayReturned['phone'] = $address['phone'] ?
                 preg_replace('/[^0-9.]+/', '', $address['phone'])
