@@ -129,22 +129,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             }
         }
 
-        /*
-        * Triggers InitiateCheckout for checkout page
-         * //todo: its triggered in cart page not in checkout
-        */
-        if ($page === 'cart' && \Tools::getValue('action') === 'show') {
-            $type = 'InitiateCheckout';
-
-            $content = [
-                'num_items' => $this->context->cart->nbProducts(),
-                'content_ids' => array_column($this->context->cart->getProducts(), 'id_product'),
-                'content_type' => $content_type,
-                'value' => (float) $this->context->cart->getOrderTotal(false),
-                'currency' => $currency_iso_code,
-            ];
-        }
-
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
@@ -156,7 +140,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         ];
 
         if ($this->context->customer->id) {
-            $smartyVariables['userInfos'] = $this->getCustomerInformations();
+            $smartyVariables['userInfos'] = $this->getCustomerInformation();
         }
 
         $this->context->smarty->assign($smartyVariables);

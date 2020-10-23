@@ -9,7 +9,7 @@ class ShopSubscriptionEvent extends AbstractEvent
 {
     public function send($params)
     {
-        $user = $this->createSdkUserData($this->context);
+        $user = $this->createSdkUserData();
         $customData = (new CustomData())
             ->setContentName(pSQL($params['email']));
 
@@ -22,6 +22,6 @@ class ShopSubscriptionEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }

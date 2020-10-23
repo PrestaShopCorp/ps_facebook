@@ -33,7 +33,7 @@ class SearchEvent extends BaseEvent implements PixelEventInterface
         ];
 
         if ($this->context->customer->id) {
-            $smartyVariables['userInfos'] = $this->getCustomerInformations();
+            $smartyVariables['userInfos'] = $this->getCustomerInformation();
         }
 
         $this->context->smarty->assign($smartyVariables);

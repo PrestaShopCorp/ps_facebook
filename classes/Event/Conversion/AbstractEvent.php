@@ -2,15 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 
-use Address;
 use Context;
-use Country;
 use FacebookAds\Object\ServerSide\EventRequest;
-use FacebookAds\Object\ServerSide\Gender;
 use FacebookAds\Object\ServerSide\UserData;
-use Gender as PsGender;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
-use State;
+use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
 abstract class AbstractEvent implements ConversionEventInterface
 {
@@ -31,58 +27,43 @@ abstract class AbstractEvent implements ConversionEventInterface
     }
 
     /**
-     * @param Context $context
-     *
      * @return UserData
-     *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
-    protected function createSdkUserData(Context $context)
+    protected function createSdkUserData()
     {
-        $customer = $context->customer;
-        $addressId = Address::getFirstCustomerAddressId($customer->id);
-        $address = new Address($addressId);
-        $gender = null;
-        if ($context->customer->id_gender) {
-            $psGender = new PsGender($context->customer->id_gender, $context->language->id);
-            $gender = (int) $psGender->type === 1 ? Gender::FEMALE : Gender::MALE;
-        }
-        $country = new Country($address->id_country);
+        $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
+        $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 
         $userData = (new UserData())
-            ->setFbc('fb.1.1554763741205.AbCdEfGhIjKlMnOpQrStUvWxYz1234567890')
-            // It is recommended to send Client IP and User Agent for ServerSide API Events.
+            ->setFbp($fbp)
+            ->setFbc($fbc)
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
             ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
-            ->setFbp('fb.1.1558571054389.1098115397')
-            ->setEmail(strtolower($customer->email))
-            ->setFirstName(strtolower($customer->firstname))
-            ->setLastName(strtolower($customer->lastname))
-            ->setPhone(preg_replace('/[^0-9.]+/', '', $address->phone))
-            ->setDateOfBirth(preg_replace('/[^0-9.]+/', '', $customer->birthday))
-            ->setCity(strtolower($address->city))
-            ->setState(strtolower((new State($address->id_state))->iso_code))
-            ->setZipCode(preg_replace('/[^0-9.]+/', '', $address->postcode))
-            ->setCountryCode(strtolower($country->iso_code));
-
-        if ($gender !== null) {
-            $userData->setGender($gender);
-        }
+            ->setEmail($customerInformation['email'])
+            ->setFirstName($customerInformation['firstname'])
+            ->setLastName($customerInformation['lastname'])
+            ->setPhone($customerInformation['phone'])
+            ->setDateOfBirth($customerInformation['birthday'])
+            ->setCity($customerInformation['city'])
+            ->setState($customerInformation['stateIso'])
+            ->setZipCode($customerInformation['postCode'])
+            ->setCountryCode($customerInformation['countryIso'])
+            ->setGender($customerInformation['gender']);
 
         return $userData;
     }
 
-    /**
-     * @param array $events
-     *
-     * @return \FacebookAds\Object\ServerSide\EventResponse
-     */
     protected function sendEvents(array $events)
     {
         $request = (new EventRequest($this->pixelId))
             ->setEvents($events);
 
-        return $request->execute();
+        try {
+            $request->execute();
+        } catch (\Exception $e) {
+            //todo: need to logg exception
+        }
     }
 }

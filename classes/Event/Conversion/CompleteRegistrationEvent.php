@@ -15,7 +15,7 @@ class CompleteRegistrationEvent extends AbstractEvent
 
     public function send($params)
     {
-        $user = $this->createSdkUserData($this->context);
+        $user = $this->createSdkUserData();
         $customData = (new CustomData())
             ->setContentName('Registration');
 
@@ -28,6 +28,6 @@ class CompleteRegistrationEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }

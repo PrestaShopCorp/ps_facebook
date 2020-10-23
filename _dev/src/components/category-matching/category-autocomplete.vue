@@ -32,14 +32,24 @@
     @hidden="afterDropdownHidden"
   >
     <template v-slot:button-content>
-      <template v-if="currentCategoryName">{{ currentCategoryName }}</template>
-      <span v-else class="text-muted select-title">
+      <template v-if="currentCategoryName">
+        {{ currentCategoryName }}
+      </template>
+      <span
+        v-else
+        class="text-muted select-title"
+      >
         {{ $t('categoryMatching.autocomplete.select') }}
       </span>
     </template>
     <b-dropdown-item tabindex="-1">
-      <template v-if="currentCategoryName">{{ currentCategoryName }}</template>
-      <span v-else class="text-muted select-title">
+      <template v-if="currentCategoryName">
+        {{ currentCategoryName }}
+      </template>
+      <span
+        v-else
+        class="text-muted select-title"
+      >
         {{ $t('categoryMatching.autocomplete.select') }}
       </span>
     </b-dropdown-item>
@@ -51,7 +61,10 @@
         :placeholder="$t('categoryMatching.autocomplete.typeToFilter')"
         @input="filterChange"
       />
-      <div v-if="loading" class="spinner" />
+      <div
+        v-if="loading"
+        class="spinner"
+      />
 
       <i v-if="tooManyProposals">{{ $t('categoryMatching.autocomplete.tooManyResults') }}</i>
       <i v-if="fetchError">{{ $t('categoryMatching.autocomplete.fetchError') }}</i>

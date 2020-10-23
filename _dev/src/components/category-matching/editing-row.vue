@@ -18,47 +18,78 @@
  *-->
 <template>
   <b-tr>
-    <b-td><slot/></b-td>
+    <b-td><slot /></b-td>
     <b-td>
       <category-autocomplete
         :language="language"
-        :shopCategoryId="shopCategoryId"
-        :initialCategoryName="currentCategoryName"
-        :initialCategoryId="currentCategoryId"
-        :autocompletionApi="autocompletionApi"
+        :shop-category-id="shopCategoryId"
+        :initial-category-name="currentCategoryName"
+        :initial-category-id="currentCategoryId"
+        :autocompletion-api="autocompletionApi"
         @onCategorySelected="categoryChanged"
       />
     </b-td>
     <b-td>
-      <div v-if="initialPropagation === true || initialPropagation === false" class="propagate">
+      <div
+        v-if="initialPropagation === true || initialPropagation === false"
+        class="propagate"
+      >
         <b-checkbox
           :id="`propagation-${shopCategoryId}`"
           :checked="currentPropagation"
           @change="changePropagation"
-          :disabled="currentCategoryId <= 0 || currentCategoryId === null" />
+          :disabled="currentCategoryId <= 0 || currentCategoryId === null"
+        />
       </div>
     </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
-        :shopCategoryId="shopCategoryId"
-        :initialCategoryName="currentSubcategoryName"
-        :initialCategoryId="currentSubcategoryId"
-        :parentCategoryId="currentCategoryId"
-        :autocompletionApi="autocompletionApi"
+        :shop-category-id="shopCategoryId"
+        :initial-category-name="currentSubcategoryName"
+        :initial-category-id="currentSubcategoryId"
+        :parent-category-id="currentCategoryId"
+        :autocompletion-api="autocompletionApi"
         :disabled="!currentCategoryId"
         @onCategorySelected="subcategoryChanged"
       />
     </b-td>
     <b-td>
-      <div v-if="loading === true" class="spinner" />
-      <div v-if="loading === false" class="saved">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="checkmark__check" fill="none" stroke-width="4" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      <div
+        v-if="loading === true"
+        class="spinner"
+      />
+      <div
+        v-if="loading === false"
+        class="saved"
+      >
+        <svg
+          class="checkmark"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 52 52"
+        >
+          <circle
+            class="checkmark__circle"
+            cx="26"
+            cy="26"
+            r="25"
+            fill="none"
+          />
+          <path
+            class="checkmark__check"
+            fill="none"
+            stroke-width="4"
+            d="M14.1 27.2l7.1 7.2 16.7-16.8"
+          />
         </svg>
       </div>
-      <div v-if="error" class="error" :title="error"><i class="material-icons">error</i></div>
+      <div
+        v-if="error"
+        class="error"
+        :title="error"
+      >
+        <i class="material-icons">error</i>
+      </div>
     </b-td>
   </b-tr>
 </template>

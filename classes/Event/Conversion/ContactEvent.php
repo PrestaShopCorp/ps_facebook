@@ -8,7 +8,7 @@ class ContactEvent extends AbstractEvent
 {
     public function send($params)
     {
-        $user = $this->createSdkUserData($this->context);
+        $user = $this->createSdkUserData();
 
         $event = (new Event())
             ->setEventName('Contact')
@@ -18,6 +18,6 @@ class ContactEvent extends AbstractEvent
         $events = [];
         $events[] = $event;
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }
