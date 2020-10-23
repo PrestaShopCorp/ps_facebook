@@ -40,7 +40,7 @@
 
     <div
       v-if="activationSwitch != null"
-      class="float-right mb-3 mt-2 ml-2"
+      class="switchy float-right mb-1 ml-2"
     >
       <span class="d-none d-sm-inline">
         {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
@@ -78,12 +78,6 @@
       {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
     </div>
     <div
-      v-if="!!url"
-      class="small"
-    >
-      <b-link :href="url">[GO to Pixel dashboard]</b-link>
-    </div>
-    <div
       v-if="!!createdAt"
       class="small"
     >
@@ -96,6 +90,16 @@
     >
       {{ $t('configuration.app.lastActive') }}
       {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+    </div>
+
+    <div
+      v-if="!!url"
+      class="url"
+    >
+      <b-link :href="url" target="_blank">
+        <i class="material-icons">analytics</i>
+        {{ $t('configuration.app.viewStats') }}
+      </b-link>
     </div>
   </div>
 </template>
@@ -195,6 +199,15 @@ export default defineComponent({
     .logo {
       width: 32px;
       height: 32px;
+    }
+
+    .url {
+      margin-top: 0.5rem;
+      margin-bottom: -0.3rem;
+    }
+
+    .switchy {
+      margin-top: 2.5rem;
     }
   }
 </style>

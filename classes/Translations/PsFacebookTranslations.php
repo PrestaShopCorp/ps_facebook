@@ -84,7 +84,7 @@ class PsFacebookTranslations
                 'messages' => [
                     'success' => $this->module->l('PrestaShop Facebook is now activated!', 'PsFacebookTranslations'),
                     'syncCatalogAdvice' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
-                    'syncCatalogButton' => $this->module->l('Sync product', 'PsFacebookTranslations'),
+                    'syncCatalogButton' => $this->module->l('Match categories', 'PsFacebookTranslations'),
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                 ],
@@ -107,6 +107,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Facebook Page', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Manage', 'PsFacebookTranslations'),
                     ],
                 ],
                 'app' => [
@@ -116,6 +117,7 @@ class PsFacebookTranslations
                     'lastActive' => $this->module->l('Last active', 'PsFacebookTranslations'),
                     'activated' => $this->module->l('Activated', 'PsFacebookTranslations'),
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
+                    'viewStats' => $this->module->l('View stats', 'PsFacebookTranslations'),
                 ],
                 'glass' => [
                     'text' => $this->module->l('You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.', 'PsFacebookTranslations'),
