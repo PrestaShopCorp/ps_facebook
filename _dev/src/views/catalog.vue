@@ -51,12 +51,16 @@ export default defineComponent({
   },
   data() {
     const forcePage = (this.$route.query && this.$route.query.page) || this.forcePage;
-    window.location.hash = '/catalog'; // consume forcePage query
+    if (forcePage) { // consumes query if any, to let history clean
+      const replacement = new URL(window.location);
+      replacement.hash = '/catalog';
+      window.location.replace(replacement.toString());
+    }
     return {
       PAGES,
       currentPage: forcePage || PAGES.summary,
       historyStack: (forcePage && forcePage !== PAGES.summary)
-        ? [PAGES.summary, this.forcePage]
+        ? [this.forcePage]
         : [PAGES.summary],
     };
   },
@@ -73,6 +77,8 @@ export default defineComponent({
       if (this.historyStack.length > 1) {
         this.historyStack.pop();
         this.currentPage = this.historyStack[this.historyStack.length - 1];
+      } else {
+        window.history.back();
       }
     },
   },

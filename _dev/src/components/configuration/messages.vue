@@ -43,124 +43,12 @@
       </p>
     </b-alert>
 
-    <b-card class="card" v-if="showSyncCatalogAdvice">
-      <div class="illustration float-left d-none d-md-block">
-        <img
-          :src="illustration2"
-          width="271"
-          height="194"
-          alt="background illustration"
-        >
-      </div>
-
-      <div class="title px-3">
-        <h3>{{ $t('configuration.messages.syncCatalogAdvice') }}</h3>
-
-        <div class="mb-2">
-          <b-iconstack
-            font-scale="1.5"
-            class="mr-2 align-bottom fixed-size"
-            width="20"
-            height="20"
-          >
-            <b-icon-circle-fill
-              stacked
-              variant="success"
-            />
-            <b-icon-check
-              stacked
-              variant="white"
-            />
-          </b-iconstack>
-          {{ $t('configuration.messages.stepPsAccount') }}
-        </div>
-
-        <div class="mb-2">
-          <b-iconstack
-            font-scale="1.5"
-            class="mr-2 align-bottom fixed-size"
-            width="20"
-            height="20"
-          >
-            <b-icon-circle-fill
-              stacked
-              variant="success"
-            />
-            <b-icon-check
-              stacked
-              variant="white"
-            />
-          </b-iconstack>
-          {{ $t('configuration.messages.stepPsFacebook') }}
-        </div>
-
-        <div class="mb-2">
-          <b-iconstack v-if="categoryMatchingStarted"
-            font-scale="1.5"
-            class="mr-2 align-bottom fixed-size"
-            width="20"
-            height="20"
-          >
-            <b-icon-circle-fill
-              stacked
-              variant="success"
-            />
-            <b-icon-check
-              stacked
-              variant="white"
-            />
-          </b-iconstack>
-          <b-icon-circle-fill
-            v-else
-            font-scale="1.5"
-            class="mr-2 align-bottom fixed-size"
-            width="20"
-            height="20"
-            variant="secondary"
-          />
-          <span :class="!categoryMatchingStarted && 'bold'">
-            {{ $t('configuration.messages.stepCategoryMatching') }}
-          </span>
-        </div>
-
-        <div class="mb-2">
-          <b-iconstack v-if="productSyncStarted"
-                       font-scale="1.5"
-                       class="mr-2 align-bottom fixed-size"
-                       width="20"
-                       height="20"
-          >
-            <b-icon-circle-fill
-              stacked
-              variant="success"
-            />
-            <b-icon-check
-              stacked
-              variant="white"
-            />
-          </b-iconstack>
-          <b-icon-circle-fill
-            v-else
-            font-scale="1.5"
-            class="mr-2 align-bottom fixed-size"
-            width="20"
-            height="20"
-            variant="secondary"
-          />
-          <span :class="!productSyncStarted && 'bold'">
-            {{ $t('configuration.messages.stepProductSync') }}
-          </span>
-        </div>
-
-        <b-button
-          variant="primary"
-          class="mt-2"
-          @click="onSyncCatalogAdviceClick"
-        >
-          {{ $t('configuration.messages.syncCatalogButton') }}
-        </b-button>
-      </div>
-    </b-card>
+    <stepper
+      v-if="showSyncCatalogAdvice"
+      :categoryMatchingStarted="categoryMatchingStarted"
+      :productSyncStarted="productSyncStarted"
+      @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+    />
   </div>
 </template>
 
@@ -169,22 +57,15 @@ import {defineComponent} from '@vue/composition-api';
 import {
   BAlert,
   BButton,
-  BCard,
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
 } from 'bootstrap-vue';
-import illustration2 from '../../assets/illustration2.png';
+import Stepper from './stepper.vue';
 
 export default defineComponent({
   name: 'Messages',
   components: {
     BAlert,
     BButton,
-    BCard,
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
+    Stepper,
   },
   props: {
     showOnboardSucceeded: {
@@ -213,11 +94,6 @@ export default defineComponent({
       default: null,
     },
   },
-  data() {
-    return {
-      illustration2,
-    };
-  },
   methods: {
     onSyncCatalogAdviceClick() {
       this.$emit('onSyncCatalogAdviceClick');
@@ -228,31 +104,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .card {
-    border: none;
-    border-radius: 3px;
-    overflow: hidden;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1);
-
-    & .title {
-      display: flow-root;
-
-      & > h3 {
-        font-weight: 600;
-        line-height: 1.5em;
-      }
-    }
-
-    & .bold {
-      font-weight: 600;
-    }
-  }
-
-  .illustration > img {
-    position: relative;
-    left: calc(-1.25rem - 2px);
-    top: calc(-1.25rem - 2px);
-  }
-</style>
