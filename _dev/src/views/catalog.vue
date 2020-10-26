@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="catalog">
+  <div id="catalog" class="ps-facebook-catalog-tab">
     <catalog-summary v-if="currentPage === PAGES.summary" />
     <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
     <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />
@@ -84,3 +84,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+  .ps-facebook-catalog-tab {
+    div.card {
+      border: none !important;
+      border-radius: 3px;
+    }
+  }
+</style>

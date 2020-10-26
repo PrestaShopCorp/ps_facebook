@@ -18,7 +18,7 @@
  *-->
 <template>
   <div v-if="loading" class="page-spinner" />
-  <b-card class="card m-2" v-else id="catalogCategoryMatchingEdit">
+  <b-card class="card m-3" v-else id="catalogCategoryMatchingEdit">
     <!-- Large screen -->
     <div class="d-none d-md-block">
       <b-button

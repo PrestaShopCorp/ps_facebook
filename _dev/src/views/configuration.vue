@@ -29,7 +29,7 @@
     <introduction
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
-      class="m-4"
+      class="m-3"
     />
     <template v-else>
       <messages
@@ -39,22 +39,22 @@
         :product-sync-started="productSyncStarted"
         :error="error"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
-        class="m-4"
+        class="m-3"
       />
       <ps-accounts
         :context="contextPsAccounts"
-        class="m-4"
+        class="m-3"
       />
 
       <no-config
         v-if="!psAccountsOnboarded"
-        class="m-4"
+        class="m-3"
       />
       <template v-else>
         <facebook-not-connected
           v-if="!facebookConnected"
           @onFbeOnboardClick="onFbeOnboardClick"
-          class="m-4"
+          class="m-3"
         />
         <facebook-connected
           v-else
@@ -63,7 +63,7 @@
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
-          class="m-4"
+          class="m-3"
         />
         <div
           v-if="showGlass"

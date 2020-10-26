@@ -70,8 +70,15 @@
       "categoryMatching": "Category matching",
       "categoryMatchingIntro": "Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.",
       "matchCategoriesButton": "Match categories",
+      "productCatalogExport": "Product catalog export",
+      "exportCatalogButton": "Export catalog",
+      "catalogExportWarning": "Only products from matched categories are synced.",
+      "catalogExportIntro": "To sell and advertise your products on Facebook and Instagram, you need to export your product catalog.",
+      "reportingTitle": "Product sync report",
+      "reportingIntro": "Only products from matched categories are synced.",
       "viewButton": "View",
-      "backButton": "Back"
+      "backButton": "Back",
+      "detailsButton": "See details"
     },
     "categoryMatching": {
       "intro": "Match your own categories with official Facebook categories to improve catalog quality and ad performance.",
