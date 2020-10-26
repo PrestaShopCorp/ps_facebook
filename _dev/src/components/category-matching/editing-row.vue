@@ -18,7 +18,9 @@
  *-->
 <template>
   <b-tr>
-    <b-td><slot /></b-td>
+    <b-td @click="getCurrentRow(shopCategoryId)">
+      <slot />
+    </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
@@ -171,6 +173,9 @@ export default defineComponent({
     changePropagation(checked) {
       this.currentPropagation = checked;
     },
+    getCurrentRow(categoryID) {
+      this.$emit('rowClicked', categoryID);
+    },
     categoryChanged(categoryId, categoryName) {
       if (this.currentCategoryId !== categoryId) {
         this.currentCategoryId = categoryId;
@@ -207,6 +212,7 @@ export default defineComponent({
         });
     },
   },
+
 });
 </script>
 <style lang="scss" scoped>
