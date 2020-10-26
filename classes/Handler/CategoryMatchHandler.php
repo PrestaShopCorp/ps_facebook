@@ -29,10 +29,8 @@ class CategoryMatchHandler
         if ($updateChildren) {
             $category = new Category($categoryId);
             $categoryChildrenIds = $category->getAllChildren();
-            $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId);
             $this->googleCategoryRepository->updateCategoryChildrenMatch($categoryChildrenIds, $googleCategoryId);
-        } else {
-            $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId);
         }
+        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId);
     }
 }

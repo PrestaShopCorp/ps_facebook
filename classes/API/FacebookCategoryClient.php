@@ -27,7 +27,7 @@ class FacebookCategoryClient
     }
 
     /**
-     * @param $categoryId
+     * @param int $categoryId
      *
      * @return array|null
      */

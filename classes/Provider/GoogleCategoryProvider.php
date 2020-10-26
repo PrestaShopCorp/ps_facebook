@@ -16,6 +16,11 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
         $this->facebookCategoryClient = $facebookCategoryClient;
     }
 
+    /**
+     * @param int $categoryId
+     *
+     * @return array|null
+     */
     public function getGoogleCategory($categoryId)
     {
         return $this->facebookCategoryClient->getGoogleCategory($categoryId);
