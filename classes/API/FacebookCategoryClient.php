@@ -35,10 +35,16 @@ class FacebookCategoryClient
     {
         $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
 
-        return $this->call('taxonomy/' . $googleCategoryId);
+        $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
+
+        if (!is_array($googleCategory)) {
+            return null;
+        }
+
+        return reset($googleCategory);
     }
 
-    protected function call($id, array $fields = [], array $query = [])
+    protected function get($id, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [
