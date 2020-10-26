@@ -2,14 +2,12 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use FBGoogleCategory;
-
 interface GoogleCategoryProviderInterface
 {
     /**
      * @param int $categoryId
      *
-     * @return FBGoogleCategory|null
+     * @return array|null
      */
     public function getGoogleCategory($categoryId);
 }

@@ -2,36 +2,22 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use FBGoogleCategory;
-use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 
 class GoogleCategoryProvider implements GoogleCategoryProviderInterface
 {
     /**
-     * @var GoogleCategoryRepository
+     * @var FacebookCategoryClient
      */
-    private $googleCategoryRepository;
+    private $facebookCategoryClient;
 
-    public function __construct(GoogleCategoryRepository $googleCategoryRepository)
+    public function __construct(FacebookCategoryClient $facebookCategoryClient)
     {
-        $this->googleCategoryRepository = $googleCategoryRepository;
+        $this->facebookCategoryClient = $facebookCategoryClient;
     }
 
-    /**
-     * @param int $categoryId
-     *
-     * @return FBGoogleCategory|null
-     *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
-     */
     public function getGoogleCategory($categoryId)
     {
-        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryByCategoryId($categoryId);
-        if (!$googleCategoryId) {
-            return null;
-        }
-
-        return new FBGoogleCategory($googleCategoryId);
+        return $this->facebookCategoryClient->getGoogleCategory($categoryId);
     }
 }

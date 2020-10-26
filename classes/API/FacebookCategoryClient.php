@@ -26,25 +26,16 @@ class FacebookCategoryClient
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
 
-    public function updateGoogleCategories()
+    /**
+     * @param $categoryId
+     *
+     * @return array|null
+     */
+    public function getGoogleCategory($categoryId)
     {
-        $googleCategoryIds = [];
-        // todo:change taxonomy to catalog id from configuration
-        $categories = $this->call('taxonomy');
-        foreach ($categories as $category) {
-            $googleCategoryIds[] = $category['id'];
-            $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByGoogleCategoryId($category['id']);
+        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
 
-            $googleCategory = new \FBGoogleCategory($googleCategoryId);
-            $googleCategory->google_category_id = $category['id'];
-            $googleCategory->parent_id = $category['parentId'];
-            $googleCategory->name = $category['name'];
-            $googleCategory->search_string = $category['searchString'];
-
-            $googleCategory->save();
-        }
-
-        $this->googleCategoryRepository->deleteNotExistingGoogleCategories($googleCategoryIds);
+        return $this->call('taxonomy/' . $googleCategoryId);
     }
 
     protected function call($id, array $fields = [], array $query = [])

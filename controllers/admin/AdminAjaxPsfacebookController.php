@@ -16,7 +16,6 @@
 
 use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
@@ -155,31 +154,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
                     'contextPsFacebook' => $facebookContext,
-                ]
-            )
-        );
-    }
-
-    public function displayAjaxUpdateGoogleCategories()
-    {
-        $facebookCategoryClient = new FacebookCategoryClient(new Client(), new GoogleCategoryRepository());
-        try {
-            $facebookCategoryClient->updateGoogleCategories();
-        } catch (Exception $e) {
-            $this->ajaxDie(
-                json_encode(
-                    [
-                        'success' => false,
-                        'message' => $e->getMessage(),
-                    ]
-                )
-            );
-        }
-
-        $this->ajaxDie(
-            json_encode(
-                [
-                    'success' => true,
                 ]
             )
         );

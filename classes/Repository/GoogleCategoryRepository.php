@@ -9,34 +9,6 @@ use PrestaShopCollection;
 class GoogleCategoryRepository
 {
     /**
-     * @param int $googleCategoryId
-     *
-     * @return int
-     */
-    public function getGoogleCategoryIdByGoogleCategoryId($googleCategoryId)
-    {
-        $sql = new DbQuery();
-        $sql->select('id_fb_google_category');
-        $sql->from('fb_google_category');
-        $sql->where('`google_category_id` = "' . (int) $googleCategoryId . '"');
-
-        return (int) Db::getInstance()->getValue($sql);
-    }
-
-    public function deleteNotExistingGoogleCategories(array $googleCategoryIds)
-    {
-        Db::getInstance()->delete(
-            'fb_google_category',
-            'google_category_id NOT IN (' . implode(', ', $googleCategoryIds) . ')'
-        );
-
-        Db::getInstance()->delete(
-            'fb_category_match',
-            'google_category_id NOT IN (' . implode(', ', $googleCategoryIds) . ')'
-        );
-    }
-
-    /**
      * @param int $categoryId
      * @param int $googleCategoryId
      *
@@ -87,16 +59,12 @@ class GoogleCategoryRepository
      *
      * @return int
      */
-    public function getGoogleCategoryByCategoryId($categoryId)
+    public function getGoogleCategoryIdByCategoryId($categoryId)
     {
         $sql = new DbQuery();
-        $sql->select('gc.id_fb_google_category');
-        $sql->select('gc.parent_id');
-        $sql->select('gc.name');
-        $sql->select('gc.search_string');
-        $sql->from('fb_google_category', 'gc');
-        $sql->innerJoin('fb_category_match', 'cm', 'cm.google_category_id = gc.google_category_id');
-        $sql->where('cm.`id_category` = "' . (int) $categoryId . '"');
+        $sql->select('google_category_id');
+        $sql->from('fb_category_match');
+        $sql->where('`id_Category` = "' . (int) $categoryId . '"');
 
         return (int) Db::getInstance()->getValue($sql);
     }
