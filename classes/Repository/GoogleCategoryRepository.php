@@ -85,7 +85,7 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      *
-     * @return array|bool|object|null
+     * @return array|false
      */
     public function getGoogleCategoryByCategoryId($categoryId)
     {

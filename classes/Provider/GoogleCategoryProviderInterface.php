@@ -7,7 +7,7 @@ interface GoogleCategoryProviderInterface
     /**
      * @param int $categoryId
      *
-     * @return string|null
+     * @return array|false
      */
     public function getGoogleCategory($categoryId);
 }

@@ -19,7 +19,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
     /**
      * @param int $categoryId
      *
-     * @return string|void|null
+     * @return array|false
      */
     public function getGoogleCategory($categoryId)
     {
