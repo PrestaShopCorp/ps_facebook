@@ -37,18 +37,26 @@
         <div class="d-flex" />
       </b-card-body>
     </b-card>
+    <b-modal
+      v-model="modalShow"
+      :id="`modal_${name}`"
+      @ok="handleOk"
+    >
+      Hello From My Modal!
+    </b-modal>
   </li>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody} from 'bootstrap-vue';
+import {BCard, BCardBody, BModal} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
   components: {
     BCard,
     BCardBody,
+    BModal,
   },
   mixins: [],
   props: {
@@ -77,6 +85,7 @@ export default defineComponent({
     return {
       switchActivated: this.active,
       isLoading: this.loading,
+      modalShow: true,
     };
   },
   methods: {
@@ -107,6 +116,9 @@ export default defineComponent({
         console.error(error);
         this.error = 'integrate.error.failedToUpdateFeature';
       });
+    },
+    handleOk() {
+      console.log('ok');
     },
   },
   watch: {
