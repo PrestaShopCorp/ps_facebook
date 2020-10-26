@@ -25,7 +25,7 @@ class Uninstaller
             \Configuration::deleteByName((string) $name);
         }
 
-        return $this->uninstallTabs() && $this->uninstallTables();
+        return $this->uninstallTabs();
     }
 
     private function uninstallTabs()
@@ -42,17 +42,6 @@ class Uninstaller
         $uninstallTabCompleted = $uninstallTabCompleted && $this->uninstallMarketingTab();
 
         return $uninstallTabCompleted;
-    }
-
-    public function uninstallTables()
-    {
-        try {
-            include dirname(__FILE__) . '/../../sql/uninstall.php';
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
     }
 
     private function uninstallMarketingTab()
