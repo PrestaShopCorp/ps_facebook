@@ -29,6 +29,7 @@ class FacebookCategoryClient
     public function updateGoogleCategories()
     {
         $googleCategoryIds = [];
+        // todo:change taxonomy to catalog id from configuration
         $categories = $this->call('taxonomy');
         foreach ($categories as $category) {
             $googleCategoryIds[] = $category['id'];
