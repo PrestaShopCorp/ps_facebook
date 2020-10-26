@@ -79,15 +79,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetGoogleCategories' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'UpdateGoogleCategories',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookUpdateCategoryMatch' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
