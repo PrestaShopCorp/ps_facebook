@@ -1,0 +1,23 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler
+
+  PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
+
+  PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider'
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+
+  PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
+
+  PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
+    arguments:
+      - '@ps_facebook'

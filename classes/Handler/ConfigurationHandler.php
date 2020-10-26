@@ -20,12 +20,19 @@ class ConfigurationHandler
      */
     private $facebookDataProvider;
 
+    /**
+     * @var FacebookClient
+     */
+    private $facebookClient;
+
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        FacebookDataProvider $facebookDataProvider
+        FacebookDataProvider $facebookDataProvider,
+        FacebookClient $facebookClient
     ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->facebookDataProvider = $facebookDataProvider;
+        $this->facebookClient = $facebookClient;
     }
 
     public function handle($onboardingInputs)
@@ -47,13 +54,7 @@ class ConfigurationHandler
             return;
         }
 
-        $facebookClient = new FacebookClient(
-            $onboardingParams['access_token'],
-            Config::API_VERSION,
-            new Client()
-        );
-
-        $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
+        $onboardingParams['fbe'] = $this->facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
     }
 
     private function saveOnboardingConfiguration(array $onboardingParams)

@@ -1,0 +1,20 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
+
+  PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'

@@ -1,0 +1,6 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter:
+    class: PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter
+
+  PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter:
+    class: PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter
