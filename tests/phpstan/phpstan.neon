@@ -27,5 +27,6 @@ parameters:
     - '#Parameter \#2 \$app_secret of static method FacebookAds\\Api::init\(\) expects string, null given.#'
     - '#Call to an undefined method AdminController\|FrontController::getCheckoutProcess\(\).#'
     - '#Access to an undefined property PrestaShop\\Module\\PrestashopFacebook\\Handler\\ConfigurationHandler::\$context.#'
+    - '#Parameter \#1 \$idCategory of class Category constructor expects null, int given.#'
 
   level: 5
