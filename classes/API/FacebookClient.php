@@ -64,13 +64,10 @@ class FacebookClient
     public function getPixel($pixelId)
     {
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
-        if (!$responseContent) {
-            return null;
-        }
 
         return new Pixel(
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['id']) ? $responseContent['id'] : null,
+            isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
             isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false
         );
