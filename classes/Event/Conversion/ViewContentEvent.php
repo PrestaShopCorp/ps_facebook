@@ -78,7 +78,7 @@ class ViewContentEvent extends AbstractEvent
                 ->setItemPrice($product['price_amount'])
                 ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setCurrency($currency_iso_code)
                 ->setContents([$content])
@@ -114,7 +114,7 @@ class ViewContentEvent extends AbstractEvent
             $breadcrumbs = $controller->getBreadcrumbLinks();
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setContentName(\Tools::replaceAccentedChars($category->name) . ' ' . $locale)
                 ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb))
@@ -144,52 +144,10 @@ class ViewContentEvent extends AbstractEvent
 
             $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
-            $user = $this->createSdkUserData($this->context);
+            $user = $this->createSdkUserData();
             $customData = (new CustomData())
                 ->setContentName(\Tools::replaceAccentedChars($cms->meta_title) . ' ' . $locale)
                 ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb));
-
-            $event = (new Event())
-                ->setEventName($type)
-                ->setEventTime(time())
-                ->setUserData($user)
-                ->setCustomData($customData);
-
-            $events[] = $event;
-        }
-
-        /*
-        * Triggers InitiateCheckout for checkout page
-        */
-        if ($controllerPage === 'cart' && $this->toolsAdapter->getValue('action') === 'show') {
-            $type = 'InitiateCheckout';
-            $cart = $this->context->cart;
-
-            $user = $this->createSdkUserData($this->context);
-            $contents = [];
-            foreach ($cart->getProducts() as $product) {
-                $fbProductId = ProductCatalogUtility::makeProductId(
-                    $product['id_product'],
-                    $product['id_product_attribute'],
-                    $locale
-                );
-                $content = new Content();
-                $content
-                    ->setProductId($fbProductId)
-                    ->setTitle(\Tools::replaceAccentedChars($product['name']))
-                    ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
-                    ->setItemPrice($product['price'])
-                    ->setQuantity($product['quantity'])
-                    ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
-
-                $contents[] = $content;
-            }
-
-            $customData = (new CustomData())
-                ->setContents($contents)
-                ->setContentType($content_type)
-                ->setValue($cart->getOrderTotal(false))
-                ->setCurrency($currency_iso_code);
 
             $event = (new Event())
                 ->setEventName($type)
@@ -204,6 +162,6 @@ class ViewContentEvent extends AbstractEvent
             return true;
         }
 
-        return $this->sendEvents($events);
+        $this->sendEvents($events);
     }
 }

@@ -2,13 +2,14 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
             return;
         }
@@ -128,51 +129,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             }
         }
 
-        /*
-        * Triggers InitiateCheckout for checkout page
-         * //todo: its triggered in cart page not in checkout
-        */
-        if ($page === 'cart' && \Tools::getValue('action') === 'show') {
-            $type = 'InitiateCheckout';
-
-            $content = [
-                'num_items' => $this->context->cart->nbProducts(),
-                'content_ids' => array_column($this->context->cart->getProducts(), 'id_product'),
-                'content_type' => $content_type,
-                'value' => (float) $this->context->cart->getOrderTotal(false),
-                'currency' => $currency_iso_code,
-            ];
-        }
-
-        // TODO: refaco this from Quickview
-        // // Decode Product Object
-        // $value = Tools::jsonDecode($params['value']);
-        // $locale = pSQL(Tools::strtoupper($this->context->language->iso_code));
-        // $iso_code = pSQL($this->context->currency->iso_code);
-
-        // $content = array(
-        // 'content_name' => Tools::replaceAccentedChars($value->product->name) .' '.$locale,
-        // 'content_ids' => array($value->product->id_product),
-        // 'content_type' => 'product',
-        // 'value' => (float)$value->product->price_amount,
-        // 'currency' => $iso_code,
-        // );
-        // $content = $this->formatPixel($content);
-
-        // $this->context->smarty->assign(array(
-        // 'type' => 'ViewContent',
-        // 'content' => $content,
-        // ));
-
-        // $value->quickview_html .= $this->context->smarty->fetch(
-        //     $this->local_path.'views/templates/hook/displaypixel.tpl'
-        // );
-
-        // // Recode Product Object
-        // $params['value'] = Tools::jsonEncode($value);
-
-        // die($params['value']);
-
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
@@ -184,7 +140,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         ];
 
         if ($this->context->customer->id) {
-            $smartyVariables['userInfos'] = $this->getCustomerInformations();
+            $smartyVariables['userInfos'] = $this->getCustomerInformation();
         }
 
         $this->context->smarty->assign($smartyVariables);

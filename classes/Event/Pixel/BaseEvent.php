@@ -2,6 +2,8 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
+
 abstract class BaseEvent
 {
     /**
@@ -29,32 +31,7 @@ abstract class BaseEvent
      */
     protected function formatPixel($params)
     {
-        // TODO: might need some refacto/clean ? this look like a manual jsonEncode()
-        if (!empty($params)) {
-            $format = '{';
-            foreach ($params as $key => &$val) {
-                if (gettype($val) === 'string') {
-                    $format .= $key . ': \'' . addslashes($val) . '\', ';
-                } elseif (gettype($val) === 'array') {
-                    $format .= $key . ': [\'';
-                    foreach ($val as &$id) {
-                        $format .= (int) $id . "', '";
-                    }
-                    unset($id);
-                    $format = \Tools::substr($format, 0, -4);
-                    $format .= '\'], ';
-                } else {
-                    $format .= $key . ': ' . addslashes($val) . ', ';
-                }
-            }
-
-            $format = \Tools::substr($format, 0, -2);
-            $format .= '}';
-
-            return $format;
-        }
-
-        return false;
+        return json_encode($params);
     }
 
     /**
@@ -62,43 +39,21 @@ abstract class BaseEvent
      *
      * @return array
      */
-    protected function getCustomerInformations()
+    protected function getCustomerInformation()
     {
-        $arrayReturned = [];
-        // TODO: fix for 1.6 ?
-        if (true === $this->module->psVersionIs17) {
-            $simpleAddresses = $this->context->customer->getSimpleAddresses();
+        $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
-            if (count($simpleAddresses) > 0) {
-                $current = reset($simpleAddresses);
-                if ($current['city'] != null) {
-                    $arrayReturned['ct'] = $current['city'];
-                }
-                if ($current['country_iso'] != null) {
-                    $arrayReturned['country'] = $current['country_iso'];
-                }
-                if ($current['postcode'] != null) {
-                    $arrayReturned['zp'] = $current['postcode'];
-                }
-                if ($current['phone'] != null) {
-                    $arrayReturned['ph'] = $current['phone'];
-                }
-            }
-        }
-
-        $gender = $this->context->customer->id_gender == '1' ? 'm' : 'f';
-        $arrayReturned['gender'] = $gender;
-
-        $birthDate = \DateTime::createFromFormat('Y-m-d', $this->context->customer->birthday);
-        if ($birthDate instanceof \DateTime) {
-            $arrayReturned['db'] = $birthDate->format('Ymd');
-        }
-
-        $arrayReturned['ln'] = $this->context->customer->firstname;
-        $arrayReturned['fn'] = $this->context->customer->lastname;
-        $arrayReturned['em'] = $this->context->customer->email;
-
-        // data structured for pixel
-        return $arrayReturned;
+        return [
+            'ct' => $customerInformation['city'],
+            'country' => $customerInformation['countryIso'],
+            'zp' => $customerInformation['postCode'],
+            'ph' => $customerInformation['phone'],
+            'gender' => $customerInformation['gender'],
+            'fn' => $customerInformation['firstname'],
+            'ln' => $customerInformation['lastname'],
+            'em' => $customerInformation['email'],
+            'bd' => $customerInformation['birthday'],
+            'st' => $customerInformation['stateIso'],
+        ];
     }
 }

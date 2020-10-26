@@ -19,7 +19,7 @@
 <template>
   <div
     v-if="loading"
-    class="spinner"
+    class="page-spinner"
   />
   <div
     id="configuration"
@@ -56,6 +56,8 @@
         />
         <facebook-connected
           v-else
+          :ps-facebook-app-id="psFacebookAppId"
+          :external-business-id="dynamicExternalBusinessId"
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
@@ -64,7 +66,23 @@
         <div
           v-if="showGlass"
           class="glass"
-        />
+          @click="glassClicked"
+        >
+          <div class="refocus">
+            <img
+              class="m-3"
+              :src="facebook"
+              width="56"
+              height="56"
+              alt="PS Facebook logo"
+            >
+            <p>{{ $t('configuration.glass.text') }}</p>
+            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+          </div>
+          <div class="closeCross p-1 m-4" @click="closePopup">
+            <i class="material-icons">close</i>
+          </div>
+        </div>
       </template>
     </template>
   </div>
@@ -79,6 +97,7 @@ import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import openPopupGenerator from '../lib/fb-login';
+import facebook from '../assets/facebook_white_logo.svg';
 
 const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
@@ -125,7 +144,12 @@ export default defineComponent({
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: () => global.contextPsFacebook,
+      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
+    },
+    psFacebookAppId: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookAppId,
     },
     externalBusinessId: {
       type: String,
@@ -154,22 +178,22 @@ export default defineComponent({
     },
     pixelActivationRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
     psFacebookRetrieveExternalBusinessId: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
   },
@@ -179,8 +203,7 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      const context = this.contextPsFacebook;
-      return (context && context.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
     },
   },
   data() {
@@ -197,10 +220,16 @@ export default defineComponent({
       error: null,
       loading: true,
       popupReceptionDuplicate: false,
+      facebook, // white logo for glass
+      openedPopup: null,
     };
   },
   created() {
-    this.fetchData();
+    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {
@@ -225,10 +254,12 @@ export default defineComponent({
       this.$router.push({name: 'Catalog', query: {component: 'matching'}});
     },
     onFbeOnboardClick() {
-      this.openPopup();
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onEditClick() {
-      this.openPopup();
+      this.openedPopup = this.openPopup();
+      this.showGlass = true;
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;
@@ -265,6 +296,7 @@ export default defineComponent({
     },
     onFbeOnboardClosed() {
       this.showGlass = false;
+      this.openedPopup = null;
     },
     onFbeOnboardResponded(response) {
       if (this.popupReceptionDuplicate) {
@@ -276,6 +308,7 @@ export default defineComponent({
 
       if (!response.access_token) {
         this.showGlass = false;
+        this.openedPopup = null;
         return;
       }
       this.showGlass = true;
@@ -296,11 +329,13 @@ export default defineComponent({
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
         this.showGlass = false;
+        this.openedPopup = null;
         this.popupReceptionDuplicate = false;
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
+        this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
@@ -321,14 +356,28 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
-          this.openPopup();
+          this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
           this.showGlass = false;
+          this.openedPopup = null;
           this.popupReceptionDuplicate = false;
           this.$forceUpdate();
         });
+      }
+    },
+    glassClicked() {
+      if (this.openedPopup) {
+        this.openedPopup.focus();
+      } else {
+        this.openedPopup = this.openPopup();
+      }
+    },
+    closePopup(event) {
+      event.stopPropagation(); // avoid popup to be focused before close
+      if (this.openedPopup) {
+        this.openedPopup.close();
       }
     },
   },
@@ -337,6 +386,10 @@ export default defineComponent({
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
+      const oldValue = this.dynamicContextPsFacebook;
+      if (oldValue && !oldValue.email && newValue && newValue.email) {
+        this.psFacebookJustOnboarded = true;
+      }
       this.dynamicContextPsFacebook = newValue;
       this.$forceUpdate();
     },
@@ -361,27 +414,45 @@ export default defineComponent({
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 10000;
-  }
 
-  .spinner {
-    color: #fff;
-    background-color: inherit !important;
-    width: 8rem !important;
-    height: 8rem !important;
-    border-radius: 4rem !important;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-    position: relative;
-    left: calc(50% - 4rem);
-    top: 6rem;
+    & > .refocus {
+      text-align: center;
+      margin-top: 25vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & > img {
+        box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+      }
+
+      & > p, & > a {
+        font-family: "Open Sans";
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 21px;
+        text-align: center;
+        text-shadow: 3px 5px 10px rgba(0,0,0,0.4);
+        max-width: 460px;
+      }
+
+      & > a {
+        font-weight: 600;
+      }
+    }
+    & > .closeCross {
+      position: fixed;
+      right: 0;
+      top: 0;
+      color: white;
+      text-shadow: 3px 5px 10px rgba(0,0,0,.4);
+
+      & > i {
+        color: #fff;
+        font-size: 2.6em !important;
+      }
+    }
   }
 </style>

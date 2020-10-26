@@ -2,7 +2,7 @@ import {BTableSimple, BTbody} from 'bootstrap-vue';
 import EditingRow from '../src/components/category-matching/editing-row.vue';
 
 export default {
-  title: 'Category matching/EditingRow component',
+  title: 'Catalog/Category matching edit page/EditingRow component',
   component: EditingRow,
 };
 

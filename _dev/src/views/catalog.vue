@@ -17,62 +17,62 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="spinner"
-  />
-  <div
-    v-else
-    id="catalog"
-  >
-    TODO
+  <div id="catalog">
+    <catalog-summary v-if="currentPage === PAGES.summary" />
+    <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
+    <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />
+    <catalog-report-details v-if="currentPage === PAGES.reportDetails" />
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 
+import PAGES from '../components/catalog/pages';
+import CatalogSummary from '../components/catalog/summary.vue';
+import CatalogCategoryMatchingEdit from '../components/catalog/category-matching-edit.vue';
+import CatalogCategoryMatchingView from '../components/catalog/category-matching-view.vue';
+import CatalogReportDetails from '../components/catalog/report-details.vue';
+
 export default defineComponent({
   name: 'Catalog',
   components: {
+    CatalogSummary,
+    CatalogCategoryMatchingEdit,
+    CatalogCategoryMatchingView,
+    CatalogReportDetails,
   },
-  mixins: [],
   props: {
-  },
-  computed: {
+    forcePage: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   data() {
     return {
-      loading: true,
+      PAGES,
+      currentPage: this.forcePage || PAGES.summary,
+      historyStack: (this.forcePage && this.forcePage !== PAGES.summary)
+        ? [PAGES.summary, this.forcePage]
+        : [PAGES.summary],
     };
   },
   methods: {
-  },
-  watch: {
+    goto(page, replace = false) {
+      if (replace) {
+        this.historyStack[this.historyStack.length - 1] = page;
+      } else {
+        this.historyStack.push(page);
+      }
+      this.currentPage = page;
+    },
+    back() {
+      if (this.historyStack.length > 1) {
+        this.historyStack.pop();
+        this.currentPage = this.historyStack[this.historyStack.length - 1];
+      }
+    },
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .spinner {
-    color: #fff;
-    background-color: inherit !important;
-    width: 8rem !important;
-    height: 8rem !important;
-    border-radius: 4rem !important;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-    position: relative;
-    left: calc(50% - 4rem);
-    top: 6rem;
-  }
-</style>

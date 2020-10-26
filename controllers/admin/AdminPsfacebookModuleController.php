@@ -19,16 +19,20 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $psAccountsService = new PsAccountsService();
 
         $this->context->smarty->assign([
-            'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => pSQL(Configuration::get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
         ]);
 
+        $defaultCurrency = $this->context->currency;
+        $defaultLanguage = $this->context->language;
+
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
@@ -98,11 +102,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,
             ],
-
-            // TODO !0: URGENT !
-            'psFacebookCurrency' => null, // TODO from shop (merchant)
-            'psFacebookTimezone' => null, // TODO from shop (merchant)
-            'psFacebookLocale' => null, // TODO from shop (merchant)
+            'psFacebookCurrency' => $defaultCurrency->iso_code,
+            'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
+            'psFacebookLocale' => $defaultLanguage->locale,
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
