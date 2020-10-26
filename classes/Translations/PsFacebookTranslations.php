@@ -111,7 +111,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Facebook Page', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
-                        'manageFbeButton' => $this->module->l('Advanced settings', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Open Advanced settings', 'PsFacebookTranslations'),
                     ],
                 ],
                 'app' => [

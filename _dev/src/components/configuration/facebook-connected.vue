@@ -77,10 +77,13 @@
       <b-dropdown
         variant="primary"
         split right
-        :text="$t('configuration.facebook.connected.manageFbeButton')"
         @click="openManageFbe"
         class="ml-4 float-right"
       >
+        <template #button-content>
+          {{ $t('configuration.facebook.connected.manageFbeButton') }}
+          <i class="material-icons">open_in_new</i>
+        </template>
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
