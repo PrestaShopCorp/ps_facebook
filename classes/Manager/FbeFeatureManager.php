@@ -38,6 +38,11 @@ class FbeFeatureManager
         }
 
         $featureConfiguration = json_decode($featureConfiguration);
+
+        if ($featureName == 'messenger_chat') {
+            unset($featureConfiguration->default_locale);
+        }
+
         $featureConfiguration->enabled = (bool) $state;
         $configuration = [
             $featureName => $featureConfiguration,

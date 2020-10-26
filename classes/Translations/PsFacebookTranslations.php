@@ -185,6 +185,9 @@ class PsFacebookTranslations
                 'warning' => [
                     'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
                 ],
+                'error' => [
+                    'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.'),
+                ],
             ],
         ];
 

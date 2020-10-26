@@ -83,7 +83,6 @@ export default defineComponent({
     switchClick() {
       if (!this.isLoading) {
         this.isLoading = true;
-        this.switchActivated = !this.switchActivated;
         this.updateFeatureState();
       }
     },
@@ -91,20 +90,22 @@ export default defineComponent({
       fetch(this.updateFeatureRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({featureName: this.name, enabled: this.switchActivated}),
+        body: JSON.stringify({featureName: this.name, enabled: !this.switchActivated}),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
         return res.json();
       }).then((res) => {
-        if (res.success === 1) {
-          alert('SUCCESS');
-        }
         this.isLoading = false;
+        if (res.success === false) {
+          throw new Error('failed to update feature');
+        } else {
+          this.switchActivated = !this.switchActivated;
+        }
       }).catch((error) => {
         console.error(error);
-        this.error = 'configuration.messages.unknownOnboardingError';
+        this.error = 'integrate.error.failedToUpdateFeature';
       });
     },
   },

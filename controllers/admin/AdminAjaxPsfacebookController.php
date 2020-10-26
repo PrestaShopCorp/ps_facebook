@@ -232,11 +232,21 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
 
-        $this->ajaxDie(
-            json_encode(
-                $response
-            )
-        );
+        if (is_array($response)) {
+            $this->ajaxDie(
+                json_encode(
+                    $response
+                )
+            );
+        } else {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false
+                    ]
+                )
+            );
+        }
     }
 
     /**
