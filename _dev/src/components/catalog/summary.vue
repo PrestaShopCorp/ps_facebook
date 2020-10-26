@@ -19,17 +19,17 @@
 <template>
   <div v-if="loading" class="page-spinner" />
   <div v-else id="catalogSummary">
-    <b-card class="card m-2">
+    <b-card class="card m-3">
       <categories-matched v-if="matchingDone" :matchingProgress="matchingProgress" />
       <match-categories v-else />
     </b-card>
 
-    <b-card class="card m-2">
+    <b-card class="card m-3">
       <catalog-exported v-if="exportDone" />
-      <export-catalog v-else />
+      <export-catalog v-else :isPrimaryAction="matchingDone" />
     </b-card>
 
-    <b-card class="card m-2">
+    <b-card class="card m-3">
       <reporting :reporting="reporting" />
     </b-card>
   </div>

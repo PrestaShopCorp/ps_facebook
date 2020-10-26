@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="catalog">
+  <div id="catalog" class="ps-facebook-catalog-tab">
     <catalog-summary v-if="currentPage === PAGES.summary" />
     <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
     <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />
@@ -50,11 +50,17 @@ export default defineComponent({
     },
   },
   data() {
+    const forcePage = (this.$route.query && this.$route.query.page) || this.forcePage;
+    if (forcePage) { // consumes query if any, to let history clean
+      const replacement = new URL(window.location);
+      replacement.hash = '/catalog';
+      window.location.replace(replacement.toString());
+    }
     return {
       PAGES,
-      currentPage: this.forcePage || PAGES.summary,
-      historyStack: (this.forcePage && this.forcePage !== PAGES.summary)
-        ? [PAGES.summary, this.forcePage]
+      currentPage: forcePage || PAGES.summary,
+      historyStack: (forcePage && forcePage !== PAGES.summary)
+        ? [this.forcePage]
         : [PAGES.summary],
     };
   },
@@ -71,8 +77,19 @@ export default defineComponent({
       if (this.historyStack.length > 1) {
         this.historyStack.pop();
         this.currentPage = this.historyStack[this.historyStack.length - 1];
+      } else {
+        window.history.back();
       }
     },
   },
 });
 </script>
+
+<style lang="scss">
+  .ps-facebook-catalog-tab {
+    div.card {
+      border: none !important;
+      border-radius: 3px;
+    }
+  }
+</style>

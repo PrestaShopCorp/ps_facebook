@@ -29,30 +29,32 @@
     <introduction
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
-      class="m-4"
+      class="m-3"
     />
     <template v-else>
       <messages
         :show-onboard-succeeded="psFacebookJustOnboarded"
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :category-matching-started="categoryMatchingStarted"
+        :product-sync-started="productSyncStarted"
         :error="error"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
-        class="m-4"
+        class="m-3"
       />
       <ps-accounts
         :context="contextPsAccounts"
-        class="m-4"
+        class="m-3"
       />
 
       <no-config
         v-if="!psAccountsOnboarded"
-        class="m-4"
+        class="m-3"
       />
       <template v-else>
         <facebook-not-connected
           v-if="!facebookConnected"
           @onFbeOnboardClick="onFbeOnboardClick"
-          class="m-4"
+          class="m-3"
         />
         <facebook-connected
           v-else
@@ -61,7 +63,7 @@
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
-          class="m-4"
+          class="m-3"
         />
         <div
           v-if="showGlass"
@@ -205,6 +207,21 @@ export default defineComponent({
     facebookConnected() {
       return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
     },
+    categoryMatchingStarted() {
+      return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
+        && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
+    },
+    productSyncStarted() {
+      return this.contextPsFacebook && this.contextPsFacebook.catalog
+        && this.contextPsFacebook.catalog.productSyncStarted;
+    },
+    showSyncCatalogAdvice() {
+      const c = this.dynamicContextPsFacebook;
+      return c && c.email && (
+        !c.catalog
+        || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
+      );
+    },
   },
   data() {
     return {
@@ -212,9 +229,6 @@ export default defineComponent({
       dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
-      showSyncCatalogAdvice: this.contextPsFacebook
-        && this.contextPsFacebook.categoriesMatching
-        && this.contextPsFacebook.categoriesMatching.sent !== true,
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
       error: null,
@@ -251,7 +265,7 @@ export default defineComponent({
         });
     },
     onSyncCatalogAdviceClick() {
-      this.$router.push({name: 'Catalog', query: {component: 'matching'}});
+      this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();
@@ -400,7 +414,7 @@ export default defineComponent({
 <style lang="scss">
   .ps-facebook-configuration-tab {
     div.card {
-      border: none;
+      border: none !important;
       border-radius: 3px;
     }
   }

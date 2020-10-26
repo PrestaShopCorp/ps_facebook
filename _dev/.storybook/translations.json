@@ -21,7 +21,11 @@
       },
       "messages": {
         "success": "PrestaShop Facebook is now activated!",
-        "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
+        "syncCatalogAdvice": "One more thing: Match your categories and import your product catalog to set up Facebook Shop, Instagram Shopping and create ad campaigns.",
+        "stepPsAccount": "Connect your PrestaShop account",
+        "stepPsFacebook": "Connect your store to Facebook",
+        "stepCategoryMatching": "Match categories",
+        "stepProductSync": "Import your product catalog",
         "syncCatalogButton": "Match categories",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
@@ -36,7 +40,7 @@
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
-          "editButton": "Edit",
+          "editButton": "Restart onboarding",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
           "facebookPixel": "Facebook Pixel",
@@ -45,7 +49,7 @@
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
           "facebookAdsTooltip": "Facebook Ads",
-          "manageFbeButton": "Manage"
+          "manageFbeButton": "Advanced settings"
         }
       },
       "app": {
@@ -66,8 +70,15 @@
       "categoryMatching": "Category matching",
       "categoryMatchingIntro": "Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.",
       "matchCategoriesButton": "Match categories",
+      "productCatalogExport": "Product catalog export",
+      "exportCatalogButton": "Export catalog",
+      "catalogExportWarning": "Only products from matched categories are synced.",
+      "catalogExportIntro": "To sell and advertise your products on Facebook and Instagram, you need to export your product catalog.",
+      "reportingTitle": "Product sync report",
+      "reportingIntro": "Only products from matched categories are synced.",
       "viewButton": "View",
-      "backButton": "Back"
+      "backButton": "Back",
+      "detailsButton": "See details"
     },
     "categoryMatching": {
       "intro": "Match your own categories with official Facebook categories to improve catalog quality and ad performance.",

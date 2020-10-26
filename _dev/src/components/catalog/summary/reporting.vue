@@ -18,25 +18,56 @@
  *-->
 <template>
   <div>
-    <h1>[Product sync report]</h1>
-    [TODO]
+    <h1>{{ $t('catalogSummary.reportingTitle') }}</h1>
+
+    <p>{{ $t('catalogSummary.reportingIntro') }}</p>
+
+    <b-container fluid class="w-100">
+      <b-row align-v="stretch">
+        <b-col class="counter m-1 pt-1 pb-2 px-3">
+          -
+        </b-col>
+        <div class="w-100 d-block d-sm-none"></div>
+        <b-col class="counter m-1 pt-1 pb-2 px-3">
+          -
+        </b-col>
+        <div class="w-100 d-block d-md-none"></div>
+        <b-col class="counter m-1 pt-1 pb-2 px-3">
+          -
+        </b-col>
+        <div class="w-100 d-block d-sm-none"></div>
+        <b-col class="counter m-1 pt-1 pb-2 px-3">
+          -
+        </b-col>
+      </b-row>
+    </b-container>
+    <br />
+
     <b-link
       class="view-button float-right ml-3"
       @click="$parent.goto($parent.PAGES.reportDetails)"
     >
-      [DETAILS]
+      {{ $t('catalogSummary.detailsButton') }}
     </b-link>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BLink} from 'bootstrap-vue';
+import {
+  BLink,
+  BContainer,
+  BRow,
+  BCol,
+} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'Reporting',
   components: {
     BLink,
+    BContainer,
+    BRow,
+    BCol,
   },
   props: {
     reporting: {
@@ -63,5 +94,10 @@ export default defineComponent({
     position: absolute;
     bottom: 0.8rem;
     right: 1rem;
+  }
+
+  .counter {
+    border-radius: 3px;
+    background-color: #FAFBFC;
   }
 </style>

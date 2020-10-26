@@ -29,7 +29,7 @@ FreshInstall.args = {
 export const Progressing: any = Template.bind({});
 Progressing.args = {
   data: {
-    exportDone: true,
+    exportDone: false,
     matchingDone: true,
     matchingProgress: {total: 42, matched: 23},
     reporting: {

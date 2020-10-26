@@ -27,14 +27,26 @@
       >
     </div>
 
-    <h3 class="title">[Product catalog export]</h3>
-    [TODO : when never exported before]
+    <h3 class="title">{{ $t('catalogSummary.productCatalogExport') }}</h3>
+    <b-button
+      class="float-right ml-4"
+      :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
+      @click="exportClicked"
+    >
+      {{ $t('catalogSummary.exportCatalogButton') }}
+    </b-button>
+    <p class="text">
+      <b-alert variant="warning" show>
+        {{ $t('catalogSummary.catalogExportWarning') }}
+      </b-alert>
+      {{ $t('catalogSummary.catalogExportIntro') }}
+    </p>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BButton, BAlert} from 'bootstrap-vue';
 
 import illustration from '../../../assets/catalog_export_illustration.png';
 
@@ -42,9 +54,14 @@ export default defineComponent({
   name: 'ExportCatalog',
   components: {
     BButton,
+    BAlert,
   },
-  mixins: [],
   props: {
+    isPrimaryAction: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   computed: {
   },
@@ -54,8 +71,9 @@ export default defineComponent({
     };
   },
   methods: {
-  },
-  watch: {
+    exportClicked() {
+      alert('Not yet implemented');
+    },
   },
 });
 </script>
@@ -66,5 +84,12 @@ export default defineComponent({
   }
   .title {
     font-weight: 600;
+  }
+  .text {
+    display: flow-root;
+
+    & > div {
+      padding-left: 3.8rem;
+    }
   }
 </style>

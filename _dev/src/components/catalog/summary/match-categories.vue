@@ -30,7 +30,7 @@
     <h3 class="title">{{ $t('catalogSummary.categoryMatching') }}</h3>
     <b-button
       class="float-right ml-3"
-      variant="outline-secondary"
+      variant="primary"
       @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
