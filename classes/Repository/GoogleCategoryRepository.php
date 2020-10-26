@@ -85,12 +85,12 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      *
-     * @return array|false
+     * @return int
      */
     public function getGoogleCategoryByCategoryId($categoryId)
     {
         $sql = new DbQuery();
-        $sql->select('gc.google_category_id');
+        $sql->select('gc.id_fb_google_category');
         $sql->select('gc.parent_id');
         $sql->select('gc.name');
         $sql->select('gc.search_string');
@@ -98,6 +98,6 @@ class GoogleCategoryRepository
         $sql->innerJoin('fb_category_match', 'cm', 'cm.google_category_id = gc.google_category_id');
         $sql->where('cm.`id_category` = "' . (int) $categoryId . '"');
 
-        return Db::getInstance()->getRow($sql);
+        return (int) Db::getInstance()->getValue($sql);
     }
 }
