@@ -159,6 +159,7 @@ class PsFacebookTranslations
                 'buttons' => [
                     'add' => $this->module->l('Add', 'PsFacebookTranslations'),
                     'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations'),
+                    'modalConfirm' => $this->module->l('Yes, confirm', 'PsFacebookTranslations'),
                 ],
                 'features' => [
                     'ig_shopping' => [

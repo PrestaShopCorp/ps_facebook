@@ -32,24 +32,61 @@
                 :checked="switchActivated"
               >
             </div>
+            <b-button
+              variant="primary"
+              data-toggle="modal"
+              :data-target="`#modal_${name}`"
+            >
+              TEST
+            </b-button>
           </div>
         </div>
         <div class="d-flex" />
       </b-card-body>
     </b-card>
-    <b-modal
-      v-model="modalShow"
+    <div
       :id="`modal_${name}`"
-      @ok="updateFeatureState"
-      @cancel="isLoading = false"
-      @close="isLoading = false"
-      @mouseout="isLoading = false"
+      class="modal"
     >
-      <template #modal-title>
-        {{$t('integrate.warning.disableFeatureModalHeader')}}
-      </template>
-      {{$t('integrate.warning.disableFeatureModalText')}}
-    </b-modal>
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  {{ $t('integrate.warning.disableFeatureModalHeader') }}
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="isLoading = false"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ $t('integrate.warning.disableFeatureModalText') }}
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="updateFeatureState"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -91,7 +128,7 @@ export default defineComponent({
     return {
       switchActivated: this.active,
       isLoading: this.loading,
-      modalShow: false,
+      showModal: false,
     };
   },
   methods: {
@@ -99,7 +136,7 @@ export default defineComponent({
       if (!this.isLoading) {
         this.isLoading = true;
         if (this.switchActivated) {
-          this.modalShow = true;
+          this.showModal = true;
         } else {
           this.updateFeatureState();
         }

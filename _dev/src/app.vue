@@ -26,7 +26,6 @@
         {{ $t('general.tabs.catalog') }}
       </MenuItem>
       <MenuItem
-        :onboarding-required="true"
         route="/integrate"
       >
         {{ $t('general.tabs.integrate') }}
