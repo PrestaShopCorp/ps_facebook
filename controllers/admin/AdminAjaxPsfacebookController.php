@@ -27,6 +27,10 @@ use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
+
+    /** @var Ps_facebook */
+    public $module;
+
     public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
