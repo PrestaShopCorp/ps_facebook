@@ -98,7 +98,7 @@
     >
       <b-link :href="url" target="_blank">
         <i class="material-icons">analytics</i>
-        {{ $t('configuration.app.viewStats') }}
+        {{ $t('configuration.app.viewStats') }} &nbsp; <i class="material-icons small-text">open_in_new</i>
       </b-link>
     </div>
   </div>

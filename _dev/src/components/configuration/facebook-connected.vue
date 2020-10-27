@@ -78,6 +78,7 @@
         variant="primary"
         split right
         :text="$t('configuration.facebook.connected.manageFbeButton')"
+        :html="manageFbeLabel"
         @click="openManageFbe"
         class="ml-4 float-right"
       >
@@ -260,6 +261,9 @@ export default defineComponent({
     return {
       facebookLogo,
       folded: !this.startExpanded,
+      manageFbeLabel: `${
+        this.$t('configuration.facebook.connected.manageFbeButton')
+      } &nbsp; <i class="material-icons">open_in_new</i>`,
     };
   },
   computed: {

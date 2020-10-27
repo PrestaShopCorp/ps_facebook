@@ -62,6 +62,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    startProductSyncRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookStartProductSyncRoute || null,
+    },
   },
   computed: {
   },
@@ -72,6 +77,12 @@ export default defineComponent({
   },
   methods: {
     exportClicked() {
+      if (!this.startProductSyncRoute) {
+        return;
+      }
+
+      // TODO !0: call PHP here, with a fetch POST to this.startProductSyncRoute.
+      //  The result should be 200, and then: this.$parent.fetchData()
       alert('Not yet implemented');
     },
   },
@@ -89,7 +100,7 @@ export default defineComponent({
     display: flow-root;
 
     & > div {
-      padding-left: 3.8rem;
+      padding-left: 3.8rem !important;
     }
   }
 </style>

@@ -62,6 +62,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    catalogSummaryRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCatalogSummaryRoute || null,
+    },
   },
   data() {
     return {
@@ -82,8 +87,11 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
+      this.loading = true;
+
       // TODO !0: load data to know this.exportDone, this.matchingDone, this.matchingProgress
-      //  and this.reporting...
+      //  and this.reporting... fetch GET from this.catalogSummaryRoute
+
       this.loading = false;
     },
     goto(page) {

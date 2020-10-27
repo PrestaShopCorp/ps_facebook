@@ -40,6 +40,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             case 'retrieveExternalBusinessId':
                 $this->ajaxProcessRetrieveExternalBusinessId();
                 break;
+            case 'requireProductSyncStart':
+                $this->ajaxProcessRequireProductSyncStart();
+                break;
             default:
                 break;
         }
@@ -128,6 +131,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * @throws PrestaShopException
      */
+    public function ajaxProcessRequireProductSyncStart()
+    {
+        // TODO !0: call our NestJS API, and store the fact that we started product sync in MySQL.
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
     public function displayAjaxConfiguration()
     {
         $facebookClient = new FacebookClient(
@@ -172,6 +183,29 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
                     'contextPsFacebook' => $facebookContext,
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxCatalogSummary()
+    {
+        // TODO !1: complete object :
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'exportDone': false, // true if export has been called once from ajaxProcessRequireProductSyncStart
+                    'matchingDone': false, // true if a category match has been called once (at least 1 matching done)
+                    'matchingProgress' => ['total' => 42, 'matched' => 0],
+                    'reporting' => [
+                      'total' => 0,
+                      'pending' =>  0,
+                      'approved' => 0,
+                      'disapproved' => 0,
+                    ],
                 ]
             )
         );
