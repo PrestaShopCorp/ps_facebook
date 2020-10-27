@@ -184,6 +184,8 @@ class PsFacebookTranslations
                 ],
                 'warning' => [
                     'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
+                    'disableFeatureModalHeader' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
+                    'disableFeatureModalText' => $this->module->l('You are about to disable this feature. This may limit some functionality.', 'PsFacebookTranslations'),
                 ],
                 'error' => [
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.'),
