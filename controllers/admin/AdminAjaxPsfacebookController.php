@@ -110,8 +110,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxConfiguration()
     {
         /** @var FbeDataProvider $fbeDataProvider */
-        /** @var FacebookDataProvider $facebookDataProvider */
         $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
 
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
@@ -132,8 +133,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxGetFbContext()
     {
         /** @var FbeDataProvider $fbeDataProvider */
-        /** @var FacebookDataProvider $facebookDataProvider */
         $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
 
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
