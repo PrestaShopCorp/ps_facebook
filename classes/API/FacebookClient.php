@@ -42,14 +42,14 @@ class FacebookClient
 
     public function getUserEmail()
     {
-        $responseContent = $this->call('me', ['email']);
+        $responseContent = $this->get('me', ['email']);
 
         return new User($responseContent['email']);
     }
 
     public function getBusinessManager($businessManagerId)
     {
-        $responseContent = $this->call((int) $businessManagerId, ['name', 'created_time']);
+        $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -63,14 +63,11 @@ class FacebookClient
 
     public function getPixel($pixelId)
     {
-        $responseContent = $this->call((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
-        if (!$responseContent) {
-            return null;
-        }
+        $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
 
         return new Pixel(
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['id']) ? $responseContent['id'] : null,
+            isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
             isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false
         );
@@ -79,12 +76,12 @@ class FacebookClient
     public function getPage($pageIds)
     {
         $pageId = reset($pageIds);
-        $responseContent = $this->call((int) $pageId, ['name', 'fan_count']);
+        $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
         if (!$responseContent) {
             return null;
         }
 
-        $logoResponse = $this->call($pageId . '/photos', ['picture']);
+        $logoResponse = $this->get($pageId . '/photos', ['picture']);
 
         $logo = null;
         if (is_array($logoResponse)) {
@@ -100,7 +97,7 @@ class FacebookClient
 
     public function getAd($adId)
     {
-        $responseContent = $this->call((int) $adId, ['name', 'created_time']);
+        $responseContent = $this->get((int) $adId, ['name', 'created_time']);
         if (!$responseContent) {
             return null;
         }
@@ -119,7 +116,7 @@ class FacebookClient
 
     public function getFbeAttribute($externalBusinessId)
     {
-        $responseContent = $this->call(
+        $responseContent = $this->get(
             '/fbe_business/fbe_installs',
             [],
             [
@@ -137,7 +134,7 @@ class FacebookClient
      *
      * @return false|array
      */
-    public function call($id, array $fields = [], array $query = [])
+    public function get($id, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [

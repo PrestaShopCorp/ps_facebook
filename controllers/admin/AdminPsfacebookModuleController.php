@@ -38,19 +38,28 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'retrieveExternalBusinessId']
+                [
+                    'action' => 'RetrieveExternalBusinessId',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookPixelActivationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'activatePixel']
+                [
+                    'action' => 'ActivatePixel',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookFbeOnboardingSaveRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'saveOnboarding']
+                [
+                    'action' => 'ConnectToFacebook',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
@@ -67,6 +76,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'GetFbContext',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookUpdateCategoryMatch' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'UpdateCategoryMatch',
                     'ajax' => 1,
                 ]
             ),
