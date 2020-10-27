@@ -50,9 +50,6 @@ class FacebookClient
     public function getBusinessManager($businessManagerId)
     {
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
-        if (!$responseContent) {
-            return null;
-        }
 
         return new FacebookBusinessManager(
             isset($responseContent['name']) ? $responseContent['name'] : null,
@@ -77,9 +74,6 @@ class FacebookClient
     {
         $pageId = reset($pageIds);
         $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
-        if (!$responseContent) {
-            return null;
-        }
 
         $logoResponse = $this->get($pageId . '/photos', ['picture']);
 
@@ -98,9 +92,6 @@ class FacebookClient
     public function getAd($adId)
     {
         $responseContent = $this->get((int) $adId, ['name', 'created_time']);
-        if (!$responseContent) {
-            return null;
-        }
 
         return new Ad(
             isset($responseContent['name']) ? $responseContent['name'] : null,
