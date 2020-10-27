@@ -21,11 +21,6 @@ use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 class ApiConversionHandler
 {
     /**
-     * @var Api|null
-     */
-    private $facebookBusinessSDK;
-
-    /**
      * @var Context
      */
     private $context;
@@ -38,8 +33,6 @@ class ApiConversionHandler
             \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
         );
 
-        $this->facebookBusinessSDK = Api::instance();
-        $this->facebookBusinessSDK->setLogger(new CurlLogger());
         $this->context = Context::getContext();
     }
 

@@ -54,6 +54,7 @@ class ConfigurationHandler
             return;
         }
 
+        $this->facebookClient->setAccessToken($onboardingParams['access_token']);
         $onboardingParams['fbe'] = $this->facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
     }
 

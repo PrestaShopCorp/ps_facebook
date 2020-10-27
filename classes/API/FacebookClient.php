@@ -41,6 +41,11 @@ class FacebookClient
         $this->client = $apiClientFactory->createClient();
     }
 
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    }
+
     public function getUserEmail()
     {
         $responseContent = $this->get('me', ['email']);
