@@ -26,8 +26,8 @@ const categories = [
     {
       'shopCategoryId': "632",
       'shopCategoryName': 'Arduino',
-      'shopParentCategoryIds': "1",
-      'deploy': null,
+      'shopParentCategoryIds': "632/",
+      'deploy': undefined,
       'show': true,
       'categoryName': 'Hardware',
       'categoryId': 632,

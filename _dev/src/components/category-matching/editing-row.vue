@@ -17,8 +17,8 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-tr>
-    <b-td @click="getCurrentRow(shopCategoryId)">
+  <b-tr :class="categoryStyle">
+    <b-td @click="getCurrentRow(shopCategoryId)" >
       <slot />
     </b-td>
     <b-td>
@@ -131,6 +131,10 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    categoryStyle: {
+      type: String,
+      required: true,
+    },
     initialSubcategoryName: {
       type: String,
       required: false,
@@ -212,6 +216,11 @@ export default defineComponent({
         });
     },
   },
+  watch: {
+    categoryStyle: function(val) {
+      this.categoryStyle = val
+    }
+  }
 
 });
 </script>
@@ -313,6 +322,12 @@ export default defineComponent({
     display: inline-block;
     line-height: 1;
     color: #c05c67;
+  }
+
+  .array-tree-lvl-2 {
+    td:first-child {
+      padding-left:20px;
+    }
   }
 
   .propagate > * {

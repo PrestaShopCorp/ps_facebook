@@ -28,13 +28,11 @@
         </b-tr>
       </b-thead>
       <b-tbody>
-      /*
-      * rajouter une props dans editing row
-      */
         <editing-row
           v-for="category in categories"
           v-if="category.show"
           :key="category.shopCategoryId"
+          :categoryStyle="categoryStyle(category)"
           :shopCategoryId="category.shopCategoryId"
           :initialCategoryName="category.categoryName"
           :initialCategoryId="category.categoryId"
@@ -55,7 +53,9 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import EditingRow from './editing-row.vue';
-
+/*
+* rajouter une props dans editing row
+*/
 export default defineComponent({
   name: 'TableMatching',
   components: {
@@ -66,6 +66,11 @@ export default defineComponent({
     initialCategories: {
       type: Array,
       required: true
+    },
+    overrideGetCurrentRow: {
+      type: Function,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -79,35 +84,65 @@ export default defineComponent({
     saveMatchingCallback() {
       return Promise.resolve(true);
     },
+    categoryStyle(category) {
+      const floor = category.shopParentCategoryIds.split('/').length - 1
+      const isDeployed = category.deploy ? 'opened' : (category.deploy === null  || floor === 3 ? '' : 'closed')
+      return 'array-tree-lvl-' + floor.toString() + ' ' + isDeployed
+    },
     getCurrentRow(currentShopCategoryID) {
+      if (this.overrideGetCurrentRow) {
+        return this.overrideGetCurrentRow(currentShopCategoryID)
+      }
       // Call php for get all subcategories from shopCategoryID
-      const subcategory = {
-        'shopParentCategoryID': '1',
-        'shopCategoryId': '2',
-        'shopCategoryName': 'Bird',
-        'deploy': null,
-        'show': true,
-        'categoryName': 'Bird Supplies',
-        'categoryId': 2,
-        'subcategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies',
-        'subcategoryId': 3,
-        'propagation': false,
-      };
+      const subcategory = [
+        {
+          'shopCategoryId': '2',
+          'shopCategoryName': 'Bird',
+          'deploy': true,
+          'show': true,
+          'categoryName': 'Bird Supplies',
+          'categoryId': 2,
+          'shopParentCategoryIds': '',
+          'subcategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies',
+          'subcategoryId': 3,
+          'propagation': false,
+        },
+        {
+          'shopCategoryId': '3',
+          'shopCategoryName': 'Bird Baths',
+          'deploy': true,
+          'show': true,
+          'categoryName': 'Animals & Pet Supplies > Pet Supplies > Bird Supplie',
+          'categoryId': 2,
+          'shopParentCategoryIds': '',
+          'subcategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Cage Accessories > Bird Cage Bird Baths',
+          'subcategoryId': 499954,
+          'propagation': false,
+        }
+      ];
 
       const currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      currentCategory.deploy = true;
-      var nbrFloors = null;
 
       switch (currentCategory.deploy) {
         case true:
-          // replier l'arborescence
-          // get all children => show = false
-          // deploy = false
-          // startWith methods
+          const filterChildren = this.categories.filter(child =>
+            child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds + child.shopCategoryId + '/')
+          )
+          filterChildren.forEach(child => {
+            child.show = false;
+          })
+          currentCategory.deploy = false;
         break;
 
         case false:
+          const childrens = this.categories.filter(child =>
+            child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds + child.shopCategoryId + '/')
+          )
+          childrens.forEach(child => {
+            child.show = true;
+          })
+          currentCategory.deploy = true;
           // deplier
           // show = true soit pour les enfants direct, et pour les sous enfant dont le pere est a true
           // filter ||
@@ -116,6 +151,18 @@ export default defineComponent({
         break;
 
         case undefined:
+          currentCategory.deploy = true;
+          if (Array.isArray(subcategory)) {
+            subcategory.forEach(el => {
+              this.categories.splice(indexCtg, 0, el);
+              el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
+            })
+          } else {
+            this.categories.splice(indexCtg, 0, subcategory);
+            subcategory.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategory.shopCategoryId + '/'
+          }
+          currentCategory.deploy = true;
+          // deploy = true
           // api PHP
           // cast deploy en toString pour le chevron regle css
           // si une reponse deploy = true
@@ -124,29 +171,6 @@ export default defineComponent({
 
         default:
         // nothing
-      }
-      if (currentCategory.deploy !== null) {
-        if (currentCategory.shopParentCategoryIds !== null) {
-          nbrFloors = currentCategory.shopParentCategoryIds.split('/');
-          // we know the number of children (limit 3 level)
-          const findSubCtg = this.categories.find(element => element.shopCategoryId == subcategory.shopCategoryId);
-
-          if (subcategory.shopParentCategoryID == currentShopCategoryID) {
-            if (findSubCtg === undefined) {
-              this.categories.splice(indexCtg, 0, subcategory);
-              currentCategory.show = true;
-              currentCategory.deploy = false;
-            } else {
-              this.categories.forEach(target => {
-                if (target.shopCategoryId == subcategory.shopCategoryId) {
-                  target.show = !target.show;
-                }
-              })
-            }
-          }
-        } else {
-          currentCategory.deploy = null;
-        }
       }
     }
   },
@@ -161,12 +185,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.display-table-matchingFb {
-
-  .subcategorie-1 {
-    td:first-child {
-      padding-left: 30px;
-    }
-  }
-}
 </style>
