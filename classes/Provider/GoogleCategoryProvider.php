@@ -35,6 +35,13 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
         return $categoryMatch;
     }
 
+    /**
+     * @param int $categoryId
+     * @param int $langId
+     * @param int $page
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     */
     public function getGoogleCategoryChildes($categoryId, $langId, $page = 1)
     {
         if (!$page || $page < 1) {

@@ -201,7 +201,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
-    public function displayAjaxGetCategoryMatch()
+    public function displayAjaxGetCategory()
     {
         $categoryId = Tools::getValue('id_category');
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */

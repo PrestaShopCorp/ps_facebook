@@ -12,8 +12,8 @@ interface GoogleCategoryProviderInterface
     public function getGoogleCategory($categoryId);
 
     /**
-     * @param $categoryId
-     * @param $page
+     * @param int $categoryId
+     * @param int $page
      *
      * @return array|null
      */
