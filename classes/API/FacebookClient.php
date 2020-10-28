@@ -145,8 +145,9 @@ class FacebookClient
     {
         $body = [
             'fbe_external_business_id' => $externalBusinessId,
-            'business_config' => $configuration
+            'business_config' => $configuration,
         ];
+
         return $this->post(
             'fbe_business',
             [],
@@ -190,8 +191,8 @@ class FacebookClient
 
     /**
      * @param int|string $id
-     * @param array $fields
-     * @param array $query
+     * @param array $headers
+     * @param array $body
      *
      * @return false|array
      */

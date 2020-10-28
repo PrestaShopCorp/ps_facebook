@@ -26,6 +26,7 @@ class FbeFeatureManager
     /**
      * @param string $featureName
      * @param bool $state
+     *
      * @return false
      */
     public function updateFeature($featureName, $state)
