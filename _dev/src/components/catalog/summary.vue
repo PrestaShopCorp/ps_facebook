@@ -89,10 +89,25 @@ export default defineComponent({
     fetchData() {
       this.loading = true;
 
-      // TODO !0: load data to know this.exportDone, this.matchingDone, this.matchingProgress
-      //  and this.reporting... fetch GET from this.catalogSummaryRoute
-
-      this.loading = false;
+      fetch(this.catalogSummaryRoute, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        this.exportDone = res.exportDone;
+        this.matchingDone = res.matchingDone;
+        this.matchingProgress = res.matchingProgress;
+        this.reporting = res.reporting;
+        this.loading = false;
+      }).catch((error) => {
+        console.error(error);
+        this.loading = false;
+      });
     },
     goto(page) {
       return this.$parent && this.$parent.goto(page);

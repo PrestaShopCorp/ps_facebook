@@ -92,7 +92,10 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'requireProductSyncStart']
+                [
+                    'action' => 'requireProductSyncStart',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookGetCatalogSummaryRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',

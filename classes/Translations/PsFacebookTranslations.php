@@ -142,6 +142,7 @@ class PsFacebookTranslations
                 'viewButton' => $this->module->l('View', 'PsFacebookTranslations'),
                 'backButton' => $this->module->l('Back', 'PsFacebookTranslations'),
                 'detailsButton' => $this->module->l('See details', 'PsFacebookTranslations'),
+                'exportCatalogButtonErrored' => $this->module->l('Failed! Try again', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
                 'intro' => $this->module->l('Match your own categories with official Facebook categories to improve catalog quality and ad performance.', 'PsFacebookTranslations'),

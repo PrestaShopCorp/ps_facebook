@@ -112,7 +112,24 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        // TODO !0: call our NestJS API, and store the fact that we started product sync in MySQL.
+        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+        $response = $client->post(
+            '/account/' . $externalBusinessId . '/start_product_sync',
+            [
+                'json' => [],
+            ]
+        )->json();
+
+        Configuration::updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
+        );
     }
 
     /**
@@ -202,8 +219,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'exportDone': false, // true if export has been called once from ajaxProcessRequireProductSyncStart
-                    'matchingDone': false, // true if a category match has been called once (at least 1 matching done)
+                    'exportDone' => (true == \Configuration::get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
+                    'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
                       'total' => 0,

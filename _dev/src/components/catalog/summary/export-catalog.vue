@@ -30,10 +30,10 @@
     <h3 class="title">{{ $t('catalogSummary.productCatalogExport') }}</h3>
     <b-button
       class="float-right ml-4"
-      :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
+      :variant="error ? 'danger' : (isPrimaryAction ? 'primary' : 'outline-secondary')"
       @click="exportClicked"
     >
-      {{ $t('catalogSummary.exportCatalogButton') }}
+      {{ exportButtonLabel }}
     </b-button>
     <p class="text">
       <b-alert variant="warning" show>
@@ -69,10 +69,16 @@ export default defineComponent({
     },
   },
   computed: {
+    exportButtonLabel() {
+      return this.error
+        ? this.$t('catalogSummary.exportCatalogButtonErrored')
+        : this.$t('catalogSummary.exportCatalogButton');
+    },
   },
   data() {
     return {
       illustration,
+      error: null,
     };
   },
   methods: {
@@ -81,9 +87,26 @@ export default defineComponent({
         return;
       }
 
-      // TODO !0: call PHP here, with a fetch POST to this.startProductSyncRoute.
-      //  The result should be 200, and then: this.$parent.fetchData()
-      alert('Not yet implemented');
+      fetch(this.startProductSyncRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.$parent.fetchData();
+      }).catch((error) => {
+        console.error(error);
+        this.error = setTimeout(() => {
+          this.error = null;
+        }, 5000);
+      });
     },
   },
 });
