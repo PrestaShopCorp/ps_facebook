@@ -10,4 +10,12 @@ interface GoogleCategoryProviderInterface
      * @return array|null
      */
     public function getGoogleCategory($categoryId);
+
+    /**
+     * @param $categoryId
+     * @param $page
+     *
+     * @return array|null
+     */
+    public function getGoogleCategoryChildes($categoryId, $page);
 }

@@ -91,12 +91,21 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetCategoryMatch' => $this->context->link->getAdminLink(
+            'psFacebookGetCategory' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
                 [
-                    'action' => 'GetCategoryMatch',
+                    'action' => 'GetCategory',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCategories' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'getCategories',
                     'ajax' => 1,
                 ]
             ),

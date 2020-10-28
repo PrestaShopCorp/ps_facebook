@@ -285,6 +285,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    public function displayAjaxGetCategories()
+    {
+        $categoryId = Tools::getValue('id_category');
+        $page = Tools::getValue('page');
+
+        /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildes($categoryId, $page);
+
+        $this->ajaxDie(
+            json_encode($googleCategories)
+        );
+    }
+
     /**
      * {@inheritdoc}
      */
