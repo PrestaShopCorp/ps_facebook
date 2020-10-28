@@ -193,19 +193,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFeatures()
     {
-        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
-
-        //TODO: MOVE ELSEWHERE, THIS IS  JUST FOR TESTING
-        $response = $client->post(
-            '/account/' . $externalBusinessId . '/exchange_tokens',
-            [
-                'json' => [
-                    'userAccessToken' => Configuration::get(Config::FB_ACCESS_TOKEN)
-                ],
-            ]
-        )->json();
-
         $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
