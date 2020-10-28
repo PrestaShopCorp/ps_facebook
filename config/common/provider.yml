@@ -13,6 +13,8 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider

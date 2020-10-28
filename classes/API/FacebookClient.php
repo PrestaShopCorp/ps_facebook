@@ -12,6 +12,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
 {
@@ -29,14 +30,18 @@ class FacebookClient
      * @var Client
      */
     private $client;
+    /**
+     * @var AccessTokenProvider
+     */
+    private $accessTokenProvider;
 
     /**
      * @param ApiClientFactoryInterface $apiClientFactory
-     * @param ConfigurationAdapter $configuration
+     * @param AccessTokenProvider $accessTokenProvider
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, ConfigurationAdapter $configuration)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider)
     {
-        $this->accessToken = $configuration->get(Config::FB_ACCESS_TOKEN);
+        $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
     }
