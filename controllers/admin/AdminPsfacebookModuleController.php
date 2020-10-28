@@ -15,6 +15,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
+        //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
 
