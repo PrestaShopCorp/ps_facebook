@@ -87,6 +87,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    categoryMatchingRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategoryMatch || null,
+    },
   },
   computed: {
   },
@@ -101,8 +106,21 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      // TODO !0
-      this.loading = false;
+      this.loading = true;
+      fetch(global.categoryMatchingRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((res) => {
+          this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
+          // TODO : update others
+          this.loading = false;
+        }).catch((error) => {
+          console.error(error);
+        });
     },
   },
   watch: {

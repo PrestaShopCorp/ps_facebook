@@ -180,9 +180,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId);
+        // FIXME : for now, this function will call our API to get taxonomy details about a category ID.
+        //  The needed feature is totally different : see ticket http://forge.prestashop.com/browse/EMKTG-305
 
         $this->ajaxDie(
             json_encode($googleCategory)
+            // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
         );
     }
 
