@@ -91,35 +91,9 @@ export default defineComponent({
     },
     getCurrentRow(currentShopCategoryID) {
       if (this.overrideGetCurrentRow) {
-        return this.overrideGetCurrentRow(currentShopCategoryID)
+        const result = this.overrideGetCurrentRow(currentShopCategoryID)
+        var subcategory = result
       }
-      // Call php for get all subcategories from shopCategoryID
-      const subcategory = [
-        {
-          'shopCategoryId': '2',
-          'shopCategoryName': 'Bird',
-          'deploy': true,
-          'show': true,
-          'categoryName': 'Bird Supplies',
-          'categoryId': 2,
-          'shopParentCategoryIds': '',
-          'subcategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies',
-          'subcategoryId': 3,
-          'propagation': false,
-        },
-        {
-          'shopCategoryId': '3',
-          'shopCategoryName': 'Bird Baths',
-          'deploy': true,
-          'show': true,
-          'categoryName': 'Animals & Pet Supplies > Pet Supplies > Bird Supplie',
-          'categoryId': 2,
-          'shopParentCategoryIds': '',
-          'subcategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies > Bird Cage Accessories > Bird Cage Bird Baths',
-          'subcategoryId': 499954,
-          'propagation': false,
-        }
-      ];
 
       const currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
@@ -143,24 +117,19 @@ export default defineComponent({
             child.show = true;
           })
           currentCategory.deploy = true;
-          // deplier
-          // show = true soit pour les enfants direct, et pour les sous enfant dont le pere est a true
-          // filter ||
-          // recursif
-          // get children
         break;
 
         case undefined:
           currentCategory.deploy = true;
-          if (Array.isArray(subcategory)) {
-            subcategory.forEach(el => {
-              this.categories.splice(indexCtg, 0, el);
-              el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
-            })
-          } else {
-            this.categories.splice(indexCtg, 0, subcategory);
-            subcategory.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategory.shopCategoryId + '/'
-          }
+            if (Array.isArray(subcategory)) {
+              subcategory.forEach(el => {
+                this.categories.splice(indexCtg, 0, el);
+                el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
+              })
+            } else {
+              this.categories.splice(indexCtg, 0, subcategory);
+              subcategory.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategory.shopCategoryId + '/'
+            }
           currentCategory.deploy = true;
           // deploy = true
           // api PHP
@@ -170,7 +139,6 @@ export default defineComponent({
         break;
 
         default:
-        // nothing
       }
     }
   },

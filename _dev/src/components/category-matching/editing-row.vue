@@ -323,10 +323,71 @@ export default defineComponent({
     line-height: 1;
     color: #c05c67;
   }
+  .opened {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_more";
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
+  .closed {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-style: normal;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_less";
+      transform: rotate(90deg);
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
 
   .array-tree-lvl-2 {
     td:first-child {
-      padding-left:20px;
+      padding-left:40px;
+    }
+  }
+  .array-tree-lvl-3 {
+    td:first-child {
+      padding-left:80px;
     }
   }
 
