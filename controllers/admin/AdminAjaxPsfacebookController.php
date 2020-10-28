@@ -225,7 +225,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
                       'total' => 0,
-                      'pending' =>  0,
+                      'pending' => 0,
                       'approved' => 0,
                       'disapproved' => 0,
                     ],
