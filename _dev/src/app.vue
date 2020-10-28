@@ -20,10 +20,16 @@
   <div id="app">
     <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
-        onboarding-required="true"
+        :onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}
+      </MenuItem>
+      <MenuItem
+        :onboarding-required="true"
+        route="/integrate"
+      >
+        {{ $t('general.tabs.integrate') }}
       </MenuItem>
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}

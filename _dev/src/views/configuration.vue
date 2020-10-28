@@ -81,7 +81,10 @@
             <p>{{ $t('configuration.glass.text') }}</p>
             <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
           </div>
-          <div class="closeCross p-1 m-4" @click="closePopup">
+          <div
+            class="closeCross p-1 m-4"
+            @click="closePopup"
+          >
             <i class="material-icons">close</i>
           </div>
         </div>

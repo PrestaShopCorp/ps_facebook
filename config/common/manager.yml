@@ -1,0 +1,6 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager:
+    class: PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'

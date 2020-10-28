@@ -17,8 +17,10 @@
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
@@ -184,6 +186,52 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode($googleCategory)
         );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxGetFeatures()
+    {
+        $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
+
+        $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'fbeFeatures' => $fbeFeatures,
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxUpdateFeature()
+    {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
+        $featureManager = $this->module->getService(FbeFeatureManager::class);
+
+        $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
+
+        if (is_array($response)) {
+            $this->ajaxDie(
+                json_encode(
+                    $response
+                )
+            );
+        } else {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
     }
 
     /**

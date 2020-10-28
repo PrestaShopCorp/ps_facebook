@@ -18,3 +18,9 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
