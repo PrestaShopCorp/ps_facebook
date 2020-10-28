@@ -11,16 +11,18 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      * @param int $googleCategoryId
+     * @param bool $isParentCategory
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function updateCategoryMatch($categoryId, $googleCategoryId)
+    public function updateCategoryMatch($categoryId, $googleCategoryId, $isParentCategory = false)
     {
         Db::getInstance()->insert(
             'fb_category_match',
             [
                 'id_category' => (int) $categoryId,
                 'google_category_id' => (int) $googleCategoryId,
+                'is_parent_category' => $isParentCategory,
             ],
             false,
             true,
@@ -42,6 +44,7 @@ class GoogleCategoryRepository
             $data[] = [
                 'id_category' => (int) $category->id,
                 'google_category_id' => (int) $googleCategoryId,
+                'is_parent_category' => false,
             ];
         }
 
@@ -57,15 +60,18 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      *
-     * @return int
+     * @return array|false
+     * @throws \PrestaShopDatabaseException
      */
-    public function getGoogleCategoryIdByCategoryId($categoryId)
+    public function getCategoryMatchByCategoryId($categoryId)
     {
         $sql = new DbQuery();
+        $sql->select('id_category');
         $sql->select('google_category_id');
+        $sql->select('is_parent_category');
         $sql->from('fb_category_match');
-        $sql->where('`id_Category` = "' . (int) $categoryId . '"');
+        $sql->where('`id_category` = "' . (int) $categoryId . '"');
 
-        return (int) Db::getInstance()->getValue($sql);
+        return Db::getInstance()->executeS($sql);
     }
 }

@@ -29,18 +29,22 @@ class FacebookCategoryClient
      * @param int $categoryId
      *
      * @return array|null
+     * @throws \PrestaShopDatabaseException
      */
     public function getGoogleCategory($categoryId)
     {
-        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
+        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchByCategoryId($categoryId);
 
-        $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
+        $googleCategory = $this->get('taxonomy/' . $categoryMatch['google_category_id']);
 
         if (!is_array($googleCategory)) {
             return null;
         }
 
-        return reset($googleCategory);
+        $googleCategory = reset($googleCategory);
+        $googleCategory[] = $categoryMatch['is_parent_category'];
+
+        return $googleCategory;
     }
 
     protected function get($id, array $fields = [], array $query = [])

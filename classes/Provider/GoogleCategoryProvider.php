@@ -20,6 +20,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
      * @param int $categoryId
      *
      * @return array|null
+     * @throws \PrestaShopDatabaseException
      */
     public function getGoogleCategory($categoryId)
     {
