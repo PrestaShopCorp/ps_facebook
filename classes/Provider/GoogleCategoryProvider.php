@@ -44,7 +44,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
      */
     public function getGoogleCategoryChildes($categoryId, $langId, $page = 1)
     {
-        if (!$page || $page < 1) {
+        if ($page < 1) {
             $page = 1;
         }
         $googleCategory = $this->googleCategoryRepository->getFilteredCategories(
