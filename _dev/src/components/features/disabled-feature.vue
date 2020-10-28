@@ -5,7 +5,7 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo d-none d-md-block"
-            :src="page_shop"
+            :src="require(`@/assets/${name}.png`)"
             :alt="$t(`integrate.features.${name}.name`)"
             width="80"
           >
@@ -38,10 +38,6 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BCard, BCardBody} from 'bootstrap-vue';
-// import ig_shopping from '../../assets/ig_shopping.png';
-// import messenger_chat from '../../assets/messenger_chat.png';
-// import page_cta from '../../assets/page_cta.png';
-import page_shop from '../../assets/page_shop.png';
 
 export default defineComponent({
   name: 'DisabledFeature',
@@ -61,18 +57,6 @@ export default defineComponent({
       required: false,
       default: () => global.facebookManageFeaturesRoute,
     },
-  },
-  data() {
-    // const images = {
-    //   ig_shopping: ig_shopping,
-    //   messenger_chat: messenger_chat,
-    //   page_cta: page_cta,
-    //   page_shop: page_shop,
-    // };
-
-    return {
-      page_shop,
-    };
   },
   methods: {
     getImgUrl(feature) {

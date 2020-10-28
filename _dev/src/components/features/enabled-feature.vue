@@ -25,6 +25,8 @@
               class="switch-input switch-input-lg ml-1"
               :class="switchActivated ? '-checked' : null"
               @click="switchClick"
+              data-toggle="modal"
+              :data-target="switchActivated ? `#modal_${name}` : null"
             >
               <input
                 class="switch-input-lg"
@@ -32,13 +34,6 @@
                 :checked="switchActivated"
               >
             </div>
-            <b-button
-              variant="primary"
-              data-toggle="modal"
-              :data-target="`#modal_${name}`"
-            >
-              TEST
-            </b-button>
           </div>
         </div>
         <div class="d-flex" />
@@ -128,16 +123,13 @@ export default defineComponent({
     return {
       switchActivated: this.active,
       isLoading: this.loading,
-      showModal: false,
     };
   },
   methods: {
     switchClick() {
       if (!this.isLoading) {
         this.isLoading = true;
-        if (this.switchActivated) {
-          this.showModal = true;
-        } else {
+        if (!this.switchActivated) {
           this.updateFeatureState();
         }
       }

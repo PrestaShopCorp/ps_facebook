@@ -32,10 +32,6 @@ class FbeFeatureDataProvider
         //TODO: Implement check if products are synchronized
         $productsSynced = false;
 
-        if (empty($features)) {
-            return [];
-        }
-
         $features = array_filter($features, function ($key) {
             return in_array($key, Config::AVAILABLE_FBE_FEATURES);
         }, ARRAY_FILTER_USE_KEY);
