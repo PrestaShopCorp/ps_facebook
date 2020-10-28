@@ -2,7 +2,7 @@
 <module>
     <name>ps_facebook</name>
     <displayName><![CDATA[Ps Facebook]]></displayName>
-    <version><![CDATA[1.0.0]]></version>
+    <version><![CDATA[1.1.0]]></version>
     <description><![CDATA[Ps facebook]]></description>
     <author><![CDATA[PrestaShop]]></author>
     <tab><![CDATA[advertising_marketing]]></tab>

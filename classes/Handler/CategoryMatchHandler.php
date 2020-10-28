@@ -31,6 +31,6 @@ class CategoryMatchHandler
             $categoryChildrenIds = $category->getAllChildren();
             $this->googleCategoryRepository->updateCategoryChildrenMatch($categoryChildrenIds, $googleCategoryId);
         }
-        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId);
+        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
     }
 }
