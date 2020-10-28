@@ -1,0 +1,5 @@
+services:
+  PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations:
+    class: PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations
+    arguments:
+      - '@ps_facebook'

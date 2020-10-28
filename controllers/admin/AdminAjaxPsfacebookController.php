@@ -14,19 +14,18 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
-use GuzzleHttp\Client;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
-use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
+    /** @var Ps_facebook */
+    public $module;
+
     public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
@@ -43,17 +42,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxConnectToFacebook()
     {
         $inputs = json_decode(file_get_contents('php://input'), true);
-
         $onboardingData = $inputs['onboarding'];
-        $facebookClient = new FacebookClient(
-            $onboardingData['access_token'],
-            Config::API_VERSION,
-            new Client()
-        );
-        $fbDataProvider = new FacebookDataProvider($facebookClient);
 
-        $configurationAdapter = new ConfigurationAdapter();
-        $configurationHandler = new ConfigurationHandler($configurationAdapter, $fbDataProvider);
+        /** @var ConfigurationHandler $configurationHandler */
+        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
 
         $response = $configurationHandler->handle($onboardingData);
 
@@ -112,14 +104,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxConfiguration()
     {
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+        /** @var FbeDataProvider $fbeDataProvider */
+        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
 
-        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
 
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
@@ -138,14 +127,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFbContext()
     {
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+        /** @var FbeDataProvider $fbeDataProvider */
+        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
 
-        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
 
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
@@ -161,7 +147,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxUpdateCategoryMatch()
     {
-        $categoryMatchHandler = new CategoryMatchHandler(new GoogleCategoryRepository());
+        /** @var CategoryMatchHandler $categoryMatchHandler */
+        $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
+
         try {
             /* todo: change to data from ajax */
             $categoryMatchHandler->updateCategoryMatch(3, 8, true);

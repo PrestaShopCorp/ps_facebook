@@ -4,12 +4,11 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
 class FacebookCategoryClient
 {
-    const API_URL = 'https://facebook-api.psessentials.net';
-
     /**
      * @var Client
      */
@@ -20,9 +19,9 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
-    public function __construct(Client $client, GoogleCategoryRepository $googleCategoryRepository)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, GoogleCategoryRepository $googleCategoryRepository)
     {
-        $this->client = $client;
+        $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
 
@@ -54,12 +53,15 @@ class FacebookCategoryClient
         );
 
         try {
-            $response = $this->client->get(
-                self::API_URL . "/{$id}",
+            $request = $this->client->createRequest(
+                'GET',
+                "/{$id}",
                 [
                     'query' => $query,
                 ]
             );
+
+            $response = $this->client->send($request);
         } catch (Exception $e) {
             return false;
         }
