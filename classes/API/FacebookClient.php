@@ -208,10 +208,13 @@ class FacebookClient
         ];
 
         try {
-            $response = $this->client->post(
-                self::API_URL . "/{$this->sdkVersion}/{$id}",
+            $request = $this->client->createRequest(
+                'POST',
+                "/{$this->sdkVersion}/{$id}",
                 $options
             );
+
+            $response = $this->client->send($request);
         } catch (Exception $e) {
             return false;
         }

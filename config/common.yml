@@ -9,6 +9,7 @@ imports:
   - { resource: common/provider.yml }
   - { resource: common/repository.yml }
   - { resource: common/translations.yml }
+  - { resource: common/manager.yml }
 
 services:
   ps_facebook:
