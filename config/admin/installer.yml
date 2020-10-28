@@ -1,0 +1,11 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Database\Installer:
+    class: PrestaShop\Module\PrestashopFacebook\Database\Installer
+    arguments:
+      - '@ps_facebook'
+
+  PrestaShop\Module\PrestashopFacebook\Database\Uninstaller:
+    class: PrestaShop\Module\PrestashopFacebook\Database\Uninstaller
+    arguments:
+      - '@ps_facebook'
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\TabRepository'

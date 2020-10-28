@@ -4,16 +4,17 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
+use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 
 class FacebookClient
 {
-    const API_URL = 'https://graph.facebook.com';
-
     /**
      * @var string
      */
@@ -30,14 +31,19 @@ class FacebookClient
     private $client;
 
     /**
-     * @param string $sdkVersion
-     * @param string $accessToken
+     * @param ApiClientFactoryInterface $apiClientFactory
+     * @param ConfigurationAdapter $configuration
      */
-    public function __construct($accessToken, $sdkVersion, Client $client)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, ConfigurationAdapter $configuration)
+    {
+        $this->accessToken = $configuration->get(Config::FB_ACCESS_TOKEN);
+        $this->sdkVersion = Config::API_VERSION;
+        $this->client = $apiClientFactory->createClient();
+    }
+
+    public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
-        $this->sdkVersion = $sdkVersion;
-        $this->client = $client;
     }
 
     public function getUserEmail()
@@ -50,9 +56,6 @@ class FacebookClient
     public function getBusinessManager($businessManagerId)
     {
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
-        if (!$responseContent) {
-            return null;
-        }
 
         return new FacebookBusinessManager(
             isset($responseContent['name']) ? $responseContent['name'] : null,
@@ -77,9 +80,6 @@ class FacebookClient
     {
         $pageId = reset($pageIds);
         $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
-        if (!$responseContent) {
-            return null;
-        }
 
         $logoResponse = $this->get($pageId . '/photos', ['picture']);
 
@@ -98,9 +98,6 @@ class FacebookClient
     public function getAd($adId)
     {
         $responseContent = $this->get((int) $adId, ['name', 'created_time']);
-        if (!$responseContent) {
-            return null;
-        }
 
         return new Ad(
             isset($responseContent['name']) ? $responseContent['name'] : null,
@@ -117,7 +114,7 @@ class FacebookClient
     public function getFbeAttribute($externalBusinessId)
     {
         $responseContent = $this->get(
-            '/fbe_business/fbe_installs',
+            'fbe_business/fbe_installs',
             [],
             [
                 'fbe_external_business_id' => $externalBusinessId,
@@ -145,12 +142,15 @@ class FacebookClient
         );
 
         try {
-            $response = $this->client->get(
-                self::API_URL . "/{$this->sdkVersion}/{$id}",
+            $request = $this->client->createRequest(
+                'GET',
+                "/{$this->sdkVersion}/{$id}",
                 [
                     'query' => $query,
                 ]
             );
+
+            $response = $this->client->send($request);
         } catch (Exception $e) {
             return false;
         }

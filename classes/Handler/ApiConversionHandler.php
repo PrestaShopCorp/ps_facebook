@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use Context;
 use FacebookAds\Api;
-use FacebookAds\Logger\CurlLogger;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -21,11 +20,6 @@ use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 class ApiConversionHandler
 {
     /**
-     * @var Api|null
-     */
-    private $facebookBusinessSDK;
-
-    /**
      * @var Context
      */
     private $context;
@@ -38,8 +32,6 @@ class ApiConversionHandler
             \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
         );
 
-        $this->facebookBusinessSDK = Api::instance();
-        $this->facebookBusinessSDK->setLogger(new CurlLogger());
         $this->context = Context::getContext();
     }
 

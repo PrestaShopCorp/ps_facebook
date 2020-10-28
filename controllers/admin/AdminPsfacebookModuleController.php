@@ -15,6 +15,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
+        //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
 
@@ -85,6 +86,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'UpdateCategoryMatch',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCategoryMatch' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetCategoryMatch',
                     'ajax' => 1,
                 ]
             ),

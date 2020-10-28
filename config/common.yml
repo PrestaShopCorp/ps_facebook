@@ -1,0 +1,18 @@
+imports:
+  - { resource: common/adapter.yml }
+  - { resource: common/api.yml }
+  - { resource: common/buffer.yml }
+  - { resource: common/context.yml }
+  - { resource: common/dispatcher.yml }
+  - { resource: common/factory.yml }
+  - { resource: common/handler.yml }
+  - { resource: common/provider.yml }
+  - { resource: common/repository.yml }
+  - { resource: common/translations.yml }
+
+services:
+  ps_facebook:
+    class: 'Ps_facebook'
+    factory: ['Module', 'getInstanceByName']
+    arguments:
+      - 'ps_facebook'

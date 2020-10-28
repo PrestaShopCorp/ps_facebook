@@ -1,0 +1,6 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory:
+    class: PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory
+
+  PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory:
+    class: PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory

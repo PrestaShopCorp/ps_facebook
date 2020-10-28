@@ -4,12 +4,11 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
 class FacebookCategoryClient
 {
-    const API_URL = 'https://facebook-api.psessentials.net';
-
     /**
      * @var Client
      */
@@ -20,9 +19,9 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
-    public function __construct(Client $client, GoogleCategoryRepository $googleCategoryRepository)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, GoogleCategoryRepository $googleCategoryRepository)
     {
-        $this->client = $client;
+        $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
 
@@ -30,18 +29,23 @@ class FacebookCategoryClient
      * @param int $categoryId
      *
      * @return array|null
+     *
+     * @throws \PrestaShopDatabaseException
      */
     public function getGoogleCategory($categoryId)
     {
-        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
+        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchByCategoryId($categoryId);
 
-        $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
+        $googleCategory = $this->get('taxonomy/' . $categoryMatch['google_category_id']);
 
         if (!is_array($googleCategory)) {
             return null;
         }
 
-        return reset($googleCategory);
+        $googleCategory = reset($googleCategory);
+        $googleCategory['is_parent_category'] = $categoryMatch['is_parent_category'];
+
+        return $googleCategory;
     }
 
     protected function get($id, array $fields = [], array $query = [])
@@ -54,12 +58,15 @@ class FacebookCategoryClient
         );
 
         try {
-            $response = $this->client->get(
-                self::API_URL . "/{$id}",
+            $request = $this->client->createRequest(
+                'GET',
+                "/{$id}",
                 [
                     'query' => $query,
                 ]
             );
+
+            $response = $this->client->send($request);
         } catch (Exception $e) {
             return false;
         }

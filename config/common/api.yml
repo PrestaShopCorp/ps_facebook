@@ -1,0 +1,12 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient:
+    class: PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory'
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
+
+  PrestaShop\Module\PrestashopFacebook\API\FacebookClient:
+    class: PrestaShop\Module\PrestashopFacebook\API\FacebookClient
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
