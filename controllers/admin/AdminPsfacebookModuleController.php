@@ -18,7 +18,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
-        $appId = Config::APP_ID;
+        $appId = $_ENV['PSX_FACEBOOK_APP_ID'];
         $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([

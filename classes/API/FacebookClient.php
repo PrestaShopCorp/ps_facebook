@@ -126,13 +126,19 @@ class FacebookClient
 
     public function getFbeFeatures($externalBusinessId)
     {
-        return $this->get(
-            '/fbe_business',
+        $response = $this->get(
+            'fbe_business',
             [],
             [
                 'fbe_external_business_id' => $externalBusinessId,
             ]
         );
+
+        if (!is_array($response)) {
+            return [];
+        }
+
+        return $response;
     }
 
     public function updateFeature($externalBusinessId, $configuration)

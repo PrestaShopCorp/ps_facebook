@@ -193,13 +193,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFeatures()
     {
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-
-        $fbeFeatureDataProvider = new FbeFeatureDataProvider($facebookClient , new ConfigurationAdapter());
+        $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
 
@@ -219,16 +213,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $inputs = json_decode(file_get_contents('php://input'), true);
 
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-
-        $featureManager = new FbeFeatureManager(
-            new ConfigurationAdapter(),
-            $facebookClient
-        );
+        $featureManager = $this->module->getService(FbeFeatureManager::class);
 
         $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
 
