@@ -37,13 +37,14 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody} from 'bootstrap-vue';
+import {BCard, BCardBody, BButton} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'DisabledFeature',
   components: {
     BCard,
     BCardBody,
+    BButton,
   },
   mixins: [],
   props: {
@@ -56,12 +57,6 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.facebookManageFeaturesRoute,
-    },
-  },
-  methods: {
-    getImgUrl(feature) {
-      console.log(this.images);
-      return this.images[feature];
     },
   },
 });

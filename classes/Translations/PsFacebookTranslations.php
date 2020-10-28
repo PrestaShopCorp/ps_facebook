@@ -189,7 +189,7 @@ class PsFacebookTranslations
                     'disableFeatureModalText' => $this->module->l('You are about to disable this feature. This may limit some functionality.', 'PsFacebookTranslations'),
                 ],
                 'error' => [
-                    'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.'),
+                    'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
             ],
         ];

@@ -87,14 +87,14 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody, BModal} from 'bootstrap-vue';
+import {BCard, BCardBody, BButton} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
   components: {
     BCard,
     BCardBody,
-    BModal,
+    BButton,
   },
   mixins: [],
   props: {
