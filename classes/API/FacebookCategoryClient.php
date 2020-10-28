@@ -29,6 +29,7 @@ class FacebookCategoryClient
      * @param int $categoryId
      *
      * @return array|null
+     *
      * @throws \PrestaShopDatabaseException
      */
     public function getGoogleCategory($categoryId)
@@ -42,7 +43,7 @@ class FacebookCategoryClient
         }
 
         $googleCategory = reset($googleCategory);
-        $googleCategory[] = $categoryMatch['is_parent_category'];
+        $googleCategory['is_parent_category'] = $categoryMatch['is_parent_category'];
 
         return $googleCategory;
     }

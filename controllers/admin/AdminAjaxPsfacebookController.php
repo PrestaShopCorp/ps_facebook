@@ -19,6 +19,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -170,6 +171,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'success' => true,
                 ]
             )
+        );
+    }
+
+    public function displayAjaxGetCategoryMatch()
+    {
+        $categoryId = Tools::getValue('id_category');
+        /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
+        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId);
+
+        $this->ajaxDie(
+            json_encode($googleCategory)
         );
     }
 

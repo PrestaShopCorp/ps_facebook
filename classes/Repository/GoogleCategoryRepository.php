@@ -61,6 +61,7 @@ class GoogleCategoryRepository
      * @param int $categoryId
      *
      * @return array|false
+     *
      * @throws \PrestaShopDatabaseException
      */
     public function getCategoryMatchByCategoryId($categoryId)
@@ -72,6 +73,6 @@ class GoogleCategoryRepository
         $sql->from('fb_category_match');
         $sql->where('`id_category` = "' . (int) $categoryId . '"');
 
-        return Db::getInstance()->executeS($sql);
+        return Db::getInstance()->getRow($sql);
     }
 }
