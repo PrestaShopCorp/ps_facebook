@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use Context;
 use FacebookAds\Api;
-use FacebookAds\Logger\CurlLogger;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;

@@ -14,20 +14,15 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
-use GuzzleHttp\Client;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
-use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
-
     /** @var Ps_facebook */
     public $module;
 
