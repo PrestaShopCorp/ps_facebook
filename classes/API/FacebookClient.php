@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
@@ -12,6 +11,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
 {
@@ -29,14 +29,18 @@ class FacebookClient
      * @var Client
      */
     private $client;
+    /**
+     * @var AccessTokenProvider
+     */
+    private $accessTokenProvider;
 
     /**
      * @param ApiClientFactoryInterface $apiClientFactory
-     * @param ConfigurationAdapter $configuration
+     * @param AccessTokenProvider $accessTokenProvider
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, ConfigurationAdapter $configuration)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider)
     {
-        $this->accessToken = $configuration->get(Config::FB_ACCESS_TOKEN);
+        $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
     }
@@ -124,6 +128,37 @@ class FacebookClient
         return reset($responseContent['data']);
     }
 
+    public function getFbeFeatures($externalBusinessId)
+    {
+        $response = $this->get(
+            'fbe_business',
+            [],
+            [
+                'fbe_external_business_id' => $externalBusinessId,
+            ]
+        );
+
+        if (!is_array($response)) {
+            return [];
+        }
+
+        return $response;
+    }
+
+    public function updateFeature($externalBusinessId, $configuration)
+    {
+        $body = [
+            'fbe_external_business_id' => $externalBusinessId,
+            'business_config' => $configuration,
+        ];
+
+        return $this->post(
+            'fbe_business',
+            [],
+            $body
+        );
+    }
+
     /**
      * @param int|string $id
      * @param array $fields
@@ -148,6 +183,40 @@ class FacebookClient
                 [
                     'query' => $query,
                 ]
+            );
+
+            $response = $this->client->send($request);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param int|string $id
+     * @param array $headers
+     * @param array $body
+     *
+     * @return false|array
+     */
+    public function post($id, array $headers = [], array $body = [])
+    {
+        $options = [
+            'headers' => $headers,
+            'body' => array_merge(
+                [
+                    'access_token' => $this->accessToken,
+                ],
+                $body
+            ),
+        ];
+
+        try {
+            $request = $this->client->createRequest(
+                'POST',
+                "/{$this->sdkVersion}/{$id}",
+                $options
             );
 
             $response = $this->client->send($request);

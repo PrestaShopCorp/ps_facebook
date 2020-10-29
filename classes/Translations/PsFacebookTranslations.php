@@ -60,6 +60,7 @@ class PsFacebookTranslations
                     'configuration' => $this->module->l('Configure', 'PsFacebookTranslations'),
                     'catalog' => $this->module->l('Export product catalog', 'PsFacebookTranslations'),
                     'help' => $this->module->l('Help', 'PsFacebookTranslations'),
+                    'integrate' => $this->module->l('Integrate', 'PsFacebookTranslations'),
                 ],
             ],
             'configuration' => [
@@ -153,6 +154,43 @@ class PsFacebookTranslations
                     'noResult' => $this->module->l('No result for your search', 'PsFacebookTranslations'),
                     'tooManyResults' => $this->module->l('Too many results, please complete your search.', 'PsFacebookTranslations'),
                     'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
+                ],
+            ],
+            'integrate' => [
+                'buttons' => [
+                    'add' => $this->module->l('Add', 'PsFacebookTranslations'),
+                    'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations'),
+                    'modalConfirm' => $this->module->l('Yes, confirm', 'PsFacebookTranslations'),
+                ],
+                'features' => [
+                    'ig_shopping' => [
+                        'name' => $this->module->l('Instagram shopping', 'PsFacebookTranslations'),
+                        'description' => $this->module->l('Tag your products in the publications to redirect traffic to your e-commerce site.', 'PsFacebookTranslations'),
+                    ],
+                    'messenger_chat' => [
+                        'name' => $this->module->l('Messenger Chat Plugin', 'PsFacebookTranslations'),
+                        'description' => $this->module->l('Allows people to start a conversation with you on your website and continue in Messenger.', 'PsFacebookTranslations'),
+                    ],
+                    'page_shop' => [
+                        'name' => $this->module->l('Facebook Shop', 'PsFacebookTranslations'),
+                        'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
+                    ],
+                    'page_cta' => [
+                        'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
+                        'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
+                    ],
+                ],
+                'headings' => [
+                    'disabledFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
+                    'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
+                ],
+                'warning' => [
+                    'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
+                    'disableFeatureModalHeader' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
+                    'disableFeatureModalText' => $this->module->l('You are about to disable this feature. This may limit some functionality.', 'PsFacebookTranslations'),
+                ],
+                'error' => [
+                    'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
             ],
         ];

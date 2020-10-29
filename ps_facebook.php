@@ -7,6 +7,7 @@ use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
@@ -187,8 +188,13 @@ class Ps_facebook extends Module
      */
     public function install()
     {
+        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
+        // does not have the _PS_ADMIN_DIR_ in this environment.
+        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
+        // $installer = $this->getService(Installer::class);
+
         /** @var Installer $installer */
-        $installer = $this->getService(Installer::class);
+        $installer = new Installer($this);
 
         return parent::install() &&
             (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
@@ -205,8 +211,13 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
+        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
+        // does not have the _PS_ADMIN_DIR_ in this environment.
+        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
+        // $uninstaller = $this->getService(Uninstaller::class);
+
         /** @var Uninstaller $uninstaller */
-        $uninstaller = $this->getService(Uninstaller::class);
+        $uninstaller = new Uninstaller($this, $this->getService(TabRepository::class));
 
         return $uninstaller->uninstall() &&
             parent::uninstall();

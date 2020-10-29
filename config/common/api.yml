@@ -9,4 +9,4 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\API\FacebookClient
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory'
-      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider'
