@@ -31,10 +31,10 @@ class AccessTokenProvider
     public function getOrRefreshToken()
     {
         $accessToken = $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN);
-        $accessTokenExpires = $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN_EXPIRES);
+        $tokenExpirationDate = $this->configurationAdapter->get(Config::PS_FACEBOOK_ACCESS_TOKEN_EXPIRATION_DATE);
         $currentTimestamp = time();
 
-        if (!$accessToken || !$accessTokenExpires || ($accessTokenExpires - $currentTimestamp < 6000)) {
+        if (!$accessToken || !$tokenExpirationDate || ($tokenExpirationDate - $currentTimestamp <= 86400)) {
             return $this->refreshToken();
         }
 
@@ -65,7 +65,7 @@ class AccessTokenProvider
             $newAccessToken = $response['access_token'];
 
             $this->configurationAdapter->updateValue(Config::FB_ACCESS_TOKEN, $newAccessToken);
-            $this->configurationAdapter->updateValue(Config::FB_ACCESS_TOKEN_EXPIRES, $tokenExpiresIn);
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
 
             return $newAccessToken;
         }
