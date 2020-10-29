@@ -17,16 +17,15 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         // Asset Manager to be sure the JS is loaded
         /** @var \FrontController|\ProductController|\CategoryController $controller */
         $controller = $this->context->controller;
-
         if (true === $this->module->psVersionIs17) {
             $controller->registerJavascript(
-                'front_common',
-                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
+                'front_fb_common',
+                $this->module->js_path . 'printpixel.js',
                 ['position' => 'bottom', 'priority' => 150]
             );
         } else {
             $controller->addJs(
-                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
+                $this->module->js_path . 'printpixel.js',
                 false
             );
         }
