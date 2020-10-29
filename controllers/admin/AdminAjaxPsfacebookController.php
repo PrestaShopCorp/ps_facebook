@@ -20,8 +20,12 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+<<<<<<< HEAD
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+=======
+use PrestaShop\Module\Ps_facebook\Api\Shop\RetrieveFaq;
+>>>>>>> start faq
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -306,6 +310,40 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(
             json_encode($googleCategories)
+        );
+    }
+
+    /**
+     * Retrieve the faq
+     *
+     * @return array|bool faq or false if no faq associated to the module
+     */
+    public function displayAjaxRetrieveFaq()
+    {
+        $faq = new RetrieveFaq();
+        // TO DO : remove when we get the module key
+        $faq->setModuleKey('697657ffe038d20741105e95a10b12d1');
+        // $faq->setModuleKey($this->module->module_key);
+        $faq->setPsVersion(_PS_VERSION_);
+        $faq->setIsoCode($this->context->language->iso_code);
+        $response = $faq->getFaq();
+
+        if (200 !== $response['httpCode']) {
+            return false;
+        }
+
+        // If no response in the selected language, retrieve the faq in the default language (english)
+        if (false === $response['body'] && $faq->getIsoCode() !== 'en') {
+            $faq->setIsoCode('en');
+            $response = $faq->getFaq();
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'faq' => $response['body'],
+                ]
+            )
         );
     }
 
