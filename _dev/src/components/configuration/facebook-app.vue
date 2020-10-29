@@ -38,59 +38,63 @@
       {{ appName }}
     </div>
 
-    <div
-      v-if="activationSwitch != null"
-      class="switchy float-right mb-1 ml-2"
-    >
-      <span class="d-none d-sm-inline">
-        {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
-      </span>
+    <div v-if="displayWarning">
+      <warning :warning-text="$t('configuration.app.informationCannotBeDisplayedWarning')" />
+    </div>
+    <div v-else>
       <div
-        class="switch-input switch-input-lg ml-1"
-        :class="switchActivated ? '-checked' : null"
-        @click="switchClick"
+        v-if="activationSwitch != null"
+        class="switchy float-right mb-1 ml-2"
       >
-        <input
-          class="switch-input-lg"
-          type="checkbox"
-          :checked="switchActivated"
+        <span class="d-none d-sm-inline">
+          {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
+        </span>
+        <div
+          class="switch-input switch-input-lg ml-1"
+          :class="switchActivated ? '-checked' : null"
+          @click="switchClick"
         >
+          <input
+            class="switch-input-lg"
+            type="checkbox"
+            :checked="switchActivated"
+          >
+        </div>
       </div>
-    </div>
 
-    <div
-      v-if="!!email"
-      class="small text-truncate"
-    >
-      {{ email }}
-    </div>
-    <div
-      v-if="!!appId"
-      class="small text-truncate"
-    >
-      {{ appId }}
-    </div>
-    <div
-      v-if="!!likes"
-      class="small"
-    >
-      {{ likes }}
-      {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
-    </div>
-    <div
-      v-if="!!createdAt"
-      class="small"
-    >
-      {{ $t('configuration.app.createdAt') }}
-      {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
-    </div>
-    <div
-      v-if="!!lastActive"
-      class="small"
-    >
-      {{ $t('configuration.app.lastActive') }}
-      {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
-    </div>
+      <div
+        v-if="!!email"
+        class="small text-truncate"
+      >
+        {{ email }}
+      </div>
+      <div
+        v-if="!!appId"
+        class="small text-truncate"
+      >
+        {{ appId }}
+      </div>
+      <div
+        v-if="!!likes"
+        class="small"
+      >
+        {{ likes }}
+        {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
+      </div>
+      <div
+        v-if="!!createdAt"
+        class="small"
+      >
+        {{ $t('configuration.app.createdAt') }}
+        {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+      </div>
+      <div
+        v-if="!!lastActive"
+        class="small"
+      >
+        {{ $t('configuration.app.lastActive') }}
+        {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+      </div>
 
     <div
       v-if="!!url"
@@ -111,10 +115,16 @@
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
 import {BFormCheckbox, BIconInfoCircle, BLink} from 'bootstrap-vue';
+import Warning from '../warning/warning.vue';
 
 export default defineComponent({
   name: 'FacebookApp',
-  components: {BFormCheckbox, BIconInfoCircle, BLink},
+  components: {
+    BFormCheckbox,
+    BIconInfoCircle,
+    BLink,
+    Warning,
+  },
   props: {
     appType: {
       type: String,
@@ -168,6 +178,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: null,
+    },
+    displayWarning: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {

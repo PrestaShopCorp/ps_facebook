@@ -124,6 +124,7 @@ class PsFacebookTranslations
                     'activated' => $this->module->l('Activated', 'PsFacebookTranslations'),
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
                     'viewStats' => $this->module->l('View stats', 'PsFacebookTranslations'),
+                    'informationCannotBeDisplayedWarning' => $this->module->l('This information cannot be displayed at the moment', 'PsFacebookTranslations'),
                 ],
                 'glass' => [
                     'text' => $this->module->l('You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.', 'PsFacebookTranslations'),
