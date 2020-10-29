@@ -335,7 +335,7 @@ class Ps_facebook extends Module
     public function hookDisplayFooter()
     {
         $content = '';
-        $messengerHandler = new MessengerHandler();
+        $messengerHandler = $this->getService(MessengerHandler::class);
         if ($messengerHandler->isReady()) {
             $this->context->smarty->assign($messengerHandler->handle());
             $content .= $this->context->smarty->fetch('module:ps_facebook/views/templates/hook/messenger.tpl');
