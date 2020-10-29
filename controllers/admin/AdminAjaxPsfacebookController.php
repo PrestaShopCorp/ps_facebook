@@ -1,5 +1,5 @@
 <?php
-/*
+/*X
 * 2007-2020 PrestaShop.
 *
 * DISCLAIMER
@@ -20,13 +20,11 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
-<<<<<<< HEAD
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
-=======
 use PrestaShop\Module\Ps_facebook\Api\Shop\RetrieveFaq;
->>>>>>> start faq
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
+use PrestaShop\ModuleLibFaq\Faq;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -316,7 +314,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * Retrieve the faq
      *
-     * return array|bool faq or false if no faq associated to the module
+     * @return array|bool faq or false if no faq associated to the module
      */
     public function displayAjaxRetrieveFaq()
     {
