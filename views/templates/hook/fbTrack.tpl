@@ -22,16 +22,20 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-{if !empty($content) && !empty($type)}
-    {literal}
-        <script>
-            fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}', {/literal}{$content nofilter}{literal});
-        </script>
-    {/literal}
-{else if !empty($type) && empty($content)}
-    {literal}
-        <script>
-            fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}');
-        </script>
-    {/literal}
+{if !empty($content)}
+    {if !empty($type)}
+        {literal}
+            <script>
+                fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}', {/literal}{$content nofilter}{literal});
+            </script>
+        {/literal}
+    {/if}
+{else if !empty($type)}
+    {if empty($content)}
+        {literal}
+            <script>
+                fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}');
+            </script>
+        {/literal}
+    {/if}
 {/if}
