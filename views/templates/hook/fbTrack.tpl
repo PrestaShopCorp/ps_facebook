@@ -22,16 +22,14 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-{if !empty($content)}
-    {if !empty($type)}
+{if !empty($type)}
+    {if !empty($content)}
         {literal}
             <script>
                 fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}', {/literal}{$content nofilter}{literal});
             </script>
         {/literal}
-    {/if}
-{else if !empty($type)}
-    {if empty($content)}
+    {else}
         {literal}
             <script>
                 fbq('{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}', '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}');
