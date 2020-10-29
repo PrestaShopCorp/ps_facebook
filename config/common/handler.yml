@@ -16,6 +16,8 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
+    arguments:
+      - '@language'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
