@@ -49,7 +49,7 @@
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
           "facebookAdsTooltip": "Facebook Ads",
-          "manageFbeButton": "Open Advanced settings"
+          "manageFbeButton": "Open advanced settings"
         }
       },
       "app": {
@@ -78,7 +78,8 @@
       "reportingIntro": "Only products from matched categories are synced.",
       "viewButton": "View",
       "backButton": "Back",
-      "detailsButton": "See details"
+      "detailsButton": "See details",
+      "exportCatalogButtonErrored": "Failed! Try again"
     },
     "categoryMatching": {
       "intro": "Match your own categories with official Facebook categories to improve catalog quality and ad performance.",

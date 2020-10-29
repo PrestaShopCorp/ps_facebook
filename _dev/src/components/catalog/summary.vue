@@ -62,6 +62,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    catalogSummaryRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCatalogSummaryRoute || null,
+    },
   },
   data() {
     return {
@@ -82,9 +87,27 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      // TODO !0: load data to know this.exportDone, this.matchingDone, this.matchingProgress
-      //  and this.reporting...
-      this.loading = false;
+      this.loading = true;
+
+      fetch(this.catalogSummaryRoute, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        this.exportDone = res.exportDone;
+        this.matchingDone = res.matchingDone;
+        this.matchingProgress = res.matchingProgress;
+        this.reporting = res.reporting;
+        this.loading = false;
+      }).catch((error) => {
+        console.error(error);
+        this.loading = false;
+      });
     },
     goto(page) {
       return this.$parent && this.$parent.goto(page);

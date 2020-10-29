@@ -30,10 +30,10 @@
     <h3 class="title">{{ $t('catalogSummary.productCatalogExport') }}</h3>
     <b-button
       class="float-right ml-4"
-      :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
+      :variant="error ? 'danger' : (isPrimaryAction ? 'primary' : 'outline-secondary')"
       @click="exportClicked"
     >
-      {{ $t('catalogSummary.exportCatalogButton') }}
+      {{ exportButtonLabel }}
     </b-button>
     <p class="text">
       <b-alert variant="warning" show>
@@ -62,17 +62,51 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    startProductSyncRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookStartProductSyncRoute || null,
+    },
   },
   computed: {
+    exportButtonLabel() {
+      return this.error
+        ? this.$t('catalogSummary.exportCatalogButtonErrored')
+        : this.$t('catalogSummary.exportCatalogButton');
+    },
   },
   data() {
     return {
       illustration,
+      error: null,
     };
   },
   methods: {
     exportClicked() {
-      alert('Not yet implemented');
+      if (!this.startProductSyncRoute) {
+        return;
+      }
+
+      fetch(this.startProductSyncRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.$parent.fetchData();
+      }).catch((error) => {
+        console.error(error);
+        this.error = setTimeout(() => {
+          this.error = null;
+        }, 5000);
+      });
     },
   },
 });
@@ -89,7 +123,7 @@ export default defineComponent({
     display: flow-root;
 
     & > div {
-      padding-left: 3.8rem;
+      padding-left: 3.8rem !important;
     }
   }
 </style>

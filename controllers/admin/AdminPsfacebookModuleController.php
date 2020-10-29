@@ -119,6 +119,24 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ]
             ),
             'facebookManageFeaturesRoute' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
+            'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'requireProductSyncStart',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCatalogSummaryRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'CatalogSummary',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,

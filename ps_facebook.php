@@ -84,6 +84,7 @@ class Ps_facebook extends Module
         Config::PS_FACEBOOK_CATALOG_ID,
         Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID,
         Config::PS_FACEBOOK_PIXEL_ENABLED,
+        Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
     ];
 
     /**
