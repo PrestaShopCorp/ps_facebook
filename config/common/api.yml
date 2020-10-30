@@ -10,3 +10,4 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
