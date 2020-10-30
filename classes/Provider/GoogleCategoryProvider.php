@@ -40,7 +40,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
      * @param int $langId
      * @param int $page
      *
-     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     * @return array|null
      */
     public function getGoogleCategoryChildren($categoryId, $langId, $page = 1)
     {
