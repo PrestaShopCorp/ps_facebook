@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
@@ -29,20 +30,28 @@ class FacebookClient
      * @var Client
      */
     private $client;
+
     /**
      * @var AccessTokenProvider
      */
     private $accessTokenProvider;
 
     /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    /**
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
+     * @param ConfigurationAdapter $configurationAdapter
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider)
+    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider, ConfigurationAdapter $configurationAdapter)
     {
         $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     public function setAccessToken($accessToken)
@@ -76,7 +85,8 @@ class FacebookClient
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
-            isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false
+            isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
         );
     }
 

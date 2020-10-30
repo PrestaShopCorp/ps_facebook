@@ -160,7 +160,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         /** @var FacebookDataProvider $facebookDataProvider */
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
-
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
         $this->ajaxDie(
