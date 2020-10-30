@@ -339,7 +339,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'faq' => $response['body'],
+                    'faq' => $faq->getFaq(),
+                    'doc' => $this->getReadme(),
+                    'contactUs' => 'https://www.google.com',
                 ]
             )
         );
@@ -352,5 +354,21 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         header('Content-Type: application/json');
         parent::ajaxDie($value, $controller, $method);
+    }
+
+    /**
+     * Get the documentation url depending on the current language
+     *
+     * @return string path of the doc
+     */
+    private function getReadme()
+    {
+        $isoCode = $this->context->language->iso_code;
+
+        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf')) {
+            $isoCode = 'en';
+        }
+
+        return _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf';
     }
 }

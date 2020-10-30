@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {BootstrapVue} from 'bootstrap-vue';
+import VueCollapse from 'vue2-collapse';
 import psAccountsVueComponents from 'prestashop_accounts_vue_components';
 import router from './router';
 import store from './store';
@@ -8,6 +9,7 @@ import i18n from './lib/i18n';
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
+Vue.use(VueCollapse);
 Vue.use(psAccountsVueComponents);
 
 new Vue({
