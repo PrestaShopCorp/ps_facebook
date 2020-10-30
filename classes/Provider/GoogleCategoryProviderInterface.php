@@ -17,5 +17,5 @@ interface GoogleCategoryProviderInterface
      *
      * @return array|null
      */
-    public function getGoogleCategoryChildes($categoryId, $page);
+    public function getGoogleCategoryChildren($categoryId, $page);
 }

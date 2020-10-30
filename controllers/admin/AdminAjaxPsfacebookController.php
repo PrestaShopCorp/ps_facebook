@@ -292,7 +292,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
-        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildes($categoryId, $page);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page);
 
         $this->ajaxDie(
             json_encode($googleCategories)

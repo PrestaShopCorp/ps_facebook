@@ -32,7 +32,7 @@ class GoogleCategoryProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider getGoogleCategoryChildesDataProvider
+     * @dataProvider getGoogleCategoryChildrenDataProvider
      *
      * @param $categoryId
      * @param $categoryMatchMock
@@ -40,7 +40,7 @@ class GoogleCategoryProviderTest extends TestCase
      * @param $page
      * @param $result
      */
-    public function testGetGoogleCategoryChildes($categoryId, $categoryMatchMock, $langId, $page, $result)
+    public function testGetGoogleCategoryChildren($categoryId, $categoryMatchMock, $langId, $page, $result)
     {
         $googleCategoryRepo = $this->getMockBuilder(GoogleCategoryRepository::class)
             ->disableOriginalConstructor()
@@ -49,7 +49,7 @@ class GoogleCategoryProviderTest extends TestCase
         $googleCategoryRepo->method('getFilteredCategories')->willReturn($categoryMatchMock);
 
         $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo);
-        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildes($categoryId, $langId, $page);
+        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, $page);
 
         $this->assertEquals($result, $googleCategory);
     }
@@ -91,7 +91,7 @@ class GoogleCategoryProviderTest extends TestCase
         ];
     }
 
-    public function getGoogleCategoryChildesDataProvider()
+    public function getGoogleCategoryChildrenDataProvider()
     {
         return [
             'main categories' => [
