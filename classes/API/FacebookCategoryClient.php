@@ -19,8 +19,10 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, GoogleCategoryRepository $googleCategoryRepository)
-    {
+    public function __construct(
+        ApiClientFactoryInterface $apiClientFactory,
+        GoogleCategoryRepository $googleCategoryRepository
+    ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
@@ -34,18 +36,15 @@ class FacebookCategoryClient
      */
     public function getGoogleCategory($categoryId)
     {
-        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchByCategoryId($categoryId);
+        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
 
-        $googleCategory = $this->get('taxonomy/' . $categoryMatch['google_category_id']);
+        $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
 
         if (!is_array($googleCategory)) {
             return null;
         }
 
-        $googleCategory = reset($googleCategory);
-        $googleCategory['is_parent_category'] = $categoryMatch['is_parent_category'];
-
-        return $googleCategory;
+        return reset($googleCategory);
     }
 
     protected function get($id, array $fields = [], array $query = [])

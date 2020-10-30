@@ -201,7 +201,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
-    public function displayAjaxGetCategoryMatch()
+    public function displayAjaxGetCategory()
     {
         $categoryId = Tools::getValue('id_category');
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
@@ -282,6 +282,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     ],
                 ]
             )
+        );
+    }
+
+    public function displayAjaxGetCategories()
+    {
+        $categoryId = (int) Tools::getValue('id_category');
+        $page = (int) Tools::getValue('page');
+
+        /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page);
+
+        $this->ajaxDie(
+            json_encode($googleCategories)
         );
     }
 
