@@ -53,9 +53,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import EditingRow from './editing-row.vue';
-/*
-* rajouter une props dans editing row
-*/
+
 export default defineComponent({
   name: 'TableMatching',
   components: {
@@ -84,63 +82,97 @@ export default defineComponent({
     saveMatchingCallback() {
       return Promise.resolve(true);
     },
+
     categoryStyle(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1
       const isDeployed = category.deploy ? 'opened' : (category.deploy === null  || floor === 3 ? '' : 'closed')
       return 'array-tree-lvl-' + floor.toString() + ' ' + isDeployed
     },
+
     getCurrentRow(currentShopCategoryID) {
+      let subcategory;
       if (this.overrideGetCurrentRow) {
         const result = this.overrideGetCurrentRow(currentShopCategoryID)
-        var subcategory = result
+        subcategory = result
       }
 
-      const currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
+      var currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
+      this.setAction(currentCategory, subcategory);
+    },
+
+    /**
+    * show children
+    */
+    showChildren(currentCategory) {
+      const childrens = this.categories.filter((child) => {
+        let reg = new RegExp(currentCategory.shopParentCategoryIds + '\\d{1,}\\/+');
+        let filter = reg.test(child.shopParentCategoryIds);
+
+        if (filter === true &&
+            child.shopParentCategoryIds !== currentCategory.shopParentCategoryIds &&
+            child.show === true) {
+          return child;
+        }
+      });
+
+      childrens.forEach(child => {
+        child.show = false;
+      })
+
+      currentCategory.deploy = false;
+    },
+
+    /**
+    * hide children
+    */
+    hideChildren(currentCategory) {
+      const filterChildren = this.categories.filter((child) => {
+        let reg = new RegExp(currentCategory.shopParentCategoryIds + '\\d{1,}\\/+');
+        let filter = reg.test(child.shopParentCategoryIds);
+
+        if (filter === true &&
+            child.shopParentCategoryIds !== currentCategory.shopParentCategoryIds &&
+            child.show === false) {
+          return child;
+        }
+      });
+
+      filterChildren.forEach(child => {
+        child.show = true;
+      })
+      currentCategory.deploy = true;
+    },
+
+    /**
+    * add subcategories
+    */
+    addChildren(currentCategory, subcategories) {
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-
-      switch (currentCategory.deploy) {
-        case true:
-          const filterChildren = this.categories.filter(child =>
-            child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds + child.shopCategoryId + '/')
-          )
-          filterChildren.forEach(child => {
-            child.show = false;
+      currentCategory.deploy = true;
+        if (Array.isArray(subcategories)) {
+          subcategories.forEach(el => {
+            this.categories.splice(indexCtg, 0, el);
+            el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
           })
-          currentCategory.deploy = false;
-        break;
+        } else {
+          this.categories.splice(indexCtg, 0, subcategories);
+          subcategories.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategories.shopCategoryId + '/'
+        }
+      currentCategory.deploy = true;
+    },
 
-        case false:
-          const childrens = this.categories.filter(child =>
-            child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds + child.shopCategoryId + '/')
-          )
-          childrens.forEach(child => {
-            child.show = true;
-          })
-          currentCategory.deploy = true;
-        break;
-
-        case undefined:
-          currentCategory.deploy = true;
-            if (Array.isArray(subcategory)) {
-              subcategory.forEach(el => {
-                this.categories.splice(indexCtg, 0, el);
-                el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
-              })
-            } else {
-              this.categories.splice(indexCtg, 0, subcategory);
-              subcategory.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategory.shopCategoryId + '/'
-            }
-          currentCategory.deploy = true;
-          // deploy = true
-          // api PHP
-          // cast deploy en toString pour le chevron regle css
-          // si une reponse deploy = true
-          // return (element, array empty => deploy => null)
-        break;
-
-        default:
+    /**
+    * call function
+    */
+    setAction(currentCategory, subcategories) {
+      const dictionary = {
+        false: () => this.hideChildren(currentCategory),
+        true: () => this.showChildren(currentCategory),
+        undefined: () => this.addChildren(currentCategory, subcategories),
+        null: () => {},
       }
-    }
+      return dictionary[currentCategory.deploy].call();
+    },
   },
   created() {
     if (this.categories.length === 0) {
