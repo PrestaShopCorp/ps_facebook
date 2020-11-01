@@ -1,19 +1,10 @@
 <template>
-  <div class="p-3">
-    <b-card>
-      <div class="d-flex">
-        <div class="warning-left">
-          <i class="material-icons align-self-center m-3">error_outline</i>
-        </div>
-        <div class="flex-grow-1 warning-right">
-          <p class="m-2">
-            {{ warningText }}
-          </p>
-          <slot>
-          </slot>
-        </div>
-      </div>
-    </b-card>
+  <div class="alert medium-alert alert-warning mt-3" role="alert">
+    <p class="alert-text">
+      {{ warningText }}
+    </p>
+    <slot>
+    </slot>
   </div>
 </template>
 

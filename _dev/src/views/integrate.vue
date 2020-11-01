@@ -57,16 +57,18 @@
         <h3 class="ml-3">
           {{ $t('integrate.headings.unavailableFeatures') }}
         </h3>
-        <warning
-          :warning-text="$t('integrate.warning.productsNotSynced')"
-        >
-          <b-button
-            variant="primary"
-            class="m-2"
+        <div class="mr-3 ml-3">
+          <warning
+            :warning-text="$t('integrate.warning.productsNotSynced')"
           >
-            {{ $t('integrate.buttons.syncProducts') }}
-          </b-button>
-        </warning>
+            <b-button
+              variant="primary"
+              class="m-2 p-2"
+            >
+              {{ $t('integrate.buttons.syncProducts') }}
+            </b-button>
+          </warning>
+        </div>
         <feature-list>
           <unavailable-feature
             v-for="(properties, featureName) in dynamicUnavailableFeatures"
