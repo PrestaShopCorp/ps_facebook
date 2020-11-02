@@ -11,6 +11,12 @@
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
+              <b-icon-info-circle
+                v-b-tooltip.hover
+                :title="$t(`integrate.features.${name}.toolTip`)"
+                class="iconInfo ml-2"
+                variant="primary"
+              />
             </h3>
           </div>
           <div>
@@ -36,7 +42,23 @@
             </div>
           </div>
         </div>
-        <div class="d-flex" />
+        <div class="d-flex">
+          <div class="flex-grow-1" />
+          <div>
+            <a
+              class="align-self-center"
+              :href="manageRoute"
+              target="_blank"
+            >
+              <b-button
+                variant="outline-secondary"
+                class="ml-4 align-self-center"
+              >
+                {{ $t('integrate.buttons.manage') }}
+              </b-button>
+            </a>
+          </div>
+        </div>
       </b-card-body>
     </b-card>
     <div
@@ -87,7 +109,13 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody, BButton} from 'bootstrap-vue';
+import {
+  BCard,
+  BCardBody,
+  BButton,
+  BTooltip,
+  BIconInfoCircle,
+} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
@@ -95,6 +123,8 @@ export default defineComponent({
     BCard,
     BCardBody,
     BButton,
+    BTooltip,
+    BIconInfoCircle,
   },
   mixins: [],
   props: {
@@ -117,6 +147,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: global.psFacebookUpdateFeatureRoute,
+    },
+    manageRoute: {
+      type: String,
+      required: false,
+      default: () => global.facebookManageFeaturesRoute,
     },
   },
   data() {
