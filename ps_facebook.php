@@ -131,7 +131,8 @@ class Ps_facebook extends Module
         $this->version = '1.1.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        // TODO : $this->module_key = '';
+        // TODO : set the corret mpodule key
+        $this->module_key = '697657ffe038d20741105e95a10b12d1';
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
         $this->bootstrap = false;
 

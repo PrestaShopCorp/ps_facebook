@@ -22,7 +22,6 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
-use PrestaShop\Module\Ps_facebook\Api\Shop\RetrieveFaq;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
 
@@ -318,23 +317,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRetrieveFaq()
     {
-        $faq = new RetrieveFaq();
-        // TO DO : remove when we get the module key
-        $faq->setModuleKey('697657ffe038d20741105e95a10b12d1');
-        // $faq->setModuleKey($this->module->module_key);
-        $faq->setPsVersion(_PS_VERSION_);
-        $faq->setIsoCode($this->context->language->iso_code);
-        $response = $faq->getFaq();
-
-        if (200 !== $response['httpCode']) {
-            return false;
-        }
-
-        // If no response in the selected language, retrieve the faq in the default language (english)
-        if (false === $response['body'] && $faq->getIsoCode() !== 'en') {
-            $faq->setIsoCode('en');
-            $response = $faq->getFaq();
-        }
+        $faq = new Faq($this->module->module_key, _PS_VERSION, $this->context->language->iso_code);
 
         $this->ajaxDie(
             json_encode(
