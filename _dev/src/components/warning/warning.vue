@@ -28,20 +28,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$dark-orange: #d3a342;
-$light-orange: #fce7bb;
-.card {
-  border: 1px solid $dark-orange;
-  .card-body{
-    padding: 0 !important;
-    border: 1px solid $dark-orange;
-    .warning-left{
-      background-color: $light-orange;
-      color: $dark-orange;
-      font-size: 30px;
-    }
-  }
-}
 .flex-grow-1 {
   flex-grow:1
 }
