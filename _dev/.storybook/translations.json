@@ -90,6 +90,12 @@
         "noResult": "No result for your search",
         "tooManyResults": "Too many results, please complete your search.",
         "fetchError": "An error occurred during search process."
+      },
+      "tableMatching": {
+        "firstTd" : "Category on your site",
+        "secondTd" : "Facebook category",
+        "thirdTd" : "Parent category",
+        "fourthTd" : "Facebook subcategory"
       }
     }
   }

@@ -155,6 +155,12 @@ class PsFacebookTranslations
                     'tooManyResults' => $this->module->l('Too many results, please complete your search.', 'PsFacebookTranslations'),
                     'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
                 ],
+                'tableMatching' => [
+                    'firstTd' => $this->module->l('Category on your site'),
+                    'secondTd' => $this->module->l('Facebook category'),
+                    'thirdTd' => $this->module->l('Parent category'),
+                    'fourthTd' => $this->module->l('Facebook subcategory')
+                ]
             ],
             'integrate' => [
                 'buttons' => [

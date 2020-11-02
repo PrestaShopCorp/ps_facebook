@@ -21,10 +21,10 @@
     <b-table-simple :responsive="true">
       <b-thead>
         <b-tr>
-          <b-th>Category on your site</b-th>
-          <b-th>Facebook category</b-th>
-          <b-th>Parent category</b-th>
-          <b-th>Facebook subcategory</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.firstTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
@@ -43,7 +43,7 @@
           :saveMatchingCallback="saveMatchingCallback"
           @rowClicked="getCurrentRow"
         >
-          {{ category.shopCategoryName }}
+        {{ category.shopCategoryName }}
         </editing-row>
       </b-tbody>
     </b-table-simple>
@@ -89,6 +89,16 @@ export default defineComponent({
       return 'array-tree-lvl-' + floor.toString() + ' ' + isDeployed
     },
 
+    canShowCheckbox(category) {
+      const floor = category.shopParentCategoryIds.split('/').length - 1
+
+      if (category.deploy === null || floor === 3) {
+        return false;
+      }
+
+      return true;
+    },
+
     getCurrentRow(currentShopCategoryID) {
       let subcategory;
       if (this.overrideGetCurrentRow) {
@@ -97,6 +107,11 @@ export default defineComponent({
       }
 
       var currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
+
+      if (this.canShowCheckbox(currentCategory) === false) {
+        currentCategory.propagation = null
+      }
+
       this.setAction(currentCategory, subcategory);
     },
 
@@ -104,43 +119,33 @@ export default defineComponent({
     * show children
     */
     showChildren(currentCategory) {
-      const childrens = this.categories.filter((child) => {
-        let reg = new RegExp(currentCategory.shopParentCategoryIds + '\\d{1,}\\/+');
-        let filter = reg.test(child.shopParentCategoryIds);
-
-        if (filter === true &&
-            child.shopParentCategoryIds !== currentCategory.shopParentCategoryIds &&
-            child.show === true) {
-          return child;
+      const filterChildren = this.categories.filter(child =>
+        child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))
+      )
+      filterChildren.forEach(child => {
+        child.show = true;
+        if (this.canShowCheckbox(child) === false) {
+          child.propagation = null
         }
-      });
-
-      childrens.forEach(child => {
-        child.show = false;
       })
-
-      currentCategory.deploy = false;
+      currentCategory.deploy = true;
     },
 
     /**
     * hide children
     */
     hideChildren(currentCategory) {
-      const filterChildren = this.categories.filter((child) => {
-        let reg = new RegExp(currentCategory.shopParentCategoryIds + '\\d{1,}\\/+');
-        let filter = reg.test(child.shopParentCategoryIds);
-
-        if (filter === true &&
-            child.shopParentCategoryIds !== currentCategory.shopParentCategoryIds &&
-            child.show === false) {
-          return child;
+      const childrens = this.categories.filter(child =>
+        child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
+        && child.shopCategoryId !== currentCategory.shopCategoryId
+      )
+      childrens.forEach(child => {
+        child.show = false;
+        if (child.deploy === true) {
+          child.deploy = false;
         }
-      });
-
-      filterChildren.forEach(child => {
-        child.show = true;
       })
-      currentCategory.deploy = true;
+      currentCategory.deploy = false;
     },
 
     /**
@@ -149,6 +154,8 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = true;
+      // Do call with fetch to PHP
+
         if (Array.isArray(subcategories)) {
           subcategories.forEach(el => {
             this.categories.splice(indexCtg, 0, el);
@@ -166,8 +173,8 @@ export default defineComponent({
     */
     setAction(currentCategory, subcategories) {
       const dictionary = {
-        false: () => this.hideChildren(currentCategory),
-        true: () => this.showChildren(currentCategory),
+        false: () => this.showChildren(currentCategory),
+        true: () => this.hideChildren(currentCategory),
         undefined: () => this.addChildren(currentCategory, subcategories),
         null: () => {},
       }
@@ -183,6 +190,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-</style>
