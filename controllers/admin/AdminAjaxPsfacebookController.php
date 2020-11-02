@@ -317,7 +317,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRetrieveFaq()
     {
-        $faq = new Faq($this->module->module_key, _PS_VERSION, $this->context->language->iso_code);
+        $faq = new Faq($this->module->module_key, _PS_VERSION_, $this->context->language->iso_code);
 
         $this->ajaxDie(
             json_encode(
