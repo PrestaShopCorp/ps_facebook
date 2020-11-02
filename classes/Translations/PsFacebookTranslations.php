@@ -177,12 +177,12 @@ class PsFacebookTranslations
                     'page_shop' => [
                         'name' => $this->module->l('Facebook Shop', 'PsFacebookTranslations'),
                         'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
-                        'toolTip' => $this->module->l("Facebook Shop", 'PsFacebookTranslations'),
+                        'toolTip' => $this->module->l('Facebook Shop', 'PsFacebookTranslations'),
                     ],
                     'page_cta' => [
                         'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
                         'description' => $this->module->l("Bring your company's most important goal to the fore on your facebook page.", 'PsFacebookTranslations'),
-                        'toolTip' => $this->module->l("Call-to-action", 'PsFacebookTranslations'),
+                        'toolTip' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
                     ],
                 ],
                 'headings' => [
