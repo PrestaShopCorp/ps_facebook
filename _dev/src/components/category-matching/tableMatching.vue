@@ -32,18 +32,18 @@
           v-for="category in categories"
           v-if="category.show"
           :key="category.shopCategoryId"
-          :categoryStyle="categoryStyle(category)"
-          :shopCategoryId="category.shopCategoryId"
-          :initialCategoryName="category.categoryName"
-          :initialCategoryId="category.categoryId"
-          :initialSubcategoryName="category.subcategoryName"
-          :initialSubcategoryId="category.subcategoryId"
-          :initialPropagation="category.propagation"
-          :autocompletionApi="'https://facebook-api.psessentials.net/taxonomy/'"
-          :saveMatchingCallback="saveMatchingCallback"
+          :category-style="categoryStyle(category)"
+          :shop-category-id="category.shopCategoryId"
+          :initial-category-name="category.categoryName"
+          :initial-category-id="category.categoryId"
+          :initial-subcategory-name="category.subcategoryName"
+          :initial-subcategory-id="category.subcategoryId"
+          :initial-propagation="category.propagation"
+          :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
+          :save-matching-callback="saveMatchingCallback"
           @rowClicked="getCurrentRow"
         >
-        {{ category.shopCategoryName }}
+          {{ category.shopCategoryName }}
         </editing-row>
       </b-tbody>
     </b-table-simple>
@@ -57,19 +57,19 @@ import EditingRow from './editing-row.vue';
 export default defineComponent({
   name: 'TableMatching',
   components: {
-    EditingRow
+    EditingRow,
   },
   mixins: [],
   props: {
     initialCategories: {
       type: Array,
-      required: true
+      required: true,
     },
     overrideGetCurrentRow: {
       type: Function,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
   },
@@ -84,13 +84,22 @@ export default defineComponent({
     },
 
     categoryStyle(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1
-      const isDeployed = category.deploy ? 'opened' : (category.deploy === null  || floor === 3 ? '' : 'closed')
-      return 'array-tree-lvl-' + floor.toString() + ' ' + isDeployed
+      const floor = category.shopParentCategoryIds.split('/').length - 1;
+
+      let isDeployed = '';
+      if (category.deploy !== true) {
+        if (category.deploy !== null || floor !== 3) {
+          isDeployed = 'closed';
+        }
+      } else {
+        isDeployed = 'opened';
+      }
+
+      return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
 
     canShowCheckbox(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1
+      const floor = category.shopParentCategoryIds.split('/').length - 1;
 
       if (category.deploy === null || floor === 3) {
         return false;
@@ -102,32 +111,37 @@ export default defineComponent({
     getCurrentRow(currentShopCategoryID) {
       let subcategory;
       if (this.overrideGetCurrentRow) {
-        const result = this.overrideGetCurrentRow(currentShopCategoryID)
-        subcategory = result
+        const result = this.overrideGetCurrentRow(currentShopCategoryID);
+        subcategory = result;
       }
 
-      var currentCategory = this.categories.find(element => element.shopCategoryId == currentShopCategoryID);
+      const currentCtg = this.categories.find(
+        (child) => child.shopCategoryId === currentShopCategoryID,
+      );
 
-      if (this.canShowCheckbox(currentCategory) === false) {
-        currentCategory.propagation = null
+      if (this.canShowCheckbox(currentCtg) === false) {
+        currentCtg.propagation = null;
       }
 
-      this.setAction(currentCategory, subcategory);
+      this.setAction(currentCtg, subcategory);
     },
 
     /**
     * show children
     */
     showChildren(currentCategory) {
-      const filterChildren = this.categories.filter(child =>
-        child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))
-      )
-      filterChildren.forEach(child => {
+      const filterChildren = this.categories.filter(
+        (child) => child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`)),
+      );
+      /* eslint no-param-reassign: "error" */
+      filterChildren.forEach((child) => {
+        /* eslint no-param-reassign: "error" */
         child.show = true;
         if (this.canShowCheckbox(child) === false) {
-          child.propagation = null
+          /* eslint no-param-reassign: "error" */
+          child.propagation = null;
         }
-      })
+      });
       currentCategory.deploy = true;
     },
 
@@ -135,16 +149,16 @@ export default defineComponent({
     * hide children
     */
     hideChildren(currentCategory) {
-      const childrens = this.categories.filter(child =>
-        child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
-        && child.shopCategoryId !== currentCategory.shopCategoryId
-      )
-      childrens.forEach(child => {
+      const childrens = this.categories.filter(
+        (child) => child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
+        && child.shopCategoryId !== currentCategory.shopCategoryId,
+      );
+      childrens.forEach((child) => {
         child.show = false;
         if (child.deploy === true) {
           child.deploy = false;
         }
-      })
+      });
       currentCategory.deploy = false;
     },
 
@@ -154,17 +168,17 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = true;
-      // Do call with fetch to PHP
+      // TODO: Do call with fetch to PHP
 
-        if (Array.isArray(subcategories)) {
-          subcategories.forEach(el => {
-            this.categories.splice(indexCtg, 0, el);
-            el.shopParentCategoryIds = currentCategory.shopParentCategoryIds + el.shopCategoryId + '/'
-          })
-        } else {
-          this.categories.splice(indexCtg, 0, subcategories);
-          subcategories.shopParentCategoryIds = currentCategory.shopParentCategoryIds + subcategories.shopCategoryId + '/'
-        }
+      if (Array.isArray(subcategories)) {
+        subcategories.forEach((el) => {
+          this.categories.splice(indexCtg, 0, el);
+          el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+        });
+      } else {
+        this.categories.splice(indexCtg, 0, subcategories);
+        subcategories.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategories.shopCategoryId}/`;
+      }
       currentCategory.deploy = true;
     },
 
@@ -177,7 +191,7 @@ export default defineComponent({
         true: () => this.hideChildren(currentCategory),
         undefined: () => this.addChildren(currentCategory, subcategories),
         null: () => {},
-      }
+      };
       return dictionary[currentCategory.deploy].call();
     },
   },

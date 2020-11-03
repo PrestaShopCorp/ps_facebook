@@ -18,7 +18,7 @@
  *-->
 <template>
   <b-tr :class="categoryStyle">
-    <b-td @click="getCurrentRow(shopCategoryId)" >
+    <b-td @click="getCurrentRow(shopCategoryId)">
       <slot />
     </b-td>
     <b-td>
@@ -217,10 +217,10 @@ export default defineComponent({
     },
   },
   watch: {
-    categoryStyle: function(val) {
-      this.categoryStyle = val
-    }
-  }
+    categoryStyle(val) {
+      this.categoryStyle = val;
+    },
+  },
 
 });
 </script>

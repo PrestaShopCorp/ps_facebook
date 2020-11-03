@@ -27,7 +27,9 @@
       >
     </div>
 
-    <h3 class="title">{{ $t('catalogSummary.categoryMatching') }}</h3>
+    <h3 class="title">
+      {{ $t('catalogSummary.categoryMatching') }}
+    </h3>
     <b-button
       class="float-right ml-3"
       variant="primary"
@@ -36,7 +38,6 @@
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>
     <p>{{ $t('catalogSummary.categoryMatchingIntro') }}</p>
-
   </div>
 </template>
 

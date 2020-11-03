@@ -159,8 +159,8 @@ class PsFacebookTranslations
                     'firstTd' => $this->module->l('Category on your site'),
                     'secondTd' => $this->module->l('Facebook category'),
                     'thirdTd' => $this->module->l('Parent category'),
-                    'fourthTd' => $this->module->l('Facebook subcategory')
-                ]
+                    'fourthTd' => $this->module->l('Facebook subcategory'),
+                ],
             ],
             'integrate' => [
                 'buttons' => [

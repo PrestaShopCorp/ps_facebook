@@ -5,11 +5,6 @@ export default {
   component: tableMatching,
 };
 
-/**
- * deploy : { true : children recup, false: children deplier, undefined: we dont know, null: aucun children}
- * shopParentCategoryIds : { floor: shopCategoryId/2/3 | null} en String
- */
-
 const testSubcategory1 = [
   {
     'shopCategoryId': '2',
