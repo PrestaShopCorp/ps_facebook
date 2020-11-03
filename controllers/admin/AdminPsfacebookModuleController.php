@@ -64,6 +64,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookFbeOnboardingUninstallRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'DisconnectFromFacebook',
+                    'ajax' => 1,
+                ]
+            ),
             'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

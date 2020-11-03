@@ -57,6 +57,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    public function displayAjaxDisconnectFromFacebook()
+    {
+        // Disconnect from FB
+        /** @var ConfigurationHandler $configurationHandler */
+        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
+        $configurationHandler->uninstallFbe();
+
+        // Return new FB context
+        $this->displayAjaxConfiguration();
+    }
+
     /**
      * Store in database a boolean for know if customer activate pixel
      */
