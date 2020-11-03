@@ -87,7 +87,7 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>
+        <b-dropdown-item @click="uninstall">
           Unlink
         </b-dropdown-item>
       </b-dropdown>
@@ -115,8 +115,8 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>
-          Unlink
+        <b-dropdown-item @click="uninstall">
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
 
@@ -307,6 +307,9 @@ export default defineComponent({
     },
     openManageFbe() {
       window.open(this.fbeUrl, '_blank');
+    },
+    uninstall() {
+      this.$emit('onUninstallClick');
     },
   },
 });
