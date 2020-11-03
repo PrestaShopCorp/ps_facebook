@@ -17,8 +17,10 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-tr>
-    <b-td><slot /></b-td>
+  <b-tr :class="categoryStyle">
+    <b-td @click="getCurrentRow(shopCategoryId)">
+      <slot />
+    </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
@@ -129,6 +131,10 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    categoryStyle: {
+      type: String,
+      required: true,
+    },
     initialSubcategoryName: {
       type: String,
       required: false,
@@ -171,6 +177,9 @@ export default defineComponent({
     changePropagation(checked) {
       this.currentPropagation = checked;
     },
+    getCurrentRow(categoryID) {
+      this.$emit('rowClicked', categoryID);
+    },
     categoryChanged(categoryId, categoryName) {
       if (this.currentCategoryId !== categoryId) {
         this.currentCategoryId = categoryId;
@@ -207,6 +216,12 @@ export default defineComponent({
         });
     },
   },
+  watch: {
+    categoryStyle(val) {
+      this.categoryStyle = val;
+    },
+  },
+
 });
 </script>
 <style lang="scss" scoped>
@@ -307,6 +322,73 @@ export default defineComponent({
     display: inline-block;
     line-height: 1;
     color: #c05c67;
+  }
+  .opened {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_more";
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
+  .closed {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-style: normal;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_less";
+      transform: rotate(90deg);
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
+
+  .array-tree-lvl-2 {
+    td:first-child {
+      padding-left:40px;
+    }
+  }
+  .array-tree-lvl-3 {
+    td:first-child {
+      padding-left:80px;
+    }
   }
 
   .propagate > * {

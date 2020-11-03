@@ -31,8 +31,8 @@
       </b-button>
       <div class="counter float-right ml-5">
         <h3>
-          {{matchingProgress.matched}} / {{matchingProgress.total}}
-          <br />
+          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
       </div>
@@ -52,8 +52,8 @@
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
       <div class="counter">
         <h3>
-          {{matchingProgress.matched}} / {{matchingProgress.total}}
-          <br />
+          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
       </div>

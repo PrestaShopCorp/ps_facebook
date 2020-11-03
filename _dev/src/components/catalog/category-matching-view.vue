@@ -17,12 +17,22 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="page-spinner" />
-  <div v-else id="catalogCategoryMatchingView">
+  <div
+    v-if="loading"
+    class="page-spinner"
+  />
+  <div
+    v-else
+    id="catalogCategoryMatchingView"
+  >
     TODO: CatalogCategoryMatchingView
-    <br />
-    <b-button @click="$parent.goto($parent.PAGES.categoryMatchingEdit)">EDIT</b-button>
-    <b-button @click="$parent.back">BACK</b-button>
+    <br>
+    <b-button @click="$parent.goto($parent.PAGES.categoryMatchingEdit)">
+      EDIT
+    </b-button>
+    <b-button @click="$parent.back">
+      BACK
+    </b-button>
   </div>
 </template>
 

@@ -17,11 +17,19 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="page-spinner" />
-  <div v-else id="catalogReportDetails">
+  <div
+    v-if="loading"
+    class="page-spinner"
+  />
+  <div
+    v-else
+    id="catalogReportDetails"
+  >
     TODO : CatalogReportDetails
-    <br /><br />
-    <b-button @click="$parent.back">BACK</b-button>
+    <br><br>
+    <b-button @click="$parent.back">
+      BACK
+    </b-button>
   </div>
 </template>
 

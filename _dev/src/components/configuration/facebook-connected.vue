@@ -87,7 +87,9 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>Unlink</b-dropdown-item>
+        <b-dropdown-item disabled>
+          Unlink
+        </b-dropdown-item>
       </b-dropdown>
     </b-card-body>
 
@@ -104,7 +106,8 @@
 
       <b-dropdown
         variant="primary"
-        split right
+        split
+        right
         :text="$t('configuration.facebook.connected.manageFbeButton')"
         @click="openManageFbe"
         class="ml-4 float-right"
@@ -112,7 +115,9 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>Unlink</b-dropdown-item>
+        <b-dropdown-item disabled>
+          Unlink
+        </b-dropdown-item>
       </b-dropdown>
 
       <div v-if="!!contextPsFacebook">
