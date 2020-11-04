@@ -14,6 +14,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
@@ -34,26 +35,32 @@ class FacebookClient
     private $client;
 
     /**
-     * @var AccessTokenProvider
-     */
-    private $accessTokenProvider;
-
-    /**
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
 
     /**
+     * @var ErrorHandler
+     */
+    private $errorHandlerFactory;
+
+    /**
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
      * @param ConfigurationAdapter $configurationAdapter
+     * @param ErrorHandlerFactoryInterface $errorHandlerFactory
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider, ConfigurationAdapter $configurationAdapter)
-    {
+    public function __construct(
+        ApiClientFactoryInterface $apiClientFactory,
+        AccessTokenProvider $accessTokenProvider,
+        ConfigurationAdapter $configurationAdapter,
+        ErrorHandlerFactoryInterface $errorHandlerFactory
+    ) {
         $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
     }
 
     public function setAccessToken($accessToken)
@@ -209,8 +216,7 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandlerFactory->handle(
                 new FacebookClientException(
                     'Failed to call get from client: ' . $e->getMessage(),
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
@@ -254,8 +260,7 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandlerFactory->handle(
                 new FacebookClientException(
                     'Failed to call post from client: ' . $e->getMessage(),
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,

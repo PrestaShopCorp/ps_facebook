@@ -4,8 +4,10 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
 class FacebookCategoryClient
@@ -20,12 +22,19 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandlerFactory;
+
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
-        GoogleCategoryRepository $googleCategoryRepository
+        GoogleCategoryRepository $googleCategoryRepository,
+        ErrorHandlerFactoryInterface $errorHandlerFactory
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
+        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -68,7 +77,17 @@ class FacebookCategoryClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            throw new FacebookClientException('Failed to call get from client: ' . $e->getMessage(), FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION, $e, false);
+            $this->errorHandlerFactory->handle(
+                new FacebookClientException(
+                    'Failed to call get from client: ' . $e->getMessage(),
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                false
+            );
+
+            return false;
         }
 
         return json_decode($response->getBody()->getContents(), true);

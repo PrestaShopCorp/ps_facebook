@@ -4,3 +4,8 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory
+
+  PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface: '@PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory'
+
+  PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory:
+    class: PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory

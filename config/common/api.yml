@@ -4,6 +4,7 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface'
 
   PrestaShop\Module\PrestashopFacebook\API\FacebookClient:
     class: PrestaShop\Module\PrestashopFacebook\API\FacebookClient
@@ -11,3 +12,4 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface'

@@ -5,6 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 use Exception;
 use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
+use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 
 class Uninstaller
@@ -16,10 +17,19 @@ class Uninstaller
      */
     private $tabRepository;
 
-    public function __construct(\Ps_facebook $module, TabRepository $tabRepository)
-    {
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandlerFactory;
+
+    public function __construct(
+        \Ps_facebook $module,
+        TabRepository $tabRepository,
+        ErrorHandlerFactoryInterface $errorHandlerFactory
+    ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
+        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -36,8 +46,7 @@ class Uninstaller
 
             return $this->uninstallTabs();
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandlerFactory->handle(
                 new FacebookInstallerException(
                     'Failed to uninstall module. ' . $e->getMessage(),
                     FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,

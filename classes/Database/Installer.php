@@ -5,15 +5,22 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 use Language;
 use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
+use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
 use Tab;
 
 class Installer
 {
     private $module;
 
-    public function __construct(\Ps_facebook $module)
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandlerFactory;
+
+    public function __construct(\Ps_facebook $module, ErrorHandlerFactoryInterface $errorHandlerFactory)
     {
         $this->module = $module;
+        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -106,8 +113,7 @@ class Installer
         try {
             include dirname(__FILE__) . '/../../sql/install.php';
         } catch (\Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandlerFactory->handle(
                 new FacebookInstallerException(
                     'Failed to install module. ' . $e->getMessage(),
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
