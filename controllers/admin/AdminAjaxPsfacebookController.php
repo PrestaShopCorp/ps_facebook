@@ -189,9 +189,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
+        $categoryId = (int) Tools::getValue('category_id');
+        $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $updateChildren = (bool) Tools::getValue('update_children');
         try {
             /* todo: change to data from ajax */
-            $categoryMatchHandler->updateCategoryMatch(3, 8, true);
+            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
