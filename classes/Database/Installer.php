@@ -10,17 +10,21 @@ class Installer
 {
     private $module;
 
-    public function __construct(\Ps_facebook $module)
+    /**
+     * @var Segment
+     */
+    private $segment;
+
+    public function __construct(\Ps_facebook $module, Segment $segment)
     {
         $this->module = $module;
+        $this->segment = $segment;
     }
 
     public function install()
     {
-        /** @var Segment $segment */
-        $segment = $this->module->getService(Segment::class);
-        $segment->setMessage('Install module');
-        $segment->track();
+        $this->segment->setMessage('PS Facebook installed');
+        $this->segment->track();
 
         return $this->installConfiguration() &&
             $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&

@@ -226,6 +226,44 @@ class Ps_facebook extends Module
             parent::uninstall();
     }
 
+    /**
+     * Activate current module.
+     *
+     * @param bool $force_all If true, enable module for all shop
+     *
+     * @return bool
+     *
+     * @throws PrestaShopException
+     */
+    public function enable($force_all = false)
+    {
+        /** @var \PrestaShop\Module\Ps_facebook\Tracker\Segment $segment */
+        $segment = $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class);
+        $segment->setMessage('Enable module');
+        $segment->track();
+
+        return parent::enable($force_all);
+    }
+
+    /**
+     * Activate current module.
+     *
+     * @param bool $force_all If true, enable module for all shop
+     *
+     * @return bool
+     *
+     * @throws PrestaShopException
+     */
+    public function disable($force_all = false)
+    {
+        /** @var \PrestaShop\Module\Ps_facebook\Tracker\Segment $segment */
+        $segment = $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class);
+        $segment->setMessage('Disable module');
+        $segment->track();
+
+        return parent::disable($force_all);
+    }
+
     public function getContent()
     {
         // With the version prestashop/prestashop-accounts-auth:2.1.9, a successful login will redirect
