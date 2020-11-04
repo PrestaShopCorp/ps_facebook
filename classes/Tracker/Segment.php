@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
+use Context;
 use PrestaShop\Module\Ps_facebook\Environment\Env;
 use PrestaShop\Module\Ps_facebook\Environment\SegmentEnv;
 
@@ -23,13 +24,19 @@ class Segment implements TrackerInterface
     private $segmentEnv;
 
     /**
+     * @var Context
+     */
+    private $context;
+
+    /**
      * Segment constructor.
      *
      * @param SegmentEnv $segmentEnv
      */
-    public function __construct(SegmentEnv $segmentEnv)
+    public function __construct(SegmentEnv $segmentEnv, Context $context)
     {
         $this->segmentEnv = $segmentEnv;
+        $this->context = $context;
         $this->init();
     }
 
@@ -76,7 +83,7 @@ class Segment implements TrackerInterface
             'context' => [
                 'ip' => $ip,
                 'userAgent' => $userAgent,
-                'locale' => \Context::getContext()->currentLocale,
+                'locale' => $this->context->currentLocale,
                 'page' => [
                     'referrer' => $referer,
                     'url' => $url,
@@ -117,7 +124,7 @@ class Segment implements TrackerInterface
      */
     private function trackShop()
     {
-        $userId = \Context::getContext()->shop->domain;
+        $userId = $this->context->shop->domain;
 
         $this->segmentTrack($userId);
     }
