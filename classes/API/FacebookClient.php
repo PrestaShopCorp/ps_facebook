@@ -171,7 +171,7 @@ class FacebookClient
 
     /**
      * @see https://developers.facebook.com/docs/marketing-api/fbe/fbe2/guides/uninstall?locale=en_US#uninstall-fbe--v2-for-businesses
-     * 
+     *
      * @param string $externalBusinessId
      * @param string $accessToken
      *

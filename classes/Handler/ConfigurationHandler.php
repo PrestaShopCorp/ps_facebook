@@ -58,6 +58,7 @@ class ConfigurationHandler
         );
 
         // Whatever the API answer, we drop the data on the configuration table
+        // For instance, a user who already uninstalled FBE will get an error while calling the API.
         $this->cleanOnboardingConfiguration();
     }
 

@@ -60,7 +60,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {FacebookConnected},
-  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :startExpanded="startExpanded" :psFacebookAppId="psFacebookAppId" :externalBusinessId="externalBusinessId" @onEditClick="onEditClick" @onPixelActivation="onPixelActivation" />',
+  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :startExpanded="startExpanded" :psFacebookAppId="psFacebookAppId" :externalBusinessId="externalBusinessId" @onEditClick="onEditClick" @onUninstallClick="onUninstallClick" @onPixelActivation="onPixelActivation" />',
 });
 export const Default:any = Template.bind({});
 Default.args = {

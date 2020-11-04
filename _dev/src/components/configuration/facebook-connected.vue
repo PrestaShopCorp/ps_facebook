@@ -88,7 +88,7 @@
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
         <b-dropdown-item @click="uninstall">
-          Unlink
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
     </b-card-body>
