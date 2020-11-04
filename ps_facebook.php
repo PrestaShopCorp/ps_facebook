@@ -7,7 +7,6 @@ use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
-use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
