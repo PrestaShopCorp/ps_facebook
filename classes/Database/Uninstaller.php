@@ -55,6 +55,8 @@ class Uninstaller
                 FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                 false
             );
+
+            return false;
         }
     }
 
