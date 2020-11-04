@@ -197,7 +197,7 @@ class Ps_facebook extends Module
         // $installer = $this->getService(Installer::class);
 
         /** @var Installer $installer */
-        $installer = new Installer($this);
+        $installer = $this->getService(Installer::class);
 
         return parent::install() &&
             (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
@@ -220,7 +220,7 @@ class Ps_facebook extends Module
         // $uninstaller = $this->getService(Uninstaller::class);
 
         /** @var Uninstaller $uninstaller */
-        $uninstaller = new Uninstaller($this, $this->getService(TabRepository::class));
+        $uninstaller = $this->getService(Uninstaller::class);
 
         return $uninstaller->uninstall() &&
             parent::uninstall();
