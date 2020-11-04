@@ -83,7 +83,7 @@ class Segment implements TrackerInterface
             'context' => [
                 'ip' => $ip,
                 'userAgent' => $userAgent,
-                'locale' => $this->context->currentLocale,
+                'locale' => $this->context->language->iso_code,
                 'page' => [
                     'referrer' => $referer,
                     'url' => $url,
@@ -116,7 +116,7 @@ class Segment implements TrackerInterface
             },
         ];
 
-        return call_user_func($dictionary[\Shop::getContext()]);
+        return call_user_func($dictionary[$this->context->shop->getContext()]);
     }
 
     /**
@@ -134,7 +134,7 @@ class Segment implements TrackerInterface
      */
     private function trackShopGroup()
     {
-        $shops = \Shop::getShops(true, \Shop::getContextShopGroupID());
+        $shops = $this->context->shop->getShops(true, $this->context->shop->getContextShopGroupID());
         foreach ($shops as $shop) {
             $this->segmentTrack($shop['domain']);
         }
@@ -145,7 +145,7 @@ class Segment implements TrackerInterface
      */
     private function trackAllShops()
     {
-        $shops = \Shop::getShops();
+        $shops = $this->context->shop->getShops();
         foreach ($shops as $shop) {
             $this->segmentTrack($shop['domain']);
         }
