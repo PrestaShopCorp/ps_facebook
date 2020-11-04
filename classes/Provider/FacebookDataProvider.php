@@ -27,7 +27,7 @@ class FacebookDataProvider
      */
     public function getContext(array $fbe)
     {
-        if (isset($fbe['error'])) {
+        if (isset($fbe['error']) || $this->facebookClient->hasAccessToken()) {
             return null;
         }
 

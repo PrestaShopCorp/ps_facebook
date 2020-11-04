@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
@@ -11,6 +12,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
@@ -59,11 +61,21 @@ class FacebookClient
         $this->accessToken = $accessToken;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasAccessToken()
+    {
+        return isset($this->accessToken);
+    }
+
     public function getUserEmail()
     {
         $responseContent = $this->get('me', ['email']);
 
-        return new User($responseContent['email']);
+        return new User(
+            isset($responseContent['email']) ? $responseContent['email'] : ''
+        );
     }
 
     public function getBusinessManager($businessManagerId)
@@ -197,6 +209,17 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookClientException(
+                    'Failed to call get from client: ' . $e->getMessage(),
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 
@@ -231,6 +254,17 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookClientException(
+                    'Failed to call post from client: ' . $e->getMessage(),
+                    FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 

@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
@@ -67,7 +68,7 @@ class FacebookCategoryClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            return false;
+            throw new FacebookClientException('Failed to call get from client: ' . $e->getMessage(), FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION, $e, false);
         }
 
         return json_decode($response->getBody()->getContents(), true);
