@@ -42,7 +42,7 @@ class FacebookClient
     /**
      * @var ErrorHandler
      */
-    private $errorHandlerFactory;
+    private $errorHandler;
 
     /**
      * @param ApiClientFactoryInterface $apiClientFactory
@@ -60,7 +60,7 @@ class FacebookClient
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
     public function setAccessToken($accessToken)
@@ -216,7 +216,7 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            $this->errorHandlerFactory->handle(
+            $this->errorHandler->handle(
                 new FacebookClientException(
                     'Failed to call get from client: ' . $e->getMessage(),
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
@@ -260,7 +260,7 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            $this->errorHandlerFactory->handle(
+            $this->errorHandler->handle(
                 new FacebookClientException(
                     'Failed to call post from client: ' . $e->getMessage(),
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,

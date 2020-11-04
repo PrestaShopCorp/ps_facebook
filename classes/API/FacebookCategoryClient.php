@@ -25,7 +25,7 @@ class FacebookCategoryClient
     /**
      * @var ErrorHandler
      */
-    private $errorHandlerFactory;
+    private $errorHandler;
 
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
@@ -34,7 +34,7 @@ class FacebookCategoryClient
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
-        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -77,7 +77,7 @@ class FacebookCategoryClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
-            $this->errorHandlerFactory->handle(
+            $this->errorHandler->handle(
                 new FacebookClientException(
                     'Failed to call get from client: ' . $e->getMessage(),
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,

@@ -15,12 +15,12 @@ class Installer
     /**
      * @var ErrorHandler
      */
-    private $errorHandlerFactory;
+    private $errorHandler;
 
     public function __construct(\Ps_facebook $module, ErrorHandlerFactoryInterface $errorHandlerFactory)
     {
         $this->module = $module;
-        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -113,7 +113,7 @@ class Installer
         try {
             include dirname(__FILE__) . '/../../sql/install.php';
         } catch (\Exception $e) {
-            $this->errorHandlerFactory->handle(
+            $this->errorHandler->handle(
                 new FacebookInstallerException(
                     'Failed to install module. ' . $e->getMessage(),
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,

@@ -20,7 +20,7 @@ class Uninstaller
     /**
      * @var ErrorHandler
      */
-    private $errorHandlerFactory;
+    private $errorHandler;
 
     public function __construct(
         \Ps_facebook $module,
@@ -29,7 +29,7 @@ class Uninstaller
     ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
-        $this->errorHandlerFactory = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
     /**
@@ -46,7 +46,7 @@ class Uninstaller
 
             return $this->uninstallTabs();
         } catch (Exception $e) {
-            $this->errorHandlerFactory->handle(
+            $this->errorHandler->handle(
                 new FacebookInstallerException(
                     'Failed to uninstall module. ' . $e->getMessage(),
                     FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
