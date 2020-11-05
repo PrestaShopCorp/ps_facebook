@@ -312,8 +312,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     /**
      * Retrieve the faq
-     *
-     * @return array|bool faq or false if no faq associated to the module
      */
     public function displayAjaxRetrieveFaq()
     {
