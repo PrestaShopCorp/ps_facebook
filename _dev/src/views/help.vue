@@ -18,17 +18,21 @@
  *-->
 <template>
   <div class="pt-5">
-    <faq :faq="faq" :contactUsLink="contactUsLink" :docLink="docLink"/>
+    <faq
+      :faq="faq"
+      :contact-us-link="contactUsLink"
+      :doc-link="docLink"
+    />
   </div>
 </template>
 
 <script>
-import faq from '../components/help/faq.vue'
+import faq from '../components/help/faq.vue';
 
 export default {
   name: 'HelpTab',
   components: {
-    faq
+    faq,
   },
   props: {
     psFacebookRetrieveFaq: {
@@ -40,31 +44,31 @@ export default {
   data() {
     return {
       faq: {},
-      docLink: "",
-      contactUsLink: "",
-    }
+      docLink: '',
+      contactUsLink: '',
+    };
   },
   created() {
-    this.fetchFaq()
+    this.fetchFaq();
   },
   methods: {
     fetchFaq() {
       fetch(this.psFacebookRetrieveFaq)
-      .then((res) => {
+        .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
-        return res.json()
-      })
-      .then((resp) => {
-        this.faq = resp.faq
-        this.docLink = resp.doc
-        this.contactUsLink = resp.contactUs
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
+          return res.json();
+        })
+        .then((resp) => {
+          this.faq = resp.faq;
+          this.docLink = resp.doc;
+          this.contactUsLink = resp.contactUs;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
   },
 };
 </script>

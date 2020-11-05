@@ -17,16 +17,28 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="page-spinner" />
-  <div v-else id="catalogSummary">
+  <div
+    v-if="loading"
+    class="page-spinner"
+  />
+  <div
+    v-else
+    id="catalogSummary"
+  >
     <b-card class="card m-3">
-      <categories-matched v-if="matchingDone" :matchingProgress="matchingProgress" />
+      <categories-matched
+        v-if="matchingDone"
+        :matching-progress="matchingProgress"
+      />
       <match-categories v-else />
     </b-card>
 
     <b-card class="card m-3">
       <catalog-exported v-if="exportDone" />
-      <export-catalog v-else :isPrimaryAction="matchingDone" />
+      <export-catalog
+        v-else
+        :is-primary-action="matchingDone"
+      />
     </b-card>
 
     <b-card class="card m-3">

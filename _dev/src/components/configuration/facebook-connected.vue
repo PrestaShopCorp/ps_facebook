@@ -76,7 +76,8 @@
 
       <b-dropdown
         variant="primary"
-        split right
+        split
+        right
         @click="openManageFbe"
         class="ml-4 float-right"
       >

@@ -69,7 +69,8 @@
       </div>
 
       <div class="mb-2">
-        <b-iconstack v-if="categoryMatchingStarted"
+        <b-iconstack
+          v-if="categoryMatchingStarted"
           font-scale="1.5"
           class="mr-2 align-bottom fixed-size"
           width="20"
@@ -98,11 +99,12 @@
       </div>
 
       <div class="mb-2">
-        <b-iconstack v-if="productSyncStarted"
-                     font-scale="1.5"
-                     class="mr-2 align-bottom fixed-size"
-                     width="20"
-                     height="20"
+        <b-iconstack
+          v-if="productSyncStarted"
+          font-scale="1.5"
+          class="mr-2 align-bottom fixed-size"
+          width="20"
+          height="20"
         >
           <b-icon-circle-fill
             stacked

@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/help',
     name: 'help',
-    component: Help
+    component: Help,
   },
   {
     path: '/',
