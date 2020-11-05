@@ -41,6 +41,7 @@
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
           "editButton": "Restart onboarding",
+          "unlinkButton": "Unlink",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
           "facebookPixel": "Facebook Pixel",

@@ -170,13 +170,35 @@ class FacebookClient
     }
 
     /**
+     * @see https://developers.facebook.com/docs/marketing-api/fbe/fbe2/guides/uninstall?locale=en_US#uninstall-fbe--v2-for-businesses
+     *
+     * @param string $externalBusinessId
+     * @param string $accessToken
+     *
+     * @return false|array
+     */
+    public function uninstallFbe($externalBusinessId, $accessToken)
+    {
+        $body = [
+            'fbe_external_business_id' => $externalBusinessId,
+            'access_token' => $accessToken,
+        ];
+
+        return $this->delete(
+            'fbe_business/fbe_installs',
+            [],
+            $body
+        );
+    }
+
+    /**
      * @param int|string $id
      * @param array $fields
      * @param array $query
      *
      * @return false|array
      */
-    public function get($id, array $fields = [], array $query = [])
+    private function get($id, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [
@@ -210,7 +232,32 @@ class FacebookClient
      *
      * @return false|array
      */
-    public function post($id, array $headers = [], array $body = [])
+    private function post($id, array $headers = [], array $body = [])
+    {
+        return $this->sendRequest($id, $headers, $body, 'POST');
+    }
+
+    /**
+     * @param int|string $id
+     * @param array $headers
+     * @param array $body
+     *
+     * @return false|array
+     */
+    private function delete($id, array $headers = [], array $body = [])
+    {
+        return $this->sendRequest($id, $headers, $body, 'DELETE');
+    }
+
+    /**
+     * @param int|string $id
+     * @param array $headers
+     * @param array $body
+     * @param string $method
+     *
+     * @return false|array
+     */
+    private function sendRequest($id, array $headers, array $body, $method)
     {
         $options = [
             'headers' => $headers,
@@ -224,7 +271,7 @@ class FacebookClient
 
         try {
             $request = $this->client->createRequest(
-                'POST',
+                $method,
                 "/{$this->sdkVersion}/{$id}",
                 $options
             );

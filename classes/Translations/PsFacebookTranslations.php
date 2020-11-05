@@ -104,6 +104,7 @@ class PsFacebookTranslations
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
+                        'unlinkButton' => $this->module->l('Unlink', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
                         'facebookPixel' => $this->module->l('Facebook Pixel', 'PsFacebookTranslations'),
