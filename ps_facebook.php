@@ -8,6 +8,7 @@ use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
  * 2007-2020 PrestaShop.
@@ -41,6 +42,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class Ps_facebook extends Module
 {
+    /**
+     * @var ServiceContainer
+     */
+    private $serviceContainer;
+
     const MODULE_ADMIN_CONTROLLERS = [
         'AdminAjaxPsfacebook',
         'AdminPsfacebookModule',
@@ -78,6 +84,7 @@ class Ps_facebook extends Module
         Config::PS_FACEBOOK_CATALOG_ID,
         Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID,
         Config::PS_FACEBOOK_PIXEL_ENABLED,
+        Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
     ];
 
     /**
@@ -121,7 +128,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         // TODO : $this->module_key = '';
@@ -144,11 +151,31 @@ class Ps_facebook extends Module
             [],
             true
         );
-        $this->templateBuffer = new TemplateBuffer();
-        $this->eventDispatcher = new EventDispatcher($this);
+        $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
+        $this->templateBuffer = $this->getService(TemplateBuffer::class);
 
-        $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
-        $dotenv->load();
+        $this->loadEnv();
+    }
+
+    private function loadEnv()
+    {
+        if (file_exists(_PS_MODULE_DIR_ . 'ps_facebook/.env')) {
+            $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
+            $dotenv->load();
+        }
+
+        $dotenvDist = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/', '.env.dist');
+        $dotenvDist->load();
+    }
+
+    /**
+     * @param string $serviceName
+     *
+     * @return mixed
+     */
+    public function getService($serviceName)
+    {
+        return $this->serviceContainer->getService($serviceName);
     }
 
     /**
@@ -161,9 +188,17 @@ class Ps_facebook extends Module
      */
     public function install()
     {
+        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
+        // does not have the _PS_ADMIN_DIR_ in this environment.
+        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
+        // $installer = $this->getService(Installer::class);
+
+        /** @var Installer $installer */
+        $installer = new Installer($this);
+
         return parent::install() &&
             (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
-            (new Installer($this))->install();
+            $installer->install();
     }
 
     /**
@@ -176,7 +211,15 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
-        return (new Uninstaller($this, new TabRepository()))->uninstall() &&
+        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
+        // does not have the _PS_ADMIN_DIR_ in this environment.
+        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
+        // $uninstaller = $this->getService(Uninstaller::class);
+
+        /** @var Uninstaller $uninstaller */
+        $uninstaller = new Uninstaller($this, $this->getService(TabRepository::class));
+
+        return $uninstaller->uninstall() &&
             parent::uninstall();
     }
 
@@ -216,14 +259,16 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
 
     public function hookDisplayHeader(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
@@ -231,7 +276,8 @@ class Ps_facebook extends Module
     // Handle QuickView (ViewContent)
     public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
@@ -242,40 +288,46 @@ class Ps_facebook extends Module
             return;
         }
 
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
 
     public function hookDisplayOrderConfirmation(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
 
     public function hookActionNewsletterRegistrationAfter(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
 
     public function hookActionSubmitAccountBefore(array $params)
     {
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }
@@ -283,7 +335,7 @@ class Ps_facebook extends Module
     public function hookDisplayFooter()
     {
         $content = '';
-        $messengerHandler = new MessengerHandler();
+        $messengerHandler = $this->getService(MessengerHandler::class);
         if ($messengerHandler->isReady()) {
             $this->context->smarty->assign($messengerHandler->handle());
             $content .= $this->context->smarty->fetch('module:ps_facebook/views/templates/hook/messenger.tpl');
@@ -298,7 +350,8 @@ class Ps_facebook extends Module
             return false;
         }
 
-        $this->eventDispatcher->dispatch(__FUNCTION__, $params);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
     }

@@ -60,18 +60,24 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {FacebookConnected},
-  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :startExpanded="startExpanded" @onEditClick="onEditClick" @onPixelActivation="onPixelActivation" />',
+  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :startExpanded="startExpanded" :psFacebookAppId="psFacebookAppId" :externalBusinessId="externalBusinessId" @onEditClick="onEditClick" @onUninstallClick="onUninstallClick" @onPixelActivation="onPixelActivation" />',
 });
 export const Default:any = Template.bind({});
 Default.args = {
+  psFacebookAppId: '1234567890',
+  externalBusinessId: '0987654321',
   contextPsFacebook,
 };
 export const DefaultFolded:any = Template.bind({});
 DefaultFolded.args = {
+  psFacebookAppId: '1234567890',
+  externalBusinessId: '0987654321',
   contextPsFacebook,
   startExpanded: false,
 };
 export const OverflowData:any = Template.bind({});
 OverflowData.args = {
+  psFacebookAppId: '1234567890',
+  externalBusinessId: '0987654321',
   contextPsFacebook: contextPsFacebookOverflows,
 };

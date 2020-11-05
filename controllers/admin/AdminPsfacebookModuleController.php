@@ -15,11 +15,14 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
+        //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
+        $appId = $_ENV['PSX_FACEBOOK_APP_ID'];
+        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
-            'id_pixel' => pSQL(Configuration::get('PS_PIXEL_ID')),
+            'id_pixel' => pSQL(Configuration::get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
@@ -32,24 +35,43 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'retrieveExternalBusinessId']
+                [
+                    'action' => 'RetrieveExternalBusinessId',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookPixelActivationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'activatePixel']
+                [
+                    'action' => 'ActivatePixel',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookFbeOnboardingSaveRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
-                ['action' => 'saveOnboarding']
+                [
+                    'action' => 'ConnectToFacebook',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookFbeOnboardingUninstallRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'DisconnectFromFacebook',
+                    'ajax' => 1,
+                ]
             ),
             'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
@@ -66,6 +88,70 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'GetFbContext',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookUpdateCategoryMatch' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'UpdateCategoryMatch',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCategory' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetCategory',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCategories' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'getCategories',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetFeaturesRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetFeatures',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookUpdateFeatureRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'UpdateFeature',
+                    'ajax' => 1,
+                ]
+            ),
+            'facebookManageFeaturesRoute' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
+            'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'requireProductSyncStart',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCatalogSummaryRoute' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'CatalogSummary',
                     'ajax' => 1,
                 ]
             ),

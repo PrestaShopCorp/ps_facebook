@@ -27,23 +27,6 @@
     </b-alert>
 
     <b-alert
-      variant="warning"
-      :show="showSyncCatalogAdvice"
-    >
-      <p>
-        {{ $t('configuration.messages.syncCatalogAdvice') }}
-        <br>
-        <b-button
-          variant="primary"
-          class="mt-2"
-          @click="onSyncCatalogAdviceClick"
-        >
-          {{ $t('configuration.messages.syncCatalogButton') }}
-        </b-button>
-      </p>
-    </b-alert>
-
-    <b-alert
       variant="danger"
       dismissible
       :show="!!error"
@@ -59,17 +42,31 @@
         </b-button>
       </p>
     </b-alert>
+
+    <stepper
+      v-if="showSyncCatalogAdvice"
+      :categoryMatchingStarted="categoryMatchingStarted"
+      :productSyncStarted="productSyncStarted"
+      @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BAlert, BButton} from 'bootstrap-vue';
+import {
+  BAlert,
+  BButton,
+} from 'bootstrap-vue';
+import Stepper from './stepper.vue';
 
 export default defineComponent({
   name: 'Messages',
-  components: {BAlert, BButton},
-  mixins: [],
+  components: {
+    BAlert,
+    BButton,
+    Stepper,
+  },
   props: {
     showOnboardSucceeded: {
       type: Boolean,
@@ -77,6 +74,16 @@ export default defineComponent({
       default: false,
     },
     showSyncCatalogAdvice: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    categoryMatchingStarted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    productSyncStarted: {
       type: Boolean,
       required: false,
       default: false,

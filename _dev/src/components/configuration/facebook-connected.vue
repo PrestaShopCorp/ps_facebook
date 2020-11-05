@@ -74,13 +74,23 @@
         </span>
       </div>
 
-      <b-button
-        variant="outline-secondary"
-        @click="edit"
-        class="ml-4"
+      <b-dropdown
+        variant="primary"
+        split right
+        @click="openManageFbe"
+        class="ml-4 float-right"
       >
-        {{ $t('configuration.facebook.connected.editButton') }}
-      </b-button>
+        <template #button-content>
+          {{ $t('configuration.facebook.connected.manageFbeButton') }}
+          <i class="material-icons">open_in_new</i>
+        </template>
+        <b-dropdown-item @click="edit">
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </b-dropdown-item>
+        <b-dropdown-item @click="uninstall">
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
+        </b-dropdown-item>
+      </b-dropdown>
     </b-card-body>
 
     <!-- Small screen -->
@@ -94,13 +104,21 @@
         alt="colors"
       >
 
-      <b-button
-        variant="outline-secondary"
-        @click="edit"
+      <b-dropdown
+        variant="primary"
+        split
+        right
+        :text="$t('configuration.facebook.connected.manageFbeButton')"
+        @click="openManageFbe"
         class="ml-4 float-right"
       >
-        {{ $t('configuration.facebook.connected.editButton') }}
-      </b-button>
+        <b-dropdown-item @click="edit">
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </b-dropdown-item>
+        <b-dropdown-item @click="uninstall">
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
+        </b-dropdown-item>
+      </b-dropdown>
 
       <div v-if="!!contextPsFacebook">
         {{ $t('configuration.facebook.connected.description') }}
@@ -148,6 +166,7 @@
               :app-name="contextPsFacebook.pixel.name"
               :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
               :last-active="Date.now()"
+              :url="pixelUrl"
               :activation-switch="contextPsFacebook.pixel.isActive"
               @onActivation="pixelActivation"
             />
@@ -202,6 +221,8 @@ import {
   BContainer,
   BRow,
   BCol,
+  BDropdown,
+  BDropdownItem,
 } from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 import facebookLogo from '../../assets/facebook_logo.svg';
@@ -220,8 +241,18 @@ export default defineComponent({
     BRow,
     BCol,
     BCardHeader,
+    BDropdown,
+    BDropdownItem,
   },
   props: {
+    psFacebookAppId: {
+      type: String,
+      required: true,
+    },
+    externalBusinessId: {
+      type: String,
+      required: true,
+    },
     contextPsFacebook: {
       type: Object,
       required: false,
@@ -252,6 +283,17 @@ export default defineComponent({
         email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
       };
     },
+    fbeUrl() {
+      const q = `?app_id=${this.psFacebookAppId}&external_business_id=${this.externalBusinessId}`;
+      return `https://www.facebook.com/facebook_business_extension/management/${q}`;
+    },
+    pixelUrl() {
+      if (!this.contextPsFacebook || !this.contextPsFacebook.pixel) {
+        return '#';
+      }
+      const pixId = this.contextPsFacebook.pixel.id;
+      return `https://business.facebook.com/events_manager2/list/pixel/${pixId}/overview`;
+    },
   },
   methods: {
     fold() {
@@ -263,6 +305,12 @@ export default defineComponent({
     pixelActivation(activated: boolean) {
       this.$emit('onPixelActivation', activated);
     },
+    openManageFbe() {
+      window.open(this.fbeUrl, '_blank');
+    },
+    uninstall() {
+      this.$emit('onUninstallClick');
+    },
   },
 });
 </script>
@@ -273,7 +321,7 @@ export default defineComponent({
     flex-direction: row;
     align-items: flex-start;
 
-    > div {
+    > div:first-of-type {
       flex-grow: 1;
       flex-shrink: 1;
 

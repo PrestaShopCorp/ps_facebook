@@ -18,10 +18,10 @@ class EventDispatcher
      */
     private $pixelHandler;
 
-    public function __construct($module)
+    public function __construct(ApiConversionHandler $apiConversionHandler, PixelHandler $pixelHandler)
     {
-        $this->conversionHandler = new ApiConversionHandler();
-        $this->pixelHandler = new PixelHandler($module);
+        $this->conversionHandler = $apiConversionHandler;
+        $this->pixelHandler = $pixelHandler;
     }
 
     /**

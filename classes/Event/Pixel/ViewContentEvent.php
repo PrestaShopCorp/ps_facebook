@@ -2,13 +2,14 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $pixel_id = \Configuration::get('PS_PIXEL_ID');
+        $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
             return;
         }
@@ -16,16 +17,15 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         // Asset Manager to be sure the JS is loaded
         /** @var \FrontController|\ProductController|\CategoryController $controller */
         $controller = $this->context->controller;
-
         if (true === $this->module->psVersionIs17) {
             $controller->registerJavascript(
-                'front_common',
-                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
+                'front_fb_common',
+                $this->module->js_path . 'printpixel.js',
                 ['position' => 'bottom', 'priority' => 150]
             );
         } else {
             $controller->addJs(
-                $this->module->js_path . 'printpixel.js?v=' . $this->module->version,
+                $this->module->js_path . 'printpixel.js',
                 false
             );
         }
@@ -128,22 +128,6 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             }
         }
 
-        /*
-        * Triggers InitiateCheckout for checkout page
-         * //todo: its triggered in cart page not in checkout
-        */
-        if ($page === 'cart' && \Tools::getValue('action') === 'show') {
-            $type = 'InitiateCheckout';
-
-            $content = [
-                'num_items' => $this->context->cart->nbProducts(),
-                'content_ids' => array_column($this->context->cart->getProducts(), 'id_product'),
-                'content_type' => $content_type,
-                'value' => (float) $this->context->cart->getOrderTotal(false),
-                'currency' => $currency_iso_code,
-            ];
-        }
-
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
@@ -155,7 +139,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
         ];
 
         if ($this->context->customer->id) {
-            $smartyVariables['userInfos'] = $this->getCustomerInformations();
+            $smartyVariables['userInfos'] = $this->getCustomerInformation();
         }
 
         $this->context->smarty->assign($smartyVariables);

@@ -10,5 +10,5 @@ interface HandlerInterface
      *
      * @return void
      */
-    public function handleEvent(string $eventName, array $event);
+    public function handleEvent($eventName, array $event);
 }

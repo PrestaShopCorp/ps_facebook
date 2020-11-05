@@ -17,48 +17,81 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-tr>
-    <b-td><slot/></b-td>
+  <b-tr :class="categoryStyle">
+    <b-td @click="getCurrentRow(shopCategoryId)">
+      <slot />
+    </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
-        :shopCategoryId="shopCategoryId"
-        :initialCategoryName="currentCategoryName"
-        :initialCategoryId="currentCategoryId"
-        :autocompletionApi="autocompletionApi"
+        :shop-category-id="shopCategoryId"
+        :initial-category-name="currentCategoryName"
+        :initial-category-id="currentCategoryId"
+        :autocompletion-api="autocompletionApi"
         @onCategorySelected="categoryChanged"
       />
     </b-td>
     <b-td>
-      <div v-if="initialPropagation === true || initialPropagation === false" class="propagate">
+      <div
+        v-if="initialPropagation === true || initialPropagation === false"
+        class="propagate"
+      >
         <b-checkbox
           :id="`propagation-${shopCategoryId}`"
           :checked="currentPropagation"
           @change="changePropagation"
-          :disabled="currentCategoryId <= 0 || currentCategoryId === null" />
+          :disabled="currentCategoryId <= 0 || currentCategoryId === null"
+        />
       </div>
     </b-td>
     <b-td>
       <category-autocomplete
         :language="language"
-        :shopCategoryId="shopCategoryId"
-        :initialCategoryName="currentSubcategoryName"
-        :initialCategoryId="currentSubcategoryId"
-        :parentCategoryId="currentCategoryId"
-        :autocompletionApi="autocompletionApi"
+        :shop-category-id="shopCategoryId"
+        :initial-category-name="currentSubcategoryName"
+        :initial-category-id="currentSubcategoryId"
+        :parent-category-id="currentCategoryId"
+        :autocompletion-api="autocompletionApi"
         :disabled="!currentCategoryId"
         @onCategorySelected="subcategoryChanged"
       />
     </b-td>
     <b-td>
-      <div v-if="loading === true" class="spinner" />
-      <div v-if="loading === false" class="saved">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="checkmark__check" fill="none" stroke-width="4" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      <div
+        v-if="loading === true"
+        class="spinner"
+      />
+      <div
+        v-if="loading === false"
+        class="saved"
+      >
+        <svg
+          class="checkmark"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 52 52"
+        >
+          <circle
+            class="checkmark__circle"
+            cx="26"
+            cy="26"
+            r="25"
+            fill="none"
+          />
+          <path
+            class="checkmark__check"
+            fill="none"
+            stroke-width="4"
+            d="M14.1 27.2l7.1 7.2 16.7-16.8"
+          />
         </svg>
       </div>
-      <div v-if="error" class="error" :title="error"><i class="material-icons">error</i></div>
+      <div
+        v-if="error"
+        class="error"
+        :title="error"
+      >
+        <i class="material-icons">error</i>
+      </div>
     </b-td>
   </b-tr>
 </template>
@@ -97,6 +130,10 @@ export default defineComponent({
       type: Number,
       required: false,
       default: null,
+    },
+    categoryStyle: {
+      type: String,
+      required: true,
     },
     initialSubcategoryName: {
       type: String,
@@ -140,6 +177,9 @@ export default defineComponent({
     changePropagation(checked) {
       this.currentPropagation = checked;
     },
+    getCurrentRow(categoryID) {
+      this.$emit('rowClicked', categoryID);
+    },
     categoryChanged(categoryId, categoryName) {
       if (this.currentCategoryId !== categoryId) {
         this.currentCategoryId = categoryId;
@@ -158,8 +198,10 @@ export default defineComponent({
       this.currentSubcategoryId = subcategoryId;
       this.currentSubcategoryName = subcategoryName;
       const result = {
-        id: subcategoryId,
-        name: subcategoryName,
+        shopCategoryId: this.shopCategoryId,
+        fbCategoryId: this.currentCategoryId,
+        fbSubcategoryId: subcategoryId,
+        fbSubcategoryName: subcategoryName,
         propagate: !!this.currentPropagation,
       };
       this.$emit('onCategoryMatched', result);
@@ -174,6 +216,12 @@ export default defineComponent({
         });
     },
   },
+  watch: {
+    categoryStyle(val) {
+      this.categoryStyle = val;
+    },
+  },
+
 });
 </script>
 <style lang="scss" scoped>
@@ -274,6 +322,73 @@ export default defineComponent({
     display: inline-block;
     line-height: 1;
     color: #c05c67;
+  }
+  .opened {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_more";
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
+  .closed {
+    td:first-child:before {
+      font-family: Material Icons;
+      font-style: normal;
+      font-size: 15px;
+      font-size: 1.5rem;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "liga";
+      content: "expand_less";
+      transform: rotate(90deg);
+      border: none;
+      display: inline-block;
+      vertical-align: middle;
+      width: auto;
+      line-height: 0;
+    }
+    td:first-child {
+      cursor: pointer;
+    }
+  }
+
+  .array-tree-lvl-2 {
+    td:first-child {
+      padding-left:40px;
+    }
+  }
+  .array-tree-lvl-3 {
+    td:first-child {
+      padding-left:80px;
+    }
   }
 
   .propagate > * {

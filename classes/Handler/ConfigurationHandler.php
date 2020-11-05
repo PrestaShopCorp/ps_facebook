@@ -2,7 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -20,12 +19,19 @@ class ConfigurationHandler
      */
     private $facebookDataProvider;
 
+    /**
+     * @var FacebookClient
+     */
+    private $facebookClient;
+
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        FacebookDataProvider $facebookDataProvider
+        FacebookDataProvider $facebookDataProvider,
+        FacebookClient $facebookClient
     ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->facebookDataProvider = $facebookDataProvider;
+        $this->facebookClient = $facebookClient;
     }
 
     public function handle($onboardingInputs)
@@ -41,19 +47,29 @@ class ConfigurationHandler
         ];
     }
 
+    /**
+     * Call the FB API to uninstall FBE on their side, then clean the database
+     */
+    public function uninstallFbe()
+    {
+        $this->facebookClient->uninstallFbe(
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+            $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN)
+        );
+
+        // Whatever the API answer, we drop the data on the configuration table
+        // For instance, a user who already uninstalled FBE will get an error while calling the API.
+        $this->cleanOnboardingConfiguration();
+    }
+
     private function addFbeAttributeIfMissing(array &$onboardingParams)
     {
         if (!empty($onboardingParams['fbe']) && !isset($onboardingParams['fbe']['error'])) {
             return;
         }
 
-        $facebookClient = new FacebookClient(
-            $onboardingParams['access_token'],
-            Config::API_VERSION,
-            new Client()
-        );
-
-        $onboardingParams['fbe'] = $facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
+        $this->facebookClient->setAccessToken($onboardingParams['access_token']);
+        $onboardingParams['fbe'] = $this->facebookClient->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
     }
 
     private function saveOnboardingConfiguration(array $onboardingParams)
@@ -66,5 +82,23 @@ class ConfigurationHandler
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_AD_ACCOUNT_ID, isset($onboardingParams['fbe']['ad_account_id']) ? $onboardingParams['fbe']['ad_account_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_CATALOG_ID, isset($onboardingParams['fbe']['catalog_id']) ? $onboardingParams['fbe']['catalog_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
+    }
+
+    private function cleanOnboardingConfiguration()
+    {
+        $dataConfigurationKeys = [
+            Config::FB_ACCESS_TOKEN,
+            Config::PS_PIXEL_ID,
+            Config::PS_FACEBOOK_PROFILES,
+            Config::PS_FACEBOOK_PAGES,
+            Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,
+            Config::PS_FACEBOOK_AD_ACCOUNT_ID,
+            Config::PS_FACEBOOK_CATALOG_ID,
+            Config::PS_FACEBOOK_PIXEL_ENABLED,
+        ];
+
+        foreach ($dataConfigurationKeys as $key) {
+            $this->configurationAdapter->deleteByName($key);
+        }
     }
 }

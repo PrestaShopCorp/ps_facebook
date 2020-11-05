@@ -21,8 +21,12 @@
       },
       "messages": {
         "success": "PrestaShop Facebook is now activated!",
-        "syncCatalogAdvice": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
-        "syncCatalogButton": "Sync product",
+        "syncCatalogAdvice": "One more thing: Match your categories and import your product catalog to set up Facebook Shop, Instagram Shopping and create ad campaigns.",
+        "stepPsAccount": "Connect your PrestaShop account",
+        "stepPsFacebook": "Connect your store to Facebook",
+        "stepCategoryMatching": "Match categories",
+        "stepProductSync": "Import your product catalog",
+        "syncCatalogButton": "Match categories",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
       },
@@ -36,7 +40,8 @@
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
-          "editButton": "Edit",
+          "editButton": "Restart onboarding",
+          "unlinkButton": "Unlink",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
           "facebookPixel": "Facebook Pixel",
@@ -44,7 +49,8 @@
           "facebookPage": "Facebook Page",
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
-          "facebookAdsTooltip": "Facebook Ads"
+          "facebookAdsTooltip": "Facebook Ads",
+          "manageFbeButton": "Open advanced settings"
         }
       },
       "app": {
@@ -53,20 +59,44 @@
         "createdAt": "Created",
         "lastActive": "Last active",
         "activated": "Activated",
-        "disabled": "Disabled"
+        "disabled": "Disabled",
+        "viewStats": "View stats"
       },
       "glass": {
         "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
         "link": "Continue"
       }
     },
+    "catalogSummary":  {
+      "categoryMatching": "Category matching",
+      "categoryMatchingIntro": "Match your own categories with official Facebook categories. \nIt helps get better ad performance and activate shop plugins.",
+      "matchCategoriesButton": "Match categories",
+      "productCatalogExport": "Product catalog export",
+      "exportCatalogButton": "Export catalog",
+      "catalogExportWarning": "Only products from matched categories are synced.",
+      "catalogExportIntro": "To sell and advertise your products on Facebook and Instagram, you need to export your product catalog.",
+      "reportingTitle": "Product sync report",
+      "reportingIntro": "Only products from matched categories are synced.",
+      "viewButton": "View",
+      "backButton": "Back",
+      "detailsButton": "See details",
+      "exportCatalogButtonErrored": "Failed! Try again"
+    },
     "categoryMatching": {
+      "intro": "Match your own categories with official Facebook categories to improve catalog quality and ad performance.",
+      "counterSubTitle": "specified parent categories",
       "autocomplete": {
         "typeToFilter": "Type to filter",
         "select": "Select",
         "noResult": "No result for your search",
         "tooManyResults": "Too many results, please complete your search.",
         "fetchError": "An error occurred during search process."
+      },
+      "tableMatching": {
+        "firstTd" : "Category on your site",
+        "secondTd" : "Facebook category",
+        "thirdTd" : "Parent category",
+        "fourthTd" : "Facebook subcategory"
       }
     }
   }

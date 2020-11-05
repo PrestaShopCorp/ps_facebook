@@ -16,7 +16,7 @@ class TemplateBuffer
      *
      * @return void
      */
-    public function add(string $data)
+    public function add($data)
     {
         $this->data .= $data;
     }

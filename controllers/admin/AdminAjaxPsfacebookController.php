@@ -14,40 +14,22 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
-use GuzzleHttp\Client;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
-    public function postProcess()
-    {
-        $action = Tools::getValue('action');
-        $inputs = json_decode(file_get_contents('php://input'), true);
+    /** @var Ps_facebook */
+    public $module;
 
-        switch ($action) {
-            case 'saveOnboarding':
-                $this->ajaxProcessConnectToFacebook($inputs);
-                break;
-            case 'activatePixel':
-                $this->ajaxProcessActivatePixel($inputs);
-                break;
-            case 'retrieveExternalBusinessId':
-                $this->ajaxProcessRetrieveExternalBusinessId();
-                break;
-            default:
-                break;
-        }
-
-        return parent::postProcess();
-    }
-
-    public function ajaxProcessSaveTokenFbeAccount()
+    public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
         $response = Configuration::updateValue(Config::FB_ACCESS_TOKEN, $token);
@@ -58,22 +40,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * Receive the Facebook access token, store it in DB then regerate app data
      *
-     * @param array $inputs
-     *
      * @throws PrestaShopException
      */
-    public function ajaxProcessConnectToFacebook(array $inputs)
+    public function displayAjaxConnectToFacebook()
     {
+        $inputs = json_decode(file_get_contents('php://input'), true);
         $onboardingData = $inputs['onboarding'];
-        $facebookClient = new FacebookClient(
-            $onboardingData['access_token'],
-            Config::API_VERSION,
-            new Client()
-        );
-        $fbDataProvider = new FacebookDataProvider($facebookClient);
 
-        $configurationAdapter = new ConfigurationAdapter();
-        $configurationHandler = new ConfigurationHandler($configurationAdapter, $fbDataProvider);
+        /** @var ConfigurationHandler $configurationHandler */
+        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
 
         $response = $configurationHandler->handle($onboardingData);
 
@@ -82,11 +57,24 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    public function displayAjaxDisconnectFromFacebook()
+    {
+        // Disconnect from FB
+        /** @var ConfigurationHandler $configurationHandler */
+        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
+        $configurationHandler->uninstallFbe();
+
+        // Return new FB context
+        $this->displayAjaxConfiguration();
+    }
+
     /**
      * Store in database a boolean for know if customer activate pixel
      */
-    public function ajaxProcessActivatePixel(array $inputs)
+    public function displayAjaxActivatePixel()
     {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
             Configuration::updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
@@ -97,7 +85,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode(['success' => false]));
     }
 
-    private function ajaxProcessRetrieveExternalBusinessId()
+    public function displayAjaxRetrieveExternalBusinessId()
     {
         $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
@@ -128,16 +116,38 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * @throws PrestaShopException
      */
+    public function displayAjaxRequireProductSyncStart()
+    {
+        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+        $response = $client->post(
+            '/account/' . $externalBusinessId . '/start_product_sync',
+            [
+                'json' => [],
+            ]
+        )->json();
+
+        Configuration::updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
     public function displayAjaxConfiguration()
     {
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+        /** @var FbeDataProvider $fbeDataProvider */
+        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
 
-        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
 
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
@@ -156,15 +166,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFbContext()
     {
-        $facebookClient = new FacebookClient(
-            Configuration::get(Config::FB_ACCESS_TOKEN),
-            Config::API_VERSION,
-            new Client()
-        );
-        $facebookDataProvider = new FacebookDataProvider($facebookClient);
+        /** @var FbeDataProvider $fbeDataProvider */
+        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
 
-        $fbeDataProvider = new FbeDataProvider(new ConfigurationAdapter());
-
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
         $this->ajaxDie(
@@ -174,6 +180,132 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'contextPsFacebook' => $facebookContext,
                 ]
             )
+        );
+    }
+
+    public function displayAjaxUpdateCategoryMatch()
+    {
+        /** @var CategoryMatchHandler $categoryMatchHandler */
+        $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
+
+        try {
+            /* todo: change to data from ajax */
+            $categoryMatchHandler->updateCategoryMatch(3, 8, true);
+        } catch (Exception $e) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                    ]
+                )
+            );
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxGetCategory()
+    {
+        $categoryId = Tools::getValue('id_category');
+        /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
+        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId);
+        // FIXME : for now, this function will call our API to get taxonomy details about a category ID.
+        //  The needed feature is totally different : see ticket http://forge.prestashop.com/browse/EMKTG-305
+
+        $this->ajaxDie(
+            json_encode($googleCategory)
+            // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxGetFeatures()
+    {
+        $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
+
+        $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'fbeFeatures' => $fbeFeatures,
+                ]
+            )
+        );
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxUpdateFeature()
+    {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+
+        $featureManager = $this->module->getService(FbeFeatureManager::class);
+
+        $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
+
+        if (is_array($response)) {
+            $this->ajaxDie(
+                json_encode(
+                    $response
+                )
+            );
+        } else {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+    }
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxCatalogSummary()
+    {
+        // TODO !1: complete object :
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'exportDone' => (true == \Configuration::get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
+                    'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
+                    'matchingProgress' => ['total' => 42, 'matched' => 0],
+                    'reporting' => [
+                      'total' => 0,
+                      'pending' => 0,
+                      'approved' => 0,
+                      'disapproved' => 0,
+                    ],
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxGetCategories()
+    {
+        $categoryId = (int) Tools::getValue('id_category');
+        $page = (int) Tools::getValue('page');
+
+        /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page);
+
+        $this->ajaxDie(
+            json_encode($googleCategories)
         );
     }
 

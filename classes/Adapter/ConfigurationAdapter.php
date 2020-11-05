@@ -15,4 +15,9 @@ class ConfigurationAdapter
     {
         return Configuration::updateValue($key, $values, $html, $idShopGroup, $idShop);
     }
+
+    public function deleteByName($key)
+    {
+        return Configuration::deleteByName($key);
+    }
 }

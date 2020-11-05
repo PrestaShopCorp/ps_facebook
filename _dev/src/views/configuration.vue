@@ -19,7 +19,7 @@
 <template>
   <div
     v-if="loading"
-    class="spinner"
+    class="page-spinner"
   />
   <div
     id="configuration"
@@ -29,44 +29,49 @@
     <introduction
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
-      class="m-4"
+      class="m-3"
     />
     <template v-else>
       <messages
         :show-onboard-succeeded="psFacebookJustOnboarded"
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+        :category-matching-started="categoryMatchingStarted"
+        :product-sync-started="productSyncStarted"
         :error="error"
         @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
-        class="m-4"
+        class="m-3"
       />
       <ps-accounts
         :context="contextPsAccounts"
-        class="m-4"
+        class="m-3"
       />
 
       <no-config
         v-if="!psAccountsOnboarded"
-        class="m-4"
+        class="m-3"
       />
       <template v-else>
         <facebook-not-connected
           v-if="!facebookConnected"
           @onFbeOnboardClick="onFbeOnboardClick"
-          class="m-4"
+          class="m-3"
         />
         <facebook-connected
           v-else
+          :ps-facebook-app-id="psFacebookAppId"
+          :external-business-id="dynamicExternalBusinessId"
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
-          class="m-4"
+          @onUninstallClick="onUninstallClick"
+          class="m-3"
         />
         <div
           v-if="showGlass"
           class="glass"
           @click="glassClicked"
         >
-          <div>
+          <div class="refocus">
             <img
               class="m-3"
               :src="facebook"
@@ -77,7 +82,12 @@
             <p>{{ $t('configuration.glass.text') }}</p>
             <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
           </div>
-
+          <div
+            class="closeCross p-1 m-4"
+            @click="closePopup"
+          >
+            <i class="material-icons">close</i>
+          </div>
         </div>
       </template>
     </template>
@@ -140,7 +150,12 @@ export default defineComponent({
     contextPsFacebook: {
       type: Object,
       required: false,
-      default: () => global.contextPsFacebook,
+      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
+    },
+    psFacebookAppId: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookAppId,
     },
     externalBusinessId: {
       type: String,
@@ -169,22 +184,27 @@ export default defineComponent({
     },
     pixelActivationRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookPixelActivationRoute || null,
     },
     fbeOnboardingSaveRoute: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
+    },
+    fbeOnboardingUninstallRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookFbeOnboardingUninstallRoute || null,
     },
     psFacebookUiUrl: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
     psFacebookRetrieveExternalBusinessId: {
       type: String,
-      required: true,
+      required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
   },
@@ -194,8 +214,22 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      const context = this.contextPsFacebook;
-      return (context && context.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+    },
+    categoryMatchingStarted() {
+      return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
+        && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
+    },
+    productSyncStarted() {
+      return this.contextPsFacebook && this.contextPsFacebook.catalog
+        && this.contextPsFacebook.catalog.productSyncStarted;
+    },
+    showSyncCatalogAdvice() {
+      const c = this.dynamicContextPsFacebook;
+      return c && c.email && (
+        !c.catalog
+        || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
+      );
     },
   },
   data() {
@@ -204,9 +238,6 @@ export default defineComponent({
       dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
-      showSyncCatalogAdvice: this.contextPsFacebook
-        && this.contextPsFacebook.categoriesMatching
-        && this.contextPsFacebook.categoriesMatching.sent !== true,
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
       error: null,
@@ -217,7 +248,11 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
+    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {
@@ -239,7 +274,7 @@ export default defineComponent({
         });
     },
     onSyncCatalogAdviceClick() {
-      this.$router.push({name: 'Catalog', query: {component: 'matching'}});
+      this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();
@@ -248,6 +283,24 @@ export default defineComponent({
     onEditClick() {
       this.openedPopup = this.openPopup();
       this.showGlass = true;
+    },
+    onUninstallClick() {
+      fetch(this.fbeOnboardingUninstallRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.facebookConnected = false;
+        }).catch((error) => {
+          console.error(error);
+          // TODO: Replace me with uninstallation specific message
+          this.error = 'configuration.messages.unknownOnboardingError';
+        });
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;
@@ -362,12 +415,22 @@ export default defineComponent({
         this.openedPopup = this.openPopup();
       }
     },
+    closePopup(event) {
+      event.stopPropagation(); // avoid popup to be focused before close
+      if (this.openedPopup) {
+        this.openedPopup.close();
+      }
+    },
   },
   watch: {
     contextPsAccounts() {
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
+      const oldValue = this.dynamicContextPsFacebook;
+      if (oldValue && !oldValue.email && newValue && newValue.email) {
+        this.psFacebookJustOnboarded = true;
+      }
       this.dynamicContextPsFacebook = newValue;
       this.$forceUpdate();
     },
@@ -378,7 +441,7 @@ export default defineComponent({
 <style lang="scss">
   .ps-facebook-configuration-tab {
     div.card {
-      border: none;
+      border: none !important;
       border-radius: 3px;
     }
   }
@@ -393,7 +456,7 @@ export default defineComponent({
     background-color: rgba(0,0,0,0.5);
     z-index: 10000;
 
-    & > div {
+    & > .refocus {
       text-align: center;
       margin-top: 25vh;
       color: white;
@@ -420,27 +483,17 @@ export default defineComponent({
         font-weight: 600;
       }
     }
-  }
+    & > .closeCross {
+      position: fixed;
+      right: 0;
+      top: 0;
+      color: white;
+      text-shadow: 3px 5px 10px rgba(0,0,0,.4);
 
-  .spinner {
-    color: #fff;
-    background-color: inherit !important;
-    width: 8rem !important;
-    height: 8rem !important;
-    border-radius: 4rem !important;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-    position: relative;
-    left: calc(50% - 4rem);
-    top: 6rem;
+      & > i {
+        color: #fff;
+        font-size: 2.6em !important;
+      }
+    }
   }
 </style>
