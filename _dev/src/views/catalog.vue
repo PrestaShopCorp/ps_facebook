@@ -17,7 +17,10 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="catalog" class="ps-facebook-catalog-tab">
+  <div
+    id="catalog"
+    class="ps-facebook-catalog-tab"
+  >
     <catalog-summary v-if="currentPage === PAGES.summary" />
     <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
     <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />

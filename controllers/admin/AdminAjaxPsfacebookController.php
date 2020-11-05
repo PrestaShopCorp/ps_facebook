@@ -1,5 +1,5 @@
 <?php
-/*
+/*X
 * 2007-2020 PrestaShop.
 *
 * DISCLAIMER
@@ -23,6 +23,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
+use PrestaShop\ModuleLibFaq\Faq;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -310,11 +311,45 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     }
 
     /**
+     * Retrieve the faq
+     */
+    public function displayAjaxRetrieveFaq()
+    {
+        $faq = new Faq($this->module->module_key, _PS_VERSION_, $this->context->language->iso_code);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'faq' => $faq->getFaq(),
+                    'doc' => $this->getReadme(),
+                    'contactUs' => 'https://www.google.com',
+                ]
+            )
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function ajaxDie($value = null, $controller = null, $method = null)
     {
         header('Content-Type: application/json');
         parent::ajaxDie($value, $controller, $method);
+    }
+
+    /**
+     * Get the documentation url depending on the current language
+     *
+     * @return string path of the doc
+     */
+    private function getReadme()
+    {
+        $isoCode = $this->context->language->iso_code;
+
+        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf')) {
+            $isoCode = 'en';
+        }
+
+        return _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf';
     }
 }

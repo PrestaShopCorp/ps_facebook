@@ -206,6 +206,28 @@ class PsFacebookTranslations
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
             ],
+
+            'help' => [
+                'title' => $this->module->l('Help for PrestaShop Facebook', 'PsFacebookTranslations'),
+                'allowsYouTo' => [
+                    'title' => $this->module->l('This module allows you to:', 'PsFacebookTranslations'),
+                    'business' => $this->module->l('Manage your business', 'PsFacebookTranslations'),
+                    'account' => $this->module->l('Manage your ad account', 'PsFacebookTranslations'),
+                    'traffic' => $this->module->l('Understand your traffic', 'PsFacebookTranslations'),
+                    'inventory' => $this->module->l('Build and manage inventory', 'PsFacebookTranslations'),
+                    'people' => $this->module->l('Reach more people', 'PsFacebookTranslations'),
+                ],
+                'help' => [
+                    'needHelp' => $this->module->l('Need help? Find here the documentation of this module.', 'PsFacebookTranslations'),
+                    'downloadPdf' => $this->module->l('Download PDF', 'PsFacebookTranslations'),
+                    'couldntFindAnyAnswer' => $this->module->l('Couldn\'t find any answer to your question?', 'PsFacebookTranslations'),
+                    'contactUs' => $this->module->l('Contact us', 'PsFacebookTranslations'),
+                ],
+            ],
+            'faq' => [
+                'title' => $this->module->l('FAQ', 'PsFacebookTranslations'),
+                'noFaq' => $this->module->l('No FAQ available.', 'PsFacebookTranslations'),
+            ],
         ];
 
         return $translations;
