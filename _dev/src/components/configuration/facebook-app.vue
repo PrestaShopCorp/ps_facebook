@@ -20,13 +20,21 @@
   <div class="app pt-1 pb-3 px-2">
     <div class="text-uppercase text-muted">
       {{ appType }}
-      <b-icon-info-circle
-        v-if="!!tooltip"
-        v-b-tooltip.hover
-        :title="tooltip"
-        class="iconInfo ml-2"
-        variant="primary"
-      />
+      <span v-if="!!tooltip">
+        <b-icon-info-circle
+          :id="`tooltip-circle-${this._uid}`"
+          class="iconInfo ml-2"
+          variant="primary"
+        />
+        <b-tooltip
+          :target="`tooltip-circle-${this._uid}`"
+          container="#app"
+          triggers="hover"
+          placement="right"
+        >
+          {{ tooltip }}
+        </b-tooltip>
+      </span>
     </div>
     <img
       v-if="!!logo"
@@ -95,6 +103,7 @@
         {{ $t('configuration.app.lastActive') }}
         {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
       </div>
+    </div>
 
     <div
       v-if="!!url"

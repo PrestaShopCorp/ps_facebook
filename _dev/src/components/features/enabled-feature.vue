@@ -12,11 +12,18 @@
               >
               {{ $t(`integrate.features.${name}.name`) }}
               <b-icon-info-circle
-                v-b-tooltip.hover
-                :title="$t(`integrate.features.${name}.toolTip`)"
+                :id="`tooltip-circle-${name}`"
                 class="iconInfo ml-2"
                 variant="primary"
               />
+              <b-tooltip
+                :target="`tooltip-circle-${name}`"
+                container="#integrate"
+                triggers="hover"
+                placement="right"
+              >
+                {{ $t(`integrate.features.${name}.toolTip`) }}
+              </b-tooltip>
             </h3>
           </div>
           <div>

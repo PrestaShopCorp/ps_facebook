@@ -108,7 +108,7 @@ class PsFacebookTranslations
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
                         'facebookPixel' => $this->module->l('Facebook Pixel', 'PsFacebookTranslations'),
-                        'facebookPixelTooltip' => $this->module->l('The Facebook pixel is a piece of code (Javascript) that we automatically install on your website pages. It allows you to "track" who visits your website, track conversions of your Facebook ads and create retargeting audiences', 'PsFacebookTranslations'),
+                        'facebookPixelTooltip' => $this->module->l('The Facebook pixel is a piece of code (Javascript) that we automatically install on your website pages. It allows you to “track” who visits your website, track conversions of your Facebook ads and create retargeting audiences', 'PsFacebookTranslations'),
                         'facebookPage' => $this->module->l('Facebook Page', 'PsFacebookTranslations'),
                         'facebookPageTooltip' => $this->module->l('Your Facebook page will represent your business in your ads', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
