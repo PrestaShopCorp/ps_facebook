@@ -21,19 +21,7 @@
     <div class="text-uppercase text-muted">
       {{ appType }}
       <span v-if="!!tooltip">
-        <b-icon-info-circle
-          :id="`tooltip-circle-${this._uid}`"
-          class="iconInfo ml-2"
-          variant="primary"
-        />
-        <b-tooltip
-          :target="`tooltip-circle-${this._uid}`"
-          container="#app"
-          triggers="hover"
-          placement="right"
-        >
-          {{ tooltip }}
-        </b-tooltip>
+        <tooltip :text="tooltip" />
       </span>
     </div>
     <img
@@ -123,15 +111,16 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BFormCheckbox, BIconInfoCircle, BLink} from 'bootstrap-vue';
+import {BFormCheckbox, BLink} from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 import Warning from '../warning/warning.vue';
 
 export default defineComponent({
   name: 'FacebookApp',
   components: {
     BFormCheckbox,
-    BIconInfoCircle,
     BLink,
+    Tooltip,
     Warning,
   },
   props: {
@@ -218,11 +207,6 @@ export default defineComponent({
     background-color: #fafbfc;
     border-radius: 3px;
     height: 100%;
-
-    .iconInfo {
-      position: relative;
-      top: 0.1em;
-    }
 
     .logo {
       width: 32px;

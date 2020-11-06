@@ -11,19 +11,7 @@
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <h3>
               {{ $t(`integrate.features.${name}.name`) }}
-              <b-icon-info-circle
-                :id="`tooltip-circle-${name}`"
-                class="iconInfo ml-2"
-                variant="primary"
-              />
-              <b-tooltip
-                :target="`tooltip-circle-${name}`"
-                container="#integrate"
-                triggers="hover"
-                placement="right"
-              >
-                {{ $t(`integrate.features.${name}.toolTip`) }}
-              </b-tooltip>
+              <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
             </h3>
             <p class="small-text text-muted">
               {{ $t(`integrate.features.${name}.description`) }}
@@ -43,14 +31,15 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody, BIconInfoCircle} from 'bootstrap-vue';
+import {BCard, BCardBody} from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'UnavailableFeature',
   components: {
     BCard,
     BCardBody,
-    BIconInfoCircle,
+    Tooltip,
   },
   mixins: [],
   props: {

@@ -11,19 +11,7 @@
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
-              <b-icon-info-circle
-                :id="`tooltip-circle-${name}`"
-                class="iconInfo ml-2"
-                variant="primary"
-              />
-              <b-tooltip
-                :target="`tooltip-circle-${name}`"
-                container="#integrate"
-                triggers="hover"
-                placement="right"
-              >
-                {{ $t(`integrate.features.${name}.toolTip`) }}
-              </b-tooltip>
+              <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
             </h3>
           </div>
           <div>
@@ -121,8 +109,8 @@ import {
   BCardBody,
   BButton,
   BTooltip,
-  BIconInfoCircle,
 } from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
@@ -131,7 +119,7 @@ export default defineComponent({
     BCardBody,
     BButton,
     BTooltip,
-    BIconInfoCircle,
+    Tooltip,
   },
   mixins: [],
   props: {
