@@ -20,13 +20,9 @@
   <div class="app pt-1 pb-3 px-2">
     <div class="text-uppercase text-muted">
       {{ appType }}
-      <b-icon-info-circle
-        v-if="!!tooltip"
-        v-b-tooltip.hover
-        :title="tooltip"
-        class="iconInfo ml-2"
-        variant="primary"
-      />
+      <span v-if="!!tooltip">
+        <tooltip :text="tooltip" />
+      </span>
     </div>
     <img
       v-if="!!logo"
@@ -95,6 +91,7 @@
         {{ $t('configuration.app.lastActive') }}
         {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
       </div>
+    </div>
 
     <div
       v-if="!!url"
@@ -114,15 +111,16 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BFormCheckbox, BIconInfoCircle, BLink} from 'bootstrap-vue';
+import {BFormCheckbox, BLink} from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 import Warning from '../warning/warning.vue';
 
 export default defineComponent({
   name: 'FacebookApp',
   components: {
     BFormCheckbox,
-    BIconInfoCircle,
     BLink,
+    Tooltip,
     Warning,
   },
   props: {
@@ -209,11 +207,6 @@ export default defineComponent({
     background-color: #fafbfc;
     border-radius: 3px;
     height: 100%;
-
-    .iconInfo {
-      position: relative;
-      top: 0.1em;
-    }
 
     .logo {
       width: 32px;
