@@ -86,7 +86,7 @@ class FacebookClient
             isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
             isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
+            (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
         );
     }
 
