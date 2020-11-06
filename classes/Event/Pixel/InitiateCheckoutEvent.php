@@ -7,7 +7,7 @@ use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class InitiateCheckoutEvent extends BaseEvent implements PixelEventInterface
 {
-    public function sendToBuffer($buffer, $0)
+    public function sendToBuffer($buffer, $event)
     {
         $type = 'InitiateCheckout';
         $track = 'trackCustom';
