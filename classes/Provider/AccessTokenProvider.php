@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Exception;
+use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
@@ -17,7 +18,7 @@ class AccessTokenProvider
     private $configurationAdapter;
 
     /**
-     * @var ErrorHandlerFactory
+     * @var ErrorHandler
      */
     private $errorHandler;
 
