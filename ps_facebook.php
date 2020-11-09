@@ -151,8 +151,11 @@ class Ps_facebook extends Module
             [],
             true
         );
-        $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
-        $this->templateBuffer = $this->getService(TemplateBuffer::class);
+
+        if ($this->serviceContainer === null) {
+            $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
+            $this->templateBuffer = $this->getService(TemplateBuffer::class);
+        }
 
         $this->loadEnv();
     }
@@ -259,6 +262,7 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -267,6 +271,7 @@ class Ps_facebook extends Module
 
     public function hookDisplayHeader(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -276,6 +281,7 @@ class Ps_facebook extends Module
     // Handle QuickView (ViewContent)
     public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -288,12 +294,14 @@ class Ps_facebook extends Module
             return;
         }
 
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -302,6 +310,7 @@ class Ps_facebook extends Module
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -310,6 +319,7 @@ class Ps_facebook extends Module
 
     public function hookDisplayOrderConfirmation(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -318,6 +328,7 @@ class Ps_facebook extends Module
 
     public function hookActionNewsletterRegistrationAfter(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -326,6 +337,7 @@ class Ps_facebook extends Module
 
     public function hookActionSubmitAccountBefore(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -350,6 +362,7 @@ class Ps_facebook extends Module
             return false;
         }
 
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 

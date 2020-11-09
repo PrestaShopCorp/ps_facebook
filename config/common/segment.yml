@@ -1,0 +1,7 @@
+services:
+  PrestaShop\Module\Ps_facebook\Tracker\Segment:
+    class: 'PrestaShop\Module\Ps_facebook\Tracker\Segment'
+    arguments:
+      - '@PrestaShop\Module\Ps_facebook\Environment\SegmentEnv'
+  PrestaShop\Module\Ps_facebook\Environment\SegmentEnv:
+    class: 'PrestaShop\Module\Ps_facebook\Environment\SegmentEnv'

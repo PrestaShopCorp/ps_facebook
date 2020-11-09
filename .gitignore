@@ -16,5 +16,6 @@ views/js/app.js
 
 .php_cs.cache
 .env
+.env.test
 
 .idea/

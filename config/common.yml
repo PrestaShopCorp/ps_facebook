@@ -10,6 +10,7 @@ imports:
   - { resource: common/repository.yml }
   - { resource: common/translations.yml }
   - { resource: common/manager.yml }
+  - { resource: common/segment.yml }
 
 services:
   ps_facebook:
