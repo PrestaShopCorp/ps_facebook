@@ -8,7 +8,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 class ContextPsFacebook implements JsonSerializable
 {
     /**
-     * @var User
+     * @var User|null
      */
     private $user;
 
@@ -40,7 +40,7 @@ class ContextPsFacebook implements JsonSerializable
     /**
      * ContextPsFacebook constructor.
      *
-     * @param User $user
+     * @param User|null $user
      * @param FacebookBusinessManager|null $facebookBusinessManager
      * @param Pixel|null $pixel
      * @param Page|null $page
@@ -58,7 +58,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @return User
+     * @return User|null
      */
     public function getUser()
     {
@@ -66,7 +66,7 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
-     * @param User $user
+     * @param User $user|null
      *
      * @return ContextPsFacebook
      */
@@ -180,7 +180,7 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'email' => $this->getUser()->getEmail(),
+            'email' => $this->getUser(),
             'pixel' => $this->getPixel(),
             'facebookBusinessManager' => $this->getFacebookBusinessManager(),
             'page' => $this->getPage(),
