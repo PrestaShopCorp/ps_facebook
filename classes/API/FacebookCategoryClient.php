@@ -79,7 +79,7 @@ class FacebookCategoryClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Failed to call get from client: ' . $e->getMessage(),
+                    'Facebook category client failed when creating get request.',
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),

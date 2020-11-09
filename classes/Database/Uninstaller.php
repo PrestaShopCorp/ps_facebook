@@ -48,7 +48,7 @@ class Uninstaller
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookInstallerException(
-                    'Failed to uninstall module. ' . $e->getMessage(),
+                    'Failed to uninstall module tabs',
                     FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                     $e
                 ),

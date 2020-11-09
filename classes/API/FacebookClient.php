@@ -78,7 +78,7 @@ class FacebookClient
 
     public function getUserEmail()
     {
-        $responseContent = $this->get('me', ['email']);
+        $responseContent = $this->get('me2', ['email']);
 
         return new User(
             isset($responseContent['email']) ? $responseContent['email'] : ''
@@ -218,7 +218,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Failed to call get from client: ' . $e->getMessage(),
+                    'Facebook client failed when creating get request.',
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
@@ -262,7 +262,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Failed to call post from client: ' . $e->getMessage(),
+                    'Facebook client failed when creating post request.',
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
                     $e
                 ),
