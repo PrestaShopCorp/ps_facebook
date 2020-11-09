@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Language;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use Tab;
 
 class Installer
@@ -16,6 +17,11 @@ class Installer
 
     public function install()
     {
+        /** @var Segment $segment */
+        $segment = $this->module->getService(Segment::class);
+        $segment->setMessage('Install module');
+        $segment->track();
+
         return $this->installConfiguration() &&
             $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&
             $this->installTabs() &&
