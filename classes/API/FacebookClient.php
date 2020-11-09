@@ -78,7 +78,7 @@ class FacebookClient
 
     public function getUserEmail()
     {
-        $responseContent = $this->get('me2', ['email']);
+        $responseContent = $this->get('me', ['email']);
 
         return new User(
             isset($responseContent['email']) ? $responseContent['email'] : ''
