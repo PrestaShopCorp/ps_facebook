@@ -35,6 +35,8 @@
     "@types/showdown": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "@vue/babel-preset-jsx": "^1.2.4",
+    "@vue/cli-plugin-babel": "^4.5.8",
     "@vue/cli-plugin-eslint": "~4.4.0",
     "@vue/cli-plugin-router": "~4.4.0",
     "@vue/cli-plugin-typescript": "~4.4.0",

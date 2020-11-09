@@ -129,7 +129,11 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
+    if (this.enabledFeatures === null || this.disabledFeatures === null || this.unavailableFeatures === null) {
+      this.fetchData();
+    } else {
+      this.loading = false;
+    }
   },
   methods: {
     fetchData() {
