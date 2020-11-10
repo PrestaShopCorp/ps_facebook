@@ -32,7 +32,7 @@ export default class ModuleContext extends VuexModule {
     'shopDomain': global.shopDomain,
     'shopUrl': global.shopUrl,
     'email': global.email,
-    'psVersion' global.psVersion,
+    'psVersion': global.psVersion,
     'moduleVersion': global.moduleVersion
   };
 
