@@ -29,11 +29,11 @@ const statei18nSettings = i18nSettings || {};
 export default class ModuleContext extends VuexModule {
   appContext: Record<string, any> = {
     ...stateContext,
-    'shopDomain': global.shopDomain,
-    'shopUrl': global.shopUrl,
-    'email': global.email,
-    'psVersion': global.psVersion,
-    'moduleVersion': global.moduleVersion
+    shopDomain: global.shopDomain,
+    shopUrl: global.shopUrl,
+    email: global.email,
+    psVersion: global.psVersion,
+    moduleVersion: global.moduleVersion
   };
 
   stateTranslations: Record<string, any> = {...stateTranslations};
