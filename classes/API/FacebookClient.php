@@ -63,7 +63,9 @@ class FacebookClient
     {
         $responseContent = $this->get('me', ['email']);
 
-        return new User($responseContent['email']);
+        return new User(
+            isset($responseContent['email']) ? $responseContent['email'] : null
+        );
     }
 
     public function getBusinessManager($businessManagerId)
@@ -71,6 +73,7 @@ class FacebookClient
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
 
         return new FacebookBusinessManager(
+            isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
@@ -82,8 +85,8 @@ class FacebookClient
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
 
         return new Pixel(
-            isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
+            isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
             isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
             (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
@@ -103,6 +106,7 @@ class FacebookClient
         }
 
         return new Page(
+            isset($responseContent['id']) ? $responseContent['id'] : $pageIds,
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['fan_count']) ? $responseContent['fan_count'] : null,
             $logo
@@ -114,6 +118,7 @@ class FacebookClient
         $responseContent = $this->get((int) $adId, ['name', 'created_time']);
 
         return new Ad(
+            isset($responseContent['id']) ? $responseContent['id'] : $adId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
