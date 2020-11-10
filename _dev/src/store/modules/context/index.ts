@@ -33,7 +33,7 @@ export default class ModuleContext extends VuexModule {
     shopUrl: global.shopUrl,
     email: global.email,
     psVersion: global.psVersion,
-    moduleVersion: global.moduleVersion
+    moduleVersion: global.moduleVersion,
   };
 
   stateTranslations: Record<string, any> = {...stateTranslations};
