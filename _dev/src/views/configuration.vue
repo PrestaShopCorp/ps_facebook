@@ -214,7 +214,7 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.facebookBusinessManager.email) || false;
     },
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
