@@ -1,10 +1,12 @@
 <template>
-  <div class="alert medium-alert alert-warning mt-3" role="alert">
+  <div
+    class="alert medium-alert alert-warning mt-3"
+    role="alert"
+  >
     <p class="alert-text">
       {{ warningText }}
     </p>
-    <slot>
-    </slot>
+    <slot />
   </div>
 </template>
 
