@@ -257,7 +257,7 @@ export default defineComponent({
   methods: {
     fetchData() {
       this.loading = true;
-      fetch(global.psFacebookLoadConfigurationRoute)
+      fetch(global.psFacebookGetFbContextRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

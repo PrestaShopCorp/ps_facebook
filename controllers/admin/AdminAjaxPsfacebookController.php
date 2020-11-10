@@ -66,7 +66,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationHandler->uninstallFbe();
 
         // Return new FB context
-        $this->displayAjaxConfiguration();
+        $this->displayAjaxGetFbContext();
     }
 
     /**
@@ -134,29 +134,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'success' => true,
-                ]
-            )
-        );
-    }
-
-    /**
-     * @throws PrestaShopException
-     */
-    public function displayAjaxConfiguration()
-    {
-        /** @var FbeDataProvider $fbeDataProvider */
-        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
-
-        /** @var FacebookDataProvider $facebookDataProvider */
-        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
-
-        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
-
-        $this->ajaxDie(
-            json_encode(
-                [
-                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => $facebookContext,
                 ]
             )
         );
