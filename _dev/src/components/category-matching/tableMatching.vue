@@ -35,10 +35,10 @@
           :category-style="categoryStyle(category)"
           :shop-category-id="category.shopCategoryId"
           :initial-category-name="category.categoryName"
-          :initial-category-id="category.categoryId"
+          :initial-category-id="category.googleCategoryId"
           :initial-subcategory-name="category.subcategoryName"
-          :initial-subcategory-id="category.subcategoryId"
-          :initial-propagation="category.propagation"
+          :initial-subcategory-id="category.googleCategoryId"
+          :initial-propagation="category.isParentCategory"
           :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
           :save-matching-callback="saveMatchingCallback"
           @rowClicked="getCurrentRow"
@@ -69,6 +69,11 @@ export default defineComponent({
       type: Function,
       required: false,
       default: null,
+    },
+    getChildrensOfParentRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategory || null,
     },
   },
   computed: {
@@ -120,7 +125,7 @@ export default defineComponent({
       );
 
       if (this.canShowCheckbox(currentCtg) === false) {
-        currentCtg.propagation = null;
+        currentCtg.isParentCategory = null;
       }
 
       this.setAction(currentCtg, subcategory);
@@ -139,7 +144,7 @@ export default defineComponent({
         child.show = true;
         if (this.canShowCheckbox(child) === false) {
           /* eslint no-param-reassign: "error" */
-          child.propagation = null;
+          child.isParentCategory = null;
         }
       });
       currentCategory.deploy = true;
@@ -166,20 +171,40 @@ export default defineComponent({
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
+      let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = true;
-      // TODO: Do call with fetch to PHP
 
-      if (Array.isArray(subcategories)) {
-        subcategories.forEach((el) => {
-          this.categories.splice(indexCtg, 0, el);
-          el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+      fetch(this.getChildrensOfParentRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({id_category: currentCategory.shopCategoryId}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      })
+        .then((res) => {
+          subcategory = res;
+          console.log(res)
+          if (Array.isArray(subcategory)) {
+            subcategory.forEach((el) => {
+              this.categories.splice(indexCtg, 0, el);
+              el.show = true;
+              el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+            });
+          } else {
+            this.categories.splice(indexCtg, 0, subcategory);
+            subcategory.show = true;
+            subcategory.shopCategoryName = 'Test';
+            subcategory.deploy = null;
+            subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
+          }
+          currentCategory.deploy = true;
+        }).catch((error) => {
+          console.error(error);
         });
-      } else {
-        this.categories.splice(indexCtg, 0, subcategories);
-        subcategories.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategories.shopCategoryId}/`;
-      }
-      currentCategory.deploy = true;
     },
 
     /**

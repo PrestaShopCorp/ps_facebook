@@ -71,7 +71,7 @@
       [TODO: filter]
     </p>
 
-    [TODO : table component to insert here]
+    <TableMatching :initial-categories="categories" />
   </b-card>
 </template>
 
@@ -79,6 +79,7 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard} from 'bootstrap-vue';
 import Spinner from '../spinner/spinner.vue';
+import TableMatching from '../category-matching/tableMatching.vue';
 
 export default defineComponent({
   name: 'CatalogCategoryMatchingEdit',
@@ -86,6 +87,7 @@ export default defineComponent({
     Spinner,
     BButton,
     BCard,
+    TableMatching,
   },
   props: {
     data: {
@@ -96,7 +98,12 @@ export default defineComponent({
     categoryMatchingRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCategoryMatch || null,
+      default: () => global.psFacebookGetCatalogSummaryRoute || null,
+    },
+    getCategoriesRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategories || null,
     },
   },
   computed: {
@@ -104,16 +111,17 @@ export default defineComponent({
   data() {
     return {
       loading: true,
+      categories: [],
       matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
   created() {
     this.fetchData();
+    this.fetchCategories();
   },
   methods: {
     fetchData() {
-      this.loading = true;
-      fetch(global.categoryMatchingRoute)
+      fetch(this.categoryMatchingRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
@@ -123,6 +131,30 @@ export default defineComponent({
         .then((res) => {
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
           // TODO : update others
+        }).catch((error) => {
+          console.error(error);
+        });
+    },
+    fetchCategories() {
+      this.loading = true;
+      fetch(this.getCategoriesRoute, {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: 'id_category=6&page=1',
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      })
+        .then((res) => {
+          res.forEach((el) => {
+            /* eslint no-param-reassign: "error" */
+            el.show = true;
+            /* eslint no-param-reassign: "error" */
+            el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+          });
+          this.categories = res;
           this.loading = false;
         }).catch((error) => {
           console.error(error);
