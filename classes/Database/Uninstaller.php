@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
 class Uninstaller
 {
@@ -13,14 +14,23 @@ class Uninstaller
      */
     private $tabRepository;
 
-    public function __construct(\Ps_facebook $module, TabRepository $tabRepository)
+    /**
+     * @var Segment
+     */
+    private $segment;
+
+    public function __construct(\Ps_facebook $module, TabRepository $tabRepository, Segment $segment)
     {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
+        $this->segment = $segment;
     }
 
     public function uninstall()
     {
+        $this->segment->setMessage('PS Facebook uninstalled');
+        $this->segment->track();
+
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
             \Configuration::deleteByName((string) $name);
         }
