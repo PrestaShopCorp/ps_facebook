@@ -3,8 +3,7 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
-use PrestaShop\Module\Ps_facebook\Environment\Env;
-use PrestaShop\Module\Ps_facebook\Environment\SegmentEnv;
+use PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory;
 
 class Segment implements TrackerInterface
 {
@@ -19,11 +18,6 @@ class Segment implements TrackerInterface
     private $options = [];
 
     /**
-     * @var SegmentEnv
-     */
-    private $segmentEnv;
-
-    /**
      * @var Context
      */
     private $context;
@@ -31,12 +25,11 @@ class Segment implements TrackerInterface
     /**
      * Segment constructor.
      *
-     * @param SegmentEnv $segmentEnv
+     * @param ContextFactory $contextFactory
      */
-    public function __construct(SegmentEnv $segmentEnv, Context $context)
+    public function __construct(ContextFactory $contextFactory)
     {
-        $this->segmentEnv = $segmentEnv;
-        $this->context = $context;
+        $this->context = $contextFactory::getContext();
         $this->init();
     }
 
@@ -45,7 +38,7 @@ class Segment implements TrackerInterface
      */
     private function init()
     {
-        \Segment::init($this->segmentEnv->getSegmentApiKey());
+        \Segment::init($_ENV['SEGMENT_API_KEY']);
     }
 
     /**
@@ -71,9 +64,7 @@ class Segment implements TrackerInterface
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'];
         $ip = $_SERVER['REMOTE_ADDR'];
-        $path = strtok($_SERVER['REQUEST_URI'], '?');
         $referer = $_SERVER['HTTP_REFERER'];
-        $queryString = '?' . $_SERVER['QUERY_STRING'];
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         \Segment::track([
@@ -90,7 +81,7 @@ class Segment implements TrackerInterface
                 ],
             ],
             'properties' => array_merge([
-                'module' => Env::MODULE_NAME,
+                'module' => 'ps_facebook',
             ], $this->options),
         ]);
 

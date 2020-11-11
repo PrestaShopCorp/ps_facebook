@@ -4,3 +4,6 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory
+
+  PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory:
+    class: PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory
