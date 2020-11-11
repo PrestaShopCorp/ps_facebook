@@ -29,7 +29,7 @@
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
             :key="featureName"
-            v-bind:active="properties.enabled"
+            :active="properties.enabled"
           />
         </feature-list>
       </div>
@@ -58,16 +58,20 @@
           {{ $t('integrate.headings.unavailableFeatures') }}
         </h3>
         <div class="mr-3 ml-3">
-          <warning
-            :warning-text="$t('integrate.warning.productsNotSynced')"
+          <b-alert
+            show
+            variant="warning"
           >
-            <b-button
-              variant="primary"
-              class="m-2 p-2"
-            >
-              {{ $t('integrate.buttons.syncProducts') }}
-            </b-button>
-          </warning>
+            <div>
+              <p>{{ $t('integrate.warning.productsNotSynced') }}</p>
+              <b-button
+                variant="primary"
+                class="mt-2"
+              >
+                {{ $t('integrate.buttons.syncProducts') }}
+              </b-button>
+            </div>
+          </b-alert>
         </div>
         <feature-list>
           <unavailable-feature
@@ -83,24 +87,23 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BAlert, BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
-import Warning from '../components/warning/warning.vue';
 
 export default defineComponent({
   name: 'Integrate',
   components: {
+    BAlert,
     BButton,
     Spinner,
     EnabledFeature,
     FeatureList,
     UnavailableFeature,
     AvailableFeature,
-    Warning,
   },
   mixins: [],
   props: {
@@ -129,7 +132,10 @@ export default defineComponent({
     };
   },
   created() {
-    if (this.enabledFeatures === null || this.availableFeatures === null || this.unavailableFeatures === null) {
+    if (this.enabledFeatures.length === 0
+      && this.availableFeatures.length === 0
+      && this.unavailableFeatures.length === 0
+    ) {
       this.fetchData();
     } else {
       this.loading = false;
