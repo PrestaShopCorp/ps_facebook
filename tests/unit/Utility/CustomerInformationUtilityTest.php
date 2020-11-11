@@ -1,5 +1,7 @@
 <?php
 
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Utility;
+
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
@@ -20,7 +22,7 @@ class CustomerInformationUtilityTest extends TestCase
         $email,
         $result
     ) {
-        $customer = $this->getMockBuilder(Customer::class)
+        $customer = $this->getMockBuilder(\Customer::class)
             ->disableOriginalConstructor()
             ->getMock();
         $customer->method('getSimpleAddresses')->willReturn($simpleAddresses);
