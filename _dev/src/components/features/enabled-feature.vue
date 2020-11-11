@@ -4,17 +4,17 @@
       <b-card-body>
         <div class="d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
-            <h3>
+            <span class="h1">
               <img
                 class="mr-1"
                 :src="require(`@/assets/${name}.png`)"
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
-              <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
-            </h3>
+            </span>
+            <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
           </div>
-          <div>
+          <div class="align-self-center">
             <span class="d-none d-sm-inline">
               {{
                 $t(switchActivated ?
@@ -37,7 +37,8 @@
             </div>
           </div>
         </div>
-        <div class="d-flex">
+        <div class="d-flex"
+          v-if="switchActivated">
           <div class="flex-grow-1" />
           <div>
             <a
@@ -198,10 +199,10 @@ export default defineComponent({
 <style lang="scss" scoped>
   li {
     &.disabled{
-      h3, p {
+      .h1, p {
         color: grey !important;
       }
-      h3 {
+      .h1 {
         img {
           filter: grayscale(100);
         }

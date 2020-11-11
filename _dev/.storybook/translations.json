@@ -129,7 +129,7 @@
         }
       },
       "headings" : {
-        "disabledFeatures": "To boost sales, add to your shop...",
+        "availableFeatures": "To boost sales, add to your shop...",
         "unavailableFeatures": "Unavailable features at the moment"
       },
       "warning" : {

@@ -194,7 +194,7 @@ class PsFacebookTranslations
                     ],
                 ],
                 'headings' => [
-                    'disabledFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
+                    'availableFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
                     'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
                 ],
                 'warning' => [

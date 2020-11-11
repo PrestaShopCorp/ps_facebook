@@ -9,12 +9,12 @@
             :alt="$t(`integrate.features.${name}.name`)"
             width="80"
           >
-          <div class="description align-self-center flex-grow-1 pl-3 pr-2">
+          <div class="description align-self-top flex-grow-1 pl-3 pr-2">
             <h3>
               {{ $t(`integrate.features.${name}.name`) }}
               <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
             </h3>
-            <p class="small-text text-muted">
+            <p>
               {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
@@ -73,6 +73,8 @@ export default defineComponent({
   .logo {
     float: left;
     display: block;
+    width: 80px;
+    height: 80px;
   }
 
   .description {

@@ -35,15 +35,15 @@
       </div>
 
       <div
-        id="disabled-features"
-        v-if="dynamicDisabledFeatures"
+        id="available-features"
+        v-if="dynamicAvailableFeatures"
       >
         <h3 class="ml-3">
-          {{ $t('integrate.headings.disabledFeatures') }}
+          {{ $t('integrate.headings.availableFeatures') }}
         </h3>
         <feature-list>
-          <disabled-feature
-            v-for="(properties, featureName) in dynamicDisabledFeatures"
+          <available-feature
+            v-for="(properties, featureName) in dynamicAvailableFeatures"
             :name="featureName"
             :key="featureName"
           />
@@ -87,7 +87,7 @@ import {BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
-import DisabledFeature from '../components/features/disabled-feature.vue';
+import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
 import Warning from '../components/warning/warning.vue';
 
@@ -99,7 +99,7 @@ export default defineComponent({
     EnabledFeature,
     FeatureList,
     UnavailableFeature,
-    DisabledFeature,
+    AvailableFeature,
     Warning,
   },
   mixins: [],
@@ -109,7 +109,7 @@ export default defineComponent({
       required: false,
       default: () => [],
     },
-    disabledFeatures: {
+    availableFeatures: {
       type: Array,
       required: false,
       default: () => [],
@@ -123,13 +123,13 @@ export default defineComponent({
   data() {
     return {
       dynamicEnabledFeatures: this.enabledFeatures,
-      dynamicDisabledFeatures: this.disabledFeatures,
+      dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
       loading: true,
     };
   },
   created() {
-    if (this.enabledFeatures === null || this.disabledFeatures === null || this.unavailableFeatures === null) {
+    if (this.enabledFeatures === null || this.availableFeatures === null || this.unavailableFeatures === null) {
       this.fetchData();
     } else {
       this.loading = false;
@@ -147,7 +147,7 @@ export default defineComponent({
         })
         .then((json) => {
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
-          this.dynamicDisabledFeatures = json.fbeFeatures.disabledFeatures;
+          this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
           this.loading = false;
         }).catch((error) => {

@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Integrate},
-  template: '<integrate :enabledFeatures="enabledFeatures" :disabledFeatures="disabledFeatures" :unavailableFeatures="unavailableFeatures" />',
+  template: '<integrate :enabledFeatures="enabledFeatures" :availableFeatures="disabledFeatures" :unavailableFeatures="unavailableFeatures" />',
 });
 
 export const NoFeaturesEnabled: any = Template.bind({});
