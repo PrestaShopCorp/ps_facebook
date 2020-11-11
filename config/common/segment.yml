@@ -2,4 +2,4 @@ services:
   PrestaShop\Module\Ps_facebook\Tracker\Segment:
     class: 'PrestaShop\Module\Ps_facebook\Tracker\Segment'
     arguments:
-      - '@PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory'
+      - '@ps_facebook.context'

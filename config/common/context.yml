@@ -1,32 +1,32 @@
 services:
-  context:
+  ps_facebook.context:
     class: 'Context'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getContext']
 
-  controller:
+  ps_facebook.controller:
     class: 'Controller'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getController']
 
-  cookie:
+  ps_facebook.cookie:
     class: 'Cookie'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getCookie']
 
-  language:
+  ps_facebook.language:
     class: 'Language'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getLanguage']
 
-  currency:
+  ps_facebook.currency:
     class: 'Currency'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getCurrency']
 
-  smarty:
+  ps_facebook.smarty:
     class: 'Smarty'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getSmarty']
 
-  shop:
+  ps_facebook.shop:
     class: 'Shop'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getShop']
 
-  link:
+  ps_facebook.link:
     class: 'Shop'
     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory', 'getLink']

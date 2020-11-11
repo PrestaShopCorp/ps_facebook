@@ -3,7 +3,6 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
-use PrestaShop\Module\PrestashopFacebook\Factory\ContextFactory;
 
 class Segment implements TrackerInterface
 {
@@ -25,11 +24,11 @@ class Segment implements TrackerInterface
     /**
      * Segment constructor.
      *
-     * @param ContextFactory $contextFactory
+     * @param Context $context
      */
-    public function __construct(ContextFactory $contextFactory)
+    public function __construct(Context $context)
     {
-        $this->context = $contextFactory::getContext();
+        $this->context = $context;
         $this->init();
     }
 
