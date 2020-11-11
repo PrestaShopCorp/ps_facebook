@@ -33,3 +33,26 @@ NoFeaturesEnabled.args = {
     }
   }
 };
+
+export const MessengerEnabled: any = Template.bind({});
+MessengerEnabled.args = {
+  enabledFeatures: {
+    "messenger_chat": {
+      enabled: true
+    },
+  },
+  disabledFeatures: {
+    "page_cta": {
+      enabled: false
+    }
+  },
+  unavailableFeatures: {
+    "ig_shopping": {
+      enabled: false
+    },
+    "page_shop": {
+      enabled: false
+    }
+  }
+};
+
