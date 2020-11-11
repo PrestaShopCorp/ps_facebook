@@ -24,7 +24,7 @@
             </span>
             <div
               class="switch-input switch-input-lg ml-1"
-              :class="switchActivated ? '-checked' : null"
+              :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
               @click="switchClick"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
@@ -159,13 +159,13 @@ export default defineComponent({
   methods: {
     switchClick() {
       if (!this.isLoading) {
-        this.isLoading = true;
         if (!this.switchActivated) {
           this.updateFeatureState();
         }
       }
     },
     updateFeatureState() {
+      this.isLoading = true;
       fetch(this.updateFeatureRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
@@ -209,6 +209,9 @@ export default defineComponent({
       }
       .switch-input {
         background-color: #c05c67 !important;
+        &.disabled {
+          background: #eee !important;
+        }
       }
       .switch-input::after {
         color: #c05c67 !important;
@@ -216,6 +219,11 @@ export default defineComponent({
     }
     .flex-grow-1 {
       flex-grow:1
+    }
+    .switch-input {
+      &.disabled {
+        background: #eee !important;
+      }
     }
   }
 </style>
