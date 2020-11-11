@@ -28,8 +28,6 @@ class FbeFeatureDataProviderTest extends TestCase
         $this->assertTrue($actual['enabledFeatures']['messenger_chat']['enabled']);
     }
 
-
-
     private function assertAllFeaturesExistOneTime($response)
     {
         foreach (Config::AVAILABLE_FBE_FEATURES as $feature) {
@@ -37,7 +35,7 @@ class FbeFeatureDataProviderTest extends TestCase
             $count = array_key_exists($feature, $response['enabledFeatures']) +
                 array_key_exists($feature, $response['disabledFeatures']) +
                 array_key_exists($feature, $response['unavailableFeatures']);
-    
+
             $this->assertEquals(
                 1,
                 $count,

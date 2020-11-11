@@ -7,7 +7,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 class ConfigurationAdapterMock extends ConfigurationAdapter
 {
     /**
-     * @var array $data
+     * @var array
      */
     private $data = [];
 
@@ -25,6 +25,7 @@ class ConfigurationAdapterMock extends ConfigurationAdapter
     {
         // Simple registration, we don't take care about multi lang values etc.
         $this->data[$key] = $values;
+
         return true;
     }
 }

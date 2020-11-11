@@ -11,38 +11,38 @@ class FacebookClientMock extends FacebookClient
     public function __construct()
     {
         $this->fbeFeatures = [
-            "business" => [
-                "name" => "PrestaShop"
+            'business' => [
+                'name' => 'PrestaShop',
             ],
-            "catalog_feed_scheduled" => [
-                "enabled" => false
+            'catalog_feed_scheduled' => [
+                'enabled' => false,
             ],
-            "ig_cta" => [
-                "enabled" => false
+            'ig_cta' => [
+                'enabled' => false,
             ],
-            "ig_shopping" => [
-                "enabled" => false
+            'ig_shopping' => [
+                'enabled' => false,
             ],
-            "messenger_chat" => [
-                "enabled" => false
+            'messenger_chat' => [
+                'enabled' => false,
             ],
-            "messenger_menu" => [
-                "enabled" => false
+            'messenger_menu' => [
+                'enabled' => false,
             ],
-            "page_card" => [
-                "enabled" => false
+            'page_card' => [
+                'enabled' => false,
             ],
-            "page_cta" => [
-                "enabled" => false
+            'page_cta' => [
+                'enabled' => false,
             ],
-            "page_post" => [
-                "enabled" => false
+            'page_post' => [
+                'enabled' => false,
             ],
-            "page_shop" => [
-                "enabled" => false
+            'page_shop' => [
+                'enabled' => false,
             ],
-            "thread_intent" => [
-                "enabled" => false
+            'thread_intent' => [
+                'enabled' => false,
             ],
         ];
     }
@@ -50,6 +50,7 @@ class FacebookClientMock extends FacebookClient
     public function switchFeature($feature, $active)
     {
         $this->fbeFeatures[$feature]['enabled'] = $active;
+
         return $this;
     }
 
