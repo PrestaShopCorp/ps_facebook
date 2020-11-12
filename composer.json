@@ -34,5 +34,10 @@
             "controllers/",
             "classes/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PrestaShop\\Module\\PrestashopFacebook\\Tests\\": "tests/unit/"
+        }
     }
 }
