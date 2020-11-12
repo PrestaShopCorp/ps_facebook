@@ -73,15 +73,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'Configuration',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookGetFbContextRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

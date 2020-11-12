@@ -214,7 +214,8 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.facebookBusinessManager.id)
+        || false;
     },
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
@@ -226,7 +227,7 @@ export default defineComponent({
     },
     showSyncCatalogAdvice() {
       const c = this.dynamicContextPsFacebook;
-      return c && c.email && (
+      return c && this.facebookConnected && (
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
@@ -257,7 +258,7 @@ export default defineComponent({
   methods: {
     fetchData() {
       this.loading = true;
-      fetch(global.psFacebookLoadConfigurationRoute)
+      fetch(global.psFacebookGetFbContextRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

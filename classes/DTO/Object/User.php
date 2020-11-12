@@ -7,7 +7,7 @@ use JsonSerializable;
 class user implements JsonSerializable
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $email;
 
@@ -17,7 +17,7 @@ class user implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEmail()
     {
