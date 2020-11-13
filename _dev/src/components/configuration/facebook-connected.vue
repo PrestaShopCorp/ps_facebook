@@ -68,9 +68,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!email"
         >
-          {{ contextPsFacebook.email }}
+          {{ email }}
         </span>
       </div>
 
@@ -282,12 +282,12 @@ export default defineComponent({
       if (!this.contextPsFacebook.facebookBusinessManager) {
         return {
           name: '',
-          email: this.contextPsFacebook.email,
+          email: this.email,
         };
       }
       return {
         name: this.contextPsFacebook.facebookBusinessManager.name,
-        email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
+        email: this.contextPsFacebook.facebookBusinessManager.email || this.email,
       };
     },
     fbeUrl() {
@@ -300,6 +300,14 @@ export default defineComponent({
       }
       const pixId = this.contextPsFacebook.pixel.id;
       return `https://business.facebook.com/events_manager2/list/pixel/${pixId}/overview`;
+    },
+    email() {
+      const email = this.contextPsFacebook && this.contextPsFacebook.email;
+      if (email) {
+        // sometimes, email is in another object.
+        return email.email ? email.email : email;
+      }
+      return null;
     },
   },
   methods: {
