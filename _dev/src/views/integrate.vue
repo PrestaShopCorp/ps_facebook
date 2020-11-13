@@ -129,6 +129,8 @@ export default defineComponent({
       dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
       loading: true,
+      hiddenProp: null,
+      visibilityChangeEvent: null,
     };
   },
   created() {
@@ -137,9 +139,16 @@ export default defineComponent({
       && this.unavailableFeatures.length === 0
     ) {
       this.fetchData();
+      this.registerToVisibilityChangeEvent();
     } else {
       this.loading = false;
     }
+  },
+  beforeDestroy() {
+    if (document.removeEventListener === 'undefined' || this.hiddenProp === null) {
+      return;
+    }
+    document.removeEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
   },
   methods: {
     fetchData() {
@@ -160,6 +169,31 @@ export default defineComponent({
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
         });
+    },
+    handleVisibilityChange() {
+      // Watch when the page gets the focus, for instance
+      // when the merchant comes back from another tab.
+      if (document[this.hiddenProp] === false) {
+        this.fetchData();
+      }
+    },
+    registerToVisibilityChangeEvent() {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+        this.hiddenProp = 'hidden';
+        this.visibilityChangeEvent = 'visibilitychange';
+      } else if (typeof document.msHidden !== 'undefined') {
+        this.hiddenProp = 'msHidden';
+        this.visibilityChangeEvent = 'msvisibilitychange';
+      } else if (typeof document.webkitHidden !== 'undefined') {
+        this.hiddenProp = 'webkitHidden';
+        this.visibilityChangeEvent = 'webkitvisibilitychange';
+      }
+
+      if (document.addEventListener === 'undefined' || this.hiddenProp === null) {
+        return;
+      }
+      document.addEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
     },
   },
 });
