@@ -105,7 +105,6 @@
           {{ $t('configuration.app.viewStats') }} &nbsp;
           <i class="material-icons small-text">open_in_new</i>
         </b-link>
-      </div>
     </div>
   </div>
 </template>
