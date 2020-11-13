@@ -10,7 +10,7 @@ class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
     public function sendToBuffer($buffer, $event)
     {
         $type = 'Purchase';
-        $track = 'trackCustom';
+        $track = 'track';
 
         $order = $this->module->psVersionIs17 ? $event['order'] : $event['objOrder'];
         $content = [

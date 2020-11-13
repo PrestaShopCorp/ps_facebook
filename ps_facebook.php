@@ -249,8 +249,6 @@ class Ps_facebook extends Module
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayHeader(array $params)
@@ -269,8 +267,6 @@ class Ps_facebook extends Module
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSearch(array $params)
@@ -287,8 +283,6 @@ class Ps_facebook extends Module
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
@@ -309,16 +303,12 @@ class Ps_facebook extends Module
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSubmitAccountBefore(array $params)
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayFooter()
