@@ -73,6 +73,9 @@ export default defineComponent({
   methods: {
     onFbeOnboardClick() {
       this.$emit('onFbeOnboardClick');
+      this.$segment.track('Launch FB configuration', {
+        module: 'ps_facebook',
+      });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },

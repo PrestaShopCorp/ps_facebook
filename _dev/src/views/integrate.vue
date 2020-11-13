@@ -29,7 +29,7 @@
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
             :key="featureName"
-            v-bind:active="properties.enabled"
+            :active="properties.enabled"
           />
         </feature-list>
       </div>

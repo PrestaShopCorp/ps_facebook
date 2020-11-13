@@ -151,7 +151,7 @@
               :app-name="fbm.name"
               :email="fbm.email || ''"
               :created-at="fbm.createdAt"
-              v-bind:display-warning="!fbm.email"
+              :display-warning="!fbm.email"
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -202,7 +202,7 @@
               :app-name="contextPsFacebook.ads.name"
               :email="contextPsFacebook.ads.email"
               :created-at="contextPsFacebook.ads.createdAt"
-              v-bind:display-warning="
+              :display-warning="
                 !contextPsFacebook.ads.name ||
                 !contextPsFacebook.ads.email ||
                 !contextPsFacebook.ads.createdAt
