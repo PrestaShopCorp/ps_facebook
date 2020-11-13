@@ -17,7 +17,7 @@ class Page implements JsonSerializable
     private $page;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $likes;
 
@@ -30,7 +30,7 @@ class Page implements JsonSerializable
      * Page constructor.
      *
      * @param string $page
-     * @param int $likes
+     * @param int|null $likes
      * @param string|null $logo
      */
     public function __construct($id, $page, $likes, $logo)
@@ -58,7 +58,7 @@ class Page implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getLikes()
     {

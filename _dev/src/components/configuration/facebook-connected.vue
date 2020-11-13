@@ -186,6 +186,9 @@
               :app-name="contextPsFacebook.page.page"
               :likes="contextPsFacebook.page.likes"
               :logo="contextPsFacebook.page.logo"
+              :display-warning="
+                !contextPsFacebook.page.page
+              "
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
