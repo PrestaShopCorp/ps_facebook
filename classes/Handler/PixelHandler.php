@@ -72,11 +72,6 @@ class PixelHandler
                     ->sendToBuffer($this->templateBuffer, $event);
                 break;
 
-            case 'customize':
-                (new CustomizeEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
-            break;
-
             default:
                 // unsupported event
             break;
