@@ -115,12 +115,11 @@ class FacebookClient
 
     public function getAd($adId)
     {
-        $responseContent = $this->get((int) $adId, ['name', 'created_time']);
+        $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
 
         return new Ad(
             isset($responseContent['id']) ? $responseContent['id'] : $adId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
