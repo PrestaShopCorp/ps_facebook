@@ -204,8 +204,8 @@
               :created-at="contextPsFacebook.ads.createdAt"
               :display-warning="
                 !contextPsFacebook.ads.name ||
-                  !contextPsFacebook.ads.email ||
-                  !contextPsFacebook.ads.createdAt
+                !contextPsFacebook.ads.email ||
+                !contextPsFacebook.ads.createdAt
               "
             />
           </b-col>
