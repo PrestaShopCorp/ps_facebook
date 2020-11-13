@@ -5,6 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CompleteRegistrationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ContactEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CustomizeEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\InitiateCheckoutEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Pixel\SearchEvent;
@@ -45,6 +46,10 @@ class PixelHandler
             case 'hookDisplayHeader':
                 (new ViewContentEvent($this->context, $this->module))
                 ->sendToBuffer($this->templateBuffer, $event);
+                if (true === \Tools::isSubmit('submitCustomizedData')) {
+                    (new CustomizeEvent($this->context, $this->module))
+                    ->sendToBuffer($this->templateBuffer, $event);
+                }
             break;
 
             case 'hookActionObjectCustomerMessageAddAfter':

@@ -5,11 +5,11 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
-class ContactEvent extends BaseEvent implements PixelEventInterface
+class CustomizeEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $type = 'Contact';
+        $type = 'CustomizeProduct';
         $track = 'track';
 
         $content = [
