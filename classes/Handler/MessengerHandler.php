@@ -5,6 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 use Configuration;
 use Language;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 
 class MessengerHandler
 {
@@ -18,11 +19,17 @@ class MessengerHandler
      */
     private $lang;
 
-    public function __construct(Language $lang)
+    /**
+     * @var FbeFeatureDataProvider
+     */
+    private $fbeFeatureDataProvider;
+
+    public function __construct(Language $lang, FbeFeatureDataProvider $fbeFeatureDataProvider)
     {
         $pageList = explode(',', Configuration::get('PS_FACEBOOK_PAGES'));
         $this->pageId = (int) reset($pageList);
         $this->lang = $lang;
+        $this->fbeFeatureDataProvider = $fbeFeatureDataProvider;
     }
 
     /**
@@ -30,7 +37,17 @@ class MessengerHandler
      */
     public function isReady()
     {
-        return !empty($this->pageId);
+        if (empty($this->pageId)) {
+            return false;
+        }
+
+        // This makes a API call to FB, it may need to be cached
+        $fbeFeatures = $this->fbeFeatureDataProvider->getFbeFeatures();
+        if (!isset($fbeFeatures['enabledFeatures']['messenger_chat']['enabled'])) {
+            return false;
+        }
+
+        return (bool) $fbeFeatures['enabledFeatures']['messenger_chat']['enabled'];
     }
 
     public function handle()
