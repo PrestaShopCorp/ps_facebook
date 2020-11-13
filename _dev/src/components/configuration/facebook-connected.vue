@@ -68,9 +68,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.user.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.user.email }}
         </span>
       </div>
 
@@ -126,9 +126,9 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.user.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.user.email }}
         </span>
       </div>
     </b-card-body>
@@ -279,15 +279,10 @@ export default defineComponent({
   },
   computed: {
     fbm() {
-      if (!this.contextPsFacebook.facebookBusinessManager) {
-        return {
-          name: '',
-          email: this.contextPsFacebook.email,
-        };
-      }
       return {
         name: this.contextPsFacebook.facebookBusinessManager.name,
-        email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
+        email: this.contextPsFacebook.facebookBusinessManager.email
+          || this.contextPsFacebook.user.email,
       };
     },
     fbeUrl() {
