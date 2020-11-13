@@ -255,9 +255,6 @@ class Ps_facebook extends Module
     {
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-        if (true === Tools::isSubmit('submitCustomizedData')) {
-            $eventDispatcher->dispatch('customize', $params);
-        }
 
         return $this->templateBuffer->flush();
     }

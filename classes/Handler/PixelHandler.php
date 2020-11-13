@@ -46,6 +46,10 @@ class PixelHandler
             case 'hookDisplayHeader':
                 (new ViewContentEvent($this->context, $this->module))
                 ->sendToBuffer($this->templateBuffer, $event);
+                if (true === \Tools::isSubmit('submitCustomizedData')) {
+                    (new CustomizeEvent($this->context, $this->module))
+                    ->sendToBuffer($this->templateBuffer, $event);
+                }
             break;
 
             case 'hookActionObjectCustomerMessageAddAfter':
