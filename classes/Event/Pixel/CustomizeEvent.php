@@ -5,18 +5,17 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
-class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
+class CustomizeEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $type = 'Purchase';
-        $track = 'trackCustom';
+        $type = 'CustomizeProduct';
+        $track = 'track';
 
-        $order = $this->module->psVersionIs17 ? $event['order'] : $event['objOrder'];
         $content = [
-            'customerID' => $order->id_customer,
-            'orderID' => $order->id,
+            'userEmail' => $this->context->customer->email,
         ];
+
         $content = $this->formatPixel($content);
 
         $smartyVariables = [
@@ -32,6 +31,7 @@ class OrderConfirmationEvent extends BaseEvent implements PixelEventInterface
         }
 
         $this->context->smarty->assign($smartyVariables);
+
         $buffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/fbTrack.tpl'));
     }
 }
