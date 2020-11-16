@@ -217,7 +217,7 @@ class Ps_facebook extends Module
         );
 
         if (!$installer->install()) {
-            $this->_errors[] = $installer->getErrors();
+            $this->_errors = $installer->getErrors();
 
             return false;
         }

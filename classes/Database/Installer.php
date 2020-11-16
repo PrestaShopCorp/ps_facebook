@@ -11,6 +11,8 @@ use Tab;
 
 class Installer
 {
+    const CLASS_NAME = 'Installer';
+
     private $module;
 
     /**
@@ -112,7 +114,7 @@ class Installer
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
                     false
                 );
-                $this->errors[] = sprintf($this->module->l('Failed to install %1s tab'), $tab['className']);
+                $this->errors[] = sprintf($this->module->l('Failed to install %1s tab', self::CLASS_NAME), $tab['className']);
 
                 return false;
             }
@@ -160,7 +162,7 @@ class Installer
                 FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
                 false
             );
-            $this->errors[] = $this->module->l('Failed to install database tables');
+            $this->errors[] = $this->module->l('Failed to install database tables', self::CLASS_NAME);
 
             return false;
         }
