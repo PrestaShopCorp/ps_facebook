@@ -8,17 +8,17 @@
             :src="require(`@/assets/${name}_disabled.png`)"
             width="80"
           >
-          <div class="description align-self-center flex-grow-1 pl-3 pr-2">
+          <div class="description align-self-top flex-grow-1 pl-3 pr-2">
             <h3>
               {{ $t(`integrate.features.${name}.name`) }}
               <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
             </h3>
-            <p class="small-text text-muted">
+            <p>
               {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
           <b-button
-            variant="disabled"
+            variant="outline-primary disabled"
             class="ml-4 align-self-center"
           >
             {{ $t('integrate.buttons.add') }}
@@ -56,6 +56,8 @@ export default defineComponent({
 .logo {
   float: left;
   display: block;
+  height: 80px;
+  width: 80px;
 }
 
 .description {

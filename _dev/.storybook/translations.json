@@ -98,6 +98,48 @@
         "thirdTd" : "Parent category",
         "fourthTd" : "Facebook subcategory"
       }
+    },
+    "integrate" : {
+      "buttons" : {
+        "add": "Add",
+        "syncProducts": "Sync products",
+        "modalConfirm": "Yes, confirm",
+        "manage": "Manage"
+      },
+      "features" : {
+        "ig_shopping" : {
+          "name": "Instagram shopping",
+          "description": "Tag your products in the publications to redirect traffic to your e-commerce site.",
+          "toolTip": "Instagram shopping"
+        },
+        "messenger_chat" : {
+          "name": "Messenger Chat Plugin",
+          "description": "Allows people to start a conversation with you on your website and continue in Messenger.",
+          "toolTip": "Integration of Messenger experience directly into your website"
+        },
+        "page_shop" : {
+          "name": "Facebook Shop",
+          "description": "Bring your company's most important goal to the fore on your facebook page.",
+          "toolTip": "Facebook Shop"
+        },
+        "page_cta" : {
+          "name": "Call-to-action",
+          "description": "Bring your company's most important goal to the fore on your facebook page.",
+          "toolTip": "Call-to-action"
+        }
+      },
+      "headings" : {
+        "availableFeatures": "To boost sales, add to your shop...",
+        "unavailableFeatures": "Unavailable features at the moment"
+      },
+      "warning" : {
+        "productsNotSynced": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
+        "disableFeatureModalHeader": "Confirm deactivation?",
+        "disableFeatureModalText": "You are about to disable this feature. This may limit some functionality."
+      },
+      "error" : {
+        "failedToUpdateFeature": "Failed to update facebook feature."
+      }
     }
   }
 }
