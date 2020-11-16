@@ -9,6 +9,11 @@ class Ad implements JsonSerializable
     /**
      * @var string
      */
+    private $id;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
@@ -26,11 +31,20 @@ class Ad implements JsonSerializable
      * @param string $email
      * @param string $createdAt
      */
-    public function __construct($name, $email, $createdAt)
+    public function __construct($id, $name, $email, $createdAt)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -60,6 +74,7 @@ class Ad implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+        'id' => $this->getId(),
           'name' => $this->getName(),
           'email' => $this->getEmail(),
           'createdAt' => $this->getCreatedAt(),

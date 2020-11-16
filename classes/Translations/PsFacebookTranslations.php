@@ -104,10 +104,11 @@ class PsFacebookTranslations
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
+                        'unlinkButton' => $this->module->l('Unlink', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
                         'facebookPixel' => $this->module->l('Facebook Pixel', 'PsFacebookTranslations'),
-                        'facebookPixelTooltip' => $this->module->l('The Facebook pixel is a piece of code (Javascript) that we automatically install on your website pages. It allows you to "track" who visits your website, track conversions of your Facebook ads and create retargeting audiences', 'PsFacebookTranslations'),
+                        'facebookPixelTooltip' => $this->module->l('The Facebook pixel is a piece of code (Javascript) that we automatically install on your website pages. It allows you to “track” who visits your website, track conversions of your Facebook ads and create retargeting audiences', 'PsFacebookTranslations'),
                         'facebookPage' => $this->module->l('Facebook Page', 'PsFacebookTranslations'),
                         'facebookPageTooltip' => $this->module->l('Your Facebook page will represent your business in your ads', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
@@ -123,6 +124,7 @@ class PsFacebookTranslations
                     'activated' => $this->module->l('Activated', 'PsFacebookTranslations'),
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
                     'viewStats' => $this->module->l('View stats', 'PsFacebookTranslations'),
+                    'informationCannotBeDisplayedWarning' => $this->module->l('This information cannot be displayed at the moment', 'PsFacebookTranslations'),
                 ],
                 'glass' => [
                     'text' => $this->module->l('You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.', 'PsFacebookTranslations'),
@@ -203,6 +205,28 @@ class PsFacebookTranslations
                 'error' => [
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
+            ],
+
+            'help' => [
+                'title' => $this->module->l('Help for PrestaShop Facebook', 'PsFacebookTranslations'),
+                'allowsYouTo' => [
+                    'title' => $this->module->l('This module allows you to:', 'PsFacebookTranslations'),
+                    'business' => $this->module->l('Manage your business', 'PsFacebookTranslations'),
+                    'account' => $this->module->l('Manage your ad account', 'PsFacebookTranslations'),
+                    'traffic' => $this->module->l('Understand your traffic', 'PsFacebookTranslations'),
+                    'inventory' => $this->module->l('Build and manage inventory', 'PsFacebookTranslations'),
+                    'people' => $this->module->l('Reach more people', 'PsFacebookTranslations'),
+                ],
+                'help' => [
+                    'needHelp' => $this->module->l('Need help? Find here the documentation of this module.', 'PsFacebookTranslations'),
+                    'downloadPdf' => $this->module->l('Download PDF', 'PsFacebookTranslations'),
+                    'couldntFindAnyAnswer' => $this->module->l('Couldn\'t find any answer to your question?', 'PsFacebookTranslations'),
+                    'contactUs' => $this->module->l('Contact us', 'PsFacebookTranslations'),
+                ],
+            ],
+            'faq' => [
+                'title' => $this->module->l('FAQ', 'PsFacebookTranslations'),
+                'noFaq' => $this->module->l('No FAQ available.', 'PsFacebookTranslations'),
             ],
         ];
 

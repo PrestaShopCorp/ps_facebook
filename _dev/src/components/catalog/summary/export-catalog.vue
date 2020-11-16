@@ -27,7 +27,9 @@
       >
     </div>
 
-    <h3 class="title">{{ $t('catalogSummary.productCatalogExport') }}</h3>
+    <h3 class="title">
+      {{ $t('catalogSummary.productCatalogExport') }}
+    </h3>
     <b-button
       class="float-right ml-4"
       :variant="error ? 'danger' : (isPrimaryAction ? 'primary' : 'outline-secondary')"
@@ -36,7 +38,10 @@
       {{ exportButtonLabel }}
     </b-button>
     <p class="text">
-      <b-alert variant="warning" show>
+      <b-alert
+        variant="warning"
+        show
+      >
         {{ $t('catalogSummary.catalogExportWarning') }}
       </b-alert>
       {{ $t('catalogSummary.catalogExportIntro') }}

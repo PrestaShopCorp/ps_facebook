@@ -63,6 +63,7 @@
           :context-ps-facebook="dynamicContextPsFacebook"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
+          @onUninstallClick="onUninstallClick"
           class="m-3"
         />
         <div
@@ -191,6 +192,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
+    fbeOnboardingUninstallRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookFbeOnboardingUninstallRoute || null,
+    },
     psFacebookUiUrl: {
       type: String,
       required: false,
@@ -208,7 +214,8 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.email) || false;
+      return (this.contextPsFacebook && this.contextPsFacebook.facebookBusinessManager.id)
+        || false;
     },
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
@@ -220,7 +227,7 @@ export default defineComponent({
     },
     showSyncCatalogAdvice() {
       const c = this.dynamicContextPsFacebook;
-      return c && c.email && (
+      return c && this.facebookConnected && (
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
@@ -251,7 +258,7 @@ export default defineComponent({
   methods: {
     fetchData() {
       this.loading = true;
-      fetch(global.psFacebookLoadConfigurationRoute)
+      fetch(global.psFacebookGetFbContextRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
@@ -277,6 +284,24 @@ export default defineComponent({
     onEditClick() {
       this.openedPopup = this.openPopup();
       this.showGlass = true;
+    },
+    onUninstallClick() {
+      fetch(this.fbeOnboardingUninstallRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.facebookConnected = false;
+        }).catch((error) => {
+          console.error(error);
+          // TODO: Replace me with uninstallation specific message
+          this.error = 'configuration.messages.unknownOnboardingError';
+        });
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;

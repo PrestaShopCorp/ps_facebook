@@ -9,6 +9,11 @@ class FacebookBusinessManager implements JsonSerializable
     /**
      * @var string
      */
+    private $id;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
@@ -24,15 +29,25 @@ class FacebookBusinessManager implements JsonSerializable
     /**
      * FacebookBusinessManager constructor.
      *
+     * @param string $id
      * @param string $name
      * @param string $mail
      * @param int $createdAt
      */
-    public function __construct($name, $mail, $createdAt)
+    public function __construct($id, $name, $mail, $createdAt)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->mail = $mail;
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -62,6 +77,7 @@ class FacebookBusinessManager implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'mail' => $this->getMail(),
             'createDate' => $this->getCreatedAt(),

@@ -7,6 +7,7 @@ use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
 class Uninstaller
 {
@@ -17,6 +18,10 @@ class Uninstaller
      */
     private $tabRepository;
 
+     * @var Segment
+     */
+    private $segment;
+
     /**
      * @var ErrorHandler
      */
@@ -25,10 +30,12 @@ class Uninstaller
     public function __construct(
         \Ps_facebook $module,
         TabRepository $tabRepository,
+        Segment $segment,
         ErrorHandlerFactoryInterface $errorHandlerFactory
     ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
+        $this->segment = $segment;
         $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
@@ -39,7 +46,9 @@ class Uninstaller
      */
     public function uninstall()
     {
-        try {
+        $this->segment->setMessage('PS Facebook uninstalled');
+        $this->segment->track();
+      try {
             foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
                 \Configuration::deleteByName((string) $name);
             }
@@ -55,8 +64,7 @@ class Uninstaller
                 FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                 false
             );
-
-            return false;
+      }
         }
     }
 

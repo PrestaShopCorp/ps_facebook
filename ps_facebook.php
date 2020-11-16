@@ -8,7 +8,6 @@ use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
-use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
@@ -132,7 +131,7 @@ class Ps_facebook extends Module
         $this->version = '1.1.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
-        // TODO : $this->module_key = '';
+        $this->module_key = '860395eb54512ec72d98615805274591';
         $this->controllerAdmin = 'AdminAjaxPsfacebook';
         $this->bootstrap = false;
 
@@ -152,8 +151,11 @@ class Ps_facebook extends Module
             [],
             true
         );
-        $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
-        $this->templateBuffer = $this->getService(TemplateBuffer::class);
+
+        if ($this->serviceContainer === null) {
+            $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
+            $this->templateBuffer = $this->getService(TemplateBuffer::class);
+        }
 
         $this->loadEnv();
     }
@@ -236,6 +238,44 @@ class Ps_facebook extends Module
             parent::uninstall();
     }
 
+    /**
+     * Activate current module.
+     *
+     * @param bool $force_all If true, enable module for all shop
+     *
+     * @return bool
+     *
+     * @throws PrestaShopException
+     */
+    public function enable($force_all = false)
+    {
+        /** @var \PrestaShop\Module\Ps_facebook\Tracker\Segment $segment */
+        $segment = $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class);
+        $segment->setMessage('Enable module');
+        $segment->track();
+
+        return parent::enable($force_all);
+    }
+
+    /**
+     * Activate current module.
+     *
+     * @param bool $force_all If true, enable module for all shop
+     *
+     * @return bool
+     *
+     * @throws PrestaShopException
+     */
+    public function disable($force_all = false)
+    {
+        /** @var \PrestaShop\Module\Ps_facebook\Tracker\Segment $segment */
+        $segment = $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class);
+        $segment->setMessage('Disable module');
+        $segment->track();
+
+        return parent::disable($force_all);
+    }
+
     public function getContent()
     {
         // With the version prestashop/prestashop-accounts-auth:2.1.9, a successful login will redirect
@@ -272,14 +312,14 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayHeader(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -289,10 +329,9 @@ class Ps_facebook extends Module
     // Handle QuickView (ViewContent)
     public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSearch(array $params)
@@ -301,28 +340,28 @@ class Ps_facebook extends Module
             return;
         }
 
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayOrderConfirmation(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
@@ -331,18 +370,16 @@ class Ps_facebook extends Module
 
     public function hookActionNewsletterRegistrationAfter(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSubmitAccountBefore(array $params)
     {
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayFooter()
@@ -363,6 +400,7 @@ class Ps_facebook extends Module
             return false;
         }
 
+        /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 

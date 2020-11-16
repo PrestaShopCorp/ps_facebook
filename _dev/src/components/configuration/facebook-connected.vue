@@ -76,7 +76,8 @@
 
       <b-dropdown
         variant="primary"
-        split right
+        split
+        right
         @click="openManageFbe"
         class="ml-4 float-right"
       >
@@ -87,8 +88,8 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>
-          Unlink
+        <b-dropdown-item @click="uninstall">
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
     </b-card-body>
@@ -115,8 +116,8 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item disabled>
-          Unlink
+        <b-dropdown-item @click="uninstall">
+          {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
 
@@ -150,6 +151,7 @@
               :app-name="fbm.name"
               :email="fbm.email || ''"
               :created-at="fbm.createdAt"
+              :display-warning="!fbm.email"
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -200,6 +202,11 @@
               :app-name="contextPsFacebook.ads.name"
               :email="contextPsFacebook.ads.email"
               :created-at="contextPsFacebook.ads.createdAt"
+              :display-warning="
+                !contextPsFacebook.ads.name ||
+                !contextPsFacebook.ads.email ||
+                !contextPsFacebook.ads.createdAt
+              "
             />
           </b-col>
         </b-row>
@@ -307,6 +314,9 @@ export default defineComponent({
     },
     openManageFbe() {
       window.open(this.fbeUrl, '_blank');
+    },
+    uninstall() {
+      this.$emit('onUninstallClick');
     },
   },
 });

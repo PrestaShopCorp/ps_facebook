@@ -45,8 +45,8 @@
 
     <stepper
       v-if="showSyncCatalogAdvice"
-      :categoryMatchingStarted="categoryMatchingStarted"
-      :productSyncStarted="productSyncStarted"
+      :category-matching-started="categoryMatchingStarted"
+      :product-sync-started="productSyncStarted"
       @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
     />
   </div>

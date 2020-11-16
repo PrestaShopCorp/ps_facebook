@@ -29,7 +29,7 @@
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
             :key="featureName"
-            v-bind:active="properties.enabled"
+            :active="properties.enabled"
           />
         </feature-list>
       </div>
@@ -57,7 +57,18 @@
         <h3 class="ml-3">
           {{ $t('integrate.headings.unavailableFeatures') }}
         </h3>
-        <products-not-synced-warning />
+        <div class="mr-3 ml-3">
+          <warning
+            :warning-text="$t('integrate.warning.productsNotSynced')"
+          >
+            <b-button
+              variant="primary"
+              class="m-2 p-2"
+            >
+              {{ $t('integrate.buttons.syncProducts') }}
+            </b-button>
+          </warning>
+        </div>
         <feature-list>
           <unavailable-feature
             v-for="(properties, featureName) in dynamicUnavailableFeatures"
@@ -72,22 +83,24 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
+import {BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import DisabledFeature from '../components/features/disabled-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
-import ProductsNotSyncedWarning from '../components/features/products-not-synced-warning.vue';
+import Warning from '../components/warning/warning.vue';
 
 export default defineComponent({
   name: 'Integrate',
   components: {
-    ProductsNotSyncedWarning,
+    BButton,
     Spinner,
     EnabledFeature,
     FeatureList,
     UnavailableFeature,
     DisabledFeature,
+    Warning,
   },
   mixins: [],
   props: {

@@ -1,0 +1,5 @@
+services:
+  PrestaShop\Module\Ps_facebook\Tracker\Segment:
+    class: 'PrestaShop\Module\Ps_facebook\Tracker\Segment'
+    arguments:
+      - '@ps_facebook.context'

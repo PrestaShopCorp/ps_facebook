@@ -180,7 +180,7 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'email' => $this->getUser()->getEmail(),
+            'email' => $this->getUser(),
             'pixel' => $this->getPixel(),
             'facebookBusinessManager' => $this->getFacebookBusinessManager(),
             'page' => $this->getPage(),

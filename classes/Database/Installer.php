@@ -7,6 +7,7 @@ use Language;
 use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use Tab;
 
 class Installer
@@ -18,14 +19,19 @@ class Installer
      */
     private $errors = [];
 
+     * @var Segment
+     */
+    private $segment;
+
     /**
      * @var ErrorHandler
      */
     private $errorHandler;
 
-    public function __construct(\Ps_facebook $module, ErrorHandlerFactoryInterface $errorHandlerFactory)
+    public function __construct(\Ps_facebook $module, Segment $segment, ErrorHandlerFactoryInterface $errorHandlerFactory)
     {
         $this->module = $module;
+        $this->segment = $segment;
         $this->errorHandler = $errorHandlerFactory->getErrorHandler();
     }
 
@@ -34,6 +40,9 @@ class Installer
      */
     public function install()
     {
+        $this->segment->setMessage('PS Facebook installed');
+        $this->segment->track();
+
         return $this->installConfiguration() &&
             $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&
             $this->installTabs() &&

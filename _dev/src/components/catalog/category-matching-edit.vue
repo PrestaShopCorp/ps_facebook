@@ -17,8 +17,15 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div v-if="loading" class="page-spinner" />
-  <b-card class="card m-3" v-else id="catalogCategoryMatchingEdit">
+  <div
+    v-if="loading"
+    class="page-spinner"
+  />
+  <b-card
+    class="card m-3"
+    v-else
+    id="catalogCategoryMatchingEdit"
+  >
     <!-- Large screen -->
     <div class="d-none d-md-block">
       <b-button

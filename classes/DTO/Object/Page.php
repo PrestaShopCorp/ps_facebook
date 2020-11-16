@@ -9,6 +9,11 @@ class Page implements JsonSerializable
     /**
      * @var string
      */
+    private $id;
+
+    /**
+     * @var string
+     */
     private $page;
 
     /**
@@ -28,11 +33,20 @@ class Page implements JsonSerializable
      * @param int $likes
      * @param string|null $logo
      */
-    public function __construct($page, $likes, $logo)
+    public function __construct($id, $page, $likes, $logo)
     {
+        $this->id = $id;
         $this->page = $page;
         $this->likes = $likes;
         $this->logo = $logo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -62,6 +76,7 @@ class Page implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'page' => $this->getPage(),
             'likes' => $this->getLikes(),
             'logo' => $this->getLogo(),

@@ -35,7 +35,7 @@ export default {
   computed: {
     facebookConnected() {
       const context = this.contextPsFacebook;
-      return (context && context.email) || false;
+      return (context && context.facebookBusinessManager.id) || false;
     },
   },
 };

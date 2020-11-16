@@ -14,7 +14,7 @@ class SearchEvent extends BaseEvent implements PixelEventInterface
             return;
         }
         $type = 'Search';
-        $track = 'trackCustom';
+        $track = 'track';
 
         $searchQuery = pSQL($event['searched_query']);
         $totalResults = pSQL($event['total']);

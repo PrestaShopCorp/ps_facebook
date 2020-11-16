@@ -1,5 +1,5 @@
 <?php
-/*
+/*X
 * 2007-2020 PrestaShop.
 *
 * DISCLAIMER
@@ -23,6 +23,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
+use PrestaShop\ModuleLibFaq\Faq;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -55,6 +56,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode($response)
         );
+    }
+
+    public function displayAjaxDisconnectFromFacebook()
+    {
+        // Disconnect from FB
+        /** @var ConfigurationHandler $configurationHandler */
+        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
+        $configurationHandler->uninstallFbe();
+
+        // Return new FB context
+        $this->displayAjaxGetFbContext();
     }
 
     /**
@@ -130,29 +142,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * @throws PrestaShopException
      */
-    public function displayAjaxConfiguration()
-    {
-        /** @var FbeDataProvider $fbeDataProvider */
-        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
-
-        /** @var FacebookDataProvider $facebookDataProvider */
-        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
-
-        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
-
-        $this->ajaxDie(
-            json_encode(
-                [
-                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => $facebookContext,
-                ]
-            )
-        );
-    }
-
-    /**
-     * @throws PrestaShopException
-     */
     public function displayAjaxGetFbContext()
     {
         /** @var FbeDataProvider $fbeDataProvider */
@@ -177,9 +166,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
+        $categoryId = (int) Tools::getValue('category_id');
+        $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $updateChildren = (bool) Tools::getValue('update_children');
         try {
             /* todo: change to data from ajax */
-            $categoryMatchHandler->updateCategoryMatch(3, 8, true);
+            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
@@ -299,11 +291,45 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     }
 
     /**
+     * Retrieve the faq
+     */
+    public function displayAjaxRetrieveFaq()
+    {
+        $faq = new Faq($this->module->module_key, _PS_VERSION_, $this->context->language->iso_code);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'faq' => $faq->getFaq(),
+                    'doc' => $this->getReadme(),
+                    'contactUs' => 'https://www.google.com',
+                ]
+            )
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function ajaxDie($value = null, $controller = null, $method = null)
     {
         header('Content-Type: application/json');
         parent::ajaxDie($value, $controller, $method);
+    }
+
+    /**
+     * Get the documentation url depending on the current language
+     *
+     * @return string path of the doc
+     */
+    private function getReadme()
+    {
+        $isoCode = $this->context->language->iso_code;
+
+        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf')) {
+            $isoCode = 'en';
+        }
+
+        return _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf';
     }
 }

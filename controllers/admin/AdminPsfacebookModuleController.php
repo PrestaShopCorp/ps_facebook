@@ -64,12 +64,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
+            'psFacebookFbeOnboardingUninstallRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
                 [],
                 [
-                    'action' => 'Configuration',
+                    'action' => 'DisconnectFromFacebook',
                     'ajax' => 1,
                 ]
             ),
@@ -146,6 +146,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookRetrieveFaq' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'RetrieveFaq',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -154,6 +163,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,
+            'shopDomain' => Tools::getShopDomain(false),
+            'shopUrl' => Tools::getShopDomainSsl(true),
+            'email' => $this->context->employee->email,
+            'psVersion' => _PS_VERSION_,
+            'moduleVersion' => $this->module->version,
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 

@@ -10,7 +10,7 @@ class CompleteRegistrationEvent extends BaseEvent implements PixelEventInterface
     public function sendToBuffer($buffer, $event)
     {
         $type = 'CompleteRegistration';
-        $track = 'trackCustom';
+        $track = 'track';
 
         $content = [
             'content_name' => 'authentication',
