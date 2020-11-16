@@ -19,6 +19,7 @@ class Installer
      */
     private $errors = [];
 
+    /**
      * @var Segment
      */
     private $segment;
