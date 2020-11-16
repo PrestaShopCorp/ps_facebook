@@ -35,7 +35,7 @@ class FacebookDataProvider
         $businessManager = $this->facebookClient->getBusinessManager($fbe['business_manager_id']);
         $pixel = $this->facebookClient->getPixel($fbe['pixel_id']);
         $pages = $this->facebookClient->getPage($fbe['pages']);
-        $ad = $this->facebookClient->getAd($fbe['business_manager_id']);
+        $ad = $this->facebookClient->getAd($fbe['ad_account_id']);
         $isCategoriesMatching = $this->facebookClient->getCategoriesMatching($fbe['catalog_id']);
 
         return new ContextPsFacebook(

@@ -35,15 +35,15 @@
       </div>
 
       <div
-        id="disabled-features"
-        v-if="dynamicDisabledFeatures"
+        id="available-features"
+        v-if="dynamicAvailableFeatures"
       >
         <h3 class="ml-3">
-          {{ $t('integrate.headings.disabledFeatures') }}
+          {{ $t('integrate.headings.availableFeatures') }}
         </h3>
         <feature-list>
-          <disabled-feature
-            v-for="(properties, featureName) in dynamicDisabledFeatures"
+          <available-feature
+            v-for="(properties, featureName) in dynamicAvailableFeatures"
             :name="featureName"
             :key="featureName"
           />
@@ -58,16 +58,20 @@
           {{ $t('integrate.headings.unavailableFeatures') }}
         </h3>
         <div class="mr-3 ml-3">
-          <warning
-            :warning-text="$t('integrate.warning.productsNotSynced')"
+          <b-alert
+            show
+            variant="warning"
           >
-            <b-button
-              variant="primary"
-              class="m-2 p-2"
-            >
-              {{ $t('integrate.buttons.syncProducts') }}
-            </b-button>
-          </warning>
+            <div>
+              <p>{{ $t('integrate.warning.productsNotSynced') }}</p>
+              <b-button
+                variant="primary"
+                class="mt-2"
+              >
+                {{ $t('integrate.buttons.syncProducts') }}
+              </b-button>
+            </div>
+          </b-alert>
         </div>
         <feature-list>
           <unavailable-feature
@@ -83,24 +87,23 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BAlert, BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
-import DisabledFeature from '../components/features/disabled-feature.vue';
+import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
-import Warning from '../components/warning/warning.vue';
 
 export default defineComponent({
   name: 'Integrate',
   components: {
+    BAlert,
     BButton,
     Spinner,
     EnabledFeature,
     FeatureList,
     UnavailableFeature,
-    DisabledFeature,
-    Warning,
+    AvailableFeature,
   },
   mixins: [],
   props: {
@@ -109,7 +112,7 @@ export default defineComponent({
       required: false,
       default: () => [],
     },
-    disabledFeatures: {
+    availableFeatures: {
       type: Array,
       required: false,
       default: () => [],
@@ -123,13 +126,29 @@ export default defineComponent({
   data() {
     return {
       dynamicEnabledFeatures: this.enabledFeatures,
-      dynamicDisabledFeatures: this.disabledFeatures,
+      dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
       loading: true,
+      hiddenProp: null,
+      visibilityChangeEvent: null,
     };
   },
   created() {
-    this.fetchData();
+    if (this.enabledFeatures.length === 0
+      && this.availableFeatures.length === 0
+      && this.unavailableFeatures.length === 0
+    ) {
+      this.fetchData();
+      this.registerToVisibilityChangeEvent();
+    } else {
+      this.loading = false;
+    }
+  },
+  beforeDestroy() {
+    if (document.removeEventListener === 'undefined' || this.hiddenProp === null) {
+      return;
+    }
+    document.removeEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
   },
   methods: {
     fetchData() {
@@ -143,13 +162,38 @@ export default defineComponent({
         })
         .then((json) => {
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
-          this.dynamicDisabledFeatures = json.fbeFeatures.disabledFeatures;
+          this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
           this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
         });
+    },
+    handleVisibilityChange() {
+      // Watch when the page gets the focus, for instance
+      // when the merchant comes back from another tab.
+      if (document[this.hiddenProp] === false) {
+        this.fetchData();
+      }
+    },
+    registerToVisibilityChangeEvent() {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+        this.hiddenProp = 'hidden';
+        this.visibilityChangeEvent = 'visibilitychange';
+      } else if (typeof document.msHidden !== 'undefined') {
+        this.hiddenProp = 'msHidden';
+        this.visibilityChangeEvent = 'msvisibilitychange';
+      } else if (typeof document.webkitHidden !== 'undefined') {
+        this.hiddenProp = 'webkitHidden';
+        this.visibilityChangeEvent = 'webkitvisibilitychange';
+      }
+
+      if (document.addEventListener === 'undefined' || this.hiddenProp === null) {
+        return;
+      }
+      document.addEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
     },
   },
 });

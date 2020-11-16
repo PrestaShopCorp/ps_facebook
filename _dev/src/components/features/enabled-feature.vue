@@ -4,17 +4,17 @@
       <b-card-body>
         <div class="d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
-            <h3>
+            <span class="h1">
               <img
                 class="mr-1"
                 :src="require(`@/assets/${name}.png`)"
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
-              <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
-            </h3>
+            </span>
+            <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
           </div>
-          <div>
+          <div class="align-self-center">
             <span class="d-none d-sm-inline">
               {{
                 $t(switchActivated ?
@@ -24,7 +24,7 @@
             </span>
             <div
               class="switch-input switch-input-lg ml-1"
-              :class="switchActivated ? '-checked' : null"
+              :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
               @click="switchClick"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
@@ -37,7 +37,8 @@
             </div>
           </div>
         </div>
-        <div class="d-flex">
+        <div class="d-flex"
+          v-if="switchActivated">
           <div class="flex-grow-1" />
           <div>
             <a
@@ -158,13 +159,13 @@ export default defineComponent({
   methods: {
     switchClick() {
       if (!this.isLoading) {
-        this.isLoading = true;
         if (!this.switchActivated) {
           this.updateFeatureState();
         }
       }
     },
     updateFeatureState() {
+      this.isLoading = true;
       fetch(this.updateFeatureRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
@@ -198,16 +199,19 @@ export default defineComponent({
 <style lang="scss" scoped>
   li {
     &.disabled{
-      h3, p {
+      .h1, p {
         color: grey !important;
       }
-      h3 {
+      .h1 {
         img {
           filter: grayscale(100);
         }
       }
       .switch-input {
         background-color: #c05c67 !important;
+        &.disabled {
+          background: #eee !important;
+        }
       }
       .switch-input::after {
         color: #c05c67 !important;
@@ -215,6 +219,11 @@ export default defineComponent({
     }
     .flex-grow-1 {
       flex-grow:1
+    }
+    .switch-input {
+      &.disabled {
+        background: #eee !important;
+      }
     }
   }
 </style>
