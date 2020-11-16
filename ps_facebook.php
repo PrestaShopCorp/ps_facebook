@@ -8,6 +8,8 @@ use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
@@ -208,7 +210,7 @@ class Ps_facebook extends Module
         }
 
         /** @var Installer $installer */
-        $installer = new Installer($this, new ErrorHandlerFactory());
+        $installer = new Installer($this, new Segment($this->context), new ErrorHandlerFactory());
         if (!$installer->install()) {
             $this->_errors[] = $installer->getErrors();
 
@@ -232,7 +234,7 @@ class Ps_facebook extends Module
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
         // $uninstaller = $this->getService(Uninstaller::class);
-        $uninstaller = new Uninstaller($this, new TabRepository(), new ErrorHandlerFactory());
+        $uninstaller = new Uninstaller($this, new TabRepository(), new Segment($this->context), new ErrorHandlerFactory());
 
         return $uninstaller->uninstall() &&
             parent::uninstall();

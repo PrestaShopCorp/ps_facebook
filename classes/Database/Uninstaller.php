@@ -66,6 +66,8 @@ class Uninstaller
                 false
             );
         }
+
+        return false;
     }
 
     /**
