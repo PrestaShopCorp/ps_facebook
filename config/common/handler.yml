@@ -18,6 +18,7 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
     arguments:
       - '@ps_facebook.language'
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
