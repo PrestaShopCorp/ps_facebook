@@ -7,6 +7,7 @@ use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
@@ -196,7 +197,10 @@ class Ps_facebook extends Module
         // $installer = $this->getService(Installer::class);
 
         /** @var Installer $installer */
-        $installer = new Installer($this);
+        $installer = new Installer(
+            $this,
+            $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class)
+        );
 
         return parent::install() &&
             (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
@@ -219,7 +223,11 @@ class Ps_facebook extends Module
         // $uninstaller = $this->getService(Uninstaller::class);
 
         /** @var Uninstaller $uninstaller */
-        $uninstaller = new Uninstaller($this, $this->getService(TabRepository::class));
+        $uninstaller = new Uninstaller(
+            $this,
+            $this->getService(TabRepository::class),
+            $this->getService(\PrestaShop\Module\Ps_facebook\Tracker\Segment::class)
+        );
 
         return $uninstaller->uninstall() &&
             parent::uninstall();
