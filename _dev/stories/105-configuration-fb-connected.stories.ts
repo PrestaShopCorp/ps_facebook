@@ -3,7 +3,9 @@ import FacebookConnected from '../src/components/configuration/facebook-connecte
 import facebookLogo from '../src/assets/facebook_logo.svg';
 
 const contextPsFacebook = {
-  email: 'him@prestashop.com',
+  user: {
+    email: 'him@prestashop.com',
+  },
   facebookBusinessManager: {
     name: 'La Fanchonette',
     email: 'fanchonette@ps.com',
@@ -28,7 +30,9 @@ const contextPsFacebook = {
 };
 
 const contextPsFacebookOverflows = {
-  email: 'a.very.long.email.should.not.be.a.problem.even.if.this.email.cannot.be.so.long@prestashop.com',
+  user: {
+    email: 'a.very.long.email.should.not.be.a.problem.even.if.this.email.cannot.be.so.long@prestashop.com',
+  },
   facebookBusinessManager: {
     name: 'La Fanchonette qui s\'étend sur la longueur',
     email: 'fanchonette.a.very.long.email.should.not.be.a.problem.even.if.its.too.long@ps.com',

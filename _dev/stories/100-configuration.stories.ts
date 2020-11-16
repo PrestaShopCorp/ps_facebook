@@ -78,7 +78,9 @@ export const FullConnected: any = Template.bind({});
 FullConnected.args = {
   contextPsAccounts: window.contextPsAccounts,
   contextPsFacebook: {
-    email: 'him@prestashop.com',
+    user: {
+      email: 'him@prestashop.com',
+    },
     facebookBusinessManager: {
       name: 'La Fanchonette',
       email: 'fanchonette@ps.com',
