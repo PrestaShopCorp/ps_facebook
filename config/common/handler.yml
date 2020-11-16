@@ -24,3 +24,6 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
     arguments:
       - '@ps_facebook'
+
+  PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler

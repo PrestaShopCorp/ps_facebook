@@ -3,9 +3,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Exception;
-use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
-use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
@@ -32,12 +31,12 @@ class Uninstaller
         \Ps_facebook $module,
         TabRepository $tabRepository,
         Segment $segment,
-        ErrorHandlerFactoryInterface $errorHandlerFactory
+        ErrorHandler $errorHandler
     ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
         $this->segment = $segment;
-        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandler;
     }
 
     /**

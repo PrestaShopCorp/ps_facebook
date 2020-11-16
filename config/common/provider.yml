@@ -15,7 +15,7 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
 
   PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider

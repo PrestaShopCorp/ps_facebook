@@ -6,7 +6,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
-use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactory;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
@@ -141,7 +141,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -161,6 +161,7 @@ class Ps_facebook extends Module
 
         $this->loadEnv();
     }
+
 
     private function loadEnv()
     {
@@ -212,7 +213,7 @@ class Ps_facebook extends Module
         $installer = new Installer(
             $this,
             $this->getService(Segment::class),
-            $this->getService(ErrorHandlerFactory::class)
+            $this->getService(ErrorHandler::class)
         );
 
         if (!$installer->install()) {
@@ -243,7 +244,7 @@ class Ps_facebook extends Module
             $this,
             $this->getService(TabRepository::class),
             $this->getService(Segment::class),
-            $this->getService(ErrorHandlerFactory::class)
+            $this->getService(ErrorHandler::class)
         );
 
         return $uninstaller->uninstall() &&
@@ -432,7 +433,7 @@ class Ps_facebook extends Module
         /* Get the checkoutPaymentKey from the $checkoutSteps array */
         foreach ($checkoutSteps as $stepObject) {
             if ($stepObject instanceof CheckoutAddressesStep) {
-                return (bool) $stepObject->isCurrent();
+                return (bool)$stepObject->isCurrent();
             }
         }
 

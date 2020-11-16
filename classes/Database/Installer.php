@@ -4,9 +4,8 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Exception;
 use Language;
-use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
-use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use Tab;
 
@@ -29,11 +28,11 @@ class Installer
      */
     private $errorHandler;
 
-    public function __construct(\Ps_facebook $module, Segment $segment, ErrorHandlerFactoryInterface $errorHandlerFactory)
+    public function __construct(\Ps_facebook $module, Segment $segment, ErrorHandler $errorHandler)
     {
         $this->module = $module;
         $this->segment = $segment;
-        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandler;
     }
 
     /**

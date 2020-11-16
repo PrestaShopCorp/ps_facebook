@@ -5,9 +5,9 @@ namespace PrestaShop\Module\PrestashopFacebook\Event\Conversion;
 use Context;
 use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
-use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
 abstract class AbstractEvent implements ConversionEventInterface
@@ -63,7 +63,7 @@ abstract class AbstractEvent implements ConversionEventInterface
         try {
             $request->execute();
         } catch (\Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler = new ErrorHandler();
             $errorHandler->handle(
                 new FacebookConversionAPIException(
                     'Failed to send conversion API event',

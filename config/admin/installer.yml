@@ -4,7 +4,7 @@ services:
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
-      - '@PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface'
+      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
 
   PrestaShop\Module\PrestashopFacebook\Database\Uninstaller:
     class: PrestaShop\Module\PrestashopFacebook\Database\Uninstaller
@@ -12,4 +12,4 @@ services:
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\TabRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
-      - '@PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface'
+      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'

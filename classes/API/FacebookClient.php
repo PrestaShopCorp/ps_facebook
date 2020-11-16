@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
-use PrestaShop\AccountsAuth\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
@@ -14,7 +13,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Factory\ErrorHandlerFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
@@ -48,19 +47,19 @@ class FacebookClient
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
      * @param ConfigurationAdapter $configurationAdapter
-     * @param ErrorHandlerFactoryInterface $errorHandlerFactory
+     * @param ErrorHandler $errorHandler
      */
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandlerFactoryInterface $errorHandlerFactory
+        ErrorHandler $errorHandler
     ) {
         $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandlerFactory->getErrorHandler();
+        $this->errorHandler = $errorHandler;
     }
 
     public function setAccessToken($accessToken)
