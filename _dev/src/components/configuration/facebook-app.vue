@@ -71,7 +71,7 @@
         {{ appId }}
       </div>
       <div
-        v-if="!!likes"
+        v-if="null !== likes"
         class="small"
       >
         {{ likes }}
