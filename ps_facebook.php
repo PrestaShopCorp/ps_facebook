@@ -209,8 +209,12 @@ class Ps_facebook extends Module
             return false;
         }
 
-        /** @var Installer $installer */
-        $installer = new Installer($this, new Segment($this->context), new ErrorHandlerFactory());
+        $installer = new Installer(
+            $this,
+            $this->getService(Segment::class),
+            $this->getService(ErrorHandlerFactory::class)
+        );
+
         if (!$installer->install()) {
             $this->_errors[] = $installer->getErrors();
 
@@ -234,7 +238,13 @@ class Ps_facebook extends Module
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
         // $uninstaller = $this->getService(Uninstaller::class);
-        $uninstaller = new Uninstaller($this, new TabRepository(), new Segment($this->context), new ErrorHandlerFactory());
+
+        $uninstaller = new Uninstaller(
+            $this,
+            $this->getService(TabRepository::class),
+            $this->getService(Segment::class),
+            $this->getService(ErrorHandlerFactory::class)
+        );
 
         return $uninstaller->uninstall() &&
             parent::uninstall();
