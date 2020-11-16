@@ -103,7 +103,7 @@ class Installer
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
                     false
                 );
-                $this->errors[] = $this->module->l('Failed to install module tabs');
+                $this->errors[] = sprintf($this->module->l('Failed to install %1s tab'), $tab['className']);
 
                 return false;
             }
