@@ -15,8 +15,10 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
@@ -101,6 +103,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )->json();
 
+            if (!isset($response['externalBusinessId']) && isset($response['message'])) {
+                /** @var ErrorHandler $errorHandler */
+                $errorHandler = $this->module->getService(ErrorHandler::class);
+                $errorHandler->handle(
+                    new FacebookOnboardException(
+                        $response['message'],
+                        FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                    ),
+                    FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                );
+            }
             $externalBusinessId = $response['externalBusinessId'];
             Configuration::updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }
@@ -166,9 +179,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
-        $categoryId = (int) Tools::getValue('category_id');
-        $googleCategoryId = (int) Tools::getValue('google_category_id');
-        $updateChildren = (bool) Tools::getValue('update_children');
+        $categoryId = (int)Tools::getValue('category_id');
+        $googleCategoryId = (int)Tools::getValue('google_category_id');
+        $updateChildren = (bool)Tools::getValue('update_children');
         try {
             /* todo: change to data from ajax */
             $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
@@ -203,7 +216,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(
             json_encode($googleCategory)
-            // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
+        // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
         );
     }
 
@@ -266,10 +279,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
-                      'total' => 0,
-                      'pending' => 0,
-                      'approved' => 0,
-                      'disapproved' => 0,
+                        'total' => 0,
+                        'pending' => 0,
+                        'approved' => 0,
+                        'disapproved' => 0,
                     ],
                 ]
             )
@@ -278,8 +291,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetCategories()
     {
-        $categoryId = (int) Tools::getValue('id_category');
-        $page = (int) Tools::getValue('page');
+        $categoryId = (int)Tools::getValue('id_category');
+        $page = (int)Tools::getValue('page');
 
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
