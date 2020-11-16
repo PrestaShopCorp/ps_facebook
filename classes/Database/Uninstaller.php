@@ -18,6 +18,7 @@ class Uninstaller
      */
     private $tabRepository;
 
+    /**
      * @var Segment
      */
     private $segment;
