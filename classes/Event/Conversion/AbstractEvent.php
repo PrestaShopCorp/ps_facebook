@@ -6,6 +6,8 @@ use Context;
 use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
 abstract class AbstractEvent implements ConversionEventInterface
@@ -36,7 +38,7 @@ abstract class AbstractEvent implements ConversionEventInterface
         $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 
-        $userData = (new UserData())
+        return (new UserData())
             ->setFbp($fbp)
             ->setFbc($fbc)
             ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
@@ -51,8 +53,6 @@ abstract class AbstractEvent implements ConversionEventInterface
             ->setZipCode($customerInformation['postCode'])
             ->setCountryCode($customerInformation['countryIso'])
             ->setGender($customerInformation['gender']);
-
-        return $userData;
     }
 
     protected function sendEvents(array $events)
@@ -63,7 +63,16 @@ abstract class AbstractEvent implements ConversionEventInterface
         try {
             $request->execute();
         } catch (\Exception $e) {
-            //todo: need to logg exception
+            $errorHandler = new ErrorHandler();
+            $errorHandler->handle(
+                new FacebookConversionAPIException(
+                    'Failed to send conversion API event',
+                    FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
+                    $e
+                ),
+                FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
+                false
+            );
         }
     }
 }

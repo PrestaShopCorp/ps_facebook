@@ -2,8 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
+use Exception;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AccessTokenProvider
@@ -13,9 +16,15 @@ class AccessTokenProvider
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter)
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, ErrorHandler $errorHandler)
     {
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandler = $errorHandler;
     }
 
     /**
@@ -50,15 +59,28 @@ class AccessTokenProvider
         $accessToken = $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN);
         $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
 
-        $response = $client->post(
-            '/account/' . $externalBusinessId . '/exchange_tokens',
-            [
-                'json' => [
-                    'userAccessToken' => $accessToken,
-                ],
-            ]
-        )->json();
+        try {
+            $response = $client->post(
+                '/account/' . $externalBusinessId . '/exchange_tokens',
+                [
+                    'json' => [
+                        'userAccessToken' => $accessToken,
+                    ],
+                ]
+            )->json();
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new AccessTokenException(
+                    'Failed to refresh access token',
+                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                    $e
+                ),
+                AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                false
+            );
 
+            return false;
+        }
         if (isset($response['access_token'])) {
             $currentTimestamp = time();
             $tokenExpiresIn = $currentTimestamp + (int) $response['expires_in'];

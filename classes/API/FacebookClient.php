@@ -11,7 +11,9 @@ use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 use PrestaShop\Module\PrestashopFacebook\DTO\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
@@ -32,31 +34,45 @@ class FacebookClient
     private $client;
 
     /**
-     * @var AccessTokenProvider
-     */
-    private $accessTokenProvider;
-
-    /**
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
 
     /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    /**
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
      * @param ConfigurationAdapter $configurationAdapter
+     * @param ErrorHandler $errorHandler
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider, ConfigurationAdapter $configurationAdapter)
-    {
+    public function __construct(
+        ApiClientFactoryInterface $apiClientFactory,
+        AccessTokenProvider $accessTokenProvider,
+        ConfigurationAdapter $configurationAdapter,
+        ErrorHandler $errorHandler
+    ) {
         $this->accessToken = $accessTokenProvider->getOrRefreshToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandler = $errorHandler;
     }
 
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAccessToken()
+    {
+        return isset($this->accessToken);
     }
 
     public function getUserEmail()
@@ -223,6 +239,16 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating get request.',
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 
@@ -282,6 +308,16 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating post request.',
+                    FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 

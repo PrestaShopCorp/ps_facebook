@@ -2,25 +2,44 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
+use Exception;
 use Language;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use Tab;
 
 class Installer
 {
+    const CLASS_NAME = 'Installer';
+
     private $module;
+
+    /**
+     * @var array
+     */
+    private $errors = [];
 
     /**
      * @var Segment
      */
     private $segment;
 
-    public function __construct(\Ps_facebook $module, Segment $segment)
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(\Ps_facebook $module, Segment $segment, ErrorHandler $errorHandler)
     {
         $this->module = $module;
         $this->segment = $segment;
+        $this->errorHandler = $errorHandler;
     }
 
+    /**
+     * @return bool
+     */
     public function install()
     {
         $this->segment->setMessage('PS Facebook installed');
@@ -30,6 +49,14 @@ class Installer
             $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&
             $this->installTabs() &&
             $this->installTables();
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**
@@ -68,14 +95,29 @@ class Installer
         $installTabCompleted = true;
 
         foreach ($this->getTabs() as $tab) {
-            $installTabCompleted = $installTabCompleted && $this->installTab(
-                    $tab['className'],
-                    $tab['parent'],
-                    $tab['name'],
-                    $tab['module'],
-                    $tab['active'],
-                    $tab['icon']
+            try {
+                $installTabCompleted = $installTabCompleted && $this->installTab(
+                        $tab['className'],
+                        $tab['parent'],
+                        $tab['name'],
+                        $tab['module'],
+                        $tab['active'],
+                        $tab['icon']
+                    );
+            } catch (Exception $e) {
+                $this->errorHandler->handle(
+                    new FacebookInstallerException(
+                        'Failed to install module tabs',
+                        FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
+                        $e
+                    ),
+                    FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
+                    false
                 );
+                $this->errors[] = sprintf($this->module->l('Failed to install %1s tab', self::CLASS_NAME), $tab['className']);
+
+                return false;
+            }
         }
 
         return $installTabCompleted;
@@ -103,7 +145,7 @@ class Installer
             $moduleTab->name[$language['id_lang']] = $name;
         }
 
-        return $moduleTab->save();
+        return $moduleTab->add();
     }
 
     public function installTables()
@@ -111,6 +153,17 @@ class Installer
         try {
             include dirname(__FILE__) . '/../../sql/install.php';
         } catch (\Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookInstallerException(
+                    'Failed to install database tables',
+                    FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
+                    $e
+                ),
+                FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
+                false
+            );
+            $this->errors[] = $this->module->l('Failed to install database tables', self::CLASS_NAME);
+
             return false;
         }
 
