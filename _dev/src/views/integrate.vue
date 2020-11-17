@@ -22,7 +22,7 @@
     <div v-else>
       <div
         id="enabled-features"
-        v-if="dynamicEnabledFeatures"
+        v-if="dynamicEnabledFeaturesLength"
       >
         <feature-list>
           <enabled-feature
@@ -36,7 +36,7 @@
 
       <div
         id="available-features"
-        v-if="dynamicAvailableFeatures"
+        v-if="dynamicAvailableFeaturesLength"
       >
         <h3 class="ml-3">
           {{ $t('integrate.headings.availableFeatures') }}
@@ -52,7 +52,7 @@
 
       <div
         id="unavailable-features"
-        v-if="dynamicUnavailableFeatures"
+        v-if="dynamicUnavailableFeaturesLength"
       >
         <h3 class="ml-3">
           {{ $t('integrate.headings.unavailableFeatures') }}
@@ -108,19 +108,19 @@ export default defineComponent({
   mixins: [],
   props: {
     enabledFeatures: {
-      type: Array,
-      required: false,
-      default: () => [],
+      type: Object,
+      required: true,
+      default: () => {},
     },
     availableFeatures: {
-      type: Array,
-      required: false,
-      default: () => [],
+      type: Object,
+      required: true,
+      default: () => {},
     },
     unavailableFeatures: {
-      type: Array,
-      required: false,
-      default: () => [],
+      type: Object,
+      required: true,
+      default: () => {},
     },
   },
   data() {
@@ -128,15 +128,18 @@ export default defineComponent({
       dynamicEnabledFeatures: this.enabledFeatures,
       dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
+      dynamicEnabledFeaturesLength: Object.keys(this.enabledFeatures).length,
+      dynamicAvailableFeaturesLength: Object.keys(this.availableFeatures).length,
+      dynamicUnavailableFeaturesLength: Object.keys(this.unavailableFeatures).length,
       loading: true,
       hiddenProp: null,
       visibilityChangeEvent: null,
     };
   },
   created() {
-    if (this.enabledFeatures.length === 0
-      && this.availableFeatures.length === 0
-      && this.unavailableFeatures.length === 0
+    if (this.dynamicEnabledFeaturesLength === 0
+      && this.dynamicAvailableFeaturesLength === 0
+      && this.dynamicUnavailableFeaturesLength === 0
     ) {
       this.fetchData();
       this.registerToVisibilityChangeEvent();

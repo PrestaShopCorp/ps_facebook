@@ -56,3 +56,46 @@ MessengerEnabled.args = {
   }
 };
 
+export const WithCatalogSynchronized: any = Template.bind({});
+WithCatalogSynchronized.args = {
+  enabledFeatures: {
+    "messenger_chat": {
+      enabled: true
+    },
+  },
+  disabledFeatures: {
+    "page_cta": {
+      enabled: false
+    },
+    "ig_shopping": {
+      enabled: false
+    },
+    "page_shop": {
+      enabled: false
+    }
+  },
+  unavailableFeatures: {
+  }
+};
+
+export const AllFeaturesEnabled: any = Template.bind({});
+AllFeaturesEnabled.args = {
+  enabledFeatures: {
+    "messenger_chat": {
+      enabled: true
+    },
+    "page_cta": {
+      enabled: true
+    },
+    "ig_shopping": {
+      enabled: true
+    },
+    "page_shop": {
+      enabled: false
+    },
+  },
+  disabledFeatures: {
+  },
+  unavailableFeatures: {
+  }
+};
