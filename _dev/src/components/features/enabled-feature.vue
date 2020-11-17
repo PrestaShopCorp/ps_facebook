@@ -2,7 +2,7 @@
   <li :class="switchActivated ? null : 'disabled'">
     <b-card no-body>
       <b-card-body>
-        <div class="d-flex">
+        <div class="feature-header d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <span class="h1">
               <img
@@ -50,7 +50,7 @@
                 variant="outline-secondary"
                 class="ml-4 align-self-center"
               >
-                {{ $t('integrate.buttons.manage') }}
+                {{ $t(`integrate.features.${name}.editButton`) }}
               </b-button>
             </a>
           </div>
@@ -224,6 +224,9 @@ export default defineComponent({
       &.disabled {
         background: #eee !important;
       }
+    }
+    .feature-header {
+      margin-bottom: 1em;
     }
   }
 </style>

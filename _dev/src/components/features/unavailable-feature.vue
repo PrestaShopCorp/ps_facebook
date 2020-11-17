@@ -20,7 +20,7 @@
             variant="outline-primary disabled"
             class="ml-4 align-self-center"
           >
-            {{ $t('integrate.buttons.add') }}
+            {{ $t(`integrate.features.${name}.addButton`) }}
           </b-button>
         </div>
       </b-card-body>

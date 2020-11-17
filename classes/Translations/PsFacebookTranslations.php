@@ -172,10 +172,8 @@ class PsFacebookTranslations
             ],
             'integrate' => [
                 'buttons' => [
-                    'add' => $this->module->l('Add', 'PsFacebookTranslations'),
                     'syncProducts' => $this->module->l('Sync products', 'PsFacebookTranslations'),
                     'modalConfirm' => $this->module->l('Yes, confirm', 'PsFacebookTranslations'),
-                    'manage' => $this->module->l('Manage', 'PsFacebookTranslations'),
                 ],
                 'features' => [
                     'ig_shopping' => [
