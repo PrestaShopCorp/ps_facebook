@@ -76,7 +76,7 @@ class PsFacebookTranslations
                     'proPoint3Title' => $this->module->l('Boost your sales', 'PsFacebookTranslations'),
                     'proPoint3Description' => $this->module->l("Manage your product catalog and \nunlock the power of ads.", 'PsFacebookTranslations'),
                     'proPoint4Title' => $this->module->l('Create and optimize better shopping experience', 'PsFacebookTranslations'),
-                    'proPoint4Description' => $this->module->l("Thanks to the automatic synchronisation of the product catalogue and the mapping of your categories have an updated and more efficient Facebook catalogue.", 'PsFacebookTranslations'),
+                    'proPoint4Description' => $this->module->l('Thanks to the automatic synchronisation of the product catalogue and the mapping of your categories have an updated and more efficient Facebook catalogue.', 'PsFacebookTranslations'),
                     'needMoreFeatures' => $this->module->l('Need more features?', 'PsFacebookTranslations'),
                     'seeDetailedPlans' => $this->module->l('See detailed plans', 'PsFacebookTranslations'),
                 ],
@@ -196,7 +196,7 @@ class PsFacebookTranslations
                     ],
                     'page_cta' => [
                         'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
-                        'description' => $this->module->l("Add a button on your Facebook Page to get people to take an action from your page such as your shop.", 'PsFacebookTranslations'),
+                        'description' => $this->module->l('Add a button on your Facebook Page to get people to take an action from your page such as your shop.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Edit', 'PsFacebookTranslations'),
                     ],
