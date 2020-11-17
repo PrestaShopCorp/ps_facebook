@@ -27,7 +27,7 @@ class ErrorHandler
                 'level' => 'warning',
                 'tags' => [
                     'php_version' => phpversion(),
-                    'ps_accounts_version' => \Ps_accounts::VERSION,
+                    'ps_accounts_version' => \Ps_facebook::VERSION,
                     'prestashop_version' => _PS_VERSION_,
                     'ps_facebook_is_enabled' => \Module::isEnabled('ps_facebook'),
                     'ps_facebook_is_installed' => \Module::isInstalled('ps_facebook'),
