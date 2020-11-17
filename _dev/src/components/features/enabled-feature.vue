@@ -12,7 +12,7 @@
               >
               {{ $t(`integrate.features.${name}.name`) }}
             </span>
-            <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
+            <tooltip :text="$t(`integrate.features.${name}.description`)" />
           </div>
           <div class="align-self-center">
             <span class="d-none d-sm-inline">
