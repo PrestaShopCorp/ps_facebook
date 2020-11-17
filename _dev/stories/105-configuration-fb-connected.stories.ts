@@ -18,13 +18,12 @@ const contextPsFacebook = {
     isActive: true,
   },
   page: {
-    name: 'La Fanchonette',
+    page: 'La Fanchonette',
     likes: 42,
     logo: facebookLogo,
   },
   ads: {
     name: 'La Fanchonette',
-    email: 'fanchonette@ps.com',
     createdAt: Date.now(),
   },
 };
@@ -45,13 +44,12 @@ const contextPsFacebookOverflows = {
     isActive: true,
   },
   page: {
-    name: 'La Fanchonette qui s\'étend sur la longueur',
+    page: 'La Fanchonette qui s\'étend sur la longueur',
     likes: 42,
     logo: facebookLogo,
   },
   ads: {
     name: 'La Fanchonette qui s\'étend sur la longueur',
-    email: 'fanchonette.a.very.long.email.should.not.be.a.problem.even.if.its.too.long@ps.com',
     createdAt: Date.now(),
   },
 };
