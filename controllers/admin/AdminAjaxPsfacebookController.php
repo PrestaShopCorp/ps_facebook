@@ -179,9 +179,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
-        $categoryId = (int)Tools::getValue('category_id');
-        $googleCategoryId = (int)Tools::getValue('google_category_id');
-        $updateChildren = (bool)Tools::getValue('update_children');
+        $categoryId = (int) Tools::getValue('category_id');
+        $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $updateChildren = (bool) Tools::getValue('update_children');
         try {
             /* todo: change to data from ajax */
             $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
@@ -291,8 +291,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetCategories()
     {
-        $categoryId = (int)Tools::getValue('id_category');
-        $page = (int)Tools::getValue('page');
+        $categoryId = (int) Tools::getValue('id_category');
+        $page = (int) Tools::getValue('page');
 
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);

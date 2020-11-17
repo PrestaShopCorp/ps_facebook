@@ -9,7 +9,6 @@ use Raven_Client;
  */
 class ErrorHandler
 {
-
     /**
      * @var Raven_Client
      */

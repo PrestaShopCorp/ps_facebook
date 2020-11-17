@@ -141,7 +141,7 @@ class Ps_facebook extends Module
 
         $this->displayName = $this->l('Ps Facebook');
         $this->description = $this->l('Ps facebook');
-        $this->psVersionIs17 = (bool)version_compare(_PS_VERSION_, '1.7', '>=');
+        $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
         $this->docs_path = $this->_path . 'docs/';
@@ -161,7 +161,6 @@ class Ps_facebook extends Module
 
         $this->loadEnv();
     }
-
 
     private function loadEnv()
     {
@@ -433,7 +432,7 @@ class Ps_facebook extends Module
         /* Get the checkoutPaymentKey from the $checkoutSteps array */
         foreach ($checkoutSteps as $stepObject) {
             if ($stepObject instanceof CheckoutAddressesStep) {
-                return (bool)$stepObject->isCurrent();
+                return (bool) $stepObject->isCurrent();
             }
         }
 
