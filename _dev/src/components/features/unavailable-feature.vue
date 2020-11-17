@@ -11,7 +11,6 @@
           <div class="description align-self-top flex-grow-1 pl-3 pr-2">
             <h3>
               {{ $t(`integrate.features.${name}.name`) }}
-              <tooltip :text="$t(`integrate.features.${name}.toolTip`)" />
             </h3>
             <p>
               {{ $t(`integrate.features.${name}.description`) }}
@@ -21,7 +20,7 @@
             variant="outline-primary disabled"
             class="ml-4 align-self-center"
           >
-            {{ $t('integrate.buttons.add') }}
+            {{ $t(`integrate.features.${name}.addButton`) }}
           </b-button>
         </div>
       </b-card-body>

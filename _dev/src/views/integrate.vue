@@ -109,18 +109,18 @@ export default defineComponent({
   props: {
     enabledFeatures: {
       type: Object,
-      required: true,
-      default: () => {},
+      required: false,
+      default: () => ({}),
     },
     availableFeatures: {
       type: Object,
-      required: true,
-      default: () => {},
+      required: false,
+      default: () => ({}),
     },
     unavailableFeatures: {
       type: Object,
-      required: true,
-      default: () => {},
+      required: false,
+      default: () => ({}),
     },
   },
   data() {
@@ -128,15 +128,13 @@ export default defineComponent({
       dynamicEnabledFeatures: this.enabledFeatures,
       dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
-      dynamicEnabledFeaturesLength: Object.keys(this.enabledFeatures).length,
-      dynamicAvailableFeaturesLength: Object.keys(this.availableFeatures).length,
-      dynamicUnavailableFeaturesLength: Object.keys(this.unavailableFeatures).length,
       loading: true,
       hiddenProp: null,
       visibilityChangeEvent: null,
     };
   },
   created() {
+    // Looking at the props (not data) to check if we can display the content immediately
     if (this.dynamicEnabledFeaturesLength === 0
       && this.dynamicAvailableFeaturesLength === 0
       && this.dynamicUnavailableFeaturesLength === 0
@@ -152,6 +150,17 @@ export default defineComponent({
       return;
     }
     document.removeEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
+  },
+  computed: {
+    dynamicEnabledFeaturesLength() {
+      return Object.keys(this.dynamicEnabledFeatures).length;
+    },
+    dynamicAvailableFeaturesLength() {
+      return Object.keys(this.dynamicAvailableFeatures).length;
+    },
+    dynamicUnavailableFeaturesLength() {
+      return Object.keys(this.dynamicUnavailableFeatures).length;
+    },
   },
   methods: {
     fetchData() {
