@@ -48,11 +48,11 @@ class Uninstaller
     {
         $this->segment->setMessage('PS Facebook uninstalled');
         $this->segment->track();
-        try {
-            foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
-                \Configuration::deleteByName((string) $name);
-            }
 
+        foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
+            \Configuration::deleteByName((string) $name);
+        }
+        try {
             return $this->uninstallTabs();
         } catch (Exception $e) {
             $this->errorHandler->handle(
