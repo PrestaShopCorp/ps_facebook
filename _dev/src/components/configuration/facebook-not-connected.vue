@@ -17,58 +17,65 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-card no-body>
-    <template v-slot:header>
-      <h3 class="d-inline">
-        {{ $t('configuration.facebook.title') }}
-      </h3>
-    </template>
-    <b-card-body>
-      {{ $t('configuration.facebook.notConnected.intro') }}
-    </b-card-body>
-    <b-card-body class="pt-0">
-      <b-button
-        variant="primary"
-        class="float-right ml-4"
-        @click="onFbeOnboardClick"
-      >
-        {{ $t('configuration.facebook.notConnected.connectButton') }}
-      </b-button>
-
-      <div class="logo mr-3">
-        <img
-          :src="facebookLogo"
-          alt="colors"
+  <b-overlay
+    :show="!active"
+    opacity="0.7"
+    no-fade="true"
+  >
+    <b-card no-body>
+      <template v-slot:header>
+        <h3 class="d-inline">
+          {{ $t('configuration.facebook.title') }}
+        </h3>
+      </template>
+      <b-card-body>
+        {{ $t('configuration.facebook.notConnected.intro') }}
+      </b-card-body>
+      <b-card-body class="pt-0">
+        <b-button
+          variant="primary"
+          class="float-right ml-4"
+          @click="onFbeOnboardClick"
+          v-if="active"
         >
-      </div>
+          {{ $t('configuration.facebook.notConnected.connectButton') }}
+        </b-button>
 
-      <div class="description pr-2">
-        <div>
-          {{ $t('configuration.facebook.notConnected.description') }}
-          <br>
-          <p
-            class="facebook-not-connected-details small-text text-muted"
-            v-html="md2html($t('configuration.facebook.notConnected.details'))"
-          />
+        <div class="logo mr-3">
+          <img
+            src="@/assets/facebook_logo.svg"
+            alt="colors"
+          >
         </div>
-      </div>
-    </b-card-body>
-  </b-card>
+
+        <div class="description pr-2">
+          <div>
+            {{ $t('configuration.facebook.notConnected.description') }}
+            <br>
+            <p
+              class="facebook-not-connected-details small-text text-muted"
+              v-html="md2html($t('configuration.facebook.notConnected.details'))"
+            />
+          </div>
+        </div>
+      </b-card-body>
+    </b-card>
+  </b-overlay>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody} from 'bootstrap-vue';
+import {BCard, BCardBody, BOverlay} from 'bootstrap-vue';
 import showdown from 'showdown';
-import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
   name: 'FacebookNotConnected',
-  components: {BCard, BCardBody},
-  data() {
-    return {
-      facebookLogo,
-    };
+  components: {BCard, BCardBody, BOverlay},
+  props: {
+    active: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
     onFbeOnboardClick() {
