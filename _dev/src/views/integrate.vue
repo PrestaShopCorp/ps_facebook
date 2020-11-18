@@ -200,6 +200,7 @@ export default defineComponent({
       this.loading = true;
       fetch(global.psFacebookGetFeaturesRoute)
         .then((res) => {
+          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
@@ -210,7 +211,6 @@ export default defineComponent({
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
           this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
-          this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
