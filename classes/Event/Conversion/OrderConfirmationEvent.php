@@ -29,7 +29,7 @@ class OrderConfirmationEvent extends AbstractEvent
         $order = $params['order'];
         $langId = $this->toolsAdapter->getValue('id_lang');
         $currencyIsoCode = $this->context->currency->iso_code;
-        $user = $this->createSdkUserData();
+        $user = $this->createSdkUserData($userData);
 
         $contents = [];
         foreach ($order->getProducts() as $product) {

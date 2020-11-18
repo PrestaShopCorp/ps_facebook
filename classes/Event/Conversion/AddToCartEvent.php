@@ -62,7 +62,7 @@ class AddToCartEvent extends AbstractEvent
         }
 
         $productName = Product::getProductName($idProduct, $idProductAttribute);
-        $user = $this->createSdkUserData();
+        $user = $this->createSdkUserData($userData);
         $customData = (new CustomData())
             ->setContentIds([$idProduct])
             ->setContentName(pSQL($productName))

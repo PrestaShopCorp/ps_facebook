@@ -33,7 +33,7 @@ class FirstCheckoutStepEvent extends AbstractEvent
             return false;
         }
 
-        $user = $this->createSdkUserData();
+        $user = $this->createSdkUserData($userData);
         $cart = $this->context->cart;
         $idLang = (int) $this->context->language->id;
         $currency_iso_code = $this->context->currency->iso_code;

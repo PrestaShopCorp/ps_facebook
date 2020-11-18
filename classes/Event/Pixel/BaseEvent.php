@@ -37,12 +37,11 @@ abstract class BaseEvent
     /**
      * getCustomerInformations
      *
+     * @param $customerInformation
      * @return array
      */
-    protected function getCustomerInformation()
+    protected function getCustomerInformation($customerInformation)
     {
-        $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         return [
             'ct' => $customerInformation['city'],
             'country' => $customerInformation['countryIso'],

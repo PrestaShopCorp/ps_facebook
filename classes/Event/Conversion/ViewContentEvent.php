@@ -40,123 +40,46 @@ class ViewContentEvent extends AbstractEvent
             return;
         }
 
-        $controllerPage = $this->context->controller->php_self;
-        if (empty($controllerPage)) {
-            $controllerPage = \Tools::getValue('controller');
-        }
-        $controllerPage = pSQL($controllerPage); // is this really needed ?
+        if (isset($params['event_type'])){$eventType = $params['event_type'];}
+        if (isset($params['event_time'])){$eventTime = $params['event_time'];}
+        if (isset($params['user'])){$userData = $params['user'];}
+        if (isset($params['custom_data'])){$customData = $params['custom_data'];}
+        if (isset($params['event_source_url'])){$eventSourceUrl = $params['event_source_url'];}
 
-        $id_lang = (int) $this->context->language->id;
-        $locale = \Tools::strtoupper($this->context->language->iso_code);
-        $currency_iso_code = $this->context->currency->iso_code;
-        $content_type = 'product';
-        $events = [];
+        if(isset($customData) && isset($customData['contents'])){$contentData = reset($customData['contents']);}
 
-        /*
-        * Triggers ViewContent product pages
-        */
-        if ($controllerPage === 'product') {
-            $type = 'ViewContent';
-
-            /** @var \ProductController $controller */
-            $controller = $this->context->controller;
-            $product = $controller->getTemplateVarProduct();
-
-            $fbProductId = ProductCatalogUtility::makeProductId(
-                $product['id_product'],
-                $product['id_product_attribute'],
-                $locale
-            );
-
-            // todo: url is generated without attribute and doesn't match with pixel url
-            $productUrl = $this->context->link->getProductLink($product->id);
+        if (isset($contentData)) {
             $content = new Content();
-            $content
-                ->setProductId($fbProductId)
-                ->setTitle(\Tools::replaceAccentedChars($product['name']))
-                ->setCategory((new Category($product['id_category_default']))->getName($id_lang))
-                ->setItemPrice($product['price_amount'])
-                ->setBrand((new \Manufacturer($product['id_manufacturer']))->name);
-
-            $user = $this->createSdkUserData();
-            $customData = (new CustomData())
-                ->setCurrency($currency_iso_code)
-                ->setContents([$content])
-                ->setContentType($content_type);
-
-            $event = (new Event())
-                ->setEventName($type)
-                ->setEventTime(time())
-                ->setUserData($user)
-                ->setCustomData($customData)
-                ->setEventSourceUrl($productUrl);
-
-            $events[] = $event;
+            if (isset($contentData['id'])){$content->setProductId($contentData['id']);}
+            if (isset($contentData['title'])){$content->setTitle($contentData['title']);}
+            if (isset($contentData['category'])){$content->setCategory($contentData['category']);}
+            if (isset($contentData['item_price'])){$content->setItemPrice($contentData['item_price']);}
+            if (isset($contentData['brand'])){$content->setBrand($contentData['brand']);}
+        }
+        if (isset($userData)) {
+            $user = $this->createSdkUserData($userData);
         }
 
-        /*
-        * Triggers ViewContent for category pages
-        */
-        if ($controllerPage === 'category' && $this->context->controller->controller_type === 'front') {
-            $type = 'ViewCategory';
-            $content_type = 'product_group';
-
-            /** @var \CategoryController $controller */
-            $controller = $this->context->controller;
-            $category = $controller->getCategory();
-
-            $page = $this->toolsAdapter->getValue('page');
-            $resultsPerPage = $this->configurationAdapter->get('PS_PRODUCTS_PER_PAGE');
-
-            $prods = $category->getProducts($id_lang, $page, $resultsPerPage);
-            $categoryUrl = $this->context->link->getCategoryLink($category->id);
-
-            $breadcrumbs = $controller->getBreadcrumbLinks();
-            $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
-
-            $user = $this->createSdkUserData();
-            $customData = (new CustomData())
-                ->setContentName(\Tools::replaceAccentedChars($category->name) . ' ' . $locale)
-                ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb))
-                ->setContentType($content_type)
-                ->setContentIds(array_column($prods, 'id_product'));
-
-            $event = (new Event())
-                ->setEventName($type)
-                ->setEventTime(time())
-                ->setUserData($user)
-                ->setCustomData($customData)
-                ->setEventSourceUrl($categoryUrl);
-
-            $events[] = $event;
+        if (isset($customData)) {
+            $customDataObj = new CustomData();
+            if (isset($customData['currency'])){$customDataObj->setCurrency($customData['currency']);}
+            if (isset($customData['value'])){$customDataObj->setValue($customData['value']);}
+            if (isset($content)){$customDataObj->setContents([$content]);}
+            if (isset($customData['content_type'])){$customDataObj->setContentType($customData['content_type']);}
+            if (isset($customData['content_name'])){$customDataObj->setContentName($customData['content_name']);}
+            if (isset($customData['content_category'])){$customDataObj->setContentCategory($customData['content_category']);}
+            if (isset($customData['content_type'])){$customDataObj->setContentType($customData['content_type']);}
+            if (isset($customData['content_ids'])){$customDataObj->setContentIds($customData['content_ids']);}
         }
 
-        /*
-        * Triggers ViewContent for cms pages
-        */
-        if ($controllerPage === 'cms') {
-            $type = 'ViewCMS';
-            $cms = new \CMS((int) \Tools::getValue('id_cms'), $id_lang);
+        $event = new Event();
+        if (isset($eventType)){$event->setEventName($eventType);}
+        if (isset($eventTime)){$event->setEventTime($eventTime);}
+        if (isset($user)){$event->setUserData($user);}
+        if (isset($customData)){$event->setCustomData($customDataObj);}
+        if (isset($eventSourceUrl)){$event->setEventSourceUrl($eventSourceUrl);}
 
-            /** @var \CmsController $controller */
-            $controller = $this->context->controller;
-            $breadcrumbs = $controller->getBreadcrumbLinks();
-
-            $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
-
-            $user = $this->createSdkUserData();
-            $customData = (new CustomData())
-                ->setContentName(\Tools::replaceAccentedChars($cms->meta_title) . ' ' . $locale)
-                ->setContentCategory(\Tools::replaceAccentedChars($breadcrumb));
-
-            $event = (new Event())
-                ->setEventName($type)
-                ->setEventTime(time())
-                ->setUserData($user)
-                ->setCustomData($customData);
-
-            $events[] = $event;
-        }
+        $events[] = $event;
 
         if (empty($event)) {
             return true;

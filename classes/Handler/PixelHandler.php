@@ -35,41 +35,41 @@ class PixelHandler
         $this->templateBuffer = $module->templateBuffer;
     }
 
-    public function handleEvent($eventName, $event)
+    public function handleEvent($eventDataName, $eventData)
     {
-        switch ($eventName) {
+        switch ($eventDataName) {
             case 'hookActionSearch':
                 (new SearchEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
+                ->sendToBuffer($this->templateBuffer, $eventData);
             break;
 
             case 'hookDisplayHeader':
                 (new ViewContentEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
+                ->sendToBuffer($this->templateBuffer, $eventData);
                 if (true === \Tools::isSubmit('submitCustomizedData')) {
                     (new CustomizeEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                    ->sendToBuffer($this->templateBuffer, $eventData);
                 }
             break;
 
             case 'hookActionObjectCustomerMessageAddAfter':
                 (new ContactEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                    ->sendToBuffer($this->templateBuffer, $eventData);
             break;
 
             case 'hookDisplayOrderConfirmation':
                 (new OrderConfirmationEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                    ->sendToBuffer($this->templateBuffer, $eventData);
             break;
 
             case 'hookActionCustomerAccountAdd':
                 (new CompleteRegistrationEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
+                ->sendToBuffer($this->templateBuffer, $eventData);
             break;
 
             case 'hookDisplayPersonalInformationTop':
                 (new InitiateCheckoutEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
+                    ->sendToBuffer($this->templateBuffer, $eventData);
                 break;
 
             default:

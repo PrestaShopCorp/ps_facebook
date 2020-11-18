@@ -31,10 +31,8 @@ abstract class AbstractEvent implements ConversionEventInterface
     /**
      * @return UserData
      */
-    protected function createSdkUserData()
+    protected function createSdkUserData($customerInformation)
     {
-        $customerInformation = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 
@@ -58,7 +56,8 @@ abstract class AbstractEvent implements ConversionEventInterface
     protected function sendEvents(array $events)
     {
         $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
+            ->setEvents($events)
+        ->setTestEventCode('TEST39621');
 
         try {
             $request->execute();

@@ -30,7 +30,8 @@ class ApiConversionHandler
         Api::init(
             null, // app_id
             null, // app_secret
-            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
+            'EAAG8FZCTh0FABAJLPh2gQxbgZBVIAmDRCPq4Ea78jmy10wzPpZAZCL9h4JDP3z1A49IUrphg79lgQ9MtZArXkKTmXhpaPvGjSIOe79msSFsQl9Ngfwl8H26WilAaYjZBfLydyouPemafBLFbY7CZBZCSAsK3HX5RPUMDQDo8TisZAHEbOdVmxJDhM'
+//            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
         );
 
         $this->context = Context::getContext();

@@ -32,7 +32,7 @@ class CustomisationEvent extends AbstractEvent
         $locale = \Tools::strtoupper($this->context->language->iso_code);
         $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds, $locale);
 
-        $user = $this->createSdkUserData();
+        $user = $this->createSdkUserData($userData);
 
         $event = (new Event())
             ->setEventName('CustomizeProduct')

@@ -27,3 +27,10 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@ps_facebook.context'
