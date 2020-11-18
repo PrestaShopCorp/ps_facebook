@@ -149,7 +149,8 @@
       "warning" : {
         "productsNotSynced": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
         "disableFeatureModalHeader": "Confirm deactivation?",
-        "disableFeatureModalText": "You are about to disable this feature. This may limit some functionality."
+        "disableFeatureModalText": "You are about to disable this feature. This may limit some functionality.",
+        "noFeatures": "Features could not be retrieved from Facebook. This may be caused by the token expiration and can be fixed by restarting the onboarding."
       },
       "error" : {
         "failedToUpdateFeature": "Failed to update facebook feature."

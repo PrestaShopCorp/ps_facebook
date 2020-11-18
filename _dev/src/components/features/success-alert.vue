@@ -2,10 +2,15 @@
   <b-alert
     variant="success"
     dismissible
-    :show="show"
+    show
   >
     {{ $t('integrate.success.featureEnabled', [$t(`integrate.features.${name}.name`)]) }}
-    <b-link v-if="link" :src="link.src" class="font-weight-bold">
+    <b-link
+      v-if="link"
+      :href="link.src"
+      class="font-weight-bold"
+      target="_blank"
+    >
       {{ link.text }}
     </b-link>
   </b-alert>
@@ -22,7 +27,7 @@ export default defineComponent({
   name: 'SuccessAlert',
   components: {
     BAlert,
-    BLink
+    BLink,
   },
   props: {
     name: {
@@ -33,22 +38,17 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    show: {
-      type: Boolean,
-      required: false,
-      default: () => false
-    }
   },
   computed: {
     link() {
-      if ('messenger_chat' === this.name) {
+      if (this.name === 'messenger_chat') {
         return {
           text: this.$i18n.t('integrate.success.shopLink'),
-          src: this.shopUrl
+          src: this.shopUrl,
         };
       }
       return null;
-    }
+    },
   },
 });
 </script>
@@ -56,9 +56,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 .flex-grow-1 {
   flex-grow:1
-}
-.alert {
-  padding-left: 3.8rem !important;
-  padding-right: 0.5rem !important;
 }
 </style>

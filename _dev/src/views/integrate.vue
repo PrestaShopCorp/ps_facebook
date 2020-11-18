@@ -20,6 +20,26 @@
   <div id="integrate">
     <spinner v-if="loading" />
     <div v-else>
+      <div class="mr-3 ml-3">
+        <!-- Display a warning when no features are shown (token expired?) -->
+        <b-alert
+          v-if="!allFeaturesLength"
+          variant="warning"
+          show
+        >
+          {{ $t('integrate.warning.noFeatures') }}
+        </b-alert>
+        <!-- Display confirmation messages for freshly enabled features -->
+        <!-- FIXME: Not displayed when the feature is already initialy enabled -->
+        <success-alert
+          v-for="(feature, index) in successfullyEnabledFeatures"
+          :key="index"
+          :name="feature"
+          :shop-url="shopUrl"
+          :show="true"
+        />
+      </div>
+
       <div
         id="enabled-features"
         v-if="dynamicEnabledFeaturesLength"
@@ -93,6 +113,7 @@ import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
+import SuccessAlert from '../components/features/success-alert.vue';
 
 export default defineComponent({
   name: 'Integrate',
@@ -104,6 +125,7 @@ export default defineComponent({
     FeatureList,
     UnavailableFeature,
     AvailableFeature,
+    SuccessAlert,
   },
   mixins: [],
   props: {
@@ -122,12 +144,18 @@ export default defineComponent({
       required: false,
       default: () => ({}),
     },
+    shopUrl: {
+      type: String,
+      required: false,
+      default: () => global.shopUrl || '#',
+    },
   },
   data() {
     return {
       dynamicEnabledFeatures: this.enabledFeatures,
       dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
+      successfullyEnabledFeatures: [],
       loading: true,
       hiddenProp: null,
       visibilityChangeEvent: null,
@@ -161,6 +189,11 @@ export default defineComponent({
     dynamicUnavailableFeaturesLength() {
       return Object.keys(this.dynamicUnavailableFeatures).length;
     },
+    allFeaturesLength() {
+      return this.dynamicEnabledFeaturesLength
+        + this.dynamicAvailableFeaturesLength
+        + this.dynamicUnavailableFeaturesLength;
+    },
   },
   methods: {
     fetchData() {
@@ -173,6 +206,7 @@ export default defineComponent({
           return res.json();
         })
         .then((json) => {
+          this.displaySuccessMessages(json.fbeFeatures.enabledFeatures);
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
           this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
@@ -181,6 +215,29 @@ export default defineComponent({
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
         });
+    },
+    displaySuccessMessages(newEnabledFeatures) {
+      if (!this.allFeaturesLength) {
+        return;
+      }
+      Object.keys(newEnabledFeatures).forEach((feature) => {
+        console.log(feature,
+          this.dynamicEnabledFeatures[feature].enabled,
+          newEnabledFeatures[feature].enabled);
+        // If the feature was disabled in the previous state, display the confirmation message
+        if (this.dynamicEnabledFeatures[feature].enabled === false
+          && newEnabledFeatures[feature].enabled === true
+        ) {
+          this.displaySuccessMessage(feature);
+        }
+      });
+    },
+    displaySuccessMessage(feature) {
+      this.successfullyEnabledFeatures.push(feature);
+    },
+    hideSuccessMessage(acknowledgedFeature) {
+      this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
+        .filter((feature) => feature !== acknowledgedFeature);
     },
     handleVisibilityChange() {
       // Watch when the page gets the focus, for instance

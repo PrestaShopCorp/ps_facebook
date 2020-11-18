@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {SuccessAlert},
-  template: '<div><success-alert v-for="(feature, index) in newFeatures" :key="index" :name="feature" :shopUrl="shopUrl" :show="true" /></div>',
+  template: '<div><success-alert v-for="(feature, index) in newFeatures" :key="index" :name="feature" :shop-url="shopUrl" :show="true" /></div>',
 });
 
 // Enabled on FB side
