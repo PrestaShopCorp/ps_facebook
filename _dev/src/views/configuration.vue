@@ -286,8 +286,10 @@ export default defineComponent({
       this.showGlass = true;
     },
     onUninstallClick() {
+      this.loading = true;
       fetch(this.fbeOnboardingUninstallRoute)
         .then((res) => {
+          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
