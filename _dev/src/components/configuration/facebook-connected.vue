@@ -203,11 +203,9 @@
               :app-type="$t('configuration.facebook.connected.facebookAds')"
               :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"
               :app-name="contextPsFacebook.ads.name"
-              :email="contextPsFacebook.ads.email"
               :created-at="contextPsFacebook.ads.createdAt"
               :display-warning="
                 !contextPsFacebook.ads.name ||
-                !contextPsFacebook.ads.email ||
                 !contextPsFacebook.ads.createdAt
               "
             />
