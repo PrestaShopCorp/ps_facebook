@@ -7,7 +7,6 @@ use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
-    const CLASS_NAME = 'ViewContentEvent';
 
     public function sendToBuffer($buffer, $params)
     {

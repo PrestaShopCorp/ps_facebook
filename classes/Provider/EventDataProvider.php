@@ -66,6 +66,14 @@ class EventDataProvider
                 if ($controllerPage === 'cms'){
                     return $this->getCMSPageData();
                 }
+            case 'hookActionSearch':
+            case 'hookActionObjectCustomerMessageAddAfter':
+            case 'hookDisplayOrderConfirmation':
+            case 'hookActionCustomerAccountAdd':
+            case 'hookDisplayPersonalInformationTop':
+            case 'hookActionCartSave':
+            case 'hookActionNewsletterRegistrationAfter':
+            case 'hookActionSubmitAccountBefore':
         }
 
         return false;

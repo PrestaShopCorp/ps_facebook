@@ -63,6 +63,7 @@ class ViewContentEvent extends AbstractEvent
         if (isset($customData)) {
             $customDataObj = new CustomData();
             if (isset($customData['currency'])){$customDataObj->setCurrency($customData['currency']);}
+            /** more about value here: https://www.facebook.com/business/help/392174274295227?id=1205376682832142 */
             if (isset($customData['value'])){$customDataObj->setValue($customData['value']);}
             if (isset($content)){$customDataObj->setContents([$content]);}
             if (isset($customData['content_type'])){$customDataObj->setContentType($customData['content_type']);}
