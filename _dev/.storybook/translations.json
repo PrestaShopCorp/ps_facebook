@@ -48,7 +48,9 @@
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
           "facebookAdsTooltip": "Facebook Ads",
-          "manageFbeButton": "Open advanced settings"
+          "manageFbeButton": "Open advanced settings",
+          "unlinkModalHeader": "Confirm uninstallation?",
+          "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
         }
       },
       "app": {
