@@ -70,6 +70,10 @@ class EventDataProvider
         switch ($name) {
             case 'hookDisplayHeader':
                 $controllerPage = $this->context->controller->php_self;
+                //todo: fix customization part
+                if (true === \Tools::isSubmit('submitCustomizedData')) {
+                    return $this->getCustomisationEventData($params);
+                }
                 if ($controllerPage === 'product') {
                     return $this->getProductPageData();
                 }
@@ -79,16 +83,20 @@ class EventDataProvider
                 if ($controllerPage === 'cms'){
                     return $this->getCMSPageData();
                 }
+                break;
             case 'hookActionSearch':
+                break;
             case 'hookActionObjectCustomerMessageAddAfter':
                 return $this->getContactEventData();
             case 'hookDisplayOrderConfirmation':
-            case 'hookActionCustomerAccountAdd':
+                break;
             case 'hookDisplayPersonalInformationTop':
                 break;
             case 'hookActionCartSave':
                 return $this->getAddToCartEventData();
             case 'hookActionNewsletterRegistrationAfter':
+                break;
+            case 'hookActionCustomerAccountAdd':
             case 'hookActionSubmitAccountBefore':
                 return $this->getCompleteRegistrationEventData();
         }
@@ -246,7 +254,7 @@ class EventDataProvider
         ];
     }
 
-    public function getCompleteRegistrationEventData()
+    private function getCompleteRegistrationEventData()
     {
         $type = 'CompleteRegistration';
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
@@ -266,7 +274,7 @@ class EventDataProvider
 
     }
 
-    public function getContactEventData()
+    private function getContactEventData()
     {
         $type = 'Contact';
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
@@ -282,4 +290,58 @@ class EventDataProvider
             'custom_data' => $customData
         ];
     }
+
+    private function getCustomisationEventData($params)
+    {
+        $type = 'CustomizeProduct';
+
+        $idLang = (int) $this->context->language->id;
+        $productId = $this->toolsAdapter->getValue('id_product');
+        $attributeIds = $params['attributeIds'];
+        $locale = \Tools::strtoupper($this->context->language->iso_code);
+        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds, $locale);
+
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData
+        ];
+    }
+
+    /**
+     * @param int $productId
+     * @param int $idLang
+     * @param int[] $attributeIds
+     * @param string $locale
+     *
+     * @return array
+     *
+     * @throws \PrestaShopException
+     */
+    private function getCustomAttributeData($productId, $idLang, $attributeIds, $locale)
+    {
+        $attributes = [];
+        foreach ($attributeIds as $attributeId) {
+            $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
+        }
+
+        $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
+            $productId,
+            $attributeIds
+        );
+
+        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute, $locale);
+
+        return [
+            'content_type' => self::PRODUCT_TYPE,
+            'content_ids' => [$psProductId],
+            'custom_properties' => [
+                'custom_attributes' => $attributes,
+            ]
+        ];
+    }
+
 }
