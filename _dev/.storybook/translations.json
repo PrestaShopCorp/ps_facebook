@@ -29,7 +29,7 @@
         "reloadButton": "Reload"
       },
       "facebook": {
-        "title": "Connect your store to Facebook",
+        "title": "Your Facebook settings",
         "notConnected": {
           "intro": "Integrate your shop with Facebook.",
           "connectButton": "Connect to Facebook",
