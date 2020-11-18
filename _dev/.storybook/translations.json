@@ -142,6 +142,10 @@
         "availableFeatures": "To boost sales, add to your shop...",
         "unavailableFeatures": "Unavailable features at the moment"
       },
+      "success": {
+        "featureEnabled": "You added {0}!",
+        "shopLink": "View your shop"
+      },
       "warning" : {
         "productsNotSynced": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
         "disableFeatureModalHeader": "Confirm deactivation?",

@@ -205,6 +205,10 @@ class PsFacebookTranslations
                     'availableFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
                     'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
                 ],
+                'success' => [
+                    'featureEnabled' => $this->module->l('You added [0]!', 'PsFacebookTranslations'),
+                    'shopLink' => $this->module->l('View your shop', 'PsFacebookTranslations'),
+                ],
                 'warning' => [
                     'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
                     'disableFeatureModalHeader' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
