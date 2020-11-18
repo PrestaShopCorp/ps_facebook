@@ -36,7 +36,7 @@ class PixelHandler
         $this->templateBuffer = $module->templateBuffer;
     }
 
-    public function handleEvent($eventDataName, $params)
+    public function handleEvent($params)
     {
         $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
@@ -44,13 +44,15 @@ class PixelHandler
         }
         $track = 'track';
 
-        if (isset($params['event_type'])){$eventType = $params['event_type'];}
-        if (isset($params['event_time'])){$eventTime = $params['event_time'];}
-        if (isset($params['user'])){$userData = $params['user'];}
-        if (isset($params['custom_data'])){$customData = $params['custom_data'];}
-        if (isset($params['event_source_url'])){$eventSourceUrl = $params['event_source_url'];}
-
-        if(isset($customData) && isset($customData['contents'])){$contentData = reset($customData['contents']);}
+        if (isset($params['event_type'])) {
+            $eventType = $params['event_type'];
+        }
+        if (isset($params['user'])) {
+            $userData = $params['user'];
+        }
+        if (isset($params['custom_data'])) {
+            $customData = $params['custom_data'];
+        }
 
         $content = $this->formatPixel($customData);
 
@@ -69,47 +71,6 @@ class PixelHandler
         $this->context->smarty->assign($smartyVariables);
 
         $this->templateBuffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/header.tpl'));
-
-        return;
-        switch ($eventDataName) {
-            case 'hookActionSearch':
-                (new SearchEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $eventData);
-            break;
-
-            case 'hookDisplayHeader':
-                (new ViewContentEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $eventData);
-                if (true === \Tools::isSubmit('submitCustomizedData')) {
-                    (new CustomizeEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $eventData);
-                }
-            break;
-
-            case 'hookActionObjectCustomerMessageAddAfter':
-                (new ContactEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $eventData);
-            break;
-
-            case 'hookDisplayOrderConfirmation':
-                (new OrderConfirmationEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $eventData);
-            break;
-
-            case 'hookActionCustomerAccountAdd':
-                (new CompleteRegistrationEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $eventData);
-            break;
-
-            case 'hookDisplayPersonalInformationTop':
-                (new InitiateCheckoutEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $eventData);
-                break;
-
-            default:
-                // unsupported event
-            break;
-        }
     }
 
     /**

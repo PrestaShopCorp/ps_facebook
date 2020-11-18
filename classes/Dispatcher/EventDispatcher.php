@@ -61,8 +61,8 @@ class EventDispatcher
             if (!$eventData) {
                 return;
             }
-            $this->conversionHandler->handleEvent($name, $eventData);
-            $this->pixelHandler->handleEvent($name, $eventData);
+            $this->conversionHandler->handleEvent($eventData);
+            $this->pixelHandler->handleEvent($eventData);
         }
     }
 }

@@ -33,4 +33,5 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
       - '@ps_facebook.context'

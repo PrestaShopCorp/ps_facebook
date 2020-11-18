@@ -6,8 +6,10 @@ use Category;
 use Context;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
+use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
+use Product;
 
 class EventDataProvider
 {
@@ -42,7 +44,17 @@ class EventDataProvider
      */
     private $configurationAdapter;
 
-    public function __construct(ToolsAdapter $toolsAdapter, ConfigurationAdapter $configurationAdapter, Context $context)
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    public function __construct(
+        ToolsAdapter $toolsAdapter,
+        ConfigurationAdapter $configurationAdapter, 
+        ProductRepository $productRepository,
+        Context $context
+    )
     {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
@@ -50,6 +62,7 @@ class EventDataProvider
         $this->idLang = (int)$this->context->language->id;
         $this->currencyIsoCode = strtolower($this->context->currency->iso_code);
         $this->configurationAdapter = $configurationAdapter;
+        $this->productRepository = $productRepository;
     }
 
     public function generateEventData($name, array $params)
@@ -68,12 +81,16 @@ class EventDataProvider
                 }
             case 'hookActionSearch':
             case 'hookActionObjectCustomerMessageAddAfter':
+                return $this->getContactEventData();
             case 'hookDisplayOrderConfirmation':
             case 'hookActionCustomerAccountAdd':
             case 'hookDisplayPersonalInformationTop':
+                break;
             case 'hookActionCartSave':
+                return $this->getAddToCartEventData();
             case 'hookActionNewsletterRegistrationAfter':
             case 'hookActionSubmitAccountBefore':
+                return $this->getCompleteRegistrationEventData();
         }
 
         return false;
@@ -173,11 +190,96 @@ class EventDataProvider
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::PRODUCT_TYPE,
         ];
+        
         return [
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
             'custom_data' => $customData,
+        ];
+    }
+
+    private function getAddToCartEventData()
+    {
+        $action = $this->toolsAdapter->getValue('action');
+        $quantity = $this->toolsAdapter->getValue('qty');
+        $idProduct = $this->toolsAdapter->getValue('id_product');
+        $op = $this->toolsAdapter->getValue('op');
+        $isDelete = $this->toolsAdapter->getValue('delete');
+        $idProductAttribute = $this->toolsAdapter->getValue('id_product_attribute');
+        $attributeGroups = $this->toolsAdapter->getValue('group');
+
+        if ($attributeGroups) {
+            $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
+                $idProduct,
+                $attributeGroups
+            );
+        }
+
+        if ($action !== 'update') {
+            return true;
+        }
+        $type = 'AddToCart';
+        if ($op) {
+            $type = $op === 'up' ? 'IncreaseProductQuantityInCart' : 'DecreaseProductQuantityInCart';
+        } elseif ($isDelete) {
+            //todo: when removing product from cart this hook gets called twice
+            $type = 'RemoveProductFromCart';
+            $quantity = null;
+        }
+
+        $productName = Product::getProductName($idProduct, $idProductAttribute);
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $customData = [
+            'content_name' => pSQL($productName),
+            'content_type' => self::PRODUCT_TYPE,
+            'content_ids' => [$idProduct],
+            'num_items' => pSQL($quantity)
+        ];
+        
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData,
+        ];
+    }
+
+    public function getCompleteRegistrationEventData()
+    {
+        $type = 'CompleteRegistration';
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $customData = [
+            'content_name' => 'authentication',
+            'currency' => $this->context->currency->iso_code,
+            'value' => 1,
+        ];
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData,
+        ];
+
+    }
+
+    public function getContactEventData()
+    {
+        $type = 'Contact';
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $customData = [
+            'userEmail' => $this->context->customer->email,
+        ];
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData
         ];
     }
 }
