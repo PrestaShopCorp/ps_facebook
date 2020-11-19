@@ -214,6 +214,7 @@ export default defineComponent({
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
+          this.loading = false;
         });
     },
     displaySuccessMessages(newEnabledFeatures) {
