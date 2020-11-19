@@ -35,7 +35,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
-        $response = Configuration::updateValue(Config::FB_ACCESS_TOKEN, $token);
+        $response = Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
 
         $this->ajaxDie(json_encode($response));
     }

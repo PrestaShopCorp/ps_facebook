@@ -54,7 +54,7 @@ class ConfigurationHandler
     {
         $this->facebookClient->uninstallFbe(
             $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-            $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN)
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
         );
 
         // Whatever the API answer, we drop the data on the configuration table
@@ -74,7 +74,7 @@ class ConfigurationHandler
 
     private function saveOnboardingConfiguration(array $onboardingParams)
     {
-        $this->configurationAdapter->updateValue(Config::FB_ACCESS_TOKEN, $onboardingParams['access_token']);
+        $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $onboardingParams['access_token']);
         $this->configurationAdapter->updateValue(Config::PS_PIXEL_ID, isset($onboardingParams['fbe']['pixel_id']) ? $onboardingParams['fbe']['pixel_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PROFILES, isset($onboardingParams['fbe']['profiles']) ? implode(',', $onboardingParams['fbe']['profiles']) : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PAGES, isset($onboardingParams['fbe']['pages']) ? implode(',', $onboardingParams['fbe']['pages']) : '');
@@ -87,7 +87,7 @@ class ConfigurationHandler
     private function cleanOnboardingConfiguration()
     {
         $dataConfigurationKeys = [
-            Config::FB_ACCESS_TOKEN,
+            Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
             Config::PS_PIXEL_ID,
             Config::PS_FACEBOOK_PROFILES,
             Config::PS_FACEBOOK_PAGES,

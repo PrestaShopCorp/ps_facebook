@@ -25,20 +25,26 @@ class ApiConversionHandler
      */
     private $context;
 
-    public function __construct()
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, Context $context)
     {
+        $this->configurationAdapter = $configurationAdapter;
+        $this->context = $context;
+
         Api::init(
             null, // app_id
             null, // app_secret
-            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
         );
-
-        $this->context = Context::getContext();
     }
 
     public function handleEvent($eventName, $params)
     {
-        $pixelId = \Configuration::get(Config::PS_PIXEL_ID);
+        $pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
 
         switch ($eventName) {
             case 'hookActionSearch':

@@ -38,7 +38,6 @@ class PsApiClient extends Client
             'base_url' => $baseUrl,
             'defaults' => [
                 'timeout' => 10,
-                'exceptions' => false,
                 'verify' => false,
                 'headers' => [
                     'Content-Type' => 'application/json',
