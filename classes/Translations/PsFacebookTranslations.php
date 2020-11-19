@@ -58,9 +58,9 @@ class PsFacebookTranslations
             'general' => [
                 'tabs' => [
                     'configuration' => $this->module->l('Configure', 'PsFacebookTranslations'),
-                    'catalog' => $this->module->l('Export product catalog', 'PsFacebookTranslations'),
+                    'catalog' => $this->module->l('Product catalog', 'PsFacebookTranslations'),
                     'help' => $this->module->l('Help', 'PsFacebookTranslations'),
-                    'integrate' => $this->module->l('Integrate', 'PsFacebookTranslations'),
+                    'integrate' => $this->module->l('Sales channels', 'PsFacebookTranslations'),
                 ],
             ],
             'configuration' => [
@@ -92,7 +92,7 @@ class PsFacebookTranslations
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
-                    'title' => $this->module->l('Connect your store to Facebook', 'PsFacebookTranslations'),
+                    'title' => $this->module->l('Your Facebook settings', 'PsFacebookTranslations'),
                     'notConnected' => [
                         'intro' => $this->module->l('Integrate your shop with Facebook.', 'PsFacebookTranslations'),
                         'connectButton' => $this->module->l('Connect to Facebook', 'PsFacebookTranslations'),
