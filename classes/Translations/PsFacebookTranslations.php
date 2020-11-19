@@ -112,6 +112,8 @@ class PsFacebookTranslations
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns', 'PsFacebookTranslations'),
                         'manageFbeButton' => $this->module->l('Open advanced settings', 'PsFacebookTranslations'),
+                        'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
+                        'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
                 ],
                 'app' => [
