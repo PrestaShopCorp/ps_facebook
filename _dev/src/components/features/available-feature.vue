@@ -19,7 +19,7 @@
           </div>
           <a
             class="align-self-center"
-            :href="manageRoute"
+            :href="manageRoute[name] || manageRoute.default"
             target="_blank"
           >
             <b-button
@@ -62,7 +62,11 @@ export default defineComponent({
     manageRoute: {
       type: String,
       required: false,
-      default: () => global.facebookManageFeaturesRoute,
+      default: () => ({
+        // Duplicates ./enabled-feature.vue
+        default: global.facebookManageFeaturesRoute,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+      }),
     },
   },
 });
