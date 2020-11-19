@@ -81,10 +81,10 @@ class AccessTokenProvider
 
             return false;
         }
-        if (isset($response['access_token'])) {
+        if (isset($response['system']) && isset($response['system']['access_token'])) {
             $currentTimestamp = time();
-            $tokenExpiresIn = $currentTimestamp + (int) $response['expires_in'];
-            $newAccessToken = $response['access_token'];
+            $tokenExpiresIn = $currentTimestamp + (70 * 365 * 24 * 3600); // never expires
+            $newAccessToken = $response['system']['access_token'];
 
             $this->configurationAdapter->updateValue(Config::FB_ACCESS_TOKEN, $newAccessToken);
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
