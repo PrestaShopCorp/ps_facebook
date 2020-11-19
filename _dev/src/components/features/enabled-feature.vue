@@ -217,6 +217,10 @@ export default defineComponent({
         color: #c05c67 !important;
       }
     }
+    .card {
+      border: none;
+      border-radius: 3px;
+    }
     .flex-grow-1 {
       flex-grow:1
     }
