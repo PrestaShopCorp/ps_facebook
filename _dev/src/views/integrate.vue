@@ -147,7 +147,7 @@ export default defineComponent({
     shopUrl: {
       type: String,
       required: false,
-      default: () => global.shopUrl || '#',
+      default: () => global.shopUrl || null,
     },
   },
   data() {
@@ -221,9 +221,6 @@ export default defineComponent({
         return;
       }
       Object.keys(newEnabledFeatures).forEach((feature) => {
-        console.log(feature,
-          this.dynamicEnabledFeatures[feature].enabled,
-          newEnabledFeatures[feature].enabled);
         // If the feature was disabled in the previous state, display the confirmation message
         if (this.dynamicEnabledFeatures[feature].enabled === false
           && newEnabledFeatures[feature].enabled === true
