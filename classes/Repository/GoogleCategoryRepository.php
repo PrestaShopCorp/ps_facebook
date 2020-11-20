@@ -9,6 +9,9 @@ use PrestaShopCollection;
 
 class GoogleCategoryRepository
 {
+    const NO_CHILDREN = 0;
+    const HAS_CHILDREN = 1;
+
     /**
      * @param int $categoryId
      * @param int $googleCategoryId
@@ -136,17 +139,17 @@ class GoogleCategoryRepository
         $sql->select('cm.google_category_id as googleCategoryId');
         $sql->select('cm.is_parent_category as isParentCategory');
         $sql->select('case when c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
-            ' then "undefined" else "null" end deploy');
+            ' then '. self::NO_CHILDREN .' else '. self::HAS_CHILDREN .' end deploy');
         $sql->from('category', 'c');
         $sql->innerJoin('category_lang', 'cl', 'c.id_category = cl.id_category AND cl.id_lang = ' . (int) $langId);
         $sql->leftJoin('fb_category_match', 'cm', 'c.id_category = cm.id_category');
         $sql->where(
-            'c.`id_parent` = ' . (int) $parentCategoryId . ' OR 
+            'c.`id_parent` = ' . (int) $parentCategoryId . ' OR
             (
                         c.`nleft` > (SELECT pc.`nleft` from `ps_category` as pc WHERE pc.id_category = '
-            . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ') AND 
+            . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ') AND
                         c.`nright` < (SELECT pc.`nright` from `ps_category` as pc WHERE pc.id_category = '
-            . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ')  
+            . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ')
             )
         ');
         $sql->limit($limit, $offset);
