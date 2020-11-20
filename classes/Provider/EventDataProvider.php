@@ -349,6 +349,29 @@ class EventDataProvider
 
     private function getOrderConfirmationEvent()
     {
+        $order = $this->module->psVersionIs17 ? $this->toolsAdapter->getValue('order') : $this->toolsAdapter->getValue('objOrder');
+        foreach ($order->getProducts() as $product) {
+            $productList[] = $product['id_product'];
+        }
+
+        $type = 'Purchase';
+
+        $customData = [
+            'content_name' => 'purchased',
+            'customerID' => $order->id_customer,
+            'orderID' => $order->id,
+            'currency' => $this->context->currency->iso_code,
+            'content_ids' => implode(',', $productList),
+            'value' => $order->total_paid,
+        ];
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData,
+        ];
     }
 
     /**
