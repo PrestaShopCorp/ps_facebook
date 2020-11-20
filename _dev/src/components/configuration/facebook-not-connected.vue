@@ -33,7 +33,7 @@
       </b-card-body>
       <b-card-body class="pt-0">
         <b-button
-          variant="primary"
+          :variant="canConnect ? 'primary' : 'outline-primary disabled'"
           class="float-right ml-4 btn-with-spinner"
           @click="onFbeOnboardClick"
           v-if="active"
