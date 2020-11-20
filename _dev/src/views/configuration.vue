@@ -50,7 +50,7 @@
         v-if="!facebookConnected"
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
-        :active="psAccountsOnboarded"
+        :active="psAccountsOnboarded && dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
@@ -263,6 +263,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
           this.loading = false;
         }).catch((error) => {
           console.error(error);
@@ -293,6 +294,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
           this.facebookConnected = false;
         }).catch((error) => {
           console.error(error);
@@ -379,9 +381,17 @@ export default defineComponent({
         this.$forceUpdate();
       });
     },
-    createExternalBusinessIdAndOpenPopup() {
-      if (this.psFacebookRetrieveExternalBusinessId) {
-        fetch(this.psFacebookRetrieveExternalBusinessId, {
+    createExternalBusinessId() {
+      if (!this.psFacebookRetrieveExternalBusinessId) {
+        return Promise.reject(new Error('No route to fetch external Business Id'));
+      }
+      if (this.contextPsAccounts.currentShop
+        && this.contextPsAccounts.currentShop.url
+        && this.psAccountsToken) {
+        if (this.dynamicExternalBusinessId) {
+          return Promise.resolve();
+        }
+        return fetch(this.psFacebookRetrieveExternalBusinessId, {
           method: 'POST',
           headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         }).then((res) => {
@@ -395,6 +405,14 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+        });
+      }
+
+      return Promise.resolve();
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        this.createExternalBusinessId().then(() => {
           this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);
@@ -422,6 +440,7 @@ export default defineComponent({
   },
   watch: {
     contextPsAccounts() {
+      // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
@@ -430,7 +449,12 @@ export default defineComponent({
         this.psFacebookJustOnboarded = true;
       }
       this.dynamicContextPsFacebook = newValue;
+      // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
       this.$forceUpdate();
+    },
+
+    dynamicExternalBusinessId(newValue, oldValue) {
+      console.log('#######', oldValue, newValue);
     },
   },
 });
