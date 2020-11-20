@@ -139,8 +139,8 @@ class Ps_facebook extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('Ps Facebook');
-        $this->description = $this->l('Ps facebook');
+        $this->displayName = $this->l('PS Facebook');
+        $this->description = $this->l('PS Facebook gives you all the tools you need to successfully sell and market across Facebook and Instagram. Discover new opportunities to help you scale and grow your business, and manage all your Facebook accounts and products from one place.');
         $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
