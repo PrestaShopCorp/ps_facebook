@@ -78,7 +78,7 @@ class Ps_facebook extends Module
 
     const CONFIGURATION_LIST = [
         Config::PS_PIXEL_ID,
-        Config::FB_ACCESS_TOKEN,
+        Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
         Config::PS_FACEBOOK_PROFILES,
         Config::PS_FACEBOOK_PAGES,
         Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,

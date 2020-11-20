@@ -58,9 +58,9 @@ class PsFacebookTranslations
             'general' => [
                 'tabs' => [
                     'configuration' => $this->module->l('Configure', 'PsFacebookTranslations'),
-                    'catalog' => $this->module->l('Export product catalog', 'PsFacebookTranslations'),
+                    'catalog' => $this->module->l('Product catalog', 'PsFacebookTranslations'),
                     'help' => $this->module->l('Help', 'PsFacebookTranslations'),
-                    'integrate' => $this->module->l('Integrate', 'PsFacebookTranslations'),
+                    'integrate' => $this->module->l('Sales channels', 'PsFacebookTranslations'),
                 ],
             ],
             'configuration' => [
@@ -92,7 +92,7 @@ class PsFacebookTranslations
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
-                    'title' => $this->module->l('Connect your store to Facebook', 'PsFacebookTranslations'),
+                    'title' => $this->module->l('Your Facebook settings', 'PsFacebookTranslations'),
                     'notConnected' => [
                         'intro' => $this->module->l('Integrate your shop with Facebook.', 'PsFacebookTranslations'),
                         'connectButton' => $this->module->l('Connect to Facebook', 'PsFacebookTranslations'),
@@ -112,6 +112,8 @@ class PsFacebookTranslations
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns', 'PsFacebookTranslations'),
                         'manageFbeButton' => $this->module->l('Open advanced settings', 'PsFacebookTranslations'),
+                        'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
+                        'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
                 ],
                 'app' => [
@@ -205,10 +207,15 @@ class PsFacebookTranslations
                     'availableFeatures' => $this->module->l('To boost sales, add to your shop...', 'PsFacebookTranslations'),
                     'unavailableFeatures' => $this->module->l('Unavailable features at the moment', 'PsFacebookTranslations'),
                 ],
+                'success' => [
+                    'featureEnabled' => $this->module->l('You added {0}!', 'PsFacebookTranslations'),
+                    'shopLink' => $this->module->l('View your shop', 'PsFacebookTranslations'),
+                ],
                 'warning' => [
                     'productsNotSynced' => $this->module->l('You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.', 'PsFacebookTranslations'),
                     'disableFeatureModalHeader' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                     'disableFeatureModalText' => $this->module->l('You are about to disable this feature. This may limit some functionality.', 'PsFacebookTranslations'),
+                    'noFeatures' => $this->module->l('Features could not be retrieved from Facebook. This may be caused by the token expiration and can be fixed by restarting the onboarding.', 'PsFacebookTranslations'),
                 ],
                 'error' => [
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),

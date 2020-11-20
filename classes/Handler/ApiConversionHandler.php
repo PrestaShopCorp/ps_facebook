@@ -27,6 +27,9 @@ class ApiConversionHandler
 
     public function __construct()
     {
+        $this->configurationAdapter = $configurationAdapter;
+        $this->context = $context;
+
         Api::init(
             null, // app_id
             null, // app_secret

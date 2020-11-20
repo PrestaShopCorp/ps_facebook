@@ -46,50 +46,46 @@
         class="m-3"
       />
 
-      <no-config
-        v-if="!psAccountsOnboarded"
+      <facebook-not-connected
+        v-if="!facebookConnected"
+        @onFbeOnboardClick="onFbeOnboardClick"
+        class="m-3"
+        :active="psAccountsOnboarded"
+        :canConnect="dynamicExternalBusinessId"
+      />
+      <facebook-connected
+        v-else
+        :ps-facebook-app-id="psFacebookAppId"
+        :external-business-id="dynamicExternalBusinessId"
+        :context-ps-facebook="dynamicContextPsFacebook"
+        @onEditClick="onEditClick"
+        @onPixelActivation="onPixelActivation"
+        @onUninstallClick="onUninstallClick"
         class="m-3"
       />
-      <template v-else>
-        <facebook-not-connected
-          v-if="!facebookConnected"
-          @onFbeOnboardClick="onFbeOnboardClick"
-          class="m-3"
-        />
-        <facebook-connected
-          v-else
-          :ps-facebook-app-id="psFacebookAppId"
-          :external-business-id="dynamicExternalBusinessId"
-          :context-ps-facebook="dynamicContextPsFacebook"
-          @onEditClick="onEditClick"
-          @onPixelActivation="onPixelActivation"
-          @onUninstallClick="onUninstallClick"
-          class="m-3"
-        />
-        <div
-          v-if="showGlass"
-          class="glass"
-          @click="glassClicked"
-        >
-          <div class="refocus">
-            <img
-              class="m-3"
-              :src="facebook"
-              width="56"
-              height="56"
-              alt="PS Facebook logo"
-            >
-            <p>{{ $t('configuration.glass.text') }}</p>
-            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
-          </div>
-          <div
-            class="closeCross p-1 m-4"
-            @click="closePopup"
+      <div
+        v-if="showGlass"
+        class="glass"
+        @click="glassClicked"
+      >
+        <div class="refocus">
+          <img
+            class="m-3"
+            src="@/assets/facebook_white_logo.svg"
+            width="56"
+            height="56"
+            alt="PS Facebook logo"
           >
-            <i class="material-icons">close</i>
-          </div>
+          <p>{{ $t('configuration.glass.text') }}</p>
+          <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
         </div>
-      </template>
+        <div
+          class="closeCross p-1 m-4"
+          @click="closePopup"
+        >
+          <i class="material-icons">close</i>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -103,7 +99,6 @@ import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import openPopupGenerator from '../lib/fb-login';
-import facebook from '../assets/facebook_white_logo.svg';
 
 const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
@@ -214,7 +209,9 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook && this.contextPsFacebook.facebookBusinessManager.id)
+      return (this.contextPsFacebook
+        && this.contextPsFacebook.facebookBusinessManager
+        && this.contextPsFacebook.facebookBusinessManager.id)
         || false;
     },
     categoryMatchingStarted() {
@@ -244,7 +241,6 @@ export default defineComponent({
       error: null,
       loading: true,
       popupReceptionDuplicate: false,
-      facebook, // white logo for glass
       openedPopup: null,
     };
   },
@@ -268,6 +264,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.createExternalBusinessId();
           this.loading = false;
         }).catch((error) => {
           console.error(error);
@@ -286,8 +283,10 @@ export default defineComponent({
       this.showGlass = true;
     },
     onUninstallClick() {
+      this.loading = true;
       fetch(this.fbeOnboardingUninstallRoute)
         .then((res) => {
+          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
@@ -296,6 +295,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.createExternalBusinessId();
           this.facebookConnected = false;
         }).catch((error) => {
           console.error(error);
@@ -382,9 +382,18 @@ export default defineComponent({
         this.$forceUpdate();
       });
     },
-    createExternalBusinessIdAndOpenPopup() {
-      if (this.psFacebookRetrieveExternalBusinessId) {
-        fetch(this.psFacebookRetrieveExternalBusinessId, {
+    createExternalBusinessId() {
+      if (!this.psFacebookRetrieveExternalBusinessId) {
+        return Promise.reject(new Error('No route to fetch external Business Id'));
+      }
+      if (this.contextPsAccounts.currentShop
+        && this.contextPsAccounts.currentShop.url
+        && this.psAccountsToken) {
+        if (this.dynamicExternalBusinessId) {
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          return Promise.resolve();
+        }
+        return fetch(this.psFacebookRetrieveExternalBusinessId, {
           method: 'POST',
           headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         }).then((res) => {
@@ -398,6 +407,15 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+        });
+      }
+
+      this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+      return Promise.resolve();
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        this.createExternalBusinessId().then(() => {
           this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);

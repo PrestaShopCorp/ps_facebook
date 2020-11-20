@@ -99,3 +99,13 @@ AllFeaturesEnabled.args = {
   unavailableFeatures: {
   }
 };
+
+export const WarningWhenNoFeatures: any = Template.bind({});
+WarningWhenNoFeatures.args = {
+  enabledFeatures: {
+  },
+  disabledFeatures: {
+  },
+  unavailableFeatures: {
+  }
+};

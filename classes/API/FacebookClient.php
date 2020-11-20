@@ -55,7 +55,7 @@ class FacebookClient
         ConfigurationAdapter $configurationAdapter,
         ErrorHandler $errorHandler
     ) {
-        $this->accessToken = $accessTokenProvider->getOrRefreshToken();
+        $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;

@@ -43,7 +43,7 @@
           <div>
             <a
               class="align-self-center"
-              :href="manageRoute"
+              :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
               <b-button
@@ -147,7 +147,11 @@ export default defineComponent({
     manageRoute: {
       type: String,
       required: false,
-      default: () => global.facebookManageFeaturesRoute,
+      default: () => ({
+        // Duplicates ./available-feature.vue
+        default: global.facebookManageFeaturesRoute,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+      }),
     },
   },
   data() {
@@ -216,6 +220,10 @@ export default defineComponent({
       .switch-input::after {
         color: #c05c67 !important;
       }
+    }
+    .card {
+      border: none;
+      border-radius: 3px;
     }
     .flex-grow-1 {
       flex-grow:1
