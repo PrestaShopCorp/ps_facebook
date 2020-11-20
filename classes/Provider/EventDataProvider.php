@@ -51,15 +51,14 @@ class EventDataProvider
 
     public function __construct(
         ToolsAdapter $toolsAdapter,
-        ConfigurationAdapter $configurationAdapter, 
+        ConfigurationAdapter $configurationAdapter,
         ProductRepository $productRepository,
         Context $context
-    )
-    {
+    ) {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int)$this->context->language->id;
+        $this->idLang = (int) $this->context->language->id;
         $this->currencyIsoCode = strtolower($this->context->currency->iso_code);
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
@@ -72,7 +71,7 @@ class EventDataProvider
                 $controllerPage = $this->context->controller->php_self;
                 //todo: fix customization part
                 if (true === \Tools::isSubmit('submitCustomizedData')) {
-                    return $this->getCustomisationEventData($params);
+                    return $this->getCustomEventData($params);
                 }
                 if ($controllerPage === 'product') {
                     return $this->getProductPageData();
@@ -80,15 +79,17 @@ class EventDataProvider
                 if ($controllerPage === 'category' && $this->context->controller->controller_type === 'front') {
                     return $this->getCategoryPageData();
                 }
-                if ($controllerPage === 'cms'){
+                if ($controllerPage === 'cms') {
                     return $this->getCMSPageData();
                 }
                 break;
             case 'hookActionSearch':
+                return $this->getSearchEventData();
                 break;
             case 'hookActionObjectCustomerMessageAddAfter':
                 return $this->getContactEventData();
             case 'hookDisplayOrderConfirmation':
+                return $this->getOrderConfirmationEvent();
                 break;
             case 'hookDisplayPersonalInformationTop':
                 break;
@@ -131,7 +132,7 @@ class EventDataProvider
             'currency' => $this->currencyIsoCode,
             'contents' => [$content],
             'content_type' => self::PRODUCT_TYPE,
-            'value' => $product['price_amount']
+            'value' => $product['price_amount'],
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
@@ -141,7 +142,7 @@ class EventDataProvider
             'event_time' => time(),
             'user' => $user,
             'custom_data' => $customData,
-            'event_source_url' => $productUrl
+            'event_source_url' => $productUrl,
         ];
     }
 
@@ -166,7 +167,7 @@ class EventDataProvider
             'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $this->locale,
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::CATEGORY_TYPE,
-            'content_ids' => array_column($prods, 'id_product')
+            'content_ids' => array_column($prods, 'id_product'),
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
@@ -176,7 +177,7 @@ class EventDataProvider
             'event_time' => time(),
             'user' => $user,
             'custom_data' => $customData,
-            'event_source_url' => $categoryUrl
+            'event_source_url' => $categoryUrl,
         ];
     }
 
@@ -198,7 +199,7 @@ class EventDataProvider
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::PRODUCT_TYPE,
         ];
-        
+
         return [
             'event_type' => $type,
             'event_time' => time(),
@@ -243,9 +244,9 @@ class EventDataProvider
             'content_name' => pSQL($productName),
             'content_type' => self::PRODUCT_TYPE,
             'content_ids' => [$idProduct],
-            'num_items' => pSQL($quantity)
+            'num_items' => pSQL($quantity),
         ];
-        
+
         return [
             'event_type' => $type,
             'event_time' => time(),
@@ -271,7 +272,6 @@ class EventDataProvider
             'user' => $user,
             'custom_data' => $customData,
         ];
-
     }
 
     private function getContactEventData()
@@ -287,7 +287,7 @@ class EventDataProvider
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
-            'custom_data' => $customData
+            'custom_data' => $customData,
         ];
     }
 
@@ -307,8 +307,48 @@ class EventDataProvider
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
-            'custom_data' => $customData
+            'custom_data' => $customData,
         ];
+    }
+
+    private function getCustomEventData()
+    {
+        $type = 'CustomizeProduct';
+
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+        ];
+    }
+
+    private function getSearchEventData()
+    {
+        $searchQuery = $this->toolsAdapter->getValue('searched_query');
+        $quantity = $this->toolsAdapter->getValue('total');
+
+        $type = 'Search';
+
+        $customData = [
+            'content_name' => 'searchQuery',
+            'search_string' => $searchQuery,
+            'total_results' => $quantity,
+        ];
+
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData,
+        ];
+    }
+
+    private function getOrderConfirmationEvent()
+    {
     }
 
     /**
@@ -340,8 +380,7 @@ class EventDataProvider
             'content_ids' => [$psProductId],
             'custom_properties' => [
                 'custom_attributes' => $attributes,
-            ]
+            ],
         ];
     }
-
 }

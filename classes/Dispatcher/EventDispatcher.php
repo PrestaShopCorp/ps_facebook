@@ -2,15 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Dispatcher;
 
-use Category;
-use Context;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider;
-use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
-use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 
 class EventDispatcher
 {
@@ -39,8 +35,7 @@ class EventDispatcher
         PixelHandler $pixelHandler,
         ConfigurationAdapter $configurationAdapter,
         EventDataProvider $eventDataProvider
-    )
-    {
+    ) {
         $this->conversionHandler = $apiConversionHandler;
         $this->pixelHandler = $pixelHandler;
         $this->configurationAdapter = $configurationAdapter;
@@ -55,7 +50,7 @@ class EventDispatcher
      */
     public function dispatch($name, array $params)
     {
-        if (true === (bool)$this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
+        if (true === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
             $eventData = $this->eventDataProvider->generateEventData($name, $params);
 
             if (!$eventData) {

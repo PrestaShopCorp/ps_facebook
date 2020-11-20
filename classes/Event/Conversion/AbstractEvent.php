@@ -8,7 +8,6 @@ use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Event\ConversionEventInterface;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
-use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 
 abstract class AbstractEvent implements ConversionEventInterface
 {

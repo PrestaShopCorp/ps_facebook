@@ -2,8 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Event\Pixel;
 
-use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
-
 abstract class BaseEvent
 {
     /**
@@ -38,6 +36,7 @@ abstract class BaseEvent
      * getCustomerInformations
      *
      * @param $customerInformation
+     *
      * @return array
      */
     protected function getCustomerInformation($customerInformation)

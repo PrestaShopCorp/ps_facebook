@@ -4,13 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CompleteRegistrationEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ContactEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CustomizeEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\InitiateCheckoutEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\OrderConfirmationEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\SearchEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ViewContentEvent;
 
 class PixelHandler
 {
@@ -89,6 +82,7 @@ class PixelHandler
      * getCustomerInformations
      *
      * @param $customerInformation
+     *
      * @return array
      */
     protected function getCustomerInformation($customerInformation)

@@ -91,7 +91,7 @@ class ApiConversionHandler
             if (isset($customData['currency'])) {
                 $customDataObj->setCurrency($customData['currency']);
             }
-            /** more about value here: https://www.facebook.com/business/help/392174274295227?id=1205376682832142 */
+            /* more about value here: https://www.facebook.com/business/help/392174274295227?id=1205376682832142 */
             if (isset($customData['value'])) {
                 $customDataObj->setValue($customData['value']);
             }
@@ -141,7 +141,6 @@ class ApiConversionHandler
         $this->sendEvents($events);
     }
 
-
     /**
      * @return UserData
      */
@@ -186,7 +185,6 @@ class ApiConversionHandler
                 FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
                 false
             );
-
         }
     }
 }
