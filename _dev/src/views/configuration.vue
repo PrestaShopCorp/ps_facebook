@@ -50,7 +50,7 @@
         v-if="!facebookConnected"
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
-        :active="psAccountsOnboarded"
+        :active="psAccountsOnboarded && dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
@@ -263,6 +263,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.createExternalBusinessId();
           this.loading = false;
         }).catch((error) => {
           console.error(error);
@@ -293,6 +294,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+          this.createExternalBusinessId();
           this.facebookConnected = false;
         }).catch((error) => {
           console.error(error);
@@ -379,9 +381,18 @@ export default defineComponent({
         this.$forceUpdate();
       });
     },
-    createExternalBusinessIdAndOpenPopup() {
-      if (this.psFacebookRetrieveExternalBusinessId) {
-        fetch(this.psFacebookRetrieveExternalBusinessId, {
+    createExternalBusinessId() {
+      if (!this.psFacebookRetrieveExternalBusinessId) {
+        return Promise.reject(new Error('No route to fetch external Business Id'));
+      }
+      if (this.contextPsAccounts.currentShop
+        && this.contextPsAccounts.currentShop.url
+        && this.psAccountsToken) {
+        if (this.dynamicExternalBusinessId) {
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          return Promise.resolve();
+        }
+        return fetch(this.psFacebookRetrieveExternalBusinessId, {
           method: 'POST',
           headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         }).then((res) => {
@@ -395,6 +406,15 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+        });
+      }
+
+      this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+      return Promise.resolve();
+    },
+    createExternalBusinessIdAndOpenPopup() {
+      if (this.psFacebookRetrieveExternalBusinessId) {
+        this.createExternalBusinessId().then(() => {
           this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);
