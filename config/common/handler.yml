@@ -1,6 +1,9 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@ps_facebook.context'
 
   PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler

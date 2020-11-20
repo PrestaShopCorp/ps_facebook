@@ -181,9 +181,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             Configuration::updateValue(Config::PS_PIXEL_ID, $id_pixel);
         }
 
-        $access_token = Tools::getValue(Config::FB_ACCESS_TOKEN);
+        $access_token = Tools::getValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
         if (!empty($access_token)) {
-            Configuration::updateValue(Config::FB_ACCESS_TOKEN, $access_token);
+            Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
         }
     }
 }
