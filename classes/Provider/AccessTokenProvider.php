@@ -122,7 +122,7 @@ class AccessTokenProvider
         }
 
         if (isset($response['longLived']['access_token'])) {
-            $tokenExpiresIn = time() + (int) $response['longLived']['expires_in'];
+            $tokenExpiresIn = time() + (70 * 365 * 24 * 3600); // never expires
             $this->userAccessToken = $response['longLived']['access_token'];
 
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $this->userAccessToken);
