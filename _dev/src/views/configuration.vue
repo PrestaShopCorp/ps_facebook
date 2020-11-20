@@ -407,6 +407,7 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          this.$root.refreshExternalBusinessId(res.externalBusinessId);
         });
       }
 

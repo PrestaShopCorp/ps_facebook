@@ -32,6 +32,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $defaultCurrency = $this->context->currency;
         $defaultLanguage = $this->context->language;
 
+        if ($externalBusinessId) {
+            Media::addJsDef([
+                'psFacebookExternalBusinessId' => $externalBusinessId,
+            ]);
+        }
+
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
@@ -127,7 +133,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'facebookManageFeaturesRoute' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
             'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

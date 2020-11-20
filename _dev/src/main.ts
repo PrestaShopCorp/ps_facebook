@@ -29,6 +29,8 @@ new Vue({
     return {
       // @ts-ignore
       contextPsFacebook: global.contextPsFacebook,
+      // @ts-ignore
+      psFacebookExternalBusinessId: global.psFacebookExternalBusinessId,
     };
   },
   methods: {
@@ -36,6 +38,11 @@ new Vue({
       this.contextPsFacebook = context;
       // @ts-ignore
       global.contextPsFacebook = context;
+    },
+    refreshExternalBusinessId(externalBusinessId) {
+      this.psFacebookExternalBusinessId = externalBusinessId;
+      // @ts-ignore
+      global.psFacebookExternalBusinessId = externalBusinessId;
     },
   },
 }).$mount('#app');
