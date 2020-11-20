@@ -263,7 +263,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
-          // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
+          this.createExternalBusinessId();
           this.loading = false;
         }).catch((error) => {
           console.error(error);
@@ -294,7 +294,7 @@ export default defineComponent({
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
-          // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
+          this.createExternalBusinessId();
           this.facebookConnected = false;
         }).catch((error) => {
           console.error(error);
@@ -389,6 +389,7 @@ export default defineComponent({
         && this.contextPsAccounts.currentShop.url
         && this.psAccountsToken) {
         if (this.dynamicExternalBusinessId) {
+          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
           return Promise.resolve();
         }
         return fetch(this.psFacebookRetrieveExternalBusinessId, {
@@ -408,6 +409,7 @@ export default defineComponent({
         });
       }
 
+      this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
       return Promise.resolve();
     },
     createExternalBusinessIdAndOpenPopup() {
@@ -440,7 +442,6 @@ export default defineComponent({
   },
   watch: {
     contextPsAccounts() {
-      // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
       this.$forceUpdate();
     },
     contextPsFacebook(newValue) {
@@ -449,12 +450,7 @@ export default defineComponent({
         this.psFacebookJustOnboarded = true;
       }
       this.dynamicContextPsFacebook = newValue;
-      // TODO !0: if need externalBusinessId now, then createExternalBusinessId()
       this.$forceUpdate();
-    },
-
-    dynamicExternalBusinessId(newValue, oldValue) {
-      console.log('#######', oldValue, newValue);
     },
   },
 });
