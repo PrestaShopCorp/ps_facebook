@@ -82,12 +82,17 @@ class ConfigurationHandler
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_AD_ACCOUNT_ID, isset($onboardingParams['fbe']['ad_account_id']) ? $onboardingParams['fbe']['ad_account_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_CATALOG_ID, isset($onboardingParams['fbe']['catalog_id']) ? $onboardingParams['fbe']['catalog_id'] : '');
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
+
+        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE);
+        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN);
     }
 
     private function cleanOnboardingConfiguration()
     {
         $dataConfigurationKeys = [
             Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
+            Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE,
+            Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN,
             Config::PS_PIXEL_ID,
             Config::PS_FACEBOOK_PROFILES,
             Config::PS_FACEBOOK_PAGES,
