@@ -92,6 +92,7 @@ class EventDataProvider
                 return $this->getOrderConfirmationEvent();
                 break;
             case 'hookDisplayPersonalInformationTop':
+                return $this->getInitiateCheckoutEvent();
                 break;
             case 'hookActionCartSave':
                 return $this->getAddToCartEventData();
@@ -371,6 +372,19 @@ class EventDataProvider
             'event_time' => time(),
             'user' => $user,
             'custom_data' => $customData,
+        ];
+    }
+
+    private function getInitiateCheckoutEvent()
+    {
+        $type = 'InitiateCheckout';
+
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
         ];
     }
 
