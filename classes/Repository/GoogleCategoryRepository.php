@@ -139,7 +139,7 @@ class GoogleCategoryRepository
         $sql->select('cm.google_category_id as googleCategoryId');
         $sql->select('cm.is_parent_category as isParentCategory');
         $sql->select('case when c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
-            ' then '. self::NO_CHILDREN .' else '. self::HAS_CHILDREN .' end deploy');
+            ' then ' . self::NO_CHILDREN . ' else ' . self::HAS_CHILDREN . ' end deploy');
         $sql->from('category', 'c');
         $sql->innerJoin('category_lang', 'cl', 'c.id_category = cl.id_category AND cl.id_lang = ' . (int) $langId);
         $sql->leftJoin('fb_category_match', 'cm', 'c.id_category = cm.id_category');
