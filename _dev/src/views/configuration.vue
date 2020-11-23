@@ -286,7 +286,7 @@ export default defineComponent({
       this.$router.push({name: 'Catalog', query: {page: 'summary'}});
     },
     onAdCampaignClick() {
-      const {catalogId} = this.dynamicContextPsFacebook;
+      const catalogId = this.dynamicContextPsFacebook.catalog.id;
       const businessId = this.dynamicContextPsFacebook.facebookBusinessManager.id;
       const host = 'https://business.facebook.com';
       const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
