@@ -37,6 +37,7 @@
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
         :category-matching-started="categoryMatchingStarted"
         :product-sync-started="productSyncStarted"
+        :ad-campaign-started="adCampaignStarted"
         :error="error"
         @onSyncCatalogClick="onSyncCatalogClick"
         @onCategoryMatchingClick="onCategoryMatchingClick"
@@ -219,10 +220,15 @@ export default defineComponent({
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
         && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
+      // TODO !1: must be true only if all parent categories are matched !
     },
     productSyncStarted() {
       return this.contextPsFacebook && this.contextPsFacebook.catalog
         && this.contextPsFacebook.catalog.productSyncStarted;
+    },
+    adCampaignStarted() {
+      // TODO !1: when true?
+      return false;
     },
     showSyncCatalogAdvice() {
       const c = this.dynamicContextPsFacebook;
@@ -274,13 +280,18 @@ export default defineComponent({
         });
     },
     onCategoryMatchingClick() {
-      // TODO !0
-    },
-    onSyncCatalogClick() {
       this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
     },
+    onSyncCatalogClick() {
+      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
+    },
     onAdCampaignClick() {
-      // TODO !0
+      const {catalogId} = this.dynamicContextPsFacebook;
+      const businessId = this.dynamicContextPsFacebook.facebookBusinessManager.id;
+      const host = 'https://business.facebook.com';
+      const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
+      const url = `${host}/products/catalogs/${catalogId}/ads${query}`;
+      window.open(url, '_blank'); // TODO !0 to test
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();

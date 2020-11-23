@@ -47,7 +47,7 @@ class ContextPsFacebook implements JsonSerializable
      * @param Ad|null $ad
      * @param bool|null $categoriesMatching
      */
-    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching)
+    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching, $catalogId)
     {
         $this->user = $user;
         $this->facebookBusinessManager = $facebookBusinessManager;
@@ -55,6 +55,7 @@ class ContextPsFacebook implements JsonSerializable
         $this->page = $page;
         $this->ad = $ad;
         $this->categoriesMatching = $categoriesMatching;
+        $this->catalogId = $catalogId;
     }
 
     /**
@@ -177,6 +178,26 @@ class ContextPsFacebook implements JsonSerializable
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getCatalogId()
+    {
+        return $this->catalogId;
+    }
+
+    /**
+     * @param string|null $catalogId
+     *
+     * @return ContextPsFacebook
+     */
+    public function setCatalogId($catalogId)
+    {
+        $this->catalogId = $catalogId;
+
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -186,6 +207,7 @@ class ContextPsFacebook implements JsonSerializable
             'page' => $this->getPage(),
             'ads' => $this->getAd(),
             'categoriesMatching' => $this->getCategoriesMatching(),
+            'catalogId' => $this->getCatalogId(),
         ];
     }
 }

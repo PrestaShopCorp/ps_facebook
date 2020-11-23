@@ -36,6 +36,7 @@ class FacebookDataProvider
         $pixel = $this->facebookClient->getPixel($fbe['pixel_id']);
         $pages = $this->facebookClient->getPage($fbe['pages']);
         $ad = $this->facebookClient->getAd($fbe['ad_account_id']);
+        $catalogId = $fbe['catalog_id'];
         $isCategoriesMatching = $this->facebookClient->getCategoriesMatching($fbe['catalog_id']);
 
         return new ContextPsFacebook(
@@ -44,7 +45,8 @@ class FacebookDataProvider
             $pixel,
             $pages,
             $ad,
-            $isCategoriesMatching
+            $isCategoriesMatching,
+            $catalogId
         );
     }
 }
