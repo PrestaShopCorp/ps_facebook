@@ -222,7 +222,7 @@ export default defineComponent({
       }
     }
     .card {
-      border: none;
+      border: none !important;
       border-radius: 3px;
     }
     .flex-grow-1 {
