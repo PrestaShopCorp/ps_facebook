@@ -245,7 +245,7 @@ export default defineComponent({
     };
   },
   created() {
-    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+    if (!this.contextPsFacebook || !this.externalBusinessId) {
       this.fetchData();
     } else {
       this.loading = false;
