@@ -51,7 +51,7 @@
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
         :active="psAccountsOnboarded"
-        :canConnect="dynamicExternalBusinessId"
+        :canConnect="!!dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
