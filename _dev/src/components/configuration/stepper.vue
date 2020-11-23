@@ -31,85 +31,13 @@
       <h3>{{ $t('configuration.messages.stepperTitle') }}</h3>
 
       <div class="mb-2">
-        <b-iconstack
-          v-if="psAccountsOnboarded"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-iconstack
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="dark"
-          />
-          <b-icon-arrow90deg-right
-            stacked
-            flip-v
-            scale="0.75"
-            variant="white"
-          />
-        </b-iconstack>
+        <stepper-icon :state="psAccountsOnboarded ? 'DONE' : 'AVAILABLE'" />
         {{ $t('configuration.messages.stepPsAccount') }}
       </div>
 
       <div class="mb-2">
-        <b-iconstack
-          v-if="psFacebookOnboarded"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-iconstack
-          v-else-if="psFacebookOnboardingAvailable"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="dark"
-          />
-          <b-icon-arrow90deg-right
-            stacked
-            flip-v
-            scale="0.75"
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size opacity-50"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="psFacebookOnboarded ? 'DONE' : (psFacebookOnboardingAvailable ? 'AVAILABLE' : 'DISABLED')"
         />
         <span :class="!psFacebookOnboardingAvailable && 'text-muted'">
           {{ $t('configuration.messages.stepPsFacebook') }}
@@ -117,47 +45,8 @@
       </div>
 
       <div class="mb-2">
-        <b-iconstack
-          v-if="categoryMatchingStarted"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-iconstack
-          v-else-if="categoryMatchingClickable"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="dark"
-          />
-          <b-icon-arrow90deg-right
-            stacked
-            flip-v
-            scale="0.75"
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size opacity-50"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="categoryMatchingStarted ? 'DONE' : (categoryMatchingClickable ? 'AVAILABLE' : 'DISABLED')"
         />
         <a
           v-if="categoryMatchingClickable"
@@ -176,47 +65,8 @@
       </div>
 
       <div class="mb-2">
-        <b-iconstack
-          v-if="productSyncStarted"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-iconstack
-          v-else-if="productSyncClickable"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="dark"
-          />
-          <b-icon-arrow90deg-right
-            stacked
-            flip-v
-            scale="0.75"
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size opacity-50"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="productSyncStarted ? 'DONE' : (productSyncClickable ? 'AVAILABLE' : 'DISABLED')"
         />
         <a
           v-if="productSyncClickable"
@@ -230,47 +80,8 @@
       </div>
 
       <div class="mb-2">
-        <b-iconstack
-          v-if="adCampaignStarted"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-iconstack
-          v-else-if="adCampaignClickable"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="dark"
-          />
-          <b-icon-arrow90deg-right
-            stacked
-            flip-v
-            scale="0.75"
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size opacity-50"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="adCampaignStarted ? 'DONE' : (adCampaignClickable ? 'AVAILABLE' : 'DISABLED')"
         />
         <a
           v-if="adCampaignClickable"
@@ -288,23 +99,15 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {
-  BCard,
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
-  BIconArrow90degRight,
-} from 'bootstrap-vue';
+import {BCard} from 'bootstrap-vue';
+import StepperIcon from './stepper-icon.vue';
 import illustration2 from '../../assets/illustration2.png';
 
 export default defineComponent({
   name: 'Stepper',
   components: {
     BCard,
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
-    BIconArrow90degRight,
+    StepperIcon,
   },
   props: {
     psAccountsOnboarded: { // TODO !1: use when we want stepper event if onboardings are not done
