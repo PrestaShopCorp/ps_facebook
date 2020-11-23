@@ -2,14 +2,18 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
+use Cart;
 use Category;
 use Context;
+use FacebookAds\Object\ServerSide\Content;
+use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use Product;
+use Ps_facebook;
 
 class EventDataProvider
 {
@@ -30,11 +34,6 @@ class EventDataProvider
     private $idLang;
 
     /**
-     * @var string
-     */
-    private $currencyIsoCode;
-
-    /**
      * @var ToolsAdapter
      */
     private $toolsAdapter;
@@ -49,19 +48,25 @@ class EventDataProvider
      */
     private $productRepository;
 
+    /**
+     * @var ps_facebook
+     */
+    private $module;
+
     public function __construct(
         ToolsAdapter $toolsAdapter,
         ConfigurationAdapter $configurationAdapter,
         ProductRepository $productRepository,
-        Context $context
+        Context $context,
+        ps_facebook $module
     ) {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int) $this->context->language->id;
-        $this->currencyIsoCode = strtolower($this->context->currency->iso_code);
+        $this->idLang = (int)$this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
+        $this->module = $module;
     }
 
     public function generateEventData($name, array $params)
@@ -69,7 +74,6 @@ class EventDataProvider
         switch ($name) {
             case 'hookDisplayHeader':
                 $controllerPage = $this->context->controller->php_self;
-                //todo: fix customization part
                 if (true === \Tools::isSubmit('submitCustomizedData')) {
                     return $this->getCustomEventData($params);
                 }
@@ -84,22 +88,18 @@ class EventDataProvider
                 }
                 break;
             case 'hookActionSearch':
-                return $this->getSearchEventData();
-                break;
+                return $this->getSearchEventData($params);
             case 'hookActionObjectCustomerMessageAddAfter':
                 return $this->getContactEventData();
             case 'hookDisplayOrderConfirmation':
-                return $this->getOrderConfirmationEvent();
-                break;
+                return $this->getOrderConfirmationEvent($params);
             case 'hookDisplayPersonalInformationTop':
                 return $this->getInitiateCheckoutEvent();
-                break;
             case 'hookActionCartSave':
                 return $this->getAddToCartEventData();
             case 'hookActionNewsletterRegistrationAfter':
-                break;
+                return $this->getShopSubscriptionEvent($params);
             case 'hookActionCustomerAccountAdd':
-            case 'hookActionSubmitAccountBefore':
                 return $this->getCompleteRegistrationEventData();
         }
 
@@ -110,14 +110,13 @@ class EventDataProvider
     {
         $type = 'ViewContent';
 
-        /** @var \ProductController $controller */
+        /** @var \ProductController|\ProductControllerCore $controller */
         $controller = $this->context->controller;
         $product = $controller->getTemplateVarProduct();
 
         $fbProductId = ProductCatalogUtility::makeProductId(
             $product['id_product'],
-            $product['id_product_attribute'],
-            $this->locale
+            $product['id_product_attribute']
         );
 
         // todo: url is generated without attribute and doesn't match with pixel url
@@ -130,7 +129,7 @@ class EventDataProvider
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
         $customData = [
-            'currency' => $this->currencyIsoCode,
+            'currency' => $this->getCurrency(),
             'contents' => [$content],
             'content_type' => self::PRODUCT_TYPE,
             'value' => $product['price_amount'],
@@ -185,7 +184,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int)$this->toolsAdapter->getValue('id_cms'), $this->idLang);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
@@ -227,7 +226,7 @@ class EventDataProvider
         }
 
         if ($action !== 'update') {
-            return true;
+            return false;
         }
         $type = 'AddToCart';
         if ($op) {
@@ -263,8 +262,6 @@ class EventDataProvider
 
         $customData = [
             'content_name' => 'authentication',
-            'currency' => $this->context->currency->iso_code,
-            'value' => 1,
         ];
 
         return [
@@ -281,7 +278,7 @@ class EventDataProvider
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $customData = [
-            'userEmail' => $this->context->customer->email,
+            'content_name' => $this->context->customer->email,
         ];
 
         return [
@@ -296,7 +293,7 @@ class EventDataProvider
     {
         $type = 'CustomizeProduct';
 
-        $idLang = (int) $this->context->language->id;
+        $idLang = (int)$this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
         $locale = \Tools::strtoupper($this->context->language->iso_code);
@@ -312,7 +309,7 @@ class EventDataProvider
         ];
     }
 
-    private function getCustomEventData()
+    private function getCustomEventData($params)
     {
         $type = 'CustomizeProduct';
 
@@ -325,18 +322,21 @@ class EventDataProvider
         ];
     }
 
-    private function getSearchEventData()
+    private function getSearchEventData($params)
     {
-        $searchQuery = $this->toolsAdapter->getValue('searched_query');
-        $quantity = $this->toolsAdapter->getValue('total');
+        $searchQuery = $params['searched_query'];
+        $quantity = $params['total'];
 
         $type = 'Search';
 
         $customData = [
             'content_name' => 'searchQuery',
             'search_string' => $searchQuery,
-            'total_results' => $quantity,
         ];
+
+        if ($quantity) {
+            $customData['num_items'] = $quantity;
+        }
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -348,9 +348,11 @@ class EventDataProvider
         ];
     }
 
-    private function getOrderConfirmationEvent()
+    private function getOrderConfirmationEvent($params)
     {
-        $order = $this->module->psVersionIs17 ? $this->toolsAdapter->getValue('order') : $this->toolsAdapter->getValue('objOrder');
+        /** @var Order $order */
+        $order = $this->module->psVersionIs17 ? $params['order'] : $params['objOrder'];
+        $productList = [];
         foreach ($order->getProducts() as $product) {
             $productList[] = $product['id_product'];
         }
@@ -359,11 +361,10 @@ class EventDataProvider
 
         $customData = [
             'content_name' => 'purchased',
-            'customerID' => $order->id_customer,
-            'orderID' => $order->id,
-            'currency' => $this->context->currency->iso_code,
-            'content_ids' => implode(',', $productList),
-            'value' => $order->total_paid,
+            'order_id' => $order->id,
+            'currency' => $this->getCurrency(),
+            'content_ids' => $productList,
+            'value' => floatval($order->total_paid),
         ];
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -378,14 +379,66 @@ class EventDataProvider
     private function getInitiateCheckoutEvent()
     {
         $type = 'InitiateCheckout';
-
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $cart = $this->context->cart;
+        $idLang = (int)$this->context->language->id;
+        $contents = $this->getProductContent($cart, $idLang);
+
+        $customData = [
+            'contents' => $contents,
+            'content_type' => 'product',
+            'currency' => $this->getCurrency(),
+            'value' => $cart->getOrderTotal(false),
+        ];
 
         return [
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
+            'custom_data' => $customData
         ];
+    }
+
+    private function getShopSubscriptionEvent($params)
+    {
+        $type = 'Subscribe';
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $customData = [
+            'content_name' => pSQL($params['email']),
+        ];
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData
+        ];
+    }
+
+    /**
+     * @param Cart $cart
+     * @param int $idLang
+     *
+     * @return Content[]
+     */
+    private function getProductContent(Cart $cart, $idLang)
+    {
+        $contents = [];
+        foreach ($cart->getProducts() as $product) {
+            $content = [
+                'id' => ProductCatalogUtility::makeProductId($product['id_product'], $product['id_product_attribute']),
+                'title' => \Tools::replaceAccentedChars($product['name']),
+                'category' => (new Category($product['id_category_default']))->getName($idLang),
+                'item_price' => $product['price'],
+                'quantity' => $product['quantity'],
+                'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
+            ];
+            $contents[] = $content;
+        }
+
+        return $contents;
     }
 
     /**
@@ -410,7 +463,7 @@ class EventDataProvider
             $attributeIds
         );
 
-        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute, $locale);
+        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute);
 
         return [
             'content_type' => self::PRODUCT_TYPE,
@@ -419,5 +472,10 @@ class EventDataProvider
                 'custom_attributes' => $attributes,
             ],
         ];
+    }
+
+    private function getCurrency()
+    {
+        return strtolower($this->context->currency->iso_code);
     }
 }

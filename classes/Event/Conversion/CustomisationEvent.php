@@ -68,7 +68,7 @@ class CustomisationEvent extends AbstractEvent
             $attributeIds
         );
 
-        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute, $locale);
+        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute);
 
         return (new CustomData())
             ->setContentType('product')

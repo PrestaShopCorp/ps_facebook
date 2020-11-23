@@ -9,6 +9,7 @@ use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -25,24 +26,28 @@ class ApiConversionHandler
      */
     private $pixelId;
 
-    public function __construct()
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, Context $context)
     {
         $this->configurationAdapter = $configurationAdapter;
         $this->context = $context;
 
+        $this->pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
+
         Api::init(
             null, // app_id
             null, // app_secret
-            'EAAG8FZCTh0FABAJLPh2gQxbgZBVIAmDRCPq4Ea78jmy10wzPpZAZCL9h4JDP3z1A49IUrphg79lgQ9MtZArXkKTmXhpaPvGjSIOe79msSFsQl9Ngfwl8H26WilAaYjZBfLydyouPemafBLFbY7CZBZCSAsK3HX5RPUMDQDo8TisZAHEbOdVmxJDhM'
-//            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
         );
-
-        $this->context = Context::getContext();
-        $this->pixelId = \Configuration::get(Config::PS_PIXEL_ID);
     }
 
     public function handleEvent($params)
     {
+
         if (empty($this->pixelId)) {
             return;
         }
@@ -64,25 +69,33 @@ class ApiConversionHandler
         }
 
         if (isset($customData) && isset($customData['contents'])) {
-            $contentData = reset($customData['contents']);
+            $contentsData = $customData['contents'];
         }
 
-        if (isset($contentData)) {
-            $content = new Content();
-            if (isset($contentData['id'])) {
-                $content->setProductId($contentData['id']);
-            }
-            if (isset($contentData['title'])) {
-                $content->setTitle($contentData['title']);
-            }
-            if (isset($contentData['category'])) {
-                $content->setCategory($contentData['category']);
-            }
-            if (isset($contentData['item_price'])) {
-                $content->setItemPrice($contentData['item_price']);
-            }
-            if (isset($contentData['brand'])) {
-                $content->setBrand($contentData['brand']);
+        if (isset($contentsData)) {
+            $contents = [];
+            foreach ($contentsData as $contentData) {
+                $content = new Content();
+                if (isset($contentData['id'])) {
+                    $content->setProductId($contentData['id']);
+                }
+                if (isset($contentData['title'])) {
+                    $content->setTitle($contentData['title']);
+                }
+                if (isset($contentData['category'])) {
+                    $content->setCategory($contentData['category']);
+                }
+                if (isset($contentData['item_price'])) {
+                    $content->setItemPrice($contentData['item_price']);
+                }
+                if (isset($contentData['brand'])) {
+                    $content->setBrand($contentData['brand']);
+                }
+                if (isset($contentData['quantity'])) {
+                    $content->setQuantity($contentData['quantity']);
+                }
+
+                $contents[] = $content;
             }
         }
         if (isset($userData)) {
@@ -99,7 +112,7 @@ class ApiConversionHandler
                 $customDataObj->setValue($customData['value']);
             }
             if (isset($content)) {
-                $customDataObj->setContents([$content]);
+                $customDataObj->setContents($contents);
             }
             if (isset($customData['content_type'])) {
                 $customDataObj->setContentType($customData['content_type']);
@@ -115,6 +128,15 @@ class ApiConversionHandler
             }
             if (isset($customData['content_ids'])) {
                 $customDataObj->setContentIds($customData['content_ids']);
+            }
+            if (isset($customData['num_items'])) {
+                $customDataObj->setNumItems($customData['num_items']);
+            }
+            if (isset($customData['order_id'])) {
+                $customDataObj->setOrderId($customData['order_id']);
+            }
+            if (isset($customData['search_string'])) {
+                $customDataObj->setSearchString($customData['search_string']);
             }
         }
 
@@ -173,7 +195,7 @@ class ApiConversionHandler
     {
         $request = (new EventRequest($this->pixelId))
             ->setEvents($events)
-            ->setTestEventCode('TEST39621');
+            ->setTestEventCode('TEST71042');
 
         try {
             $request->execute();

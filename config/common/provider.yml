@@ -35,3 +35,4 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
       - '@ps_facebook.context'
+      - '@ps_facebook'

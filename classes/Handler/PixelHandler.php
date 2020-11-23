@@ -43,11 +43,13 @@ class PixelHandler
         if (isset($params['user'])) {
             $userData = $params['user'];
         }
+
+        $content = [];
         if (isset($params['custom_data'])) {
             $customData = $params['custom_data'];
+            $content = $this->formatPixel($customData);
         }
 
-        $content = $this->formatPixel($customData);
 
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
