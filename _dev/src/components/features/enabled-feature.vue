@@ -149,7 +149,7 @@ export default defineComponent({
       required: false,
       default: () => ({
         // Duplicates ./available-feature.vue
-        default: global.facebookManageFeaturesRoute,
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
         page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
       }),
     },
