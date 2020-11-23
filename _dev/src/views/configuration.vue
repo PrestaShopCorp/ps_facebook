@@ -38,7 +38,9 @@
         :category-matching-started="categoryMatchingStarted"
         :product-sync-started="productSyncStarted"
         :error="error"
-        @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+        @onSyncCatalogClick="onSyncCatalogClick"
+        @onCategoryMatchingClick="onCategoryMatchingClick"
+        @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
       <ps-accounts
@@ -271,8 +273,14 @@ export default defineComponent({
           this.error = 'configuration.messages.unknownOnboardingError';
         });
     },
-    onSyncCatalogAdviceClick() {
+    onCategoryMatchingClick() {
+      // TODO !0
+    },
+    onSyncCatalogClick() {
       this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
+    },
+    onAdCampaignClick() {
+      // TODO !0
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();

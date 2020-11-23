@@ -19,12 +19,13 @@
       },
       "messages": {
         "success": "PrestaShop Facebook is now activated!",
-        "syncCatalogAdvice": "One more thing: Match your categories and import your product catalog to set up Facebook Shop, Instagram Shopping and create ad campaigns.",
+        "stepperTitle": "Step-by-step guide",
         "stepPsAccount": "Connect your PrestaShop account",
         "stepPsFacebook": "Connect your store to Facebook",
-        "stepCategoryMatching": "Match categories",
-        "stepProductSync": "Import your product catalog",
-        "syncCatalogButton": "Match categories",
+        "stepCategoryMatching": "Map categories",
+        "stepCategoryMatchingOptional": "(optional but strongly recommended)",
+        "stepProductSync": "Export your product catalog",
+        "stepAdCampaign": "Create ad campaign",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
       },

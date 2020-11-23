@@ -47,7 +47,9 @@
       v-if="showSyncCatalogAdvice"
       :category-matching-started="categoryMatchingStarted"
       :product-sync-started="productSyncStarted"
-      @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+      :ad-campaign-started="adCampaignStarted"
+      @onCategoryMatchingClick="onCategoryMatchingClick"
+      @onSyncCatalogClick="onSyncCatalogClick"
     />
   </div>
 </template>
@@ -88,6 +90,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    adCampaignStarted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     error: {
       type: String,
       required: false,
@@ -95,8 +102,14 @@ export default defineComponent({
     },
   },
   methods: {
-    onSyncCatalogAdviceClick() {
-      this.$emit('onSyncCatalogAdviceClick');
+    onCategoryMatchingClick() {
+      this.$emit('onCategoryMatchingClick');
+    },
+    onSyncCatalogClick() {
+      this.$emit('onSyncCatalogClick');
+    },
+    onAdCampaignClick() {
+      this.$emit('onAdCampaignClick');
     },
     reloadBrowser() {
       window.document.location.reload();
