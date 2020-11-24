@@ -278,21 +278,16 @@ class EventDataProvider
         $type = 'Contact';
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
-        $customData = [
-            'content_name' => $this->context->customer->email,
-        ];
-
         return [
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
-            'custom_data' => $customData,
         ];
     }
 
     private function getCustomisationEventData($params)
     {
-        $type = 'CustomizeProduct';
+        $type = 'CombinationProduct';
 
         $idLang = (int) $this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
@@ -365,7 +360,7 @@ class EventDataProvider
             'order_id' => $order->id,
             'currency' => $this->getCurrency(),
             'content_ids' => $productList,
-            'value' => floatval($order->total_paid),
+            'value' => floatval($order->total_paid_tax_excl),
         ];
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -430,11 +425,11 @@ class EventDataProvider
         foreach ($cart->getProducts() as $product) {
             $content = [
                 'id' => ProductCatalogUtility::makeProductId($product['id_product'], $product['id_product_attribute']),
-                'title' => \Tools::replaceAccentedChars($product['name']),
-                'category' => (new Category($product['id_category_default']))->getName($idLang),
-                'item_price' => $product['price'],
                 'quantity' => $product['quantity'],
+                'item_price' => $product['price'],
+                'title' => \Tools::replaceAccentedChars($product['name']),
                 'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
+                'category' => (new Category($product['id_category_default']))->getName($idLang),
             ];
             $contents[] = $content;
         }

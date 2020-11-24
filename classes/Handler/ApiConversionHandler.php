@@ -41,7 +41,8 @@ class ApiConversionHandler
         Api::init(
             null, // app_id
             null, // app_secret
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
+            'EAAXM5JGPSe0BAMcBamHocBdEIxZCEeZBFhGdjS2DZBGlpKtigwjK6f8wUulVfSLxuyRVTCyAMGYaAaFhc2CCYrulj1BbJy1gW1AF44o8uc5M3VY2e2RNEeYqE0lWqB4gCkrcyZAZAB8qLl3xzXDqJEQKlpZBP5e8BlpDC09ljTPGgoemYwFE7rVte10k294rkZD'
+//            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
         );
     }
 
@@ -196,7 +197,9 @@ class ApiConversionHandler
     protected function sendEvents(array $events)
     {
         $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
+            ->setEvents($events)
+            ->setTestEventCode('TEST71042');
+
 
         try {
             $request->execute();
