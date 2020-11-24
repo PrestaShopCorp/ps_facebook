@@ -20,7 +20,7 @@
   <b-overlay
     :show="!active"
     opacity="0.7"
-    no-fade="true"
+    no-fade
   >
     <b-card no-body>
       <template v-slot:header>

@@ -60,7 +60,7 @@ export default defineComponent({
       default: () => '',
     },
     manageRoute: {
-      type: String,
+      type: Object,
       required: false,
       default: () => ({
         // Duplicates ./enabled-feature.vue

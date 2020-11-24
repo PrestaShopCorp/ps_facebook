@@ -13,7 +13,7 @@
         "php": ">=5.6",
         "guzzlehttp/guzzle": "~5.3",
         "prestashop/circuit-breaker": "^3.0",
-        "facebook/php-business-sdk": "^8.0",
+        "facebook/php-business-sdk": "dev-guzzle5",
         "prestashop/prestashop-accounts-auth": "^2.1.9",
         "vlucas/phpdotenv": "3.4",
         "facebook/graph-sdk": "^5.7",
@@ -39,5 +39,12 @@
         "psr-4": {
             "PrestaShop\\Module\\PrestashopFacebook\\Tests\\": "tests/unit/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "comment": "Facebook repository has been forked in order to use their latest changes with Guzzle 5, required by the core.",
+            "type": "vcs",
+            "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk"
+        }
+    ]
 }
