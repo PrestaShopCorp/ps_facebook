@@ -17,11 +17,15 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div class="pt-5">
+  <div
+    id="help"
+    class="ps-facebook-help-tab"
+  >
     <faq
       :faq="faq"
       :contact-us-link="contactUsLink"
       :doc-link="docLink"
+      class="m-3"
     />
   </div>
 </template>
@@ -73,5 +77,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  .ps-facebook-help-tab {
+    div.card {
+      border: none !important;
+      border-radius: 3px;
+    }
+  }
 </style>
