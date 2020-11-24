@@ -37,8 +37,10 @@
             </div>
           </div>
         </div>
-        <div class="d-flex"
-          v-if="switchActivated">
+        <div
+          class="d-flex"
+          v-if="switchActivated"
+        >
           <div class="flex-grow-1" />
           <div>
             <a

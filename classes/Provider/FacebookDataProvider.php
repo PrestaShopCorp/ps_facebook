@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
 
 class FacebookDataProvider
 {
@@ -36,6 +37,7 @@ class FacebookDataProvider
         $pixel = $this->facebookClient->getPixel($fbe['pixel_id']);
         $pages = $this->facebookClient->getPage($fbe['pages']);
         $ad = $this->facebookClient->getAd($fbe['ad_account_id']);
+        $catalog = new Catalog($fbe['catalog_id']); // No additional data retrieved from FB
         $isCategoriesMatching = $this->facebookClient->getCategoriesMatching($fbe['catalog_id']);
 
         return new ContextPsFacebook(
@@ -44,6 +46,7 @@ class FacebookDataProvider
             $pixel,
             $pages,
             $ad,
+            $catalog,
             $isCategoriesMatching
         );
     }

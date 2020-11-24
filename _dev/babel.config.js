@@ -17,14 +17,13 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 module.exports = {
-    presets: [
-      "@vue/cli-plugin-babel/preset",
-      [
-        "@vue/babel-preset-jsx",
-        {
-          injectH: false,
-        },
-      ],
+  presets: [
+    '@vue/cli-plugin-babel/preset',
+    [
+      '@vue/babel-preset-jsx',
+      {
+        injectH: false,
+      },
     ],
-  };
-  
+  ],
+};

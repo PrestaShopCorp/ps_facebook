@@ -6,11 +6,11 @@ use Exception;
 use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
-use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
-use PrestaShop\Module\PrestashopFacebook\DTO\Page;
-use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -140,6 +140,7 @@ class FacebookClient
         );
     }
 
+    // todo: finish categories matching
     public function getCategoriesMatching($catalogId)
     {
         return false;

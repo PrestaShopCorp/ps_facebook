@@ -140,48 +140,48 @@
     </b-card-body>
 
     <!-- Confirmation modal for FBE uninstallation -->
+    <div
+      id="ps_facebook_modal_unlink"
+      class="modal"
+    >
       <div
-        id="ps_facebook_modal_unlink"
-        class="modal"
+        class="modal-dialog"
+        role="document"
       >
-        <div
-          class="modal-dialog"
-          role="document"
-        >
-          <div class="modal-content tw-rounded-none">
-            <div class="modal-header">
-              <slot name="header">
-                <div class="tw-flex tw-items-center">
-                  <h5 class="modal-title tw-pl-3">
-                    {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
-                  </h5>
-                </div>
-              </slot>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              {{ $t('configuration.facebook.connected.unlinkModalText') }}
-            </div>
-            <div class="modal-footer">
-              <b-button
-                variant="primary"
-                target="_blank"
-                data-dismiss="modal"
-                @click="uninstall"
-              >
-                {{ $t('integrate.buttons.modalConfirm') }}
-              </b-button>
-            </div>
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ $t('configuration.facebook.connected.unlinkModalText') }}
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="uninstall"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
           </div>
         </div>
       </div>
+    </div>
 
     <b-card-body
       v-if="!folded"
@@ -256,7 +256,7 @@
               :created-at="contextPsFacebook.ads.createdAt"
               :display-warning="
                 !contextPsFacebook.ads.name ||
-                !contextPsFacebook.ads.createdAt
+                  !contextPsFacebook.ads.createdAt
               "
             />
           </b-col>

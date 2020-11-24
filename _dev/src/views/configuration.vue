@@ -37,8 +37,11 @@
         :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
         :category-matching-started="categoryMatchingStarted"
         :product-sync-started="productSyncStarted"
+        :ad-campaign-started="adCampaignStarted"
         :error="error"
-        @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+        @onSyncCatalogClick="onSyncCatalogClick"
+        @onCategoryMatchingClick="onCategoryMatchingClick"
+        @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
       <ps-accounts
@@ -51,7 +54,7 @@
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
         :active="psAccountsOnboarded"
-        :canConnect="!!dynamicExternalBusinessId"
+        :can-connect="!!dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
@@ -217,10 +220,15 @@ export default defineComponent({
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
         && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
+      // TODO !1: must be true only if all parent categories are matched !
     },
     productSyncStarted() {
       return this.contextPsFacebook && this.contextPsFacebook.catalog
         && this.contextPsFacebook.catalog.productSyncStarted;
+    },
+    adCampaignStarted() {
+      // TODO !1: when true?
+      return false;
     },
     showSyncCatalogAdvice() {
       const c = this.dynamicContextPsFacebook;
@@ -271,8 +279,19 @@ export default defineComponent({
           this.error = 'configuration.messages.unknownOnboardingError';
         });
     },
-    onSyncCatalogAdviceClick() {
+    onCategoryMatchingClick() {
       this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
+    },
+    onSyncCatalogClick() {
+      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
+    },
+    onAdCampaignClick() {
+      const catalogId = this.dynamicContextPsFacebook.catalog.id;
+      const businessId = this.dynamicContextPsFacebook.facebookBusinessManager.id;
+      const host = 'https://business.facebook.com';
+      const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
+      const url = `${host}/products/catalogs/${catalogId}/ads${query}`;
+      window.open(url, '_blank');
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();
