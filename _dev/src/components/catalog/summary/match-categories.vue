@@ -44,7 +44,7 @@
         class="small-text"
         show
       >
-        <span v-html="textCategoryMatchingNotice"></span>
+        <span v-html="textCategoryMatchingNotice" />
       </b-alert>
     </p>
   </div>

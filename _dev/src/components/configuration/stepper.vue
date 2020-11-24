@@ -37,26 +37,29 @@
 
       <div class="mb-2">
         <stepper-icon
-          :state="psFacebookOnboarded ? 'DONE' : (psFacebookOnboardingAvailable ? 'AVAILABLE' : 'DISABLED')"
+          :state="psFacebookOnboarded ? 'DONE' : (psFbOnboardAvailable ? 'AVAILABLE' : 'DISABLED')"
         />
-        <span :class="!psFacebookOnboardingAvailable && 'text-muted'">
+        <span :class="!psFbOnboardAvailable && 'text-muted'">
           {{ $t('configuration.messages.stepPsFacebook') }}
         </span>
       </div>
 
       <div class="mb-2">
         <stepper-icon
-          :state="categoryMatchingStarted ? 'DONE' : (categoryMatchingClickable ? 'AVAILABLE' : 'DISABLED')"
+          :state="categoryMatchingStarted ? 'DONE' : (catMatchClickable ? 'AVAILABLE' : 'DISABLED')"
         />
         <a
-          v-if="categoryMatchingClickable"
+          v-if="catMatchClickable"
           @click="onCategoryMatchingClick"
           href="javascript:void(0)"
           :class="!categoryMatchingStarted && 'bold'"
         >
           {{ $t('configuration.messages.stepCategoryMatching') }}
         </a>
-        <span v-else class="text-muted">
+        <span
+          v-else
+          class="text-muted"
+        >
           {{ $t('configuration.messages.stepCategoryMatching') }}
         </span>
         <span class="italic text-muted">
@@ -76,7 +79,12 @@
         >
           {{ $t('configuration.messages.stepProductSync') }}
         </a>
-        <span v-else class="text-muted">{{ $t('configuration.messages.stepProductSync') }}</span>
+        <span
+          v-else
+          class="text-muted"
+        >
+          {{ $t('configuration.messages.stepProductSync') }}
+        </span>
       </div>
 
       <div class="mb-2">
@@ -91,7 +99,12 @@
         >
           {{ $t('configuration.messages.stepAdCampaign') }}
         </a>
-        <span v-else class="text-muted">{{ $t('configuration.messages.stepAdCampaign') }}</span>
+        <span
+          v-else
+          class="text-muted"
+        >
+          {{ $t('configuration.messages.stepAdCampaign') }}
+        </span>
       </div>
     </div>
   </b-card>
@@ -142,10 +155,10 @@ export default defineComponent({
     };
   },
   computed: {
-    psFacebookOnboardingAvailable() {
+    psFbOnboardAvailable() {
       return this.psAccountsOnboarded;
     },
-    categoryMatchingClickable() {
+    catMatchClickable() {
       return this.psAccountsOnboarded && this.psFacebookOnboarded;
     },
     productSyncClickable() {

@@ -54,7 +54,7 @@
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
         :active="psAccountsOnboarded"
-        :canConnect="dynamicExternalBusinessId"
+        :can-connect="dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
@@ -291,7 +291,7 @@ export default defineComponent({
       const host = 'https://business.facebook.com';
       const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
       const url = `${host}/products/catalogs/${catalogId}/ads${query}`;
-      window.open(url, '_blank'); // TODO !0 to test
+      window.open(url, '_blank');
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();

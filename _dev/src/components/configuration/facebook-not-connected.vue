@@ -42,7 +42,10 @@
           <span :class="!canConnect ? 'hidden' : ''">
             {{ $t('configuration.facebook.notConnected.connectButton') }}
           </span>
-          <div v-if="!canConnect" class="spinner" />
+          <div
+            v-if="!canConnect"
+            class="spinner"
+          />
         </b-button>
 
         <div class="logo mr-3">

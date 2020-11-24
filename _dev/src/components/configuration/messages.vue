@@ -50,6 +50,7 @@
       :ad-campaign-started="adCampaignStarted"
       @onCategoryMatchingClick="onCategoryMatchingClick"
       @onSyncCatalogClick="onSyncCatalogClick"
+      @onAdCampaignClick="onAdCampaignClick"
     />
   </div>
 </template>

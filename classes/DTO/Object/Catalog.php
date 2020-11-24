@@ -2,7 +2,9 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\DTO\Object;
 
-class Catalog
+use JsonSerializable;
+
+class Catalog implements JsonSerializable
 {
     /**
      * @var string
