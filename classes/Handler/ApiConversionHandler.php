@@ -47,7 +47,6 @@ class ApiConversionHandler
 
     public function handleEvent($params)
     {
-
         if (empty($this->pixelId)) {
             return;
         }

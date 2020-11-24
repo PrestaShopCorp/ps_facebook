@@ -63,7 +63,7 @@ class EventDataProvider
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int)$this->context->language->id;
+        $this->idLang = (int) $this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
@@ -184,7 +184,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int)$this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
@@ -293,7 +293,7 @@ class EventDataProvider
     {
         $type = 'CustomizeProduct';
 
-        $idLang = (int)$this->context->language->id;
+        $idLang = (int) $this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
         $locale = \Tools::strtoupper($this->context->language->iso_code);
@@ -382,7 +382,7 @@ class EventDataProvider
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $cart = $this->context->cart;
-        $idLang = (int)$this->context->language->id;
+        $idLang = (int) $this->context->language->id;
         $contents = $this->getProductContent($cart, $idLang);
 
         $customData = [
@@ -396,7 +396,7 @@ class EventDataProvider
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
-            'custom_data' => $customData
+            'custom_data' => $customData,
         ];
     }
 
@@ -413,7 +413,7 @@ class EventDataProvider
             'event_type' => $type,
             'event_time' => time(),
             'user' => $user,
-            'custom_data' => $customData
+            'custom_data' => $customData,
         ];
     }
 

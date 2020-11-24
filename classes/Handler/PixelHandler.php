@@ -50,7 +50,6 @@ class PixelHandler
             $content = $this->formatPixel($customData);
         }
 
-
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
             'id_pixel' => $pixel_id,

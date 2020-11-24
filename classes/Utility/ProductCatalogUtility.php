@@ -16,7 +16,7 @@ class ProductCatalogUtility
             '-',
             [
                 (int) $productId,
-                (int) $productAttributeId
+                (int) $productAttributeId,
             ]
         );
     }
