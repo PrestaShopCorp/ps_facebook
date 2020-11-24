@@ -37,6 +37,7 @@ class PixelHandler
         }
         $track = 'track';
 
+        $eventType = 'undefined';
         if (isset($params['event_type'])) {
             $eventType = $params['event_type'];
         }
@@ -58,7 +59,7 @@ class PixelHandler
             'track' => $track,
         ];
 
-        if ($this->context->customer->id) {
+        if (isset($userData)) {
             $smartyVariables['userInfos'] = $this->getCustomerInformation($userData);
         }
 
@@ -80,9 +81,9 @@ class PixelHandler
     }
 
     /**
-     * getCustomerInformations
+     * getCustomerInformation
      *
-     * @param $customerInformation
+     * @param array $customerInformation
      *
      * @return array
      */

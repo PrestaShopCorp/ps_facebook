@@ -110,7 +110,7 @@ class ApiConversionHandler
             if (isset($customData['value'])) {
                 $customDataObj->setValue($customData['value']);
             }
-            if (isset($content)) {
+            if (isset($contents)) {
                 $customDataObj->setContents($contents);
             }
             if (isset($customData['content_type'])) {
@@ -137,6 +137,9 @@ class ApiConversionHandler
             if (isset($customData['search_string'])) {
                 $customDataObj->setSearchString($customData['search_string']);
             }
+            if (isset($customData['custom_properties'])) {
+                $customDataObj->setCustomProperties($customData['custom_properties']);
+            }
         }
 
         $event = new Event();
@@ -149,7 +152,7 @@ class ApiConversionHandler
         if (isset($user)) {
             $event->setUserData($user);
         }
-        if (isset($customData)) {
+        if (isset($customDataObj)) {
             $event->setCustomData($customDataObj);
         }
         if (isset($eventSourceUrl)) {
@@ -193,8 +196,7 @@ class ApiConversionHandler
     protected function sendEvents(array $events)
     {
         $request = (new EventRequest($this->pixelId))
-            ->setEvents($events)
-            ->setTestEventCode('TEST71042');
+            ->setEvents($events);
 
         try {
             $request->execute();

@@ -1,11 +1,13 @@
 <?php
 
-use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CustomisationEvent;
-use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
+use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
+use PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider;
 
 class ps_facebookAjaxModuleFrontController extends ModuleFrontController
 {
+    /** @var Ps_facebook */
+    public $module;
+
     public function postProcess()
     {
         if ('CustomizeProduct' === Tools::getValue('action')) {
@@ -25,9 +27,12 @@ class ps_facebookAjaxModuleFrontController extends ModuleFrontController
             'productId' => $productId,
             'attributeIds' => $attributeIds,
         ];
-        $pixelId = \Configuration::get(Config::PS_PIXEL_ID);
 
-        (new CustomisationEvent($this->context, $pixelId, new ProductRepository()))
-            ->send($params);
+        /** @var EventDataProvider $eventDataProvider */
+        $eventDataProvider = $this->module->getService(EventDataProvider::class);
+        $apiConversionHandler = $this->module->getService(ApiConversionHandler::class);
+
+        $eventData = $eventDataProvider->generateEventData('customizeProduct', $params);
+        $apiConversionHandler->handleEvent($eventData);
     }
 }

@@ -5,7 +5,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 use Cart;
 use Category;
 use Context;
-use FacebookAds\Object\ServerSide\Content;
 use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
@@ -75,7 +74,7 @@ class EventDataProvider
             case 'hookDisplayHeader':
                 $controllerPage = $this->context->controller->php_self;
                 if (true === \Tools::isSubmit('submitCustomizedData')) {
-                    return $this->getCustomEventData($params);
+                    return $this->getCustomEventData();
                 }
                 if ($controllerPage === 'product') {
                     return $this->getProductPageData();
@@ -101,6 +100,8 @@ class EventDataProvider
                 return $this->getShopSubscriptionEvent($params);
             case 'hookActionCustomerAccountAdd':
                 return $this->getCompleteRegistrationEventData();
+            case 'customizeProduct':
+                return $this->getCustomisationEventData($params);
         }
 
         return false;
@@ -309,7 +310,7 @@ class EventDataProvider
         ];
     }
 
-    private function getCustomEventData($params)
+    private function getCustomEventData()
     {
         $type = 'CustomizeProduct';
 
@@ -421,7 +422,7 @@ class EventDataProvider
      * @param Cart $cart
      * @param int $idLang
      *
-     * @return Content[]
+     * @return array
      */
     private function getProductContent(Cart $cart, $idLang)
     {
