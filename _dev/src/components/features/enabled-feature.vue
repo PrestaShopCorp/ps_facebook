@@ -145,12 +145,12 @@ export default defineComponent({
       default: global.psFacebookUpdateFeatureRoute,
     },
     manageRoute: {
-      type: String,
+      type: Object,
       required: false,
       default: () => ({
         // Duplicates ./available-feature.vue
         default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}` || '#',
       }),
     },
   },
@@ -222,7 +222,7 @@ export default defineComponent({
       }
     }
     .card {
-      border: none;
+      border: none !important;
       border-radius: 3px;
     }
     .flex-grow-1 {

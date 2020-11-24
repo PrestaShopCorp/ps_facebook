@@ -51,7 +51,7 @@
         @onFbeOnboardClick="onFbeOnboardClick"
         class="m-3"
         :active="psAccountsOnboarded"
-        :canConnect="dynamicExternalBusinessId"
+        :canConnect="!!dynamicExternalBusinessId"
       />
       <facebook-connected
         v-else
@@ -245,7 +245,7 @@ export default defineComponent({
     };
   },
   created() {
-    if (this.contextPsFacebook === undefined || this.externalBusinessId === undefined) {
+    if (!this.contextPsFacebook || !this.externalBusinessId) {
       this.fetchData();
     } else {
       this.loading = false;
