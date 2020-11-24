@@ -17,109 +17,107 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-container class="m-auto p-0">
-    <b-card no-body>
-      <template v-slot:header>
-        <i class="material-icons">help</i>{{ $t("help.title") }}
-      </template>
+  <b-card no-body>
+    <template v-slot:header>
+      <i class="material-icons">help</i>{{ $t("help.title") }}
+    </template>
 
-      <b-card-body>
-        <div class="d-flex">
-          <div class="left-block">
-            <div class="module-desc d-flex mb-4">
-              <div class="module-img mr-3">
-                <img
-                  src="@/assets/logo.png"
-                  width="75"
-                  height="75"
-                  alt=""
-                >
-              </div>
-              <div>
-                <b>{{ $t("help.allowsYouTo.title") }}</b>
-                <ul class="mt-3">
-                  <li>{{ $t("help.allowsYouTo.business") }}</li>
-                  <li>{{ $t("help.allowsYouTo.account") }}</li>
-                  <li>{{ $t("help.allowsYouTo.traffic") }}</li>
-                  <li>{{ $t("help.allowsYouTo.inventory") }}</li>
-                  <li>{{ $t("help.allowsYouTo.people") }}</li>
-                </ul>
-              </div>
+    <b-card-body>
+      <div class="d-flex">
+        <div class="left-block">
+          <div class="module-desc d-flex mb-4">
+            <div class="module-img mr-3">
+              <img
+                src="@/assets/logo.png"
+                width="75"
+                height="75"
+                alt=""
+              >
             </div>
-            <div class="faq">
-              <h1>{{ $t("faq.title") }}</h1>
-              <div class="separator my-3" />
-              <template v-if="faq && faq.categories">
-                <v-collapse-group
-                  class="my-3"
-                  v-for="(categorie, index) in faq.categories"
-                  :key="index"
-                  :only-one-active="true"
-                >
-                  <h3 class="categorie-title">
-                    {{ categorie.title }}
-                  </h3>
-                  <v-collapse-wrapper
-                    :ref="index + '_' + i"
-                    v-for="(item, i) in categorie.blocks"
-                    :key="i"
-                  >
-                    <div
-                      class="my-3 question"
-                      v-collapse-toggle
-                    >
-                      <a><i class="material-icons">keyboard_arrow_right</i>
-                        {{ item.question }}</a>
-                    </div>
-                    <div
-                      class="answer"
-                      :class="'a' + i"
-                      v-collapse-content
-                    >
-                      {{ item.answer }}
-                    </div>
-                  </v-collapse-wrapper>
-                </v-collapse-group>
-              </template>
-              <template v-else>
-                <b-alert
-                  variant="warning"
-                  show
-                >
-                  <p>{{ $t("faq.noFaq") }}</p>
-                </b-alert>
-              </template>
+            <div>
+              <b>{{ $t("help.allowsYouTo.title") }}</b>
+              <ul class="mt-3">
+                <li>{{ $t("help.allowsYouTo.business") }}</li>
+                <li>{{ $t("help.allowsYouTo.account") }}</li>
+                <li>{{ $t("help.allowsYouTo.traffic") }}</li>
+                <li>{{ $t("help.allowsYouTo.inventory") }}</li>
+                <li>{{ $t("help.allowsYouTo.people") }}</li>
+              </ul>
             </div>
           </div>
-          <div class="right-block">
-            <div class="doc">
-              <b class="text-muted">{{ $t("help.help.needHelp") }}</b>
-              <br>
-              <b-button
-                class="mt-3"
-                variant="primary"
-                @click="getDocumentation()"
+          <div class="faq">
+            <h1>{{ $t("faq.title") }}</h1>
+            <div class="separator my-3" />
+            <template v-if="faq && faq.categories">
+              <v-collapse-group
+                class="my-3"
+                v-for="(categorie, index) in faq.categories"
+                :key="index"
+                :only-one-active="true"
               >
-                {{ $t("help.help.downloadPdf") }}
-              </b-button>
-            </div>
-            <div class="contact mt-4">
-              <div>{{ $t("help.help.couldntFindAnyAnswer") }}</div>
-              <div class="mt-2">
-                <b-button
-                  variant="link"
-                  @click="contactUs()"
+                <h3 class="categorie-title">
+                  {{ categorie.title }}
+                </h3>
+                <v-collapse-wrapper
+                  :ref="index + '_' + i"
+                  v-for="(item, i) in categorie.blocks"
+                  :key="i"
                 >
-                  {{ $t("help.help.contactUs") }}
-                  <i class="material-icons">arrow_right_alt</i>
-                </b-button>
-              </div>
+                  <div
+                    class="my-3 question"
+                    v-collapse-toggle
+                  >
+                    <a><i class="material-icons">keyboard_arrow_right</i>
+                      {{ item.question }}</a>
+                  </div>
+                  <div
+                    class="answer"
+                    :class="'a' + i"
+                    v-collapse-content
+                  >
+                    {{ item.answer }}
+                  </div>
+                </v-collapse-wrapper>
+              </v-collapse-group>
+            </template>
+            <template v-else>
+              <b-alert
+                variant="warning"
+                show
+              >
+                <p>{{ $t("faq.noFaq") }}</p>
+              </b-alert>
+            </template>
+          </div>
+        </div>
+        <div class="right-block">
+          <div class="doc">
+            <b class="text-muted">{{ $t("help.help.needHelp") }}</b>
+            <br>
+            <b-button
+              class="mt-3"
+              variant="primary"
+              @click="getDocumentation()"
+            >
+              {{ $t("help.help.downloadPdf") }}
+            </b-button>
+          </div>
+          <div class="contact mt-4">
+            <div>{{ $t("help.help.couldntFindAnyAnswer") }}</div>
+            <div class="mt-2">
+              <b-button
+                variant="link"
+                @click="contactUs()"
+              >
+                {{ $t("help.help.contactUs") }}
+                <i class="material-icons">arrow_right_alt</i>
+              </b-button>
             </div>
           </div>
         </div>
-      </b-card-body>
-    </b-card>
-  </b-container>
+      </div>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script lang="ts">
