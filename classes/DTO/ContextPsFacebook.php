@@ -3,6 +3,11 @@
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 use JsonSerializable;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 
 class ContextPsFacebook implements JsonSerializable
