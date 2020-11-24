@@ -3,8 +3,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
-use PrestaShop\Module\PrestashopFacebook\DTO\Catalog;
 use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
 
 class FacebookDataProvider
 {
