@@ -17,11 +17,6 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 class ApiConversionHandler
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var false|string
      */
     private $pixelId;
@@ -31,10 +26,9 @@ class ApiConversionHandler
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, Context $context)
+    public function __construct(ConfigurationAdapter $configurationAdapter)
     {
         $this->configurationAdapter = $configurationAdapter;
-        $this->context = $context;
 
         $this->pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
 
@@ -197,6 +191,12 @@ class ApiConversionHandler
     {
         $request = (new EventRequest($this->pixelId))
             ->setEvents($events);
+
+        // A test event code can be set to check the events are properly sent to Facebook
+        $testEventCode = $this->configurationAdapter->get(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
+        if (!empty($testEventCode)) {
+            $request->setTestEventCode($testEventCode);
+        }
 
         try {
             $request->execute();

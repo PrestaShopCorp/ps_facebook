@@ -303,6 +303,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    /****************
+     * HELP CONTENT *
+     ****************/
+
     /**
      * Retrieve the faq
      */
@@ -319,6 +323,34 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )
         );
+    }
+
+    /******************************
+     * DEVELOPMENT & DEBUG ROUTES *
+     ******************************/
+
+    public function displayAjaxUpdateConversionApiData()
+    {
+        $inputs = json_decode(file_get_contents('php://input'), true);
+        $success = true;
+
+        if (isset($inputs['system_access_token'])) {
+            $success = $success && 
+                Configuration::updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $inputs['system_access_token']);
+        }
+        if (isset($inputs['test_event'])) {
+            $success = $success && 
+                Configuration::updateValue(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE, $inputs['test_event']);
+        }
+        if (isset($inputs['drop_test_event'])) {
+            $success = $success && 
+                Configuration::deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
+        }
+
+        if (!$success) {
+            http_response_code(400);
+        }
+        $this->ajaxDie(json_encode(['success' => $success]));
     }
 
     /**
