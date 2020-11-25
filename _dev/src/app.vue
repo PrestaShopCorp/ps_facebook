@@ -70,12 +70,12 @@ export default {
   },
   created() {
     this.getFbContext();
-    this.$segment.identify(this.$store.state.appContext.shopDomain, {
-      name: this.$store.state.appContext.shopUrl,
-      email: this.$store.state.appContext.user.email,
-      language: this.$store.state.statei18nSettings.isoCode,
-      version_ps: this.$store.state.appContext.psVersion,
-      version_module: this.$store.state.appContext.moduleVersion,
+    this.$segment.identify(this.$store.state.context.appContext.shopDomain, {
+      name: this.$store.state.context.appContext.shopUrl,
+      email: this.$store.state.context.appContext.email,
+      language: this.$store.state.context.statei18nSettings.isoCode,
+      version_ps: this.$store.state.context.appContext.psVersion,
+      version_module: this.$store.state.context.appContext.moduleVersion,
       module: 'ps_facebook',
     });
   },
