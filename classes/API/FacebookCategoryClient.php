@@ -39,13 +39,13 @@ class FacebookCategoryClient
     /**
      * @param int $categoryId
      *
+     * @param $shopId
      * @return array|null
      *
-     * @throws \PrestaShopDatabaseException
      */
-    public function getGoogleCategory($categoryId)
+    public function getGoogleCategory($categoryId, $shopId)
     {
-        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId);
+        $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId, $shopId);
 
         $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
 

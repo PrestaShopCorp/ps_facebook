@@ -185,6 +185,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
+        /** @var \PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository $a */
+        $a = $this->module->getService(\PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository::class );
+        $a->areParentCategoriesMatched($this->context->shop->id);
         parent::initContent();
     }
 

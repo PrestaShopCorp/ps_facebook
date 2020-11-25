@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use Configuration;
 use Language;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 
@@ -24,9 +25,12 @@ class MessengerHandler
      */
     private $fbeFeatureDataProvider;
 
-    public function __construct(Language $lang, FbeFeatureDataProvider $fbeFeatureDataProvider)
-    {
-        $pageList = explode(',', Configuration::get('PS_FACEBOOK_PAGES'));
+    public function __construct(
+        Language $lang,
+        FbeFeatureDataProvider $fbeFeatureDataProvider,
+        ConfigurationAdapter $configurationAdapter
+    ) {
+        $pageList = explode(',', $configurationAdapter->get('PS_FACEBOOK_PAGES'));
         $this->pageId = (int) reset($pageList);
         $this->lang = $lang;
         $this->fbeFeatureDataProvider = $fbeFeatureDataProvider;

@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
+use Shop;
 
 class GoogleCategoryProvider implements GoogleCategoryProviderInterface
 {
@@ -12,22 +13,29 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
      */
     private $googleCategoryRepository;
 
+    /**
+     * @var Shop
+     */
+    private $shop;
+
     public function __construct(
-        GoogleCategoryRepository $googleCategoryRepository
+        GoogleCategoryRepository $googleCategoryRepository,
+        Shop $shop
     ) {
         $this->googleCategoryRepository = $googleCategoryRepository;
+        $this->shop = $shop;
     }
 
     /**
      * @param int $categoryId
      *
+     * @param $shopId
      * @return array|null
      *
-     * @throws \PrestaShopDatabaseException
      */
-    public function getGoogleCategory($categoryId)
+    public function getGoogleCategory($categoryId, $shopId)
     {
-        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchByCategoryId($categoryId);
+        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchByCategoryId($categoryId, $shopId);
         if (!is_array($categoryMatch)) {
             return null;
         }
@@ -51,7 +59,8 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
             $categoryId,
             $langId,
             Config::CATEGORIES_PER_PAGE * ($page - 1),
-            Config::CATEGORIES_PER_PAGE
+            Config::CATEGORIES_PER_PAGE,
+            $this->shop->id
         );
 
         if (!is_array($googleCategories)) {

@@ -1,6 +1,8 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository
