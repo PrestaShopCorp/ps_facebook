@@ -28,7 +28,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
 
     /**
      * @param int $categoryId
-     * @param $shopId
+     * @param int $shopId
      *
      * @return array|null
      */

@@ -21,7 +21,7 @@ class CategoryMatchHandler
      * @param int $categoryId
      * @param int $googleCategoryId
      * @param bool $updateChildren
-     * @param $shopId
+     * @param int $shopId
      *
      * @throws \PrestaShopDatabaseException
      */

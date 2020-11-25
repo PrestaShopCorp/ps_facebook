@@ -8,6 +8,9 @@ use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
+    /** @var Ps_facebook */
+    public $module;
+
     /**
      * @var ConfigurationAdapter
      */

@@ -26,7 +26,7 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      * @param int $googleCategoryId
-     * @param $shopId
+     * @param int $shopId
      * @param bool $isParentCategory
      *
      * @throws \PrestaShopDatabaseException
@@ -50,7 +50,7 @@ class GoogleCategoryRepository
     /**
      * @param PrestaShopCollection $childCategories
      * @param int $googleCategoryId
-     * @param $shopId
+     * @param int $shopId
      *
      * @throws \PrestaShopDatabaseException
      */
@@ -78,7 +78,7 @@ class GoogleCategoryRepository
 
     /**
      * @param int $categoryId
-     * @param $shopId
+     * @param int $shopId
      *
      * @return int
      */
@@ -95,7 +95,7 @@ class GoogleCategoryRepository
 
     /**
      * @param int $categoryId
-     * @param $shopId
+     * @param int $shopId
      *
      * @return array|false
      */
@@ -114,7 +114,7 @@ class GoogleCategoryRepository
 
     /**
      * @param array $categoryIds
-     * @param $shopId
+     * @param int $shopId
      *
      * @return array|false
      *
@@ -133,7 +133,7 @@ class GoogleCategoryRepository
 
     /**
      * @param array $categoryIds
-     * @param $shopId
+     * @param int $shopId
      *
      * @return array|false
      *
@@ -183,7 +183,7 @@ class GoogleCategoryRepository
     }
 
     /**
-     * @param $shopId
+     * @param int $shopId
      *
      * @return bool
      *

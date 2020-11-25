@@ -38,7 +38,7 @@ class FacebookCategoryClient
 
     /**
      * @param int $categoryId
-     * @param $shopId
+     * @param int $shopId
      *
      * @return array|null
      */
