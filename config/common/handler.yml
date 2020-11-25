@@ -21,11 +21,13 @@ services:
     arguments:
       - '@ps_facebook.language'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
     arguments:
       - '@ps_facebook'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler

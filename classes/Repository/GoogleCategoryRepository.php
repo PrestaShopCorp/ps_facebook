@@ -39,7 +39,7 @@ class GoogleCategoryRepository
                 'id_category' => (int) $categoryId,
                 'google_category_id' => (int) $googleCategoryId,
                 'is_parent_category' => $isParentCategory,
-                'id_shop' => (int) $shopId
+                'id_shop' => (int) $shopId,
             ],
             false,
             true,
@@ -50,8 +50,8 @@ class GoogleCategoryRepository
     /**
      * @param PrestaShopCollection $childCategories
      * @param int $googleCategoryId
-     *
      * @param $shopId
+     *
      * @throws \PrestaShopDatabaseException
      */
     public function updateCategoryChildrenMatch(PrestaShopCollection $childCategories, $googleCategoryId, $shopId)
@@ -63,7 +63,7 @@ class GoogleCategoryRepository
                 'id_category' => (int) $category->id,
                 'google_category_id' => (int) $googleCategoryId,
                 'is_parent_category' => false,
-                'id_shop' => (int) $shopId
+                'id_shop' => (int) $shopId,
             ];
         }
 
@@ -95,10 +95,9 @@ class GoogleCategoryRepository
 
     /**
      * @param int $categoryId
-     *
      * @param $shopId
-     * @return array|false
      *
+     * @return array|false
      */
     public function getCategoryMatchByCategoryId($categoryId, $shopId)
     {
@@ -115,8 +114,8 @@ class GoogleCategoryRepository
 
     /**
      * @param array $categoryIds
-     *
      * @param $shopId
+     *
      * @return array|false
      *
      * @throws \PrestaShopDatabaseException
@@ -134,8 +133,8 @@ class GoogleCategoryRepository
 
     /**
      * @param array $categoryIds
-     *
      * @param $shopId
+     *
      * @return array|false
      *
      * @throws \PrestaShopDatabaseException
@@ -185,7 +184,9 @@ class GoogleCategoryRepository
 
     /**
      * @param $shopId
+     *
      * @return bool
+     *
      * @throws \PrestaShopDatabaseException
      */
     public function areParentCategoriesMatched($shopId)
@@ -194,10 +195,10 @@ class GoogleCategoryRepository
         $sql->select('c.id_category');
         $sql->from('category', 'c');
         $sql->innerJoin('category_shop', 'cs', 'cs.id_category = c.id_category');
-        $sql->leftJoin('fb_category_match', 'cm', 'cm.id_category = c.id_category AND cm.id_shop = cs.id_shop' );
+        $sql->leftJoin('fb_category_match', 'cm', 'cm.id_category = c.id_category AND cm.id_shop = cs.id_shop');
         $sql->where("c.id_parent = {$this->homeCategoryId} AND cm.google_category_id IS NULL");
-        $sql->where("cs.id_shop = " . (int) $shopId);
+        $sql->where('cs.id_shop = ' . (int) $shopId);
 
-         return (bool) Db::getInstance()->executeS($sql);
+        return (bool) Db::getInstance()->executeS($sql);
     }
 }

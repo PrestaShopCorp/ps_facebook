@@ -2,14 +2,22 @@
 
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
     public function __construct()
     {
         parent::__construct();
+        /* @var ConfigurationAdapter configurationAdapter */
+        $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->bootstrap = false;
     }
 
@@ -19,11 +27,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
         $appId = $_ENV['PSX_FACEBOOK_APP_ID'];
-        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
-            'id_pixel' => pSQL(Configuration::get(Config::PS_PIXEL_ID)),
-            'access_token' => pSQL(Configuration::get('PS_FBE_ACCESS_TOKEN')),
+            'id_pixel' => pSQL($this->configurationAdapter->get(Config::PS_PIXEL_ID)),
+            'access_token' => pSQL($this->configurationAdapter->get('PS_FBE_ACCESS_TOKEN')),
             'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
@@ -175,7 +183,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'languageLocale' => $this->context->language->language_code,
             ],
             'psFacebookCurrency' => $defaultCurrency->iso_code,
-            'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
+            'psFacebookTimezone' => $this->configurationAdapter->get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,
             'shopDomain' => Tools::getShopDomain(false),
             'shopUrl' => Tools::getShopDomainSsl(true),
@@ -186,7 +194,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
         /** @var \PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository $a */
-        $a = $this->module->getService(\PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository::class );
+        $a = $this->module->getService(\PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository::class);
         $a->areParentCategoriesMatched($this->context->shop->id);
         parent::initContent();
     }
@@ -195,12 +203,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     {
         $id_pixel = Tools::getValue(Config::PS_PIXEL_ID);
         if (!empty($id_pixel)) {
-            Configuration::updateValue(Config::PS_PIXEL_ID, $id_pixel);
+            $this->configurationAdapter->updateValue(Config::PS_PIXEL_ID, $id_pixel);
         }
 
         $access_token = Tools::getValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
         if (!empty($access_token)) {
-            Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
         }
     }
 }

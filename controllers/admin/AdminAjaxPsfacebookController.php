@@ -41,7 +41,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        /** @var ConfigurationAdapter configurationAdapter */
+        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
     }
 

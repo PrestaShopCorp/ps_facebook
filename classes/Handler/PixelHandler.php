@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
@@ -22,16 +23,22 @@ class PixelHandler
      */
     private $templateBuffer;
 
-    public function __construct($module)
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct($module, ConfigurationAdapter $configurationAdapter)
     {
         $this->context = \Context::getContext();
         $this->module = $module;
         $this->templateBuffer = $module->templateBuffer;
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     public function handleEvent($params)
     {
-        $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
+        $pixel_id = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
             return;
         }

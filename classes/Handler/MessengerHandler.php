@@ -2,7 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use Configuration;
 use Language;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
