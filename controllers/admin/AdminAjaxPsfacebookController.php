@@ -335,15 +335,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $success = true;
 
         if (isset($inputs['system_access_token'])) {
-            $success = $success && 
+            $success = /*$success && */
                 Configuration::updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $inputs['system_access_token']);
         }
         if (isset($inputs['test_event'])) {
-            $success = $success && 
+            $success = $success &&
                 Configuration::updateValue(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE, $inputs['test_event']);
         }
         if (isset($inputs['drop_test_event'])) {
-            $success = $success && 
+            $success = $success &&
                 Configuration::deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
         }
 

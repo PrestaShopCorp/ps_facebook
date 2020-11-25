@@ -2,7 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use Context;
 use FacebookAds\Api;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
