@@ -88,13 +88,14 @@ class PsFacebookTranslations
                     'stepCategoryMatching' => $this->module->l('Map categories', 'PsFacebookTranslations'),
                     'stepCategoryMatchingOptional' => $this->module->l('(optional but strongly recommended)', 'PsFacebookTranslations'),
                     'stepProductSync' => $this->module->l('Export your product catalog', 'PsFacebookTranslations'),
-                    'stepAdCampaign' => $this->module->l('Create ad campaign', 'PsFacebookTranslations'),
+                    'stepAdCampaign' => $this->module->l('Create Traffic and/or Dynamic Ads', 'PsFacebookTranslations'),
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
                     'title' => $this->module->l('Your Facebook settings', 'PsFacebookTranslations'),
                     'notConnected' => [
+                        'title' => $this->module->l('Connect your store to Facebook', 'PsFacebookTranslations'),
                         'intro' => $this->module->l('Integrate your shop with Facebook.', 'PsFacebookTranslations'),
                         'connectButton' => $this->module->l('Connect to Facebook', 'PsFacebookTranslations'),
                         'description' => $this->module->l('With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.', 'PsFacebookTranslations'),
