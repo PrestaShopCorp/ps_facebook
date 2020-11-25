@@ -68,15 +68,16 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.user.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.user.email }}
         </span>
       </div>
 
       <b-dropdown
         variant="primary"
-        split right
+        split
+        right
         @click="openManageFbe"
         class="ml-4 float-right"
       >
@@ -87,7 +88,10 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item @click="uninstall">
+        <b-dropdown-item
+          data-toggle="modal"
+          data-target="#ps_facebook_modal_unlink"
+        >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
@@ -115,7 +119,10 @@
         <b-dropdown-item @click="edit">
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
-        <b-dropdown-item @click="uninstall">
+        <b-dropdown-item
+          data-toggle="modal"
+          data-target="#ps_facebook_modal_unlink"
+        >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
       </b-dropdown>
@@ -125,12 +132,56 @@
         <br>
         <span
           class="font-weight-bold"
-          v-if="!!contextPsFacebook.email"
+          v-if="!!contextPsFacebook.user.email"
         >
-          {{ contextPsFacebook.email }}
+          {{ contextPsFacebook.user.email }}
         </span>
       </div>
     </b-card-body>
+
+    <!-- Confirmation modal for FBE uninstallation -->
+    <div
+      id="ps_facebook_modal_unlink"
+      class="modal"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ $t('configuration.facebook.connected.unlinkModalText') }}
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="uninstall"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <b-card-body
       v-if="!folded"
@@ -150,6 +201,7 @@
               :app-name="fbm.name"
               :email="fbm.email || ''"
               :created-at="fbm.createdAt"
+              :display-warning="!fbm.email"
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -184,6 +236,9 @@
               :app-name="contextPsFacebook.page.page"
               :likes="contextPsFacebook.page.likes"
               :logo="contextPsFacebook.page.logo"
+              :display-warning="
+                !contextPsFacebook.page.page
+              "
             />
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -198,8 +253,11 @@
               :app-type="$t('configuration.facebook.connected.facebookAds')"
               :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"
               :app-name="contextPsFacebook.ads.name"
-              :email="contextPsFacebook.ads.email"
               :created-at="contextPsFacebook.ads.createdAt"
+              :display-warning="
+                !contextPsFacebook.ads.name ||
+                  !contextPsFacebook.ads.createdAt
+              "
             />
           </b-col>
         </b-row>
@@ -272,15 +330,10 @@ export default defineComponent({
   },
   computed: {
     fbm() {
-      if (!this.contextPsFacebook.facebookBusinessManager) {
-        return {
-          name: '',
-          email: this.contextPsFacebook.email,
-        };
-      }
       return {
         name: this.contextPsFacebook.facebookBusinessManager.name,
-        email: this.contextPsFacebook.facebookBusinessManager.email || this.contextPsFacebook.email,
+        email: this.contextPsFacebook.facebookBusinessManager.email
+          || this.contextPsFacebook.user.email,
       };
     },
     fbeUrl() {

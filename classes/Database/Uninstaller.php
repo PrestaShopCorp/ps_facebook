@@ -2,7 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
+use Exception;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
 class Uninstaller
 {
@@ -13,21 +17,64 @@ class Uninstaller
      */
     private $tabRepository;
 
-    public function __construct(\Ps_facebook $module, TabRepository $tabRepository)
-    {
+    /**
+     * @var Segment
+     */
+    private $segment;
+
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(
+        \Ps_facebook $module,
+        TabRepository $tabRepository,
+        Segment $segment,
+        ErrorHandler $errorHandler
+    ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
+        $this->segment = $segment;
+        $this->errorHandler = $errorHandler;
     }
 
+    /**
+     * @return bool
+     *
+     * @throws Exception
+     */
     public function uninstall()
     {
+        $this->segment->setMessage('PS Facebook uninstalled');
+        $this->segment->track();
+
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
             \Configuration::deleteByName((string) $name);
         }
+        try {
+            return $this->uninstallTabs();
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookInstallerException(
+                    'Failed to uninstall module tabs',
+                    FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                    $e
+                ),
+                FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                false
+            );
+        }
 
-        return $this->uninstallTabs();
+        return false;
     }
 
+    /**
+     * @return bool
+     *
+     * @throws \PrestaShopDatabaseException
+     * @throws \PrestaShopException
+     */
     private function uninstallTabs()
     {
         $uninstallTabCompleted = true;
@@ -44,6 +91,12 @@ class Uninstaller
         return $uninstallTabCompleted;
     }
 
+    /**
+     * @return bool
+     *
+     * @throws \PrestaShopDatabaseException
+     * @throws \PrestaShopException
+     */
     private function uninstallMarketingTab()
     {
         $id_tab = (int) \Tab::getIdFromClassName('Marketing');

@@ -22,26 +22,29 @@
 
     <p>{{ $t('catalogSummary.reportingIntro') }}</p>
 
-    <b-container fluid class="w-100">
+    <b-container
+      fluid
+      class="w-100"
+    >
       <b-row align-v="stretch">
         <b-col class="counter m-1 pt-1 pb-2 px-3">
           -
         </b-col>
-        <div class="w-100 d-block d-sm-none"></div>
+        <div class="w-100 d-block d-sm-none" />
         <b-col class="counter m-1 pt-1 pb-2 px-3">
           -
         </b-col>
-        <div class="w-100 d-block d-md-none"></div>
+        <div class="w-100 d-block d-md-none" />
         <b-col class="counter m-1 pt-1 pb-2 px-3">
           -
         </b-col>
-        <div class="w-100 d-block d-sm-none"></div>
+        <div class="w-100 d-block d-sm-none" />
         <b-col class="counter m-1 pt-1 pb-2 px-3">
           -
         </b-col>
       </b-row>
     </b-container>
-    <br />
+    <br>
 
     <b-link
       class="view-button float-right ml-3"

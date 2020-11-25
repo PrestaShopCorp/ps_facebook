@@ -1,5 +1,5 @@
 <?php
-/*
+/*X
 * 2007-2020 PrestaShop.
 *
 * DISCLAIMER
@@ -15,14 +15,17 @@
 */
 
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
+use PrestaShop\ModuleLibFaq\Faq;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -32,7 +35,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
-        $response = Configuration::updateValue(Config::FB_ACCESS_TOKEN, $token);
+        $response = Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
 
         $this->ajaxDie(json_encode($response));
     }
@@ -65,7 +68,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationHandler->uninstallFbe();
 
         // Return new FB context
-        $this->displayAjaxConfiguration();
+        $this->displayAjaxGetFbContext();
     }
 
     /**
@@ -100,6 +103,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )->json();
 
+            if (!isset($response['externalBusinessId']) && isset($response['message'])) {
+                /** @var ErrorHandler $errorHandler */
+                $errorHandler = $this->module->getService(ErrorHandler::class);
+                $errorHandler->handle(
+                    new FacebookOnboardException(
+                        $response['message'],
+                        FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                    ),
+                    FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                );
+            }
             $externalBusinessId = $response['externalBusinessId'];
             Configuration::updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }
@@ -141,29 +155,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /**
      * @throws PrestaShopException
      */
-    public function displayAjaxConfiguration()
-    {
-        /** @var FbeDataProvider $fbeDataProvider */
-        $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
-
-        /** @var FacebookDataProvider $facebookDataProvider */
-        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
-
-        $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
-
-        $this->ajaxDie(
-            json_encode(
-                [
-                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    'contextPsFacebook' => $facebookContext,
-                ]
-            )
-        );
-    }
-
-    /**
-     * @throws PrestaShopException
-     */
     public function displayAjaxGetFbContext()
     {
         /** @var FbeDataProvider $fbeDataProvider */
@@ -188,9 +179,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
+        $categoryId = (int) Tools::getValue('category_id');
+        $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $updateChildren = (bool) Tools::getValue('update_children');
         try {
             /* todo: change to data from ajax */
-            $categoryMatchHandler->updateCategoryMatch(3, 8, true);
+            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
@@ -222,7 +216,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(
             json_encode($googleCategory)
-            // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
+        // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
         );
     }
 
@@ -285,10 +279,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
-                      'total' => 0,
-                      'pending' => 0,
-                      'approved' => 0,
-                      'disapproved' => 0,
+                        'total' => 0,
+                        'pending' => 0,
+                        'approved' => 0,
+                        'disapproved' => 0,
                     ],
                 ]
             )
@@ -310,11 +304,45 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     }
 
     /**
+     * Retrieve the faq
+     */
+    public function displayAjaxRetrieveFaq()
+    {
+        $faq = new Faq($this->module->module_key, _PS_VERSION_, $this->context->language->iso_code);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'faq' => $faq->getFaq(),
+                    'doc' => $this->getReadme(),
+                    'contactUs' => 'https://www.google.com',
+                ]
+            )
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function ajaxDie($value = null, $controller = null, $method = null)
     {
         header('Content-Type: application/json');
         parent::ajaxDie($value, $controller, $method);
+    }
+
+    /**
+     * Get the documentation url depending on the current language
+     *
+     * @return string path of the doc
+     */
+    private function getReadme()
+    {
+        $isoCode = $this->context->language->iso_code;
+
+        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf')) {
+            $isoCode = 'en';
+        }
+
+        return _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf';
     }
 }

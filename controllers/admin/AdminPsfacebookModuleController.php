@@ -32,6 +32,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $defaultCurrency = $this->context->currency;
         $defaultLanguage = $this->context->language;
 
+        if ($externalBusinessId) {
+            Media::addJsDef([
+                'psFacebookExternalBusinessId' => $externalBusinessId,
+            ]);
+        }
+
         Media::addJsDef([
             'contextPsAccounts' => $psAccountPresenter->present(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
@@ -70,15 +76,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'DisconnectFromFacebook',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookLoadConfigurationRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'Configuration',
                     'ajax' => 1,
                 ]
             ),
@@ -136,7 +133,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'facebookManageFeaturesRoute' => "https://www.facebook.com/facebook_business_extension?app_id=$appId&external_business_id=$externalBusinessId",
             'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -155,6 +151,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookRetrieveFaq' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'RetrieveFaq',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -163,6 +168,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => Configuration::get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,
+            'shopDomain' => Tools::getShopDomain(false),
+            'shopUrl' => Tools::getShopDomainSsl(true),
+            'email' => $this->context->employee->email,
+            'psVersion' => _PS_VERSION_,
+            'moduleVersion' => $this->module->version,
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
@@ -176,9 +186,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             Configuration::updateValue(Config::PS_PIXEL_ID, $id_pixel);
         }
 
-        $access_token = Tools::getValue(Config::FB_ACCESS_TOKEN);
+        $access_token = Tools::getValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
         if (!empty($access_token)) {
-            Configuration::updateValue(Config::FB_ACCESS_TOKEN, $access_token);
+            Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
         }
     }
 }

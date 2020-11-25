@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\DTO;
+namespace PrestaShop\Module\PrestashopFacebook\DTO\Object;
 
 use JsonSerializable;
 
@@ -9,10 +9,15 @@ class Page implements JsonSerializable
     /**
      * @var string
      */
+    private $id;
+
+    /**
+     * @var string
+     */
     private $page;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $likes;
 
@@ -25,14 +30,23 @@ class Page implements JsonSerializable
      * Page constructor.
      *
      * @param string $page
-     * @param int $likes
+     * @param int|null $likes
      * @param string|null $logo
      */
-    public function __construct($page, $likes, $logo)
+    public function __construct($id, $page, $likes, $logo)
     {
+        $this->id = $id;
         $this->page = $page;
         $this->likes = $likes;
         $this->logo = $logo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -44,7 +58,7 @@ class Page implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getLikes()
     {
@@ -62,6 +76,7 @@ class Page implements JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->getId(),
             'page' => $this->getPage(),
             'likes' => $this->getLikes(),
             'logo' => $this->getLogo(),

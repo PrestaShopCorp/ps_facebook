@@ -20,30 +20,50 @@
   <div id="integrate">
     <spinner v-if="loading" />
     <div v-else>
+      <div class="mr-3 ml-3">
+        <!-- Display a warning when no features are shown (token expired?) -->
+        <b-alert
+          v-if="!allFeaturesLength"
+          variant="warning"
+          show
+        >
+          {{ $t('integrate.warning.noFeatures') }}
+        </b-alert>
+        <!-- Display confirmation messages for freshly enabled features -->
+        <!-- FIXME: Not displayed when the feature is already initialy enabled -->
+        <success-alert
+          v-for="(feature, index) in successfullyEnabledFeatures"
+          :key="index"
+          :name="feature"
+          :shop-url="shopUrl"
+          :show="true"
+        />
+      </div>
+
       <div
         id="enabled-features"
-        v-if="dynamicEnabledFeatures"
+        v-if="dynamicEnabledFeaturesLength"
       >
         <feature-list>
           <enabled-feature
             v-for="(properties, featureName) in dynamicEnabledFeatures"
             :name="featureName"
             :key="featureName"
-            v-bind:active="properties.enabled"
+            :active="properties.enabled"
           />
         </feature-list>
       </div>
 
       <div
-        id="disabled-features"
-        v-if="dynamicDisabledFeatures"
+        id="available-features"
+        v-if="dynamicAvailableFeaturesLength"
       >
         <h3 class="ml-3">
-          {{ $t('integrate.headings.disabledFeatures') }}
+          {{ $t('integrate.headings.availableFeatures') }}
         </h3>
         <feature-list>
-          <disabled-feature
-            v-for="(properties, featureName) in dynamicDisabledFeatures"
+          <available-feature
+            v-for="(properties, featureName) in dynamicAvailableFeatures"
             :name="featureName"
             :key="featureName"
           />
@@ -52,12 +72,27 @@
 
       <div
         id="unavailable-features"
-        v-if="dynamicUnavailableFeatures"
+        v-if="dynamicUnavailableFeaturesLength"
       >
         <h3 class="ml-3">
           {{ $t('integrate.headings.unavailableFeatures') }}
         </h3>
-        <products-not-synced-warning />
+        <div class="mr-3 ml-3">
+          <b-alert
+            show
+            variant="warning"
+          >
+            <div>
+              <p>{{ $t('integrate.warning.productsNotSynced') }}</p>
+              <b-button
+                variant="primary"
+                class="mt-2"
+              >
+                {{ $t('integrate.buttons.syncProducts') }}
+              </b-button>
+            </div>
+          </b-alert>
+        </div>
         <feature-list>
           <unavailable-feature
             v-for="(properties, featureName) in dynamicUnavailableFeatures"
@@ -72,71 +107,160 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
+import {BAlert, BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
-import DisabledFeature from '../components/features/disabled-feature.vue';
+import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
-import ProductsNotSyncedWarning from '../components/features/products-not-synced-warning.vue';
+import SuccessAlert from '../components/features/success-alert.vue';
 
 export default defineComponent({
   name: 'Integrate',
   components: {
-    ProductsNotSyncedWarning,
+    BAlert,
+    BButton,
     Spinner,
     EnabledFeature,
     FeatureList,
     UnavailableFeature,
-    DisabledFeature,
+    AvailableFeature,
+    SuccessAlert,
   },
   mixins: [],
   props: {
     enabledFeatures: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => [],
+      default: () => ({}),
     },
-    disabledFeatures: {
-      type: Array,
+    availableFeatures: {
+      type: Object,
       required: false,
-      default: () => [],
+      default: () => ({}),
     },
     unavailableFeatures: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => [],
+      default: () => ({}),
+    },
+    shopUrl: {
+      type: String,
+      required: false,
+      default: () => global.shopUrl || null,
     },
   },
   data() {
     return {
       dynamicEnabledFeatures: this.enabledFeatures,
-      dynamicDisabledFeatures: this.disabledFeatures,
+      dynamicAvailableFeatures: this.availableFeatures,
       dynamicUnavailableFeatures: this.unavailableFeatures,
+      successfullyEnabledFeatures: [],
       loading: true,
+      hiddenProp: null,
+      visibilityChangeEvent: null,
     };
   },
   created() {
-    this.fetchData();
+    // Looking at the props (not data) to check if we can display the content immediately
+    if (this.dynamicEnabledFeaturesLength === 0
+      && this.dynamicAvailableFeaturesLength === 0
+      && this.dynamicUnavailableFeaturesLength === 0
+    ) {
+      this.fetchData();
+      this.registerToVisibilityChangeEvent();
+    } else {
+      this.loading = false;
+    }
+  },
+  beforeDestroy() {
+    if (document.removeEventListener === 'undefined' || this.hiddenProp === null) {
+      return;
+    }
+    document.removeEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
+  },
+  computed: {
+    dynamicEnabledFeaturesLength() {
+      return Object.keys(this.dynamicEnabledFeatures).length;
+    },
+    dynamicAvailableFeaturesLength() {
+      return Object.keys(this.dynamicAvailableFeatures).length;
+    },
+    dynamicUnavailableFeaturesLength() {
+      return Object.keys(this.dynamicUnavailableFeatures).length;
+    },
+    allFeaturesLength() {
+      return this.dynamicEnabledFeaturesLength
+        + this.dynamicAvailableFeaturesLength
+        + this.dynamicUnavailableFeaturesLength;
+    },
   },
   methods: {
     fetchData() {
       this.loading = true;
       fetch(global.psFacebookGetFeaturesRoute)
         .then((res) => {
+          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
           return res.json();
         })
         .then((json) => {
+          this.displaySuccessMessages(json.fbeFeatures.enabledFeatures);
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
-          this.dynamicDisabledFeatures = json.fbeFeatures.disabledFeatures;
+          this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
-          this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
+          this.loading = false;
         });
+    },
+    displaySuccessMessages(newEnabledFeatures) {
+      if (!this.allFeaturesLength) {
+        return;
+      }
+      Object.keys(newEnabledFeatures).forEach((feature) => {
+        // If the feature was disabled in the previous state, display the confirmation message
+        if (this.dynamicEnabledFeatures[feature].enabled === false
+          && newEnabledFeatures[feature].enabled === true
+        ) {
+          this.displaySuccessMessage(feature);
+        }
+      });
+    },
+    displaySuccessMessage(feature) {
+      this.successfullyEnabledFeatures.push(feature);
+    },
+    hideSuccessMessage(acknowledgedFeature) {
+      this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
+        .filter((feature) => feature !== acknowledgedFeature);
+    },
+    handleVisibilityChange() {
+      // Watch when the page gets the focus, for instance
+      // when the merchant comes back from another tab.
+      if (document[this.hiddenProp] === false) {
+        this.fetchData();
+      }
+    },
+    registerToVisibilityChangeEvent() {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+        this.hiddenProp = 'hidden';
+        this.visibilityChangeEvent = 'visibilitychange';
+      } else if (typeof document.msHidden !== 'undefined') {
+        this.hiddenProp = 'msHidden';
+        this.visibilityChangeEvent = 'msvisibilitychange';
+      } else if (typeof document.webkitHidden !== 'undefined') {
+        this.hiddenProp = 'webkitHidden';
+        this.visibilityChangeEvent = 'webkitvisibilitychange';
+      }
+
+      if (document.addEventListener === 'undefined' || this.hiddenProp === null) {
+        return;
+      }
+      document.addEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
     },
   },
 });

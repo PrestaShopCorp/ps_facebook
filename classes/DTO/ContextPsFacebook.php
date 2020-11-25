@@ -3,6 +3,11 @@
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 use JsonSerializable;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
 
 class ContextPsFacebook implements JsonSerializable
@@ -33,6 +38,11 @@ class ContextPsFacebook implements JsonSerializable
     private $ad;
 
     /**
+     * @var Catalog|null
+     */
+    private $catalog;
+
+    /**
      * @var bool|null
      */
     private $categoriesMatching;
@@ -45,15 +55,17 @@ class ContextPsFacebook implements JsonSerializable
      * @param Pixel|null $pixel
      * @param Page|null $page
      * @param Ad|null $ad
+     * @param Catalog|null $catalog
      * @param bool|null $categoriesMatching
      */
-    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $categoriesMatching)
+    public function __construct($user, $facebookBusinessManager, $pixel, $page, $ad, $catalog, $categoriesMatching)
     {
         $this->user = $user;
         $this->facebookBusinessManager = $facebookBusinessManager;
         $this->pixel = $pixel;
         $this->page = $page;
         $this->ad = $ad;
+        $this->catalog = $catalog;
         $this->categoriesMatching = $categoriesMatching;
     }
 
@@ -158,6 +170,26 @@ class ContextPsFacebook implements JsonSerializable
     }
 
     /**
+     * @return Catalog|null
+     */
+    public function getCatalog()
+    {
+        return $this->catalog;
+    }
+
+    /**
+     * @param Catalog|null $catalog
+     *
+     * @return ContextPsFacebook
+     */
+    public function setCatalog($catalog)
+    {
+        $this->catalog = $catalog;
+
+        return $this;
+    }
+
+    /**
      * @return bool|null
      */
     public function getCategoriesMatching()
@@ -180,12 +212,13 @@ class ContextPsFacebook implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'email' => $this->getUser()->getEmail(),
+            'user' => $this->getUser(),
             'pixel' => $this->getPixel(),
             'facebookBusinessManager' => $this->getFacebookBusinessManager(),
             'page' => $this->getPage(),
             'ads' => $this->getAd(),
             'categoriesMatching' => $this->getCategoriesMatching(),
+            'catalog' => $this->getCatalog(),
         ];
     }
 }

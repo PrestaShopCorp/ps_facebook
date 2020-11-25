@@ -20,7 +20,7 @@
   <b-card class="introductionCard">
     <div class="illustration float-right d-none d-md-block">
       <img
-        :src="illustration"
+        src="@/assets/illustration.png"
         width="271"
         height="194"
         alt="background illustration"
@@ -31,7 +31,7 @@
       <div class="titleRow">
         <img
           class="mr-3 mb-3 float-left"
-          :src="facebook"
+          src="@/assets/facebook_logo.svg"
           width="56"
           height="56"
           alt="PS Facebook logo"
@@ -57,7 +57,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="manageBusinessIllustration"
+          src="@/assets/manage_business_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -71,7 +71,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="adAccountIllustration"
+          src="@/assets/ad_account_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -85,7 +85,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="understandTrafficIllustration"
+          src="@/assets/understand_traffic_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -96,11 +96,10 @@
         </div>
       </div>
 
-      <!--
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="potatoe"
+          src="@/assets/reach_people_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -108,21 +107,6 @@
         <div class="mb-4 mb-md-0">
           <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
           <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
-        </div>
-      </div>
-      -->
-
-      <div class="potatoe">
-        <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          :src="reachPeopleIllustration"
-          width="192"
-          height="128"
-          alt="A potatoe"
-        >
-        <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint5Title') }}</h1>
-          <p>{{ $t('configuration.introduction.proPoint5Description') }}</p>
         </div>
       </div>
 
@@ -154,28 +138,10 @@
 import {defineComponent} from '@vue/composition-api';
 import {BCard, BButton} from 'bootstrap-vue';
 import showdown from 'showdown';
-import illustration from '../../assets/illustration.png';
-import facebook from '../../assets/facebook_logo.svg';
-import potatoe from '../../assets/Oval.png';
-import adAccountIllustration from '../../assets/ad_account_illustration.png';
-import manageBusinessIllustration from '../../assets/manage_business_illustration.png';
-import reachPeopleIllustration from '../../assets/reach_people_illustration.png';
-import understandTrafficIllustration from '../../assets/understand_traffic_illustration.png';
 
 export default defineComponent({
   name: 'Introduction',
   components: {BCard, BButton},
-  data() {
-    return {
-      illustration,
-      facebook,
-      potatoe,
-      adAccountIllustration,
-      manageBusinessIllustration,
-      reachPeopleIllustration,
-      understandTrafficIllustration,
-    };
-  },
   methods: {
     onHide() {
       this.$emit('onHide');

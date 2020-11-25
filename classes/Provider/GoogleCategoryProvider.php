@@ -47,17 +47,17 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
         if ($page < 1) {
             $page = 1;
         }
-        $googleCategory = $this->googleCategoryRepository->getFilteredCategories(
+        $googleCategories = $this->googleCategoryRepository->getFilteredCategories(
             $categoryId,
             $langId,
             Config::CATEGORIES_PER_PAGE * ($page - 1),
             Config::CATEGORIES_PER_PAGE
         );
 
-        if (!is_array($googleCategory)) {
+        if (!is_array($googleCategories)) {
             return null;
         }
 
-        return $googleCategory;
+        return $googleCategories;
     }
 }

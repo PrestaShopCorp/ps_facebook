@@ -70,6 +70,14 @@ export default {
   },
   created() {
     this.getFbContext();
+    this.$segment.identify(this.$store.state.context.appContext.shopDomain, {
+      name: this.$store.state.context.appContext.shopUrl,
+      email: this.$store.state.context.appContext.email,
+      language: this.$store.state.context.statei18nSettings.isoCode,
+      version_ps: this.$store.state.context.appContext.psVersion,
+      version_module: this.$store.state.context.appContext.moduleVersion,
+      module: 'ps_facebook',
+    });
   },
   methods: {
     getFbContext() {
@@ -197,5 +205,11 @@ export default {
     position: relative;
     left: calc(50% - 4rem);
     top: 6rem;
+  }
+
+  // Fix for alerts
+  .alert {
+    padding-left: 3.8rem !important;
+    padding-right: 0.5rem !important;
   }
 </style>

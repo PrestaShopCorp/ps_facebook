@@ -8,25 +8,19 @@
             :src="require(`@/assets/${name}_disabled.png`)"
             width="80"
           >
-          <div class="description align-self-center flex-grow-1 pl-3 pr-2">
+          <div class="description align-self-top flex-grow-1 pl-3 pr-2">
             <h3>
               {{ $t(`integrate.features.${name}.name`) }}
-              <b-icon-info-circle
-                v-b-tooltip.hover
-                :title="$t(`integrate.features.${name}.toolTip`)"
-                class="iconInfo ml-2"
-                variant="primary"
-              />
             </h3>
-            <p class="small-text text-muted">
+            <p>
               {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
           <b-button
-            variant="disabled"
+            variant="outline-primary disabled"
             class="ml-4 align-self-center"
           >
-            {{ $t('integrate.buttons.add') }}
+            {{ $t(`integrate.features.${name}.addButton`) }}
           </b-button>
         </div>
       </b-card-body>
@@ -36,14 +30,15 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody, BIconInfoCircle} from 'bootstrap-vue';
+import {BCard, BCardBody} from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'UnavailableFeature',
   components: {
     BCard,
     BCardBody,
-    BIconInfoCircle,
+    Tooltip,
   },
   mixins: [],
   props: {
@@ -60,6 +55,8 @@ export default defineComponent({
 .logo {
   float: left;
   display: block;
+  height: 80px;
+  width: 80px;
 }
 
 .description {

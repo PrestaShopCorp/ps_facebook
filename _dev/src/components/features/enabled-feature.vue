@@ -2,24 +2,19 @@
   <li :class="switchActivated ? null : 'disabled'">
     <b-card no-body>
       <b-card-body>
-        <div class="d-flex">
+        <div class="feature-header d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
-            <h3>
+            <span class="h1">
               <img
                 class="mr-1"
                 :src="require(`@/assets/${name}.png`)"
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
-              <b-icon-info-circle
-                v-b-tooltip.hover
-                :title="$t(`integrate.features.${name}.toolTip`)"
-                class="iconInfo ml-2"
-                variant="primary"
-              />
-            </h3>
+            </span>
+            <tooltip :text="$t(`integrate.features.${name}.description`)" />
           </div>
-          <div>
+          <div class="align-self-center">
             <span class="d-none d-sm-inline">
               {{
                 $t(switchActivated ?
@@ -29,7 +24,7 @@
             </span>
             <div
               class="switch-input switch-input-lg ml-1"
-              :class="switchActivated ? '-checked' : null"
+              :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
               @click="switchClick"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
@@ -42,19 +37,22 @@
             </div>
           </div>
         </div>
-        <div class="d-flex">
+        <div
+          class="d-flex"
+          v-if="switchActivated"
+        >
           <div class="flex-grow-1" />
           <div>
             <a
               class="align-self-center"
-              :href="manageRoute"
+              :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
               <b-button
                 variant="outline-secondary"
                 class="ml-4 align-self-center"
               >
-                {{ $t('integrate.buttons.manage') }}
+                {{ $t(`integrate.features.${name}.editButton`) }}
               </b-button>
             </a>
           </div>
@@ -114,8 +112,8 @@ import {
   BCardBody,
   BButton,
   BTooltip,
-  BIconInfoCircle,
 } from 'bootstrap-vue';
+import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
@@ -124,7 +122,7 @@ export default defineComponent({
     BCardBody,
     BButton,
     BTooltip,
-    BIconInfoCircle,
+    Tooltip,
   },
   mixins: [],
   props: {
@@ -149,9 +147,13 @@ export default defineComponent({
       default: global.psFacebookUpdateFeatureRoute,
     },
     manageRoute: {
-      type: String,
+      type: Object,
       required: false,
-      default: () => global.facebookManageFeaturesRoute,
+      default: () => ({
+        // Duplicates ./available-feature.vue
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}` || '#',
+      }),
     },
   },
   data() {
@@ -163,13 +165,13 @@ export default defineComponent({
   methods: {
     switchClick() {
       if (!this.isLoading) {
-        this.isLoading = true;
         if (!this.switchActivated) {
           this.updateFeatureState();
         }
       }
     },
     updateFeatureState() {
+      this.isLoading = true;
       fetch(this.updateFeatureRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
@@ -203,23 +205,38 @@ export default defineComponent({
 <style lang="scss" scoped>
   li {
     &.disabled{
-      h3, p {
+      .h1, p {
         color: grey !important;
       }
-      h3 {
+      .h1 {
         img {
           filter: grayscale(100);
         }
       }
       .switch-input {
         background-color: #c05c67 !important;
+        &.disabled {
+          background: #eee !important;
+        }
       }
       .switch-input::after {
         color: #c05c67 !important;
       }
     }
+    .card {
+      border: none !important;
+      border-radius: 3px;
+    }
     .flex-grow-1 {
       flex-grow:1
+    }
+    .switch-input {
+      &.disabled {
+        background: #eee !important;
+      }
+    }
+    .feature-header {
+      margin-bottom: 1em;
     }
   }
 </style>

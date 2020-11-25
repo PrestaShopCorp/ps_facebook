@@ -2,8 +2,11 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
+use Exception;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AccessTokenProvider
@@ -13,63 +16,122 @@ class AccessTokenProvider
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter)
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    /**
+     * @var string
+     */
+    private $userAccessToken;
+
+    /**
+     * @var string|null
+     */
+    private $systemAccessToken;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, ErrorHandler $errorHandler)
     {
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandler = $errorHandler;
     }
 
     /**
      * @return string
      */
-    public function getAccessToken()
+    public function getUserAccessToken()
     {
-        // TODO : implement some cache system to get access token
-        // https://graph.facebook.com/oauth/access_token?client_secret=b3f469de46ebc1f94f5b8e3e0db09fc4&grant_type=client_credentials&client_id=726899634800479
-        return '';
-    }
-
-    public function getOrRefreshToken()
-    {
-        $accessToken = $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN);
-        $tokenExpirationDate = $this->configurationAdapter->get(Config::PS_FACEBOOK_ACCESS_TOKEN_EXPIRATION_DATE);
-        $currentTimestamp = time();
-
-        if (!$accessToken || !$tokenExpirationDate || ($tokenExpirationDate - $currentTimestamp <= 86400)) {
-            return $this->refreshToken();
+        if (!$this->userAccessToken) {
+            $this->getOrRefreshTokens();
         }
 
-        return $accessToken;
+        return $this->userAccessToken;
     }
 
     /**
-     * @return string|false
+     * @return string|null
      */
-    public function refreshToken()
+    public function getSystemAccessToken()
     {
-        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $accessToken = $this->configurationAdapter->get(Config::FB_ACCESS_TOKEN);
-        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
-
-        $response = $client->post(
-            '/account/' . $externalBusinessId . '/exchange_tokens',
-            [
-                'json' => [
-                    'userAccessToken' => $accessToken,
-                ],
-            ]
-        )->json();
-
-        if (isset($response['access_token'])) {
-            $currentTimestamp = time();
-            $tokenExpiresIn = $currentTimestamp + (int) $response['expires_in'];
-            $newAccessToken = $response['access_token'];
-
-            $this->configurationAdapter->updateValue(Config::FB_ACCESS_TOKEN, $newAccessToken);
-            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
-
-            return $newAccessToken;
+        if (!$this->systemAccessToken) {
+            $this->getOrRefreshTokens();
         }
 
-        return false;
+        return $this->systemAccessToken;
+    }
+
+    /**
+     * Load data from configuration table and request from API them if something is missing
+     */
+    private function getOrRefreshTokens()
+    {
+        $this->userAccessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+        $this->systemAccessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN);
+        $tokenExpirationDate = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE);
+        $currentTimestamp = time();
+
+        if (!$this->userAccessToken
+            || !$this->systemAccessToken
+            || !$tokenExpirationDate
+            || ($tokenExpirationDate - $currentTimestamp <= 86400)
+        ) {
+            $this->refreshTokens();
+        }
+    }
+
+    /**
+     * Exchange existing tokens with new ones, then store them in the DB + make them available in this class
+     *
+     * @return void
+     */
+    public function refreshTokens()
+    {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $accessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+
+        $managerId = $this->configurationAdapter->get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID);
+        if (!$managerId) {
+            // Force as null, otherwise it gets a falsy value in the API request
+            $managerId = null;
+        }
+
+        try {
+            $response = $client->post(
+                '/account/' . $externalBusinessId . '/exchange_tokens',
+                [
+                    'json' => [
+                        'userAccessToken' => $accessToken,
+                        'businessManagerId' => $managerId,
+                    ],
+                ]
+            )->json();
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new AccessTokenException(
+                    'Failed to refresh access token',
+                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                    $e
+                ),
+                AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                false
+            );
+
+            return;
+        }
+
+        if (isset($response['longLived']['access_token'])) {
+            $tokenExpiresIn = time() + (70 * 365 * 24 * 3600); // never expires
+            $this->userAccessToken = $response['longLived']['access_token'];
+
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $this->userAccessToken);
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
+        }
+
+        if (isset($response['system']['access_token'])) {
+            $this->systemAccessToken = $response['system']['access_token'];
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $this->systemAccessToken);
+        }
     }
 }

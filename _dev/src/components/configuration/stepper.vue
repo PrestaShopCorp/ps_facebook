@@ -28,136 +28,111 @@
     </div>
 
     <div class="title px-3">
-      <h3>{{ $t('configuration.messages.syncCatalogAdvice') }}</h3>
+      <h3>{{ $t('configuration.messages.stepperTitle') }}</h3>
 
       <div class="mb-2">
-        <b-iconstack
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
+        <stepper-icon :state="psAccountsOnboarded ? 'DONE' : 'AVAILABLE'" />
         {{ $t('configuration.messages.stepPsAccount') }}
       </div>
 
       <div class="mb-2">
-        <b-iconstack
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        {{ $t('configuration.messages.stepPsFacebook') }}
-      </div>
-
-      <div class="mb-2">
-        <b-iconstack v-if="categoryMatchingStarted"
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="psFacebookOnboarded ? 'DONE' : (psFbOnboardAvailable ? 'AVAILABLE' : 'DISABLED')"
         />
-        <span :class="!categoryMatchingStarted && 'bold'">
-          {{ $t('configuration.messages.stepCategoryMatching') }}
+        <span :class="!psFbOnboardAvailable && 'text-muted'">
+          {{ $t('configuration.messages.stepPsFacebook') }}
         </span>
       </div>
 
       <div class="mb-2">
-        <b-iconstack v-if="productSyncStarted"
-                     font-scale="1.5"
-                     class="mr-2 align-bottom fixed-size"
-                     width="20"
-                     height="20"
-        >
-          <b-icon-circle-fill
-            stacked
-            variant="success"
-          />
-          <b-icon-check
-            stacked
-            variant="white"
-          />
-        </b-iconstack>
-        <b-icon-circle-fill
-          v-else
-          font-scale="1.5"
-          class="mr-2 align-bottom fixed-size"
-          width="20"
-          height="20"
-          variant="secondary"
+        <stepper-icon
+          :state="categoryMatchingStarted ? 'DONE' : (catMatchClickable ? 'AVAILABLE' : 'DISABLED')"
         />
-        <span :class="!productSyncStarted && 'bold'">
+        <a
+          v-if="catMatchClickable"
+          @click="onCategoryMatchingClick"
+          href="javascript:void(0)"
+          :class="!categoryMatchingStarted && 'bold'"
+        >
+          {{ $t('configuration.messages.stepCategoryMatching') }}
+        </a>
+        <span
+          v-else
+          class="text-muted"
+        >
+          {{ $t('configuration.messages.stepCategoryMatching') }}
+        </span>
+        <span class="italic text-muted">
+          {{ $t('configuration.messages.stepCategoryMatchingOptional') }}
+        </span>
+      </div>
+
+      <div class="mb-2">
+        <stepper-icon
+          :state="productSyncStarted ? 'DONE' : (productSyncClickable ? 'AVAILABLE' : 'DISABLED')"
+        />
+        <a
+          v-if="productSyncClickable"
+          @click="onSyncCatalogClick"
+          href="javascript:void(0)"
+          :class="!productSyncStarted && 'bold'"
+        >
+          {{ $t('configuration.messages.stepProductSync') }}
+        </a>
+        <span
+          v-else
+          class="text-muted"
+        >
           {{ $t('configuration.messages.stepProductSync') }}
         </span>
       </div>
 
-      <b-button
-        variant="primary"
-        class="mt-2"
-        @click="onSyncCatalogAdviceClick"
-      >
-        {{ $t('configuration.messages.syncCatalogButton') }}
-      </b-button>
+      <div class="mb-2">
+        <stepper-icon
+          :state="adCampaignStarted ? 'DONE' : (adCampaignClickable ? 'AVAILABLE' : 'DISABLED')"
+        />
+        <a
+          v-if="adCampaignClickable"
+          @click="onAdCampaignClick"
+          href="javascript:void(0)"
+          :class="!adCampaignStarted && 'bold'"
+        >
+          {{ $t('configuration.messages.stepAdCampaign') }}
+        </a>
+        <span
+          v-else
+          class="text-muted"
+        >
+          {{ $t('configuration.messages.stepAdCampaign') }}
+        </span>
+      </div>
     </div>
   </b-card>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {
-  BButton,
-  BCard,
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
-} from 'bootstrap-vue';
+import {BCard} from 'bootstrap-vue';
+import StepperIcon from './stepper-icon.vue';
 import illustration2 from '../../assets/illustration2.png';
 
 export default defineComponent({
   name: 'Stepper',
   components: {
-    BButton,
     BCard,
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
+    StepperIcon,
   },
   props: {
+    psAccountsOnboarded: { // TODO !1: use when we want stepper event if onboardings are not done
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    psFacebookOnboarded: { // TODO !1: use when we want stepper event if onboardings are not done
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     categoryMatchingStarted: {
       type: Boolean,
       required: false,
@@ -168,15 +143,40 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    adCampaignStarted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       illustration2,
     };
   },
+  computed: {
+    psFbOnboardAvailable() {
+      return this.psAccountsOnboarded;
+    },
+    catMatchClickable() {
+      return this.psAccountsOnboarded && this.psFacebookOnboarded;
+    },
+    productSyncClickable() {
+      return this.psAccountsOnboarded && this.psFacebookOnboarded;
+    },
+    adCampaignClickable() {
+      return this.psAccountsOnboarded && this.psFacebookOnboarded;
+    },
+  },
   methods: {
-    onSyncCatalogAdviceClick() {
-      this.$emit('onSyncCatalogAdviceClick');
+    onCategoryMatchingClick() {
+      this.$emit('onCategoryMatchingClick');
+    },
+    onSyncCatalogClick() {
+      this.$emit('onSyncCatalogClick');
+    },
+    onAdCampaignClick() {
+      this.$emit('onAdCampaignClick');
     },
   },
 });
@@ -201,11 +201,19 @@ export default defineComponent({
     & .bold {
       font-weight: 600;
     }
+
+    & .italic {
+      font-style: italic;
+    }
   }
 
   .illustration > img {
     position: relative;
     left: calc(-1.25rem - 2px);
     top: calc(-1.25rem - 2px);
+  }
+
+  .opacity-50 {
+    opacity: 0.5;
   }
 </style>

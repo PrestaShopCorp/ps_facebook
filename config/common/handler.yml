@@ -1,6 +1,9 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@ps_facebook.context'
 
   PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler
@@ -17,9 +20,13 @@ services:
   PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
     arguments:
-      - '@language'
+      - '@ps_facebook.language'
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
     arguments:
       - '@ps_facebook'
+
+  PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler

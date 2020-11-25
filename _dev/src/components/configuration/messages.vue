@@ -45,9 +45,12 @@
 
     <stepper
       v-if="showSyncCatalogAdvice"
-      :categoryMatchingStarted="categoryMatchingStarted"
-      :productSyncStarted="productSyncStarted"
-      @onSyncCatalogAdviceClick="onSyncCatalogAdviceClick"
+      :category-matching-started="categoryMatchingStarted"
+      :product-sync-started="productSyncStarted"
+      :ad-campaign-started="adCampaignStarted"
+      @onCategoryMatchingClick="onCategoryMatchingClick"
+      @onSyncCatalogClick="onSyncCatalogClick"
+      @onAdCampaignClick="onAdCampaignClick"
     />
   </div>
 </template>
@@ -88,6 +91,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    adCampaignStarted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     error: {
       type: String,
       required: false,
@@ -95,8 +103,14 @@ export default defineComponent({
     },
   },
   methods: {
-    onSyncCatalogAdviceClick() {
-      this.$emit('onSyncCatalogAdviceClick');
+    onCategoryMatchingClick() {
+      this.$emit('onCategoryMatchingClick');
+    },
+    onSyncCatalogClick() {
+      this.$emit('onSyncCatalogClick');
+    },
+    onAdCampaignClick() {
+      this.$emit('onAdCampaignClick');
     },
     reloadBrowser() {
       window.document.location.reload();

@@ -15,5 +15,5 @@ module.exports = {
   filenameHashing: false,
   outputDir: '../views/',
   assetsDir: '',
-  publicPath: '/modules/ps_facebook/views/',
+  publicPath: '../modules/ps_facebook/views/',
 };

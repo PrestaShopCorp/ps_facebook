@@ -37,7 +37,16 @@
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>
-    <p>{{ $t('catalogSummary.categoryMatchingIntro') }}</p>
+    <p class="text">
+      {{ $t('catalogSummary.categoryMatchingIntro') }}
+      <b-alert
+        variant="info"
+        class="small-text"
+        show
+      >
+        <span v-html="textCategoryMatchingNotice" />
+      </b-alert>
+    </p>
   </div>
 </template>
 
@@ -57,11 +66,31 @@ export default defineComponent({
       illustration,
     };
   },
+  computed: {
+    textCategoryMatchingNotice() {
+      return this.$i18n.t('catalogSummary.categoryMatchingNotice')
+        .replace('[1]', '<u><b>')
+        .replace('[/1]', '</b></u>');
+    },
+  },
 });
 </script>
 
 <style lang="scss" scoped>
   .title {
     font-weight: 600;
+  }
+  .text {
+    display: flow-root;
+
+    & > div {
+      margin-top: 1em;
+      padding-left: 3.8rem !important;
+      padding-right: 0.5rem !important;
+
+      span {
+        padding: 0 !important;
+      }
+    }
   }
 </style>
