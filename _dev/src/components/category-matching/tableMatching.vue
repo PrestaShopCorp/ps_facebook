@@ -54,6 +54,13 @@
 import {defineComponent} from '@vue/composition-api';
 import EditingRow from './editing-row.vue';
 
+const PARENT_STATEMENT = {
+  NO_CHILDREN: '0',
+  HAS_CHILDREN: '1',
+  UNFOLD: '2',
+  FOLD: '3',
+};
+
 export default defineComponent({
   name: 'TableMatching',
   components: {
@@ -75,30 +82,42 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookGetCategory || null,
     },
+    saveParentStatement: {
+      type: String,
+      required: false,
+      default:  () => global.psFacebookUpdateCategoryMatch || null,
+    },
+    getCategoriesRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategories || null,
+    },
   },
   computed: {
   },
   data() {
     return {
       categories: this.initialCategories,
+      hasScrolledToBottom: false,
     };
   },
   methods: {
-    saveMatchingCallback() {
-      return Promise.resolve(true);
+    saveMatchingCallback(category) {
+      fetch(this.saveParentStatement, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_shop_category=${category.shopCategoryId}&google_category_id=${category.fbCategoryId}&update_children=${category.propagate}`,
+      }).then((res) => {
+        return Promise.resolve(true);
+      }).catch((error) => {
+        console.error(error);
+        return Promise.reject(new Error(error));
+      });
     },
 
     categoryStyle(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
-
-      let isDeployed = '';
-      if (category.deploy !== true) {
-        if (category.deploy !== null || floor !== 3) {
-          isDeployed = 'closed';
-        }
-      } else {
-        isDeployed = 'opened';
-      }
+      const isDeployed = category.deploy === PARENT_STATEMENT.FOLD ? 'opened' : (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3 ? '' : 'closed');
 
       return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
@@ -106,7 +125,7 @@ export default defineComponent({
     canShowCheckbox(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
 
-      if (category.deploy === null || floor === 3) {
+      if (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3) {
         return false;
       }
 
@@ -147,7 +166,7 @@ export default defineComponent({
           child.isParentCategory = null;
         }
       });
-      currentCategory.deploy = true;
+      currentCategory.deploy = PARENT_STATEMENT.FOLD;
     },
 
     /**
@@ -160,11 +179,11 @@ export default defineComponent({
       );
       childrens.forEach((child) => {
         child.show = false;
-        if (child.deploy === true) {
-          child.deploy = false;
+        if (child.deploy === PARENT_STATEMENT.FOLD) {
+          child.deploy = PARENT_STATEMENT.UNFOLD;
         }
       });
-      currentCategory.deploy = false;
+      currentCategory.deploy = PARENT_STATEMENT.UNFOLD;
     },
 
     /**
@@ -173,12 +192,12 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      currentCategory.deploy = true;
+      currentCategory.deploy = PARENT_STATEMENT.FOLD;
 
-      fetch(this.getChildrensOfParentRoute, {
+      fetch(this.getCategoriesRoute, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({id_category: currentCategory.shopCategoryId}),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_category=${currentCategory.shopCategoryId}&page=1`,
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -187,7 +206,6 @@ export default defineComponent({
       })
         .then((res) => {
           subcategory = res;
-          console.log(res)
           if (Array.isArray(subcategory)) {
             subcategory.forEach((el) => {
               this.categories.splice(indexCtg, 0, el);
@@ -197,30 +215,42 @@ export default defineComponent({
           } else {
             this.categories.splice(indexCtg, 0, subcategory);
             subcategory.show = true;
-            subcategory.shopCategoryName = 'Test';
-            subcategory.deploy = null;
             subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
           }
-          currentCategory.deploy = true;
+
+          if (subcategory.length !== 0) {
+            currentCategory.deploy = PARENT_STATEMENT.FOLD;
+          } else {
+            currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
+          }
         }).catch((error) => {
           console.error(error);
         });
     },
 
+    handleScroll() {
+      if (document.documentElement.scrollTop + window.innerHeight
+          === document.documentElement.scrollHeight
+      ) {
+        console.log('run method for lazy loading');
+      }
+    },
     /**
     * call function
     */
     setAction(currentCategory, subcategories) {
       const dictionary = {
-        false: () => this.showChildren(currentCategory),
-        true: () => this.hideChildren(currentCategory),
-        undefined: () => this.addChildren(currentCategory, subcategories),
-        null: () => {},
+        '0': () => {},
+        '1': () => this.addChildren(currentCategory, subcategories),
+        '2': () => this.showChildren(currentCategory),
+        '3': () => this.hideChildren(currentCategory),
       };
       return dictionary[currentCategory.deploy].call();
     },
   },
   created() {
+    window.addEventListener('scroll', this.handleScroll);
+    console.log(this.categories)
     if (this.categories.length === 0) {
       // call php
     }
