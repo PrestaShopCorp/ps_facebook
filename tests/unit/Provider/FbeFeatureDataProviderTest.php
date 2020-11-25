@@ -7,7 +7,6 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Tests\Mock\ConfigurationAdapterMock;
 use PrestaShop\Module\PrestashopFacebook\Tests\Mock\FacebookClientMock;
-use Shop;
 
 class FbeFeatureDataProviderTest extends TestCase
 {
