@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, {RouteConfig} from 'vue-router';
 import Configuration from '../views/configuration.vue';
 import Catalog from '../views/catalog.vue';
+import Debug from '../views/debug.vue';
 import Integrate from '../views/integrate.vue';
 import Help from '../views/help.vue';
 
@@ -31,6 +32,11 @@ const routes: Array<RouteConfig> = [
     path: '/integrate',
     name: 'Integrate',
     component: Integrate,
+  },
+  {
+    path: '/debug',
+    name: 'Debug',
+    component: Debug,
   },
 ];
 
