@@ -229,24 +229,24 @@ export default defineComponent({
 <style lang="scss" scoped>
   .spinner {
     color: #fff;
-    background-color: #fff;
-    width: 1.4rem;
-    height: 1.4rem;
-    border-radius: 2.5rem;
-    border-right-color: #25b9d7;
+    background-color: #fff!important;
+    width: 1.4rem!important;
+    height: 1.4rem!important;
+    border-radius: 2.5rem!important;
+    border-right-color: #25b9d7!important;
     border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
-    position: absolute;
-    top: 0.7rem;
-    right: 0.7rem;
+    border-width: .1875rem!important;
+    border-style: solid!important;
+    font-size: 0!important;
+    outline: none!important;
+    display: inline-block!important;
+    border-left-color: #bbcdd2!important;
+    border-top-color: #bbcdd2!important;
+    -webkit-animation: rotating 2s linear infinite!important;
+    animation: rotating 2s linear infinite!important;
+    position: absolute!important;
+    top: 0.7rem!important;
+    right: 0.7rem!important;
   }
 
   .select-title {
@@ -257,125 +257,125 @@ export default defineComponent({
 <style lang="scss">
   .category-matching-dropdown {
     & > button {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      direction: rtl;
-      text-align: end;
+      text-overflow: ellipsis!important;
+      overflow: hidden!important;
+      direction: rtl!important;
+      text-align: end!important;
 
       &::after {
-        content: "";
+        content: "" !important;
       }
       &::before {
-        text-align: start;
-        margin-left: .625rem;
-        margin-right: 0;
-        font-family: Material Icons;
-        font-weight: 400;
+        text-align: start!important;
+        margin-left: .625rem!important;
+        margin-right: 0!important;
+        font-family: Material Icons!important;
+        font-weight: 400!important;
         font-style: normal;
-        font-size: 1.5rem;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-        -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: "liga";
-        content: "expand_more";
-        border: none;
-        display: inline-block;
-        vertical-align: middle;
-        width: auto;
-        line-height: 1;
-        float: right;
-        box-sizing: border-box;
+        font-size: 1.5rem!important;
+        text-transform: none!important;
+        letter-spacing: normal!important;
+        word-wrap: normal!important;
+        white-space: nowrap!important;
+        direction: ltr!important;
+        -webkit-font-smoothing: antialiased!important;
+        text-rendering: optimizeLegibility!important;
+        -moz-osx-font-smoothing: grayscale!important;
+        font-feature-settings: "liga"!important;
+        content: "expand_more"!important;
+        border: none!important;
+        display: inline-block!important;
+        vertical-align: middle!important;
+        width: auto!important;
+        line-height: 1!important;
+        float: right!important;
+        box-sizing: border-box!important;
       }
     }
 
     & > ul {
-      top: -2.4rem !important;
-      padding: 0.4rem;
-      border: 2px solid #3ed2f0;
-      box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.175);
-      max-height: 25rem;
-      overflow-y: auto;
+      top: -2.4rem!important;
+      padding: 0.4rem!important;
+      border: 2px solid #3ed2f0!important;
+      box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.175)!important;
+      max-height: 25rem!important;
+      overflow-y: auto!important;
 
       & > li:first-of-type {
-        margin-top: calc(-0.4rem + 2px);
-        margin-bottom: 0.6rem;
+        margin-top: calc(-0.4rem + 2px)!important;
+        margin-bottom: 0.6rem!important;
 
         & > a {
-          font-weight: 600;
-          display: inherit;
-          width: inherit;
-          white-space: inherit;
-          clear: none;
-          text-align: center;
+          font-weight: 600!important;
+          display: inherit!important;
+          width: inherit!important;
+          white-space: inherit!important;
+          clear: none!important;
+          text-align: center!important;
 
           &:active {
-            background: inherit;
-            color: inherit;
+            background: inherit!important;
+            color: inherit!important;
           }
         }
 
         &:before {
           font-family: Material Icons;
-          font-weight: 400;
+          font-weight: 400!important;
           font-style: normal;
-          font-size: 24px;
-          font-size: 1.5rem;
-          text-transform: none;
-          letter-spacing: normal;
-          word-wrap: normal;
-          white-space: nowrap;
-          direction: ltr;
-          -webkit-font-smoothing: antialiased;
-          text-rendering: optimizeLegibility;
-          -moz-osx-font-smoothing: grayscale;
-          font-feature-settings: "liga";
-          content: "expand_less";
-          border: none;
-          display: inline-block;
-          vertical-align: middle;
-          width: auto;
-          float: right;
+          font-size: 24px!important;
+          font-size: 1.5rem!important;
+          text-transform: none!important;
+          letter-spacing: normal!important;
+          word-wrap: normal!important;
+          white-space: nowrap!important;
+          direction: ltr!important;
+          -webkit-font-smoothing: antialiased!important;
+          text-rendering: optimizeLegibility!important;
+          -moz-osx-font-smoothing: grayscale!important;
+          font-feature-settings: "liga"!important;
+          content: "expand_less"!important;
+          border: none!important;
+          display: inline-block!important;
+          vertical-align: middle!important;
+          width: auto!important;
+          float: right!important;
         }
       }
 
       & > li:not(:first-of-type) {
-        margin-top: 0.4rem;
+        margin-top: 0.4rem!important;
 
         & > a {
-          white-space: normal;
+          white-space: normal!important;
 
           &.disabled {
             font-style: italic;
-            font-size: 0.85em;
-            background-color: white;
+            font-size: 0.85em!important;
+            background-color: white!important;
           }
 
           &:not(.disabled):hover {
-            background-color: #25b9d7;
-            color: white;
+            background-color: #25b9d7!important;
+            color: white!important;
           }
         }
 
         &:nth-of-type(even) {
-          background-color: #eff1f2;
+          background-color: #eff1f2!important;
         }
       }
 
       & > li:nth-of-type(2) {
-        margin: -0.4rem;
-        padding: 0.4rem;
-        position: sticky;
-        top: -0.5rem;
+        margin: -0.4rem!important;
+        padding: 0.4rem!important;
+        position: sticky!important;
+        top: -0.5rem!important;
         background-color: white !important;
 
         & > i {
-          font-size: 0.85em;
-          background-color: white;
+          font-size: 0.85em!important;
+          background-color: white!important;
         }
       }
     }

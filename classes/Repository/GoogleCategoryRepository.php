@@ -120,9 +120,9 @@ class GoogleCategoryRepository
     public function getCategoryMatchByCategoryId($categoryId, $shopId)
     {
         $sql = new DbQuery();
-        $sql->select('id_category as shopCategoryId');
-        $sql->select('google_category_id as googleCategoryId');
-        $sql->select('is_parent_category as isParentCategory');
+        $sql->select('id_category');
+        $sql->select('google_category_id');
+        $sql->select('is_parent_category');
         $sql->from('fb_category_match');
         $sql->where('`id_category` = "' . (int) $categoryId . '"');
         $sql->where('id_shop = ' . (int) $shopId);
