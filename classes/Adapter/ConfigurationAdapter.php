@@ -10,17 +10,17 @@ class ConfigurationAdapter
     /**
      * @var Shop
      */
-    private $shop;
+    private $shopId;
 
-    public function __construct(Shop $shop)
+    public function __construct($shopId)
     {
-        $this->shop = $shop;
+        $this->shopId = $shopId;
     }
 
     public function get($key, $idLang = null, $idShopGroup = null, $idShop = null, $default = false)
     {
         if ($idShop === null) {
-            $idShop = $this->shop->id;
+            $idShop = $this->shopId;
         }
 
         return Configuration::get($key, $idLang, $idShopGroup, $idShop, $default);
@@ -29,7 +29,7 @@ class ConfigurationAdapter
     public function updateValue($key, $values, $html = false, $idShopGroup = null, $idShop = null)
     {
         if ($idShop === null) {
-            $idShop = $this->shop->id;
+            $idShop = $this->shopId;
         }
 
         return Configuration::updateValue($key, $values, $html, $idShopGroup, $idShop);

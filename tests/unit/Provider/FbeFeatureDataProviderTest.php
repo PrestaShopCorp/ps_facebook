@@ -7,24 +7,20 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Tests\Mock\ConfigurationAdapterMock;
 use PrestaShop\Module\PrestashopFacebook\Tests\Mock\FacebookClientMock;
+use Shop;
 
 class FbeFeatureDataProviderTest extends TestCase
 {
     public function testFeaturesExist()
     {
-        $configurationAdapter = $this->getMockBuilder(ConfigurationAdapterMock::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), $configurationAdapter))->getFbeFeatures();
+        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), new ConfigurationAdapterMock(1)))->getFbeFeatures();
 
         $this->assertAllFeaturesExistOneTime($actual);
     }
 
     public function testEnabledFacebookFeatureIsFoundInEnabledFeaturesReponse()
     {
-        $configurationAdapter = $this->getMockBuilder(ConfigurationAdapterMock::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $configurationAdapter = new ConfigurationAdapterMock(1);
         $facebookClient = (new FacebookClientMock())
             ->switchFeature('messenger_chat', true);
         $actual = (new FbeFeatureDataProvider($facebookClient, $configurationAdapter))->getFbeFeatures();
