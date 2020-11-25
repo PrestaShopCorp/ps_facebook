@@ -10,6 +10,13 @@ use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
 class Uninstaller
 {
+    const CLASS_NAME = 'Uninstaller';
+
+    /**
+     * @var array
+     */
+    private $errors = [];
+
     private $module;
 
     /**
@@ -50,10 +57,31 @@ class Uninstaller
         $this->segment->track();
 
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
-            \Configuration::deleteByName((string) $name);
+            \Configuration::deleteByName((string)$name);
         }
+
+        return $this->uninstallTabs() && $this->uninstallTables();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws \PrestaShopDatabaseException
+     * @throws \PrestaShopException|Exception
+     */
+    private function uninstallTabs()
+    {
+        $uninstallTabCompleted = true;
+
         try {
-            return $this->uninstallTabs();
+            foreach (\Ps_facebook::MODULE_ADMIN_CONTROLLERS as $controllerName) {
+                $id_tab = (int)\Tab::getIdFromClassName($controllerName);
+                $tab = new \Tab($id_tab);
+                if (\Validate::isLoadedObject($tab)) {
+                    $uninstallTabCompleted = $uninstallTabCompleted && $tab->delete();
+                }
+            }
+            $uninstallTabCompleted = $uninstallTabCompleted && $this->uninstallMarketingTab();
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookInstallerException(
@@ -64,29 +92,10 @@ class Uninstaller
                 FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                 false
             );
+            $this->errors[] = $this->module->l('Failed to uninstall database tables', self::CLASS_NAME);
+
+            return false;
         }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
-     */
-    private function uninstallTabs()
-    {
-        $uninstallTabCompleted = true;
-
-        foreach (\Ps_facebook::MODULE_ADMIN_CONTROLLERS as $controllerName) {
-            $id_tab = (int) \Tab::getIdFromClassName($controllerName);
-            $tab = new \Tab($id_tab);
-            if (\Validate::isLoadedObject($tab)) {
-                $uninstallTabCompleted = $uninstallTabCompleted && $tab->delete();
-            }
-        }
-        $uninstallTabCompleted = $uninstallTabCompleted && $this->uninstallMarketingTab();
 
         return $uninstallTabCompleted;
     }
@@ -99,7 +108,7 @@ class Uninstaller
      */
     private function uninstallMarketingTab()
     {
-        $id_tab = (int) \Tab::getIdFromClassName('Marketing');
+        $id_tab = (int)\Tab::getIdFromClassName('Marketing');
         $tab = new \Tab($id_tab);
         if (!\Validate::isLoadedObject($tab)) {
             return true;
@@ -109,5 +118,27 @@ class Uninstaller
         }
 
         return $tab->delete();
+    }
+
+    public function uninstallTables()
+    {
+        try {
+            include dirname(__FILE__) . '/../../sql/uninstall.php';
+        } catch (\Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookInstallerException(
+                    'Failed to uninstall database tables',
+                    FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                    $e
+                ),
+                FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                false
+            );
+            $this->errors[] = $this->module->l('Failed to uninstall database tables', self::CLASS_NAME);
+
+            return false;
+        }
+
+        return true;
     }
 }
