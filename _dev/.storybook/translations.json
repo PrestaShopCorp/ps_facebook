@@ -25,13 +25,14 @@
         "stepCategoryMatching": "Map categories",
         "stepCategoryMatchingOptional": "(optional but strongly recommended)",
         "stepProductSync": "Export your product catalog",
-        "stepAdCampaign": "Create ad campaign",
+        "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
       },
       "facebook": {
         "title": "Your Facebook settings",
         "notConnected": {
+          "title": "Connect your store to Facebook",
           "intro": "Integrate your shop with Facebook.",
           "connectButton": "Connect to Facebook",
           "description": "With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",

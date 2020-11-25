@@ -25,7 +25,7 @@
     <b-card no-body>
       <template v-slot:header>
         <h3 class="d-inline">
-          {{ $t('configuration.facebook.title') }}
+          {{ $t('configuration.facebook.notConnected.title') }}
         </h3>
       </template>
       <b-card-body>
