@@ -25,7 +25,6 @@ class FbeFeatureDataProviderTest extends TestCase
         $configurationAdapter = $this->getMockBuilder(ConfigurationAdapterMock::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $configurationAdapter = new ConfigurationAdapterMock($configurationAdapter);
         $facebookClient = (new FacebookClientMock())
             ->switchFeature('messenger_chat', true);
         $actual = (new FbeFeatureDataProvider($facebookClient, $configurationAdapter))->getFbeFeatures();
