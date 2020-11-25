@@ -3,13 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CompleteRegistrationEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ContactEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\CustomizeEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\InitiateCheckoutEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\OrderConfirmationEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\SearchEvent;
-use PrestaShop\Module\PrestashopFacebook\Event\Pixel\ViewContentEvent;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class PixelHandler
 {
@@ -35,46 +29,77 @@ class PixelHandler
         $this->templateBuffer = $module->templateBuffer;
     }
 
-    public function handleEvent($eventName, $event)
+    public function handleEvent($params)
     {
-        switch ($eventName) {
-            case 'hookActionSearch':
-                (new SearchEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
-            break;
-
-            case 'hookDisplayHeader':
-                (new ViewContentEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
-                if (true === \Tools::isSubmit('submitCustomizedData')) {
-                    (new CustomizeEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
-                }
-            break;
-
-            case 'hookActionObjectCustomerMessageAddAfter':
-                (new ContactEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
-            break;
-
-            case 'hookDisplayOrderConfirmation':
-                (new OrderConfirmationEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
-            break;
-
-            case 'hookActionCustomerAccountAdd':
-                (new CompleteRegistrationEvent($this->context, $this->module))
-                ->sendToBuffer($this->templateBuffer, $event);
-            break;
-
-            case 'hookDisplayPersonalInformationTop':
-                (new InitiateCheckoutEvent($this->context, $this->module))
-                    ->sendToBuffer($this->templateBuffer, $event);
-                break;
-
-            default:
-                // unsupported event
-            break;
+        $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
+        if (empty($pixel_id)) {
+            return;
         }
+        $track = 'track';
+
+        $eventType = 'undefined';
+        if (isset($params['event_type'])) {
+            $eventType = $params['event_type'];
+        }
+        if (isset($params['user'])) {
+            $userData = $params['user'];
+        }
+
+        $content = [];
+        if (isset($params['custom_data'])) {
+            $customData = $params['custom_data'];
+            $content = $this->formatPixel($customData);
+        }
+
+        $smartyVariables = [
+            'pixel_fc' => $this->module->front_controller,
+            'id_pixel' => $pixel_id,
+            'type' => $eventType,
+            'content' => $content,
+            'track' => $track,
+        ];
+
+        if (isset($userData)) {
+            $smartyVariables['userInfos'] = $this->getCustomerInformation($userData);
+        }
+
+        $this->context->smarty->assign($smartyVariables);
+
+        $this->templateBuffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/header.tpl'));
+    }
+
+    /**
+     * formatPixel
+     *
+     * @param array $params
+     *
+     * @return string|false
+     */
+    protected function formatPixel($params)
+    {
+        return json_encode($params);
+    }
+
+    /**
+     * getCustomerInformation
+     *
+     * @param array $customerInformation
+     *
+     * @return array
+     */
+    protected function getCustomerInformation($customerInformation)
+    {
+        return [
+            'ct' => $customerInformation['city'],
+            'country' => $customerInformation['countryIso'],
+            'zp' => $customerInformation['postCode'],
+            'ph' => $customerInformation['phone'],
+            'gender' => $customerInformation['gender'],
+            'fn' => $customerInformation['firstname'],
+            'ln' => $customerInformation['lastname'],
+            'em' => $customerInformation['email'],
+            'bd' => $customerInformation['birthday'],
+            'st' => $customerInformation['stateIso'],
+        ];
     }
 }
