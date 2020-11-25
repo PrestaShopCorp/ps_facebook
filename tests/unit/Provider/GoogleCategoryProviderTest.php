@@ -5,7 +5,6 @@ namespace provider;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
-use Shop;
 
 class GoogleCategoryProviderTest extends TestCase
 {
@@ -25,10 +24,9 @@ class GoogleCategoryProviderTest extends TestCase
             ->getMock();
 
         $googleCategoryRepo->method('getCategoryMatchByCategoryId')->willReturn($categoryMatchMock);
-        $shop = new Shop();
-        $shop->id = 1;
-        $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo, $shop);
-        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId, $shop->id);
+
+        $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo);
+        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId, 1);
 
         $this->assertEquals($result, $googleCategory);
     }
@@ -49,10 +47,8 @@ class GoogleCategoryProviderTest extends TestCase
             ->getMock();
 
         $googleCategoryRepo->method('getFilteredCategories')->willReturn($categoryMatchMock);
-        $shop = new Shop();
-        $shop->id = 1;
-        $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo, $shop);
-        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, $page);
+        $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo);
+        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, 1, $page);
 
         $this->assertEquals($result, $googleCategory);
     }
