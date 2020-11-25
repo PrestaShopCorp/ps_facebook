@@ -88,13 +88,6 @@ $(document).ready(function() {
         }
     })
 
-    var selection = document.querySelector('#product .product-customization form') !== null;
-    if (selection) {
-        document.querySelector('#product .product-customization form').addEventListener("submit", function(e){
-            fbq('track', 'CustomizeProduct');
-        })
-    }
-
     //Track product added to a wishlist
     prestashop.on('wishlistEventBusInit', () => {
         window.WishlistEventBus.$on('addedToWishlist', (params) => {

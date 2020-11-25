@@ -10,6 +10,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\AddToCartEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CompleteRegistrationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\ContactEvent;
+use PrestaShop\Module\PrestashopFacebook\Event\Conversion\CustomisationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\FirstCheckoutStepEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\OrderConfirmationEvent;
 use PrestaShop\Module\PrestashopFacebook\Event\Conversion\SearchEvent;
@@ -24,20 +25,26 @@ class ApiConversionHandler
      */
     private $context;
 
-    public function __construct()
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, Context $context)
     {
+        $this->configurationAdapter = $configurationAdapter;
+        $this->context = $context;
+
         Api::init(
             null, // app_id
             null, // app_secret
-            \Configuration::get(Config::FB_ACCESS_TOKEN) // access_token
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
         );
-
-        $this->context = Context::getContext();
     }
 
     public function handleEvent($eventName, $params)
     {
-        $pixelId = \Configuration::get(Config::PS_PIXEL_ID);
+        $pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
 
         switch ($eventName) {
             case 'hookActionSearch':
@@ -71,6 +78,10 @@ class ApiConversionHandler
             case 'hookDisplayHeader':
                 (new ViewContentEvent($this->context, $pixelId, new ToolsAdapter(), new ConfigurationAdapter()))
                     ->send($params);
+                if (true === \Tools::isSubmit('submitCustomizedData')) {
+                    (new CustomisationEvent($this->context, $pixelId, new ProductRepository()))
+                        ->send($params);
+                }
                 break;
             default:
                 // unsupported event

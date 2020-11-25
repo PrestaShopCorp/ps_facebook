@@ -17,65 +17,85 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-card no-body>
-    <template v-slot:header>
-      <h3 class="d-inline">
-        {{ $t('configuration.facebook.title') }}
-      </h3>
-    </template>
-    <b-card-body>
-      {{ $t('configuration.facebook.notConnected.intro') }}
-    </b-card-body>
-    <b-card-body class="pt-0">
-      <b-button
-        variant="primary"
-        class="float-right ml-4"
-        @click="onFbeOnboardClick"
-      >
-        {{ $t('configuration.facebook.notConnected.connectButton') }}
-      </b-button>
-
-      <div class="logo mr-3">
-        <img
-          :src="facebookLogo"
-          alt="colors"
+  <b-overlay
+    :show="!active"
+    opacity="0.7"
+    no-fade
+  >
+    <b-card no-body>
+      <template v-slot:header>
+        <h3 class="d-inline">
+          {{ $t('configuration.facebook.title') }}
+        </h3>
+      </template>
+      <b-card-body>
+        {{ $t('configuration.facebook.notConnected.intro') }}
+      </b-card-body>
+      <b-card-body class="pt-0">
+        <b-button
+          :variant="canConnect ? 'primary' : 'outline-primary disabled'"
+          class="float-right ml-4 btn-with-spinner"
+          @click="onFbeOnboardClick"
+          v-if="active"
+          :disabled="!canConnect"
         >
-      </div>
-
-      <div class="description pr-2">
-        <div>
-          {{ $t('configuration.facebook.notConnected.description') }}
-          <br>
-          <p
-            class="facebook-not-connected-details small-text text-muted"
-            v-html="md2html($t('configuration.facebook.notConnected.details'))"
+          <span :class="!canConnect ? 'hidden' : ''">
+            {{ $t('configuration.facebook.notConnected.connectButton') }}
+          </span>
+          <div
+            v-if="!canConnect"
+            class="spinner"
           />
+        </b-button>
+
+        <div class="logo mr-3">
+          <img
+            src="@/assets/facebook_logo.svg"
+            alt="colors"
+          >
         </div>
-      </div>
-    </b-card-body>
-  </b-card>
+
+        <div class="description pr-2">
+          <div>
+            {{ $t('configuration.facebook.notConnected.description') }}
+            <br>
+            <p
+              class="facebook-not-connected-details small-text text-muted"
+              v-html="md2html($t('configuration.facebook.notConnected.details'))"
+            />
+          </div>
+        </div>
+      </b-card-body>
+    </b-card>
+  </b-overlay>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {BCard, BCardBody} from 'bootstrap-vue';
+import {BCard, BCardBody, BOverlay} from 'bootstrap-vue';
 import showdown from 'showdown';
-import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
   name: 'FacebookNotConnected',
-  components: {BCard, BCardBody},
-  data() {
-    return {
-      facebookLogo,
-    };
+  components: {BCard, BCardBody, BOverlay},
+  props: {
+    active: {
+      type: Boolean,
+      required: true,
+    },
+    canConnect: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
     onFbeOnboardClick() {
-      this.$emit('onFbeOnboardClick');
-      this.$segment.track('Launch FB configuration', {
-        module: 'ps_facebook',
-      });
+      if (this.canConnect) {
+        this.$emit('onFbeOnboardClick');
+        this.$segment.track('Launch FB configuration', {
+          module: 'ps_facebook',
+        });
+      }
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
@@ -91,6 +111,36 @@ export default defineComponent({
   .description {
     display: table-cell;
   }
+
+  .btn-with-spinner {
+    position: relative;
+
+    & > .hidden {
+      visibility: hidden;
+    }
+
+    & > .spinner {
+      color: #fff;
+      background-color: #fff;
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      border-radius: 2.5rem;
+      border-right-color: #25b9d7;
+      border-bottom-color: #25b9d7;
+      border-width: .1875rem;
+      border-style: solid;
+      font-size: 0;
+      outline: none;
+      display: inline-block;
+      border-left-color: #bbcdd2;
+      border-top-color: #bbcdd2;
+      -webkit-animation: rotating 2s linear infinite;
+      animation: rotating 2s linear infinite;
+      position: absolute;
+      left: calc(50% - 0.6rem);
+    }
+  }
+
 </style>
 <style lang="scss">
   .facebook-not-connected-details {

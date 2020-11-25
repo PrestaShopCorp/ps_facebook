@@ -71,7 +71,7 @@
         {{ appId }}
       </div>
       <div
-        v-if="!!likes"
+        v-if="null !== likes"
         class="small"
       >
         {{ likes }}
@@ -93,18 +93,18 @@
       </div>
     </div>
 
-      <div
-        v-if="!!url"
-        class="url"
+    <div
+      v-if="!!url"
+      class="url"
+    >
+      <b-link
+        :href="url"
+        target="_blank"
       >
-        <b-link
-          :href="url"
-          target="_blank"
-        >
-          <i class="material-icons">analytics</i>
-          {{ $t('configuration.app.viewStats') }} &nbsp;
-          <i class="material-icons small-text">open_in_new</i>
-        </b-link>
+        <i class="material-icons">analytics</i>
+        {{ $t('configuration.app.viewStats') }} &nbsp;
+        <i class="material-icons small-text">open_in_new</i>
+      </b-link>
     </div>
   </div>
 </template>
@@ -130,7 +130,7 @@ export default defineComponent({
     },
     appName: {
       type: String,
-      required: true,
+      default: null,
     },
     email: {
       type: String,

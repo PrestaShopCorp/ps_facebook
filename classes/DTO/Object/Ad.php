@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\DTO;
+namespace PrestaShop\Module\PrestashopFacebook\DTO\Object;
 
 use JsonSerializable;
 
@@ -19,23 +19,17 @@ class Ad implements JsonSerializable
     /**
      * @var string
      */
-    private $email;
-
-    /**
-     * @var string
-     */
     private $createdAt;
 
     /**
+     * @param string $id
      * @param string $name
-     * @param string $email
      * @param string $createdAt
      */
-    public function __construct($id, $name, $email, $createdAt)
+    public function __construct($id, $name, $createdAt)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->email = $email;
         $this->createdAt = $createdAt;
     }
 
@@ -58,14 +52,6 @@ class Ad implements JsonSerializable
     /**
      * @return string
      */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return string
-     */
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -74,10 +60,9 @@ class Ad implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-        'id' => $this->getId(),
-          'name' => $this->getName(),
-          'email' => $this->getEmail(),
-          'createdAt' => $this->getCreatedAt(),
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'createdAt' => $this->getCreatedAt(),
         ];
     }
 }

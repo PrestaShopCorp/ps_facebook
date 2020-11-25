@@ -4,7 +4,9 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
 class FacebookCategoryClient
@@ -19,12 +21,19 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
-        GoogleCategoryRepository $googleCategoryRepository
+        GoogleCategoryRepository $googleCategoryRepository,
+        ErrorHandler $errorHandler
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
+        $this->errorHandler = $errorHandler;
     }
 
     /**
@@ -67,6 +76,16 @@ class FacebookCategoryClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook category client failed when creating get request.',
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 

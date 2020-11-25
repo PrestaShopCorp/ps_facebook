@@ -10,7 +10,7 @@ class InitiateCheckoutEvent extends BaseEvent implements PixelEventInterface
     public function sendToBuffer($buffer, $event)
     {
         $type = 'InitiateCheckout';
-        $track = 'trackCustom';
+        $track = 'track';
 
         $content = [
             'userEmail' => $this->context->customer->email,

@@ -7,6 +7,8 @@ use PrestaShop\Module\PrestashopFacebook\Event\PixelEventInterface;
 
 class ViewContentEvent extends BaseEvent implements PixelEventInterface
 {
+    const CLASS_NAME = 'ViewContentEvent';
+
     public function sendToBuffer($buffer, $event)
     {
         $pixel_id = \Configuration::get(Config::PS_PIXEL_ID);
@@ -82,7 +84,7 @@ class ViewContentEvent extends BaseEvent implements PixelEventInterface
             } else {
                 $breadcrumbs = [];
                 $breadcrumbs['links'][] = [
-                    'title' => $this->module->l('Home'),
+                    'title' => $this->module->l('Home', self::CLASS_NAME),
                     'url' => $this->context->link->getPageLink('index', true),
                 ];
 

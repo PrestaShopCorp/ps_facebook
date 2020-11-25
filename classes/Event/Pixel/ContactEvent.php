@@ -9,8 +9,8 @@ class ContactEvent extends BaseEvent implements PixelEventInterface
 {
     public function sendToBuffer($buffer, $event)
     {
-        $type = 'ContactSend';
-        $track = 'trackCustom';
+        $type = 'Contact';
+        $track = 'track';
 
         $content = [
             'userEmail' => $this->context->customer->email,

@@ -6,12 +6,14 @@ use Exception;
 use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\Ad;
-use PrestaShop\Module\PrestashopFacebook\DTO\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
-use PrestaShop\Module\PrestashopFacebook\DTO\Page;
-use PrestaShop\Module\PrestashopFacebook\DTO\Pixel;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
 class FacebookClient
@@ -32,31 +34,45 @@ class FacebookClient
     private $client;
 
     /**
-     * @var AccessTokenProvider
-     */
-    private $accessTokenProvider;
-
-    /**
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
 
     /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    /**
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
      * @param ConfigurationAdapter $configurationAdapter
+     * @param ErrorHandler $errorHandler
      */
-    public function __construct(ApiClientFactoryInterface $apiClientFactory, AccessTokenProvider $accessTokenProvider, ConfigurationAdapter $configurationAdapter)
-    {
-        $this->accessToken = $accessTokenProvider->getOrRefreshToken();
+    public function __construct(
+        ApiClientFactoryInterface $apiClientFactory,
+        AccessTokenProvider $accessTokenProvider,
+        ConfigurationAdapter $configurationAdapter,
+        ErrorHandler $errorHandler
+    ) {
+        $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandler = $errorHandler;
     }
 
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAccessToken()
+    {
+        return isset($this->accessToken);
     }
 
     public function getUserEmail()
@@ -115,16 +131,16 @@ class FacebookClient
 
     public function getAd($adId)
     {
-        $responseContent = $this->get((int) $adId, ['name', 'created_time']);
+        $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
 
         return new Ad(
             isset($responseContent['id']) ? $responseContent['id'] : $adId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
 
+    // todo: finish categories matching
     public function getCategoriesMatching($catalogId)
     {
         return false;
@@ -224,6 +240,16 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating get request.',
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 
@@ -283,6 +309,16 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating post request.',
+                    FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                false
+            );
+
             return false;
         }
 

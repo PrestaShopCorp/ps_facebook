@@ -30,6 +30,7 @@ class FbeDataProvider
             ],
             'business_manager_id' => $this->configurationAdapter->get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID),
             'catalog_id' => $this->configurationAdapter->get(Config::PS_FACEBOOK_CATALOG_ID),
+            'ad_account_id' => $this->configurationAdapter->get(Config::PS_FACEBOOK_AD_ACCOUNT_ID),
         ];
     }
 }

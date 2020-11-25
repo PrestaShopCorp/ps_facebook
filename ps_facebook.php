@@ -6,7 +6,10 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
+use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
@@ -75,7 +78,7 @@ class Ps_facebook extends Module
 
     const CONFIGURATION_LIST = [
         Config::PS_PIXEL_ID,
-        Config::FB_ACCESS_TOKEN,
+        Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
         Config::PS_FACEBOOK_PROFILES,
         Config::PS_FACEBOOK_PAGES,
         Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,
@@ -136,8 +139,8 @@ class Ps_facebook extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('Ps Facebook');
-        $this->description = $this->l('Ps facebook');
+        $this->displayName = $this->l('PS Facebook');
+        $this->description = $this->l('PS Facebook gives you all the tools you need to successfully sell and market across Facebook and Instagram. Discover new opportunities to help you scale and grow your business, and manage all your Facebook accounts and products from one place.');
         $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
         $this->js_path = $this->_path . 'views/js/';
@@ -194,13 +197,31 @@ class Ps_facebook extends Module
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
         // $installer = $this->getService(Installer::class);
+        if (!parent::install()) {
+            $this->_errors[] = $this->l('Unable to install module');
 
-        /** @var Installer $installer */
-        $installer = $this->getService(Installer::class);
+            return false;
+        }
 
-        return parent::install() &&
-            (new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts() &&
-            $installer->install();
+        if (!(new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts()) {
+            $this->_errors[] = $this->l('Unable to install ps accounts');
+
+            return false;
+        }
+
+        $installer = new Installer(
+            $this,
+            $this->getService(Segment::class),
+            $this->getService(ErrorHandler::class)
+        );
+
+        if (!$installer->install()) {
+            $this->_errors = $installer->getErrors();
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -218,8 +239,12 @@ class Ps_facebook extends Module
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
         // $uninstaller = $this->getService(Uninstaller::class);
 
-        /** @var Uninstaller $uninstaller */
-        $uninstaller = $this->getService(Uninstaller::class);
+        $uninstaller = new Uninstaller(
+            $this,
+            $this->getService(TabRepository::class),
+            $this->getService(Segment::class),
+            $this->getService(ErrorHandler::class)
+        );
 
         return $uninstaller->uninstall() &&
             parent::uninstall();
@@ -302,8 +327,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayHeader(array $params)
@@ -321,8 +344,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSearch(array $params)
@@ -341,8 +362,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
@@ -350,8 +369,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayOrderConfirmation(array $params)
@@ -368,8 +385,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookActionSubmitAccountBefore(array $params)
@@ -377,8 +392,6 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
     }
 
     public function hookDisplayFooter()

@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\DTO;
+namespace PrestaShop\Module\PrestashopFacebook\DTO\Object;
 
 use JsonSerializable;
 

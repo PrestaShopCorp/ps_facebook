@@ -96,22 +96,6 @@
         </div>
       </div>
 
-      <!--
-      <div class="potatoe">
-        <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/Oval.png"
-          width="192"
-          height="128"
-          alt="A potatoe"
-        >
-        <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
-          <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
-        </div>
-      </div>
-      -->
-
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
@@ -121,8 +105,8 @@
           alt="A potatoe"
         >
         <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint5Title') }}</h1>
-          <p>{{ $t('configuration.introduction.proPoint5Description') }}</p>
+          <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
+          <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
         </div>
       </div>
 
