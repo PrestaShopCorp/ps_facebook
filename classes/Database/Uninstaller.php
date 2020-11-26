@@ -57,7 +57,7 @@ class Uninstaller
         $this->segment->track();
 
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
-            \Configuration::deleteByName((string)$name);
+            \Configuration::deleteByName((string) $name);
         }
 
         return $this->uninstallTabs() && $this->uninstallTables();
@@ -75,7 +75,7 @@ class Uninstaller
 
         try {
             foreach (\Ps_facebook::MODULE_ADMIN_CONTROLLERS as $controllerName) {
-                $id_tab = (int)\Tab::getIdFromClassName($controllerName);
+                $id_tab = (int) \Tab::getIdFromClassName($controllerName);
                 $tab = new \Tab($id_tab);
                 if (\Validate::isLoadedObject($tab)) {
                     $uninstallTabCompleted = $uninstallTabCompleted && $tab->delete();
@@ -108,7 +108,7 @@ class Uninstaller
      */
     private function uninstallMarketingTab()
     {
-        $id_tab = (int)\Tab::getIdFromClassName('Marketing');
+        $id_tab = (int) \Tab::getIdFromClassName('Marketing');
         $tab = new \Tab($id_tab);
         if (!\Validate::isLoadedObject($tab)) {
             return true;
