@@ -14,6 +14,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 */
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
@@ -32,10 +33,25 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     /** @var Ps_facebook */
     public $module;
 
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        /*
+         * @var ConfigurationAdapter $configurationAdapter
+         */
+        $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+    }
+
     public function displayAjaxSaveTokenFbeAccount()
     {
         $token = \Tools::getValue('accessToken');
-        $response = Configuration::updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
+        $response = $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
 
         $this->ajaxDie(json_encode($response));
     }
@@ -80,7 +96,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
-            Configuration::updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
             $this->ajaxDie(json_encode(['success' => true]));
         }
 
@@ -90,7 +106,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxRetrieveExternalBusinessId()
     {
-        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
             $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
             $response = $client->post(
@@ -115,7 +131,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 );
             }
             $externalBusinessId = $response['externalBusinessId'];
-            Configuration::updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }
 
         $this->ajaxDie(
@@ -132,7 +148,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        $externalBusinessId = Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
         $response = $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
@@ -141,7 +157,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             ]
         )->json();
 
-        Configuration::updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
+        $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
 
         $this->ajaxDie(
             json_encode(
@@ -167,7 +183,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'psFacebookExternalBusinessId' => Configuration::get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+                    'psFacebookExternalBusinessId' => $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
                     'contextPsFacebook' => $facebookContext,
                 ]
             )
@@ -275,7 +291,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'exportDone' => (true == \Configuration::get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
+                    'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
                     'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
@@ -336,15 +352,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         if (isset($inputs['system_access_token'])) {
             $success = /*$success && */
-                Configuration::updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $inputs['system_access_token']);
+                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $inputs['system_access_token']);
         }
         if (isset($inputs['test_event'])) {
             $success = $success &&
-                Configuration::updateValue(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE, $inputs['test_event']);
+                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE, $inputs['test_event']);
         }
         if (isset($inputs['drop_test_event'])) {
             $success = $success &&
-                Configuration::deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
+                $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
         }
 
         if (!$success) {
