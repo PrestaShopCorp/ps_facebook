@@ -1,6 +1,8 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter:
     class: PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter
+    arguments:
+      - '@=service("ps_facebook.shop").id'
 
   PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter:
     class: PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter

@@ -41,10 +41,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-
-        /*
-         * @var ConfigurationAdapter $configurationAdapter
-         */
+        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
     }
 
@@ -198,9 +195,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $categoryId = (int) Tools::getValue('category_id');
         $googleCategoryId = (int) Tools::getValue('google_category_id');
         $updateChildren = (bool) Tools::getValue('update_children');
+        $shopId = $this->context->shop->id;
+        if (!$categoryId || !$googleCategoryId) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => 'Missing data',
+                    ]
+                )
+            );
+        }
         try {
             /* todo: change to data from ajax */
-            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
+            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId);
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
@@ -226,7 +234,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $categoryId = Tools::getValue('id_category');
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
-        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId);
+        $shopId = $this->context->shop->id;
+
+        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId, $shopId);
         // FIXME : for now, this function will call our API to get taxonomy details about a category ID.
         //  The needed feature is totally different : see ticket http://forge.prestashop.com/browse/EMKTG-305
 
@@ -309,10 +319,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $categoryId = (int) Tools::getValue('id_category');
         $page = (int) Tools::getValue('page');
+        $shopId = (int) $this->context->shop->id;
 
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
-        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
 
         $this->ajaxDie(
             json_encode($googleCategories)

@@ -4,7 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Config;
 
 class Config
 {
-    const API_VERSION = 'v8.0';
+    const API_VERSION = 'v9.0';
 
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';

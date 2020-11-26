@@ -72,7 +72,7 @@ class FacebookClient
      */
     public function hasAccessToken()
     {
-        return isset($this->accessToken);
+        return (bool) $this->accessToken;
     }
 
     public function getUserEmail()

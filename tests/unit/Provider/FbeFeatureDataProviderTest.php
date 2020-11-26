@@ -12,14 +12,14 @@ class FbeFeatureDataProviderTest extends TestCase
 {
     public function testFeaturesExist()
     {
-        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), new ConfigurationAdapterMock()))->getFbeFeatures();
+        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), new ConfigurationAdapterMock(1)))->getFbeFeatures();
 
         $this->assertAllFeaturesExistOneTime($actual);
     }
 
     public function testEnabledFacebookFeatureIsFoundInEnabledFeaturesReponse()
     {
-        $configurationAdapter = new ConfigurationAdapterMock();
+        $configurationAdapter = new ConfigurationAdapterMock(1);
         $facebookClient = (new FacebookClientMock())
             ->switchFeature('messenger_chat', true);
         $actual = (new FbeFeatureDataProvider($facebookClient, $configurationAdapter))->getFbeFeatures();
