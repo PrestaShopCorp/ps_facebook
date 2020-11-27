@@ -30,13 +30,34 @@
     <h3 class="title">
       {{ $t('catalogSummary.productCatalogExport') }}
     </h3>
+
     <b-button
+      v-if="!exportDoneOnce"
       class="float-right ml-4"
-      :variant="error ? 'danger' : (isPrimaryAction ? 'primary' : 'outline-secondary')"
+      :variant="error ? 'danger' : 'primary'"
       @click="exportClicked"
     >
       {{ exportButtonLabel }}
     </b-button>
+    <b-button
+      v-else-if="exportOn"
+      class="float-right ml-4"
+      :variant="error ? 'danger' : 'outline-secondary'"
+      @click="exportClicked"
+    >
+      <i class="material-icons">pause_circle_filled</i>
+      PAUSE
+    </b-button>
+    <b-button
+      v-else
+      class="float-right ml-4"
+      :variant="error ? 'danger' : 'outline-secondary'"
+      @click="exportClicked"
+    >
+      <i class="material-icons">loop</i>
+      RESUME
+    </b-button>
+
     <p class="text">
       <b-alert
         variant="warning"
@@ -46,6 +67,9 @@
       </b-alert>
       {{ $t('catalogSummary.catalogExportIntro') }}
     </p>
+
+    {{ exportOn }}
+    {{ validation }}
   </div>
 </template>
 
@@ -62,10 +86,17 @@ export default defineComponent({
     BAlert,
   },
   props: {
-    isPrimaryAction: {
+    validation: {
+      type: Object,
+      required: true,
+    },
+    exportDoneOnce: {
       type: Boolean,
-      required: false,
-      default: false,
+      required: true,
+    },
+    exportOn: {
+      type: Boolean,
+      required: true,
     },
     startProductSyncRoute: {
       type: String,
@@ -95,7 +126,9 @@ export default defineComponent({
       fetch(this.startProductSyncRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        // body: JSON.stringify({}),
+        body: JSON.stringify({
+          turnOn: this.exportDoneOnce ? !this.exportOn : true,
+        }),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);

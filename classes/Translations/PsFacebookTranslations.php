@@ -137,13 +137,13 @@ class PsFacebookTranslations
             'catalogSummary' => [
                 'categoryMatching' => $this->module->l('Enhance your catalog', 'PsFacebookTranslations'),
                 'categoryMatchingIntro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.', 'PsFacebookTranslations'),
-                'categoryMatchingNotice' => $this->module->l('You [1]must[/1] choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.', 'PsFacebookTranslations'),
+                'categoryMatchingNotice' => $this->module->l('You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.', 'PsFacebookTranslations'),
                 'matchCategoriesButton' => $this->module->l('Map categories', 'PsFacebookTranslations'),
 
                 'productCatalogExport' => $this->module->l('Your catalog in Facebook Business', 'PsFacebookTranslations'),
                 'exportCatalogButton' => $this->module->l('Share catalog', 'PsFacebookTranslations'),
                 'catalogExportIntro' => $this->module->l("Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog. A catalog is a container that holds information about the items you want to advertise or sell across Facebook and Instagram.", 'PsFacebookTranslations'),
-                'catalogExportWarning' => $this->module->l('By sharing your catalogue, you agree PrestaShop may send all information related to the catalog products to Facebook.', 'PsFacebookTranslations'),
+                'catalogExportWarning' => $this->module->l('By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.', 'PsFacebookTranslations'),
                 'reportingTitle' => $this->module->l('Product sync report', 'PsFacebookTranslations'),
                 'reportingIntro' => $this->module->l('It can take up to 24h for your PrestaShop product information to sync to Facebook. Once products are published you can start tagging them on Instagram or create Facebook ads.', 'PsFacebookTranslations'),
                 'pauseButton' => $this->module->l('Pause', 'PsFacebookTranslations'),

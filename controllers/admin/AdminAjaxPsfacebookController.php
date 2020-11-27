@@ -145,16 +145,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
+        $turnOn = (bool) Tools::getValue('turn_on');
+
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
         $response = $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
             [
-                'json' => [],
+                'json' => ['turnOn' => $turnOn],
             ]
         )->json();
 
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
+        $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_ON, $turnOn);
 
         $this->ajaxDie(
             json_encode(
@@ -302,6 +305,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
+                    'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
                     'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'reporting' => [
