@@ -4,6 +4,8 @@ namespace PrestaShop\Module\PrestashopFacebook\Tests\Integration\API;
 
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
 use PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory;
 use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\AccessTokenProviderMock;
 use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\ConfigurationAdapterMock;
@@ -77,5 +79,61 @@ class FacebookClientTest extends TestCase
         $this->assertSame($businessManagerId, $businessManager->getId());
         $this->assertNotNull($businessManager->getName());
         $this->assertNotNull($businessManager->getCreatedAt());
+    }
+
+    public function testGetPixel()
+    {
+        if (empty($this->fbConfig['pixel_id'])) {
+            $this->markTestSkipped(
+              'The Pixel ID is missing from the JSON config file.'
+            );
+        }
+
+        $configurationAdapter = new ConfigurationAdapterMock(1);
+        $configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            $configurationAdapter,
+            new ErrorHandlerMock()
+        );
+
+        $pixelId = $this->fbConfig['pixel_id'];
+
+        $pixel = $facebookClient->getPixel($pixelId);
+
+        $this->assertNotNull($pixel->getId());
+        $this->assertSame($pixelId, $pixel->getId());
+        $this->assertNotNull($pixel->getName());
+        $this->assertNotNull($pixel->getLastActive());
+        $this->assertNotNull($pixel->isUnavailable());
+        $this->assertTrue($pixel->isActive());
+    }
+
+    public function testPage()
+    {
+        if (empty($this->fbConfig['page_ids'])) {
+            $this->markTestSkipped(
+              'The Page IDs are missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $pageIds = $this->fbConfig['page_ids'];
+
+        $page = $facebookClient->getPage($pageIds);
+
+        $this->assertNotNull($page->getId());
+        $this->assertSame(reset($pageIds), $page->getId());
+        $this->assertNotNull($page->getPage());
+        $this->assertNotNull($page->getLikes());
+        $this->assertNotNull($page->getLogo());
     }
 }

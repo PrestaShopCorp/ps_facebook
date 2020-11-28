@@ -1,6 +1,9 @@
 {
-  "comment": "Copy me as config.json and fill the configuration data",
+  "comment1": "Copy me as config.json and fill the configuration data",
+  "comment2": "See https://developers.facebook.com/tools/accesstoken/",
 
   "access_token": "",
-  "business_manager_id": ""
+  "business_manager_id": "",
+  "pixel_id": "",
+  "page_ids: [],
 }

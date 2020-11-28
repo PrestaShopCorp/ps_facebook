@@ -101,6 +101,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $pixelId
+     *
+     * @return Pixel
+     */
     public function getPixel($pixelId)
     {
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
@@ -114,7 +119,12 @@ class FacebookClient
         );
     }
 
-    public function getPage($pageIds)
+    /**
+     * @param array $pageIds
+     *
+     * @return Page
+     */
+    public function getPage(array $pageIds)
     {
         $pageId = reset($pageIds);
         $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
