@@ -111,7 +111,7 @@ class FacebookClientTest extends TestCase
         $this->assertTrue($pixel->isActive());
     }
 
-    public function testPage()
+    public function testGetPage()
     {
         if (empty($this->fbConfig['page_ids'])) {
             $this->markTestSkipped(
@@ -135,5 +135,30 @@ class FacebookClientTest extends TestCase
         $this->assertNotNull($page->getPage());
         $this->assertNotNull($page->getLikes());
         $this->assertNotNull($page->getLogo());
+    }
+
+    public function testGetAd()
+    {
+        if (empty($this->fbConfig['ad_id'])) {
+            $this->markTestSkipped(
+              'The Ad ID is missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $adId = $this->fbConfig['ad_id'];
+
+        $ad = $facebookClient->getAd($adId);
+
+        $this->assertNotNull($ad->getId());
+        $this->assertSame('act_' . $adId, $ad->getId());
+        $this->assertNotNull($ad->getName());
+        $this->assertNotNull($ad->getCreatedAt());
     }
 }

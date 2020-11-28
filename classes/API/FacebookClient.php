@@ -144,6 +144,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $adId
+     *
+     * @return Ad
+     */
     public function getAd($adId)
     {
         $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
