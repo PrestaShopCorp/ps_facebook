@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Tests\Mock;
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock;
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 

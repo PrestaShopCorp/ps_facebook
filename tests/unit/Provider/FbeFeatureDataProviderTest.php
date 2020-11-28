@@ -1,12 +1,12 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Tests\Provider;
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Provider;
 
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
-use PrestaShop\Module\PrestashopFacebook\Tests\Mock\ConfigurationAdapterMock;
-use PrestaShop\Module\PrestashopFacebook\Tests\Mock\FacebookClientMock;
+use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\ConfigurationAdapterMock;
+use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\FacebookClientMock;
 
 class FbeFeatureDataProviderTest extends TestCase
 {

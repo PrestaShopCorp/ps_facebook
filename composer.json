@@ -37,7 +37,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PrestaShop\\Module\\PrestashopFacebook\\Tests\\": "tests/unit/"
+            "PrestaShop\\Module\\PrestashopFacebook\\Tests\\Unit\\": "tests/unit",
+            "PrestaShop\\Module\\PrestashopFacebook\\Tests\\Integration\\": "tests/integration"
         }
     },
     "repositories": [
