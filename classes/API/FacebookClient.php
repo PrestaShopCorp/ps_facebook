@@ -84,6 +84,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $businessManagerId
+     *
+     * @return FacebookBusinessManager
+     */
     public function getBusinessManager($businessManagerId)
     {
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);

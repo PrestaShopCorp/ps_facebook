@@ -27,6 +27,9 @@ class FacebookClientTest extends TestCase
         }
     }
 
+    /** 
+     * Basic test for having a default constructor with all working parameters
+     */
     public function testFacebookClientIsReady()
     {
         $facebookClient = new FacebookClient(
@@ -37,5 +40,42 @@ class FacebookClientTest extends TestCase
         );
 
         $this->assertTrue($facebookClient->hasAccessToken());
+    }
+
+    public function testGetFbUserEmail()
+    {
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $this->assertNotNull($facebookClient->getUserEmail()->getEmail());
+    }
+
+    public function testGetBusinessManager()
+    {
+        if (empty($this->fbConfig['business_manager_id'])) {
+            $this->markTestSkipped(
+              'The Business Manager ID is missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $businessManagerId = $this->fbConfig['business_manager_id'];
+
+        $businessManager = $facebookClient->getBusinessManager($businessManagerId);
+
+        $this->assertNotNull($businessManager->getId());
+        $this->assertSame($businessManagerId, $businessManager->getId());
+        $this->assertNotNull($businessManager->getName());
+        $this->assertNotNull($businessManager->getCreatedAt());
     }
 }
