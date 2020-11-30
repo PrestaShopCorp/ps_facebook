@@ -27,10 +27,38 @@
       >
     </div>
 
-    <h3 class="title">
+    <h1 class="title">
       {{ $t('catalogSummary.productCatalogExport') }}
-    </h3>
+    </h1>
+    <p class="text">
+      {{ $t('catalogSummary.catalogExportIntro') }}
+      <br><br>
+      <b-alert
+        variant="info"
+        show
+        v-html="md2html($t('catalogSummary.catalogExportInfo'))"
+      />
+    </p>
 
+    <hr class="separator">
+
+    <div class="float-right">
+      ### refresh button
+    </div>
+    <h3>
+      {{ $t('catalogSummary.preApprovalScanTitle') }}
+      <span class="refreshDate text-muted">
+        {{ $t('catalogSummary.preApprovalScanRefreshDate', [(new Date()).toLocaleTimeString()]) }}
+      </span>
+    </h3>
+    <p>{{ $t('catalogSummary.preApprovalScanIntro') }}</p>
+    ### 2 cards - {{ validation }}
+
+    <hr class="separator">
+
+    <b-alert variant="warning" show class="warning">
+      {{ $t('catalogSummary.catalogExportWarning') }}
+    </b-alert>
     <b-button
       v-if="!exportDoneOnce"
       class="float-right ml-4"
@@ -39,37 +67,7 @@
     >
       {{ exportButtonLabel }}
     </b-button>
-    <b-button
-      v-else-if="exportOn"
-      class="float-right ml-4"
-      :variant="error ? 'danger' : 'outline-secondary'"
-      @click="exportClicked"
-    >
-      <i class="material-icons">pause_circle_filled</i>
-      PAUSE
-    </b-button>
-    <b-button
-      v-else
-      class="float-right ml-4"
-      :variant="error ? 'danger' : 'outline-secondary'"
-      @click="exportClicked"
-    >
-      <i class="material-icons">loop</i>
-      RESUME
-    </b-button>
-
-    <p class="text">
-      <b-alert
-        variant="warning"
-        show
-      >
-        {{ $t('catalogSummary.catalogExportWarning') }}
-      </b-alert>
-      {{ $t('catalogSummary.catalogExportIntro') }}
-    </p>
-
-    {{ exportOn }}
-    {{ validation }}
+    <p class="disclaimer text-muted">{{ $t('catalogSummary.catalogExportDisclaimer') }}</p>
   </div>
 </template>
 
@@ -78,6 +76,7 @@ import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert} from 'bootstrap-vue';
 
 import illustration from '../../../assets/catalog_export_illustration.png';
+import showdown from "showdown";
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -146,6 +145,7 @@ export default defineComponent({
         }, 5000);
       });
     },
+    md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>
@@ -159,9 +159,33 @@ export default defineComponent({
   }
   .text {
     display: flow-root;
+    margin-bottom: 0;
 
     & > div {
-      padding-left: 3.8rem !important;
+      font-size: small;
+      padding-left: 3.2rem !important;
+      padding-top: 0.6rem !important;
+      padding-bottom: 0;
     }
+  }
+  .separator {
+    margin-top: 0.7rem;
+    margin-bottom: 1.4rem;
+  }
+  .refreshDate {
+    padding-left: 1rem;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .warning {
+    font-size: small;
+    padding-left: 3.8rem !important;
+    padding-top: 0.6rem !important;
+  }
+  .disclaimer {
+    font-size: smaller;
+    font-style: italic;
+    margin-bottom: 0;
   }
 </style>

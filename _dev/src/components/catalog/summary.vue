@@ -26,6 +26,14 @@
     id="catalogSummary"
   >
     <b-card class="card m-3">
+      <export-catalog
+        :validation="validation"
+        :export-done-once="exportDone"
+        :export-on="exportOn"
+      />
+    </b-card>
+
+    <b-card class="card m-3">
       <categories-matched
         v-if="matchingDone"
         :matching-progress="matchingProgress"
@@ -33,14 +41,6 @@
       <match-categories
         v-else
         :is-primary-action="exportDone"
-      />
-    </b-card>
-
-    <b-card class="card m-3">
-      <export-catalog
-        :validation="validation"
-        :export-done-once="exportDone"
-        :export-on="exportOn"
       />
     </b-card>
 
