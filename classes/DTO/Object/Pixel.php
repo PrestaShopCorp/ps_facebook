@@ -31,6 +31,8 @@ class Pixel implements JsonSerializable
      */
     private $isActive;
 
+    private $settingsUrl;
+
     /**
      * Pixel constructor.
      *
@@ -39,14 +41,16 @@ class Pixel implements JsonSerializable
      * @param string $lastActive
      * @param bool $isUnavailable
      * @param bool $isActive
+     * @param $settingsUrl
      */
-    public function __construct($id, $name, $lastActive, $isUnavailable, $isActive)
+    public function __construct($id, $name, $lastActive, $isUnavailable, $isActive, $settingsUrl)
     {
         $this->id = $id;
         $this->name = $name;
         $this->lastActive = $lastActive;
         $this->isUnavailable = $isUnavailable;
         $this->isActive = $isActive;
+        $this->settingsUrl = $settingsUrl;
     }
 
     /**
@@ -89,6 +93,14 @@ class Pixel implements JsonSerializable
         return $this->isActive;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSettingsUrl()
+    {
+        return $this->settingsUrl;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -97,6 +109,7 @@ class Pixel implements JsonSerializable
             'lastActive' => $this->getLastActive(),
             'isUnavailable' => $this->isUnavailable(),
             'isActive' => $this->isActive(),
+            'settingsUrl' => $this->getSettingsUrl(),
         ];
     }
 }

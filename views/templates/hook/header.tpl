@@ -63,11 +63,11 @@
       <meta property="og:url" content="{$product.link nofilter}">
       <meta property="og:image" content="{$product.images.0.bySize.medium_default.url}">
       <meta property="product:brand" content="{$product_manufacturer->name}">
-      <meta property="product:availability" content="{if $product.available_for_order == 1}In stock{else}Out of stock{/if}">
+      <meta property="product:availability" content="{$product.seo_availability}">
       <meta property="product:condition" content="{$product.embedded_attributes.condition}">
-      <meta property="product:price:amount" content="{$product.price_amount}">
+      <meta property="product:price:amount" content="{$product.price}">
       <meta property="product:price:currency" content="{$currency.iso_code}">
-      <meta property="product:retailer_item_id" content="{$product.id}">
+      <meta property="product:retailer_item_id" content="{$product.id}-{$product.id_product_attribute}">
   {/if}
 {/if}
 <!-- END OF Set Facebook Pixel Product Export -->

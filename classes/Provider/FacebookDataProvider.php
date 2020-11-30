@@ -34,7 +34,7 @@ class FacebookDataProvider
 
         $user = $this->facebookClient->getUserEmail();
         $businessManager = $this->facebookClient->getBusinessManager($fbe['business_manager_id']);
-        $pixel = $this->facebookClient->getPixel($fbe['pixel_id']);
+        $pixel = $this->facebookClient->getPixel($fbe['pixel_id'], $fbe['catalog_id']);
         $pages = $this->facebookClient->getPage($fbe['pages']);
         $ad = $this->facebookClient->getAd($fbe['ad_account_id']);
         $catalog = new Catalog($fbe['catalog_id']); // No additional data retrieved from FB

@@ -96,7 +96,7 @@ class FacebookClient
         );
     }
 
-    public function getPixel($pixelId)
+    public function getPixel($pixelId, $catalogId)
     {
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
 
@@ -105,7 +105,8 @@ class FacebookClient
             isset($responseContent['name']) ? $responseContent['name'] : null,
             isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
             isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
-            (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
+            (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED),
+            "https://www.facebook.com/products/catalogs/$catalogId/data_sources/pixels/{$pixelId}/settings"
         );
     }
 

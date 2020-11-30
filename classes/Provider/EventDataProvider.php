@@ -126,14 +126,16 @@ class EventDataProvider
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
             'category' => (new Category($product['id_category_default']))->getName($this->idLang),
-            'item_price' => $product['price_amount'],
+            'item_price' => $product['price'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
         $customData = [
             'currency' => $this->getCurrency(),
+            'content_ids' => [$fbProductId],
             'contents' => [$content],
             'content_type' => self::PRODUCT_TYPE,
             'value' => $product['price_amount'],
+            'google_product_category' => 9
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
