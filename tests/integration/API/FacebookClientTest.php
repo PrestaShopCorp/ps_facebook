@@ -161,4 +161,115 @@ class FacebookClientTest extends TestCase
         $this->assertNotNull($ad->getName());
         $this->assertNotNull($ad->getCreatedAt());
     }
+
+
+    public function testGetFbeAttribute()
+    {
+        if (empty($this->fbConfig['external_business_id'])) {
+            $this->markTestSkipped(
+              'The External Business ID is missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $externalBusinessId = $this->fbConfig['external_business_id'];
+
+        $fbeData = $facebookClient->getFbeAttribute($externalBusinessId);
+
+        $this->assertTrue(is_array($fbeData));
+
+        // Check mandatory keys exist
+        $this->assertArrayHasKey('business_manager_id', $fbeData);
+        $this->assertArrayHasKey('pixel_id', $fbeData);
+        $this->assertArrayHasKey('profiles', $fbeData);
+        $this->assertArrayHasKey('ad_account_id', $fbeData);
+        $this->assertArrayHasKey('catalog_id', $fbeData);
+        $this->assertArrayHasKey('pages', $fbeData);
+
+        // Check type
+        $this->assertTrue(is_string($fbeData['business_manager_id']));
+        $this->assertTrue(is_string($fbeData['pixel_id']));
+        $this->assertTrue(is_array($fbeData['profiles']));
+        $this->assertTrue(is_string($fbeData['ad_account_id']));
+        $this->assertTrue(is_string($fbeData['catalog_id']));
+        $this->assertTrue(is_array($fbeData['pages']));
+        
+        // If properties are defined in config.json, check they match with the returned data
+        if (!empty($this->fbConfig['business_manager_id'])) {
+            $this->assertSame($this->fbConfig['business_manager_id'], $fbeData['business_manager_id']);
+        }
+        if (!empty($this->fbConfig['pixel_id'])) {
+            $this->assertSame($this->fbConfig['pixel_id'], $fbeData['pixel_id']);
+        }
+        // TODO: check profiles?
+        if (!empty($this->fbConfig['ad_id'])) {
+            $this->assertSame($this->fbConfig['ad_id'], $fbeData['ad_account_id']);
+        }
+        // TODO: check catalog ID?
+        if (!empty($this->fbConfig['page_ids'])) {
+            $this->assertSame($this->fbConfig['page_ids'], $fbeData['pages']);
+        }
+    }
+
+    public function testGetFbeFeatures()
+    {
+        if (empty($this->fbConfig['external_business_id'])) {
+            $this->markTestSkipped(
+              'The External Business ID is missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $externalBusinessId = $this->fbConfig['external_business_id'];
+
+        $fbeFeatures = $facebookClient->getFbeFeatures($externalBusinessId);
+
+        $this->assertTrue(is_array($fbeFeatures));
+        foreach(Config::AVAILABLE_FBE_FEATURES as $feature) {
+            $this->assertArrayHasKey($feature, $fbeFeatures, "Feature $feature was not found in list from FB.");
+            $this->assertTrue(isset($fbeFeatures[$feature]['enabled']), "Feature $feature has no key 'enabled'");
+            $this->assertTrue(is_bool($fbeFeatures[$feature]['enabled']), "Key 'enabled' of feature $feature is not a boolean");
+        }
+    }
+
+    public function testUpdateFeature()
+    {
+        if (empty($this->fbConfig['external_business_id'])) {
+            $this->markTestSkipped(
+              'The External Business ID is missing from the JSON config file.'
+            );
+        }
+
+        $facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
+
+        $externalBusinessId = $this->fbConfig['external_business_id'];
+
+        $configuration = [
+            'messenger_chat' => [
+                'enabled' => true,
+            ],
+        ];
+
+        $result = $facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue($result['success']);
+    }
 }
