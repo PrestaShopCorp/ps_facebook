@@ -250,8 +250,8 @@ export default defineComponent({
   }
 
   .select-title {
-    font-weight: normal;
-    font-style: italic;
+    font-weight: normal!important;
+    font-style: italic!important;
   }
 </style>
 <style lang="scss">

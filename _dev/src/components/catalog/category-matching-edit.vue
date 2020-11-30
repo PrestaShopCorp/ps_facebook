@@ -67,8 +67,7 @@
       {{ $t('categoryMatching.intro') }}
     </p>
 
-    <p>
-    </p>
+    <p />
 
     <TableMatching :initial-categories="categories" />
   </b-card>
@@ -151,7 +150,7 @@ export default defineComponent({
             /* eslint no-param-reassign: "error" */
             el.show = true;
             /* eslint no-param-reassign: "error" */
-            el.googleCategoryId = parseInt(el.googleCategoryId);
+            el.googleCategoryId = Number(el.googleCategoryId);
             /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           });

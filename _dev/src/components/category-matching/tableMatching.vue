@@ -85,7 +85,7 @@ export default defineComponent({
     saveParentStatement: {
       type: String,
       required: false,
-      default:  () => global.psFacebookUpdateCategoryMatch || null,
+      default: () => global.psFacebookUpdateCategoryMatch || null,
     },
     getCategoriesRoute: {
       type: String,
@@ -98,20 +98,20 @@ export default defineComponent({
   data() {
     return {
       categories: this.initialCategories,
-      hasScrolledToBottom: false,
+      loading: null,
     };
   },
   methods: {
     saveMatchingCallback(category) {
-      fetch(this.saveParentStatement, {
+      return fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `id_shop_category=${category.shopCategoryId}&google_category_id=${category.fbCategoryId}&update_children=${category.propagate}`,
       }).then((res) => {
-        return Promise.resolve(true);
-      }).catch((error) => {
-        console.error(error);
-        return Promise.reject(new Error(error));
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return true;
       });
     },
 
@@ -232,7 +232,31 @@ export default defineComponent({
       if (document.documentElement.scrollTop + window.innerHeight
           === document.documentElement.scrollHeight
       ) {
-        console.log('run method for lazy loading');
+        fetch(this.getCategoriesRoute, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: 'id_category=3&page=1',
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+          .then((res) => {
+            if (Array.isArray(res)) {
+              res.forEach((el) => {
+                this.categories.push(el);
+                el.show = true;
+                el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+              });
+            } else {
+              this.categories.push(res);
+              res.show = true;
+              res.shopParentCategoryIds = `${res.shopCategoryId}/`;
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
       }
     },
     /**
@@ -240,17 +264,17 @@ export default defineComponent({
     */
     setAction(currentCategory, subcategories) {
       const dictionary = {
-        '0': () => {},
-        '1': () => this.addChildren(currentCategory, subcategories),
-        '2': () => this.showChildren(currentCategory),
-        '3': () => this.hideChildren(currentCategory),
+        0: () => {},
+        1: () => this.addChildren(currentCategory, subcategories),
+        2: () => this.showChildren(currentCategory),
+        3: () => this.hideChildren(currentCategory),
       };
       return dictionary[currentCategory.deploy].call();
     },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
-    console.log(this.categories)
+    console.log(this.categories);
     if (this.categories.length === 0) {
       // call php
     }
