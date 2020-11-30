@@ -18,6 +18,11 @@ class FacebookClientTest extends TestCase
      */
     private $fbConfig;
 
+    /**
+     * @var FacebookClient
+     */
+    private $facebookClient;
+
     protected function setUp()
     {
         $this->fbConfig = json_decode(file_get_contents(__DIR__ . '/../config.json'), true);
@@ -27,6 +32,16 @@ class FacebookClientTest extends TestCase
               'The Access Token is missing from the JSON config file.'
             );
         }
+
+        $configurationAdapter = new ConfigurationAdapterMock(1);
+        $configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
+
+        $this->facebookClient = new FacebookClient(
+            new FacebookEssentialsApiClientFactory(),
+            new AccessTokenProviderMock($this->fbConfig['access_token']),
+            new ConfigurationAdapterMock(1),
+            new ErrorHandlerMock()
+        );
     }
 
     /** 
@@ -34,26 +49,12 @@ class FacebookClientTest extends TestCase
      */
     public function testFacebookClientIsReady()
     {
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
-        $this->assertTrue($facebookClient->hasAccessToken());
+        $this->assertTrue($this->facebookClient->hasAccessToken());
     }
 
     public function testGetFbUserEmail()
     {
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
-        $this->assertNotNull($facebookClient->getUserEmail()->getEmail());
+        $this->assertNotNull($this->facebookClient->getUserEmail()->getEmail());
     }
 
     public function testGetBusinessManager()
@@ -64,16 +65,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $businessManagerId = $this->fbConfig['business_manager_id'];
 
-        $businessManager = $facebookClient->getBusinessManager($businessManagerId);
+        $businessManager = $this->facebookClient->getBusinessManager($businessManagerId);
 
         $this->assertNotNull($businessManager->getId());
         $this->assertSame($businessManagerId, $businessManager->getId());
@@ -89,19 +83,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $configurationAdapter = new ConfigurationAdapterMock(1);
-        $configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, true);
-
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            $configurationAdapter,
-            new ErrorHandlerMock()
-        );
-
         $pixelId = $this->fbConfig['pixel_id'];
 
-        $pixel = $facebookClient->getPixel($pixelId);
+        $pixel = $this->facebookClient->getPixel($pixelId);
 
         $this->assertNotNull($pixel->getId());
         $this->assertSame($pixelId, $pixel->getId());
@@ -119,16 +103,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $pageIds = $this->fbConfig['page_ids'];
 
-        $page = $facebookClient->getPage($pageIds);
+        $page = $this->facebookClient->getPage($pageIds);
 
         $this->assertNotNull($page->getId());
         $this->assertSame(reset($pageIds), $page->getId());
@@ -145,16 +122,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $adId = $this->fbConfig['ad_id'];
 
-        $ad = $facebookClient->getAd($adId);
+        $ad = $this->facebookClient->getAd($adId);
 
         $this->assertNotNull($ad->getId());
         $this->assertSame('act_' . $adId, $ad->getId());
@@ -171,16 +141,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $externalBusinessId = $this->fbConfig['external_business_id'];
 
-        $fbeData = $facebookClient->getFbeAttribute($externalBusinessId);
+        $fbeData = $this->facebookClient->getFbeAttribute($externalBusinessId);
 
         $this->assertTrue(is_array($fbeData));
 
@@ -225,16 +188,9 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $externalBusinessId = $this->fbConfig['external_business_id'];
 
-        $fbeFeatures = $facebookClient->getFbeFeatures($externalBusinessId);
+        $fbeFeatures = $this->facebookClient->getFbeFeatures($externalBusinessId);
 
         $this->assertTrue(is_array($fbeFeatures));
         foreach(Config::AVAILABLE_FBE_FEATURES as $feature) {
@@ -252,13 +208,6 @@ class FacebookClientTest extends TestCase
             );
         }
 
-        $facebookClient = new FacebookClient(
-            new FacebookEssentialsApiClientFactory(),
-            new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
-            new ErrorHandlerMock()
-        );
-
         $externalBusinessId = $this->fbConfig['external_business_id'];
 
         $configuration = [
@@ -267,7 +216,7 @@ class FacebookClientTest extends TestCase
             ],
         ];
 
-        $result = $facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
+        $result = $this->facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
 
         $this->assertTrue(is_array($result));
         $this->assertTrue($result['success']);
