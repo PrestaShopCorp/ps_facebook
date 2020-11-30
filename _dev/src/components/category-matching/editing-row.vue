@@ -226,102 +226,102 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
   .spinner {
-    color: #fff!important;
-    background-color: #fff!important;
-    width: 1.4rem!important;
-    height: 1.4rem!important;
-    border-radius: 2.5rem!important;
-    border-right-color: #25b9d7!important;
-    border-bottom-color: #25b9d7!important;
-    border-width: .1875rem!important;
-    border-style: solid!important;
-    font-size: 0!important;
-    outline: none!important;
-    display: inline-block!important;
-    border-left-color: #bbcdd2!important;
-    border-top-color: #bbcdd2!important;
-    -webkit-animation: rotating 2s linear infinite!important;
-    animation: rotating 2s linear infinite!important;
+    color: #fff;
+    background-color: #fff;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 2.5rem;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
   }
 
   .saved {
-    animation: temporary 3s linear normal!important;
-    opacity: 0!important;
-    width: 1.4rem!important;
-    height: 1.4rem!important;
-    display: inline-block!important;
+    animation: temporary 3s linear normal;
+    opacity: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: inline-block;
 
     & > * {
-      zoom: 0.35!important;
+      zoom: 0.35;
     }
   }
 
   .checkmark__circle {
-    stroke-dasharray: 166!important;
-    stroke-dashoffset: 166!important;
-    stroke-width: 2!important;
-    stroke-miterlimit: 10!important;
-    stroke: #70B580!important;
-    fill: none!important;
-    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards!important;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #70B580;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
   }
 
   .checkmark {
-    width: 56px!important;
-    height: 56px!important;
-    border-radius: 50%!important;
-    display: block!important;
-    stroke-width: 2!important;
-    stroke: #fff!important;
-    stroke-miterlimit: 10!important;
-    margin: 10% auto!important;
-    box-shadow: inset 0px 0px 0px #70B580!important;
-    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both!important;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    margin: 10% auto;
+    box-shadow: inset 0px 0px 0px #70B580;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
   }
 
   .checkmark__check {
-    transform-origin: 50% 50%!important;
-    stroke-dasharray: 48!important;
-    stroke-dashoffset: 48!important;
-    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards!important;
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
   }
 
   @keyframes stroke {
     100% {
-      stroke-dashoffset: 0!important;
+      stroke-dashoffset: 0;
     }
   }
   @keyframes scale {
     0%, 100% {
-      transform: none!important;
+      transform: none;
     }
     50% {
-      transform: scale3d(1.1, 1.1, 1)!important;
+      transform: scale3d(1.1, 1.1, 1);
     }
   }
   @keyframes fill {
     100% {
-      box-shadow: inset 0px 0px 0px 30px #70B580!important;
+      box-shadow: inset 0px 0px 0px 30px #70B580;
     }
   }
   @keyframes temporary {
     0%, 100% {
-      opacity: 0!important;
+      opacity: 0;
     }
     1%, 90% {
-      opacity: 1!important;
+      opacity: 1;
     }
   }
 
   .error {
-    font-family: Material Icons!important;
-    font-weight: 400!important;
-    font-style: normal!important;
-    font-size: 24px!important;
-    font-size: 1.5rem!important;
-    display: inline-block!important;
-    line-height: 1!important;
-    color: #c05c67!important;
+    font-family: Material Icons;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    font-size: 1.5rem;
+    display: inline-block;
+    line-height: 1;
+    color: #c05c67;
   }
   .opened {
     td:first-child:before {
