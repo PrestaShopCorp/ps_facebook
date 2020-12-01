@@ -43,7 +43,7 @@
       <b-button
         class="mb-2 mt-1"
         variant="primary"
-        @click="onHide"
+        @click="onHide, onGetStarted"
       >
         {{ $t('configuration.introduction.getStarted') }}
       </b-button>
@@ -125,7 +125,7 @@
         <p>{{ $t('configuration.introduction.resume') }}</p>
         <b-button
           variant="primary"
-          @click="onHide"
+          @click="onHide, onGetStarted"
         >
           {{ $t('configuration.introduction.getStarted') }}
         </b-button>
@@ -145,6 +145,11 @@ export default defineComponent({
   methods: {
     onHide() {
       this.$emit('onHide');
+    },
+    onGetStarted() {
+      this.$segment.track('PS Facebook installed', {
+          module: 'ps_facebook',
+        });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },

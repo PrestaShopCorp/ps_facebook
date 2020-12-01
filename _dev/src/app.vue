@@ -34,7 +34,9 @@
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}
       </MenuItem>
-      <MenuItem route="/help">
+      <MenuItem
+        @click="onHelp"
+        route="/help">
         {{ $t('general.tabs.help') }}
       </MenuItem>
     </Menu>
@@ -92,6 +94,11 @@ export default {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
         }).catch((error) => {
           console.error(error);
+        });
+    },
+    onHelp() {
+      this.$segment.track('Click on help tab', {
+          module: 'ps_facebook',
         });
     },
   },
