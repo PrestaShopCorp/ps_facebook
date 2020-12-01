@@ -78,7 +78,7 @@
           class="pb-3 px-2"
         >
           <div class="app pt-1 pb-3 px-2">
-            <div class="text-uppercase text-muted small-text">
+            <div class="text-uppercase text-muted small-text pb-1">
               {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
             </div>
             <span class="green-number">
@@ -96,7 +96,7 @@
           class="pb-3 px-2"
         >
           <div class="app pt-1 pb-3 px-2">
-            <div class="text-uppercase text-muted small-text">
+            <div class="text-uppercase text-muted small-text pb-1">
               {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
             </div>
             <div class="float-right see-details">
