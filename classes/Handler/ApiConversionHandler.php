@@ -154,10 +154,6 @@ class ApiConversionHandler
 
         $events[] = $event;
 
-        if (empty($event)) {
-            return true;
-        }
-
         $this->sendEvents($events);
     }
 
