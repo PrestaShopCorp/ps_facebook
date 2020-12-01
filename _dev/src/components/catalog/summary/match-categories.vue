@@ -27,9 +27,9 @@
       >
     </div>
 
-    <h3 class="title">
+    <h1 class="title">
       {{ $t('catalogSummary.categoryMatching') }}
-    </h3>
+    </h1>
     <b-button
       class="float-right ml-3"
       :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"

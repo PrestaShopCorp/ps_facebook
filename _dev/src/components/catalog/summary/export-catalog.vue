@@ -21,13 +21,29 @@
     <div class="illustration float-left mr-3 d-none d-md-block">
       <img
         :src="illustration"
-        width="112"
-        height="134"
+        :width="(exportDoneOnce && 45) || 112"
+        :height="(exportDoneOnce && 48) || 134"
         alt="background illustration"
       >
     </div>
 
     <h1 class="title">
+      <div v-if="exportDoneOnce" class="mt-1 ml-3">
+        <span class="d-none d-sm-inline">
+          {{ $t(exportOn ? 'catalogSummary.catalogExportActivated' : 'catalogSummary.catalogExportPaused') }}
+        </span>
+        <div
+          class="switch-input switch-input-lg ml-1"
+          :class="exportOn ? '-checked' : null"
+          @click="exportClicked"
+        >
+          <input
+            class="switch-input-lg"
+            type="checkbox"
+            :checked="exportOn"
+          >
+        </div>
+      </div>
       {{ $t('catalogSummary.productCatalogExport') }}
     </h1>
     <p class="text">
@@ -43,7 +59,7 @@
     <hr class="separator">
 
     <div class="float-right">
-      ### refresh button
+      <i class="material-icons refresh-icon" @click="rescan">loop</i>
     </div>
     <h3>
       {{ $t('catalogSummary.preApprovalScanTitle') }}
@@ -52,31 +68,100 @@
       </span>
     </h3>
     <p>{{ $t('catalogSummary.preApprovalScanIntro') }}</p>
-    ### 2 cards - {{ validation }}
+
+    <b-container fluid>
+      <b-row align-v="stretch">
+        <b-col
+          lg="6"
+          md="6"
+          sm="12"
+          class="pb-3 px-2"
+        >
+          <div class="app pt-1 pb-3 px-2">
+            <div class="text-uppercase text-muted small-text">
+              {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
+            </div>
+            <span class="green-number">
+              {{ validation.prevalidation.syncable }}
+            </span>&nbsp;/&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+          </div>
+        </b-col>
+        <div class="w-100 d-block d-sm-none" />
+        <div class="w-100 d-none d-sm-block d-md-none" />
+        <b-col
+          lg="6"
+          md="6"
+          sm="12"
+          class="pb-3 px-2"
+        >
+          <div class="app pt-1 pb-3 px-2">
+            <div class="text-uppercase text-muted small-text">
+              {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
+            </div>
+            <div class="float-right see-details">
+              More details soon
+            </div>
+            <span class="red-number">
+              {{ validation.prevalidation.notSyncable }}
+            </span>&nbsp;/&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
 
     <hr class="separator">
 
-    <b-alert variant="warning" show class="warning">
-      {{ $t('catalogSummary.catalogExportWarning') }}
-    </b-alert>
-    <b-button
-      v-if="!exportDoneOnce"
-      class="float-right ml-4"
-      :variant="error ? 'danger' : 'primary'"
-      @click="exportClicked"
-    >
-      {{ exportButtonLabel }}
-    </b-button>
-    <p class="disclaimer text-muted">{{ $t('catalogSummary.catalogExportDisclaimer') }}</p>
+    <template v-if="!exportOn">
+      <b-alert variant="warning" show class="warning">
+        {{ $t('catalogSummary.catalogExportWarning') }}
+      </b-alert>
+      <b-button
+        v-if="!exportDoneOnce"
+        class="float-right ml-4"
+        :variant="error ? 'danger' : 'primary'"
+        @click="exportClicked"
+      >
+        {{ exportButtonLabel }}
+      </b-button>
+      <p v-if="!exportDoneOnce" class="disclaimer text-muted">
+        {{ $t('catalogSummary.catalogExportDisclaimer') }}
+      </p>
+      <template v-else>
+        <b-link
+          class="view-button float-right ml-3"
+          @click="viewCatalogClicked"
+        >
+          <i class="material-icons">launch</i>
+          {{ $t('catalogSummary.viewCatalogButton') }}
+        </b-link>
+        <p class="mb-0">
+          <i class="material-icons pause-icon">pause_circle_filled</i>
+          {{ $t('catalogSummary.catalogExportOperationPaused') }}
+        </p>
+      </template>
+    </template>
+
+    <template v-else>
+      <b-alert variant="info" show class="warning">
+        {{ $t('catalogSummary.catalogExportNotice') }}
+      </b-alert>
+      <br>
+      <b-link
+        class="view-button float-right ml-3"
+        @click="viewCatalogClicked"
+      >
+        <i class="material-icons">launch</i>
+        {{ $t('catalogSummary.viewCatalogButton') }}
+      </b-link>
+    </template>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert} from 'bootstrap-vue';
-
+import showdown from 'showdown';
 import illustration from '../../../assets/catalog_export_illustration.png';
-import showdown from "showdown";
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -145,6 +230,12 @@ export default defineComponent({
         }, 5000);
       });
     },
+    rescan() {
+      window.location.reload();
+    },
+    viewCatalogClicked() {
+      // TODO !1: need URL, target blank !
+    },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
 });
@@ -153,9 +244,19 @@ export default defineComponent({
 <style lang="scss" scoped>
   .illustration {
     margin-bottom: -10px;
+
+    & > img {
+      margin-bottom: 6rem;
+    }
   }
   .title {
     font-weight: 600;
+
+    & > div {
+      float: right;
+      font-size: 0.6em;
+      font-weight: 300;
+    }
   }
   .text {
     display: flow-root;
@@ -187,5 +288,41 @@ export default defineComponent({
     font-size: smaller;
     font-style: italic;
     margin-bottom: 0;
+  }
+  .pause-icon {
+    font-size: 1.5em;
+    color: #6C868E;
+  }
+  .refresh-icon {
+    font-size: 1.8em;
+    color: #6C868E;
+    cursor: pointer;
+  }
+  .app {
+    background-color: #fafbfc;
+    border-radius: 3px;
+    height: 100%;
+  }
+  .green-number {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #70B580;
+  }
+  .red-number {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #C05C67;
+  }
+  .see-details {
+    font-size: small;
+    font-style: italic;
+    position: relative;
+    bottom: -1rem;
+  }
+  .view-button {
+    font-weight: 700;
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
   }
 </style>
