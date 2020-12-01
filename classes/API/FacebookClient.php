@@ -96,7 +96,7 @@ class FacebookClient
         );
     }
 
-    public function getPixel($pixelId, $catalogId)
+    public function getPixel($pixelId)
     {
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
 

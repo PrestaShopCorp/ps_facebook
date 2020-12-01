@@ -132,7 +132,7 @@ class EventDataProvider
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
             'category' => (new Category($product['id_category_default']))->getName($this->idLang),
-            'item_price' => $product['price_amount'],
+            'item_price' => $product['price_tax_exc'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
         $customData = [
@@ -140,7 +140,7 @@ class EventDataProvider
             'content_ids' => [$fbProductId],
             'contents' => [$content],
             'content_type' => self::PRODUCT_TYPE,
-            'value' => $product['price_amount'],
+            'value' => $product['price_tax_exc'],
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
@@ -306,8 +306,7 @@ class EventDataProvider
         $idLang = (int) $this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
-        $locale = \Tools::strtoupper($this->context->language->iso_code);
-        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds, $locale);
+        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -440,7 +439,7 @@ class EventDataProvider
             $content = [
                 'id' => ProductCatalogUtility::makeProductId($product['id_product'], $product['id_product_attribute']),
                 'quantity' => $product['quantity'],
-                'item_price' => $product['price'],
+                'item_price' => $product['price_tax_exc'],
                 'title' => \Tools::replaceAccentedChars($product['name']),
                 'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
                 'category' => (new Category($product['id_category_default']))->getName($idLang),
@@ -455,13 +454,12 @@ class EventDataProvider
      * @param int $productId
      * @param int $idLang
      * @param int[] $attributeIds
-     * @param string $locale
      *
      * @return array
      *
      * @throws \PrestaShopException
      */
-    private function getCustomAttributeData($productId, $idLang, $attributeIds, $locale)
+    private function getCustomAttributeData($productId, $idLang, $attributeIds)
     {
         $attributes = [];
         foreach ($attributeIds as $attributeId) {
