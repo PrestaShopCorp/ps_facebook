@@ -3,16 +3,17 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use FacebookAds\Object\Values\ProductItemAvailabilityValues;
-use PrestaShopBundle\Form\Admin\Product\ProductQuantity;
 use Product;
 
 class ProductAvailabilityProvider implements ProductAvailabilityProviderInterface
 {
     /**
      * todo:add more availability cases
+     *
      * @param $productId
      *
      * @return string
+     *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
