@@ -5,7 +5,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Tests\Integration\API;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
 use PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory;
 use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\AccessTokenProviderMock;
 use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\ConfigurationAdapterMock;
@@ -44,7 +43,7 @@ class FacebookClientTest extends TestCase
         );
     }
 
-    /** 
+    /**
      * Basic test for having a default constructor with all working parameters
      */
     public function testFacebookClientIsReady()
@@ -132,7 +131,6 @@ class FacebookClientTest extends TestCase
         $this->assertNotNull($ad->getCreatedAt());
     }
 
-
     public function testGetFbeAttribute()
     {
         if (empty($this->fbConfig['external_business_id'])) {
@@ -162,7 +160,7 @@ class FacebookClientTest extends TestCase
         $this->assertTrue(is_string($fbeData['ad_account_id']));
         $this->assertTrue(is_string($fbeData['catalog_id']));
         $this->assertTrue(is_array($fbeData['pages']));
-        
+
         // If properties are defined in config.json, check they match with the returned data
         if (!empty($this->fbConfig['business_manager_id'])) {
             $this->assertSame($this->fbConfig['business_manager_id'], $fbeData['business_manager_id']);
@@ -193,7 +191,7 @@ class FacebookClientTest extends TestCase
         $fbeFeatures = $this->facebookClient->getFbeFeatures($externalBusinessId);
 
         $this->assertTrue(is_array($fbeFeatures));
-        foreach(Config::AVAILABLE_FBE_FEATURES as $feature) {
+        foreach (Config::AVAILABLE_FBE_FEATURES as $feature) {
             $this->assertArrayHasKey($feature, $fbeFeatures, "Feature $feature was not found in list from FB.");
             $this->assertTrue(isset($fbeFeatures[$feature]['enabled']), "Feature $feature has no key 'enabled'");
             $this->assertTrue(is_bool($fbeFeatures[$feature]['enabled']), "Key 'enabled' of feature $feature is not a boolean");

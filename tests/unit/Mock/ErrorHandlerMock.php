@@ -3,9 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock;
 
 use GuzzleHttp\Exception\RequestException;
-use Module;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
-use Raven_Client;
 
 /**
  * Handle Error.
@@ -39,11 +37,7 @@ class ErrorHandlerMock extends ErrorHandler
             $requestException = $error->getPrevious();
             if ($requestException->hasResponse()) {
                 // Display the response from FB and keep the trace
-                throw new \Exception(
-                    $requestException->getResponse()->getBody()->getContents(),
-                    $code,
-                    $error
-                );
+                throw new \Exception($requestException->getResponse()->getBody()->getContents(), $code, $error);
             }
         }
 

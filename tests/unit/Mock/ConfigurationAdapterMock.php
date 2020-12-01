@@ -18,7 +18,7 @@ class ConfigurationAdapterMock extends ConfigurationAdapter
 
     public function get($key, $idLang = null, $idShopGroup = null, $idShop = null, $default = false)
     {
-        return isset($this->data[$key]) ? $this->data : false;
+        return isset($this->data[$key]) ? $this->data[$key] : false;
     }
 
     public function updateValue($key, $values, $html = false, $idShopGroup = null, $idShop = null)
