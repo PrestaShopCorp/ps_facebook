@@ -27,26 +27,25 @@
       >
     </div>
 
-    <h3 class="title">
+    <h1 class="title">
       {{ $t('catalogSummary.categoryMatching') }}
-    </h3>
+    </h1>
     <b-button
       class="float-right ml-3"
-      variant="primary"
+      :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
       @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>
     <p class="text">
       {{ $t('catalogSummary.categoryMatchingIntro') }}
-      <b-alert
-        variant="info"
-        class="small-text"
-        show
-      >
-        <span v-html="textCategoryMatchingNotice" />
-      </b-alert>
     </p>
+    <b-alert
+      variant="info"
+      class="small-text fix-alert"
+      show
+      v-html="md2html($t('catalogSummary.categoryMatchingNotice'))"
+    />
   </div>
 </template>
 
@@ -54,6 +53,7 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
 
+import showdown from 'showdown';
 import illustration from '../../../assets/category_matching_illustration.png';
 
 export default defineComponent({
@@ -61,17 +61,20 @@ export default defineComponent({
   components: {
     BButton,
   },
+  props: {
+    isPrimaryAction: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       illustration,
     };
   },
-  computed: {
-    textCategoryMatchingNotice() {
-      return this.$i18n.t('catalogSummary.categoryMatchingNotice')
-        .replace('[1]', '<u><b>')
-        .replace('[/1]', '</b></u>');
-    },
+  methods: {
+    md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>
@@ -92,5 +95,13 @@ export default defineComponent({
         padding: 0 !important;
       }
     }
+  }
+  .fix-alert {
+    margin-bottom: 0;
+  }
+</style>
+<style lang="scss">
+  .fix-alert.small-text > p {
+    font-size: .75rem !important;
   }
 </style>
