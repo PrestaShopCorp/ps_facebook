@@ -36,3 +36,9 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
       - '@ps_facebook.context'
       - '@ps_facebook'
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider
