@@ -6,5 +6,8 @@
   "business_manager_id": "",
   "pixel_id": "",
   "page_ids: [],
-  "ad_id": ""
+  "ad_id": "",
+
+  "system_access_token": "",
+  "test_event_code": ""
 }
