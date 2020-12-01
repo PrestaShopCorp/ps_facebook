@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Tests\Utility;
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Utility;
 
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
