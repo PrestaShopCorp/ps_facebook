@@ -5,7 +5,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 interface ProductAvailabilityProviderInterface
 {
     /**
-     * @param $productId
+     * @param int $productId
      *
      * @return string
      */

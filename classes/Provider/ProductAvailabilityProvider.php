@@ -10,12 +10,10 @@ class ProductAvailabilityProvider implements ProductAvailabilityProviderInterfac
     /**
      * todo:add more availability cases
      *
-     * @param $productId
+     * @param int $productId
      *
      * @return string
      *
-     * @throws \PrestaShopDatabaseException
-     * @throws \PrestaShopException
      */
     public function getProductAvailability($productId)
     {
