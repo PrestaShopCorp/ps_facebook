@@ -152,9 +152,7 @@ class ApiConversionHandler
             $event->setEventSourceUrl($eventSourceUrl);
         }
 
-        $events[] = $event;
-
-        $this->sendEvents($events);
+        $this->sendEvents([$event]);
     }
 
     /**
