@@ -44,8 +44,8 @@
       />
     </b-card>
 
-    TODO : remove REPORTING component once new wireframes integrated.
     <!--b-card class="card m-3">
+      TODO : remove REPORTING component once new wireframes integrated.
       <reporting :reporting="reporting" />
     </b-card -->
   </div>

@@ -83,7 +83,8 @@
             </div>
             <span class="green-number">
               {{ validation.prevalidation.syncable }}
-            </span>&nbsp;/&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+            </span>
+            /&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
           </div>
         </b-col>
         <div class="w-100 d-block d-sm-none" />
@@ -103,7 +104,8 @@
             </div>
             <span class="red-number">
               {{ validation.prevalidation.notSyncable }}
-            </span>&nbsp;/&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+            </span>
+            /&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
           </div>
         </b-col>
       </b-row>
