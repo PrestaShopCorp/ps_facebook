@@ -96,7 +96,6 @@ class FacebookClient
         return new FacebookBusinessManager(
             isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
