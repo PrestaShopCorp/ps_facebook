@@ -439,7 +439,7 @@ class EventDataProvider
             $content = [
                 'id' => ProductCatalogUtility::makeProductId($product['id_product'], $product['id_product_attribute']),
                 'quantity' => $product['quantity'],
-                'item_price' => $product['price_tax_exc'],
+                'item_price' => $product['price'],
                 'title' => \Tools::replaceAccentedChars($product['name']),
                 'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
                 'category' => (new Category($product['id_category_default']))->getName($idLang),

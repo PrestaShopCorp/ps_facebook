@@ -53,10 +53,9 @@ class EventDispatcher
         if (true === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
             $eventData = $this->eventDataProvider->generateEventData($name, $params);
 
-            if (!$eventData) {
-                return;
+            if ($eventData) {
+                $this->conversionHandler->handleEvent($eventData);
             }
-            $this->conversionHandler->handleEvent($eventData);
             $this->pixelHandler->handleEvent($eventData);
         }
     }
