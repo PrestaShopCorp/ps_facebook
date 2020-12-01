@@ -197,6 +197,13 @@ class PsFacebookTranslations
                     'thirdTd' => $this->module->l('Parent category'),
                     'fourthTd' => $this->module->l('Google subcategory'),
                 ],
+                'editTable' => [
+                    'required' => $this->module->l('Required'),
+                    'checkboxTxt' => $this->module->l('Display unspecified categories only'),
+                    'psCategoryName' => $this->module->l('Category on your site'),
+                    'fbCategoryName' => $this->module->l('Facebook category'),
+                    'fbSubcategoryName' => $this->module->l('Facebook subcategory'),
+                ]
             ],
             'integrate' => [
                 'buttons' => [
