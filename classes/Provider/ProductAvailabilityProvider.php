@@ -13,7 +13,6 @@ class ProductAvailabilityProvider implements ProductAvailabilityProviderInterfac
      * @param int $productId
      *
      * @return string
-     *
      */
     public function getProductAvailability($productId)
     {
