@@ -87,9 +87,9 @@
               {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
             </div>
             <span class="green-number">
-              {{ validation.prevalidation.syncable }}
+              {{ prevalidation.syncable }}
             </span>
-            /&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+            /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
           </div>
         </b-col>
         <div class="w-100 d-block d-sm-none" />
@@ -108,9 +108,9 @@
               More details soon
             </div>
             <span class="red-number">
-              {{ validation.prevalidation.notSyncable }}
+              {{ prevalidation.notSyncable }}
             </span>
-            /&nbsp;{{ validation.prevalidation.syncable + validation.prevalidation.notSyncable }}
+            /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
           </div>
         </b-col>
       </b-row>
@@ -200,6 +200,9 @@ export default defineComponent({
       return this.error
         ? this.$t('catalogSummary.exportCatalogButtonErrored')
         : this.$t('catalogSummary.exportCatalogButton');
+    },
+    prevalidation() {
+      return this.validation ? this.validation.prevalidation : {syncable: 0, notSyncable: 0};
     },
   },
   data() {

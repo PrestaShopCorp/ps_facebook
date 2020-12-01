@@ -308,11 +308,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
                     'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
-                    'reporting' => [
-                        'total' => 0,
-                        'pending' => 0,
-                        'approved' => 0,
-                        'disapproved' => 0,
+                    'validation' => [
+                        'prevalidation' => [
+                            'syncable' => 0,
+                            'notSyncable' => 0,
+                        ],
+                        'reporting' => [
+                            'errored' => 0,
+                        ],
                     ],
                 ]
             )
