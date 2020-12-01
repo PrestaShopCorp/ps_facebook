@@ -30,7 +30,12 @@
     <h1 class="title">
       <div v-if="exportDoneOnce" class="mt-1 ml-3">
         <span class="d-none d-sm-inline">
-          {{ $t(exportOn ? 'catalogSummary.catalogExportActivated' : 'catalogSummary.catalogExportPaused') }}
+          {{
+            $t(exportOn
+              ? 'catalogSummary.catalogExportActivated'
+              : 'catalogSummary.catalogExportPaused'
+            )
+          }}
         </span>
         <div
           class="switch-input switch-input-lg ml-1"
