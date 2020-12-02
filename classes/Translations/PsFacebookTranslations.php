@@ -136,16 +136,16 @@ class PsFacebookTranslations
 
             'catalogSummary' => [
                 'categoryMatching' => $this->module->l('Enhance your catalog', 'PsFacebookTranslations'),
-                'categoryMatchingIntro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.', 'PsFacebookTranslations'),
+                'categoryMatchingIntro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category.', 'PsFacebookTranslations'),
                 'categoryMatchingNotice' => $this->module->l('You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.', 'PsFacebookTranslations'),
                 'matchCategoriesButton' => $this->module->l('Map categories', 'PsFacebookTranslations'),
 
                 'productCatalogExport' => $this->module->l('Your catalog in Facebook Business', 'PsFacebookTranslations'),
                 'exportCatalogButton' => $this->module->l('Share catalog', 'PsFacebookTranslations'),
                 'catalogExportIntro' => $this->module->l('Before buyers can purchase items from you, you\'ll need to upload your products information into a Facebook Product Catalog.', 'PsFacebookTranslations'),
-                'catalogExportInfo' => $this->module->l("Please be aware of the following: \n1. All « active » products will be exported into Facebook.\n2. It can take up to 24 hours to sync your PrestaShop product information.\n3. The update frequency of the entire catalog is: every 24 hours.\n4. Every change to your catalogue is taken into account at the next sync.\n5. Only products with mandatory fields will sync. Here is the mandatory fields listed: a name, a (short) description, a quantity, a price, a link, a cover, a manufacturer or an ean/upc/isbn.", 'PsFacebookTranslations'),
+                'catalogExportInfo' => $this->module->l("Please be aware of the following: \n1. All « active » products are exported to Facebook.\n2. It can take up to 24h for your PrestaShop product information to sync to Facebook.\n3. The entire catalog is updated with a recurrent update every 24 hours.\n4. Each modification made to your catalog will be taken into account during the next synchronization.\n5. Only products with mandatory fields filled will be synchronized: a name, a (short) description, a quantity, a price, a link, a cover, a manufacturer or an ean/upc/isbn.", 'PsFacebookTranslations'),
                 'preApprovalScanTitle' => $this->module->l('Pre-approval scan', 'PsFacebookTranslations'),
-                'preApprovalScanIntro' => $this->module->l('Check products ready to be synced and those with detected problems and couldn\'t be synced.', 'PsFacebookTranslations'),
+                'preApprovalScanIntro' => $this->module->l('Check which products are ready to be synchronized and which ones have problems and will not be synchronized.', 'PsFacebookTranslations'),
                 'preApprovalScanRefreshDate' => $this->module->l('Last scan today at {0}', 'PsFacebookTranslations'),
                 'preApprovalScanReadyToSync' => $this->module->l('Ready to sync', 'PsFacebookTranslations'),
                 'preApprovalScanNonSyncable' => $this->module->l('Non-syncable', 'PsFacebookTranslations'),
