@@ -145,7 +145,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        $turnOn = (bool) Tools::getValue('turn_on');
+        $inputs = json_decode(file_get_contents('php://input'), true);
+        $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
@@ -163,6 +164,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'success' => true,
+                    'turnOn' => $turnOn,
                 ]
             )
         );

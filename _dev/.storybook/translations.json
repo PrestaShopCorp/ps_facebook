@@ -96,7 +96,9 @@
       "detailsButton": "See details",
       "showMore": "Show more",
       "showLess": "Show less",
-      "exportCatalogButtonErrored": "Failed! Try again"
+      "exportCatalogButtonErrored": "Failed! Try again",
+      "modalDeactivationTitle": "Confirm deactivation?",
+      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
     },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",

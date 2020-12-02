@@ -59,7 +59,10 @@
       <p class="app foldable p-2 mb-0"
         v-html="md2html($t('catalogSummary.catalogExportInfo'))"
       />
-      <span class="see-more" @click="seeMore"><span>{{ $t('catalogSummary.showMore') }}</span>...</span>
+      <span class="see-more" @click="seeMore">
+        <span>{{ $t('catalogSummary.showMore') }}</span>
+        ...
+      </span>
       <span class="see-less" @click="seeLess">{{ $t('catalogSummary.showLess') }}</span>
     </div>
 
@@ -179,7 +182,7 @@
             <slot name="header">
               <div class="tw-flex tw-items-center">
                 <h5 class="modal-title tw-pl-3">
-                  HEADER
+                  {{ $t('catalogSummary.modalDeactivationTitle') }}
                 </h5>
               </div>
             </slot>
@@ -193,7 +196,7 @@
             </button>
           </div>
           <div class="modal-body">
-            TEXT
+            {{ $t('catalogSummary.modalDeactivationText') }}
           </div>
           <div class="modal-footer">
             <b-button
@@ -278,7 +281,7 @@ export default defineComponent({
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({
-          turnOn: activate,
+          turn_on: activate,
         }),
       }).then((res) => {
         if (!res.ok) {

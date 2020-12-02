@@ -162,6 +162,8 @@ class PsFacebookTranslations
                 'showMore' => $this->module->l('Show more', 'PsFacebookTranslations'),
                 'showLess' => $this->module->l('Show less', 'PsFacebookTranslations'),
                 'exportCatalogButtonErrored' => $this->module->l('Failed! Try again', 'PsFacebookTranslations'),
+                'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
+                'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
