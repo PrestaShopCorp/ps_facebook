@@ -262,10 +262,10 @@ class FacebookClient
             $this->errorHandler->handle(
                 new FacebookClientException(
                     'Facebook client failed when creating get request.',
-                    $e->getCode(),
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 
