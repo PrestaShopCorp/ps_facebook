@@ -41,6 +41,8 @@
           class="switch-input switch-input-lg ml-1"
           :class="exportOn ? '-checked' : null"
           @click="exportClicked(!exportOn)"
+          data-toggle="modal"
+          :data-target="exportOn ? '#ps_facebook_modal_unsync' : null"
         >
           <input
             class="switch-input-lg"
@@ -162,6 +164,50 @@
         {{ $t('catalogSummary.viewCatalogButton') }}
       </b-link>
     </template>
+
+    <!-- Confirmation modal for Disabling synchronization -->
+    <div
+      id="ps_facebook_modal_unsync"
+      class="modal"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  HEADER
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            TEXT
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="exportClicked(false, true)"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -219,13 +265,13 @@ export default defineComponent({
     };
   },
   methods: {
-    exportClicked(activate) {
-      if (!this.startProductSyncRoute) {
-        return;
+    exportClicked(activate, confirm = false) {
+      if (!activate && !confirm) {
+        return; // blocking modal, to confirm deactivation
       }
 
-      if (!activate) {
-        // TODO !1: blocking modal, to confirm deactivation
+      if (!this.startProductSyncRoute) {
+        return;
       }
 
       fetch(this.startProductSyncRoute, {
