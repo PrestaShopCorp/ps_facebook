@@ -10,6 +10,8 @@ use Raven_Client;
  */
 class ErrorHandler
 {
+    const ERROR_CODE = 500;
+
     /**
      * @var Raven_Client
      */

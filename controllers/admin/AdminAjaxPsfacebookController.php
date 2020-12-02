@@ -25,6 +25,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
 
@@ -123,8 +124,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     new FacebookOnboardException(
                         $response['message'],
                         FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
-                    ),
-                    FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                    )
                 );
             }
             $externalBusinessId = $response['externalBusinessId'];
@@ -378,6 +378,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             http_response_code(400);
         }
         $this->ajaxDie(json_encode(['success' => $success]));
+    }
+
+    public function displayAjaxGetProductsWithErrors()
+    {
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->module->getService(ProductRepository::class);
+        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
+
+        $this->ajaxDie(json_encode([$productsWithErrors]));
     }
 
     /**

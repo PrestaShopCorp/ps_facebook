@@ -159,7 +159,7 @@ class Installer
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
                     $e
                 ),
-                FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
+                $e->getCode(),
                 false
             );
             $this->errors[] = $this->module->l('Failed to install database tables', self::CLASS_NAME);

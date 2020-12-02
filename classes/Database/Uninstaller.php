@@ -89,7 +89,7 @@ class Uninstaller
                     FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                     $e
                 ),
-                FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                $e->getCode(),
                 false
             );
             $this->errors[] = $this->module->l('Failed to uninstall database tables', self::CLASS_NAME);
@@ -131,7 +131,7 @@ class Uninstaller
                     FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
                     $e
                 ),
-                FacebookInstallerException::FACEBOOK_UNINSTALL_EXCEPTION,
+                $e->getCode(),
                 false
             );
             $this->errors[] = $this->module->l('Failed to uninstall database tables', self::CLASS_NAME);
