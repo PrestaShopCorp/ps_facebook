@@ -51,15 +51,15 @@
       </div>
       {{ $t('catalogSummary.productCatalogExport') }}
     </h1>
-    <p class="text">
+    <div class="text" :class="seeMoreState && 'expanded'">
       {{ $t('catalogSummary.catalogExportIntro') }}
-      <br><br>
-      <b-alert
-        variant="info"
-        show
+      <br/><br/>
+      <p class="app foldable p-2 mb-0"
         v-html="md2html($t('catalogSummary.catalogExportInfo'))"
       />
-    </p>
+      <span class="see-more" @click="seeMore"><span>{{ $t('catalogSummary.showMore') }}</span>...</span>
+      <span class="see-less" @click="seeLess">{{ $t('catalogSummary.showLess') }}</span>
+    </div>
 
     <hr class="separator">
 
@@ -209,6 +209,7 @@ export default defineComponent({
     return {
       illustration,
       error: null,
+      seeMoreState: false,
     };
   },
   methods: {
@@ -247,6 +248,12 @@ export default defineComponent({
       // TODO !1: need URL, target blank !
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
+    seeMore() {
+      this.seeMoreState = true;
+    },
+    seeLess() {
+      this.seeMoreState = false;
+    },
   },
 });
 </script>
@@ -271,12 +278,60 @@ export default defineComponent({
   .text {
     display: flow-root;
     margin-bottom: 0;
+    position: relative;
 
     & > div {
       font-size: small;
       padding-left: 3.2rem !important;
       padding-top: 0.6rem !important;
       padding-bottom: 0;
+    }
+
+    & .foldable {
+      font-size: small;
+      display: block;
+      height: 8.5em !important;
+      overflow-y: hidden;
+    }
+
+    & > span {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding-top: 0.2rem;
+      padding-bottom: 0.3rem;
+      padding-right: 0.9rem;
+      padding-left: 2.2rem;
+      font-size: small;
+
+      &.see-more {
+        width: 100%;
+        background: #fafbfc;
+        border-radius: 3px;
+        cursor: s-resize;
+
+        & > span {
+          float: right;
+          font-weight: bold;
+        }
+      }
+      &.see-less {
+        visibility: hidden;
+        cursor: n-resize;
+        font-weight: bold;
+      }
+    }
+
+    &.expanded {
+      & .foldable {
+        height: 100% !important;
+      }
+      & .see-more {
+        visibility: hidden;
+      }
+      & .see-less {
+        visibility: visible;
+      }
     }
   }
   .separator {
