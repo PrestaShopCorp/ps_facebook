@@ -64,9 +64,9 @@ jobs:
         env:
           TAG: ${{ steps.get_tag.outputs.TAG }}
 
-#      - name: Terraform apply
-#        working-directory: _dev/cloud
-#        run: terraform apply -auto-approve
-#        env:
-#          SHA: ${{ github.sha }}
-#          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Terraform apply
+        working-directory: _dev/cloud
+        run: terraform apply -auto-approve
+        env:
+          SHA: ${{ github.sha }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
