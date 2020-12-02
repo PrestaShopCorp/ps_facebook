@@ -43,24 +43,24 @@ jobs:
 
       - name: Docker pull
         continue-on-error: true
-        run: docker pull "eu.gcr.io/psessentials-integration/accounts-vue-components-package:latest"
+        run: docker pull "eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
 
       - name: Build package
         working-directory: _dev
         run: |
           docker build \
             --target=package \
-            --cache-from="eu.gcr.io/psessentials-integration/accounts-vue-components-package:latest" \
-            --tag="eu.gcr.io/psessentials-integration/accounts-vue-components-package:latest" .
-          docker push "eu.gcr.io/psessentials-integration/accounts-vue-components-package:latest"
+            --cache-from="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest" \
+            --tag="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest" .
+          docker push "eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
 
       - name: Build and push finale image
         working-directory: _dev
         run: |
           docker build . \
-            --tag="eu.gcr.io/psessentials-integration/accounts-vue-components:latest" \
-            --cache-from="eu.gcr.io/psessentials-integration/accounts-vue-components-package:latest"
-          docker push "eu.gcr.io/psessentials-integration/accounts-vue-components:latest"
+            --tag="eu.gcr.io/psessentials-integration/facebook-storybook:latest" \
+            --cache-from="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
+          docker push "eu.gcr.io/psessentials-integration/facebook-storybook:latest"
         env:
           TAG: ${{ steps.get_tag.outputs.TAG }}
 
