@@ -127,7 +127,7 @@ class EventDataProvider
             $product['id_product_attribute']
         );
 
-        $productUrl = $this->context->link->getProductLink($product->id);
+        $productUrl = $this->context->link->getProductLink($product['id']);
         $content = [
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
