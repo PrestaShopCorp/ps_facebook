@@ -1,10 +1,8 @@
 name: Facebook CI/CD
 
 on:
-  push:
-    branches:
-      - master
-      - main
+  pull_request:
+    types: [opened,edited,reopened,synchronize,labeled]
 
 jobs:
   alpha:
