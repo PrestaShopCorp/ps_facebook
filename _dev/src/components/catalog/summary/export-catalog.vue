@@ -40,7 +40,7 @@
         <div
           class="switch-input switch-input-lg ml-1"
           :class="exportOn ? '-checked' : null"
-          @click="exportClicked"
+          @click="exportClicked(!exportOn)"
         >
           <input
             class="switch-input-lg"
@@ -126,7 +126,7 @@
         v-if="!exportDoneOnce"
         class="float-right ml-4"
         :variant="error ? 'danger' : 'primary'"
-        @click="exportClicked"
+        @click="exportClicked(true)"
       >
         {{ exportButtonLabel }}
       </b-button>
@@ -135,6 +135,7 @@
       </p>
       <template v-else>
         <b-link
+          v-if="catalogId"
           class="view-button float-right ml-3"
           @click="viewCatalogClicked"
         >
@@ -194,6 +195,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookStartProductSyncRoute || null,
     },
+    catalogId: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   computed: {
     exportButtonLabel() {
@@ -213,16 +219,20 @@ export default defineComponent({
     };
   },
   methods: {
-    exportClicked() {
+    exportClicked(activate) {
       if (!this.startProductSyncRoute) {
         return;
+      }
+
+      if (!activate) {
+        // TODO !1: blocking modal, to confirm deactivation
       }
 
       fetch(this.startProductSyncRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({
-          turnOn: this.exportDoneOnce ? !this.exportOn : true,
+          turnOn: activate,
         }),
       }).then((res) => {
         if (!res.ok) {
@@ -245,7 +255,8 @@ export default defineComponent({
       window.location.reload();
     },
     viewCatalogClicked() {
-      // TODO !1: need URL, target blank !
+      const url = `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
+      window.open(url, '_blank');
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
     seeMore() {
