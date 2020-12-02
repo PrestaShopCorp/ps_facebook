@@ -5,5 +5,6 @@
 terraform {
   backend "gcs" {
     prefix = "terraform/facebook-storybook"
+    bucket = "psessentials-production"
   }
 }
