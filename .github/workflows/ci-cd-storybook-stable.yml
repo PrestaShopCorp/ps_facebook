@@ -1,15 +1,15 @@
 name: Facebook CI/CD
 
-on:
-  pull_request:
-    types: [opened,edited,reopened,synchronize,labeled]
+on: [push]
+#on:
+#  pull_request:
+#    types: [opened,edited,reopened,synchronize,labeled]
 
 jobs:
-  alpha:
-    name: Alpha - Storybook
+  stable:
+    name: Stable - Storybook
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: contains(github.event.pull_request.labels.*.name, 'quality assurance needed')
 
     steps:
       - name: Checkout the repository
@@ -24,7 +24,7 @@ jobs:
           echo $GOOGLE_APPLICATION_CREDENTIALS > token.json
           gcloud auth activate-service-account --key-file=token.json
           gcloud container clusters get-credentials $GCLOUD_CLUSTER \
-          --zone europe-west1-c --project psessentials-integration
+          --zone europe-west1-c --project psessentials-production
           gcloud auth configure-docker
           rm token.json
         env:
@@ -35,31 +35,31 @@ jobs:
         working-directory: _dev/cloud
         run: |
           terraform init -backend-config="bucket=psessentials-production"
-          terraform workspace select alpha
+          terraform workspace select stable
           terraform fmt
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Docker pull
         continue-on-error: true
-        run: docker pull "eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
+        run: docker pull "eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
 
       - name: Build package
         working-directory: _dev
         run: |
           docker build \
             --target=package \
-            --cache-from="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest" \
-            --tag="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest" .
-          docker push "eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
+            --cache-from="eu.gcr.io/psessentials-production/facebook-storybook-package:latest" \
+            --tag="eu.gcr.io/psessentials-production/facebook-storybook-package:latest" .
+          docker push "eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
 
       - name: Build and push finale image
         working-directory: _dev
         run: |
           docker build . \
-            --tag="eu.gcr.io/psessentials-integration/facebook-storybook:latest" \
-            --cache-from="eu.gcr.io/psessentials-integration/facebook-storybook-package:latest"
-          docker push "eu.gcr.io/psessentials-integration/facebook-storybook:latest"
+            --tag="eu.gcr.io/psessentials-production/facebook-storybook:latest" \
+            --cache-from="eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
+          docker push "eu.gcr.io/psessentials-production/facebook-storybook:latest"
         env:
           TAG: ${{ steps.get_tag.outputs.TAG }}
 
