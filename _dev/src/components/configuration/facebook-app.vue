@@ -90,6 +90,7 @@
       >
         {{ $t('configuration.app.lastActive') }}
         {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+        {{ new Date(lastActive).toLocaleTimeString(undefined) }}
       </div>
     </div>
 
