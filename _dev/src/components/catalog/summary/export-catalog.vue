@@ -53,7 +53,7 @@
       </div>
       {{ $t('catalogSummary.productCatalogExport') }}
     </h1>
-    <div class="text" :class="seeMoreState && 'expanded'">
+    <div class="text" :class="{ expanded: seeMoreState }">
       {{ $t('catalogSummary.catalogExportIntro') }}
       <br/><br/>
       <p class="app foldable p-2 mb-0"
