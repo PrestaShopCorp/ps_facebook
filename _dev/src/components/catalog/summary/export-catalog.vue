@@ -162,9 +162,8 @@
         {{ $t('catalogSummary.catalogExportNotice') }}
       </b-alert>
       <br>
-      <b-link
+      <b-link :href="viewCatalog" target="_blank"
         class="view-button float-right ml-3"
-        @click="viewCatalogClicked"
       >
         <i class="material-icons">launch</i>
         {{ $t('catalogSummary.viewCatalogButton') }}
@@ -263,6 +262,9 @@ export default defineComponent({
     prevalidation() {
       return this.validation ? this.validation.prevalidation : {syncable: 0, notSyncable: 0};
     },
+    viewCatalog() {
+      return `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
+    },
   },
   data() {
     return {
@@ -306,10 +308,6 @@ export default defineComponent({
     },
     rescan() {
       window.location.reload();
-    },
-    viewCatalogClicked() {
-      const url = `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
-      window.open(url, '_blank');
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
     seeMore() {
