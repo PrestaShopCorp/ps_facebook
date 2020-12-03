@@ -1,0 +1,72 @@
+name: Storybook CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  stable:
+    name: Stable - Storybook
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - name: Gcloud auth and write env file
+        run: |
+          echo $GOOGLE_APPLICATION_CREDENTIALS > token.json
+          gcloud auth activate-service-account --key-file=token.json
+          gcloud container clusters get-credentials $GCLOUD_CLUSTER \
+          --zone europe-west1-c --project psessentials-production
+          gcloud auth configure-docker
+          rm token.json
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          GCLOUD_CLUSTER: ${{ secrets.GCLOUD_CLUSTER }}
+
+      - name: Terraform init
+        working-directory: _dev/cloud
+        run: |
+          terraform init
+          terraform workspace select stable
+          terraform fmt
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      - name: Docker pull
+        continue-on-error: true
+        run: docker pull "eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
+
+      - name: Build package
+        working-directory: _dev
+        run: |
+          docker build \
+            --target=package \
+            --cache-from="eu.gcr.io/psessentials-production/facebook-storybook-package:latest" \
+            --tag="eu.gcr.io/psessentials-production/facebook-storybook-package:latest" .
+          docker push "eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
+
+      - name: Build and push finale image
+        working-directory: _dev
+        run: |
+          docker build . \
+            --tag="eu.gcr.io/psessentials-production/facebook-storybook:latest" \
+            --cache-from="eu.gcr.io/psessentials-production/facebook-storybook-package:latest"
+          docker push "eu.gcr.io/psessentials-production/facebook-storybook:latest"
+        env:
+          TAG: ${{ steps.get_tag.outputs.TAG }}
+
+      - name: Terraform apply
+        working-directory: _dev/cloud
+        run: terraform apply -auto-approve
+        env:
+          SHA: ${{ github.sha }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
