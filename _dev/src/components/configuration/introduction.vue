@@ -148,8 +148,8 @@ export default defineComponent({
     },
     onGetStarted() {
       this.$segment.track('PS Facebook installed', {
-          module: 'ps_facebook',
-        });
+        module: 'ps_facebook',
+      });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },

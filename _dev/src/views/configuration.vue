@@ -388,6 +388,9 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error!');
         }
+        this.$segment.track('PS Account & FBE connected', {
+          module: 'ps_facebook',
+        });
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
         this.showGlass = false;
         this.openedPopup = null;
@@ -453,12 +456,18 @@ export default defineComponent({
       } else {
         this.openedPopup = this.openPopup();
       }
+      this.$segment.track('Click on black screen', {
+        module: 'ps_facebook',
+      });
     },
     closePopup(event) {
       event.stopPropagation(); // avoid popup to be focused before close
       if (this.openedPopup) {
         this.openedPopup.close();
       }
+      this.$segment.track('Click on the cross to close the pop-in', {
+        module: 'ps_facebook',
+      });
     },
   },
   watch: {
