@@ -129,7 +129,7 @@ class ProductRepository
         $sql->where('ps.id_shop = ' . (int) $shopId);
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
-        OR pl.description_short = "" AND pl.description = ""
+        OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
         OR is.id_image is NULL
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
         OR ps.price = 0 
