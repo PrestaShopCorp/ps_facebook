@@ -34,7 +34,8 @@ jobs:
       - name: Terraform init
         working-directory: _dev/cloud
         run: |
-          terraform init -backend-config="bucket=psessentials-production"
+          terraform init
+          terraform workspace new alpha
           terraform workspace select alpha
           terraform fmt
         env:
