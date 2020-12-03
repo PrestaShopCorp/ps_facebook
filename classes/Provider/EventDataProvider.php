@@ -52,12 +52,18 @@ class EventDataProvider
      */
     private $module;
 
+    /**
+     * @var ProductAvailabilityProviderInterface
+     */
+    private $availabilityProvider;
+
     public function __construct(
         ToolsAdapter $toolsAdapter,
         ConfigurationAdapter $configurationAdapter,
         ProductRepository $productRepository,
         Context $context,
-        ps_facebook $module
+        ps_facebook $module,
+        ProductAvailabilityProviderInterface $availabilityProvider
     ) {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
@@ -66,6 +72,7 @@ class EventDataProvider
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
+        $this->availabilityProvider = $availabilityProvider;
     }
 
     public function generateEventData($name, array $params)
@@ -120,23 +127,30 @@ class EventDataProvider
             $product['id_product_attribute']
         );
 
-        // todo: url is generated without attribute and doesn't match with pixel url
         $productUrl = $this->context->link->getProductLink($product->id);
         $content = [
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
             'category' => (new Category($product['id_category_default']))->getName($this->idLang),
-            'item_price' => $product['price_amount'],
+            'item_price' => $product['price_tax_exc'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
         $customData = [
             'currency' => $this->getCurrency(),
+            'content_ids' => [$fbProductId],
             'contents' => [$content],
             'content_type' => self::PRODUCT_TYPE,
-            'value' => $product['price_amount'],
+            'value' => $product['price_tax_exc'],
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $this->context->smarty->assign(
+            [
+                'retailer_item_id' => $fbProductId,
+                'product_availability' => $this->availabilityProvider->getProductAvailability((int) $product['id_product']),
+            ]
+        );
 
         return [
             'event_type' => $type,
@@ -292,8 +306,7 @@ class EventDataProvider
         $idLang = (int) $this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
-        $locale = \Tools::strtoupper($this->context->language->iso_code);
-        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds, $locale);
+        $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -441,13 +454,12 @@ class EventDataProvider
      * @param int $productId
      * @param int $idLang
      * @param int[] $attributeIds
-     * @param string $locale
      *
      * @return array
      *
      * @throws \PrestaShopException
      */
-    private function getCustomAttributeData($productId, $idLang, $attributeIds, $locale)
+    private function getCustomAttributeData($productId, $idLang, $attributeIds)
     {
         $attributes = [];
         foreach ($attributeIds as $attributeId) {

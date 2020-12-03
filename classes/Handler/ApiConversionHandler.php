@@ -25,9 +25,17 @@ class ApiConversionHandler
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter)
-    {
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(
+        ConfigurationAdapter $configurationAdapter,
+        ErrorHandler $errorHandler
+    ) {
         $this->configurationAdapter = $configurationAdapter;
+        $this->errorHandler = $errorHandler;
 
         $this->pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
 
@@ -152,13 +160,7 @@ class ApiConversionHandler
             $event->setEventSourceUrl($eventSourceUrl);
         }
 
-        $events[] = $event;
-
-        if (empty($event)) {
-            return true;
-        }
-
-        $this->sendEvents($events);
+        $this->sendEvents([$event]);
     }
 
     /**
@@ -200,14 +202,13 @@ class ApiConversionHandler
         try {
             $request->execute();
         } catch (\Exception $e) {
-            $errorHandler = new ErrorHandler();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookConversionAPIException(
                     'Failed to send conversion API event',
                     FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
                     $e
                 ),
-                FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
+                $e->getCode(),
                 false
             );
         }

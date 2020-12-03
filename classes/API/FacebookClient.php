@@ -84,6 +84,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $businessManagerId
+     *
+     * @return FacebookBusinessManager
+     */
     public function getBusinessManager($businessManagerId)
     {
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
@@ -91,11 +96,15 @@ class FacebookClient
         return new FacebookBusinessManager(
             isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
 
+    /**
+     * @param string $pixelId
+     *
+     * @return Pixel
+     */
     public function getPixel($pixelId)
     {
         $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
@@ -109,7 +118,12 @@ class FacebookClient
         );
     }
 
-    public function getPage($pageIds)
+    /**
+     * @param array $pageIds
+     *
+     * @return Page
+     */
+    public function getPage(array $pageIds)
     {
         $pageId = reset($pageIds);
         $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
@@ -129,6 +143,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $adId
+     *
+     * @return Ad
+     */
     public function getAd($adId)
     {
         $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
@@ -246,7 +265,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 
@@ -315,7 +334,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 

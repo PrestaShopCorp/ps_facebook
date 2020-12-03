@@ -44,7 +44,7 @@ class PixelHandler
         }
         $track = 'track';
 
-        $eventType = 'undefined';
+        $eventType = false;
         if (isset($params['event_type'])) {
             $eventType = $params['event_type'];
         }

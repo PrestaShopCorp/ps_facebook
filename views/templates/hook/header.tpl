@@ -58,16 +58,26 @@
 <!-- Set Facebook Pixel Product Export -->
 {if isset($page) }
   {if $page.page_name == 'product'}
-      <meta property="og:title" content="{$product.name|escape:'htmlall':'UTF-8'}">
-      <meta property="og:description" content="{$product.description_short|strip_tags:false|escape:'htmlall':'UTF-8'}">
-      <meta property="og:url" content="{$product.link nofilter}">
-      <meta property="og:image" content="{$product.images.0.bySize.medium_default.url}">
+      <meta property="og:type" content="product">
+      <meta property="og:url" content="{$urls.current_url}">
+      <meta property="og:title" content="{$page.meta.title}">
+      <meta property="og:site_name" content="{$shop.name}">
+      <meta property="og:description" content="{$page.meta.description}">
+      <meta property="og:image" content="{$product.cover.large.url}">
+      {if $product.show_price}
+          <meta property="product:pretax_price:amount" content="{$product.price_tax_exc}">
+          <meta property="product:pretax_price:currency" content="{$currency.iso_code}">
+          <meta property="product:price:amount" content="{$product.price_amount}">
+          <meta property="product:price:currency" content="{$currency.iso_code}">
+      {/if}
+      {if isset($product.weight) && ($product.weight != 0)}
+          <meta property="product:weight:value" content="{$product.weight}">
+          <meta property="product:weight:units" content="{$product.weight_unit}">
+      {/if}
       <meta property="product:brand" content="{$product_manufacturer->name}">
-      <meta property="product:availability" content="{if $product.available_for_order == 1}In stock{else}Out of stock{/if}">
+      <meta property="og:availability" content="{$product_availability}">
       <meta property="product:condition" content="{$product.embedded_attributes.condition}">
-      <meta property="product:price:amount" content="{$product.price_amount}">
-      <meta property="product:price:currency" content="{$currency.iso_code}">
-      <meta property="product:retailer_item_id" content="{$product.id}">
+      <meta property="product:retailer_item_id" content="{$retailer_item_id}">
   {/if}
 {/if}
 <!-- END OF Set Facebook Pixel Product Export -->
