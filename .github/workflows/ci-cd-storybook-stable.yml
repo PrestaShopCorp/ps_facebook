@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - feature/storybook-ci-cd
 
 jobs:
   stable:

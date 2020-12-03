@@ -19,7 +19,7 @@ locals {
     }
     url = {
       alpha = "storybook-facebook.psessentials-integration.net"
-      stable = "storybook-faacebook.psessentials.net"
+      stable = "storybook-facebook.psessentials.net"
     }
   }
 }
