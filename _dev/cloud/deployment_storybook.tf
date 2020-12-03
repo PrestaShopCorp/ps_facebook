@@ -17,7 +17,7 @@ resource "kubernetes_deployment" "storybook" {
 
     # wait for previous to be down before launching new one
     strategy {
-      type = "Recreate"
+      type = "RollingUpdate"
     }
 
     selector {
