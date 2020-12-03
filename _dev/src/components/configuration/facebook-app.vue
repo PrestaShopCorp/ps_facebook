@@ -154,12 +154,12 @@ export default defineComponent({
       default: null,
     },
     createdAt: {
-      type: Number,
+      type: String,
       required: false,
       default: null,
     },
     lastActive: {
-      type: Number,
+      type: String,
       required: false,
       default: null,
     },
