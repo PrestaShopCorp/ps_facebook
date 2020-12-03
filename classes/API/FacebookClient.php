@@ -265,7 +265,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 
@@ -334,7 +334,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 

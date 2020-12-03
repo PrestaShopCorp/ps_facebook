@@ -114,7 +114,7 @@ class AccessTokenProvider
                     AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
                     $e
                 ),
-                AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                $e->getCode(),
                 false
             );
 

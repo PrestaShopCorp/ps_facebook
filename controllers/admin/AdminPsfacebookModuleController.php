@@ -180,6 +180,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookGetProductsWithErrors' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetProductsWithErrors',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -196,9 +205,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
-        /** @var \PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository $a */
-        $a = $this->module->getService(\PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository::class);
-        $a->areParentCategoriesMatched($this->context->shop->id);
         parent::initContent();
     }
 

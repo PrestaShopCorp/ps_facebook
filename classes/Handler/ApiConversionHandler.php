@@ -208,7 +208,7 @@ class ApiConversionHandler
                     FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
                     $e
                 ),
-                FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
+                $e->getCode(),
                 false
             );
         }

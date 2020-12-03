@@ -81,7 +81,7 @@ class FacebookCategoryClient
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 
