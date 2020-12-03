@@ -187,6 +187,7 @@ export default defineComponent({
           throw new Error('failed to update feature');
         } else {
           this.switchActivated = !this.switchActivated;
+          this.$emit('toggle-switch', this.name, this.switchActivated);
         }
       }).catch((error) => {
         console.error(error);

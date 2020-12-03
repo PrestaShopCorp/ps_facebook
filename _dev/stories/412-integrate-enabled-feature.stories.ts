@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {EnabledFeature},
-  template: '<enabled-feature :name="featureName" :active="properties.enabled"/>',
+  template: '<enabled-feature :name="featureName" :active="properties.enabled" :manageRoute="manageRoute" />',
 });
 
 // Enabled on FB side
@@ -20,6 +20,11 @@ EnabledOnFacebook.args = {
   properties: {
     enabled: true,
   },
+  manageRoute: {
+    // Duplicates ./available-feature.vue
+    default: `https://www.facebook.com/facebook_business_extension?app_id=0&external_business_id=0`,
+    page_cta: `https://www.facebook.com/0` || '#',
+  },
 };
 
 // Disabled on FB side
@@ -28,5 +33,10 @@ DisabledOnFacebook.args = {
   featureName: 'messenger_chat',
   properties: {
     enabled: false,
+  },
+  manageRoute: {
+    // Duplicates ./available-feature.vue
+    default: `https://www.facebook.com/facebook_business_extension?app_id=0&external_business_id=0`,
+    page_cta: `https://www.facebook.com/0` || '#',
   },
 };

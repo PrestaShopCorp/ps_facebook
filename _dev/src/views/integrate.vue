@@ -50,6 +50,7 @@
             :name="featureName"
             :key="featureName"
             :active="properties.enabled"
+            @toggle-switch="onToggleSwitch"
           />
         </feature-list>
       </div>
@@ -227,6 +228,10 @@ export default defineComponent({
           && newEnabledFeatures[feature].enabled === true
         ) {
           this.displaySuccessMessage(feature);
+        } else if (this.dynamicEnabledFeatures[feature].enabled === true
+          && newEnabledFeatures[feature].enabled === false
+        ) {
+          this.hideSuccessMessage(feature);
         }
       });
     },
@@ -236,6 +241,14 @@ export default defineComponent({
     hideSuccessMessage(acknowledgedFeature) {
       this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
         .filter((feature) => feature !== acknowledgedFeature);
+    },
+    onToggleSwitch(name, newStatus) {
+      const newEnabledFeatures = {
+        ...this.dynamicEnabledFeatures,
+        [name]: {enabled: newStatus},
+      };
+      this.displaySuccessMessages(newEnabledFeatures);
+      this.dynamicEnabledFeatures = newEnabledFeatures;
     },
     onWindowVisibilityChange() {
       // Watch when the page gets the focus, for instance

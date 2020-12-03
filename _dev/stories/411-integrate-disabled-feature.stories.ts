@@ -10,7 +10,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {AvailableFeature},
-  template: '<available-feature :name="featureName" :active="properties.enabled"/>',
+  template: '<available-feature :name="featureName" :active="properties.enabled" :manageRoute="manageRoute" />',
 });
 
 export const Default: any = Template.bind({});
@@ -18,5 +18,10 @@ Default.args = {
   featureName: 'messenger_chat',
   properties: {
     enabled: false,
+  },
+  manageRoute: {
+    // Duplicates ./available-feature.vue
+    default: `https://www.facebook.com/facebook_business_extension?app_id=0&external_business_id=0`,
+    page_cta: `https://www.facebook.com/0` || '#',
   },
 };
