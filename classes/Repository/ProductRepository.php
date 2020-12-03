@@ -122,7 +122,7 @@ class ProductRepository
 
         $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
-        $sql->innerJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
+        $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
