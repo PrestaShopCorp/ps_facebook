@@ -64,8 +64,8 @@ export default defineComponent({
       required: false,
       default: () => ({
         // Duplicates ./enabled-feature.vue
-        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global?.psFacebookAppId || 0}&external_business_id=${global?.psFacebookExternalBusinessId || 0}`,
+        page_cta: `https://www.facebook.com/${global?.contextPsFacebook?.page?.id || 0}`,
       }),
     },
   },
