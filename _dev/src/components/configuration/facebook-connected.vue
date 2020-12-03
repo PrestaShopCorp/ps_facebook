@@ -217,6 +217,7 @@
               :tooltip="$t('configuration.facebook.connected.facebookPixelTooltip')"
               :app-name="contextPsFacebook.pixel.name"
               :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
+              :last-active="contextPsFacebook.pixel.lastActive"
               :url="pixelUrl"
               :activation-switch="contextPsFacebook.pixel.isActive"
               @onActivation="pixelActivation"

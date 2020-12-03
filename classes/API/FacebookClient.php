@@ -101,19 +101,36 @@ class FacebookClient
     }
 
     /**
+     * @param string $adId
      * @param string $pixelId
      *
+     * @see https://developers.facebook.com/docs/marketing-api/reference/ad-account/adspixels/?locale=en_US
+     * 
      * @return Pixel
      */
-    public function getPixel($pixelId)
+    public function getPixel($adId, $pixelId)
     {
-        $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
+        $responseContent = $this->get('act_' . $adId . '/adspixels', ['name', 'last_fired_time', 'is_unavailable']);
+
+        $name = $lastFiredTime = null;
+        $isUnavailable = false;
+
+        if (isset($responseContent['data'])) {
+            foreach ($responseContent['data'] as $adPixel) {
+                if ($adPixel['id'] !== $pixelId) {
+                    continue;
+                }
+                $name = $adPixel['name'];
+                $lastFiredTime = $adPixel['last_fired_time'];
+                $isUnavailable = $adPixel['is_unavailable'];
+            }
+        }
 
         return new Pixel(
-            isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
-            isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
-            isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
+            $pixelId,
+            $name,
+            $lastFiredTime,
+            $isUnavailable,
             (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
         );
     }
