@@ -105,7 +105,7 @@ class FacebookClient
      * @param string $pixelId
      *
      * @see https://developers.facebook.com/docs/marketing-api/reference/ad-account/adspixels/?locale=en_US
-     * 
+     *
      * @return Pixel
      */
     public function getPixel($adId, $pixelId)
