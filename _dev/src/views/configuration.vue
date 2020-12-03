@@ -17,8 +17,14 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
+  <MultiStoreSelector
+    v-if="!contextPsAccounts.isShopContext"
+    :shops="contextPsAccounts.shops"
+    class="m-3"
+    @shop-selected="onShopSelected($event)"
+  />
   <div
-    v-if="loading"
+    v-else-if="loading"
     class="page-spinner"
   />
   <div
@@ -95,7 +101,7 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {PsAccounts} from 'prestashop_accounts_vue_components';
+import {MultiStoreSelector, PsAccounts} from 'prestashop_accounts_vue_components';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
@@ -133,6 +139,7 @@ export default defineComponent({
   components: {
     Introduction,
     Messages,
+    MultiStoreSelector,
     PsAccounts,
     NoConfig,
     FacebookNotConnected,
@@ -400,6 +407,9 @@ export default defineComponent({
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
+    },
+    onShopSelected(shopSelected) {
+      window.location.href = shopSelected.url;
     },
     createExternalBusinessId() {
       if (!this.psFacebookRetrieveExternalBusinessId) {

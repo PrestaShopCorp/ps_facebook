@@ -29,7 +29,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         //todo: add module version validation so merchant can see that he needs to upgrade module
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
         $psAccountsService = new PsAccountsService();
-        $appId = $_ENV['PSX_FACEBOOK_APP_ID'];
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
@@ -50,7 +49,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         }
 
         Media::addJsDef([
-            'contextPsAccounts' => $psAccountPresenter->present(),
+            'contextPsAccounts' => $this->psAccountsHotFix($psAccountPresenter->present()),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
             'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
@@ -219,5 +218,32 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         if (!empty($access_token)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
         }
+    }
+
+    /**
+     * Quickfix for multishop with PS Accounts.
+     * The shop in the Context class is always defined, even if multistore. This means the multistore selector
+     * is never displayed at the moment.
+
+     * TODO : Move in https://github.com/PrestaShopCorp/prestashop_accounts_vue_components
+     */
+    private function psAccountsHotFix($presentedData)
+    {
+        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
+        foreach ($presentedData['shops'] as $groupKey => &$shopGroup) {
+            foreach ($shopGroup['shops'] as &$shop) {
+                $shop['url'] = $this->context->link->getAdminLink(
+                    'AdminModules',
+                    true,
+                    [],
+                    [
+                        'configure' => $this->module->name,
+                        'setShopContext' => 's-' . $shop['id'],
+                    ]
+                );
+            }
+        }
+
+        return $presentedData;
     }
 }
