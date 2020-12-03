@@ -19,3 +19,5 @@ views/js/chunk-vendors.js
 .env
 
 .idea/
+
+.terraform/
