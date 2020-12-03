@@ -30,6 +30,7 @@
         :validation="validation"
         :export-done-once="exportDone"
         :export-on="exportOn"
+        :catalog-id="catalogId"
       />
     </b-card>
 
@@ -100,6 +101,14 @@ export default defineComponent({
       this.loading = false;
     }
   },
+  computed: {
+    catalogId() {
+      if (this.$root.contextPsFacebook && this.$root.contextPsFacebook.catalog) {
+        return this.$root.contextPsFacebook.catalog.id;
+      }
+      return null;
+    },
+  },
   methods: {
     fetchData() {
       this.loading = true;
@@ -119,6 +128,7 @@ export default defineComponent({
         this.matchingDone = res.matchingDone;
         this.matchingProgress = res.matchingProgress;
         this.validation = res.validation;
+        this.catalogId = res.catalogId;
         this.loading = false;
       }).catch((error) => {
         console.error(error);

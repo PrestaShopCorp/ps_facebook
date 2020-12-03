@@ -27,6 +27,7 @@ FreshInstall.args = {
         errored: 42,
       },
     },
+    catalogId: '34567890',
   },
 };
 
@@ -46,6 +47,7 @@ CategoryProgressing.args = {
         errored: 42,
       },
     },
+    catalogId: '34567890',
   },
 };
 
@@ -65,6 +67,7 @@ SyncOn.args = {
         errored: 42,
       },
     },
+    catalogId: '34567890',
   },
 };
 
@@ -84,6 +87,7 @@ SyncPaused.args = {
         errored: 42,
       },
     },
+    catalogId: '34567890',
   },
 };
 

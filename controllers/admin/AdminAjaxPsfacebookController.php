@@ -145,7 +145,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        $turnOn = (bool) Tools::getValue('turn_on');
+        $inputs = json_decode(file_get_contents('php://input'), true);
+        $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
@@ -163,6 +164,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'success' => true,
+                    'turnOn' => $turnOn,
                 ]
             )
         );
@@ -300,7 +302,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxCatalogSummary()
     {
-        // TODO !1: complete object :
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->module->getService(ProductRepository::class);
+        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
+        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+
         $this->ajaxDie(
             json_encode(
                 [
@@ -310,11 +316,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'validation' => [
                         'prevalidation' => [
-                            'syncable' => 0,
-                            'notSyncable' => 0,
+                            'syncable' => $productsTotal - count($productsWithErrors),
+                            'notSyncable' => count($productsWithErrors),
+                            'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'errored' => 0,
+                            'errored' => 0, // TODO !1: complete object
                         ],
                     ],
                 ]

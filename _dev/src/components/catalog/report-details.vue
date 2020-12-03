@@ -25,31 +25,81 @@
     v-else
     id="catalogReportDetails"
   >
-    TODO : CatalogReportDetails
-    <br><br>
-    <b-button @click="$parent.back">
-      BACK
-    </b-button>
+    <b-card class="card m-3">
+      <b-button variant="primary" @click="$parent.back">
+        BACK
+      </b-button>
+      <br><br>
+      <b-table-simple>
+        <b-tr>
+          <b-td>Name</b-td>
+          <b-td>ID</b-td>
+          <b-td>LANG</b-td>
+          <b-td>COVER</b-td>
+          <b-td>DESC</b-td>
+          <b-td>LINK</b-td>
+          <b-td>BARCODE</b-td>
+          <b-td>PRICE</b-td>
+        </b-tr>
+        <b-tr
+          v-for="({
+            name, has_cover, has_description_or_short_description,
+            has_link, has_manufacturer_or_ean_or_upc_or_isbn,
+            has_price_tax_excl, language, id_product, id_product_attribute
+          }, index) in rows"
+          :key="index"
+        >
+          <b-td>{{ name }}</b-td>
+          <b-td>{{ id_product }} - {{ id_product_attribute }}</b-td>
+          <b-td>{{ language }}</b-td>
+          <b-td>
+            <i v-if="has_cover === '0'" class="material-icons">close</i>
+          </b-td>
+          <b-td>
+            <i v-if="has_description_or_short_description === '0'" class="material-icons">
+              close
+            </i>
+          </b-td>
+          <b-td><i v-if="has_link === '0'" class="material-icons">close</i></b-td>
+          <b-td>
+            <i v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'" class="material-icons">
+              close
+            </i>
+          </b-td>
+          <b-td>
+            <i v-if="has_price_tax_excl === '0'" class="material-icons">close</i>
+          </b-td>
+        </b-tr>
+      </b-table-simple>
+    </b-card>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
     BButton,
+    BCard,
+    BTableSimple,
   },
   mixins: [],
   props: {
+    getProductsWithErrorsRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetProductsWithErrors || null,
+    },
   },
   computed: {
   },
   data() {
     return {
       loading: true,
+      rows: [],
     };
   },
   created() {
@@ -57,8 +107,26 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      // TODO !0
-      this.loading = false;
+      this.loading = true;
+
+      fetch(this.getProductsWithErrorsRoute, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        const {0: rows} = res;
+        this.rows = rows;
+        console.log('###', rows);
+        this.loading = false;
+      }).catch((error) => {
+        console.error(error);
+        this.loading = false;
+      });
     },
   },
   watch: {

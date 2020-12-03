@@ -40,7 +40,9 @@
         <div
           class="switch-input switch-input-lg ml-1"
           :class="exportOn ? '-checked' : null"
-          @click="exportClicked"
+          @click="exportClicked(!exportOn)"
+          data-toggle="modal"
+          :data-target="exportOn ? '#ps_facebook_modal_unsync' : null"
         >
           <input
             class="switch-input-lg"
@@ -51,15 +53,18 @@
       </div>
       {{ $t('catalogSummary.productCatalogExport') }}
     </h1>
-    <p class="text">
+    <div class="text" :class="{ expanded: seeMoreState }">
       {{ $t('catalogSummary.catalogExportIntro') }}
-      <br><br>
-      <b-alert
-        variant="info"
-        show
+      <br/><br/>
+      <p class="app foldable p-2 mb-0"
         v-html="md2html($t('catalogSummary.catalogExportInfo'))"
       />
-    </p>
+      <span class="see-more" @click="seeMore">
+        <span>{{ $t('catalogSummary.showMore') }}</span>
+        ...
+      </span>
+      <span class="see-less" @click="seeLess">{{ $t('catalogSummary.showLess') }}</span>
+    </div>
 
     <hr class="separator">
 
@@ -104,9 +109,12 @@
             <div class="text-uppercase text-muted small-text pb-1">
               {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
             </div>
-            <div class="float-right see-details">
-              More details soon
-            </div>
+            <b-link
+              class="float-right see-details"
+              @click="$parent.goto($parent.PAGES.reportDetails)"
+            >
+              {{ $t('catalogSummary.detailsButton') }}
+            </b-link>
             <span class="red-number">
               {{ prevalidation.notSyncable }}
             </span>
@@ -126,7 +134,7 @@
         v-if="!exportDoneOnce"
         class="float-right ml-4"
         :variant="error ? 'danger' : 'primary'"
-        @click="exportClicked"
+        @click="exportClicked(true)"
       >
         {{ exportButtonLabel }}
       </b-button>
@@ -135,6 +143,7 @@
       </p>
       <template v-else>
         <b-link
+          v-if="catalogId"
           class="view-button float-right ml-3"
           @click="viewCatalogClicked"
         >
@@ -153,20 +162,63 @@
         {{ $t('catalogSummary.catalogExportNotice') }}
       </b-alert>
       <br>
-      <b-link
+      <b-link :href="viewCatalog" target="_blank"
         class="view-button float-right ml-3"
-        @click="viewCatalogClicked"
       >
         <i class="material-icons">launch</i>
         {{ $t('catalogSummary.viewCatalogButton') }}
       </b-link>
     </template>
+
+    <!-- Confirmation modal for Disabling synchronization -->
+    <div
+      id="ps_facebook_modal_unsync"
+      class="modal"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  {{ $t('catalogSummary.modalDeactivationTitle') }}
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ $t('catalogSummary.modalDeactivationText') }}
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="exportClicked(false, true)"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton, BAlert} from 'bootstrap-vue';
+import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
 import illustration from '../../../assets/catalog_export_illustration.png';
 
@@ -175,6 +227,7 @@ export default defineComponent({
   components: {
     BButton,
     BAlert,
+    BLink,
   },
   props: {
     validation: {
@@ -194,6 +247,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookStartProductSyncRoute || null,
     },
+    catalogId: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   computed: {
     exportButtonLabel() {
@@ -204,15 +262,23 @@ export default defineComponent({
     prevalidation() {
       return this.validation ? this.validation.prevalidation : {syncable: 0, notSyncable: 0};
     },
+    viewCatalog() {
+      return `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
+    },
   },
   data() {
     return {
       illustration,
       error: null,
+      seeMoreState: false,
     };
   },
   methods: {
-    exportClicked() {
+    exportClicked(activate, confirm = false) {
+      if (!activate && !confirm) {
+        return; // blocking modal, to confirm deactivation
+      }
+
       if (!this.startProductSyncRoute) {
         return;
       }
@@ -221,7 +287,7 @@ export default defineComponent({
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({
-          turnOn: this.exportDoneOnce ? !this.exportOn : true,
+          turn_on: activate,
         }),
       }).then((res) => {
         if (!res.ok) {
@@ -243,10 +309,13 @@ export default defineComponent({
     rescan() {
       window.location.reload();
     },
-    viewCatalogClicked() {
-      // TODO !1: need URL, target blank !
-    },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
+    seeMore() {
+      this.seeMoreState = true;
+    },
+    seeLess() {
+      this.seeMoreState = false;
+    },
   },
 });
 </script>
@@ -271,12 +340,60 @@ export default defineComponent({
   .text {
     display: flow-root;
     margin-bottom: 0;
+    position: relative;
 
     & > div {
       font-size: small;
       padding-left: 3.2rem !important;
       padding-top: 0.6rem !important;
       padding-bottom: 0;
+    }
+
+    & .foldable {
+      font-size: small;
+      display: block;
+      height: 8.5em !important;
+      overflow-y: hidden;
+    }
+
+    & > span {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding-top: 0.2rem;
+      padding-bottom: 0.3rem;
+      padding-right: 0.9rem;
+      padding-left: 2.2rem;
+      font-size: small;
+
+      &.see-more {
+        width: 100%;
+        background: #fafbfc;
+        border-radius: 3px;
+        cursor: s-resize;
+
+        & > span {
+          float: right;
+          font-weight: bold;
+        }
+      }
+      &.see-less {
+        visibility: hidden;
+        cursor: n-resize;
+        font-weight: bold;
+      }
+    }
+
+    &.expanded {
+      & .foldable {
+        height: 100% !important;
+      }
+      & .see-more {
+        visibility: hidden;
+      }
+      & .see-less {
+        visibility: visible;
+      }
     }
   }
   .separator {
