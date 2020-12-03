@@ -154,6 +154,7 @@ class ProductRepository
         $sql->where('ps.id_shop = ' . (int) $shopId);
 
         $res = Db::getInstance()->executeS($sql);
+
         return $res[0]['total'];
     }
 }
