@@ -50,6 +50,7 @@
             :name="featureName"
             :key="featureName"
             :active="properties.enabled"
+            :manage-route="manageRoute"
             @toggle-switch="onToggleSwitch"
           />
         </feature-list>
@@ -67,6 +68,7 @@
             v-for="(properties, featureName) in dynamicAvailableFeatures"
             :name="featureName"
             :key="featureName"
+            :manage-route="manageRoute"
           />
         </feature-list>
       </div>
@@ -149,6 +151,14 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.shopUrl || null,
+    },
+    manageRoute: {
+      type: Object,
+      required: false,
+      default: () => ({
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+      }),
     },
   },
   data() {
