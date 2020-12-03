@@ -1,4 +1,4 @@
-name: Facebook CI/CD
+name: Storybook CI/CD
 
 on:
   pull_request:

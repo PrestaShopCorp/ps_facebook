@@ -1,11 +1,10 @@
-name: Facebook CI/CD
+name: Storybook CI/CD
 
 on:
   push:
     branches:
       - master
       - main
-      - feature/storybook-ci-cd
 
 jobs:
   stable:
