@@ -38,7 +38,8 @@
       </MenuItem>
       <MenuItem
         @click="onHelp"
-        route="/help">
+        route="/help"
+      >
         {{ $t('general.tabs.help') }}
       </MenuItem>
     </Menu>
@@ -112,7 +113,7 @@ export default {
       this.$segment.track('Click on Sales channels tab', {
         module: 'ps_facebook',
       });
-    }
+    },
   },
 };
 </script>
