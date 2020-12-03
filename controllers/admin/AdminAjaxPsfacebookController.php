@@ -302,7 +302,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxCatalogSummary()
     {
-        // TODO !1: complete object :
+        /** @var ProductRepository $productRepository */
+        $productRepository = $this->module->getService(ProductRepository::class);
+        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
+        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+
         $this->ajaxDie(
             json_encode(
                 [
@@ -312,11 +316,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'validation' => [
                         'prevalidation' => [
-                            'syncable' => 0,
-                            'notSyncable' => 0,
+                            'syncable' => $productsTotal - count($productsWithErrors),
+                            'notSyncable' => count($productsWithErrors),
+                            'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'errored' => 0,
+                            'errored' => 0, // TODO !1: complete object
                         ],
                     ],
                 ]

@@ -109,9 +109,12 @@
             <div class="text-uppercase text-muted small-text pb-1">
               {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
             </div>
-            <div class="float-right see-details">
-              More details soon
-            </div>
+            <b-link
+              class="float-right see-details"
+              @click="$parent.goto($parent.PAGES.reportDetails)"
+            >
+              {{ $t('catalogSummary.detailsButton') }}
+            </b-link>
             <span class="red-number">
               {{ prevalidation.notSyncable }}
             </span>
@@ -216,7 +219,7 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton, BAlert} from 'bootstrap-vue';
+import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
 import illustration from '../../../assets/catalog_export_illustration.png';
 
@@ -225,6 +228,7 @@ export default defineComponent({
   components: {
     BButton,
     BAlert,
+    BLink,
   },
   props: {
     validation: {
