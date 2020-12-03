@@ -37,7 +37,6 @@ jobs:
         working-directory: _dev/cloud
         run: |
           terraform init
-          terraform workspace new stable
           terraform workspace select stable
           terraform fmt
         env:
