@@ -116,7 +116,7 @@ class ProductRepository
         $sql->select('IF(is.id_image IS NOT NULL, true, false) as has_cover');
         $sql->select('IF(pl.link_rewrite = "" OR pl.link_rewrite is NULL, false, true) as has_link');
         $sql->select('IF(ps.price > 0, true, false) as has_price_tax_excl');
-        $sql->select('IF( pl.description_short = "" AND pl.description = "", false, true) as has_description_or_short_description');
+        $sql->select('IF((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL), false, true) as has_description_or_short_description');
 
         $sql->from('product', 'p');
 
