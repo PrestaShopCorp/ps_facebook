@@ -51,7 +51,7 @@
             :key="featureName"
             :active="properties.enabled"
             :manage-route="manageRoute"
-            @toggle-switch="onToggleSwitch"
+            @onToggleSwitch="onToggleSwitch"
           />
         </feature-list>
       </div>
@@ -157,7 +157,7 @@ export default defineComponent({
       required: false,
       default: () => ({
         default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
       }),
     },
   },
