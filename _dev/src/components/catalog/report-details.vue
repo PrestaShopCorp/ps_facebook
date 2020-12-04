@@ -33,12 +33,12 @@
       <b-table-simple>
         <b-tr>
           <b-td>Name</b-td>
-          <b-td>ID</b-td>
+          <b-td>&nbsp;</b-td>
           <b-td>LANG</b-td>
           <b-td>COVER</b-td>
           <b-td>DESC</b-td>
           <b-td>LINK</b-td>
-          <b-td>BARCODE</b-td>
+          <b-td>BARCODE/BRAND</b-td>
           <b-td>PRICE</b-td>
         </b-tr>
         <b-tr
@@ -49,8 +49,8 @@
           }, index) in rows"
           :key="index"
         >
-          <b-td>{{ name }}</b-td>
-          <b-td>{{ id_product }} - {{ id_product_attribute }}</b-td>
+          <b-td><b-link :href="url.replace('/1?', `/${id_product}?`)">{{ name }}</b-link></b-td>
+          <b-td>{{ id_product_attribute }}</b-td>
           <b-td>{{ language }}</b-td>
           <b-td>
             <i v-if="has_cover === '0'" class="material-icons">close</i>
@@ -100,6 +100,7 @@ export default defineComponent({
     return {
       loading: true,
       rows: [],
+      url: '',
     };
   },
   created() {
@@ -119,9 +120,9 @@ export default defineComponent({
         }
         return res.json();
       }).then((res) => {
-        const {0: rows} = res;
-        this.rows = rows;
-        console.log('###', rows);
+        const {list, url} = res;
+        this.rows = list;
+        this.url = url;
         this.loading = false;
       }).catch((error) => {
         console.error(error);
