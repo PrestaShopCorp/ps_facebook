@@ -21,3 +21,4 @@ views/js/chunk-vendors.js
 .idea/
 
 tests/integration/config.json
+.terraform/
