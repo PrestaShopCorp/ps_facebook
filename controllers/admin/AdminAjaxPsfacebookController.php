@@ -34,6 +34,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
+use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
@@ -332,6 +333,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+        /** @var GoogleCategoryRepository $googleCategoryRepository */
+        $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
+
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
 
@@ -340,7 +344,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
                     'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
-                    'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
+                    'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id), // true if a category match has been called once (at least 1 matching done)
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'validation' => [
                         'prevalidation' => [

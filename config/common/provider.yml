@@ -37,6 +37,15 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider
+  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
