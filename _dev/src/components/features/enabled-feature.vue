@@ -148,12 +148,7 @@ export default defineComponent({
     },
     manageRoute: {
       type: Object,
-      required: false,
-      default: () => ({
-        // Duplicates ./available-feature.vue
-        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}` || '#',
-      }),
+      required: true,
     },
   },
   data() {
@@ -187,6 +182,7 @@ export default defineComponent({
           throw new Error('failed to update feature');
         } else {
           this.switchActivated = !this.switchActivated;
+          this.$emit('onToggleSwitch', this.name, this.switchActivated);
         }
       }).catch((error) => {
         console.error(error);
