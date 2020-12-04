@@ -26,6 +26,8 @@
         "stepCategoryMatchingOptional": "(optional but strongly recommended)",
         "stepProductSync": "Export your product catalog",
         "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
+        "shopInConflictError": "This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. To register this shop, you must first unregister your Facebook account from the other one using the same domain.",
+
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload"
       },

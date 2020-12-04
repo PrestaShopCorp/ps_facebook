@@ -50,7 +50,16 @@
         @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
+      <b-alert
+        v-if="psAccountShopInConflict"
+        variant="danger"
+        class="m-3"
+        show
+      >
+        {{ $t('configuration.messages.shopInConflictError') }}
+      </b-alert>
       <ps-accounts
+        v-else
         :context="contextPsAccounts"
         class="m-3"
       />
@@ -171,6 +180,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.psAccountsToken,
+    },
+    psAccountShopInConflict: {
+      type: Boolean,
+      required: false,
+      default: () => global.psAccountShopInConflict,
     },
     currency: {
       type: String,
