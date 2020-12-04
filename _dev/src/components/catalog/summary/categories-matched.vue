@@ -28,17 +28,19 @@
     </div>
 
     <h1 class="title">
-      {{ $t('catalogSummary.categoryMatching') }}
+      {{ $t('categoryMatched.title') }}
     </h1>
 
     <b-link
       class="view-button float-right ml-3"
-      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
     >
-      {{ $t('catalogSummary.viewButton') }}
+      {{ $t('categoryMatched.btn') }}
     </b-link>
 
-    [TODO : when matching done or in progress]
+    <p>
+      {{ $t('categoryMatched.description') }}
+    </p>
   </div>
 </template>
 

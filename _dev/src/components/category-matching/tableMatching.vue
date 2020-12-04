@@ -275,10 +275,6 @@ export default defineComponent({
   created() {
     this.loading = true;
     window.addEventListener('scroll', this.handleScroll);
-    console.log(this.categories);
-    if (this.categories.length === 0) {
-      // call php
-    }
   },
   watch: {
   },

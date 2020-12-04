@@ -247,4 +247,21 @@ class GoogleCategoryRepository
             throw new \PrestaShopDatabaseException('No categories found');
         }
     }
+
+    /**
+     * @param int $shopId
+     *
+     * @return bool
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function isMatchingDone($shopId)
+    {
+        $sql = new DbQuery();
+        $sql->select('cm.id_category');
+        $sql->from('fb_category_match', 'cm');
+        $sql->where('cm.id_shop = ' . (int) $shopId);
+
+        return (bool) Db::getInstance()->executeS($sql);
+    }
 }

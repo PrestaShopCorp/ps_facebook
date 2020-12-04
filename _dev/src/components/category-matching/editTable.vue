@@ -19,17 +19,13 @@
 <template>
   <div class="display-table-editTable">
     <div class="d-none d-md-block">
-      <b-checkbox :checked="filterCategory" class="float-left mr-3" @change="changeFilter">
+      <b-checkbox
+        :checked="filterCategory"
+        class="float-left mr-3"
+        @change="changeFilter"
+      >
         {{ $t('categoryMatching.editTable.checkboxTxt') }} ({{ numberOfCategoryWithoutMatching }})
       </b-checkbox>
-      <div class="counter float-right ml-5">
-        <b-button
-          class="pull-left mr-3"
-          variant="primary"
-        >
-          Edit
-        </b-button>
-      </div>
     </div>
     <b-table-simple :responsive="true">
       <b-thead>
@@ -42,7 +38,7 @@
       <b-tbody>
         <b-tr
           v-for="category in categories"
-          v-if="category.show && category.checked"
+          v-if="category.show"
           :key="category.shopCategoryId"
           :class="categoryStyle(category)"
         >
@@ -52,7 +48,9 @@
             {{ category.shopCategoryName }}
           </b-td>
           <b-td v-if="!category.googleCategoryId">
-            <b-badge variant="danger"> {{ $t('categoryMatching.editTable.required') }} </b-badge>
+            <b-badge variant="danger">
+              {{ $t('categoryMatching.editTable.required') }}
+            </b-badge>
           </b-td>
           <b-td v-else>
             {{ category.googleCategoryId }}
@@ -150,17 +148,17 @@ export default defineComponent({
       this.setAction(currentCtg, subcategory);
     },
 
-    changeFilter(checked) {
-      this.filterCategory = checked;
+    changeFilter(value) {
+      this.filterCategory = value;
 
       if (this.filterCategory === true) {
         this.categories.forEach((el) => {
-          var result = !el.googleCategoryId ? true : false;
-          el.checked = result;
+          const result = !el.googleCategoryId;
+          el.show = result;
         });
       } else {
         this.categories.forEach((el) => {
-            el.checked = true;
+          el.show = true;
         });
       }
     },
@@ -176,7 +174,6 @@ export default defineComponent({
       filterChildren.forEach((child) => {
         /* eslint no-param-reassign: "error" */
         child.show = true;
-        child.checked = true;
       });
       currentCategory.deploy = PARENT_STATEMENT.FOLD;
     },
@@ -191,7 +188,6 @@ export default defineComponent({
       );
       childrens.forEach((child) => {
         child.show = false;
-        child.checked = false;
         if (child.deploy === PARENT_STATEMENT.FOLD) {
           child.deploy = PARENT_STATEMENT.UNFOLD;
         }
@@ -223,13 +219,11 @@ export default defineComponent({
             subcategory.forEach((el) => {
               this.categories.splice(indexCtg, 0, el);
               el.show = true;
-              el.checked = true;
               el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
             });
           } else {
             this.categories.splice(indexCtg, 0, subcategory);
             subcategory.show = true;
-            subcategory.checked = true;
             subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
           }
 
@@ -258,7 +252,6 @@ export default defineComponent({
   },
   created() {
     this.categories.forEach((el) => {
-      el.checked = true;
       if (!el.googleCategoryId) {
         this.numberOfCategoryWithoutMatching += 1;
       }
