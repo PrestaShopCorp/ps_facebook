@@ -90,6 +90,7 @@
       >
         {{ $t('configuration.app.lastActive') }}
         {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+        {{ new Date(lastActive).toLocaleTimeString(undefined) }}
       </div>
     </div>
 
@@ -153,12 +154,12 @@ export default defineComponent({
       default: null,
     },
     createdAt: {
-      type: Number,
+      type: String,
       required: false,
       default: null,
     },
     lastActive: {
-      type: Number,
+      type: String,
       required: false,
       default: null,
     },
