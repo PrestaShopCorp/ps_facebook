@@ -7,5 +7,8 @@ services:
   PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository
 
+  PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository:
+    class: PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository
+
   PrestaShop\Module\PrestashopFacebook\Repository\TabRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\TabRepository
