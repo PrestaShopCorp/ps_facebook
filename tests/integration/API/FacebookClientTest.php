@@ -38,7 +38,7 @@ class FacebookClientTest extends TestCase
         $this->facebookClient = new FacebookClient(
             new FacebookEssentialsApiClientFactory(),
             new AccessTokenProviderMock($this->fbConfig['access_token']),
-            new ConfigurationAdapterMock(1),
+            $configurationAdapter,
             new ErrorHandlerMock()
         );
     }
@@ -76,15 +76,22 @@ class FacebookClientTest extends TestCase
 
     public function testGetPixel()
     {
+        if (empty($this->fbConfig['ad_id'])) {
+            $this->markTestSkipped(
+              'The Ad ID is missing from the JSON config file.'
+            );
+        }
+
         if (empty($this->fbConfig['pixel_id'])) {
             $this->markTestSkipped(
               'The Pixel ID is missing from the JSON config file.'
             );
         }
 
+        $adId = $this->fbConfig['ad_id'];
         $pixelId = $this->fbConfig['pixel_id'];
 
-        $pixel = $this->facebookClient->getPixel($pixelId);
+        $pixel = $this->facebookClient->getPixel($adId, $pixelId);
 
         $this->assertNotNull($pixel->getId());
         $this->assertSame($pixelId, $pixel->getId());
