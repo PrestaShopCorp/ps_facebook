@@ -400,7 +400,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $productRepository = $this->module->getService(ProductRepository::class);
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
 
-        $this->ajaxDie(json_encode([$productsWithErrors]));
+        $this->ajaxDie(json_encode([
+            'list' => $productsWithErrors,
+            'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
+        ]));
     }
 
     /**
