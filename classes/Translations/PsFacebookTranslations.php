@@ -90,7 +90,7 @@ class PsFacebookTranslations
                     'stepProductSync' => $this->module->l('Export your product catalog', 'PsFacebookTranslations'),
                     'stepAdCampaign' => $this->module->l('Create Traffic and/or Dynamic Ads', 'PsFacebookTranslations'),
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
-                    'shopInConflictError' => $this->module->l('This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. To register this shop, you must first unregister your Facebook account from the other one using the same domain.', 'PsFacebookTranslations'),
+                    'shopInConflictError' => $this->module->l("This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.", 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [

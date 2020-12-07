@@ -55,9 +55,8 @@
         variant="danger"
         class="m-3"
         show
-      >
-        {{ $t('configuration.messages.shopInConflictError') }}
-      </b-alert>
+        v-html="md2html($t('configuration.messages.shopInConflictError'))"
+      />
       <ps-accounts
         v-else
         :context="contextPsAccounts"
@@ -111,6 +110,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {MultiStoreSelector, PsAccounts} from 'prestashop_accounts_vue_components';
+import Showdown from 'showdown';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
@@ -488,6 +488,7 @@ export default defineComponent({
         this.openedPopup.close();
       }
     },
+    md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
     contextPsAccounts() {
