@@ -1,5 +1,5 @@
 name: JS tests
-on: [push, pull_request]
+on: [push]
 jobs:
   js-linter:
     name: JS linter
