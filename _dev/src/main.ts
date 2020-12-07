@@ -13,7 +13,8 @@ Vue.use(BootstrapVue);
 Vue.use(VueCollapse);
 Vue.use(psAccountsVueComponents);
 Vue.use(VueSegment, {
-  id: 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw',
+  // @ts-ignore
+  id: global.psFacebookSegmentId,
   router,
   debug: process.env.NODE_ENV !== 'production',
   pageCategory: 'ps_facebook',
