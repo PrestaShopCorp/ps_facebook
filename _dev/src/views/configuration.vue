@@ -17,13 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <MultiStoreSelector
-    v-if="!contextPsAccounts.isShopContext"
-    :shops="contextPsAccounts.shops"
-    class="m-3"
-    @shop-selected="onShopSelected($event)"
-  />
-  <spinner v-else-if="loading" />
+  <spinner v-if="loading" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -33,6 +27,12 @@
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
       class="m-3"
+    />
+    <MultiStoreSelector
+      v-else-if="!contextPsAccounts.isShopContext"
+      :shops="contextPsAccounts.shops"
+      class="m-3"
+      @shop-selected="onShopSelected($event)"
     />
     <template v-else>
       <messages
