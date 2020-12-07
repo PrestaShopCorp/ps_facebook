@@ -4,6 +4,7 @@ use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -16,11 +17,17 @@ class AdminPsfacebookModuleController extends ModuleAdminController
      */
     private $configurationAdapter;
 
+    /**
+     * @var MultishopDataProvider
+     */
+    private $multishopDataProvider;
+
     public function __construct()
     {
         parent::__construct();
         /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+        $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->bootstrap = false;
     }
 
@@ -51,6 +58,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             'contextPsAccounts' => $this->psAccountsHotFix($psAccountPresenter->present()),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
