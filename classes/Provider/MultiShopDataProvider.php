@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
+use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use Shop;
 
 class MultishopDataProvider
@@ -12,9 +13,17 @@ class MultishopDataProvider
      */
     private $shopRepository;
 
-    public function __construct(ShopRepository $shopRepository)
-    {
+    /**
+     * @var Segment
+     */
+    private $segment;
+
+    public function __construct(
+        ShopRepository $shopRepository,
+        Segment $segment
+    ) {
         $this->shopRepository = $shopRepository;
+        $this->segment = $segment;
     }
 
     /**
@@ -47,6 +56,9 @@ class MultishopDataProvider
                 && $currentShop->domain_ssl !== $shopData['domain_ssl']) {
                 continue;
             }
+
+            $this->segment->setMessage('Error: Multistore with same domain detected');
+            $this->segment->track();
 
             return true;
         }
