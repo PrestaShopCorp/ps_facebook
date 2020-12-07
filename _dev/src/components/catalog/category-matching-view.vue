@@ -17,10 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogCategoryMatchingView"
@@ -39,10 +36,12 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
+import Spinner from '../components/spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogCategoryMatchingView',
   components: {
+    Spinner,
     BButton,
   },
   mixins: [],

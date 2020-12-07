@@ -23,10 +23,7 @@
     class="m-3"
     @shop-selected="onShopSelected($event)"
   />
-  <div
-    v-else-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-else-if="loading" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -102,6 +99,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {MultiStoreSelector, PsAccounts} from 'prestashop_accounts_vue_components';
+import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
@@ -137,6 +135,7 @@ const generateOpenPopup = (component, popupUrl) => {
 export default defineComponent({
   name: 'Configuration',
   components: {
+    Spinner,
     Introduction,
     Messages,
     MultiStoreSelector,

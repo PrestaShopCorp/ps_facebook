@@ -17,10 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <b-card
     class="card m-3"
     v-else
@@ -81,10 +78,12 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard} from 'bootstrap-vue';
+import Spinner from '../components/spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogCategoryMatchingEdit',
   components: {
+    Spinner,
     BButton,
     BCard,
   },

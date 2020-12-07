@@ -17,10 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogReportDetails"
@@ -78,10 +75,12 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
+import Spinner from '../components/spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
+    Spinner,
     BButton,
     BCard,
     BTableSimple,

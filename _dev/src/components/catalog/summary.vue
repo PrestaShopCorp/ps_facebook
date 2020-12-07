@@ -17,10 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogSummary"
@@ -55,6 +52,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BCard} from 'bootstrap-vue';
+import Spinner from '../components/spinner/spinner.vue';
 
 import PAGES from './pages';
 import ExportCatalog from './summary/export-catalog.vue';
@@ -65,6 +63,7 @@ import Reporting from './summary/reporting.vue';
 export default defineComponent({
   name: 'CatalogSummary',
   components: {
+    Spinner,
     BCard,
     ExportCatalog,
     MatchCategories,
