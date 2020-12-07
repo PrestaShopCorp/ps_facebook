@@ -17,11 +17,6 @@ class FacebookBusinessManager implements JsonSerializable
     private $name;
 
     /**
-     * @var string
-     */
-    private $mail;
-
-    /**
      * @var int
      */
     private $createdAt;
@@ -31,14 +26,12 @@ class FacebookBusinessManager implements JsonSerializable
      *
      * @param string $id
      * @param string $name
-     * @param string $mail
      * @param int $createdAt
      */
-    public function __construct($id, $name, $mail, $createdAt)
+    public function __construct($id, $name, $createdAt)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->mail = $mail;
         $this->createdAt = $createdAt;
     }
 
@@ -59,14 +52,6 @@ class FacebookBusinessManager implements JsonSerializable
     }
 
     /**
-     * @return string
-     */
-    public function getMail()
-    {
-        return $this->mail;
-    }
-
-    /**
      * @return int
      */
     public function getCreatedAt()
@@ -79,7 +64,6 @@ class FacebookBusinessManager implements JsonSerializable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'mail' => $this->getMail(),
             'createDate' => $this->getCreatedAt(),
         ];
     }

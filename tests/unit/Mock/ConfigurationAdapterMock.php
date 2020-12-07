@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Tests\Mock;
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock;
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 
@@ -16,9 +16,9 @@ class ConfigurationAdapterMock extends ConfigurationAdapter
         $this->data = array_merge($this->data, $data);
     }
 
-    public function get($id)
+    public function get($key, $idLang = null, $idShopGroup = null, $idShop = null, $default = false)
     {
-        return isset($this->data[$id]) ? $this->data : false;
+        return isset($this->data[$key]) ? $this->data[$key] : false;
     }
 
     public function updateValue($key, $values, $html = false, $idShopGroup = null, $idShop = null)

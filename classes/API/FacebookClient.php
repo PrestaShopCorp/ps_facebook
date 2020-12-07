@@ -72,7 +72,7 @@ class FacebookClient
      */
     public function hasAccessToken()
     {
-        return isset($this->accessToken);
+        return (bool) $this->accessToken;
     }
 
     public function getUserEmail()
@@ -84,6 +84,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $businessManagerId
+     *
+     * @return FacebookBusinessManager
+     */
     public function getBusinessManager($businessManagerId)
     {
         $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
@@ -91,25 +96,51 @@ class FacebookClient
         return new FacebookBusinessManager(
             isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
             isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['email']) ? $responseContent['email'] : null,
             isset($responseContent['created_time']) ? $responseContent['created_time'] : null
         );
     }
 
-    public function getPixel($pixelId)
+    /**
+     * @param string $adId
+     * @param string $pixelId
+     *
+     * @see https://developers.facebook.com/docs/marketing-api/reference/ad-account/adspixels/?locale=en_US
+     *
+     * @return Pixel
+     */
+    public function getPixel($adId, $pixelId)
     {
-        $responseContent = $this->get((int) $pixelId, ['name', 'last_fired_time', 'is_unavailable']);
+        $responseContent = $this->get('act_' . $adId . '/adspixels', ['name', 'last_fired_time', 'is_unavailable']);
+
+        $name = $lastFiredTime = null;
+        $isUnavailable = false;
+
+        if (isset($responseContent['data'])) {
+            foreach ($responseContent['data'] as $adPixel) {
+                if ($adPixel['id'] !== $pixelId) {
+                    continue;
+                }
+                $name = isset($adPixel['name']) ? $adPixel['name'] : null;
+                $lastFiredTime = isset($adPixel['last_fired_time']) ? $adPixel['last_fired_time'] : null;
+                $isUnavailable = isset($adPixel['is_unavailable']) ? $adPixel['is_unavailable'] : null;
+            }
+        }
 
         return new Pixel(
-            isset($responseContent['id']) ? $responseContent['id'] : $pixelId,
-            isset($responseContent['name']) ? $responseContent['name'] : null,
-            isset($responseContent['last_fired_time']) ? $responseContent['last_fired_time'] : null,
-            isset($responseContent['is_unavailable']) ? !$responseContent['is_unavailable'] : false,
+            $pixelId,
+            $name,
+            $lastFiredTime,
+            $isUnavailable,
             (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)
         );
     }
 
-    public function getPage($pageIds)
+    /**
+     * @param array $pageIds
+     *
+     * @return Page
+     */
+    public function getPage(array $pageIds)
     {
         $pageId = reset($pageIds);
         $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
@@ -129,6 +160,11 @@ class FacebookClient
         );
     }
 
+    /**
+     * @param string $adId
+     *
+     * @return Ad
+     */
     public function getAd($adId)
     {
         $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
@@ -246,7 +282,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 
@@ -315,7 +351,7 @@ class FacebookClient
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
                     $e
                 ),
-                FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
+                $e->getCode(),
                 false
             );
 

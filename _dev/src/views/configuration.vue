@@ -17,10 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -30,6 +27,12 @@
       v-if="!psAccountsOnboarded && showIntroduction"
       @onHide="showIntroduction = false"
       class="m-3"
+    />
+    <MultiStoreSelector
+      v-else-if="!contextPsAccounts.isShopContext"
+      :shops="contextPsAccounts.shops"
+      class="m-3"
+      @shop-selected="onShopSelected($event)"
     />
     <template v-else>
       <messages
@@ -44,7 +47,15 @@
         @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
+      <b-alert
+        v-if="psAccountShopInConflict"
+        variant="danger"
+        class="m-3"
+        show
+        v-html="md2html($t('configuration.messages.shopInConflictError'))"
+      />
       <ps-accounts
+        v-else
         :context="contextPsAccounts"
         class="m-3"
       />
@@ -95,7 +106,9 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {PsAccounts} from 'prestashop_accounts_vue_components';
+import {MultiStoreSelector, PsAccounts} from 'prestashop_accounts_vue_components';
+import Showdown from 'showdown';
+import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
@@ -131,8 +144,10 @@ const generateOpenPopup = (component, popupUrl) => {
 export default defineComponent({
   name: 'Configuration',
   components: {
+    Spinner,
     Introduction,
     Messages,
+    MultiStoreSelector,
     PsAccounts,
     NoConfig,
     FacebookNotConnected,
@@ -164,6 +179,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.psAccountsToken,
+    },
+    psAccountShopInConflict: {
+      type: Boolean,
+      required: false,
+      default: () => global.psAccountShopInConflict,
     },
     currency: {
       type: String,
@@ -316,6 +336,7 @@ export default defineComponent({
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
           this.facebookConnected = false;
+          this.psFacebookJustOnboarded = false;
         }).catch((error) => {
           console.error(error);
           // TODO: Replace me with uninstallation specific message
@@ -372,7 +393,7 @@ export default defineComponent({
         this.openedPopup = null;
         return;
       }
-      this.showGlass = true;
+      this.loading = true;
 
       // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
       fetch(this.fbeOnboardingSaveRoute, {
@@ -389,17 +410,23 @@ export default defineComponent({
           throw new Error('Error!');
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+        this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
+        this.psFacebookJustOnboarded = true;
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
+        this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
+    },
+    onShopSelected(shopSelected) {
+      window.location.href = shopSelected.url;
     },
     createExternalBusinessId() {
       if (!this.psFacebookRetrieveExternalBusinessId) {
@@ -460,6 +487,7 @@ export default defineComponent({
         this.openedPopup.close();
       }
     },
+    md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
     contextPsAccounts() {

@@ -50,6 +50,8 @@
             :name="featureName"
             :key="featureName"
             :active="properties.enabled"
+            :manage-route="manageRoute"
+            @onToggleSwitch="onToggleSwitch"
           />
         </feature-list>
       </div>
@@ -66,6 +68,7 @@
             v-for="(properties, featureName) in dynamicAvailableFeatures"
             :name="featureName"
             :key="featureName"
+            :manage-route="manageRoute"
           />
         </feature-list>
       </div>
@@ -149,6 +152,14 @@ export default defineComponent({
       required: false,
       default: () => global.shopUrl || null,
     },
+    manageRoute: {
+      type: Object,
+      required: false,
+      default: () => ({
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
+        page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
+      }),
+    },
   },
   data() {
     return {
@@ -168,7 +179,7 @@ export default defineComponent({
       && this.dynamicUnavailableFeaturesLength === 0
     ) {
       this.fetchData();
-      this.registerToVisibilityChangeEvent();
+      this.registerToWindowVisibilityChangeEvent();
     } else {
       this.loading = false;
     }
@@ -177,7 +188,7 @@ export default defineComponent({
     if (document.removeEventListener === 'undefined' || this.hiddenProp === null) {
       return;
     }
-    document.removeEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
+    document.removeEventListener(this.visibilityChangeEvent, this.onWindowVisibilityChange, false);
   },
   computed: {
     dynamicEnabledFeaturesLength() {
@@ -200,7 +211,6 @@ export default defineComponent({
       this.loading = true;
       fetch(global.psFacebookGetFeaturesRoute)
         .then((res) => {
-          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
@@ -211,6 +221,7 @@ export default defineComponent({
           this.dynamicEnabledFeatures = json.fbeFeatures.enabledFeatures;
           this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
+          this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
@@ -227,6 +238,10 @@ export default defineComponent({
           && newEnabledFeatures[feature].enabled === true
         ) {
           this.displaySuccessMessage(feature);
+        } else if (this.dynamicEnabledFeatures[feature].enabled === true
+          && newEnabledFeatures[feature].enabled === false
+        ) {
+          this.hideSuccessMessage(feature);
         }
       });
     },
@@ -237,14 +252,22 @@ export default defineComponent({
       this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
         .filter((feature) => feature !== acknowledgedFeature);
     },
-    handleVisibilityChange() {
+    onToggleSwitch(name, newStatus) {
+      const newEnabledFeatures = {
+        ...this.dynamicEnabledFeatures,
+        [name]: {enabled: newStatus},
+      };
+      this.displaySuccessMessages(newEnabledFeatures);
+      this.dynamicEnabledFeatures = newEnabledFeatures;
+    },
+    onWindowVisibilityChange() {
       // Watch when the page gets the focus, for instance
       // when the merchant comes back from another tab.
       if (document[this.hiddenProp] === false) {
         this.fetchData();
       }
     },
-    registerToVisibilityChangeEvent() {
+    registerToWindowVisibilityChangeEvent() {
       // https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
       if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
         this.hiddenProp = 'hidden';
@@ -260,7 +283,7 @@ export default defineComponent({
       if (document.addEventListener === 'undefined' || this.hiddenProp === null) {
         return;
       }
-      document.addEventListener(this.visibilityChangeEvent, this.handleVisibilityChange, false);
+      document.addEventListener(this.visibilityChangeEvent, this.onWindowVisibilityChange, false);
     },
   },
 });

@@ -61,9 +61,9 @@ class Segment implements TrackerInterface
 
     private function segmentTrack($userId)
     {
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $referer = $_SERVER['HTTP_REFERER'];
+        $userAgent = array_key_exists('HTTP_USER_AGENT', $_SERVER) === true ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $ip = array_key_exists('REMOTE_ADDR', $_SERVER) === true ? $_SERVER['REMOTE_ADDR'] : '';
+        $referer = array_key_exists('HTTP_REFERER', $_SERVER) === true ? $_SERVER['HTTP_REFERER'] : '';
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         \Segment::track([

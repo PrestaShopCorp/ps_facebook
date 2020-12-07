@@ -3,6 +3,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Db;
+use DbQuery;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShopException;
 
 class ProductRepository
@@ -101,5 +103,63 @@ class ProductRepository
         }
 
         return (int) $idProductAttribute;
+    }
+
+    public function getProductsWithErrors($shopId, $page = -1)
+    {
+        $sql = new DbQuery();
+
+        $sql->select('ps.id_product, pas.id_product_attribute, pl.name');
+        $sql->select('pl.id_lang, l.iso_code as language');
+        $sql->select('
+            IF((m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = "", false, true) as has_manufacturer_or_ean_or_upc_or_isbn
+            ');
+        $sql->select('IF(is.id_image IS NOT NULL, true, false) as has_cover');
+        $sql->select('IF(pl.link_rewrite = "" OR pl.link_rewrite is NULL, false, true) as has_link');
+        $sql->select('IF(ps.price > 0, true, false) as has_price_tax_excl');
+        $sql->select('IF((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL), false, true) as has_description_or_short_description');
+
+        $sql->from('product', 'p');
+
+        $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
+        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang');
+        $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
+        $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
+        $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
+
+        $sql->where('ps.id_shop = ' . (int) $shopId);
+        $sql->where('
+        (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
+        OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
+        OR is.id_image is NULL
+        OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
+        OR ps.price = 0
+        OR pl.name = "" OR pl.name is NULL
+        ');
+
+        if ($page > -1) {
+            $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page));
+        }
+
+        return Db::getInstance()->executeS($sql);
+    }
+
+    public function getProductsTotal($shopId)
+    {
+        $sql = new DbQuery();
+
+        $sql->select('COUNT(1) as total');
+        $sql->from('product', 'p');
+
+        $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
+        $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
+
+        $sql->where('ps.id_shop = ' . (int) $shopId);
+
+        $res = Db::getInstance()->executeS($sql);
+
+        return $res[0]['total'];
     }
 }

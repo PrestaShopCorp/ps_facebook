@@ -17,43 +17,45 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogSummary"
   >
     <b-card class="card m-3">
+      <export-catalog
+        :validation="validation"
+        :export-done-once="exportDone"
+        :export-on="exportOn"
+        :catalog-id="catalogId"
+      />
+    </b-card>
+
+    <b-card class="card m-3">
       <categories-matched
         v-if="matchingDone"
         :matching-progress="matchingProgress"
       />
-      <match-categories v-else />
-    </b-card>
-
-    <b-card class="card m-3">
-      <catalog-exported v-if="exportDone" />
-      <export-catalog
+      <match-categories
         v-else
-        :is-primary-action="matchingDone"
+        :is-primary-action="exportDone"
       />
     </b-card>
 
-    <b-card class="card m-3">
+    <!--b-card class="card m-3">
+      TODO : remove REPORTING component once new wireframes integrated.
       <reporting :reporting="reporting" />
-    </b-card>
+    </b-card -->
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BCard} from 'bootstrap-vue';
+import Spinner from '../spinner/spinner.vue';
 
 import PAGES from './pages';
 import ExportCatalog from './summary/export-catalog.vue';
-import CatalogExported from './summary/catalog-exported.vue';
 import MatchCategories from './summary/match-categories.vue';
 import CategoriesMatched from './summary/categories-matched.vue';
 import Reporting from './summary/reporting.vue';
@@ -61,9 +63,9 @@ import Reporting from './summary/reporting.vue';
 export default defineComponent({
   name: 'CatalogSummary',
   components: {
+    Spinner,
     BCard,
     ExportCatalog,
-    CatalogExported,
     MatchCategories,
     CategoriesMatched,
     Reporting,
@@ -85,9 +87,10 @@ export default defineComponent({
       PAGES,
       loading: true,
       exportDone: this.data ? this.data.exportDone : false,
+      exportOn: this.data ? this.data.exportOn : false,
       matchingDone: this.data ? this.data.matchingDone : false,
       matchingProgress: this.data ? this.data.matchingProgress : null,
-      reporting: this.data ? this.data.reporting : null,
+      validation: this.data ? this.data.validation : null,
     };
   },
   created() {
@@ -96,6 +99,14 @@ export default defineComponent({
     } else {
       this.loading = false;
     }
+  },
+  computed: {
+    catalogId() {
+      if (this.$root.contextPsFacebook && this.$root.contextPsFacebook.catalog) {
+        return this.$root.contextPsFacebook.catalog.id;
+      }
+      return null;
+    },
   },
   methods: {
     fetchData() {
@@ -112,9 +123,11 @@ export default defineComponent({
         return res.json();
       }).then((res) => {
         this.exportDone = res.exportDone;
+        this.exportOn = res.exportOn;
         this.matchingDone = res.matchingDone;
         this.matchingProgress = res.matchingProgress;
-        this.reporting = res.reporting;
+        this.validation = res.validation;
+        this.catalogId = res.catalogId;
         this.loading = false;
       }).catch((error) => {
         console.error(error);

@@ -15,43 +15,97 @@ export const FreshInstall: any = Template.bind({});
 FreshInstall.args = {
   data: {
     exportDone: false,
+    exportOn: false,
     matchingDone: false,
     matchingProgress: {total: 42, matched: 0},
-    reporting: {
-      total: 0,
-      pending: 0,
-      approved: 0,
-      disapproved: 0,
+    validation: {
+      prevalidation: {
+        syncable: 134,
+        notSyncable: 12,
+      },
+      reporting: {
+        errored: 42,
+      },
     },
+    catalogId: '34567890',
   },
 };
 
-export const Progressing: any = Template.bind({});
-Progressing.args = {
+export const CategoryProgressing: any = Template.bind({});
+CategoryProgressing.args = {
   data: {
     exportDone: false,
+    exportOn: false,
     matchingDone: true,
     matchingProgress: {total: 42, matched: 23},
-    reporting: {
-      total: 42,
-      pending: 2,
-      approved: 39,
-      disapproved: 1,
+    validation: {
+      prevalidation: {
+        syncable: 134,
+        notSyncable: 12,
+      },
+      reporting: {
+        errored: 42,
+      },
     },
+    catalogId: '34567890',
   },
 };
 
-export const Finished: any = Template.bind({});
-Finished.args = {
+export const SyncOn: any = Template.bind({});
+SyncOn.args = {
   data: {
     exportDone: true,
+    exportOn: true,
+    matchingDone: false,
+    matchingProgress: {total: 42, matched: 23},
+    validation: {
+      prevalidation: {
+        syncable: 134,
+        notSyncable: 12,
+      },
+      reporting: {
+        errored: 42,
+      },
+    },
+    catalogId: '34567890',
+  },
+};
+
+export const SyncPaused: any = Template.bind({});
+SyncPaused.args = {
+  data: {
+    exportDone: true,
+    exportOn: false,
+    matchingDone: false,
+    matchingProgress: {total: 42, matched: 23},
+    validation: {
+      prevalidation: {
+        syncable: 134,
+        notSyncable: 12,
+      },
+      reporting: {
+        errored: 42,
+      },
+    },
+    catalogId: '34567890',
+  },
+};
+
+export const BothDone: any = Template.bind({});
+BothDone.args = {
+  data: {
+    exportDone: true,
+    exportOn: true,
     matchingDone: true,
     matchingProgress: {total: 42, matched: 42},
-    reporting: {
-      total: 42,
-      pending: 0,
-      approved: 41,
-      disapproved: 1,
+    validation: {
+      prevalidation: {
+        syncable: 134,
+        notSyncable: 12,
+      },
+      reporting: {
+        errored: 42,
+      },
     },
   },
 };

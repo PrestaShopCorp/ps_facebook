@@ -85,6 +85,7 @@ class ConfigurationHandler
 
         $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE);
         $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN);
+        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
     }
 
     private function cleanOnboardingConfiguration()
@@ -100,6 +101,9 @@ class ConfigurationHandler
             Config::PS_FACEBOOK_AD_ACCOUNT_ID,
             Config::PS_FACEBOOK_CATALOG_ID,
             Config::PS_FACEBOOK_PIXEL_ENABLED,
+            Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE,
+            Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
+            Config::PS_FACEBOOK_PRODUCT_SYNC_ON,
         ];
 
         foreach ($dataConfigurationKeys as $key) {

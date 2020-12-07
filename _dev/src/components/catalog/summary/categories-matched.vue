@@ -18,7 +18,18 @@
  *-->
 <template>
   <div>
-    <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+    <div class="illustration float-left mr-3 d-none d-md-block">
+      <img
+        :src="illustration"
+        width="48"
+        height="44"
+        alt="background illustration"
+      >
+    </div>
+
+    <h1 class="title">
+      {{ $t('catalogSummary.categoryMatching') }}
+    </h1>
 
     <b-link
       class="view-button float-right ml-3"
@@ -34,6 +45,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BLink} from 'bootstrap-vue';
+import illustration from '../../../assets/category_matching_illustration.png';
 
 export default defineComponent({
   name: 'CategoriesMatched',
@@ -51,6 +63,7 @@ export default defineComponent({
   },
   data() {
     return {
+      illustration,
     };
   },
   methods: {
@@ -61,6 +74,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .title {
+    font-weight: 600;
+  }
   .view-button {
     font-weight: 700;
     position: absolute;

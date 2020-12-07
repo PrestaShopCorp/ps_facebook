@@ -17,39 +17,144 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogReportDetails"
   >
-    TODO : CatalogReportDetails
-    <br><br>
-    <b-button @click="$parent.back">
-      BACK
-    </b-button>
+    <b-card class="card m-3">
+      <b-button
+        class="float-left mr-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
+      </b-button>
+      <h1>{{ $t('syncReport.title') }}</h1>
+
+      <br><br>
+      <b-alert variant="warning" show class="warning">
+        This feature is still in beta.
+      </b-alert>
+
+      <b-table-simple>
+        <b-thead>
+          <b-tr>
+            <b-th>{{ $t('syncReport.name') }}</b-th>
+            <b-th>LANG</b-th>
+            <b-th>COVER</b-th>
+            <b-th>DESC</b-th>
+            <b-th>BARCODE/BRAND</b-th>
+            <b-th>PRICE</b-th>
+          </b-tr>
+        </b-thead>
+        <b-tr
+          v-for="({
+            name, has_cover, has_description_or_short_description,
+            has_manufacturer_or_ean_or_upc_or_isbn,
+            has_price_tax_excl, language, id_product, id_product_attribute
+          }, index) in rows"
+          :key="index"
+        >
+          <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
+            <b-td>
+              <b-link :href="url.replace('/1?', `/${id_product}?`)" target="_blank">
+                {{ name }}
+              </b-link>
+            </b-td>
+            <b-td>{{ language }}</b-td>
+            <b-td>
+              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_description_or_short_description === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+          </template>
+          <template v-else>
+            <b-td class="pl-4">Variant #{{ id_product_attribute }}</b-td>
+            <b-td>{{ language }}</b-td>
+            <b-td>
+              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_description_or_short_description === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+          </template>
+        </b-tr>
+      </b-table-simple>
+    </b-card>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton} from 'bootstrap-vue';
+import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
+import Spinner from '../spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
+    Spinner,
     BButton,
+    BCard,
+    BTableSimple,
   },
   mixins: [],
   props: {
+    getProductsWithErrorsRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetProductsWithErrors || null,
+    },
   },
   computed: {
   },
   data() {
     return {
       loading: true,
+      rows: [],
+      url: '',
     };
   },
   created() {
@@ -57,8 +162,26 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      // TODO !0
-      this.loading = false;
+      this.loading = true;
+
+      fetch(this.getProductsWithErrorsRoute, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        // body: JSON.stringify({}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        const {list, url} = res;
+        this.rows = list;
+        this.url = url;
+        this.loading = false;
+      }).catch((error) => {
+        console.error(error);
+        this.loading = false;
+      });
     },
   },
   watch: {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\Module\PrestashopFacebook\Tests\Utility;
+namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Utility;
 
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
@@ -85,8 +85,8 @@ class CustomerInformationUtilityTest extends TestCase
                     'lastname' => strtolower($lastName),
                     'email' => strtolower($email),
                     'countryIso' => 'lv',
-                    'postCode' => '3003',
-                    'stateIso' => '',
+                    'postCode' => 'lv-3003',
+                    'stateIso' => null,
                 ],
             ],
             'without simple address' => [

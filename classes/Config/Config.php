@@ -4,7 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Config;
 
 class Config
 {
-    const API_VERSION = 'v8.0';
+    const API_VERSION = 'v9.0';
 
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
@@ -17,7 +17,9 @@ class Config
     const PS_FACEBOOK_CATALOG_ID = 'PS_FACEBOOK_CATALOG_ID';
     const PS_FACEBOOK_EXTERNAL_BUSINESS_ID = 'PS_FACEBOOK_EXTERNAL_BUSINESS_ID';
     const PS_FACEBOOK_PIXEL_ENABLED = 'PS_FACEBOOK_PIXEL_ENABLED';
+    const PS_FACEBOOK_CAPI_TEST_EVENT_CODE = 'PS_FACEBOOK_CAPI_TEST_EVENT_CODE';
     const PS_FACEBOOK_PRODUCT_SYNC_FIRST_START = 'PS_FACEBOOK_PRODUCT_SYNC_FIRST_START';
+    const PS_FACEBOOK_PRODUCT_SYNC_ON = 'PS_FACEBOOK_PRODUCT_SYNC_ON';
 
     const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop', 'ig_shopping'];
     const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
@@ -25,4 +27,6 @@ class Config
 
     const CATEGORIES_PER_PAGE = 50;
     const MAX_CATEGORY_DEPTH = 3;
+
+    const REPORTS_PER_PAGE = 50;
 }

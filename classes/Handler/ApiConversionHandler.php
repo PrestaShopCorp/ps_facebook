@@ -2,7 +2,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use Context;
 use FacebookAds\Api;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
@@ -17,11 +16,6 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 class ApiConversionHandler
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var false|string
      */
     private $pixelId;
@@ -31,10 +25,17 @@ class ApiConversionHandler
      */
     private $configurationAdapter;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, Context $context)
-    {
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(
+        ConfigurationAdapter $configurationAdapter,
+        ErrorHandler $errorHandler
+    ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->context = $context;
+        $this->errorHandler = $errorHandler;
 
         $this->pixelId = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
 
@@ -159,13 +160,7 @@ class ApiConversionHandler
             $event->setEventSourceUrl($eventSourceUrl);
         }
 
-        $events[] = $event;
-
-        if (empty($event)) {
-            return true;
-        }
-
-        $this->sendEvents($events);
+        $this->sendEvents([$event]);
     }
 
     /**
@@ -198,17 +193,22 @@ class ApiConversionHandler
         $request = (new EventRequest($this->pixelId))
             ->setEvents($events);
 
+        // A test event code can be set to check the events are properly sent to Facebook
+        $testEventCode = $this->configurationAdapter->get(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
+        if (!empty($testEventCode)) {
+            $request->setTestEventCode($testEventCode);
+        }
+
         try {
             $request->execute();
         } catch (\Exception $e) {
-            $errorHandler = new ErrorHandler();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookConversionAPIException(
                     'Failed to send conversion API event',
                     FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
                     $e
                 ),
-                FacebookConversionAPIException::SEND_EVENT_EXCEPTION,
+                $e->getCode(),
                 false
             );
         }

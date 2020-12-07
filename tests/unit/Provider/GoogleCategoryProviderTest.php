@@ -26,7 +26,7 @@ class GoogleCategoryProviderTest extends TestCase
         $googleCategoryRepo->method('getCategoryMatchByCategoryId')->willReturn($categoryMatchMock);
 
         $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo);
-        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId);
+        $googleCategory = $googleCategoryProvider->getGoogleCategory($categoryId, 1);
 
         $this->assertEquals($result, $googleCategory);
     }
@@ -47,9 +47,8 @@ class GoogleCategoryProviderTest extends TestCase
             ->getMock();
 
         $googleCategoryRepo->method('getFilteredCategories')->willReturn($categoryMatchMock);
-
         $googleCategoryProvider = new GoogleCategoryProvider($googleCategoryRepo);
-        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, $page);
+        $googleCategory = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, 1, $page);
 
         $this->assertEquals($result, $googleCategory);
     }

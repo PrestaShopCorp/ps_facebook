@@ -61,12 +61,7 @@ export default defineComponent({
     },
     manageRoute: {
       type: Object,
-      required: false,
-      default: () => ({
-        // Duplicates ./enabled-feature.vue
-        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook.page.id}`,
-      }),
+      required: true,
     },
   },
 });

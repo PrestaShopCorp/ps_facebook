@@ -52,7 +52,7 @@ class ErrorHandler
      */
     public function handle($error, $code = null, $throw = true)
     {
-        $code ? $this->client->captureException($error) : $this->client->captureMessage($error);
+        $this->client->captureException($error);
         if ($code && true === $throw) {
             http_response_code($code);
             throw $error;

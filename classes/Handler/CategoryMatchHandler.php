@@ -21,16 +21,17 @@ class CategoryMatchHandler
      * @param int $categoryId
      * @param int $googleCategoryId
      * @param bool $updateChildren
+     * @param int $shopId
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren)
+    public function updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId)
     {
         if ($updateChildren) {
             $category = new Category($categoryId);
             $categoryChildrenIds = $category->getAllChildren();
-            $this->googleCategoryRepository->updateCategoryChildrenMatch($categoryChildrenIds, $googleCategoryId);
+            $this->googleCategoryRepository->updateCategoryChildrenMatch($categoryChildrenIds, $googleCategoryId, $shopId);
         }
-        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren);
+        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId, $shopId, $updateChildren);
     }
 }
