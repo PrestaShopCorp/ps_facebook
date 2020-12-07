@@ -3,20 +3,10 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use FacebookAds\Object\Values\ProductItemAvailabilityValues;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use Product;
 
 class ProductAvailabilityProvider implements ProductAvailabilityProviderInterface
 {
-    /**
-     * @var ConfigurationAdapter
-     */
-    private $configurationAdapter;
-
-    public function __construct(ConfigurationAdapter $configurationAdapter)
-    {
-        $this->configurationAdapter = $configurationAdapter;
-    }
 
     /**
      * @param int $productId
