@@ -67,7 +67,7 @@
                     class="my-3 question"
                     v-collapse-toggle
                   >
-                    <a><i class="material-icons">keyboard_arrow_right</i>
+                    <a @click="onQuestionClick()"><i class="material-icons">keyboard_arrow_right</i>
                       {{ item.question }}</a>
                   </div>
                   <div
@@ -127,10 +127,21 @@ export default defineComponent({
   props: ['faq', 'contactUsLink', 'docLink'],
   methods: {
     contactUs() {
+      this.$segment.track('Click on Contact us', {
+        module: 'ps_facebook',
+      });
       window.open(this.$props.contactUsLink, '_blank');
     },
     getDocumentation() {
       window.open(this.$props.docLink, '_blank');
+      this.$segment.track('Click on Download the guide CTA', {
+        module: 'ps_facebook',
+      });
+    },
+    onQuestionClick() {
+      this.$segment.track('Click on the question #', {
+        module: 'ps_facebook',
+      });
     },
   },
 });

@@ -397,6 +397,9 @@ export default defineComponent({
         this.popupReceptionDuplicate = false;
       }).catch((error) => {
         console.error(error);
+        this.$segment.track('The pop-up gets blocked', {
+          module: 'ps_facebook',
+        });
         this.error = 'configuration.messages.unknownOnboardingError';
         this.showGlass = false;
         this.openedPopup = null;
