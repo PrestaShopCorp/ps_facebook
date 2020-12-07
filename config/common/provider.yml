@@ -42,3 +42,5 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
