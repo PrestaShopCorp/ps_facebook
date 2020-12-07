@@ -23,9 +23,21 @@
     id="catalogReportDetails"
   >
     <b-card class="card m-3">
-      <b-button variant="primary" @click="$parent.back">
-        BACK
+      <b-button
+        class="float-left mr-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
       </b-button>
+      <h1>{{ $t('syncReport.title') }}</h1>
+
+      <br><br>
+      <b-alert variant="warning" show class="warning">
+        This feature is still in beta.
+      </b-alert>
+
       <br><br>
       <b-table-simple>
         <b-tr>

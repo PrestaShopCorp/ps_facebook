@@ -396,9 +396,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetProductsWithErrors()
     {
+        $page = (int) Tools::getValue('page');
+        if (!$page || $page < 0)) {
+            $page = 0;
+        }
+
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
-        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
+        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id, $page);
 
         $this->ajaxDie(json_encode([
             'list' => $productsWithErrors,

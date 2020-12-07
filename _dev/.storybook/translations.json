@@ -99,6 +99,14 @@
       "modalDeactivationTitle": "Confirm deactivation?",
       "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
     },
+    "syncReport": {
+      "title": "Product status",
+      "id": "ID",
+      "name": "Name",
+      "status": "Status",
+      "rejectionCause": "Cause of rejection",
+      "allStatus": "All status"
+    },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",
       "intro": "To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.",
