@@ -30,18 +30,17 @@
       <b-table-simple>
         <b-tr>
           <b-td>Name</b-td>
-          <b-td>&nbsp;</b-td>
+          <b-td>VARIANT ID</b-td>
           <b-td>LANG</b-td>
           <b-td>COVER</b-td>
           <b-td>DESC</b-td>
-          <b-td>LINK</b-td>
           <b-td>BARCODE/BRAND</b-td>
           <b-td>PRICE</b-td>
         </b-tr>
         <b-tr
           v-for="({
             name, has_cover, has_description_or_short_description,
-            has_link, has_manufacturer_or_ean_or_upc_or_isbn,
+            has_manufacturer_or_ean_or_upc_or_isbn,
             has_price_tax_excl, language, id_product, id_product_attribute
           }, index) in rows"
           :key="index"
@@ -57,7 +56,6 @@
               close
             </i>
           </b-td>
-          <b-td><i v-if="has_link === '0'" class="material-icons">close</i></b-td>
           <b-td>
             <i v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'" class="material-icons">
               close
