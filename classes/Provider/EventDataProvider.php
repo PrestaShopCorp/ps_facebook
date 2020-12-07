@@ -8,6 +8,7 @@ use Context;
 use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
@@ -57,22 +58,29 @@ class EventDataProvider
      */
     private $availabilityProvider;
 
+    /**
+     * @var FacebookCategoryClient
+     */
+    private $facebookCategoryClient;
+
     public function __construct(
         ToolsAdapter $toolsAdapter,
         ConfigurationAdapter $configurationAdapter,
         ProductRepository $productRepository,
         Context $context,
         ps_facebook $module,
-        ProductAvailabilityProviderInterface $availabilityProvider
+        ProductAvailabilityProviderInterface $availabilityProvider,
+        FacebookCategoryClient $facebookCategoryClient
     ) {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int) $this->context->language->id;
+        $this->idLang = (int)$this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
         $this->availabilityProvider = $availabilityProvider;
+        $this->facebookCategoryClient = $facebookCategoryClient;
     }
 
     public function generateEventData($name, array $params)
@@ -128,10 +136,11 @@ class EventDataProvider
         );
 
         $productUrl = $this->context->link->getProductLink($product['id']);
+
         $content = [
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
-            'category' => (new Category($product['id_category_default']))->getName($this->idLang),
+            'category' => $this->getCategory($product['id_category_default']),
             'item_price' => $product['price_tax_exc'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
@@ -148,7 +157,7 @@ class EventDataProvider
         $this->context->smarty->assign(
             [
                 'retailer_item_id' => $fbProductId,
-                'product_availability' => $this->availabilityProvider->getProductAvailability((int) $product['id_product']),
+                'product_availability' => $this->availabilityProvider->getProductAvailability((int)$product['id_product']),
             ]
         );
 
@@ -199,7 +208,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int)$this->toolsAdapter->getValue('id_cms'), $this->idLang);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
@@ -303,7 +312,7 @@ class EventDataProvider
     {
         $type = 'CombinationProduct';
 
-        $idLang = (int) $this->context->language->id;
+        $idLang = (int)$this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
         $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
@@ -391,7 +400,7 @@ class EventDataProvider
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $cart = $this->context->cart;
-        $idLang = (int) $this->context->language->id;
+        $idLang = (int)$this->context->language->id;
         $contents = $this->getProductContent($cart, $idLang);
 
         $customData = [
@@ -485,5 +494,16 @@ class EventDataProvider
     private function getCurrency()
     {
         return strtolower($this->context->currency->iso_code);
+    }
+
+    private function getCategory($categoryId)
+    {
+        $googleCategory = $this->facebookCategoryClient->getGoogleCategory(
+            $categoryId,
+            $this->context->shop->id
+        );
+        return $googleCategory ?
+            $googleCategory['name'] :
+            (new Category($categoryId))->getName($this->idLang);
     }
 }
