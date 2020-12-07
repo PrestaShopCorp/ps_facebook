@@ -7,7 +7,6 @@ use Product;
 
 class ProductAvailabilityProvider implements ProductAvailabilityProviderInterface
 {
-
     /**
      * @param int $productId
      *
