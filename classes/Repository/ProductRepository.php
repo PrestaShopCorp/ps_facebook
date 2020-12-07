@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use Db;
 use DbQuery;
 use PrestaShopException;
