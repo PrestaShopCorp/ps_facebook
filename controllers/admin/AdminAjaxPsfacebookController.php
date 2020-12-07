@@ -346,7 +346,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'faq' => $faq->getFaq(),
                     'doc' => $this->getReadme(),
-                    'contactUs' => 'https://www.google.com',
+                    'contactUs' => 'support-facebook@prestashop.com',
                 ]
             )
         );

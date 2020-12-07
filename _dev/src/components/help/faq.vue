@@ -108,6 +108,7 @@
               <b-button
                 variant="link"
                 @click="contactUs()"
+                :href="`mailto:support-facebook@prestashop.com`"
               >
                 {{ $t("help.help.contactUs") }}
                 <i class="material-icons">arrow_right_alt</i>
@@ -130,7 +131,6 @@ export default defineComponent({
       this.$segment.track('Click on Contact us', {
         module: 'ps_facebook',
       });
-      window.open(this.$props.contactUsLink, '_blank');
     },
     getDocumentation() {
       window.open(this.$props.docLink, '_blank');
