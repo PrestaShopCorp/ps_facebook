@@ -17,34 +17,42 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div
-    v-if="loading"
-    class="page-spinner"
-  />
+  <spinner v-if="loading" />
   <div
     v-else
     id="catalogReportDetails"
   >
     <b-card class="card m-3">
-      <b-button variant="primary" @click="$parent.back">
-        BACK
+      <b-button
+        class="float-left mr-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
       </b-button>
+      <h1>{{ $t('syncReport.title') }}</h1>
+
+      <br><br>
+      <b-alert variant="warning" show class="warning">
+        This feature is still in beta.
+      </b-alert>
+
       <br><br>
       <b-table-simple>
         <b-tr>
-          <b-td>Name</b-td>
-          <b-td>&nbsp;</b-td>
+          <b-th>Name</b-th>
+          <b-th>VARIANT ID</b-th>
           <b-td>LANG</b-td>
           <b-td>COVER</b-td>
           <b-td>DESC</b-td>
-          <b-td>LINK</b-td>
           <b-td>BARCODE/BRAND</b-td>
           <b-td>PRICE</b-td>
         </b-tr>
         <b-tr
           v-for="({
             name, has_cover, has_description_or_short_description,
-            has_link, has_manufacturer_or_ean_or_upc_or_isbn,
+            has_manufacturer_or_ean_or_upc_or_isbn,
             has_price_tax_excl, language, id_product, id_product_attribute
           }, index) in rows"
           :key="index"
@@ -60,7 +68,6 @@
               close
             </i>
           </b-td>
-          <b-td><i v-if="has_link === '0'" class="material-icons">close</i></b-td>
           <b-td>
             <i v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'" class="material-icons">
               close
@@ -78,10 +85,12 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
+import Spinner from '../spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
+    Spinner,
     BButton,
     BCard,
     BTableSimple,

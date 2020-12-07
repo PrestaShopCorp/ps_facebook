@@ -27,4 +27,6 @@ class Config
 
     const CATEGORIES_PER_PAGE = 50;
     const MAX_CATEGORY_DEPTH = 3;
+
+    const REPORTS_PER_PAGE = 50;
 }

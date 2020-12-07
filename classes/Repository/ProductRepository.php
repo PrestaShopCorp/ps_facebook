@@ -4,6 +4,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Db;
 use DbQuery;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShopException;
 
 class ProductRepository
@@ -104,7 +105,7 @@ class ProductRepository
         return (int) $idProductAttribute;
     }
 
-    public function getProductsWithErrors($shopId)
+    public function getProductsWithErrors($shopId, $page = -1)
     {
         $sql = new DbQuery();
 
@@ -136,6 +137,10 @@ class ProductRepository
         OR ps.price = 0
         OR pl.name = "" OR pl.name is NULL
         ');
+
+        if ($page > -1) {
+            $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page));
+        }
 
         return Db::getInstance()->executeS($sql);
     }
