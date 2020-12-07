@@ -397,7 +397,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxGetProductsWithErrors()
     {
         $page = (int) Tools::getValue('page');
-        if (!$page || $page < 0)) {
+        if (!$page || $page < 0) {
             $page = 0;
         }
 

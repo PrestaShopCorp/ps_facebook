@@ -52,7 +52,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BCard} from 'bootstrap-vue';
-import Spinner from '../components/spinner/spinner.vue';
+import Spinner from '../spinner/spinner.vue';
 
 import PAGES from './pages';
 import ExportCatalog from './summary/export-catalog.vue';

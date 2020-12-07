@@ -41,8 +41,8 @@
       <br><br>
       <b-table-simple>
         <b-tr>
-          <b-td>Name</b-td>
-          <b-td>VARIANT ID</b-td>
+          <b-th>Name</b-th>
+          <b-th>VARIANT ID</b-th>
           <b-td>LANG</b-td>
           <b-td>COVER</b-td>
           <b-td>DESC</b-td>
@@ -85,7 +85,7 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
-import Spinner from '../components/spinner/spinner.vue';
+import Spinner from '../spinner/spinner.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
