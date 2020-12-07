@@ -323,6 +323,7 @@ export default defineComponent({
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
           this.facebookConnected = false;
+          this.psFacebookJustOnboarded = false;
         }).catch((error) => {
           console.error(error);
           // TODO: Replace me with uninstallation specific message
@@ -379,7 +380,7 @@ export default defineComponent({
         this.openedPopup = null;
         return;
       }
-      this.showGlass = true;
+      this.loading = true;
 
       // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
       fetch(this.fbeOnboardingSaveRoute, {
@@ -396,12 +397,15 @@ export default defineComponent({
           throw new Error('Error!');
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+        this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
+        this.psFacebookJustOnboarded = true;
       }).catch((error) => {
         console.error(error);
         this.error = 'configuration.messages.unknownOnboardingError';
+        this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
