@@ -166,6 +166,14 @@ class PsFacebookTranslations
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
             ],
+            'syncReport' => [
+                'title' => $this->module->l('Product status', 'PsFacebookTranslations'),
+                'id' => $this->module->l('ID', 'PsFacebookTranslations'),
+                'name' => $this->module->l('Name', 'PsFacebookTranslations'),
+                'status' => $this->module->l('Status', 'PsFacebookTranslations'),
+                'rejectionCause' => $this->module->l('Cause of rejection', 'PsFacebookTranslations'),
+                'allStatus' => $this->module->l('All status', 'PsFacebookTranslations'),
+            ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
                 'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.', 'PsFacebookTranslations'),
