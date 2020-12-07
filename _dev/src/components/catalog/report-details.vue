@@ -38,17 +38,17 @@
         This feature is still in beta.
       </b-alert>
 
-      <br><br>
       <b-table-simple>
-        <b-tr>
-          <b-th>Name</b-th>
-          <b-th>VARIANT ID</b-th>
-          <b-td>LANG</b-td>
-          <b-td>COVER</b-td>
-          <b-td>DESC</b-td>
-          <b-td>BARCODE/BRAND</b-td>
-          <b-td>PRICE</b-td>
-        </b-tr>
+        <b-thead>
+          <b-tr>
+            <b-th>{{ $t('syncReport.name') }}</b-th>
+            <b-th>LANG</b-th>
+            <b-th>COVER</b-th>
+            <b-th>DESC</b-th>
+            <b-th>BARCODE/BRAND</b-th>
+            <b-th>PRICE</b-th>
+          </b-tr>
+        </b-thead>
         <b-tr
           v-for="({
             name, has_cover, has_description_or_short_description,
@@ -57,25 +57,70 @@
           }, index) in rows"
           :key="index"
         >
-          <b-td><b-link :href="url.replace('/1?', `/${id_product}?`)">{{ name }}</b-link></b-td>
-          <b-td>{{ id_product_attribute }}</b-td>
-          <b-td>{{ language }}</b-td>
-          <b-td>
-            <i v-if="has_cover === '0'" class="material-icons">close</i>
-          </b-td>
-          <b-td>
-            <i v-if="has_description_or_short_description === '0'" class="material-icons">
-              close
-            </i>
-          </b-td>
-          <b-td>
-            <i v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'" class="material-icons">
-              close
-            </i>
-          </b-td>
-          <b-td>
-            <i v-if="has_price_tax_excl === '0'" class="material-icons">close</i>
-          </b-td>
+          <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
+            <b-td>
+              <b-link :href="url.replace('/1?', `/${id_product}?`)" target="_blank">
+                {{ name }}
+              </b-link>
+            </b-td>
+            <b-td>{{ language }}</b-td>
+            <b-td>
+              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_description_or_short_description === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+          </template>
+          <template v-else>
+            <b-td class="pl-4">Variant #{{ id_product_attribute }}</b-td>
+            <b-td>{{ language }}</b-td>
+            <b-td>
+              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_description_or_short_description === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i
+                v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
+                class="material-icons text-danger"
+              >
+                close
+              </i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+            <b-td>
+              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
+              <i v-else class="material-icons text-success">done</i>
+            </b-td>
+          </template>
         </b-tr>
       </b-table-simple>
     </b-card>
