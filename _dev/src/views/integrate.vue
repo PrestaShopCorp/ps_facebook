@@ -30,7 +30,6 @@
           {{ $t('integrate.warning.noFeatures') }}
         </b-alert>
         <!-- Display confirmation messages for freshly enabled features -->
-        <!-- FIXME: Not displayed when the feature is already initialy enabled -->
         <success-alert
           v-for="(feature, index) in successfullyEnabledFeatures"
           :key="index"
