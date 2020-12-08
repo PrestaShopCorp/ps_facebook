@@ -201,4 +201,34 @@ class GoogleCategoryRepository
 
         return (bool) Db::getInstance()->executeS($sql);
     }
+
+    /**
+     * @param int $langId
+     * @param int $shopId
+     *
+     * @return array
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getCategoriesWithParentInfo($langId, $shopId)
+    {
+        if (!isset($this->categoryLangCache[$langId])) {
+            $query = new DbQuery();
+            $query->select('c.id_category, cl.name, c.id_parent')
+                ->from('category', 'c')
+                ->leftJoin(
+                    'category_lang',
+                    'cl',
+                    'cl.id_category = c.id_category AND cl.id_shop = ' . (int) $shopId
+                )
+                ->where('cl.id_lang = ' . (int) $langId)
+                ->orderBy('cl.id_category');
+            $result = Db::getInstance()->executeS($query);
+            if (is_array($result)) {
+                return $result;
+            } else {
+                throw new \PrestaShopDatabaseException('No categories found');
+            }
+        }
+    }
 }

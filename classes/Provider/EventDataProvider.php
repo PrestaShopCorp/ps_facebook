@@ -63,6 +63,11 @@ class EventDataProvider
      */
     private $facebookCategoryClient;
 
+    /**
+     * @var GoogleCategoryProvider
+     */
+    private $googleCategoryProvider;
+
     public function __construct(
         ToolsAdapter $toolsAdapter,
         ConfigurationAdapter $configurationAdapter,
@@ -70,7 +75,8 @@ class EventDataProvider
         Context $context,
         ps_facebook $module,
         ProductAvailabilityProviderInterface $availabilityProvider,
-        FacebookCategoryClient $facebookCategoryClient
+        FacebookCategoryClient $facebookCategoryClient,
+        GoogleCategoryProvider $googleCategoryProvider
     ) {
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
@@ -81,6 +87,7 @@ class EventDataProvider
         $this->module = $module;
         $this->availabilityProvider = $availabilityProvider;
         $this->facebookCategoryClient = $facebookCategoryClient;
+        $this->googleCategoryProvider = $googleCategoryProvider;
     }
 
     public function generateEventData($name, array $params)
@@ -136,12 +143,16 @@ class EventDataProvider
         );
 
         $productUrl = $this->context->link->getProductLink($product['id']);
-        $category = $this->getCategory($product['id_category_default']);
 
+        $categoryPath = $this->googleCategoryProvider->getCategoryPaths(
+            $product['id_category_default'],
+            $this->context->language->id,
+            $this->context->shop->id
+        );
         $content = [
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
-            'category' => $category,
+            'category' => $categoryPath['category_path'],
             'item_price' => $product['price_tax_exc'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
@@ -154,6 +165,7 @@ class EventDataProvider
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+        $category = $this->getCategory($product['id_category_default']);
 
         $this->context->smarty->assign(
             [
@@ -402,8 +414,7 @@ class EventDataProvider
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $cart = $this->context->cart;
-        $idLang = (int) $this->context->language->id;
-        $contents = $this->getProductContent($cart, $idLang);
+        $contents = $this->getProductContent($cart);
 
         $customData = [
             'contents' => $contents,
@@ -439,21 +450,25 @@ class EventDataProvider
 
     /**
      * @param Cart $cart
-     * @param int $idLang
      *
      * @return array
      */
-    private function getProductContent(Cart $cart, $idLang)
+    private function getProductContent(Cart $cart)
     {
         $contents = [];
         foreach ($cart->getProducts() as $product) {
+            $categoryPath = $this->googleCategoryProvider->getCategoryPaths(
+                $product['id_category_default'],
+                $this->context->language->id,
+                $this->context->shop->id
+            );
             $content = [
                 'id' => ProductCatalogUtility::makeProductId($product['id_product'], $product['id_product_attribute']),
                 'quantity' => $product['quantity'],
                 'item_price' => $product['price'],
                 'title' => \Tools::replaceAccentedChars($product['name']),
                 'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
-                'category' => (new Category($product['id_category_default']))->getName($idLang),
+                'category' => $categoryPath['category_path'],
             ];
             $contents[] = $content;
         }
@@ -508,78 +523,5 @@ class EventDataProvider
         return $googleCategory ?
             $googleCategory['id'] :
             (new Category($categoryId))->getName($this->idLang);
-    }
-
-    public function getCategoryPaths($topCategoryId, $langId, $shopId)
-    {
-        if ((int) $topCategoryId === 0) {
-            return [
-                'category_path' => '',
-                'category_id_path' => '',
-            ];
-        }
-        $categoryId = $topCategoryId;
-        $categories = [];
-        try {
-            $categoriesWithParentsInfo = $this->getCategoriesWithParentInfo($langId, $shopId);
-        } catch (\PrestaShopDatabaseException $e) {
-            return [
-                'category_path' => '',
-                'category_id_path' => '',
-            ];
-        }
-        $homeCategory = Category::getTopCategory()->id;
-
-        while ((int) $categoryId != $homeCategory) {
-            foreach ($categoriesWithParentsInfo as $category) {
-                if ($category['id_category'] == $categoryId) {
-                    $categories[] = $category;
-                    $categoryId = $category['id_parent'];
-                    break;
-                }
-            }
-        }
-        $categories = array_reverse($categories);
-
-        return [
-            'category_path' => implode(' > ', array_map(function ($category) {
-                return $category['name'];
-            }, $categories)),
-            'category_id_path' => implode(' > ', array_map(function ($category) {
-                return $category['id_category'];
-            }, $categories)),
-        ];
-    }
-
-    /**
-     * @param int $langId
-     * @param int $shopId
-     *
-     * @return array
-     *
-     * @throws \PrestaShopDatabaseException
-     */
-    public function getCategoriesWithParentInfo($langId, $shopId)
-    {
-        if (!isset($this->categoryLangCache[$langId])) {
-            $query = new DbQuery();
-            $query->select('c.id_category, cl.name, c.id_parent')
-                ->from('category', 'c')
-                ->leftJoin(
-                    'category_lang',
-                    'cl',
-                    'cl.id_category = c.id_category AND cl.id_shop = ' . (int) $shopId
-                )
-                ->where('cl.id_lang = ' . (int) $langId)
-                ->orderBy('cl.id_category');
-            $result = $this->db->executeS($query);
-            if (is_array($result)) {
-                $this->categoryLangCache[$langId] = $result;
-            } else {
-                throw new \PrestaShopDatabaseException('No categories found');
-            }
-        }
-
-        return $this->categoryLangCache[$langId];
     }
 }
