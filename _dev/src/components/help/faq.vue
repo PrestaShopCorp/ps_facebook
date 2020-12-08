@@ -48,7 +48,15 @@
           <div class="faq">
             <h1>{{ $t("faq.title") }}</h1>
             <div class="separator my-3" />
-            <template v-if="faq && faq.categories">
+            <div
+              class="mt-3 text-center"
+              v-if="loading"
+            >
+              <div
+                class="spinner"
+              />
+            </div>
+            <template v-else-if="faq && faq.categories">
               <v-collapse-group
                 class="my-3"
                 v-for="(categorie, index) in faq.categories"
@@ -126,7 +134,7 @@
 import {defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
-  props: ['faq', 'contactUsLink', 'docLink'],
+  props: ['faq', 'contactUsLink', 'docLink', 'loading'],
   methods: {
     contactUs() {
       this.$segment.track('Click on Contact us', {
