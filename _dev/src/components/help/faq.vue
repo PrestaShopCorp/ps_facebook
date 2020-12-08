@@ -67,7 +67,7 @@
                     class="my-3 question"
                     v-collapse-toggle
                   >
-                    <a @click="onQuestionClick()"><i class="material-icons">keyboard_arrow_right</i>
+                    <a @click="onQuestionClick(i)"><i class="material-icons">keyboard_arrow_right</i>
                       {{ item.question }}</a>
                   </div>
                   <div
@@ -138,8 +138,8 @@ export default defineComponent({
         module: 'ps_facebook',
       });
     },
-    onQuestionClick() {
-      this.$segment.track('Click on the question #', {
+    onQuestionClick(number) {
+      this.$segment.track('Click on the question #' + number, {
         module: 'ps_facebook',
       });
     },
