@@ -21,7 +21,7 @@ import {Module, VuexModule} from 'vuex-module-decorators';
 const {contextPsAccounts} = window || {};
 const {translations} = window || {};
 const {i18nSettings} = window || {};
-const stateContext = contextPsAccounts ? contextPsAccounts: {};
+const stateContext = contextPsAccounts ? contextPsAccounts.context : {};
 const stateTranslations = translations || {};
 const statei18nSettings = i18nSettings || {};
 
