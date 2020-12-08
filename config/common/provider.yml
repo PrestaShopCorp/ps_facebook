@@ -44,3 +44,9 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider
+
+  PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository'
+      - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'

@@ -120,9 +120,9 @@ class FacebookClient
                 if ($adPixel['id'] !== $pixelId) {
                     continue;
                 }
-                $name = $adPixel['name'];
-                $lastFiredTime = $adPixel['last_fired_time'];
-                $isUnavailable = $adPixel['is_unavailable'];
+                $name = isset($adPixel['name']) ? $adPixel['name'] : null;
+                $lastFiredTime = isset($adPixel['last_fired_time']) ? $adPixel['last_fired_time'] : null;
+                $isUnavailable = isset($adPixel['is_unavailable']) ? $adPixel['is_unavailable'] : null;
             }
         }
 
