@@ -61,6 +61,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
             'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
+            'psFacebookSegmentId' => $_ENV['SEGMENT_API_KEY'],
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
