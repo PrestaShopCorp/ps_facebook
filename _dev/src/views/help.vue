@@ -31,9 +31,10 @@
 </template>
 
 <script>
+import {defineComponent} from '@vue/composition-api';
 import faq from '../components/help/faq.vue';
 
-export default {
+export default defineComponent({
   name: 'HelpTab',
   components: {
     faq,
@@ -74,7 +75,7 @@ export default {
         });
     },
   },
-};
+});
 </script>
 
 <style lang="scss">

@@ -67,7 +67,8 @@
                     class="my-3 question"
                     v-collapse-toggle
                   >
-                    <a><i class="material-icons">keyboard_arrow_right</i>
+                    <a @click="onQuestionClick(i)">
+                      <i class="material-icons">keyboard_arrow_right</i>
                       {{ item.question }}</a>
                   </div>
                   <div
@@ -108,6 +109,7 @@
               <b-button
                 variant="link"
                 @click="contactUs()"
+                :href="`mailto:` + contactUsLink"
               >
                 {{ $t("help.help.contactUs") }}
                 <i class="material-icons">arrow_right_alt</i>
@@ -127,10 +129,20 @@ export default defineComponent({
   props: ['faq', 'contactUsLink', 'docLink'],
   methods: {
     contactUs() {
-      window.open(this.$props.contactUsLink, '_blank');
+      this.$segment.track('Click on Contact us', {
+        module: 'ps_facebook',
+      });
     },
     getDocumentation() {
       window.open(this.$props.docLink, '_blank');
+      this.$segment.track('Click on Download the guide CTA', {
+        module: 'ps_facebook',
+      });
+    },
+    onQuestionClick(number) {
+      this.$segment.track(`Click on the question #${number}`, {
+        module: 'ps_facebook',
+      });
     },
   },
 });

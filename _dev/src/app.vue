@@ -20,12 +20,14 @@
   <div id="app">
     <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
+        @click="onProduct"
         :onboarding-required="true"
         route="/catalog"
       >
         {{ $t('general.tabs.catalog') }}
       </MenuItem>
       <MenuItem
+        @click="onSales"
         :onboarding-required="true"
         route="/integrate"
       >
@@ -34,7 +36,10 @@
       <MenuItem route="/configuration">
         {{ $t('general.tabs.configuration') }}
       </MenuItem>
-      <MenuItem route="/help">
+      <MenuItem
+        @click="onHelp"
+        route="/help"
+      >
         {{ $t('general.tabs.help') }}
       </MenuItem>
     </Menu>
@@ -93,6 +98,21 @@ export default {
         }).catch((error) => {
           console.error(error);
         });
+    },
+    onHelp() {
+      this.$segment.track('Click on Help tab', {
+        module: 'ps_facebook',
+      });
+    },
+    onProduct() {
+      this.$segment.track('Click on Product catalog tab', {
+        module: 'ps_facebook',
+      });
+    },
+    onSales() {
+      this.$segment.track('Click on Sales channels tab', {
+        module: 'ps_facebook',
+      });
     },
   },
 };
