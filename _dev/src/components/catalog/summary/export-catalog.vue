@@ -28,7 +28,10 @@
     </div>
 
     <h1 class="title">
-      <div v-if="exportDoneOnce" class="mt-1 ml-3">
+      <div
+        v-if="exportDoneOnce"
+        class="mt-1 ml-3"
+      >
         <span class="d-none d-sm-inline">
           {{
             $t(exportOn
@@ -53,23 +56,36 @@
       </div>
       {{ $t('catalogSummary.productCatalogExport') }}
     </h1>
-    <div class="text" :class="{ expanded: seeMoreState }">
+    <div
+      class="text"
+      :class="{ expanded: seeMoreState }"
+    >
       {{ $t('catalogSummary.catalogExportIntro') }}
-      <br/><br/>
-      <p class="app foldable p-2 mb-0"
+      <br><br>
+      <p
+        class="app foldable p-2 mb-0"
         v-html="md2html($t('catalogSummary.catalogExportInfo'))"
       />
-      <span class="see-more" @click="seeMore">
+      <span
+        class="see-more"
+        @click="seeMore"
+      >
         <span>{{ $t('catalogSummary.showMore') }}</span>
         ...
       </span>
-      <span class="see-less" @click="seeLess">{{ $t('catalogSummary.showLess') }}</span>
+      <span
+        class="see-less"
+        @click="seeLess"
+      >{{ $t('catalogSummary.showLess') }}</span>
     </div>
 
     <hr class="separator">
 
     <div class="float-right">
-      <i class="material-icons refresh-icon" @click="rescan">loop</i>
+      <i
+        class="material-icons refresh-icon"
+        @click="rescan"
+      >loop</i>
     </div>
     <h3>
       {{ $t('catalogSummary.preApprovalScanTitle') }}
@@ -127,7 +143,12 @@
     <hr class="separator">
 
     <template v-if="!exportOn">
-      <b-alert v-if="!exportDoneOnce" variant="warning" show class="warning">
+      <b-alert
+        v-if="!exportDoneOnce"
+        variant="warning"
+        show
+        class="warning"
+      >
         {{ $t('catalogSummary.catalogExportWarning') }}
       </b-alert>
       <b-button
@@ -138,7 +159,10 @@
       >
         {{ exportButtonLabel }}
       </b-button>
-      <p v-if="!exportDoneOnce" class="disclaimer text-muted">
+      <p
+        v-if="!exportDoneOnce"
+        class="disclaimer text-muted"
+      >
         {{ $t('catalogSummary.catalogExportDisclaimer') }}
       </p>
       <template v-else>
@@ -158,11 +182,17 @@
     </template>
 
     <template v-else>
-      <b-alert variant="info" show class="warning">
+      <b-alert
+        variant="info"
+        show
+        class="warning"
+      >
         {{ $t('catalogSummary.catalogExportNotice') }}
       </b-alert>
       <br>
-      <b-link :href="viewCatalog" target="_blank"
+      <b-link
+        :href="viewCatalog"
+        target="_blank"
         class="view-button float-right ml-3"
       >
         <i class="material-icons">launch</i>

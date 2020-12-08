@@ -75,14 +75,7 @@ export default {
   },
   created() {
     this.getFbContext();
-    this.$segment.identify(this.$store.state.context.appContext.shopDomain, {
-      name: this.$store.state.context.appContext.shopUrl,
-      email: this.$store.state.context.appContext.email,
-      language: this.$store.state.context.statei18nSettings.isoCode,
-      version_ps: this.$store.state.context.appContext.psVersion,
-      version_module: this.$store.state.context.appContext.moduleVersion,
-      module: 'ps_facebook',
-    });
+    this.identifySegment();
   },
   methods: {
     getFbContext() {
@@ -113,6 +106,21 @@ export default {
       this.$segment.track('Click on Sales channels tab', {
         module: 'ps_facebook',
       });
+    },
+    identifySegment() {
+      this.$segment.identify(this.$store.state.context.appContext.shopDomain, {
+        name: this.$store.state.context.appContext.shopUrl,
+        email: this.$store.state.context.appContext.user.email,
+        language: this.$store.state.context.statei18nSettings.isoCode,
+        version_ps: this.$store.state.context.appContext.psVersion,
+        version_module: this.$store.state.context.appContext.moduleVersion,
+        module: 'ps_facebook',
+      });
+    },
+  },
+  watch: {
+    $route() {
+      this.identifySegment();
     },
   },
 };
