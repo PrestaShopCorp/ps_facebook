@@ -44,7 +44,10 @@
         </span>
       </div>
 
-      <div class="mb-2">
+      <div
+        class="mb-2"
+        hidden
+      >
         <stepper-icon
           :state="categoryMatchingStarted ? 'DONE' : (catMatchClickable ? 'AVAILABLE' : 'DISABLED')"
         />
