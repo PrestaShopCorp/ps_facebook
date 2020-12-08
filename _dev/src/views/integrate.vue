@@ -89,8 +89,9 @@
               <b-button
                 variant="primary"
                 class="mt-2"
+                @click="onSyncCatalogClick"
               >
-                {{ $t('integrate.buttons.syncProducts') }}
+                {{ $t('catalogSummary.exportCatalogButton') }}
               </b-button>
             </div>
           </b-alert>
@@ -252,6 +253,9 @@ export default defineComponent({
     hideSuccessMessage(acknowledgedFeature) {
       this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
         .filter((feature) => feature !== acknowledgedFeature);
+    },
+    onSyncCatalogClick() {
+      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
     },
     onToggleSwitch(name, newStatus) {
       const newEnabledFeatures = {
