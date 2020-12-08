@@ -127,7 +127,7 @@
     <hr class="separator">
 
     <template v-if="!exportOn">
-      <b-alert variant="warning" show class="warning">
+      <b-alert v-if="!exportDoneOnce" variant="warning" show class="warning">
         {{ $t('catalogSummary.catalogExportWarning') }}
       </b-alert>
       <b-button
