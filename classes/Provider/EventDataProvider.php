@@ -75,7 +75,7 @@ class EventDataProvider
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int)$this->context->language->id;
+        $this->idLang = (int) $this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
@@ -136,11 +136,12 @@ class EventDataProvider
         );
 
         $productUrl = $this->context->link->getProductLink($product['id']);
+        $category = $this->getCategory($product['id_category_default']);
 
         $content = [
             'id' => $fbProductId,
             'title' => \Tools::replaceAccentedChars($product['name']),
-            'category' => $this->getCategory($product['id_category_default']),
+            'category' => $category,
             'item_price' => $product['price_tax_exc'],
             'brand' => (new \Manufacturer($product['id_manufacturer']))->name,
         ];
@@ -157,7 +158,8 @@ class EventDataProvider
         $this->context->smarty->assign(
             [
                 'retailer_item_id' => $fbProductId,
-                'product_availability' => $this->availabilityProvider->getProductAvailability((int)$product['id_product']),
+                'product_availability' => $this->availabilityProvider->getProductAvailability((int) $product['id_product']),
+                'item_group_id' => $category,
             ]
         );
 
@@ -208,7 +210,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int)$this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
@@ -312,7 +314,7 @@ class EventDataProvider
     {
         $type = 'CombinationProduct';
 
-        $idLang = (int)$this->context->language->id;
+        $idLang = (int) $this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
         $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
@@ -400,7 +402,7 @@ class EventDataProvider
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $cart = $this->context->cart;
-        $idLang = (int)$this->context->language->id;
+        $idLang = (int) $this->context->language->id;
         $contents = $this->getProductContent($cart, $idLang);
 
         $customData = [
@@ -502,8 +504,9 @@ class EventDataProvider
             $categoryId,
             $this->context->shop->id
         );
+
         return $googleCategory ?
-            $googleCategory['name'] :
+            $googleCategory['id'] :
             (new Category($categoryId))->getName($this->idLang);
     }
 
@@ -576,6 +579,7 @@ class EventDataProvider
                 throw new \PrestaShopDatabaseException('No categories found');
             }
         }
+
         return $this->categoryLangCache[$langId];
     }
 }

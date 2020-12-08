@@ -78,6 +78,8 @@
       <meta property="og:availability" content="{$product_availability}">
       <meta property="product:condition" content="{$product.embedded_attributes.condition}">
       <meta property="product:retailer_item_id" content="{$retailer_item_id}">
+      <meta property="product:item_group_id" content="{$product.id_product}">
+      <meta property="product:category" content="{$item_group_id}"/>
   {/if}
 {/if}
 <!-- END OF Set Facebook Pixel Product Export -->
