@@ -234,11 +234,13 @@ export default defineComponent({
       }
       Object.keys(newEnabledFeatures).forEach((feature) => {
         // If the feature was disabled in the previous state, display the confirmation message
-        if (this.dynamicEnabledFeatures[feature].enabled === false
+        if ((!this.dynamicEnabledFeatures[feature]
+          || this.dynamicEnabledFeatures[feature].enabled === false)
           && newEnabledFeatures[feature].enabled === true
         ) {
           this.displaySuccessMessage(feature);
-        } else if (this.dynamicEnabledFeatures[feature].enabled === true
+        } else if (this.dynamicEnabledFeatures[feature]
+          && this.dynamicEnabledFeatures[feature].enabled === true
           && newEnabledFeatures[feature].enabled === false
         ) {
           this.hideSuccessMessage(feature);
