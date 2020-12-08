@@ -29,6 +29,7 @@ const statei18nSettings = i18nSettings || {};
 export default class ModuleContext extends VuexModule {
   appContext: Record<string, any> = {
     ...stateContext,
+    defaultCategory: (window as any).defaultCategory,
     shopDomain: (window as any).shopDomain,
     shopUrl: (window as any).shopUrl,
     email: (window as any).email,

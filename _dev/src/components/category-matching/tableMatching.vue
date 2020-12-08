@@ -46,6 +46,22 @@
           {{ category.shopCategoryName }}
         </editing-row>
       </b-tbody>
+      <b-tfoot v-if="loading">
+        <div
+          v-if="hasCategories"
+          class="spinner"
+        />
+        <b-tr v-else>
+          <b-td
+            colspan="4"
+            style="text-align:center"
+          >
+            <div>
+              {{ $t('categoryMatching.tableMatching.nocategoriesloaded') }}
+            </div>
+          </b-td>
+        </b-tr>
+      </b-tfoot>
     </b-table-simple>
   </div>
 </template>
@@ -99,6 +115,7 @@ export default defineComponent({
     return {
       categories: this.initialCategories,
       loading: null,
+      hasCategories: false,
     };
   },
   methods: {
@@ -106,7 +123,7 @@ export default defineComponent({
       return fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_shop_category=${category.shopCategoryId}&google_category_id=${category.fbCategoryId}&update_children=${category.propagate}`,
+        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_parent_id=${category.fbCategoryId}&update_children=${category.propagate}`,
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -119,7 +136,7 @@ export default defineComponent({
       const floor = category.shopParentCategoryIds.split('/').length - 1;
       const isDeployed = category.deploy === PARENT_STATEMENT.FOLD ? 'opened' : (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3 ? '' : 'closed');
 
-      return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
+      return `psfb-match array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
 
     canShowCheckbox(category) {
@@ -194,69 +211,59 @@ export default defineComponent({
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = PARENT_STATEMENT.FOLD;
 
-      fetch(this.getCategoriesRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_category=${currentCategory.shopCategoryId}&page=1`,
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
+      this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
+        subcategory = res;
+        if (Array.isArray(subcategory)) {
+          subcategory.forEach((el) => {
+            this.categories.splice(indexCtg, 0, el);
+            el.show = true;
+            el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+          });
+        } else {
+          this.categories.splice(indexCtg, 0, subcategory);
+          subcategory.show = true;
+          subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
         }
-        return res.json();
-      })
-        .then((res) => {
-          subcategory = res;
-          if (Array.isArray(subcategory)) {
-            subcategory.forEach((el) => {
-              this.categories.splice(indexCtg, 0, el);
-              el.show = true;
-              el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-            });
-          } else {
-            this.categories.splice(indexCtg, 0, subcategory);
-            subcategory.show = true;
-            subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-          }
 
-          if (subcategory.length !== 0) {
-            currentCategory.deploy = PARENT_STATEMENT.FOLD;
-          } else {
-            currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
+        if (subcategory.length !== 0) {
+          currentCategory.deploy = PARENT_STATEMENT.FOLD;
+        } else {
+          currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
+        }
+      });
     },
 
     handleScroll() {
       if (document.documentElement.scrollTop + window.innerHeight
           === document.documentElement.scrollHeight
       ) {
-        fetch(this.getCategoriesRoute, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: 'id_category=3&page=1',
-        }).then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        })
-          .then((res) => {
-            if (Array.isArray(res)) {
-              res.forEach((el) => {
+        this.loading = true;
+        this.$parent.fetchCategories(0, 1).then((res) => {
+          if (Array.isArray(res)) {
+            res.forEach((el) => {
+              if (undefined === this.categories.find(
+                (ctg) => el.shopCategoryId === ctg.shopCategoryId)
+              ) {
+                this.hasCategories = true;
                 this.categories.push(el);
                 el.show = true;
                 el.shopParentCategoryIds = `${el.shopCategoryId}/`;
-              });
-            } else {
+              }
+              this.hasCategories = false;
+            });
+          } else {
+            if (undefined === this.categories.find(
+              (ctg) => res.shopCategoryId === ctg.shopCategoryId)
+            ) {
               this.categories.push(res);
+              this.hasCategories = true;
               res.show = true;
               res.shopParentCategoryIds = `${res.shopCategoryId}/`;
             }
-          }).catch((error) => {
-            console.error(error);
-          });
+            this.hasCategories = false;
+            this.loading = false;
+          }
+        });
       }
     },
     /**
@@ -273,10 +280,31 @@ export default defineComponent({
     },
   },
   created() {
-    this.loading = true;
     window.addEventListener('scroll', this.handleScroll);
   },
   watch: {
   },
 });
 </script>
+<style lang="scss" scoped>
+.spinner {
+  color: #fff;
+  background-color: #fff;
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+  border-radius: 2.5rem;
+  border-right-color: #25b9d7;
+  border-bottom-color: #25b9d7;
+  border-width: .1875rem;
+  border-style: solid;
+  font-size: 0;
+  outline: none;
+  display: inline-block;
+  border-left-color: #bbcdd2;
+  border-top-color: #bbcdd2;
+  -webkit-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+  position: absolute;
+  left: calc(50% - 0.6rem);
+}
+</style>

@@ -108,7 +108,7 @@ export default defineComponent({
   data() {
     return {
       categories: this.initialCategories,
-      loading: null,
+      loading: true,
       filterCategory: false,
       numberOfCategoryWithoutMatching: 0,
     };
@@ -203,38 +203,26 @@ export default defineComponent({
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = PARENT_STATEMENT.FOLD;
 
-      fetch(this.getCategoriesRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_category=${currentCategory.shopCategoryId}&page=1`,
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
+      this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
+        subcategory = res;
+        if (Array.isArray(subcategory)) {
+          subcategory.forEach((el) => {
+            this.categories.splice(indexCtg, 0, el);
+            el.show = true;
+            el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+          });
+        } else {
+          this.categories.splice(indexCtg, 0, subcategory);
+          subcategory.show = true;
+          subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
         }
-        return res.json();
-      })
-        .then((res) => {
-          subcategory = res;
-          if (Array.isArray(subcategory)) {
-            subcategory.forEach((el) => {
-              this.categories.splice(indexCtg, 0, el);
-              el.show = true;
-              el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-            });
-          } else {
-            this.categories.splice(indexCtg, 0, subcategory);
-            subcategory.show = true;
-            subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-          }
 
-          if (subcategory.length !== 0) {
-            currentCategory.deploy = PARENT_STATEMENT.FOLD;
-          } else {
-            currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
+        if (subcategory.length !== 0) {
+          currentCategory.deploy = PARENT_STATEMENT.FOLD;
+        } else {
+          currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
+        }
+      });
     },
     /**
     * call function
