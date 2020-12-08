@@ -67,7 +67,8 @@
                     class="my-3 question"
                     v-collapse-toggle
                   >
-                    <a @click="onQuestionClick(i)"><i class="material-icons">keyboard_arrow_right</i>
+                    <a @click="onQuestionClick(i)">
+                      <i class="material-icons">keyboard_arrow_right</i>
                       {{ item.question }}</a>
                   </div>
                   <div
@@ -108,7 +109,7 @@
               <b-button
                 variant="link"
                 @click="contactUs()"
-                :href="`mailto:support-facebook@prestashop.com`"
+                :href="`mailto:` + contactUsLink"
               >
                 {{ $t("help.help.contactUs") }}
                 <i class="material-icons">arrow_right_alt</i>
@@ -139,7 +140,7 @@ export default defineComponent({
       });
     },
     onQuestionClick(number) {
-      this.$segment.track('Click on the question #' + number, {
+      this.$segment.track(`Click on the question #${number}`, {
         module: 'ps_facebook',
       });
     },
