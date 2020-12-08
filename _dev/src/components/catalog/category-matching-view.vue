@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading"/>
+  <spinner v-if="loading" />
   <b-card
     class="card m-3"
     v-else
@@ -68,8 +68,10 @@
     </p>
 
     <p />
-
-    <TableMatching :initial-categories="categories" />
+    <TableMatching
+      v-if="categories.length > 0"
+      :initial-categories="categories"
+    />
   </b-card>
 </template>
 
@@ -110,7 +112,9 @@ export default defineComponent({
   },
   created() {
     this.fetchData();
-    this.fetchCategories();
+    this.fetchCategories(0, 1).then((res) => {
+      this.categories = res;
+    });
   },
   methods: {
     fetchData() {
@@ -123,17 +127,22 @@ export default defineComponent({
         })
         .then((res) => {
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
-          // TODO : update others
         }).catch((error) => {
           console.error(error);
         });
     },
-    fetchCategories() {
+    fetchCategories(idCategory, page) {
       this.loading = true;
-      fetch(this.getCategoriesRoute, {
+      let mainCategoryId = idCategory;
+
+      if (mainCategoryId === 0) {
+        mainCategoryId = this.$store.state.context.appContext.defaultCategory.id_category;
+      }
+
+      return fetch(this.getCategoriesRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'id_category=2&page=1',
+        body: `id_category=${mainCategoryId}&page=${page}`,
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -141,6 +150,7 @@ export default defineComponent({
         return res.json();
       })
         .then((res) => {
+          // TODO: utiliser un map
           res.forEach((el) => {
             const propagation = !!el.isParentCategory;
             /* eslint no-param-reassign: "error" */
@@ -151,8 +161,9 @@ export default defineComponent({
             /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           });
-          this.categories = res;
+
           this.loading = false;
+          return res;
         }).catch((error) => {
           console.error(error);
         });
