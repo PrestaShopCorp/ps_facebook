@@ -30,7 +30,6 @@
           {{ $t('integrate.warning.noFeatures') }}
         </b-alert>
         <!-- Display confirmation messages for freshly enabled features -->
-        <!-- FIXME: Not displayed when the feature is already initialy enabled -->
         <success-alert
           v-for="(feature, index) in successfullyEnabledFeatures"
           :key="index"
@@ -90,8 +89,9 @@
               <b-button
                 variant="primary"
                 class="mt-2"
+                @click="onSyncCatalogClick"
               >
-                {{ $t('integrate.buttons.syncProducts') }}
+                {{ $t('catalogSummary.exportCatalogButton') }}
               </b-button>
             </div>
           </b-alert>
@@ -234,11 +234,13 @@ export default defineComponent({
       }
       Object.keys(newEnabledFeatures).forEach((feature) => {
         // If the feature was disabled in the previous state, display the confirmation message
-        if (this.dynamicEnabledFeatures[feature].enabled === false
+        if ((!this.dynamicEnabledFeatures[feature]
+          || this.dynamicEnabledFeatures[feature].enabled === false)
           && newEnabledFeatures[feature].enabled === true
         ) {
           this.displaySuccessMessage(feature);
-        } else if (this.dynamicEnabledFeatures[feature].enabled === true
+        } else if (this.dynamicEnabledFeatures[feature]
+          && this.dynamicEnabledFeatures[feature].enabled === true
           && newEnabledFeatures[feature].enabled === false
         ) {
           this.hideSuccessMessage(feature);
@@ -251,6 +253,9 @@ export default defineComponent({
     hideSuccessMessage(acknowledgedFeature) {
       this.successfullyEnabledFeatures = this.successfullyEnabledFeatures
         .filter((feature) => feature !== acknowledgedFeature);
+    },
+    onSyncCatalogClick() {
+      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
     },
     onToggleSwitch(name, newStatus) {
       const newEnabledFeatures = {
