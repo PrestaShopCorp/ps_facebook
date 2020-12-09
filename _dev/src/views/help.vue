@@ -25,6 +25,7 @@
       :faq="faq"
       :contact-us-link="contactUsLink"
       :doc-link="docLink"
+      :loading="loading"
       class="m-3"
     />
   </div>
@@ -51,6 +52,7 @@ export default defineComponent({
       faq: {},
       docLink: '',
       contactUsLink: '',
+      loading: true,
     };
   },
   created() {
@@ -69,9 +71,11 @@ export default defineComponent({
           this.faq = resp.faq;
           this.docLink = resp.doc;
           this.contactUsLink = resp.contactUs;
+          this.loading = false;
         })
         .catch((error) => {
           console.error(error);
+          this.loading = false;
         });
     },
   },
