@@ -23,6 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 use Language;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 
 class MessengerHandler
@@ -42,15 +43,22 @@ class MessengerHandler
      */
     private $fbeFeatureDataProvider;
 
+    /**
+     * @var Env
+     */
+    private $env;
+
     public function __construct(
         Language $lang,
         FbeFeatureDataProvider $fbeFeatureDataProvider,
-        ConfigurationAdapter $configurationAdapter
+        ConfigurationAdapter $configurationAdapter,
+        Env $env
     ) {
         $pageList = explode(',', $configurationAdapter->get('PS_FACEBOOK_PAGES'));
         $this->pageId = (int) reset($pageList);
         $this->lang = $lang;
         $this->fbeFeatureDataProvider = $fbeFeatureDataProvider;
+        $this->env = $env;
     }
 
     /**
@@ -75,7 +83,7 @@ class MessengerHandler
     {
         return [
             'ps_facebook_messenger_api_version' => Config::API_VERSION,
-            'ps_facebook_messenger_app_id' => $_ENV['PSX_FACEBOOK_APP_ID'],
+            'ps_facebook_messenger_app_id' => $this->env->get('PSX_FACEBOOK_APP_ID'),
             'ps_facebook_messenger_page_id' => $this->pageId,
             'ps_facebook_messenger_locale' => $this->getLocale(),
         ];

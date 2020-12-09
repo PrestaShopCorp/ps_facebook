@@ -21,6 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 
 use Module;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use Raven_Client;
 
 /**
@@ -41,9 +42,10 @@ class ErrorHandler
     public function __construct()
     {
         $module = Module::getInstanceByName('ps_facebook');
+        $env = $module->getService(Env::class);
 
         $this->client = new Raven_Client(
-            $_ENV['SENTRY_CREDENTIALS'],
+            $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
             [
                 'level' => 'warning',
                 'tags' => [

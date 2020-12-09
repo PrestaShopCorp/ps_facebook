@@ -10,7 +10,7 @@ class Env
 {
     /**
      * @param string $key
-     * 
+     *
      * @return string
      */
     public function get($key)
@@ -18,6 +18,7 @@ class Env
         if (!empty($_ENV[$key])) {
             return $_ENV[$key];
         }
-        return constant(Config::class .'::' . $key);
+
+        return constant(Config::class . '::' . $key);
     }
 }

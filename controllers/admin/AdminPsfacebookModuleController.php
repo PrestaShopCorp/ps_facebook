@@ -22,6 +22,7 @@ use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
@@ -36,6 +37,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     private $configurationAdapter;
 
     /**
+     * @var Env
+     */
+    private $env;
+
+    /**
      * @var MultishopDataProvider
      */
     private $multishopDataProvider;
@@ -43,8 +49,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+        $this->env = $this->module->getService(Env::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->bootstrap = false;
     }
@@ -77,9 +83,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'contextPsAccounts' => $this->psAccountsHotFix($psAccountPresenter->present()),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
-            'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
-            'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
-            'psFacebookSegmentId' => $_ENV['SEGMENT_API_KEY'],
+            'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
+            'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
+            'psFacebookSegmentId' => $this->env->get('PSX_FACEBOOK_SEGMENT_API_KEY'),
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
