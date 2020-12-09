@@ -223,7 +223,7 @@ class GoogleCategoryRepository
             ->where('cl.id_lang = ' . (int) $langId)
             ->orderBy('cl.id_category');
         $result = Db::getInstance()->executeS($query);
-        if (is_array($result)) {
+        if ($result) {
             return $result;
         } else {
             throw new \PrestaShopDatabaseException('No categories found');
