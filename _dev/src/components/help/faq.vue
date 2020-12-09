@@ -23,8 +23,8 @@
     </template>
 
     <b-card-body>
-      <div class="d-flex">
-        <div class="left-block">
+      <div class="row">
+        <div class="left-block col-md-6">
           <div class="module-desc d-flex mb-4">
             <div class="module-img mr-3">
               <img
@@ -45,52 +45,8 @@
               </ul>
             </div>
           </div>
-          <div class="faq">
-            <h1>{{ $t("faq.title") }}</h1>
-            <div class="separator my-3" />
-            <template v-if="faq && faq.categories">
-              <v-collapse-group
-                class="my-3"
-                v-for="(categorie, index) in faq.categories"
-                :key="index"
-                :only-one-active="true"
-              >
-                <h3 class="categorie-title">
-                  {{ categorie.title }}
-                </h3>
-                <v-collapse-wrapper
-                  :ref="index + '_' + i"
-                  v-for="(item, i) in categorie.blocks"
-                  :key="i"
-                >
-                  <div
-                    class="my-3 question"
-                    v-collapse-toggle
-                  >
-                    <a><i class="material-icons">keyboard_arrow_right</i>
-                      {{ item.question }}</a>
-                  </div>
-                  <div
-                    class="answer"
-                    :class="'a' + i"
-                    v-collapse-content
-                  >
-                    {{ item.answer }}
-                  </div>
-                </v-collapse-wrapper>
-              </v-collapse-group>
-            </template>
-            <template v-else>
-              <b-alert
-                variant="warning"
-                show
-              >
-                <p>{{ $t("faq.noFaq") }}</p>
-              </b-alert>
-            </template>
-          </div>
         </div>
-        <div class="right-block">
+        <div class="right-block col-md">
           <div class="doc">
             <b class="text-muted">{{ $t("help.help.needHelp") }}</b>
             <br>
@@ -108,12 +64,68 @@
               <b-button
                 variant="link"
                 @click="contactUs()"
+                :href="`mailto:` + contactUsLink"
               >
                 {{ $t("help.help.contactUs") }}
                 <i class="material-icons">arrow_right_alt</i>
               </b-button>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="faq col">
+          <h1>{{ $t("faq.title") }}</h1>
+          <div class="separator my-3" />
+          <div
+            class="mt-3 text-center"
+            v-if="loading"
+          >
+            <div
+              class="spinner"
+            />
+          </div>
+          <template v-else-if="faq && faq.categories">
+            <v-collapse-group
+              class="my-3"
+              v-for="(categorie, index) in faq.categories"
+              :key="index"
+              :only-one-active="true"
+            >
+              <h3 class="categorie-title">
+                {{ categorie.title }}
+              </h3>
+              <v-collapse-wrapper
+                :ref="index + '_' + i"
+                v-for="(item, i) in categorie.blocks"
+                :key="i"
+              >
+                <div
+                  class="my-3 question"
+                  v-collapse-toggle
+                >
+                  <a @click="onQuestionClick(index + '_' + i)">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    {{ item.question }}</a>
+                </div>
+                <div
+                  class="answer"
+                  :class="'a' + i"
+                  v-collapse-content
+                >
+                  {{ item.answer }}
+                </div>
+              </v-collapse-wrapper>
+            </v-collapse-group>
+          </template>
+          <template v-else>
+            <b-alert
+              variant="warning"
+              show
+            >
+              <p>{{ $t("faq.noFaq") }}</p>
+            </b-alert>
+          </template>
         </div>
       </div>
     </b-card-body>
@@ -124,13 +136,23 @@
 import {defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
-  props: ['faq', 'contactUsLink', 'docLink'],
+  props: ['faq', 'contactUsLink', 'docLink', 'loading'],
   methods: {
     contactUs() {
-      window.open(this.$props.contactUsLink, '_blank');
+      this.$segment.track('Click on Contact us', {
+        module: 'ps_facebook',
+      });
     },
     getDocumentation() {
       window.open(this.$props.docLink, '_blank');
+      this.$segment.track('Click on Download the guide CTA', {
+        module: 'ps_facebook',
+      });
+    },
+    onQuestionClick(ref) {
+      this.$segment.track(`Click on the question #${ref}`, {
+        module: 'ps_facebook',
+      });
     },
   },
 });

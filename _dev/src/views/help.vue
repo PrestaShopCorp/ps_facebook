@@ -25,15 +25,17 @@
       :faq="faq"
       :contact-us-link="contactUsLink"
       :doc-link="docLink"
+      :loading="loading"
       class="m-3"
     />
   </div>
 </template>
 
 <script>
+import {defineComponent} from '@vue/composition-api';
 import faq from '../components/help/faq.vue';
 
-export default {
+export default defineComponent({
   name: 'HelpTab',
   components: {
     faq,
@@ -50,6 +52,7 @@ export default {
       faq: {},
       docLink: '',
       contactUsLink: '',
+      loading: true,
     };
   },
   created() {
@@ -68,13 +71,15 @@ export default {
           this.faq = resp.faq;
           this.docLink = resp.doc;
           this.contactUsLink = resp.contactUs;
+          this.loading = false;
         })
         .catch((error) => {
           console.error(error);
+          this.loading = false;
         });
     },
   },
-};
+});
 </script>
 
 <style lang="scss">

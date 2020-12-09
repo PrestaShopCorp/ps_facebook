@@ -354,15 +354,24 @@ export default defineComponent({
     },
     edit() {
       this.$emit('onEditClick');
+      this.$segment.track('Click on Restart onboarding', {
+        module: 'ps_facebook',
+      });
     },
     pixelActivation(activated: boolean) {
       this.$emit('onPixelActivation', activated);
     },
     openManageFbe() {
       window.open(this.fbeUrl, '_blank');
+      this.$segment.track('Click on Open advanced Settings', {
+        module: 'ps_facebook',
+      });
     },
     uninstall() {
       this.$emit('onUninstallClick');
+      this.$segment.track('Click on unlink', {
+        module: 'ps_facebook',
+      });
     },
   },
 });

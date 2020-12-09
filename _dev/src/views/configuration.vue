@@ -409,6 +409,9 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error!');
         }
+        this.$segment.track('PS Account & FBE connected', {
+          module: 'ps_facebook',
+        });
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
         this.loading = false;
         this.showGlass = false;
@@ -417,6 +420,9 @@ export default defineComponent({
         this.psFacebookJustOnboarded = true;
       }).catch((error) => {
         console.error(error);
+        this.$segment.track('The pop-up gets blocked', {
+          module: 'ps_facebook',
+        });
         this.error = 'configuration.messages.unknownOnboardingError';
         this.loading = false;
         this.showGlass = false;
@@ -480,12 +486,18 @@ export default defineComponent({
       } else {
         this.openedPopup = this.openPopup();
       }
+      this.$segment.track('Click on black screen', {
+        module: 'ps_facebook',
+      });
     },
     closePopup(event) {
       event.stopPropagation(); // avoid popup to be focused before close
       if (this.openedPopup) {
         this.openedPopup.close();
       }
+      this.$segment.track('Click on the cross to close the pop-in', {
+        module: 'ps_facebook',
+      });
     },
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },

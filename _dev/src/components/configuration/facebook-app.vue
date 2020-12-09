@@ -101,6 +101,7 @@
       <b-link
         :href="url"
         target="_blank"
+        @click="onStats"
       >
         <i class="material-icons">analytics</i>
         {{ $t('configuration.app.viewStats') }} &nbsp;
@@ -193,6 +194,14 @@ export default defineComponent({
     switchClick() {
       this.switchActivated = !this.switchActivated;
       this.$emit('onActivation', this.switchActivated);
+      this.$segment.track('Click on pixel switch CTA', {
+        module: 'ps_facebook',
+      });
+    },
+    onStats() {
+      this.$segment.track('Click on view stat CTA', {
+        module: 'ps_facebook',
+      });
     },
   },
   watch: {

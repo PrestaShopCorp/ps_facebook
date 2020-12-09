@@ -44,7 +44,10 @@
         </span>
       </div>
 
-      <div class="mb-2">
+      <div
+        class="mb-2"
+        hidden
+      >
         <stepper-icon
           :state="categoryMatchingStarted ? 'DONE' : (catMatchClickable ? 'AVAILABLE' : 'DISABLED')"
         />
@@ -171,12 +174,21 @@ export default defineComponent({
   methods: {
     onCategoryMatchingClick() {
       this.$emit('onCategoryMatchingClick');
+      this.$segment.track('Click on map categories', {
+        module: 'ps_facebook',
+      });
     },
     onSyncCatalogClick() {
       this.$emit('onSyncCatalogClick');
+      this.$segment.track('Click on export product catalog', {
+        module: 'ps_facebook',
+      });
     },
     onAdCampaignClick() {
       this.$emit('onAdCampaignClick');
+      this.$segment.track('Click on dynamics ads', {
+        module: 'ps_facebook',
+      });
     },
   },
 });

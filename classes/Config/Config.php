@@ -21,7 +21,7 @@ class Config
     const PS_FACEBOOK_PRODUCT_SYNC_FIRST_START = 'PS_FACEBOOK_PRODUCT_SYNC_FIRST_START';
     const PS_FACEBOOK_PRODUCT_SYNC_ON = 'PS_FACEBOOK_PRODUCT_SYNC_ON';
 
-    const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop', 'ig_shopping'];
+    const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop'/*, 'ig_shopping'*/];
     const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
     const FBE_FEATURE_CONFIGURATION = 'PS_FACEBOOK_FBE_FEATURE_CONFIG_';
 

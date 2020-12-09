@@ -34,7 +34,11 @@
       <h1>{{ $t('syncReport.title') }}</h1>
 
       <br><br>
-      <b-alert variant="warning" show class="warning">
+      <b-alert
+        variant="warning"
+        show
+        class="warning"
+      >
         This feature is still in beta.
       </b-alert>
 
@@ -59,14 +63,23 @@
         >
           <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
             <b-td>
-              <b-link :href="url.replace('/1?', `/${id_product}?`)" target="_blank">
+              <b-link
+                :href="url.replace('/1?', `/${id_product}?`)"
+                target="_blank"
+              >
                 {{ name }}
               </b-link>
             </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>
-              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-if="has_cover === '0'"
+                class="material-icons text-danger"
+              >close</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
               <i
@@ -75,7 +88,10 @@
               >
                 close
               </i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
               <i
@@ -84,19 +100,36 @@
               >
                 close
               </i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
-              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-if="has_price_tax_excl === '0'"
+                class="material-icons text-danger"
+              >close</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
           </template>
           <template v-else>
-            <b-td class="pl-4">Variant #{{ id_product_attribute }}</b-td>
+            <b-td class="pl-4">
+              Variant #{{ id_product_attribute }}
+            </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>
-              <i v-if="has_cover === '0'" class="material-icons text-danger">close</i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-if="has_cover === '0'"
+                class="material-icons text-danger"
+              >close</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
               <i
@@ -105,7 +138,10 @@
               >
                 close
               </i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
               <i
@@ -114,11 +150,20 @@
               >
                 close
               </i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
             <b-td>
-              <i v-if="has_price_tax_excl === '0'" class="material-icons text-danger">close</i>
-              <i v-else class="material-icons text-success">done</i>
+              <i
+                v-if="has_price_tax_excl === '0'"
+                class="material-icons text-danger"
+              >close</i>
+              <i
+                v-else
+                class="material-icons text-success"
+              >done</i>
             </b-td>
           </template>
         </b-tr>
