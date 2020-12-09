@@ -81,7 +81,7 @@ class EventDataProvider
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int) $this->context->language->id;
+        $this->idLang = (int)$this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
@@ -170,7 +170,7 @@ class EventDataProvider
         $this->context->smarty->assign(
             [
                 'retailer_item_id' => $fbProductId,
-                'product_availability' => $this->availabilityProvider->getProductAvailability((int) $product['id_product']),
+                'product_availability' => $this->availabilityProvider->getProductAvailability((int)$product['id_product']),
                 'item_group_id' => $category,
             ]
         );
@@ -222,7 +222,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int)$this->toolsAdapter->getValue('id_cms'), $this->idLang);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
@@ -326,7 +326,7 @@ class EventDataProvider
     {
         $type = 'CombinationProduct';
 
-        $idLang = (int) $this->context->language->id;
+        $idLang = (int)$this->context->language->id;
         $productId = $this->toolsAdapter->getValue('id_product');
         $attributeIds = $params['attributeIds'];
         $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
@@ -520,8 +520,6 @@ class EventDataProvider
             $this->context->shop->id
         );
 
-        return $googleCategory ?
-            $googleCategory['id'] :
-            (new Category($categoryId))->getName($this->idLang);
+        return $googleCategory ? $googleCategory['id'] : '';
     }
 }
