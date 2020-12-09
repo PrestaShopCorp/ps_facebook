@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 
 use Module;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use Ps_facebook;
 use Raven_Client;
 
 /**
@@ -41,6 +42,7 @@ class ErrorHandler
 
     public function __construct()
     {
+        /** @var Ps_facebook */
         $module = Module::getInstanceByName('ps_facebook');
         $env = $module->getService(Env::class);
 
