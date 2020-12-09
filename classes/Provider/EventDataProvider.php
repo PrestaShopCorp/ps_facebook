@@ -28,11 +28,6 @@ class EventDataProvider
     private $locale;
 
     /**
-     * @var int
-     */
-    private $idLang;
-
-    /**
      * @var ToolsAdapter
      */
     private $toolsAdapter;
@@ -80,7 +75,6 @@ class EventDataProvider
         $this->toolsAdapter = $toolsAdapter;
         $this->context = $context;
         $this->locale = \Tools::strtoupper($this->context->language->iso_code);
-        $this->idLang = (int) $this->context->language->id;
         $this->configurationAdapter = $configurationAdapter;
         $this->productRepository = $productRepository;
         $this->module = $module;
@@ -194,7 +188,7 @@ class EventDataProvider
         $page = $this->toolsAdapter->getValue('page');
         $resultsPerPage = $this->configurationAdapter->get('PS_PRODUCTS_PER_PAGE');
 
-        $prods = $category->getProducts($this->idLang, $page, $resultsPerPage);
+        $prods = $category->getProducts($this->context->language->id, $page, $resultsPerPage);
         $categoryUrl = $this->context->link->getCategoryLink($category->id);
 
         $breadcrumbs = $controller->getBreadcrumbLinks();
@@ -221,7 +215,7 @@ class EventDataProvider
     private function getCMSPageData()
     {
         $type = 'ViewCMS';
-        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->idLang);
+        $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->context->language->id);
 
         /** @var \CmsController $controller */
         $controller = $this->context->controller;
