@@ -85,14 +85,15 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
         $categoryExists = true;
 
         while ((int) $categoryId != $homeCategory && $categoryExists) {
+            $categoryExists = false;
             foreach ($categoriesWithParentsInfo as $category) {
                 if ($category['id_category'] == $categoryId) {
                     $categories[] = $category;
                     $categoryId = $category['id_parent'];
+                    $categoryExists = true;
                     break;
                 }
             }
-            $categoryExists = false;
         }
         $categories = array_reverse($categories);
 
