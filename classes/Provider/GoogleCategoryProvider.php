@@ -82,8 +82,9 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
             ];
         }
         $homeCategory = Category::getTopCategory()->id;
+        $categoryExists = true;
 
-        while ((int) $categoryId != $homeCategory) {
+        while ((int) $categoryId != $homeCategory && $categoryExists) {
             foreach ($categoriesWithParentsInfo as $category) {
                 if ($category['id_category'] == $categoryId) {
                     $categories[] = $category;
@@ -91,6 +92,7 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
                     break;
                 }
             }
+            $categoryExists = false;
         }
         $categories = array_reverse($categories);
 
