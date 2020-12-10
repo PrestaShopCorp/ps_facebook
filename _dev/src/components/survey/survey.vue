@@ -1,5 +1,6 @@
 <template>
   <b-card
+    v-if="showSurvey"
     no-body
     class="m-3 mt-4 p-3 text-center survey"
   >
@@ -25,6 +26,18 @@ export default defineComponent({
   components: {
     BCard,
     BButton,
+  },
+  props: {
+    locale: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookLocale || 'en-US',
+    },
+  },
+  computed: {
+    showSurvey() {
+      return ['en', 'fr'].includes(this.locale.substring(0, 2));
+    },
   },
 });
 </script>

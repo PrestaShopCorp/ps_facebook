@@ -105,7 +105,7 @@
         </feature-list>
       </div>
 
-      <survey v-if="showSurvey" />
+      <survey />
     </div>
   </div>
 </template>
@@ -208,10 +208,6 @@ export default defineComponent({
       return this.dynamicEnabledFeaturesLength
         + this.dynamicAvailableFeaturesLength
         + this.dynamicUnavailableFeaturesLength;
-    },
-    showSurvey() {
-      const locale = global.psFacebookLocale || 'en-US';
-      return ['en', 'fr'].includes(locale.substring(0, 2));
     },
   },
   methods: {

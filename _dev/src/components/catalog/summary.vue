@@ -47,7 +47,7 @@
       <reporting :reporting="reporting" />
     </b-card -->
 
-    <survey v-if="showSurvey" />
+    <survey />
   </div>
 </template>
 
@@ -110,10 +110,6 @@ export default defineComponent({
         return this.$root.contextPsFacebook.catalog.id;
       }
       return null;
-    },
-    showSurvey() {
-      const locale = global.psFacebookLocale || 'en-US';
-      return ['en', 'fr'].includes(locale.substring(0, 2));
     },
   },
   methods: {

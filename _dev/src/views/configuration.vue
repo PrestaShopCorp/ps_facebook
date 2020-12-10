@@ -77,7 +77,7 @@
         @onUninstallClick="onUninstallClick"
         class="m-3"
       />
-      <survey v-if="facebookConnected && showSurvey" />
+      <survey v-if="facebookConnected" />
       <div
         v-if="showGlass"
         class="glass"
@@ -259,9 +259,6 @@ export default defineComponent({
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
-    },
-    showSurvey() {
-      return ['en', 'fr'].includes(this.locale.substring(0, 2));
     },
   },
   data() {

@@ -8,8 +8,15 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Survey},
-  template: '<survey />',
+  template: '<survey :locale="locale" />',
 });
 
 export const Default: any = Template.bind({});
-Default.args = {};
+Default.args = {
+  locale: 'en-US',
+};
+
+export const LanguageNotAvailable: any = Template.bind({});
+LanguageNotAvailable.args = {
+  locale: 'zh-CN',
+};
