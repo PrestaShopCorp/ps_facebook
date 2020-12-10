@@ -47,5 +47,7 @@
             "type": "vcs",
             "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk"
         }
-    ]
+    ],
+    "author": "PrestaShop",
+    "license": "AFL-3.0"
 }
