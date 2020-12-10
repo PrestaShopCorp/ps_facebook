@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="m-3 mt-5 p-3 text-center survey"
+    class="m-3 mt-4 p-3 text-center survey"
   >
     <h3><i class="material-icons">mood</i>  {{ $t('survey.title') }}</h3>
     <p class="small-text">{{ $t('survey.text') }}</p>
@@ -32,7 +32,7 @@ export default defineComponent({
 <style lang="scss" scoped>
   .survey {
     display: block !important;
-    background: rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.3) !important;
     border: 1px solid #dde3e6 !important;
     border-radius: 3px;
   }

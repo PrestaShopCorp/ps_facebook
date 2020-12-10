@@ -153,7 +153,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .card:not(.survey) {
+  .card {
     border: none;
     border-radius: 3px;
     overflow: hidden;
