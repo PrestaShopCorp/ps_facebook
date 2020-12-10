@@ -46,6 +46,8 @@
       TODO : remove REPORTING component once new wireframes integrated.
       <reporting :reporting="reporting" />
     </b-card -->
+
+    <survey v-if="showSurvey" />
   </div>
 </template>
 
@@ -59,6 +61,7 @@ import ExportCatalog from './summary/export-catalog.vue';
 import MatchCategories from './summary/match-categories.vue';
 import CategoriesMatched from './summary/categories-matched.vue';
 import Reporting from './summary/reporting.vue';
+import Survey from '../survey/survey.vue';
 
 export default defineComponent({
   name: 'CatalogSummary',
@@ -69,6 +72,7 @@ export default defineComponent({
     MatchCategories,
     CategoriesMatched,
     Reporting,
+    Survey,
   },
   props: {
     data: {
@@ -106,6 +110,10 @@ export default defineComponent({
         return this.$root.contextPsFacebook.catalog.id;
       }
       return null;
+    },
+    showSurvey() {
+      const locale = global.psFacebookLocale || 'en-US';
+      return ['en', 'fr'].includes(locale.substring(0, 2));
     },
   },
   methods: {
@@ -145,7 +153,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .card {
+  .card:not(.survey) {
     border: none;
     border-radius: 3px;
     overflow: hidden;

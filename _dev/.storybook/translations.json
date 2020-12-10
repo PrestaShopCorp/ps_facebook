@@ -127,7 +127,7 @@
         "fourthTd" : "Facebook subcategory"
       }
     },
-    "integrate" : {
+    "integrate": {
       "buttons" : {
         "add": "Add",
         "syncProducts": "Sync products",
@@ -177,6 +177,11 @@
       "error" : {
         "failedToUpdateFeature": "Failed to update facebook feature."
       }
+    },
+    "survey": {
+      "title": "Give us your feedback!",
+      "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+      "button": "Let's begin"
     }
   }
 }

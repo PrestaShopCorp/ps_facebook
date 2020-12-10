@@ -77,6 +77,7 @@
         @onUninstallClick="onUninstallClick"
         class="m-3"
       />
+      <survey v-if="facebookConnected && showSurvey" />
       <div
         v-if="showGlass"
         class="glass"
@@ -114,6 +115,7 @@ import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 
 const generateOpenPopup = (component, popupUrl) => {
@@ -152,6 +154,7 @@ export default defineComponent({
     NoConfig,
     FacebookNotConnected,
     FacebookConnected,
+    Survey,
   },
   mixins: [],
   props: {
@@ -256,6 +259,9 @@ export default defineComponent({
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
+    },
+    showSurvey() {
+      return ['en', 'fr'].includes(this.locale.substring(0, 2));
     },
   },
   data() {
@@ -519,7 +525,7 @@ export default defineComponent({
 
 <style lang="scss">
   .ps-facebook-configuration-tab {
-    div.card {
+    div.card:not(.survey) {
       border: none !important;
       border-radius: 3px;
     }

@@ -241,6 +241,11 @@ class PsFacebookTranslations
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
             ],
+            'survey' => [
+                'title' => $this->module->l('Give us your feedback!', 'PsFacebookTranslations'),
+                'text' => $this->module->l('Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!', 'PsFacebookTranslations'),
+                'button' => $this->module->l("Let's begin", 'PsFacebookTranslations'),
+            ],
 
             'help' => [
                 'title' => $this->module->l('Help for PrestaShop Facebook', 'PsFacebookTranslations'),
