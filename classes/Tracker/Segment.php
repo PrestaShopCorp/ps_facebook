@@ -21,6 +21,7 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 
 class Segment implements TrackerInterface
 {
@@ -40,13 +41,17 @@ class Segment implements TrackerInterface
     private $context;
 
     /**
-     * Segment constructor.
-     *
-     * @param Context $context
+     * @var Env
      */
-    public function __construct(Context $context)
+    private $env;
+
+    /**
+     * Segment constructor.
+     */
+    public function __construct(Context $context, Env $env)
     {
         $this->context = $context;
+        $this->env = $env;
         $this->init();
     }
 
@@ -55,7 +60,7 @@ class Segment implements TrackerInterface
      */
     private function init()
     {
-        \Segment::init($_ENV['SEGMENT_API_KEY']);
+        \Segment::init($this->env->get('PSX_FACEBOOK_SEGMENT_API_KEY'));
     }
 
     /**

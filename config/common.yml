@@ -2,6 +2,7 @@ imports:
   - { resource: common/adapter.yml }
   - { resource: common/api.yml }
   - { resource: common/buffer.yml }
+  - { resource: common/config.yml }
   - { resource: common/context.yml }
   - { resource: common/dispatcher.yml }
   - { resource: common/factory.yml }
