@@ -20,7 +20,6 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -122,7 +121,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         ],
                     ]
                 )->json();
-            } catch (Exception $e){
+            } catch (Exception $e) {
                 $errorHandler = ErrorHandler::getInstance();
                 $errorHandler->handle(
                     new FacebookOnboardException(
@@ -133,6 +132,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     $e->getCode(),
                     true
                 );
+
+                return;
             }
 
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
