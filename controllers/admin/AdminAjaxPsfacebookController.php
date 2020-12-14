@@ -20,6 +20,7 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -111,15 +112,28 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
             $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
-            $response = $client->post(
-                '/account/onboard',
-                [
-                    'json' => [
-                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                    ],
-                ]
-            )->json();
+            try {
+                $response = $client->post(
+                    '/account/onboard',
+                    [
+                        'json' => [
+                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                        ],
+                    ]
+                )->json();
+            } catch (Exception $e){
+                $errorHandler = ErrorHandler::getInstance();
+                $errorHandler->handle(
+                    new FacebookOnboardException(
+                        'Failed to onboard on facebook',
+                        FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
+                        $e
+                    ),
+                    $e->getCode(),
+                    true
+                );
+            }
 
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
                 /** @var ErrorHandler $errorHandler */
