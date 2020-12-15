@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div id="app">
+  <div id="psFacebookApp">
     <Menu :context-ps-facebook="contextPsFacebook">
       <MenuItem
         @click="onProduct"
@@ -127,11 +127,11 @@ export default {
 </script>
 
 <style lang="scss">
-  #app {
+  #psFacebookApp {
     @import '~bootstrap-vue/dist/bootstrap-vue';
     @import '~prestakit/dist/css/bootstrap-prestashop-ui-kit';
   }
-  #app {
+  #psFacebookApp {
     margin: 0px;
     font-family: Open Sans,Helvetica,Arial,sans-serif;
     font-size: 14px;
@@ -141,20 +141,20 @@ export default {
     color: #363a41;
     text-align: left;
   }
-  #app .card-header, .card-header .card-header-title {
+  #psFacebookApp .card-header, .card-header .card-header-title {
     font-weight: 600;
     line-height: 24px;
     line-height: 1.5rem;
   }
-  #app .card-header .main-header #header-search-container .input-group:before,
+  #psFacebookApp .card-header .main-header #header-search-container .input-group:before,
   .card-header .material-icons, .card-header .ps-tree-items .tree-name button:before,
   .main-header #header-search-container .card-header .input-group:before,
   .ps-tree-items .tree-name .card-header button:before {
     color: #6c868e;
     margin-right: 5px;
   }
-  #app .form-group.has-danger:after, #app .form-group.has-success:after,
-  #app .form-group.has-warning:after {
+  #psFacebookApp .form-group.has-danger:after, #psFacebookApp .form-group.has-success:after,
+  #psFacebookApp .form-group.has-warning:after {
     right: 10px;
   }
   .nobootstrap {
