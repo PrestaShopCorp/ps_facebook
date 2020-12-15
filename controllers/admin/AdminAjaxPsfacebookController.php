@@ -429,6 +429,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $moduleManager = $moduleManagerBuilder->build();
         $isUpgradeSuccessful = false;
         try {
+            /* @phpstan-ignore-next-line */
             $isUpgradeSuccessful = $moduleManager->upgrade('ps_accounts');
         } catch (Exception $e) {
             $errorHandler = ErrorHandler::getInstance();
