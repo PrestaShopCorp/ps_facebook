@@ -234,15 +234,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'UpgradePsAccounts',
-                    'ajax' => 1,
-                ]
-            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -256,9 +247,20 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
-            'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
-            'psAccountsVersion' => $psAccountsVersion,
-            'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
+            'psAccountVersionCheck' => [
+                'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
+                'psAccountsVersion' => $psAccountsVersion,
+                'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
+                'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
+                    'AdminAjaxPsfacebook',
+                    true,
+                    [],
+                    [
+                        'action' => 'UpgradePsAccounts',
+                        'ajax' => 1,
+                    ]
+                ),
+            ],
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
