@@ -20,6 +20,7 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -43,11 +44,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $configurationAdapter;
 
+    /**
+     * @var Env
+     */
+    private $env;
+
     public function __construct()
     {
         parent::__construct();
-        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+        $this->env = $this->module->getService(Env::class);
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -168,7 +174,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
         $response = $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
             [

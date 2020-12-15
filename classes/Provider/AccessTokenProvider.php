@@ -23,6 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 use Exception;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
@@ -33,6 +34,11 @@ class AccessTokenProvider
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
+
+    /**
+     * @var Env
+     */
+    private $env;
 
     /**
      * @var ErrorHandler
@@ -49,9 +55,10 @@ class AccessTokenProvider
      */
     private $systemAccessToken;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, ErrorHandler $errorHandler)
+    public function __construct(ConfigurationAdapter $configurationAdapter, Env $env, ErrorHandler $errorHandler)
     {
         $this->configurationAdapter = $configurationAdapter;
+        $this->env = $env;
         $this->errorHandler = $errorHandler;
     }
 
@@ -107,7 +114,7 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $accessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
-        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
 
         $managerId = $this->configurationAdapter->get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID);
         if (!$managerId) {
