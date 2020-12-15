@@ -116,16 +116,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = PsApiClient::create($$this->env->get('PSX_FACEBOOK_API_URL'));
-            $response = $client->post(
-                '/account/onboard',
-                [
-                    'json' => [
-                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                    ],
-                ]
-            )->json();
+            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+            try {
+                $response = $client->post(
+                    '/account/onboard',
+                    [
+                        'json' => [
+                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                        ],
+                    ]
+                )->json();
+            } catch (Exception $e) {
+                $errorHandler = ErrorHandler::getInstance();
+                $errorHandler->handle(
+                    new FacebookOnboardException(
+                        'Failed to onboard on facebook',
+                        FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
+                        $e
+                    ),
+                    $e->getCode(),
+                    true
+                );
+
+                return;
+            }
 
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
                 /** @var ErrorHandler $errorHandler */
