@@ -79,6 +79,18 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ]);
         }
 
+        $needsPsAccountsUpgrade = false;
+        $psAccountsVersion = null;
+        if (Module::isInstalled('ps_accounts')) {
+            $psAccountsVersion = Ps_accounts::VERSION;
+
+            $needsPsAccountsUpgrade = version_compare(
+                $psAccountsVersion,
+                Config::REQUIRED_PS_ACCOUNTS_VERSION,
+                '<'
+            );
+        }
+
         Media::addJsDef([
             'contextPsAccounts' => $this->psAccountsHotFix($psAccountPresenter->present()),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
@@ -221,6 +233,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'UpgradePsAccounts',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -234,6 +255,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
+            'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
+            'psAccountsVersion' => $psAccountsVersion,
+            'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
