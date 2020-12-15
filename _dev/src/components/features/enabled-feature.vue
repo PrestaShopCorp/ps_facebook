@@ -25,7 +25,7 @@
             <div
               class="switch-input switch-input-lg ml-1"
               :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
-              @click="switchClick"
+              @click="switchClick(name)"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
             >
@@ -45,6 +45,7 @@
           <div>
             <a
               class="align-self-center"
+              @click="onSalesEdit(name)"
               :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
@@ -81,7 +82,7 @@
               class="close"
               data-dismiss="modal"
               aria-label="Close"
-              @click="isLoading = false"
+              @click="onClosePopin()"
             >
               <span aria-hidden="true">×</span>
             </button>
@@ -158,12 +159,30 @@ export default defineComponent({
     };
   },
   methods: {
-    switchClick() {
+    switchClick(name) {
       if (!this.isLoading) {
         if (!this.switchActivated) {
+          this.$segment.track(`${name} feature enable`, {
+            module: 'ps_facebook',
+          });
           this.updateFeatureState();
+        } else {
+          this.$segment.track(`${name} feature disable`, {
+            module: 'ps_facebook',
+          });
         }
       }
+    },
+    onSalesEdit(name) {
+      this.$segment.track(`Manage - ${name}`, {
+        module: 'ps_facebook',
+      });
+    },
+    onClosePopin() {
+      this.isLoading = false;
+      this.$segment.track('Sales Channels - Disable popin', {
+        module: 'ps_facebook',
+      });
     },
     updateFeatureState() {
       this.isLoading = true;

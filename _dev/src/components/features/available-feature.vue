@@ -19,6 +19,7 @@
           </div>
           <a
             class="align-self-center"
+            @click="onSales(name)"
             :href="manageRoute[name] || manageRoute.default"
             target="_blank"
           >
@@ -62,6 +63,13 @@ export default defineComponent({
     manageRoute: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    onSales(name) {
+      this.$segment.track(`Add CTA - ${name}`, {
+        module: 'ps_facebook',
+      });
     },
   },
 });
