@@ -9,6 +9,7 @@
     <b-button
       size="sm"
       variant="secondary"
+      @click="onSurvey()"
       href="https://forms-prestashop.typeform.com/to/X9FKIl3e"
       target="_blank"
     >
@@ -32,6 +33,13 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.psFacebookLocale || 'en-US',
+    },
+  },
+  methods: {
+    onSurvey() {
+      this.$segment.track('Take the survey', {
+        module: 'ps_facebook',
+      });
     },
   },
   computed: {
