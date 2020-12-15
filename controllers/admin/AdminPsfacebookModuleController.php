@@ -82,8 +82,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $needsPsAccountsUpgrade = false;
         $psAccountsVersion = null;
         if (Module::isInstalled('ps_accounts')) {
-            /* @phpstan-ignore-next-line */
-            $psAccountsVersion = Ps_accounts::VERSION;
+            $psAccounts = Module::getInstanceByName('ps_accounts');
+            $psAccountsVersion = $psAccounts->version;
 
             $needsPsAccountsUpgrade = version_compare(
                 $psAccountsVersion,
