@@ -194,12 +194,6 @@ class FacebookClient
         );
     }
 
-    // todo: finish categories matching
-    public function getCategoriesMatching($catalogId)
-    {
-        return false;
-    }
-
     public function getFbeAttribute($externalBusinessId)
     {
         $responseContent = $this->get(

@@ -239,7 +239,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
         try {
-            /* todo: change to data from ajax */
             $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId);
         } catch (Exception $e) {
             $this->ajaxDie(
@@ -274,7 +273,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(
             json_encode($googleCategory)
-        // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
         );
     }
 
