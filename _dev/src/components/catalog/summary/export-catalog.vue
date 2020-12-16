@@ -127,7 +127,7 @@
             </div>
             <b-link
               class="float-right see-details"
-              @click="$parent.goto($parent.PAGES.reportDetails)"
+              @click="onDetails()"
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
@@ -191,6 +191,7 @@
       </b-alert>
       <br>
       <b-link
+        @click="onViewCatalog()"
         :href="viewCatalog"
         target="_blank"
         class="view-button float-right ml-3"
@@ -309,6 +310,16 @@ export default defineComponent({
         return; // blocking modal, to confirm deactivation
       }
 
+      if (activate) {
+        this.$segment.track('Share catalog enable', {
+          module: 'ps_facebook',
+        });
+      } else {
+        this.$segment.track('Share catalog disable', {
+          module: 'ps_facebook',
+        });
+      }
+
       if (!this.startProductSyncRoute) {
         return;
       }
@@ -334,6 +345,18 @@ export default defineComponent({
         this.error = setTimeout(() => {
           this.error = null;
         }, 5000);
+      });
+    },
+    onDetails() {
+      this.$segment.track('See details 2', {
+        module: 'ps_facebook',
+      });
+
+      this.$parent.goto(this.$parent.PAGES.reportDetails);
+    },
+    onViewCatalog() {
+      this.$segment.track('View catalog', {
+        module: 'ps_facebook',
       });
     },
     rescan() {
