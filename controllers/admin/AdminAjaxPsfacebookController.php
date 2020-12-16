@@ -22,6 +22,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -33,6 +34,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterfac
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
+use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -433,6 +435,36 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode([
             'list' => $productsWithErrors,
             'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
+        ]));
+    }
+
+    public function displayAjaxUpgradePsAccounts()
+    {
+        $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
+        $moduleManager = $moduleManagerBuilder->build();
+        $isUpgradeSuccessful = false;
+        try {
+            /* @phpstan-ignore-next-line */
+            $isUpgradeSuccessful = $moduleManager->upgrade('ps_accounts');
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookPsAccountsUpdateException(
+                    'Failed to upgrade ps_accounts',
+                    FacebookPsAccountsUpdateException::FACEBOOK_PS_ACCOUNTS_UPGRADE_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+
+            $this->ajaxDie(json_encode([
+                'success' => false,
+            ]));
+        }
+
+        $this->ajaxDie(json_encode([
+            'success' => $isUpgradeSuccessful,
         ]));
     }
 
