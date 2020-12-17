@@ -28,17 +28,16 @@
     </div>
 
     <div class="p-3">
-      <div class="titleRow">
+      <div class="col text-center">
         <img
-          class="mr-3 mb-3 float-left"
-          src="@/assets/facebook_logo.svg"
-          width="56"
+          class="mx-auto mb-3"
+          src="@/assets/logo-wordmark.png"
+          width="390"
           height="56"
           alt="PS Facebook logo"
         >
-        <h1>PrestaShop <span class="ml-1 text-muted">Facebook</span></h1>
-        <h2>{{ $t('configuration.introduction.subTitle') }}</h2>
       </div>
+      <h2>{{ $t('configuration.introduction.subTitle') }}</h2>
 
       <b-button
         class="mb-2 mt-1"
@@ -71,7 +70,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/ad_account_illustration.png"
+          src="@/assets/understand_traffic_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -85,7 +84,7 @@
       <div class="potatoe">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/understand_traffic_illustration.png"
+          src="@/assets/boost_your_sales_illustration.png"
           width="192"
           height="128"
           alt="A potatoe"
@@ -165,22 +164,6 @@ export default defineComponent({
     position: relative;
     right: calc(-1.25rem - 2px);
     top: calc(-1.25rem - 2px);
-  }
-
-  .titleRow {
-    > h1 {
-      font-size: 2.2em;
-      font-weight: 600;
-      color: #231768;
-      padding-top: 0.7rem;
-      margin-bottom: 1.7rem;
-
-      > span {
-        text-transform: uppercase;
-        font-size: 0.85em;
-        color: #89909D;
-      }
-    }
   }
 </style>
 <style lang="scss">

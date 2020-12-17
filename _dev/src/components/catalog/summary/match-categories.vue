@@ -20,9 +20,9 @@
   <div>
     <div class="illustration float-left mr-3 d-none d-md-block">
       <img
-        :src="illustration"
-        width="112"
-        height="102"
+        src="@/assets/category_matching_illustration.png"
+        width="120"
+        height="120"
         alt="background illustration"
       >
     </div>
@@ -54,7 +54,6 @@ import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
 
 import showdown from 'showdown';
-import illustration from '../../../assets/category_matching_illustration.png';
 
 export default defineComponent({
   name: 'MatchCategories',
@@ -67,11 +66,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-  },
-  data() {
-    return {
-      illustration,
-    };
   },
   methods: {
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
