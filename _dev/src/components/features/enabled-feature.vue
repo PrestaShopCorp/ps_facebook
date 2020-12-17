@@ -63,6 +63,7 @@
     <div
       :id="`modal_${name}`"
       class="modal"
+      @shown="onPopinDisplay"
     >
       <div
         class="modal-dialog"
@@ -82,7 +83,7 @@
               class="close"
               data-dismiss="modal"
               aria-label="Close"
-              @click="onClosePopin()"
+              @click="isLoading = false"
             >
               <span aria-hidden="true">×</span>
             </button>
@@ -178,8 +179,7 @@ export default defineComponent({
         module: 'ps_facebook',
       });
     },
-    onClosePopin() {
-      this.isLoading = false;
+    onPopinDisplay() {
       this.$segment.track('Sales Channels - Disable popin', {
         module: 'ps_facebook',
       });
