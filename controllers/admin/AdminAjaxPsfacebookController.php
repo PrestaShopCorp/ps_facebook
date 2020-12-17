@@ -118,7 +118,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
             try {
                 $response = $client->post(
                     '/account/onboard',
