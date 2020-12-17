@@ -45,7 +45,7 @@
           <div>
             <a
               class="align-self-center"
-              @click="onSalesEdit(name)"
+              @click="onManageClick(name)"
               :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
@@ -163,24 +163,17 @@ export default defineComponent({
     switchClick(name) {
       if (!this.isLoading) {
         if (!this.switchActivated) {
-          this.$segment.track(`${name} feature enable`, {
-            module: 'ps_facebook',
-          });
           this.updateFeatureState();
-        } else {
-          this.$segment.track(`${name} feature disable`, {
-            module: 'ps_facebook',
-          });
         }
       }
     },
-    onSalesEdit(name) {
-      this.$segment.track(`Manage - ${name}`, {
+    onManageClick(name) {
+      this.$segment.track(`Click on "manage" ${name}`, {
         module: 'ps_facebook',
       });
     },
     onPopinDisplay() {
-      this.$segment.track('Sales Channels - Disable popin', {
+      this.$segment.track('Sales Channels - Disable modal displayed', {
         module: 'ps_facebook',
       });
     },
