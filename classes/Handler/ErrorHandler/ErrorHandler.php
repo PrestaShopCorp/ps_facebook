@@ -21,6 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 
 use Module;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use Ps_facebook;
 use Raven_Client;
@@ -56,6 +57,7 @@ class ErrorHandler
                     'prestashop_version' => _PS_VERSION_,
                     'ps_facebook_is_enabled' => \Module::isEnabled('ps_facebook'),
                     'ps_facebook_is_installed' => \Module::isInstalled('ps_facebook'),
+                    'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
             ]
         );
