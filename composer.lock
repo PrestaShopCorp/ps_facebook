@@ -447,16 +447,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.29",
+            "version": "2.0.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "497856a8d997f640b4a516062f84228a772a48a8"
+                "reference": "136b9ca7eebef78be14abf90d65c5e57b6bc5d36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/497856a8d997f640b4a516062f84228a772a48a8",
-                "reference": "497856a8d997f640b4a516062f84228a772a48a8",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/136b9ca7eebef78be14abf90d65c5e57b6bc5d36",
+                "reference": "136b9ca7eebef78be14abf90d65c5e57b6bc5d36",
                 "shasum": ""
             },
             "require": {
@@ -464,7 +464,7 @@
             },
             "require-dev": {
                 "phing/phing": "~2.7",
-                "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0|^9.4",
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "suggest": {
@@ -548,7 +548,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-08T04:24:43+00:00"
+            "time": "2020-12-17T05:42:04+00:00"
         },
         {
             "name": "prestashop/circuit-breaker",
@@ -3113,16 +3113,16 @@
         },
         {
             "name": "prestashop/php-dev-tools",
-            "version": "v3.11",
+            "version": "v3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShop/php-dev-tools.git",
-                "reference": "4406828ed591e2d2bd03718a46fbdf888646fb65"
+                "reference": "4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/4406828ed591e2d2bd03718a46fbdf888646fb65",
-                "reference": "4406828ed591e2d2bd03718a46fbdf888646fb65",
+                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62",
+                "reference": "4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62",
                 "shasum": ""
             },
             "require": {
@@ -3147,7 +3147,7 @@
                 "MIT"
             ],
             "description": "PrestaShop coding standards",
-            "time": "2020-11-24T08:15:01+00:00"
+            "time": "2020-12-10T08:15:43+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
