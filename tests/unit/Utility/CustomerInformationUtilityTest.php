@@ -73,8 +73,8 @@ class CustomerInformationUtilityTest extends TestCase
                 ],
                 'genderId' => 1,
                 'birthday' => $birthdayFormatted,
-                'first_name' => $firstName,
-                'last_name' => $lastName,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
                 'email' => $email,
                 'result' => [
                     'city' => 'kaunas',
@@ -93,8 +93,8 @@ class CustomerInformationUtilityTest extends TestCase
                 'simpleAddresses' => [],
                 'genderId' => 1,
                 'birthday' => $birthdayFormatted,
-                'first_name' => $firstName,
-                'last_name' => $lastName,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
                 'email' => $email,
                 'result' => [
                     'city' => null,
@@ -113,8 +113,8 @@ class CustomerInformationUtilityTest extends TestCase
                 'simpleAddresses' => [],
                 'genderId' => 0,
                 'birthday' => null,
-                'first_name' => null,
-                'last_name' => null,
+                'firstName' => null,
+                'lastName' => null,
                 'email' => null,
                 'result' => [
                     'city' => null,
