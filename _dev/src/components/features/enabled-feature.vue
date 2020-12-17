@@ -25,7 +25,7 @@
             <div
               class="switch-input switch-input-lg ml-1"
               :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
-              @click="switchClick(name)"
+              @click="switchClick()"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
             >
@@ -159,7 +159,7 @@ export default defineComponent({
     };
   },
   methods: {
-    switchClick(name) {
+    switchClick() {
       if (!this.isLoading) {
         if (!this.switchActivated) {
           this.updateFeatureState();
