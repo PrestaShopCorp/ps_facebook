@@ -22,7 +22,7 @@
       <img
         src="@/assets/illustration.png"
         width="271"
-        height="194"
+        height="200"
         alt="background illustration"
       >
     </div>

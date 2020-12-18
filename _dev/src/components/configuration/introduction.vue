@@ -20,7 +20,7 @@
   <b-card class="introductionCard">
     <div class="illustration float-right d-none d-md-block">
       <img
-        src="@/assets/illustration.png"
+        src="@/assets/illustration_header.png"
         width="271"
         height="194"
         alt="background illustration"
@@ -28,11 +28,10 @@
     </div>
 
     <div class="p-3">
-      <div class="col text-center">
+      <div>
         <img
-          class="mx-auto mb-3"
+          class="mb-3"
           src="@/assets/logo-wordmark.png"
-          width="390"
           height="56"
           alt="PS Facebook logo"
         >

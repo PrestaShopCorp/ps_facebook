@@ -159,7 +159,7 @@ export default defineComponent({
     };
   },
   methods: {
-    switchClick(name) {
+    switchClick() {
       if (!this.isLoading) {
         if (!this.switchActivated) {
           this.updateFeatureState();
