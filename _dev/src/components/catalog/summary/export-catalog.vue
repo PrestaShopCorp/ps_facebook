@@ -20,8 +20,8 @@
   <div>
     <div class="illustration float-left mr-3 d-none d-md-block">
       <img
-        :src="illustration"
-        :width="(exportDoneOnce && 45) || 112"
+        src="@/assets/catalog_export_illustration.png"
+        :width="(exportDoneOnce && 48) || 134"
         :height="(exportDoneOnce && 48) || 134"
         alt="background illustration"
       >
@@ -251,7 +251,6 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
-import illustration from '../../../assets/catalog_export_illustration.png';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -299,7 +298,6 @@ export default defineComponent({
   },
   data() {
     return {
-      illustration,
       error: null,
       seeMoreState: false,
     };
