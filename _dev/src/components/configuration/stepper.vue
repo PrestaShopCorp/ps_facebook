@@ -213,12 +213,6 @@ export default defineComponent({
     }
   }
 
-  .illustration > img {
-    position: relative;
-    left: calc(-1.25rem - 2px);
-    top: calc(-1.25rem - 2px);
-  }
-
   .opacity-50 {
     opacity: 0.5;
   }
