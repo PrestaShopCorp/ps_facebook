@@ -120,6 +120,10 @@ export default defineComponent({
   },
   methods: {
     saveMatchingCallback(category) {
+      // condition for work with storybook
+      if (this.overrideGetCurrentRow) {
+        return Promise.resolve(true);
+      }
       return fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -210,6 +214,22 @@ export default defineComponent({
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = PARENT_STATEMENT.FOLD;
+
+      // condition for work with storybook
+      if (this.overrideGetCurrentRow) {
+        if (Array.isArray(subcategory)) {
+          subcategory.forEach((el) => {
+            this.categories.splice(indexCtg, 0, el);
+            el.show = true;
+            el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+          });
+        } else {
+          this.categories.splice(indexCtg, 0, subcategory);
+          subcategory.show = true;
+          subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
+        }
+        return;
+      }
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
         subcategory = res;

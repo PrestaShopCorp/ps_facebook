@@ -224,6 +224,40 @@ export default defineComponent({
         }
       });
     },
+
+    handleScroll() {
+      if (document.documentElement.scrollTop + window.innerHeight
+          === document.documentElement.scrollHeight
+      ) {
+        this.loading = true;
+        this.$parent.fetchCategories(0, 1).then((res) => {
+          if (Array.isArray(res)) {
+            res.forEach((el) => {
+              if (undefined === this.categories.find(
+                (ctg) => el.shopCategoryId === ctg.shopCategoryId)
+              ) {
+                this.hasCategories = true;
+                this.categories.push(el);
+                el.show = true;
+                el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+              }
+              this.hasCategories = false;
+            });
+          } else {
+            if (undefined === this.categories.find(
+              (ctg) => res.shopCategoryId === ctg.shopCategoryId)
+            ) {
+              this.categories.push(res);
+              this.hasCategories = true;
+              res.show = true;
+              res.shopParentCategoryIds = `${res.shopCategoryId}/`;
+            }
+            this.hasCategories = false;
+            this.loading = false;
+          }
+        });
+      }
+    },
     /**
     * call function
     */
@@ -244,6 +278,7 @@ export default defineComponent({
         this.numberOfCategoryWithoutMatching += 1;
       }
     });
+    window.addEventListener('scroll', this.handleScroll);
   },
   watch: {
   },
