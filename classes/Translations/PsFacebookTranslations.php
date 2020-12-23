@@ -160,6 +160,15 @@ class PsFacebookTranslations
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
             ],
+            'productScan' => [
+                'betaWarning' => $this->module->l('This feature is still in beta.', 'PsFacebookTranslations'),
+                'lang' => $this->module->l('Lang', 'PsFacebookTranslations'),
+                'cover' => $this->module->l('Cover', 'PsFacebookTranslations'),
+                'description' => $this->module->l('Desc', 'PsFacebookTranslations'),
+                'barcode' => $this->module->l('Barcode / Brand', 'PsFacebookTranslations'),
+                'price' => $this->module->l('Price', 'PsFacebookTranslations'),
+                'variant' => $this->module->l('Variant #{0}', 'PsFacebookTranslations'),
+            ],
             'syncReport' => [
                 'title' => $this->module->l('Product status', 'PsFacebookTranslations'),
                 'id' => $this->module->l('ID', 'PsFacebookTranslations'),
