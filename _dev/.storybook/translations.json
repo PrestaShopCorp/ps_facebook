@@ -29,7 +29,11 @@
         "shopInConflictError": "This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\n\n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.",
 
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-        "reloadButton": "Reload"
+        "reloadButton": "Reload",
+
+        "psAccountUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "psAccountUpgradeButton": "Upgrade PrestaShop Accounts",
+        "psAccountUpgradeDone": "PrestaShop Account has been successfully upgraded."
       },
       "facebook": {
         "title": "Your Facebook settings",

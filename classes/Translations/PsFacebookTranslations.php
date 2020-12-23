@@ -86,6 +86,9 @@ class PsFacebookTranslations
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
                     'shopInConflictError' => $this->module->l("This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.", 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
+                    'psAccountUpgradeNeededWarning' => $this->module->l("The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.", 'PsFacebookTranslations'),
+                    'psAccountUpgradeButton' => $this->module->l('Upgrade PrestaShop Accounts', 'PsFacebookTranslations'),
+                    'psAccountUpgradeDone' => $this->module->l('PrestaShop Account has been successfully upgraded.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
                     'title' => $this->module->l('Your Facebook settings', 'PsFacebookTranslations'),
