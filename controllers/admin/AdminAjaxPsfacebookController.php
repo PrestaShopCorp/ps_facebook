@@ -473,7 +473,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
             $response = $client->post(
                 "/account/{$businessId}/update_product_sync_reporting"
             )->json();
@@ -499,7 +499,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleProductHandler $googleProductHandler */
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
 
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProducts($productsWithErrors);
+        $shopId = Context::getContext()->shop->id;
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProducts($productsWithErrors, $shopId);
 
         $this->ajaxDie(
             json_encode(

@@ -38,4 +38,3 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
-      - '@ps_facebook.shop'

@@ -4,7 +4,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
-use Shop;
 
 class GoogleProductHandler
 {
@@ -13,25 +12,27 @@ class GoogleProductHandler
      */
     private $productRepository;
 
-    /**
-     * @var Shop
-     */
-    private $shop;
-
-    public function __construct(ProductRepository $productRepository, Shop $shop)
+    public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
-        $this->shop = $shop;
     }
 
-    public function getInformationAboutGoogleProducts(array $googleProducts)
+    /**
+     * @param array $googleProducts
+     * @param int $shopId
+     *
+     * @return array
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutGoogleProducts(array $googleProducts, $shopId)
     {
         $googleProductsInformation = [];
         foreach ($googleProducts as $googleProductId => $message) {
             $googleProductObj = $this->googleProductToObject($googleProductId);
             $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
                 $googleProductObj,
-                $this->shop->id
+                $shopId
             );
             $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
             $googleProductsInformation[$googleProductId]['message'] = $message;

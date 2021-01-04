@@ -5,7 +5,6 @@ namespace Handler;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
-use Shop;
 
 class GoogleProductHandlerTest extends TestCase
 {
@@ -24,9 +23,8 @@ class GoogleProductHandlerTest extends TestCase
         foreach ($productRepoMocks as $key => $productRepoMock) {
             $productRepo->expects($this->at($key))->method('getInformationAboutGoogleProduct')->willReturn($productRepoMock);
         }
-        $shop = new Shop();
-        $googleProductHandler = new GoogleProductHandler($productRepo, $shop);
-        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProducts($googleProduct);
+        $googleProductHandler = new GoogleProductHandler($productRepo);
+        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProducts($googleProduct, 1);
 
         self::assertEquals($result, $informationAboutProducts);
     }
