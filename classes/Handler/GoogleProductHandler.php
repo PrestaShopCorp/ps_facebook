@@ -40,12 +40,17 @@ class GoogleProductHandler
         return $googleProductsInformation;
     }
 
+    /**
+     * @param string $googleProduct
+     *
+     * @return GoogleProduct
+     */
     private function googleProductToObject($googleProduct)
     {
         $googleProductSplitted = explode('-', $googleProduct);
         $googleProductObj = new GoogleProduct();
-        $googleProductObj->setProductId((int)$googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ID]);
-        $googleProductObj->setProductAttributeId((int)$googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ATTRIBUTE_ID]);
+        $googleProductObj->setProductId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ID]);
+        $googleProductObj->setProductAttributeId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ATTRIBUTE_ID]);
         $googleProductObj->setLandIsoCode($googleProductSplitted[GoogleProduct::POSITION_COUNTRY_ISO_CODE]);
 
         return $googleProductObj;

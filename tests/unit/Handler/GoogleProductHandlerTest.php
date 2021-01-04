@@ -55,8 +55,8 @@ class GoogleProductHandlerTest extends TestCase
                             'id_product_attribute' => $productOneAttributeId,
                             'name' => $productOneName,
                             'iso_code' => $isoCode,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'result' => [
                     $productOneGoogleId => [
@@ -65,8 +65,8 @@ class GoogleProductHandlerTest extends TestCase
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
                         'iso_code' => $isoCode,
-                    ]
-                ]
+                    ],
+                ],
             ],
             '2 products' => [
                 'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
@@ -77,7 +77,7 @@ class GoogleProductHandlerTest extends TestCase
                             'id_product_attribute' => $productOneAttributeId,
                             'name' => $productOneName,
                             'iso_code' => $isoCode,
-                        ]
+                        ],
                     ],
                     1 => [
                         [
@@ -85,8 +85,8 @@ class GoogleProductHandlerTest extends TestCase
                             'id_product_attribute' => $productTwoAttributeId,
                             'name' => $productTwoName,
                             'iso_code' => $isoCode,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'result' => [
                     $productOneGoogleId => [
@@ -102,7 +102,7 @@ class GoogleProductHandlerTest extends TestCase
                         'id_product_attribute' => $productTwoAttributeId,
                         'name' => $productTwoName,
                         'iso_code' => $isoCode,
-                    ]
+                    ],
                 ],
                 '2 products but one is missing in database' => [
                     'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
@@ -114,9 +114,9 @@ class GoogleProductHandlerTest extends TestCase
                                 'id_product_attribute' => $productOneAttributeId,
                                 'name' => $productOneName,
                                 'iso_code' => $isoCode,
-                            ]
+                            ],
                         ],
-                        1 => []
+                        1 => [],
                     ],
                     'result' => [
                         $productOneGoogleId => [
@@ -127,11 +127,11 @@ class GoogleProductHandlerTest extends TestCase
                             'iso_code' => $isoCode,
                         ],
                         $productTwoGoogleId => [
-                            'message' => 'error message'
-                        ]
-                    ]
-                ]
-            ]
+                            'message' => 'error message',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

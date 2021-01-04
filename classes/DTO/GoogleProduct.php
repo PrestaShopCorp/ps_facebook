@@ -1,8 +1,6 @@
 <?php
 
-
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
-
 
 class GoogleProduct
 {
@@ -35,6 +33,7 @@ class GoogleProduct
 
     /**
      * @param int $productId
+     *
      * @return GoogleProduct
      */
     public function setProductId($productId)
@@ -54,6 +53,7 @@ class GoogleProduct
 
     /**
      * @param int $productAttributeId
+     *
      * @return GoogleProduct
      */
     public function setProductAttributeId($productAttributeId)
@@ -73,6 +73,7 @@ class GoogleProduct
 
     /**
      * @param string $landIsoCode
+     *
      * @return GoogleProduct
      */
     public function setLandIsoCode($landIsoCode)
@@ -81,5 +82,4 @@ class GoogleProduct
 
         return $this;
     }
-
 }

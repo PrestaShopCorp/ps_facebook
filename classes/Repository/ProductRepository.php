@@ -185,7 +185,9 @@ class ProductRepository
     /**
      * @param GoogleProduct $googleProduct
      * @param int $shopId
+     *
      * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
      * @throws \PrestaShopDatabaseException
      */
     public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId)

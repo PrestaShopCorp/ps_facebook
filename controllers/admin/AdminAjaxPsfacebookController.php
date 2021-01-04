@@ -226,9 +226,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
-        $categoryId = (int)Tools::getValue('category_id');
-        $googleCategoryId = (int)Tools::getValue('google_category_id');
-        $updateChildren = (bool)Tools::getValue('update_children');
+        $categoryId = (int) Tools::getValue('category_id');
+        $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $updateChildren = (bool) Tools::getValue('update_children');
         $shopId = $this->context->shop->id;
         if (!$categoryId || !$googleCategoryId) {
             $this->ajaxDie(
@@ -358,9 +358,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetCategories()
     {
-        $categoryId = (int)Tools::getValue('id_category');
-        $page = (int)Tools::getValue('page');
-        $shopId = (int)$this->context->shop->id;
+        $categoryId = (int) Tools::getValue('id_category');
+        $page = (int) Tools::getValue('page');
+        $shopId = (int) $this->context->shop->id;
 
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
@@ -423,7 +423,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetProductsWithErrors()
     {
-        $page = (int)Tools::getValue('page');
+        $page = (int) Tools::getValue('page');
         if (!$page || $page < 0) {
             $page = 0;
         }
