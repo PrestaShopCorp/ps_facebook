@@ -49,7 +49,7 @@ class GoogleProductHandlerTest extends TestCase
         return [
             '1 product' => [
                 'googleProduct' => [$productOneGoogleId => 'error message'],
-                'productRepoMock' => [
+                'productRepoMocks' => [
                     0 => [
                         [
                             'id_product' => $productOneId,
@@ -71,7 +71,7 @@ class GoogleProductHandlerTest extends TestCase
             ],
             '2 products' => [
                 'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
-                'productRepoMock' => [
+                'productRepoMocks' => [
                     0 => [
                         [
                             'id_product' => $productOneId,
@@ -107,7 +107,7 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 '2 products but one is missing in database' => [
                     'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
-                    'productRepoMock' => [
+                    'productRepoMocks' => [
                         0 => [
                             [
                                 'message' => 'error message',
