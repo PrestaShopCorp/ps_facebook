@@ -27,6 +27,7 @@ use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateExcep
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
@@ -489,14 +490,23 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
             $response = [
                 'success' => false,
-
             ];
         }
+
+        $productsWithErrors = isset($response['errors']) ? $response['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($response['lastFinishedSyncStartedAt']) ? $response['lastFinishedSyncStartedAt'] : 0;
+
+        /** @var GoogleProductHandler $googleProductHandler */
+        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProducts($productsWithErrors);
 
         $this->ajaxDie(
             json_encode(
                 [
-                    $response
+                    'success' => true,
+                    'productsWithErrors' => $informationAboutProductsWithErrors,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
                 ]
             )
         );

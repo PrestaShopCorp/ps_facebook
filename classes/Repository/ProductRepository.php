@@ -23,6 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
 use PrestaShopException;
 
 class ProductRepository
@@ -179,5 +180,29 @@ class ProductRepository
         $res = Db::getInstance()->executeS($sql);
 
         return $res[0]['total'];
+    }
+
+    /**
+     * @param GoogleProduct $googleProduct
+     * @param int $shopId
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId)
+    {
+        $sql = new DbQuery();
+
+        $sql->select('pa.id_product, pa.id_product_attribute, pl.name');
+        $sql->select('l.iso_code');
+
+        $sql->from('product_attribute', 'pa');
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($googleProduct->getLandIsoCode()) . '"');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
+
+        $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductId());
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+
+        return Db::getInstance()->executeS($sql);
     }
 }
