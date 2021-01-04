@@ -132,7 +132,7 @@ class GoogleProductHandlerTest extends TestCase
                         'message' => 'error message',
                     ],
                 ],
-            ]
+            ],
         ];
     }
 }
