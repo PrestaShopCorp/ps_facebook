@@ -20,8 +20,11 @@ class GoogleProductHandlerTest extends TestCase
         $productRepo = $this->getMockBuilder(ProductRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        foreach ($productRepoMocks as $key => $productRepoMock) {
-            $productRepo->expects($this->at($key))->method('getInformationAboutGoogleProduct')->willReturn($productRepoMock);
+        foreach ($productRepoMocks as $key => $mock) {
+            $productRepo
+                ->expects($this->at($key))
+                ->method('getInformationAboutGoogleProduct')
+                ->willReturn($mock);
         }
         $googleProductHandler = new GoogleProductHandler($productRepo);
         $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProducts($googleProduct, 1);
