@@ -105,34 +105,34 @@ class GoogleProductHandlerTest extends TestCase
                         'iso_code' => $isoCode,
                     ],
                 ],
-                '2 products but one is missing in database' => [
-                    'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
-                    'productRepoMocks' => [
-                        0 => [
-                            [
-                                'message' => 'error message',
-                                'id_product' => $productOneId,
-                                'id_product_attribute' => $productOneAttributeId,
-                                'name' => $productOneName,
-                                'iso_code' => $isoCode,
-                            ],
-                        ],
-                        1 => [],
-                    ],
-                    'result' => [
-                        $productOneGoogleId => [
+            ],
+            '2 products but one is missing in database' => [
+                'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
+                'productRepoMocks' => [
+                    0 => [
+                        [
                             'message' => 'error message',
                             'id_product' => $productOneId,
                             'id_product_attribute' => $productOneAttributeId,
                             'name' => $productOneName,
                             'iso_code' => $isoCode,
                         ],
-                        $productTwoGoogleId => [
-                            'message' => 'error message',
-                        ],
+                    ],
+                    1 => [],
+                ],
+                'result' => [
+                    $productOneGoogleId => [
+                        'message' => 'error message',
+                        'id_product' => $productOneId,
+                        'id_product_attribute' => $productOneAttributeId,
+                        'name' => $productOneName,
+                        'iso_code' => $isoCode,
+                    ],
+                    $productTwoGoogleId => [
+                        'message' => 'error message',
                     ],
                 ],
-            ],
+            ]
         ];
     }
 }
