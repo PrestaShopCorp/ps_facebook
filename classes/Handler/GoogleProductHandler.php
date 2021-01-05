@@ -2,8 +2,8 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
-use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
+use PrestaShop\Module\Ps_facebook\Utility\GoogleProductUtility;
 
 class GoogleProductHandler
 {
@@ -29,7 +29,7 @@ class GoogleProductHandler
     {
         $googleProductsInformation = [];
         foreach ($googleProducts as $googleProductId => $message) {
-            $googleProductObj = $this->googleProductToObject($googleProductId);
+            $googleProductObj = GoogleProductUtility::googleProductToObject($googleProductId);
             $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
                 $googleProductObj,
                 $shopId
@@ -39,21 +39,5 @@ class GoogleProductHandler
         }
 
         return $googleProductsInformation;
-    }
-
-    /**
-     * @param string $googleProduct
-     *
-     * @return GoogleProduct
-     */
-    private function googleProductToObject($googleProduct)
-    {
-        $googleProductSplitted = explode('-', $googleProduct);
-        $googleProductObj = new GoogleProduct();
-        $googleProductObj->setProductId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ID]);
-        $googleProductObj->setProductAttributeId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ATTRIBUTE_ID]);
-        $googleProductObj->setLandIsoCode($googleProductSplitted[GoogleProduct::POSITION_COUNTRY_ISO_CODE]);
-
-        return $googleProductObj;
     }
 }
