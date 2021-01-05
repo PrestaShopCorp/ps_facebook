@@ -500,7 +500,52 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProducts($productsWithErrors, $shopId);
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'productsWithErrors' => $informationAboutProductsWithErrors,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxGetProductStatuses()
+    {
+        $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+
+        try {
+            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+            $response = $client->post(
+                "/account/{$businessId}/update_product_sync_reporting"
+            )->json();
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookAccountException(
+                    'Failed to get product sync reporting',
+                    FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+            $response = [
+                'success' => false,
+            ];
+        }
+
+        $productsWithErrors = isset($response['errors']) ? $response['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($response['lastFinishedSyncStartedAt']) ? $response['lastFinishedSyncStartedAt'] : 0;
+
+        /** @var GoogleProductHandler $googleProductHandler */
+        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+
+        $shopId = Context::getContext()->shop->id;
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
 
         $this->ajaxDie(
             json_encode(

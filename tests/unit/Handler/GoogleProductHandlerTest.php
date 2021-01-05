@@ -27,7 +27,7 @@ class GoogleProductHandlerTest extends TestCase
                 ->willReturn($mock);
         }
         $googleProductHandler = new GoogleProductHandler($productRepo);
-        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProducts($googleProduct, 1);
+        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1);
 
         self::assertEquals($result, $informationAboutProducts);
     }

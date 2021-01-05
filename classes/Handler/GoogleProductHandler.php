@@ -25,7 +25,7 @@ class GoogleProductHandler
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProducts(array $googleProducts, $shopId)
+    public function getInformationAboutGoogleProductsWithErrors(array $googleProducts, $shopId)
     {
         $googleProductsInformation = [];
         foreach ($googleProducts as $googleProductId => $message) {
@@ -36,6 +36,21 @@ class GoogleProductHandler
             );
             $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
             $googleProductsInformation[$googleProductId]['message'] = $message;
+        }
+
+        return $googleProductsInformation;
+    }
+
+    public function getFilteredInformationAboutGoogleProducts(array $googleProducts, $shopId)
+    {
+        $googleProductsInformation = [];
+        foreach ($googleProducts as $googleProductId => $message) {
+            $googleProductObj = GoogleProductUtility::googleProductToObject($googleProductId);
+            $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
+                $googleProductObj,
+                $shopId
+            );
+            $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
         }
 
         return $googleProductsInformation;
