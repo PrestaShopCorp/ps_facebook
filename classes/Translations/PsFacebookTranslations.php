@@ -215,6 +215,8 @@ class PsFacebookTranslations
                 'title' => $this->module->l('Enhance your catalog: category mapping'),
                 'description' => $this->module->l('To enhance your catalog and help customers disovers your items online, enter a Facebook product Category (FPC) for your items and then add more informations specific to each category.'),
                 'btn' => $this->module->l('View mapping'),
+                'progressBarMatched' => $this->module->l('Matched categories'),
+                'progressBarTotal' => $this->module->l('Categories total'),
             ],
             'integrate' => [
                 'buttons' => [

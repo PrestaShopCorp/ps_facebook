@@ -41,6 +41,24 @@
     <p>
       {{ $t('categoryMatched.description') }}
     </p>
+
+    <div class="w-75 p-3 mb-1">
+      <div class="h-25">
+        <span class="psfb-progress-txt">
+          {{ $t('categoryMatched.progressBarMatched')}}
+        </span>
+        <span class="float-right psfb-progress-txt">
+          {{ $t('categoryMatched.progressBarTotal')}}
+        </span>
+      </div>
+      <b-progress
+        class="psfb-progress-bar"
+        :value="progressBarData.matched"
+        :max="progressBarData.total"
+      />
+      <span class="psfb-number matched"> {{ progressBarData.matched }}</span>
+      <span class="float-right psfb-number total"> {{ progressBarData.total }}</span>
+    </div>
   </div>
 </template>
 
@@ -66,6 +84,7 @@ export default defineComponent({
   data() {
     return {
       illustration,
+      progressBarData: this.matchingProgress,
     };
   },
   methods: {
@@ -84,5 +103,21 @@ export default defineComponent({
     position: absolute;
     bottom: 0.8rem;
     right: 1rem;
+  }
+  .psfb-number {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .psfb-number.matched {
+    color: #24B9D7;
+  }
+  .psfb-progress-bar {
+    margin-bottom: 5px;
+    height: 20px;
+    margin-top: 5px;
+  }
+  .psfb-progress-txt {
+    color:#6C868E;
+    font-size: 12px;
   }
 </style>
