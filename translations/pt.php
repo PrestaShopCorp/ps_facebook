@@ -110,6 +110,18 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c74ea6dbff701bfa238195
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b5703b845e5aa6ab6940d1186da4929b'] = 'Falha! Tente novamente';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_52a1adcaecd13eeb6d9b6ef88b95ec9b'] = 'Confirmar a desativação?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c9a9cc1961202f742271aeae36f5450e'] = 'Está prestes a desativar a sincronização do seu catálogo com o Facebook Business. Os produtos não serão sincronizados até que a exportação por catálogo seja reativada.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40486c34faeee69ad16bf5cbf28f16c4'] = 'Esta funcionalidade ainda se encontra em fase beta';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_263ab2eac2168d940fe76675ef8b3081'] = 'Língua';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c795dfff10a7c952f4c5438951e9ece9'] = 'Imagem';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5fc8b9a31666e95fddf7fdc19ba6070c'] = 'Desc';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5802e982fb664638fa25fd1aa2b8067a'] = 'Códigobarras/marca';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3601146c4e948c32b6424d2c0a7f0118'] = 'Prémio';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fbd8442315206102188bb70cf7d5b3bf'] = 'Estado do produto';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_49ee3087348e8d44e1feda1917443987'] = 'Nome';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d8825072c89799be'] = 'Estado';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Causa de rejeição';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Todos os estados';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Melhore o seu catálogo: mapeamento de categorias';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'Para melhorar o seu catálogo e ajudar os clientes a descobrir os seus artigos online, introduza uma categoria de produto do Google (GPC) para os seus artigos e depois adicione mais informações específicas a cada categoria. Recomendamos que escolha a categoria mais específica possível que se aplica a cada item para ajudar os clientes a compreender que tipo de item está a vender.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5e8a207a6917e15f61a2074ef8f1d7e5'] = 'categorias-mãe especificadas';
@@ -162,3 +174,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b9bba5b6f850988c410bd6
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_02d4482d332e1aef3437cd61c9bcc624'] = 'Contacte-nos';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1fe917b01f9a3f87fa2d7d3b7643fac1'] = 'FAQ';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd9aab6f08d973a4a986ef7811fa60a3'] = 'Não existem FAQs disponíveis.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Facebook';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Facebook dá-lhe todas as ferramentas necessárias para vender e comercializar com sucesso no Facebook e Instagram. Descubra novas formas de ajudá-lo a aumentar o seu negócio e a gerir todas as suas contas e produtos do Facebook a partir de um único local.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_bb8956c67b82c7444a80c6b2433dd8b4'] = 'Tem certeza de que deseja desinstalar este módulo?';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'Impossível instalar o módulo';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_a6111d843740c2352137f7f8cf571103'] = 'Impossível instalar a PrestaShop Account';
