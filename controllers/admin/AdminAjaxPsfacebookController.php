@@ -541,17 +541,36 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $productsWithErrors = isset($response['errors']) ? $response['errors'] : [];
         $lastFinishedSyncStartedAt = isset($response['lastFinishedSyncStartedAt']) ? $response['lastFinishedSyncStartedAt'] : 0;
 
+        $page = Tools::getValue('page');
+        $status = Tools::getValue('status');
+        $sortBy = Tools::getValue('sortBy');
+        $sortTo = Tools::getValue('sortTo');
+        $searchById = Tools::getValue('searchById');
+        $searchByName = Tools::getValue('searchByName');
+        $searchByMessage = Tools::getValue('searchByMessage');
+
         /** @var GoogleProductHandler $googleProductHandler */
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
+        $informationAboutProducts = $googleProductHandler->getFilteredInformationAboutGoogleProducts(
+            $productsWithErrors,
+            $lastFinishedSyncStartedAt,
+            $shopId,
+            $page,
+            $status,
+            $sortBy,
+            $sortTo,
+            $searchById,
+            $searchByName,
+            $searchByMessage
+        );
 
         $this->ajaxDie(
             json_encode(
                 [
                     'success' => true,
-                    'productsWithErrors' => $informationAboutProductsWithErrors,
+                    'products' => $informationAboutProducts,
                     'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
                 ]
             )

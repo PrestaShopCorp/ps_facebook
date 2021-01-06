@@ -38,3 +38,5 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
+      - '@PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations'
+      - '@ps_facebook.language'

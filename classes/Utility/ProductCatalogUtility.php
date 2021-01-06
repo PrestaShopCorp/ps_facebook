@@ -25,16 +25,29 @@ class ProductCatalogUtility
     /**
      * @param int $productId
      * @param int|null $productAttributeId
+     * @param string $isoCode
      *
      * @return string
      */
-    public static function makeProductId($productId, $productAttributeId)
+    public static function makeProductId($productId, $productAttributeId, $isoCode = false)
     {
-        return implode(
+        $googleProductId = implode(
             '-',
             [
                 (int) $productId,
                 (int) $productAttributeId,
+            ]
+        );
+
+        if (!$isoCode) {
+            return $googleProductId;
+        }
+
+        return implode(
+            '-',
+            [
+                $googleProductId,
+                $isoCode,
             ]
         );
     }
