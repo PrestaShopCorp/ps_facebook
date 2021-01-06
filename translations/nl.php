@@ -108,6 +108,18 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c74ea6dbff701bfa238195
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b5703b845e5aa6ab6940d1186da4929b'] = 'Mislukt! Probeer het nog eens';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_52a1adcaecd13eeb6d9b6ef88b95ec9b'] = 'Deactivering bevestigen?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c9a9cc1961202f742271aeae36f5450e'] = 'U staat op het punt om de synchronisatie van uw catalogus met Facebook Business uit te schakelen. Producten worden pas gesynchroniseerd als de export van de catalogus opnieuw wordt geactiveerd.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40486c34faeee69ad16bf5cbf28f16c4'] = 'Deze functie is nog steeds in betaversie';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_263ab2eac2168d940fe76675ef8b3081'] = 'Taal';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c795dfff10a7c952f4c5438951e9ece9'] = 'Beeld';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5fc8b9a31666e95fddf7fdc19ba6070c'] = 'Beschr';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5802e982fb664638fa25fd1aa2b8067a'] = 'Barcode/merken';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3601146c4e948c32b6424d2c0a7f0118'] = 'Prijs';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fbd8442315206102188bb70cf7d5b3bf'] = 'Status van het product';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_49ee3087348e8d44e1feda1917443987'] = 'Naam';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d8825072c89799be'] = 'Status';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Reden van afwijzing';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Alle statussen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Verbeter uw catalogus: categorie in kaart brengen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'Om uw catalogus te verbeteren en klanten te helpen uw artikelen online te ontdekken, voert u een Google productcategorie (GPC) in voor uw artikelen en voegt u vervolgens meer informatie toe die specifiek is voor elke categorie. Wij raden u aan de meest specifieke categorie te kiezen die van toepassing is op elk item om klanten te helpen begrijpen wat voor soort item u verkoopt.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5e8a207a6917e15f61a2074ef8f1d7e5'] = 'gespecificeerde parent categorieën';
@@ -160,3 +172,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b9bba5b6f850988c410bd6
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_02d4482d332e1aef3437cd61c9bcc624'] = 'Neem contact met ons op';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1fe917b01f9a3f87fa2d7d3b7643fac1'] = 'FAQ';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd9aab6f08d973a4a986ef7811fa60a3'] = 'Geen FAQ beschikbaar.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Facebook';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Facebook geeft u alle tools die u nodig hebt om succesvol te verkopen en producten op de markt te brengen op Facebook en Instagram. Ontdek nieuwe manieren om u te helpen uw bedrijf te laten groeien en al uw Facebook-accounts en producten vanuit één plaats te beheren.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_bb8956c67b82c7444a80c6b2433dd8b4'] = 'Weet u zeker dat u de installatie van deze module ongedaan wilt maken?';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'De module kan niet worden geïnstalleerd';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_a6111d843740c2352137f7f8cf571103'] = 'Het is niet mogelijk om een PrestaShop account te installeren';
