@@ -25,7 +25,7 @@ class ProductCatalogUtility
     /**
      * @param int $productId
      * @param int|null $productAttributeId
-     * @param string $isoCode
+     * @param bool|string $isoCode
      *
      * @return string
      */

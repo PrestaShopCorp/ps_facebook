@@ -227,7 +227,7 @@ class ProductRepository
     }
 
     /**
-     * @param int $timestamp
+     * @param string $syncUpdateDate
      * @param int $shopId
      * @param array $productsWithErrors
      * @param int $page
@@ -243,7 +243,7 @@ class ProductRepository
      * @throws \PrestaShopDatabaseException
      */
     public function getInformationAboutGoogleProducts(
-        $timestamp,
+        $syncUpdateDate,
         $shopId,
         $productsWithErrors,
         $page = 1,
@@ -263,7 +263,7 @@ class ProductRepository
         $sql->select('
             IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute, l.iso_code) IN ( "' . implode(',', $productsWithErrors) . '"), "'
             . $disapproved . '", 
-            IF(ps.date_upd <= "' . pSQL($timestamp) . '", " ' . $approved . '", "' . $pending . '" )
+            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
              ) as status
         ');
         $sql->select('l.iso_code');
