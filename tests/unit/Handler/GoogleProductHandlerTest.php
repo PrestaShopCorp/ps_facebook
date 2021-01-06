@@ -5,6 +5,7 @@ namespace Handler;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class GoogleProductHandlerTest extends TestCase
 {
@@ -26,7 +27,10 @@ class GoogleProductHandlerTest extends TestCase
                 ->method('getInformationAboutGoogleProduct')
                 ->willReturn($mock);
         }
-        $googleProductHandler = new GoogleProductHandler($productRepo);
+        $psFacebookTranslations = $this->getMockBuilder(PsFacebookTranslations::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $googleProductHandler = new GoogleProductHandler($productRepo, $psFacebookTranslations);
         $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1);
 
         self::assertEquals($result, $informationAboutProducts);

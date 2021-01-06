@@ -18,19 +18,12 @@ class GoogleProductHandler
      */
     private $facebookTranslations;
 
-    /**
-     * @var \Language
-     */
-    private $language;
-
     public function __construct(
         ProductRepository $productRepository,
-        PsFacebookTranslations $facebookTranslations,
-        \Language $language
+        PsFacebookTranslations $facebookTranslations
     ) {
         $this->productRepository = $productRepository;
         $this->facebookTranslations = $facebookTranslations;
-        $this->language = $language;
     }
 
     /**
