@@ -39,18 +39,18 @@
         show
         class="warning"
       >
-        This feature is still in beta.
+        {{ $t('productScan.betaWarning') }}
       </b-alert>
 
       <b-table-simple>
         <b-thead>
           <b-tr>
             <b-th>{{ $t('syncReport.name') }}</b-th>
-            <b-th>LANG</b-th>
-            <b-th>COVER</b-th>
-            <b-th>DESC</b-th>
-            <b-th>BARCODE/BRAND</b-th>
-            <b-th>PRICE</b-th>
+            <b-th>{{ $t('productScan.lang') }}</b-th>
+            <b-th>{{ $t('productScan.cover') }}</b-th>
+            <b-th>{{ $t('productScan.description') }}</b-th>
+            <b-th>{{ $t('productScan.barcode') }}</b-th>
+            <b-th>{{ $t('productScan.price') }}</b-th>
           </b-tr>
         </b-thead>
         <b-tr
@@ -118,7 +118,7 @@
           </template>
           <template v-else>
             <b-td class="pl-4">
-              Variant #{{ id_product_attribute }}
+              {{ $t('productScan.variant', [id_product_attribute])}}
             </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>
@@ -235,4 +235,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  th {
+    text-transform: uppercase;
+  }
 </style>
