@@ -135,6 +135,8 @@ class EventDataProvider
                 return $this->getCompleteRegistrationEventData();
             case 'customizeProduct':
                 return $this->getCustomisationEventData($params);
+            case 'hookActionFacebookCallPixel':
+                return $this->getCustomEvent($params);
         }
 
         return false;
@@ -485,6 +487,31 @@ class EventDataProvider
         }
 
         return $contents;
+    }
+
+    /**
+     * @param $params
+     *
+     * @return array
+     */
+    private function getCustomEvent($params)
+    {
+        $type = isset($params['eventName']) ? pSQL($params['eventName']) : 'CustomEvent';
+
+        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
+
+        $customData = [
+            'custom_properties' => [
+                'module' => pSQL($params['module']),
+            ],
+        ];
+
+        return [
+            'event_type' => $type,
+            'event_time' => time(),
+            'user' => $user,
+            'custom_data' => $customData,
+        ];
     }
 
     /**

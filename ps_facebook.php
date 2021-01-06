@@ -92,6 +92,7 @@ class Ps_facebook extends Module
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
+        'actionFacebookCallPixel',
     ];
 
     const CONFIGURATION_LIST = [
@@ -149,7 +150,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.2.0';
+        $this->version = '1.3.1';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '860395eb54512ec72d98615805274591';
@@ -420,6 +421,13 @@ class Ps_facebook extends Module
         }
 
         return $content . $this->templateBuffer->flush();
+    }
+
+    public function hookActionFacebookCallPixel($params)
+    {
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+        $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayPersonalInformationTop(array $params)
