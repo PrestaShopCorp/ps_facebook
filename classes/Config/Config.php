@@ -24,6 +24,8 @@ class Config
 {
     const API_VERSION = 'v9.0';
 
+    const REQUIRED_PS_ACCOUNTS_VERSION = '3.0.0';
+
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
     const PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE = 'PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE';
@@ -47,4 +49,11 @@ class Config
     const MAX_CATEGORY_DEPTH = 3;
 
     const REPORTS_PER_PAGE = 50;
+
+    // Data that can be overwritten by .env file if using the Env class
+    const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
+    const PSX_FACEBOOK_UI_URL = 'https://facebook.psessentials.net';
+    const PSX_FACEBOOK_APP_ID = '726899634800479';
+    const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
+    const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 }

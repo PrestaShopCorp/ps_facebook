@@ -25,7 +25,7 @@
             <div
               class="switch-input switch-input-lg ml-1"
               :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
-              @click="switchClick"
+              @click="switchClick()"
               data-toggle="modal"
               :data-target="switchActivated ? `#modal_${name}` : null"
             >
@@ -45,6 +45,7 @@
           <div>
             <a
               class="align-self-center"
+              @click="onManageClick(name)"
               :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
@@ -162,8 +163,17 @@ export default defineComponent({
       if (!this.isLoading) {
         if (!this.switchActivated) {
           this.updateFeatureState();
+        } else {
+          this.$segment.track('Sales Channels - Disable modal displayed', {
+            module: 'ps_facebook',
+          });
         }
       }
+    },
+    onManageClick(name) {
+      this.$segment.track(`Click on "manage" ${name}`, {
+        module: 'ps_facebook',
+      });
     },
     updateFeatureState() {
       this.isLoading = true;

@@ -22,6 +22,7 @@ use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
@@ -36,6 +37,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     private $configurationAdapter;
 
     /**
+     * @var Env
+     */
+    private $env;
+
+    /**
      * @var MultishopDataProvider
      */
     private $multishopDataProvider;
@@ -43,8 +49,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+        $this->env = $this->module->getService(Env::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->bootstrap = false;
     }
@@ -73,13 +79,26 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ]);
         }
 
+        $needsPsAccountsUpgrade = false;
+        $psAccountsVersion = null;
+        if (Module::isInstalled('ps_accounts')) {
+            $psAccounts = Module::getInstanceByName('ps_accounts');
+            $psAccountsVersion = $psAccounts->version;
+
+            $needsPsAccountsUpgrade = version_compare(
+                $psAccountsVersion,
+                Config::REQUIRED_PS_ACCOUNTS_VERSION,
+                '<'
+            );
+        }
+
         Media::addJsDef([
             'contextPsAccounts' => $this->psAccountsHotFix($psAccountPresenter->present()),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
-            'psFacebookAppId' => $_ENV['PSX_FACEBOOK_APP_ID'],
-            'psFacebookFbeUiUrl' => $_ENV['PSX_FACEBOOK_UI_URL'],
-            'psFacebookSegmentId' => $_ENV['SEGMENT_API_KEY'],
+            'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
+            'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
+            'psFacebookSegmentId' => $this->env->get('PSX_FACEBOOK_SEGMENT_API_KEY'),
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -228,6 +247,20 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
+            'psAccountVersionCheck' => [
+                'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
+                'psAccountsVersion' => $psAccountsVersion,
+                'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
+                'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
+                    'AdminAjaxPsfacebook',
+                    true,
+                    [],
+                    [
+                        'action' => 'UpgradePsAccounts',
+                        'ajax' => 1,
+                    ]
+                ),
+            ],
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 

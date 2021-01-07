@@ -20,9 +20,9 @@
   <b-card class="card">
     <div class="illustration float-left d-none d-md-block">
       <img
-        :src="illustration2"
+        src="@/assets/illustration.png"
         width="271"
-        height="194"
+        height="200"
         alt="background illustration"
       >
     </div>
@@ -117,7 +117,6 @@
 import {defineComponent} from '@vue/composition-api';
 import {BCard} from 'bootstrap-vue';
 import StepperIcon from './stepper-icon.vue';
-import illustration2 from '../../assets/illustration2.png';
 
 export default defineComponent({
   name: 'Stepper',
@@ -151,11 +150,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-  },
-  data() {
-    return {
-      illustration2,
-    };
   },
   computed: {
     psFbOnboardAvailable() {
@@ -217,12 +211,6 @@ export default defineComponent({
     & .italic {
       font-style: italic;
     }
-  }
-
-  .illustration > img {
-    position: relative;
-    left: calc(-1.25rem - 2px);
-    top: calc(-1.25rem - 2px);
   }
 
   .opacity-50 {

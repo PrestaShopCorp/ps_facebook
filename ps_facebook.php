@@ -187,9 +187,6 @@ class Ps_facebook extends Module
             $dotenv = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/');
             $dotenv->load();
         }
-
-        $dotenvDist = Dotenv::create(_PS_MODULE_DIR_ . 'ps_facebook/', '.env.dist');
-        $dotenvDist->load();
     }
 
     /**

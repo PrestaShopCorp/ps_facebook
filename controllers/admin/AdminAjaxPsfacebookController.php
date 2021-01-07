@@ -20,7 +20,9 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -32,6 +34,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterfac
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
+use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -43,11 +46,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $configurationAdapter;
 
+    /**
+     * @var Env
+     */
+    private $env;
+
     public function __construct()
     {
         parent::__construct();
-        /* @var ConfigurationAdapter configurationAdapter */
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
+        $this->env = $this->module->getService(Env::class);
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -110,16 +118,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
-            $response = $client->post(
-                '/account/onboard',
-                [
-                    'json' => [
-                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                    ],
-                ]
-            )->json();
+            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+            try {
+                $response = $client->post(
+                    '/account/onboard',
+                    [
+                        'json' => [
+                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                        ],
+                    ]
+                )->json();
+            } catch (Exception $e) {
+                $errorHandler = ErrorHandler::getInstance();
+                $errorHandler->handle(
+                    new FacebookOnboardException(
+                        'Failed to onboard on facebook',
+                        FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
+                        $e
+                    ),
+                    $e->getCode(),
+                    true
+                );
+
+                return;
+            }
 
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
                 /** @var ErrorHandler $errorHandler */
@@ -153,7 +176,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($_ENV['PSX_FACEBOOK_API_URL']);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
         $response = $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
             [
@@ -216,7 +239,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
         try {
-            /* todo: change to data from ajax */
             $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId);
         } catch (Exception $e) {
             $this->ajaxDie(
@@ -251,7 +273,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(
             json_encode($googleCategory)
-        // TODO : need this object : example : { matchingProgress: {total: 789, matched: 12} }
         );
     }
 
@@ -415,6 +436,36 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         ]));
     }
 
+    public function displayAjaxUpgradePsAccounts()
+    {
+        $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
+        $moduleManager = $moduleManagerBuilder->build();
+        $isUpgradeSuccessful = false;
+        try {
+            /* @phpstan-ignore-next-line */
+            $isUpgradeSuccessful = $moduleManager->upgrade('ps_accounts');
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookPsAccountsUpdateException(
+                    'Failed to upgrade ps_accounts',
+                    FacebookPsAccountsUpdateException::FACEBOOK_PS_ACCOUNTS_UPGRADE_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+
+            $this->ajaxDie(json_encode([
+                'success' => false,
+            ]));
+        }
+
+        $this->ajaxDie(json_encode([
+            'success' => $isUpgradeSuccessful,
+        ]));
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -433,10 +484,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $isoCode = $this->context->language->iso_code;
 
-        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf')) {
+        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf')) {
             $isoCode = 'en';
         }
 
-        return _MODULE_DIR_ . $this->module->name . '/docs/readme_' . $isoCode . '.pdf';
+        return _MODULE_DIR_ . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf';
     }
 }

@@ -1,4 +1,11 @@
 services:
+  PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
+      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
+
   PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
 
   PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider:
