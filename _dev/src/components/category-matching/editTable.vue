@@ -47,15 +47,15 @@
           >
             {{ category.shopCategoryName }}
           </b-td>
-          <b-td v-if="!category.googleCategoryId">
+          <b-td v-if="!category.googleCategoryParentName">
             <b-badge variant="danger">
               {{ $t('categoryMatching.editTable.required') }}
             </b-badge>
           </b-td>
           <b-td v-else>
-            {{ category.googleCategoryId }}
+            {{ category.googleCategoryParentName  }}
           </b-td>
-          <b-td> {{ category.subcategoryName ? category.subcategoryName : '-' }} </b-td>
+          <b-td> {{ category.googleCategoryName ? category.googleCategoryName : '-' }} </b-td>
         </b-tr>
       </b-tbody>
     </b-table-simple>

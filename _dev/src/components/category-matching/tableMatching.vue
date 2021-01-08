@@ -34,9 +34,9 @@
           :key="category.shopCategoryId"
           :category-style="categoryStyle(category)"
           :shop-category-id="category.shopCategoryId"
-          :initial-category-name="category.categoryName"
-          :initial-category-id="category.googleCategoryId"
-          :initial-subcategory-name="category.subcategoryName"
+          :initial-category-name="category.googleCategoryParentName"
+          :initial-category-id="category.googleCategoryParentId"
+          :initial-subcategory-name="category.googleCategoryName"
           :initial-subcategory-id="category.googleCategoryId"
           :initial-propagation="category.isParentCategory"
           :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
@@ -124,10 +124,12 @@ export default defineComponent({
       if (this.overrideGetCurrentRow) {
         return Promise.resolve(true);
       }
+      console.log(category);
+
       return fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_parent_id=${category.fbCategoryId}&update_children=${category.propagate}`,
+        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${category.propagate}`,
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
