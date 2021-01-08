@@ -150,14 +150,19 @@ export default defineComponent({
         return res.json();
       })
         .then((res) => {
-          // TODO: utiliser un map
           res.forEach((el) => {
-            const propagation = !!el.isParentCategory;
+            let propagation = null;
+            if (el.isParentCategory === '1') {
+              propagation = true;
+            } else {
+              propagation = false;
+            }
             /* eslint no-param-reassign: "error" */
             el.show = true;
             /* eslint no-param-reassign: "error" */
             el.isParentCategory = propagation;
             el.googleCategoryId = Number(el.googleCategoryId);
+            el.googleCategoryParentId = Number(el.googleCategoryParentId);
             /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           });

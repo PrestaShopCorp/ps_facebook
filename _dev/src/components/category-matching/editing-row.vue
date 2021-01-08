@@ -200,6 +200,7 @@ export default defineComponent({
       const result = {
         shopCategoryId: this.shopCategoryId,
         fbCategoryId: this.currentCategoryId,
+        fbCategoryName: this.currentCategoryName.replace('&', '-'),
         fbSubcategoryId: subcategoryId,
         fbSubcategoryName: subcategoryName,
         propagate: !!this.currentPropagation,

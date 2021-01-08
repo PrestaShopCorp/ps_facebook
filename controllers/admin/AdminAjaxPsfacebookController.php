@@ -249,9 +249,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $categoryId = (int) Tools::getValue('category_id');
         $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $googleCategoryName =  Tools::getValue('google_category_name');
         $googleCategoryParentId = (int) Tools::getValue('google_category_parent_id');
-        $updateChildren = (bool) Tools::getValue('update_children');
+        $googleCategoryParentName = Tools::getValue('google_category_parent_name');
+        $updateChildren = Tools::getValue('update_children');
         $shopId = $this->context->shop->id;
+
         if (!$categoryId || !$googleCategoryId) {
             $this->ajaxDie(
                 json_encode(
@@ -263,7 +266,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
         try {
-            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $googleCategoryParentId, $updateChildren, $shopId);
+            $categoryMatchHandler->updateCategoryMatch(
+                $categoryId,
+                $googleCategoryId,
+                $googleCategoryName,
+                $googleCategoryParentId,
+                $googleCategoryParentName,
+                $updateChildren,
+                $shopId
+            );
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
@@ -372,6 +383,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
                     'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
                     'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id), // true if a category match has been called once (at least 1 matching done)
+                    // TODO : do a method for fetch the real data
                     'matchingProgress' => ['total' => 42, 'matched' => 0],
                     'validation' => [
                         'prevalidation' => [
@@ -399,19 +411,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
-
-        $this->ajaxDie(
-            json_encode($googleCategories)
-        );
-    }
-
-    public function displayAjaxGetCategoriesByIds()
-    {
-        $categoryIds = Tools::getValue('id_categories');
-
-        /** @var FacebookCategoryClient $facebookCategoryClient */
-        $facebookCategoryClient = $this->module->getService(FacebookCategoryClient::class);
-        $googleCategories = $facebookCategoryClient->getGoogleCategories($categoryIds);
 
         $this->ajaxDie(
             json_encode($googleCategories)
