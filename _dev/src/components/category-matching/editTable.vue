@@ -23,6 +23,8 @@
         :checked="filterCategory"
         class="float-left mr-3"
         @change="changeFilter"
+        disabled-field="notEnabled"
+        :disabled="enableCheckbox"
       >
         {{ $t('categoryMatching.editTable.checkboxTxt') }} ({{ numberOfCategoryWithoutMatching }})
       </b-checkbox>
@@ -53,12 +55,18 @@
             </b-badge>
           </b-td>
           <b-td v-else>
-            {{ category.googleCategoryParentName  }}
+            {{ category.googleCategoryParentName }}
           </b-td>
           <b-td> {{ category.googleCategoryName ? category.googleCategoryName : '-' }} </b-td>
         </b-tr>
       </b-tbody>
     </b-table-simple>
+    <b-tfoot v-if="loading">
+      <div
+        v-if="hasCategories"
+        id="spinner"
+      />
+    </b-tfoot>
   </div>
 </template>
 
@@ -108,8 +116,10 @@ export default defineComponent({
   data() {
     return {
       categories: this.initialCategories,
-      loading: true,
+      loading: null,
+      enableCheckbox: false,
       filterCategory: false,
+      hasCategories: false,
       numberOfCategoryWithoutMatching: 0,
     };
   },
@@ -241,7 +251,8 @@ export default defineComponent({
                 el.show = true;
                 el.shopParentCategoryIds = `${el.shopCategoryId}/`;
               }
-              this.hasCategories = false;
+              // this.hasCategories = false;
+              this.loading = false;
             });
           } else {
             if (undefined === this.categories.find(
@@ -252,7 +263,7 @@ export default defineComponent({
               res.show = true;
               res.shopParentCategoryIds = `${res.shopCategoryId}/`;
             }
-            this.hasCategories = false;
+            // this.hasCategories = false;
             this.loading = false;
           }
         });
@@ -278,6 +289,10 @@ export default defineComponent({
         this.numberOfCategoryWithoutMatching += 1;
       }
     });
+
+    if (this.numberOfCategoryWithoutMatching === 0) {
+      this.enableCheckbox = true;
+    }
     window.addEventListener('scroll', this.handleScroll);
   },
   watch: {
@@ -356,6 +371,27 @@ export default defineComponent({
     td:first-child {
       padding-left:80px!important;
     }
-    }
+  }
+
+  #spinner {
+    color: #fff;
+    background-color: #fff;
+    width: 1.3rem !important;
+    height: 1.3rem !important;
+    border-radius: 2.5rem;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    position: absolute;
+    left: calc(50% - 0.6rem);
+  }
 }
 </style>

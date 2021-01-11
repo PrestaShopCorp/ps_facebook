@@ -49,18 +49,8 @@
       <b-tfoot v-if="loading">
         <div
           v-if="hasCategories"
-          class="spinner"
+          id="spinner"
         />
-        <b-tr v-else>
-          <b-td
-            colspan="4"
-            style="text-align:center"
-          >
-            <div>
-              {{ $t('categoryMatching.tableMatching.nocategoriesloaded') }}
-            </div>
-          </b-td>
-        </b-tr>
       </b-tfoot>
     </b-table-simple>
   </div>
@@ -124,12 +114,13 @@ export default defineComponent({
       if (this.overrideGetCurrentRow) {
         return Promise.resolve(true);
       }
-      console.log(category);
+
+      const updateParent = Number(category.propagate);
 
       return fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${category.propagate}`,
+        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${updateParent}`,
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
@@ -213,6 +204,7 @@ export default defineComponent({
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
+      this.loading = true;
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = PARENT_STATEMENT.FOLD;
@@ -253,6 +245,7 @@ export default defineComponent({
           currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
         }
       });
+      this.loading = false;
     },
 
     handleScroll() {
@@ -272,6 +265,7 @@ export default defineComponent({
                 el.shopParentCategoryIds = `${el.shopCategoryId}/`;
               }
               this.hasCategories = false;
+              this.loading = false;
             });
           } else {
             if (undefined === this.categories.find(
@@ -309,7 +303,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.spinner {
+#spinner {
   color: #fff;
   background-color: #fff;
   width: 1.3rem !important;
