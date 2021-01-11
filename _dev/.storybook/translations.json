@@ -29,7 +29,11 @@
         "shopInConflictError": "This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\n\n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.",
 
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-        "reloadButton": "Reload"
+        "reloadButton": "Reload",
+
+        "psAccountUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "psAccountUpgradeButton": "Upgrade PrestaShop Accounts",
+        "psAccountUpgradeDone": "PrestaShop Account has been successfully upgraded."
       },
       "facebook": {
         "title": "Your Facebook settings",
@@ -100,6 +104,15 @@
       "exportCatalogButtonErrored": "Failed! Try again",
       "modalDeactivationTitle": "Confirm deactivation?",
       "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
+    },
+    "productScan": {
+      "betaWarning": "This feature is still in beta.",
+      "lang": "Lang",
+      "cover": "Cover",
+      "description": "Desc",
+      "barcode": "Barcode / Brand",
+      "price": "Price",
+      "variant": "Variant #{0}"
     },
     "syncReport": {
       "title": "Product status",

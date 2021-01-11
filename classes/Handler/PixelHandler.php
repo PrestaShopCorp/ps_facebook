@@ -20,6 +20,8 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
+use FacebookAds\Object\ServerSide\Normalizer;
+use FacebookAds\Object\ServerSide\Util;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -115,16 +117,16 @@ class PixelHandler
     protected function getCustomerInformation($customerInformation)
     {
         return [
-            'ct' => $customerInformation['city'],
-            'country' => $customerInformation['countryIso'],
-            'zp' => $customerInformation['postCode'],
-            'ph' => $customerInformation['phone'],
-            'gender' => $customerInformation['gender'],
-            'fn' => $customerInformation['firstname'],
-            'ln' => $customerInformation['lastname'],
-            'em' => $customerInformation['email'],
-            'bd' => $customerInformation['birthday'],
-            'st' => $customerInformation['stateIso'],
+            'ct' => Util::hash(Normalizer::normalize('ct', $customerInformation['city'])),
+            'country' => Util::hash(Normalizer::normalize('country', $customerInformation['countryIso'])),
+            'zp' => Util::hash(Normalizer::normalize('zp', $customerInformation['postCode'])),
+            'ph' => Util::hash(Normalizer::normalize('ph', $customerInformation['phone'])),
+            'gender' => Util::hash(Normalizer::normalize('gender', $customerInformation['gender'])),
+            'fn' => Util::hash(Normalizer::normalize('fn', $customerInformation['firstname'])),
+            'ln' => Util::hash(Normalizer::normalize('ln', $customerInformation['lastname'])),
+            'em' => Util::hash(Normalizer::normalize('em', $customerInformation['email'])),
+            'bd' => Util::hash(Normalizer::normalize('bd', $customerInformation['birthday'])),
+            'st' => Util::hash(Normalizer::normalize('st', $customerInformation['stateIso'])),
         ];
     }
 }

@@ -26,7 +26,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_f67c914d677eb56f8c06fb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8d81c350341bb50e266a8efa21cf0f25'] = 'Schritt-für-Schritt-Anleitung';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2dddad3a82e8e68edd68fe1776c1c13b'] = 'Verbinden Sie Ihr PrestaShop-Konto';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7cf592033613'] = 'Verbinden Sie Ihr Geschäft mit Facebook';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9bef3cdc8de51'] = 'Karten-Kategorien';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9bef3cdc8de51'] = 'Kategorien zuordnen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_089b82e17fe5e6e2b6e87a5285b305c8'] = '(optional, aber dringend empfohlen)';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Exportieren Sie Ihren Produktkatalog';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7bdb4177430'] = 'Verkehrsabhängige und/oder dynamische Anzeigen erstellen';
@@ -104,6 +104,18 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c74ea6dbff701bfa238195
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b5703b845e5aa6ab6940d1186da4929b'] = 'Gescheitert! Erneut versuchen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_52a1adcaecd13eeb6d9b6ef88b95ec9b'] = 'Deaktivierung bestätigen?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c9a9cc1961202f742271aeae36f5450e'] = 'Sie sind dabei, die Synchronisierung Ihres Katalogs mit Facebook Business zu deaktivieren. Die Produkte werden erst synchronisiert, wenn der Katalogexport reaktiviert wird.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40486c34faeee69ad16bf5cbf28f16c4'] = 'Diese funktion befindet sich noch im beta-stadium';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_263ab2eac2168d940fe76675ef8b3081'] = 'Lang';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c795dfff10a7c952f4c5438951e9ece9'] = 'Image';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5fc8b9a31666e95fddf7fdc19ba6070c'] = 'Desc';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5802e982fb664638fa25fd1aa2b8067a'] = 'Barcode/marke';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3601146c4e948c32b6424d2c0a7f0118'] = 'Prix';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fbd8442315206102188bb70cf7d5b3bf'] = 'Produktstatus';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_49ee3087348e8d44e1feda1917443987'] = 'Name';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d8825072c89799be'] = 'Stand';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Ursache der Ablehnung';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Alle Zustände';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Erweitern Sie Ihren Katalog : Kategoriezuordnung';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'Um Ihren Katalog zu erweitern und Kunden dabei zu helfen, Ihre Artikel online zu entdecken, geben Sie eine Google-Produktkategorie (GPC) für Ihre Artikel ein und fügen Sie dann weitere spezifische Informationen für jede Kategorie hinzu. Wir empfehlen Ihnen, die spezifischste Kategorie zu wählen, die auf jeden Artikel zutrifft, damit die Kunden verstehen, welche Art von Artikel Sie verkaufen.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5e8a207a6917e15f61a2074ef8f1d7e5'] = 'Angegebene übergeordnete Kategorien';
@@ -156,3 +168,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b9bba5b6f850988c410bd6
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_02d4482d332e1aef3437cd61c9bcc624'] = 'Kontaktieren Sie uns';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1fe917b01f9a3f87fa2d7d3b7643fac1'] = 'FAQ';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd9aab6f08d973a4a986ef7811fa60a3'] = 'Keine FAQ verfügbar.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Facebook';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Facebook gibt Ihnen alle Werkzeuge an die Hand, die Sie für den erfolgreichen Verkauf und die Vermarktung auf Facebook und Instagram benötigen. Entdecken Sie neue Möglichkeiten, die Ihnen helfen, Ihr Geschäft auszubauen und alle Ihre Facebook-Konten und Produkte von einem Ort aus zu verwalten.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_bb8956c67b82c7444a80c6b2433dd8b4'] = 'Sind Sie sicher, dass Sie dieses Modul deinstallieren möchten?';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'Das Modul kann nicht installiert werden';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_a6111d843740c2352137f7f8cf571103'] = 'PrestaShop-Konto kann nicht installiert werden';
