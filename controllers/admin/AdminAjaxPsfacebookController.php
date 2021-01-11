@@ -21,7 +21,6 @@
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
@@ -33,6 +32,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
@@ -470,31 +470,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetProductSyncReporting()
     {
-        $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
 
-        try {
-            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-            $response = $client->post(
-                "/account/{$businessId}/update_product_sync_reporting"
-            )->json();
-        } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
-                new FacebookAccountException(
-                    'Failed to get product sync reporting',
-                    FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
             );
-            $response = [
-                'success' => false,
-            ];
         }
 
-        $productsWithErrors = isset($response['errors']) ? $response['errors'] : [];
-        $lastFinishedSyncStartedAt = isset($response['lastFinishedSyncStartedAt']) ? $response['lastFinishedSyncStartedAt'] : 0;
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         /** @var GoogleProductHandler $googleProductHandler */
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
@@ -515,31 +506,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetProductStatuses()
     {
-        $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
 
-        try {
-            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-            $response = $client->post(
-                "/account/{$businessId}/update_product_sync_reporting"
-            )->json();
-        } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
-                new FacebookAccountException(
-                    'Failed to get product sync reporting',
-                    FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
             );
-            $response = [
-                'success' => false,
-            ];
         }
 
-        $productsWithErrors = isset($response['errors']) ? $response['errors'] : [];
-        $lastFinishedSyncStartedAt = isset($response['lastFinishedSyncStartedAt']) ? $response['lastFinishedSyncStartedAt'] : 0;
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $page = Tools::getValue('page');
         $status = Tools::getValue('status');

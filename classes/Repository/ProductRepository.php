@@ -276,7 +276,7 @@ class ProductRepository
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         if ($sortBy) {
-            $sql->orderBy(pSQL($sortBy) . ', ' . pSQL($sortTo));
+            $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
         }
         if ($searchById) {
             $sql->where('ps.id_product LIKE "%' . (int) $searchById . '%"');
