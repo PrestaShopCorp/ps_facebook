@@ -190,6 +190,7 @@ class PsFacebookTranslations
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
                 'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
                 'counterSubTitle' => $this->module->l('specified parent categories', 'PsFacebookTranslations'),
+                'edit' => $this->module->l('Edit', 'PsFacebookTranslations'),
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
                     'select' => $this->module->l('Select', 'PsFacebookTranslations'),
