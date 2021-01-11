@@ -19,7 +19,6 @@
  */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
@@ -34,6 +33,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
@@ -230,10 +230,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $categoryId = (int) Tools::getValue('category_id');
         $googleCategoryId = (int) Tools::getValue('google_category_id');
-        $googleCategoryName =  Tools::getValue('google_category_name');
+        $googleCategoryName = Tools::getValue('google_category_name');
         $googleCategoryParentId = (int) Tools::getValue('google_category_parent_id');
         $googleCategoryParentName = Tools::getValue('google_category_parent_name');
-        $updateChildren = Tools::getValue('update_children');
+        $updateChildren = (bool) Tools::getValue('update_children');
         $shopId = $this->context->shop->id;
 
         if (!$categoryId || !$googleCategoryId) {
@@ -347,7 +347,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $productRepository = $this->module->getService(ProductRepository::class);
         /** @var GoogleCategoryRepository $googleCategoryRepository */
         $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
+        /** @var GoogleCategoryProvider $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
 
+        $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
 
@@ -356,9 +359,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
                     'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
-                    'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id), // true if a category match has been called once (at least 1 matching done)
-                    // TODO : do a method for fetch the real data
-                    'matchingProgress' => ['total' => 42, 'matched' => 0],
+                    'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id),
+                    'matchingProgress' => $informationAboutCategoryMatching,
                     'validation' => [
                         'prevalidation' => [
                             'syncable' => $productsTotal - count($productsWithErrors),

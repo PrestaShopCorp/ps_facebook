@@ -79,6 +79,7 @@ export default defineComponent({
   }
   .text {
     display: flow-root;
+    margin-bottom: 3.5rem!important;
 
     & > div {
       margin-top: 1em;

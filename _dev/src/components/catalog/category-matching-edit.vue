@@ -35,7 +35,7 @@
         {{ $t('catalogSummary.backButton') }}
       </b-button>
       <div class="counter float-right ml-5">
-        <h3>
+        <h3 :class="matchingDone">
           {{ matchingProgress.matched }} / {{ matchingProgress.total }}
           <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
@@ -56,7 +56,7 @@
       </b-button>
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
       <div class="counter">
-        <h3>
+        <h3 :class="matchingDone">
           {{ matchingProgress.matched }} / {{ matchingProgress.total }}
           <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
@@ -120,13 +120,16 @@ export default defineComponent({
     return {
       loading: true,
       categories: [],
+      matchingDone: null,
       matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
   created() {
     this.fetchData();
+    this.loading = true;
     this.fetchCategories(0, 1).then((res) => {
       this.categories = res;
+      this.loading = false;
     });
   },
   methods: {
@@ -140,13 +143,15 @@ export default defineComponent({
         })
         .then((res) => {
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
+          if (res.matchingProgress.matched === res.matchingProgress.total) {
+            this.matchingDone = 'matching-finished';
+          }
         }).catch((error) => {
           console.error(error);
         });
     },
 
     fetchCategories(idCategory, page) {
-      this.loading = true;
       let mainCategoryId = idCategory;
 
       if (mainCategoryId === 0) {
@@ -175,8 +180,6 @@ export default defineComponent({
             /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           });
-
-          this.loading = false;
           return res;
         }).catch((error) => {
           console.error(error);
@@ -203,6 +206,9 @@ export default defineComponent({
   .counter {
     &.float-right {
       text-align: right;
+    }
+    .matching-finished {
+      color: #70B580!important;
     }
     & > h3 {
       color: #CD9321 !important;
