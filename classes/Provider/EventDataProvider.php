@@ -492,11 +492,15 @@ class EventDataProvider
     /**
      * @param array $params
      *
-     * @return array
+     * @return array|null
      */
     private function getCustomEvent($params)
     {
-        $type = isset($params['eventName']) ? pSQL($params['eventName']) : 'CustomEvent';
+        if (!isset($params['eventName'])) {
+            return null;
+        }
+
+        $type = pSQL($params['eventName']);
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
