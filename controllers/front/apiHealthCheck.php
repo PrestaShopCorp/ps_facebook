@@ -1,10 +1,12 @@
 <?php
 
 use PrestaShop\Module\PrestashopFacebook\Repository\ServerInformationRepository;
-use PrestaShop\Module\PsAccounts\Config\Config;
 
 class ps_FacebookApiHealthCheckModuleFrontController extends ModuleFrontController
 {
+    /** @var Ps_facebook */
+    public $module;
+
     /**
      * @return void
      */
@@ -39,13 +41,6 @@ class ps_FacebookApiHealthCheckModuleFrontController extends ModuleFrontControll
     private function dieWithResponse(array $response, $code)
     {
         $httpStatusText = "HTTP/1.1 $code";
-
-        if (array_key_exists((int) $code, Config::HTTP_STATUS_MESSAGES)) {
-            $httpStatusText .= ' ' . Config::HTTP_STATUS_MESSAGES[(int) $code];
-        } elseif (isset($response['body']['statusText'])) {
-            $httpStatusText .= ' ' . $response['body']['statusText'];
-        }
-
         $response['httpCode'] = (int) $code;
 
         header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
