@@ -34,8 +34,8 @@ class ProductSyncReportProvider
 
         try {
             $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-            $response = $client->post(
-                "/account/{$businessId}/update_product_sync_reporting"
+            $response = $client->get(
+                "/account/{$businessId}/reporting"
             )->json();
         } catch (Exception $e) {
             $errorHandler = ErrorHandler::getInstance();
