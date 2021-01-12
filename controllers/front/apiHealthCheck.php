@@ -5,11 +5,6 @@ use PrestaShop\Module\PsAccounts\Config\Config;
 
 class ps_FacebookApiHealthCheckModuleFrontController extends ModuleFrontController
 {
-    public function init()
-    {
-        $a = 1;
-    }
-
     /**
      * @return void
      */
