@@ -12,3 +12,6 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Repository\TabRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\TabRepository
+
+  PrestaShop\Module\PrestashopFacebook\Repository\ServerInformationRepository:
+    class: PrestaShop\Module\PrestashopFacebook\Repository\ServerInformationRepository
