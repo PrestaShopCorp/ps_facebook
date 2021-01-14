@@ -52,3 +52,9 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
