@@ -261,6 +261,24 @@ class FacebookClient
     }
 
     /**
+     * @param int $catalogId
+     *
+     * @return array|false
+     */
+    public function getProductsInCatalogCount($catalogId)
+    {
+        $body = [
+            'fields' => 'product_count',
+        ];
+
+        return $this->post(
+            $catalogId,
+            [],
+            $body
+        );
+    }
+
+    /**
      * @param int|string $id
      * @param array $fields
      * @param array $query

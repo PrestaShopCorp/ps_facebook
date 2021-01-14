@@ -329,6 +329,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
 
@@ -347,7 +351,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         ],
                         'reporting' => [
                             'lastSyncDate' => null, // TODO !0: the last sync date given by our own API (/reporting)
-                            'catalog': 42, // TODO !0: the amount of products in the FB catalog (FB API call, to do if never done)
+                            'catalog'=> $facebookDataProvider->getProductsInCatalogCount(), // TODO !0: the amount of products in the FB catalog (FB API call, to do if never done)
                             'errored' => 0, // TODO !0: the count of errored products given by our own API (/reporting)
                         ],
                     ],
