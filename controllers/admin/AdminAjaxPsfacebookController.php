@@ -346,7 +346,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                             'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'errored' => 0, // TODO !1: complete object
+                            'lastSyncDate' => null, // TODO !0: the last sync date given by our own API (/reporting)
+                            'catalog': 42, // TODO !0: the amount of products in the FB catalog (FB API call, to do if never done)
+                            'errored' => 0, // TODO !0: the count of errored products given by our own API (/reporting)
                         ],
                     ],
                 ]

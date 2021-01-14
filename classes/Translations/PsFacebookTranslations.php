@@ -162,6 +162,9 @@ class PsFacebookTranslations
                 'exportCatalogButtonErrored' => $this->module->l('Failed! Try again', 'PsFacebookTranslations'),
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
+                'reportingLastSync' => $this->module->l('Last sync', 'PsFacebookTranslations'),
+                'reportingCatalogCount' => $this->module->l('Products in Facebook catalog', 'PsFacebookTranslations'),
+                'reportingErrorsCount' => $this->module->l('Errors due to catalog export', 'PsFacebookTranslations'),
             ],
             'productScan' => [
                 'betaWarning' => $this->module->l('This feature is still in beta.', 'PsFacebookTranslations'),
