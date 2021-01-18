@@ -73,7 +73,7 @@
       variant="primary"
       @click="$parent.goto($parent.PAGES.categoryMatchingView)"
     >
-      Edit
+      {{ $t('categoryMatching.edit') }}
     </b-button>
 
     <EditTable
