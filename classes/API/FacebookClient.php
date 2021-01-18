@@ -290,7 +290,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Facebook client failed when creating get request.',
+                    'Facebook client failed when creating get request. Id: ' . $id,
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
@@ -359,7 +359,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Facebook client failed when creating post request.',
+                    'Facebook client failed when creating post request. Id: ' . $id,
                     FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
                     $e
                 ),
