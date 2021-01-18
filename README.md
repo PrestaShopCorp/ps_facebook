@@ -51,6 +51,27 @@ Some values of the Config class can be overwriten by having your own environment
 You can for instance have your own `.env` at the root of this project to replace the Facebook App ID
 or switch the API URLs to another domain.
 
+
+* **Using Pixel event in other modules**
+
+You can call custom Pixel event by using hook: actionFacebookCallPixel
+
+You also need to add some params in hook call
+
+*Required:* 
++ eventName
++ module
+
+*Optional:*
++ id_product
++ id_product_attribute
+
+Example:    
+```
+Hook::exec('actionFacebookCallPixel' ,['eventName' => 'AddToWishlist', 'module' => 'wishlist', 'id_product' => $productId, 'id_product_attribute' => $idProductAttribute]);
+```
+
+
 ### Tests
 
 This module follows [recommandations of the PrestaShop devdocs](https://devdocs.prestashop.com/1.7/modules/testing/) and is checked by PHP-CS-Fixer, PHPStan and PHPUnit before each release.

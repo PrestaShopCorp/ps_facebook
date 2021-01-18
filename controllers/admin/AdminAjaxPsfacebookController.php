@@ -19,6 +19,7 @@
  */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
@@ -365,6 +366,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
+
+        $this->ajaxDie(
+            json_encode($googleCategories)
+        );
+    }
+
+    public function displayAjaxGetCategoriesByIds()
+    {
+        $categoryIds = Tools::getValue('id_categories');
+
+        /** @var FacebookCategoryClient $facebookCategoryClient */
+        $facebookCategoryClient = $this->module->getService(FacebookCategoryClient::class);
+        $googleCategories = $facebookCategoryClient->getGoogleCategories($categoryIds);
 
         $this->ajaxDie(
             json_encode($googleCategories)
