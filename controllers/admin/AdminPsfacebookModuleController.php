@@ -305,9 +305,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
      * TODO : Move in https://github.com/PrestaShopCorp/prestashop_accounts_vue_components
      */
-    private function psAccountsHotFix($presentedData)
+    private function psAccountsHotFix(array $presentedData)
     {
-        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
+        if (!isset($presentedData['shops'])) {
+            return;
+        }
+
         foreach ($presentedData['shops'] as $groupKey => &$shopGroup) {
             foreach ($shopGroup['shops'] as &$shop) {
                 $shop['url'] = $this->context->link->getAdminLink(
@@ -321,6 +324,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 );
             }
         }
+
+        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
 
         return $presentedData;
     }
