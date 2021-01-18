@@ -21,6 +21,40 @@ class ps_FacebookApiHealthCheckModuleFrontController extends ModuleFrontControll
     }
 
     /**
+     * Override displayMaintenancePage to prevent the maintenance page to be displayed
+     *
+     * @see FrontController::displayMaintenancePage()
+     */
+    protected function displayMaintenancePage()
+    {
+        return;
+    }
+
+    /**
+     * Override displayRestrictedCountryPage to prevent page country is not allowed
+     *
+     * @see FrontController::displayRestrictedCountryPage()
+     */
+    protected function displayRestrictedCountryPage()
+    {
+        return;
+    }
+
+    /**
+     * Override geolocationManagement to prevent country GEOIP blocking
+     *
+     * @see FrontController::geolocationManagement()
+     *
+     * @param Country $defaultCountry
+     *
+     * @return false
+     */
+    protected function geolocationManagement($defaultCountry)
+    {
+        return false;
+    }
+
+    /**
      * @param array $response
      *
      * @return void
