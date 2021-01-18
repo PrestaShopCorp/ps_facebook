@@ -331,8 +331,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+        $productsErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $this->ajaxDie(
             json_encode(
@@ -348,9 +358,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                             'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'lastSyncDate' => null, // TODO !0: the last sync date given by our own API (/reporting)
-                            'catalog': 42, // TODO !0: the amount of products in the FB catalog (FB API call, to do if never done)
-                            'errored' => 0, // TODO !0: the count of errored products given by our own API (/reporting)
+                            'lastSyncDate' => $lastFinishedSyncStartedAt, // TODO !0: the last sync date given by our own API (/reporting)
+                            'catalog'=> $productCount['product_count'], // TODO !0: the amount of products in the FB catalog (FB API call, to do if never done)
+                            'errored' => count($productsErrors), // TODO !0: the count of errored products given by our own API (/reporting)
                         ],
                     ],
                 ]
