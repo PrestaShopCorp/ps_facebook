@@ -43,6 +43,9 @@ class FbeFeatureDataProvider
 
     public function getFbeFeatures()
     {
+        if (!$this->facebookClient->hasAccessToken()) {
+            return false;
+        }
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $features = $this->facebookClient->getFbeFeatures($externalBusinessId);
         $unavailableFeatures = [];

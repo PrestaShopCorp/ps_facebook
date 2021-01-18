@@ -67,7 +67,7 @@ class AccessTokenProvider
      */
     public function getUserAccessToken()
     {
-        if (!$this->userAccessToken) {
+        if (!$this->userAccessToken && \Context::getContext()->controller->controller_type !== 'front') {
             $this->getOrRefreshTokens();
         }
 
