@@ -95,7 +95,7 @@ class FacebookClient
 
     public function getUserEmail()
     {
-        $responseContent = $this->get('me', ['email']);
+        $responseContent = $this->get('me', __FUNCTION__, ['email']);
 
         return new User(
             isset($responseContent['email']) ? $responseContent['email'] : null
@@ -109,7 +109,7 @@ class FacebookClient
      */
     public function getBusinessManager($businessManagerId)
     {
-        $responseContent = $this->get((int) $businessManagerId, ['name', 'created_time']);
+        $responseContent = $this->get((int) $businessManagerId, __FUNCTION__, ['name', 'created_time']);
 
         return new FacebookBusinessManager(
             isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
@@ -128,7 +128,7 @@ class FacebookClient
      */
     public function getPixel($adId, $pixelId)
     {
-        $responseContent = $this->get('act_' . $adId . '/adspixels', ['name', 'last_fired_time', 'is_unavailable']);
+        $responseContent = $this->get('act_' . $adId . '/adspixels', __FUNCTION__, ['name', 'last_fired_time', 'is_unavailable']);
 
         $name = $lastFiredTime = null;
         $isUnavailable = false;
@@ -161,9 +161,9 @@ class FacebookClient
     public function getPage(array $pageIds)
     {
         $pageId = reset($pageIds);
-        $responseContent = $this->get((int) $pageId, ['name', 'fan_count']);
+        $responseContent = $this->get((int) $pageId, __FUNCTION__, ['name', 'fan_count']);
 
-        $logoResponse = $this->get($pageId . '/photos', ['picture']);
+        $logoResponse = $this->get($pageId . '/photos', __FUNCTION__ . 'Photo', ['picture']);
 
         $logo = null;
         if (is_array($logoResponse)) {
@@ -185,7 +185,7 @@ class FacebookClient
      */
     public function getAd($adId)
     {
-        $responseContent = $this->get('act_' . $adId, ['name', 'created_time']);
+        $responseContent = $this->get('act_' . $adId, __FUNCTION__, ['name', 'created_time']);
 
         return new Ad(
             isset($responseContent['id']) ? $responseContent['id'] : $adId,
@@ -198,6 +198,7 @@ class FacebookClient
     {
         $responseContent = $this->get(
             'fbe_business/fbe_installs',
+            __FUNCTION__,
             [],
             [
                 'fbe_external_business_id' => $externalBusinessId,
@@ -211,6 +212,7 @@ class FacebookClient
     {
         $response = $this->get(
             'fbe_business',
+            __FUNCTION__,
             [],
             [
                 'fbe_external_business_id' => $externalBusinessId,
@@ -262,12 +264,15 @@ class FacebookClient
 
     /**
      * @param int|string $id
+     * @param string $method
      * @param array $fields
      * @param array $query
      *
      * @return false|array
+     *
+     * @throws Exception
      */
-    private function get($id, array $fields = [], array $query = [])
+    private function get($id, $method, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [
@@ -290,7 +295,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Facebook client failed when creating get request.',
+                    'Facebook client failed when creating get request. Method: ' . $method,
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
