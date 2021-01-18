@@ -274,6 +274,11 @@ class PsFacebookTranslations
                 'title' => $this->module->l('FAQ', 'PsFacebookTranslations'),
                 'noFaq' => $this->module->l('No FAQ available.', 'PsFacebookTranslations'),
             ],
+            'productStatuses' => [
+                'Approved' => $this->module->l('Approved'),
+                'Pending' => $this->module->l('Pending'),
+                'Disapproved' => $this->module->l('Disapproved'),
+            ],
         ];
 
         return $translations;

@@ -28,7 +28,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2dddad3a82e8e68edd68fe
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7cf592033613'] = 'Connecter sa boutique à Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9bef3cdc8de51'] = 'Mapper ses catégories';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_089b82e17fe5e6e2b6e87a5285b305c8'] = '(facultatif mais fortement recommandé)';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Exportez son catalogue de produits';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Exporter son catalogue de produits';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7bdb4177430'] = 'Créer des publicités dynamiques ou pour le trafic';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Recharger';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'Ce domaine est déjà relié à votre compte PrestaShop et Facebook avec une autre boutique de cette instance PrestaShop. 
@@ -39,7 +39,6 @@ Pour enregistrer cette boutique, vous devez d\'abord :
 - ou changer le nom de domaine de cette boutique.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'Une erreur inconnue s\'est produite lors de l\'onboarding. Veuillez recharger et réessayer.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4dae92e5770'] = 'Vos paramètres Facebook';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7cf592033613'] = 'Connectez votre boutique à Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Intégrez votre boutique à Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Se connecter à Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'Avec PrestaShop Facebook, profitez d\'une expérience d\'intégration et de gestion sans friction et sans code des fonctionnalités business de Facebook';
