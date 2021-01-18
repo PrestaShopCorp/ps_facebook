@@ -496,7 +496,7 @@ class EventDataProvider
      */
     private function getCustomEvent($params)
     {
-        if (!isset($params['eventName'])) {
+        if (!isset($params['eventName']) || !isset($params['module'])) {
             return null;
         }
 
@@ -509,6 +509,14 @@ class EventDataProvider
                 'module' => pSQL($params['module']),
             ],
         ];
+
+        if (isset($params['id_product'])) {
+            $fbProductId = ProductCatalogUtility::makeProductId(
+                $params['id_product'],
+                isset($params['id_product_attribute']) ? $params['id_product_attribute'] : 0
+            );
+            $customData['content_ids']['module'] = $fbProductId;
+        }
 
         return [
             'event_type' => $type,

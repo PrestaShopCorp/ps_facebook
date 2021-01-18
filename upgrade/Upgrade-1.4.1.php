@@ -17,7 +17,7 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
-function upgrade_module_1_3_1(Module $module)
+function upgrade_module_1_4_1(Module $module)
 {
     $module->registerHook('actionFacebookCallPixel');
 
