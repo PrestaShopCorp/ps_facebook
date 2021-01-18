@@ -1,0 +1,9 @@
+{
+    "id_product" : "50291",
+    "technical_name" : "ps_facebook",
+    "display_name" : "PS Facebook",
+    "channel" : "stable",
+    "type_upgrade" : "updatemin",
+    "product_type" : "module",
+    "compatible_from": "1.7.0.3"
+}
