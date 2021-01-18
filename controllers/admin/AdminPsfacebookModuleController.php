@@ -234,6 +234,24 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookGetProductSyncReporting' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetProductSyncReporting',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetProductStatuses' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'GetProductStatuses',
+                    'ajax' => 1,
+                ]
+            ),
             'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
@@ -287,9 +305,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
      * TODO : Move in https://github.com/PrestaShopCorp/prestashop_accounts_vue_components
      */
-    private function psAccountsHotFix($presentedData)
+    private function psAccountsHotFix(array $presentedData)
     {
-        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
+        if (!isset($presentedData['shops'])) {
+            return;
+        }
+
         foreach ($presentedData['shops'] as $groupKey => &$shopGroup) {
             foreach ($shopGroup['shops'] as &$shop) {
                 $shop['url'] = $this->context->link->getAdminLink(
@@ -303,6 +324,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 );
             }
         }
+
+        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
 
         return $presentedData;
     }

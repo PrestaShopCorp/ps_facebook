@@ -33,3 +33,9 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler
+
+  PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
+      - '@PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations'

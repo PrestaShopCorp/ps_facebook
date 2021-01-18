@@ -26,11 +26,13 @@ use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateExcep
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
@@ -466,6 +468,97 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode([
             'success' => $isUpgradeSuccessful,
         ]));
+    }
+
+    public function displayAjaxGetProductSyncReporting()
+    {
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
+
+        /** @var GoogleProductHandler $googleProductHandler */
+        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+
+        $shopId = Context::getContext()->shop->id;
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'productsWithErrors' => $informationAboutProductsWithErrors,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxGetProductStatuses()
+    {
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
+
+        $page = Tools::getValue('page');
+        $status = Tools::getValue('status');
+        $sortBy = Tools::getValue('sortBy');
+        $sortTo = Tools::getValue('sortTo');
+        $searchById = Tools::getValue('searchById');
+        $searchByName = Tools::getValue('searchByName');
+        $searchByMessage = Tools::getValue('searchByMessage');
+
+        /** @var GoogleProductHandler $googleProductHandler */
+        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+
+        $shopId = Context::getContext()->shop->id;
+        $informationAboutProducts = $googleProductHandler->getFilteredInformationAboutGoogleProducts(
+            $productsWithErrors,
+            $lastFinishedSyncStartedAt,
+            $shopId,
+            $page,
+            $status,
+            $sortBy,
+            $sortTo,
+            $searchById,
+            $searchByName,
+            $searchByMessage
+        );
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'products' => $informationAboutProducts,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                ]
+            )
+        );
     }
 
     /**
