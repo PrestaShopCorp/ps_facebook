@@ -67,7 +67,7 @@ class AccessTokenProvider
      */
     public function getUserAccessToken()
     {
-        if (!$this->userAccessToken && \Context::getContext()->controller->controller_type !== 'front') {
+        if (!$this->userAccessToken) {
             $this->getOrRefreshTokens();
         }
 
@@ -96,10 +96,11 @@ class AccessTokenProvider
         $tokenExpirationDate = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE);
         $currentTimestamp = time();
 
-        if (!$this->userAccessToken
-            || !$this->systemAccessToken
-            || !$tokenExpirationDate
-            || ($tokenExpirationDate - $currentTimestamp <= 86400)
+        if ((!$this->userAccessToken
+                || !$this->systemAccessToken
+                || !$tokenExpirationDate
+                || ($tokenExpirationDate - $currentTimestamp <= 86400))
+            && \Context::getContext()->controller->controller_type !== 'front'
         ) {
             $this->refreshTokens();
         }
