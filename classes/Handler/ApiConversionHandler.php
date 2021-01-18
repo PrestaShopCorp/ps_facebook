@@ -60,7 +60,8 @@ class ApiConversionHandler
         Api::init(
             null, // app_id
             null, // app_secret
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN),
+            false
         );
     }
 
