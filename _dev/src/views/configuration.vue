@@ -30,7 +30,7 @@
     />
     <MultiStoreSelector
       v-else-if="!contextPsAccounts.isShopContext"
-      :shops="contextPsAccounts.shops"
+      :shops="contextPsAccounts.shops || []"
       class="m-3"
       @shop-selected="onShopSelected($event)"
     />
@@ -241,7 +241,8 @@ export default defineComponent({
   },
   computed: {
     psAccountsOnboarded() {
-      return this.contextPsAccounts.user.email !== null
+      return this.contextPsAccounts.user
+        && this.contextPsAccounts.user.email !== null
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
