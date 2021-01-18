@@ -23,10 +23,29 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
 
 class ProductRepository
 {
+    /**
+     * @var PsFacebookTranslations
+     */
+    private $facebookTranslations;
+
+    /**
+     * @var \Language
+     */
+    private $language;
+
+    public function __construct(PsFacebookTranslations $facebookTranslations, \Language $language)
+    {
+        $this->facebookTranslations = $facebookTranslations;
+        $this->language = $language;
+    }
+
     /**
      * Copy of prestashop Product::getIdProductAttributeByIdAttributes function
      * because old PS versions are missing this function
@@ -179,5 +198,110 @@ class ProductRepository
         $res = Db::getInstance()->executeS($sql);
 
         return $res[0]['total'];
+    }
+
+    /**
+     * @param GoogleProduct $googleProduct
+     * @param int $shopId
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId)
+    {
+        $sql = new DbQuery();
+
+        $sql->select('pa.id_product, pa.id_product_attribute, pl.name');
+        $sql->select('l.iso_code');
+
+        $sql->from('product_attribute', 'pa');
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($googleProduct->getLandIsoCode()) . '"');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
+
+        $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductId());
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+
+        return Db::getInstance()->executeS($sql);
+    }
+
+    /**
+     * @param string $syncUpdateDate
+     * @param int $shopId
+     * @param array $productsWithErrors
+     * @param int $page
+     * @param string|null $status
+     * @param string|null $sortBy
+     * @param string $sortTo
+     * @param int|bool $searchById
+     * @param string|bool $searchByName
+     * @param string|bool $searchByMessage
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutGoogleProducts(
+        $syncUpdateDate,
+        $shopId,
+        $productsWithErrors,
+        $page = 1,
+        $status = null,
+        $sortBy = null,
+        $sortTo = 'ASC',
+        $searchById = false,
+        $searchByName = false,
+        $searchByMessage = false
+    ) {
+        $approved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Approved'];
+        $pending = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Pending'];
+        $disapproved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Disapproved'];
+        $sql = new DbQuery();
+
+        $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
+        $sql->select('
+            IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute, l.iso_code) IN ( "' . implode(',', $productsWithErrors) . '"), "'
+            . $disapproved . '", 
+            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
+             ) as status
+        ');
+        $sql->select('l.iso_code');
+        $sql->from('product_shop', 'ps');
+        $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
+        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang');
+
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
+
+        if ($sortBy) {
+            $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
+        }
+        if ($searchById) {
+            $sql->where('ps.id_product LIKE "%' . (int) $searchById . '%"');
+        }
+        if ($searchByName) {
+            $sql->where('pl.name LIKE "%' . pSQL($searchByName) . '%"');
+        }
+        if ($searchByMessage) {
+            $sql->where('ps.id_product LIKE "%' . (int) $searchByMessage . '%"');
+        }
+        if ($status) {
+            $sql->having('ps.id_product LIKE "%' . pSQL($status) . '%"');
+        }
+
+        $result = Db::getInstance()->executeS($sql);
+        $products = [];
+        foreach ($result as $product) {
+            $googleProductId = ProductCatalogUtility::makeProductId(
+                $product['id_product'],
+                $product['id_product_attribute'],
+                $product['iso_code']
+            );
+            $products[$googleProductId] = $product;
+        }
+
+        return $products;
     }
 }

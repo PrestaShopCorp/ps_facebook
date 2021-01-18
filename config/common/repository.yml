@@ -6,6 +6,9 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository
+    arguments:
+      - '@PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations'
+      - '@ps_facebook.language'
 
   PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository
