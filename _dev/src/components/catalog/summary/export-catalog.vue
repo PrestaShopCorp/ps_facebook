@@ -344,12 +344,14 @@ export default defineComponent({
         errored: 'N/A',
       };
 
+      const syncDate = data.lastSyncDate ? new Date(data.lastSyncDate) : null;
+
       return {
-        syncDate: data.lastSyncDate.toLocaleDateString(
+        syncDate: syncDate?.toLocaleDateString(
           undefined,
           {year: 'numeric', month: 'numeric', day: 'numeric'},
         ),
-        syncTime: data.lastSyncDate.toLocaleTimeString(
+        syncTime: syncDate?.toLocaleTimeString(
           undefined,
           {hour: '2-digit', minute: '2-digit'},
         ),
