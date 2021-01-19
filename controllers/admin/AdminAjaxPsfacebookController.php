@@ -371,7 +371,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProvider $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
 
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
         $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
+        $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id, ['onlyActive' => true]);
 
