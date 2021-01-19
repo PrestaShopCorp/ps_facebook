@@ -58,4 +58,9 @@ class FacebookClientMock extends FacebookClient
     {
         return $this->fbeFeatures;
     }
+
+    public function hasAccessToken()
+    {
+        return true;
+    }
 }
