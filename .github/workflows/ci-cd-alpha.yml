@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - master
+      - fix/ci-cd-ancestor
   pull_request:
     types: [opened,edited,reopened,synchronize,labeled]
 
 env:
   MODULE_NAME: ps_facebook
   GCLOUD_TOKEN_PATH: ./token.json
+  PS_IMG_VERSION: prestashop/prestashop:1.7.6.9-7.2-apache
 
 jobs:
 
@@ -72,7 +74,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") rm -rf modules/ps_facebook'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") rm -rf modules/ps_facebook'
 
       - name: Move modules
         uses: appleboy/ssh-action@master
@@ -91,8 +93,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module install ps_facebook'
 
       - name: Clear cache
         uses: appleboy/ssh-action@master
@@ -101,8 +103,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console cache:cl'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") chmod -R 777 var/cache var/logs'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console cache:cl'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") chmod -R 777 var/cache var/logs'
 
       - name: Delete tmp module
         uses: appleboy/ssh-action@master
