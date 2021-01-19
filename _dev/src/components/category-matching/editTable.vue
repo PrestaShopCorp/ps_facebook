@@ -39,8 +39,7 @@
       </b-thead>
       <b-tbody>
         <b-tr
-          v-for="category in categories"
-          v-if="category.show"
+          v-for="category in activeCategories"
           :key="category.shopCategoryId"
           :class="categoryStyle(category)"
         >
@@ -72,19 +71,15 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-
-const PARENT_STATEMENT = {
-  NO_CHILDREN: '0',
-  HAS_CHILDREN: '1',
-  UNFOLD: '2',
-  FOLD: '3',
-};
+import MixinMatching from './matching.ts';
 
 export default defineComponent({
   name: 'editTable',
   components: {
   },
-  mixins: [],
+  mixins: [
+    MixinMatching,
+  ],
   props: {
     initialCategories: {
       type: Array,
@@ -112,6 +107,11 @@ export default defineComponent({
     },
   },
   computed: {
+    activeCategories() {
+      return this.categories.filter(
+        (category) => category.show,
+      );
+    },
   },
   data() {
     return {
@@ -124,22 +124,9 @@ export default defineComponent({
     };
   },
   methods: {
-    saveMatchingCallback(category) {
-      return fetch(this.saveParentStatement, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_shop_category=${category.shopCategoryId}&google_category_id=${category.fbCategoryId}&update_children=${category.propagate}`,
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return true;
-      });
-    },
-
     categoryStyle(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
-      const isDeployed = category.deploy === PARENT_STATEMENT.FOLD ? 'opened' : (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3 ? '' : 'closed');
+      const isDeployed = category.deploy === this.FOLD ? 'opened' : (category.deploy === this.NO_CHILDREN || floor === 3 ? '' : 'closed');
 
       return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
@@ -185,7 +172,7 @@ export default defineComponent({
         /* eslint no-param-reassign: "error" */
         child.show = true;
       });
-      currentCategory.deploy = PARENT_STATEMENT.FOLD;
+      currentCategory.deploy = this.FOLD;
     },
 
     /**
@@ -198,11 +185,11 @@ export default defineComponent({
       );
       childrens.forEach((child) => {
         child.show = false;
-        if (child.deploy === PARENT_STATEMENT.FOLD) {
-          child.deploy = PARENT_STATEMENT.UNFOLD;
+        if (child.deploy === this.FOLD) {
+          child.deploy = this.UNFOLD;
         }
       });
-      currentCategory.deploy = PARENT_STATEMENT.UNFOLD;
+      currentCategory.deploy = this.UNFOLD;
     },
 
     /**
@@ -211,7 +198,7 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      currentCategory.deploy = PARENT_STATEMENT.FOLD;
+      currentCategory.deploy = this.FOLD;
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
         subcategory = res;
@@ -228,9 +215,9 @@ export default defineComponent({
         }
 
         if (subcategory.length !== 0) {
-          currentCategory.deploy = PARENT_STATEMENT.FOLD;
+          currentCategory.deploy = this.FOLD;
         } else {
-          currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
+          currentCategory.deploy = this.NO_CHILDREN;
         }
       });
     },
@@ -251,8 +238,7 @@ export default defineComponent({
                 el.show = true;
                 el.shopParentCategoryIds = `${el.shopCategoryId}/`;
               }
-              // this.hasCategories = false;
-              this.loading = false;
+              this.hasCategories = false;
             });
           } else {
             if (undefined === this.categories.find(
@@ -263,9 +249,9 @@ export default defineComponent({
               res.show = true;
               res.shopParentCategoryIds = `${res.shopCategoryId}/`;
             }
-            // this.hasCategories = false;
-            this.loading = false;
+            this.hasCategories = false;
           }
+          this.loading = false;
         });
       }
     },

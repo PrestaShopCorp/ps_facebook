@@ -29,8 +29,7 @@
       </b-thead>
       <b-tbody>
         <editing-row
-          v-for="category in categories"
-          v-if="category.show"
+          v-for="category in activeCategories"
           :key="category.shopCategoryId"
           :category-style="categoryStyle(category)"
           :shop-category-id="category.shopCategoryId"
@@ -59,20 +58,16 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import EditingRow from './editing-row.vue';
-
-const PARENT_STATEMENT = {
-  NO_CHILDREN: '0',
-  HAS_CHILDREN: '1',
-  UNFOLD: '2',
-  FOLD: '3',
-};
+import MixinMatching from './matching.ts';
 
 export default defineComponent({
   name: 'TableMatching',
   components: {
     EditingRow,
   },
-  mixins: [],
+  mixins: [
+    MixinMatching,
+  ],
   props: {
     initialCategories: {
       type: Array,
@@ -100,6 +95,11 @@ export default defineComponent({
     },
   },
   computed: {
+    activeCategories() {
+      return this.categories.filter(
+        (category) => category.show,
+      );
+    },
   },
   data() {
     return {
@@ -129,17 +129,10 @@ export default defineComponent({
       });
     },
 
-    categoryStyle(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1;
-      const isDeployed = category.deploy === PARENT_STATEMENT.FOLD ? 'opened' : (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3 ? '' : 'closed');
-
-      return `psfb-match array-tree-lvl-${floor.toString()} ${isDeployed}`;
-    },
-
     canShowCheckbox(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
 
-      if (category.deploy === PARENT_STATEMENT.NO_CHILDREN || floor === 3) {
+      if (category.deploy === this.NO_CHILDREN || floor === 3) {
         return false;
       }
 
@@ -180,7 +173,7 @@ export default defineComponent({
           child.isParentCategory = null;
         }
       });
-      currentCategory.deploy = PARENT_STATEMENT.FOLD;
+      currentCategory.deploy = this.FOLD;
     },
 
     /**
@@ -193,11 +186,11 @@ export default defineComponent({
       );
       childrens.forEach((child) => {
         child.show = false;
-        if (child.deploy === PARENT_STATEMENT.FOLD) {
-          child.deploy = PARENT_STATEMENT.UNFOLD;
+        if (child.deploy === this.FOLD) {
+          child.deploy = this.UNFOLD;
         }
       });
-      currentCategory.deploy = PARENT_STATEMENT.UNFOLD;
+      currentCategory.deploy = this.UNFOLD;
     },
 
     /**
@@ -207,9 +200,8 @@ export default defineComponent({
       this.loading = true;
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      currentCategory.deploy = PARENT_STATEMENT.FOLD;
+      currentCategory.deploy = this.FOLD;
 
-      // condition for work with storybook
       if (this.overrideGetCurrentRow) {
         if (Array.isArray(subcategory)) {
           subcategory.forEach((el) => {
@@ -240,9 +232,9 @@ export default defineComponent({
         }
 
         if (subcategory.length !== 0) {
-          currentCategory.deploy = PARENT_STATEMENT.FOLD;
+          currentCategory.deploy = this.FOLD;
         } else {
-          currentCategory.deploy = PARENT_STATEMENT.NO_CHILDREN;
+          currentCategory.deploy = this.NO_CHILDREN;
         }
       });
       this.loading = false;
@@ -265,7 +257,6 @@ export default defineComponent({
                 el.shopParentCategoryIds = `${el.shopCategoryId}/`;
               }
               this.hasCategories = false;
-              this.loading = false;
             });
           } else {
             if (undefined === this.categories.find(
@@ -277,8 +268,8 @@ export default defineComponent({
               res.shopParentCategoryIds = `${res.shopCategoryId}/`;
             }
             this.hasCategories = false;
-            this.loading = false;
           }
+          this.loading = false;
         });
       }
     },

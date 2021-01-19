@@ -67,7 +67,6 @@
       {{ $t('categoryMatching.intro') }}
     </p>
 
-    <p />
     <TableMatching
       v-if="categories.length > 0"
       :initial-categories="categories"
