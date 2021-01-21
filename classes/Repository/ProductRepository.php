@@ -216,7 +216,8 @@ class ProductRepository
         $sql->select('l.iso_code');
 
         $sql->from('product_attribute', 'pa');
-        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($googleProduct->getLandIsoCode()) . '"');
+        // TODO !0: fix, format of $googleProduct changed, there is no lang anymore (use shop default lang instead)
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "fr"'); // TODO !0: change for shop default lang. Still need a join ?
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
         $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
@@ -260,9 +261,10 @@ class ProductRepository
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
+        // TODO !0: fix, format of $productsWithErrors is not "1-1-fr" anymore, but "1-1" (we lose the lang), keep only shop default lang instead.
         $sql->select('
             IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute, l.iso_code) IN ( "' . implode(',', $productsWithErrors) . '"), "'
-            . $disapproved . '", 
+            . $disapproved . '",
             IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
              ) as status
         ');
@@ -270,7 +272,7 @@ class ProductRepository
         $sql->from('product_shop', 'ps');
         $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
-        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang');
+        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang'); // TODO !0: fix here too?
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
@@ -297,7 +299,7 @@ class ProductRepository
             $googleProductId = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
                 $product['id_product_attribute'],
-                $product['iso_code']
+                $product['iso_code'] // TODO !0: fix here too?
             );
             $products[$googleProductId] = $product;
         }

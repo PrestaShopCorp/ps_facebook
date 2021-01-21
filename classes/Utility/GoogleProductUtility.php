@@ -17,7 +17,6 @@ class GoogleProductUtility
         $googleProductObj = new GoogleProduct();
         $googleProductObj->setProductId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ID]);
         $googleProductObj->setProductAttributeId((int) $googleProductSplitted[GoogleProduct::POSITION_PRODUCT_ATTRIBUTE_ID]);
-        $googleProductObj->setLandIsoCode($googleProductSplitted[GoogleProduct::POSITION_COUNTRY_ISO_CODE]);
 
         return $googleProductObj;
     }

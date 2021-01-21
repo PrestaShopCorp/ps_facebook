@@ -37,14 +37,14 @@ class GoogleProductHandler
     public function getInformationAboutGoogleProductsWithErrors(array $googleProducts, $shopId)
     {
         $googleProductsInformation = [];
-        foreach ($googleProducts as $googleProductId => $message) {
+        foreach ($googleProducts as $googleProductId => $messages) {
             $googleProductObj = GoogleProductUtility::googleProductToObject($googleProductId);
             $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
                 $googleProductObj,
                 $shopId
             );
             $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
-            $googleProductsInformation[$googleProductId]['message'] = $message;
+            $googleProductsInformation[$googleProductId]['messages'] = $messages;
         }
 
         return $googleProductsInformation;
@@ -93,8 +93,8 @@ class GoogleProductHandler
             $searchByMessage
         );
 
-        foreach ($googleProducts as $googleProductId => $message) {
-            $googleProductsInfo['message'] = $message;
+        foreach ($googleProducts as $googleProductId => $messages) {
+            $googleProductsInfo['messages'] = $messages;
         }
 
         return $googleProductsInfo;
