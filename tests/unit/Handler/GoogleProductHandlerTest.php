@@ -38,22 +38,21 @@ class GoogleProductHandlerTest extends TestCase
 
     public function getInformationAboutGoogleProductsDataProvider()
     {
-        // TODO !0: as the language is not in the GoogleProduct anymore, have to fix this part.
         $isoCode = 'en';
 
-        $productOneGoogleId = '1-1-en';
+        $productOneGoogleId = '1-1';
         $productOneId = 1;
         $productOneAttributeId = 1;
         $productOneName = 'Hummingbird printed t-shirt';
 
-        $productTwoGoogleId = '2-2-en';
+        $productTwoGoogleId = '2-2';
         $productTwoId = 2;
         $productTwoAttributeId = 2;
         $productTwoName = 'Hummingbird printed t-shirt2';
 
         return [
             '1 product' => [
-                'googleProduct' => [$productOneGoogleId => 'error message'],
+                'googleProduct' => [$productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message']],
                 'productRepoMocks' => [
                     0 => [
                         [
@@ -75,7 +74,10 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products' => [
-                'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
+                'googleProduct' => [
+                    $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message']
+                ],
                 'productRepoMocks' => [
                     0 => [
                         [
@@ -112,7 +114,10 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products but one is missing in database' => [
-                'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
+                'googleProduct' => [
+                    $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message']
+                ],
                 'productRepoMocks' => [
                     0 => [
                         [
