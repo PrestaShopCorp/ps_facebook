@@ -503,7 +503,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
+        $isoCode = Context::getContext()->language->iso_code;
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId, $isoCode);
 
         $this->ajaxDie(
             json_encode(

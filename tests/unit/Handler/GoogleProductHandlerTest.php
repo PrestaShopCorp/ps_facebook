@@ -31,7 +31,7 @@ class GoogleProductHandlerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $googleProductHandler = new GoogleProductHandler($productRepo, $psFacebookTranslations);
-        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1);
+        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1, 'eu');
 
         self::assertEquals($result, $informationAboutProducts);
     }
