@@ -23,7 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
+use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
@@ -201,7 +201,7 @@ class ProductRepository
     }
 
     /**
-     * @param GoogleProduct $googleProduct
+     * @param EventBusProduct $eventBusProduct
      * @param int $shopId
      * @param string $isoCode
      *
@@ -209,7 +209,7 @@ class ProductRepository
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId, $isoCode)
+    public function getInformationAboutEventBusProduct(EventBusProduct $eventBusProduct, $shopId, $isoCode)
     {
         $sql = new DbQuery();
 
@@ -220,8 +220,8 @@ class ProductRepository
         $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
-        $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
-        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductAttributeId());
+        $sql->where('pa.id_product = ' . (int) $eventBusProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $eventBusProduct->getProductAttributeId());
         $sql->where('pl.id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
@@ -243,7 +243,7 @@ class ProductRepository
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProducts(
+    public function getInformationAboutEventBusProducts(
         $syncUpdateDate,
         $shopId,
         $productsWithErrors,
@@ -296,12 +296,12 @@ class ProductRepository
         $result = Db::getInstance()->executeS($sql);
         $products = [];
         foreach ($result as $product) {
-            $googleProductId = ProductCatalogUtility::makeProductId(
+            $eventBusProductId = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
                 $product['id_product_attribute'],
                 $product['iso_code'] // TODO !0: fix here too?
             );
-            $products[$googleProductId] = $product;
+            $products[$eventBusProductId] = $product;
         }
 
         return $products;

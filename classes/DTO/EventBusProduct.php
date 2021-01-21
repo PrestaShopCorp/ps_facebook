@@ -2,7 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
-class GoogleProduct
+class EventBusProduct
 {
     const POSITION_PRODUCT_ID = 0;
     const POSITION_PRODUCT_ATTRIBUTE_ID = 1;
@@ -28,7 +28,7 @@ class GoogleProduct
     /**
      * @param int $productId
      *
-     * @return GoogleProduct
+     * @return EventBusProduct
      */
     public function setProductId($productId)
     {
@@ -48,7 +48,7 @@ class GoogleProduct
     /**
      * @param int $productAttributeId
      *
-     * @return GoogleProduct
+     * @return EventBusProduct
      */
     public function setProductAttributeId($productAttributeId)
     {

@@ -31,7 +31,7 @@ class ProductCatalogUtility
      */
     public static function makeProductId($productId, $productAttributeId, $isoCode = false)
     {
-        $googleProductId = implode(
+        $eventBusProductId = implode(
             '-',
             [
                 (int) $productId,
@@ -40,13 +40,13 @@ class ProductCatalogUtility
         );
 
         if (!$isoCode) {
-            return $googleProductId;
+            return $eventBusProductId;
         }
 
         return implode(
             '-',
             [
-                $googleProductId,
+                $eventBusProductId,
                 $isoCode,
             ]
         );
