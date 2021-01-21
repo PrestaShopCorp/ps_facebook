@@ -203,12 +203,13 @@ class ProductRepository
     /**
      * @param GoogleProduct $googleProduct
      * @param int $shopId
+     * @param string $isoCode
      *
      * @return array|bool|\mysqli_result|\PDOStatement|resource|null
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId)
+    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId, $isoCode)
     {
         $sql = new DbQuery();
 
@@ -216,12 +217,11 @@ class ProductRepository
         $sql->select('l.iso_code');
 
         $sql->from('product_attribute', 'pa');
-        // TODO !0: fix, format of $googleProduct changed, there is no lang anymore (use shop default lang instead)
-        $sql->innerJoin('lang', 'l', 'l.iso_code = "fr"'); // TODO !0: change for shop default lang. Still need a join ?
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
         $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
-        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductAttributeId());
         $sql->where('pl.id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
