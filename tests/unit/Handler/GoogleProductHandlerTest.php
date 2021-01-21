@@ -76,7 +76,7 @@ class GoogleProductHandlerTest extends TestCase
             '2 products' => [
                 'googleProduct' => [
                     $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
-                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message']
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                 ],
                 'productRepoMocks' => [
                     0 => [
@@ -116,7 +116,7 @@ class GoogleProductHandlerTest extends TestCase
             '2 products but one is missing in database' => [
                 'googleProduct' => [
                     $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
-                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message']
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                 ],
                 'productRepoMocks' => [
                     0 => [
