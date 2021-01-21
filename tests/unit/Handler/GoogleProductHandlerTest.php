@@ -38,6 +38,7 @@ class GoogleProductHandlerTest extends TestCase
 
     public function getInformationAboutGoogleProductsDataProvider()
     {
+        // TODO !0: as the language is not in the GoogleProduct anymore, have to fix this part.
         $isoCode = 'en';
 
         $productOneGoogleId = '1-1-en';
@@ -65,7 +66,7 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
@@ -95,14 +96,14 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
                         'iso_code' => $isoCode,
                     ],
                     $productTwoGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productTwoId,
                         'id_product_attribute' => $productTwoAttributeId,
                         'name' => $productTwoName,
@@ -115,7 +116,7 @@ class GoogleProductHandlerTest extends TestCase
                 'productRepoMocks' => [
                     0 => [
                         [
-                            'message' => 'error message',
+                            'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                             'id_product' => $productOneId,
                             'id_product_attribute' => $productOneAttributeId,
                             'name' => $productOneName,
@@ -126,14 +127,14 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
                         'iso_code' => $isoCode,
                     ],
                     $productTwoGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                     ],
                 ],
             ],
