@@ -96,7 +96,7 @@ class GoogleProductHandler
         );
 
         foreach ($googleProducts as $googleProductId => $messages) {
-            $googleProductsInfo['messages'] = $messages;
+            $googleProductsInfo[$googleProductId]['messages'] = $messages;
         }
 
         return $googleProductsInfo;
