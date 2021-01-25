@@ -22,16 +22,16 @@ dist:
 	mkdir -p ./dist
 
 # target: bundle-prod              	     - Bundle a production zip
-bundle-prod: dist .env.prod ./vendor ./_dev/node_modules
+bundle-prod: dist .env.prod ./vendor ./views/index.php
 	cp ".env.prod" ".env"
-	cd .. && zip -r "${PACKAGE}_prod.zip" ${MODULE} -x '*.git*'
-	mv "../${PACKAGE}_prod.zip" ./dist
+	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' ${MODULE}/_dev/\* ${MODULE}/dist/\*
+	mv ../${PACKAGE}_prod.zip ./dist
 
 # target: bundle-prod              	     - Bundle an integration zip
-bundle-inte: dist .env.inte ./vendor ./_dev/node_modules
+bundle-inte: dist .env.inte ./vendor ./views/index.php
 	cp ".env.inte" ".env"
-	cd .. && zip -r "${PACKAGE}_inte.zip" ${MODULE} -x '*.git*'
-	mv "../${PACKAGE}_inte.zip" ./dist
+	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' ${MODULE}/_dev/\* ${MODULE}/dist/\*
+	mv ../${PACKAGE}_inte.zip ./dist
 
 # target: build              	         - Setup PHP & Node.js locally
 build: build-front build-composer
@@ -47,7 +47,7 @@ build-front:
 ifndef NPM
     $(error "NPM is unavailable on your system")
 endif
-	npm --prefix=./_dev install
+	npm --prefix=./_dev ci
 	npm --prefix=./_dev run build
 
 # target: composer.phar                  - Install composer to manage php deps
@@ -91,7 +91,7 @@ docker-build: docker-build-front docker-build-composer
 
 # target: docker-build-front             - Build front for prod with docker
 docker-build-front:
-	docker-compose run --rm node sh -c "npm --prefix=./_dev install"
+	docker-compose run --rm node sh -c "npm --prefix=./_dev ci"
 	docker-compose run --rm node sh -c "npm --prefix=./_dev run build"
 
 # target: docker-watch-front             - Watch VueJS files and compile when saved
