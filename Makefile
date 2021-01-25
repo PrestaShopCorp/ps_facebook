@@ -24,13 +24,23 @@ dist:
 # target: bundle-prod              	     - Bundle a production zip
 bundle-prod: dist .env.prod ./vendor ./views/index.php
 	cp ".env.prod" ".env"
-	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' ${MODULE}/_dev/\* ${MODULE}/dist/\*
+	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' \
+	  ${MODULE}/_dev/\* \
+	  ${MODULE}/dist/\* \
+	  ${MODULE}/.env.\* \
+	  ${MODULE}/composer.phar \
+	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_prod.zip ./dist
 
 # target: bundle-prod              	     - Bundle an integration zip
 bundle-inte: dist .env.inte ./vendor ./views/index.php
 	cp ".env.inte" ".env"
-	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' ${MODULE}/_dev/\* ${MODULE}/dist/\*
+	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' \
+	  ${MODULE}/_dev/\* \
+	  ${MODULE}/dist/\* \
+	  ${MODULE}/.env.\* \
+	  ${MODULE}/composer.phar \
+	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_inte.zip ./dist
 
 # target: build              	         - Setup PHP & Node.js locally
