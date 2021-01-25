@@ -165,7 +165,7 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
-        $sql->where('ps.id_shop = ' . (int) $shopId);
+        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
@@ -261,16 +261,15 @@ class ProductRepository
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
         $sql->select('
-            IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute, l.iso_code) IN ( "' . implode(',', $productsWithErrors) . '"), "'
-            . $disapproved . '", 
+            IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
+            . $disapproved . '",
             IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
              ) as status
         ');
-        $sql->select('l.iso_code');
+
         $sql->from('product_shop', 'ps');
         $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
-        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang');
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
@@ -296,8 +295,7 @@ class ProductRepository
         foreach ($result as $product) {
             $googleProductId = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
-                $product['id_product_attribute'],
-                $product['iso_code']
+                $product['id_product_attribute']
             );
             $products[$googleProductId] = $product;
         }
