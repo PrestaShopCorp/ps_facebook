@@ -1,6 +1,11 @@
 vendor/
 node_modules/
 upload/*
+.env.prod
+.env.inte
+.env
+dist/
+composer.phar
 
 # Ignore VueJS compiled files
 views/css/app.css
