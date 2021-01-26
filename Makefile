@@ -27,7 +27,8 @@ bundle-prod: dist .env.prod ./vendor ./views/index.php
 	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
-	  ${MODULE}/.env.\* \
+	  ${MODULE}/.env.inte \
+	  ${MODULE}/.env.prod \
 	  ${MODULE}/composer.phar \
 	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_prod.zip ./dist
@@ -38,7 +39,8 @@ bundle-inte: dist .env.inte ./vendor ./views/index.php
 	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
-	  ${MODULE}/.env.\* \
+	  ${MODULE}/.env.inte \
+	  ${MODULE}/.env.prod \
 	  ${MODULE}/composer.phar \
 	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_inte.zip ./dist
