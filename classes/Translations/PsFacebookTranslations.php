@@ -184,6 +184,7 @@ class PsFacebookTranslations
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
                 'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
                 'counterSubTitle' => $this->module->l('specified parent categories', 'PsFacebookTranslations'),
+                'edit' => $this->module->l('Edit', 'PsFacebookTranslations'),
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
                     'select' => $this->module->l('Select', 'PsFacebookTranslations'),
@@ -197,6 +198,20 @@ class PsFacebookTranslations
                     'thirdTd' => $this->module->l('Parent category'),
                     'fourthTd' => $this->module->l('Google subcategory'),
                 ],
+                'editTable' => [
+                    'required' => $this->module->l('Required'),
+                    'checkboxTxt' => $this->module->l('Display unspecified categories only'),
+                    'psCategoryName' => $this->module->l('Category on your site'),
+                    'fbCategoryName' => $this->module->l('Facebook category'),
+                    'fbSubcategoryName' => $this->module->l('Facebook subcategory'),
+                ],
+            ],
+            'categoryMatched' => [
+                'title' => $this->module->l('Enhance your catalog: category mapping'),
+                'description' => $this->module->l('To enhance your catalog and help customers disovers your items online, enter a Facebook product Category (FPC) for your items and then add more informations specific to each category.'),
+                'btn' => $this->module->l('View mapping'),
+                'progressBarMatched' => $this->module->l('Matched categories'),
+                'progressBarTotal' => $this->module->l('Categories total'),
             ],
             'integrate' => [
                 'buttons' => [

@@ -17,53 +17,65 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div class="display-table-matchingFb">
+  <div class="display-table-editTable">
+    <div class="d-none d-md-block">
+      <b-checkbox
+        :checked="filterCategory"
+        class="float-left mr-3"
+        @change="changeFilter"
+        disabled-field="notEnabled"
+        :disabled="enableCheckbox"
+      >
+        {{ $t('categoryMatching.editTable.checkboxTxt') }} ({{ numberOfCategoryWithoutMatching }})
+      </b-checkbox>
+    </div>
     <b-table-simple :responsive="true">
       <b-thead>
         <b-tr>
-          <b-th>{{ $t('categoryMatching.tableMatching.firstTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.psCategoryName') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.fbCategoryName') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.fbSubcategoryName') }}</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
-        <editing-row
+        <b-tr
           v-for="category in activeCategories"
           :key="category.shopCategoryId"
-          :category-style="categoryStyle(category)"
-          :shop-category-id="category.shopCategoryId"
-          :initial-category-name="category.googleCategoryParentName"
-          :initial-category-id="category.googleCategoryParentId"
-          :initial-subcategory-name="category.googleCategoryName"
-          :initial-subcategory-id="category.googleCategoryId"
-          :initial-propagation="category.isParentCategory"
-          :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
-          :save-matching-callback="saveMatchingCallback"
-          @rowClicked="getCurrentRow"
+          :class="categoryStyle(category)"
         >
-          {{ category.shopCategoryName }}
-        </editing-row>
+          <b-td
+            @click="getCurrentRow(category.shopCategoryId)"
+          >
+            {{ category.shopCategoryName }}
+          </b-td>
+          <b-td v-if="!category.googleCategoryParentName">
+            <b-badge variant="danger">
+              {{ $t('categoryMatching.editTable.required') }}
+            </b-badge>
+          </b-td>
+          <b-td v-else>
+            {{ category.googleCategoryParentName }}
+          </b-td>
+          <b-td> {{ category.googleCategoryName ? category.googleCategoryName : '-' }} </b-td>
+        </b-tr>
       </b-tbody>
-      <b-tfoot v-if="loading">
-        <div
-          v-if="hasCategories"
-          id="spinner"
-        />
-      </b-tfoot>
     </b-table-simple>
+    <b-tfoot v-if="loading">
+      <div
+        v-if="hasCategories"
+        id="spinner"
+      />
+    </b-tfoot>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import EditingRow from './editing-row.vue';
 import MixinMatching from './matching.ts';
 
 export default defineComponent({
-  name: 'TableMatching',
+  name: 'editTable',
   components: {
-    EditingRow,
   },
   mixins: [
     MixinMatching,
@@ -105,38 +117,18 @@ export default defineComponent({
     return {
       categories: this.initialCategories,
       loading: null,
+      enableCheckbox: false,
+      filterCategory: false,
       hasCategories: false,
+      numberOfCategoryWithoutMatching: 0,
     };
   },
   methods: {
-    saveMatchingCallback(category) {
-      // condition for work with storybook
-      if (this.overrideGetCurrentRow) {
-        return Promise.resolve(true);
-      }
-
-      const updateParent = Number(category.propagate);
-
-      return fetch(this.saveParentStatement, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${updateParent}`,
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return true;
-      });
-    },
-
-    canShowCheckbox(category) {
+    categoryStyle(category) {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
+      const isDeployed = category.deploy === this.FOLD ? 'opened' : (category.deploy === this.NO_CHILDREN || floor === 3 ? '' : 'closed');
 
-      if (category.deploy === this.NO_CHILDREN || floor === 3) {
-        return false;
-      }
-
-      return true;
+      return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
 
     getCurrentRow(currentShopCategoryID) {
@@ -150,11 +142,22 @@ export default defineComponent({
         (child) => child.shopCategoryId === currentShopCategoryID,
       );
 
-      if (this.canShowCheckbox(currentCtg) === false) {
-        currentCtg.isParentCategory = null;
-      }
-
       this.setAction(currentCtg, subcategory);
+    },
+
+    changeFilter(value) {
+      this.filterCategory = value;
+
+      if (this.filterCategory === true) {
+        this.categories.forEach((el) => {
+          const result = !el.googleCategoryId;
+          el.show = result;
+        });
+      } else {
+        this.categories.forEach((el) => {
+          el.show = true;
+        });
+      }
     },
 
     /**
@@ -168,10 +171,6 @@ export default defineComponent({
       filterChildren.forEach((child) => {
         /* eslint no-param-reassign: "error" */
         child.show = true;
-        if (this.canShowCheckbox(child) === false) {
-          /* eslint no-param-reassign: "error" */
-          child.isParentCategory = null;
-        }
       });
       currentCategory.deploy = this.FOLD;
     },
@@ -197,25 +196,9 @@ export default defineComponent({
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
-      this.loading = true;
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       currentCategory.deploy = this.FOLD;
-
-      if (this.overrideGetCurrentRow) {
-        if (Array.isArray(subcategory)) {
-          subcategory.forEach((el) => {
-            this.categories.splice(indexCtg, 0, el);
-            el.show = true;
-            el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-          });
-        } else {
-          this.categories.splice(indexCtg, 0, subcategory);
-          subcategory.show = true;
-          subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-        }
-        return;
-      }
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
         subcategory = res;
@@ -237,7 +220,6 @@ export default defineComponent({
           currentCategory.deploy = this.NO_CHILDREN;
         }
       });
-      this.loading = false;
     },
 
     handleScroll() {
@@ -283,35 +265,119 @@ export default defineComponent({
         2: () => this.showChildren(currentCategory),
         3: () => this.hideChildren(currentCategory),
       };
+
       return dictionary[currentCategory.deploy].call();
     },
   },
   created() {
+    this.categories.forEach((el) => {
+      if (!el.googleCategoryId) {
+        this.numberOfCategoryWithoutMatching += 1;
+      }
+    });
+
+    if (this.numberOfCategoryWithoutMatching === 0) {
+      this.enableCheckbox = true;
+    }
     window.addEventListener('scroll', this.handleScroll);
   },
   watch: {
   },
 });
 </script>
+
 <style lang="scss" scoped>
-#spinner {
-  color: #fff;
-  background-color: #fff;
-  width: 1.3rem !important;
-  height: 1.3rem !important;
-  border-radius: 2.5rem;
-  border-right-color: #25b9d7;
-  border-bottom-color: #25b9d7;
-  border-width: .1875rem;
-  border-style: solid;
-  font-size: 0;
-  outline: none;
-  display: inline-block;
-  border-left-color: #bbcdd2;
-  border-top-color: #bbcdd2;
-  -webkit-animation: rotating 2s linear infinite;
-  animation: rotating 2s linear infinite;
-  position: absolute;
-  left: calc(50% - 0.6rem);
+.display-table-editTable {
+  table tbody tr {
+    height: 50px;
+  }
+  .opened {
+    td:first-child:before {
+      font-family: Material Icons!important;
+      font-weight: 400!important;
+      font-style: normal!important;
+      font-size: 24px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_more"!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
+    }
+    td:first-child {
+      cursor: pointer!important;
+    }
+  }
+  .closed {
+    td:first-child:before {
+      font-family: Material Icons!important;
+      font-style: normal!important;
+      font-size: 15px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_less"!important;
+      transform: rotate(90deg)!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
+    }
+    td:first-child {
+      cursor: pointer!important;
+    }
+  }
+
+  .array-tree-lvl-2 {
+    td:first-child {
+      padding-left:40px!important;
+    }
+  }
+  .array-tree-lvl-3 {
+    td:first-child {
+      padding-left:80px!important;
+    }
+  }
+
+  #spinner {
+    color: #fff;
+    background-color: #fff;
+    width: 1.3rem !important;
+    height: 1.3rem !important;
+    border-radius: 2.5rem;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    position: absolute;
+    left: calc(50% - 0.6rem);
+  }
 }
 </style>

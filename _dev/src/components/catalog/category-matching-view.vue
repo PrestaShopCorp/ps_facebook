@@ -18,49 +18,161 @@
  *-->
 <template>
   <spinner v-if="loading" />
-  <div
+  <b-card
+    class="card m-3"
     v-else
     id="catalogCategoryMatchingView"
   >
-    TODO: CatalogCategoryMatchingView
-    <br>
-    <b-button @click="$parent.goto($parent.PAGES.categoryMatchingEdit)">
-      EDIT
-    </b-button>
-    <b-button @click="$parent.back">
-      BACK
-    </b-button>
-  </div>
+    <!-- Large screen -->
+    <div class="d-none d-md-block">
+      <b-button
+        class="float-left mr-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
+      </b-button>
+      <div class="counter float-right ml-5">
+        <h3 :class="matchingDone">
+          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          <br>
+          <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
+        </h3>
+      </div>
+      <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+    </div>
+
+    <!-- Small screen -->
+    <div class="d-block d-md-none">
+      <b-button
+        class="w-auto mb-3"
+        variant="outline-secondary"
+        @click="$parent.back"
+      >
+        <i class="material-icons">keyboard_backspace</i>
+        {{ $t('catalogSummary.backButton') }}
+      </b-button>
+      <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
+      <div class="counter">
+        <h3 :class="matchingDone">
+          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          <br>
+          <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
+        </h3>
+      </div>
+    </div>
+
+    <p class="py-3">
+      {{ $t('categoryMatching.intro') }}
+    </p>
+
+    <TableMatching
+      v-if="categories.length > 0"
+      :initial-categories="categories"
+    />
+  </b-card>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
+import TableMatching from '../category-matching/tableMatching.vue';
 import Spinner from '../spinner/spinner.vue';
 
 export default defineComponent({
-  name: 'CatalogCategoryMatchingView',
+  name: 'CatalogMatchingView',
   components: {
-    Spinner,
     BButton,
+    Spinner,
+    TableMatching,
   },
   mixins: [],
   props: {
+    categoryMatchingRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCatalogSummaryRoute || null,
+    },
+    getCategoriesRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategories || null,
+    },
   },
   computed: {
   },
   data() {
     return {
+      categories: [],
+      matchingDone: null,
       loading: true,
+      matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
   created() {
     this.fetchData();
+    this.loading = true;
+    this.fetchCategories(0, 1).then((res) => {
+      this.categories = res;
+      this.loading = false;
+    });
   },
   methods: {
     fetchData() {
-      // TODO !0
-      this.loading = false;
+      fetch(this.categoryMatchingRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((res) => {
+          this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
+          if (res.matchingProgress.matched === res.matchingProgress.total) {
+            this.matchingDone = 'matching-finished';
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+    },
+    fetchCategories(idCategory, page) {
+      let mainCategoryId = idCategory;
+      if (mainCategoryId === 0) {
+        mainCategoryId = this.$store.state.context.appContext.defaultCategory.id_category;
+      }
+
+      return fetch(this.getCategoriesRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_category=${mainCategoryId}&page=${page}`,
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      })
+        .then((res) => {
+          res.forEach((el) => {
+            let propagation = null;
+            if (el.isParentCategory === '1') {
+              propagation = true;
+            } else {
+              propagation = false;
+            }
+            /* eslint no-param-reassign: "error" */
+            el.show = true;
+            /* eslint no-param-reassign: "error" */
+            el.isParentCategory = propagation;
+            el.googleCategoryId = Number(el.googleCategoryId);
+            el.googleCategoryParentId = Number(el.googleCategoryParentId);
+            /* eslint no-param-reassign: "error" */
+            el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+          });
+          return res;
+        }).catch((error) => {
+          console.error(error);
+        });
     },
   },
   watch: {
@@ -69,4 +181,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .card {
+    border: none;
+    border-radius: 3px;
+    overflow: hidden;
+    & > .card-body {
+      padding: 1rem;
+    }
+    & h1 {
+      margin-top: 0.2rem;
+    }
+  }
+  .counter {
+    &.float-right {
+      text-align: right;
+    }
+    .matching-finished {
+      color: #70B580!important;
+    }
+    & > h3 {
+      color: #CD9321 !important;
+      line-height: 1;
+      & > span {
+        font-size: x-small;
+        font-weight: normal;
+        color: #363A41 !important;
+      }
+    }
+  }
 </style>

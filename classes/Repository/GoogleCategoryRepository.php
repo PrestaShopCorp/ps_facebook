@@ -44,18 +44,31 @@ class GoogleCategoryRepository
     /**
      * @param int $categoryId
      * @param int $googleCategoryId
+     * @param string $googleCategoryName
+     * @param int $googleCategoryParentId
+     * @param string $googleCategoryParentName
      * @param int $shopId
      * @param bool $isParentCategory
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function updateCategoryMatch($categoryId, $googleCategoryId, $shopId, $isParentCategory = false)
-    {
+    public function updateCategoryMatch(
+        $categoryId,
+        $googleCategoryId,
+        $googleCategoryName,
+        $googleCategoryParentId,
+        $googleCategoryParentName,
+        $shopId,
+        $isParentCategory = false
+    ) {
         Db::getInstance()->insert(
             'fb_category_match',
             [
                 'id_category' => (int) $categoryId,
                 'google_category_id' => (int) $googleCategoryId,
+                'google_category_name' => $googleCategoryName,
+                'google_category_parent_id' => (int) $googleCategoryParentId,
+                'google_category_parent_name' => $googleCategoryParentName,
                 'is_parent_category' => $isParentCategory,
                 'id_shop' => (int) $shopId,
             ],
@@ -68,18 +81,30 @@ class GoogleCategoryRepository
     /**
      * @param PrestaShopCollection $childCategories
      * @param int $googleCategoryId
+     * @param string $googleCategoryName
+     * @param int $googleCategoryParentId
+     * @param string $googleCategoryParentName
      * @param int $shopId
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function updateCategoryChildrenMatch(PrestaShopCollection $childCategories, $googleCategoryId, $shopId)
-    {
+    public function updateCategoryChildrenMatch(
+        PrestaShopCollection $childCategories,
+        $googleCategoryId,
+        $googleCategoryName,
+        $googleCategoryParentId,
+        $googleCategoryParentName,
+        $shopId
+    ) {
         $data = [];
 
         foreach ($childCategories as $category) {
             $data[] = [
                 'id_category' => (int) $category->id,
                 'google_category_id' => (int) $googleCategoryId,
+                'google_category_name' => $googleCategoryName,
+                'google_category_parent_id' => (int) $googleCategoryParentId,
+                'google_category_parent_name' => $googleCategoryParentName,
                 'is_parent_category' => false,
                 'id_shop' => (int) $shopId,
             ];
@@ -122,6 +147,9 @@ class GoogleCategoryRepository
         $sql = new DbQuery();
         $sql->select('id_category');
         $sql->select('google_category_id');
+        $sql->select('google_category_name');
+        $sql->select('google_category_parent_id');
+        $sql->select('google_category_parent_name');
         $sql->select('is_parent_category');
         $sql->from('fb_category_match');
         $sql->where('`id_category` = "' . (int) $categoryId . '"');
@@ -162,6 +190,7 @@ class GoogleCategoryRepository
         $sql = new DbQuery();
         $sql->select('id_category');
         $sql->select('google_category_id');
+        $sql->select('google_category_parent_id');
         $sql->select('is_parent_category');
         $sql->from('fb_category_match');
         $sql->where('`id_category` IN ("' . implode('", "', $categoryIds) . '")');
@@ -176,6 +205,9 @@ class GoogleCategoryRepository
         $sql->select('c.id_category as shopCategoryId');
         $sql->select('cl.name as shopCategoryName');
         $sql->select('cm.google_category_id as googleCategoryId');
+        $sql->select('cm.google_category_name as googleCategoryName');
+        $sql->select('cm.google_category_parent_id as googleCategoryParentId');
+        $sql->select('cm.google_category_parent_name as googleCategoryParentName');
         $sql->select('cm.is_parent_category as isParentCategory');
         $sql->select('case when c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
             ' then ' . self::NO_CHILDREN . ' else ' . self::HAS_CHILDREN . ' end deploy');
@@ -246,5 +278,57 @@ class GoogleCategoryRepository
         } else {
             throw new \PrestaShopDatabaseException('No categories found');
         }
+    }
+
+    /**
+     * @param int $shopId
+     *
+     * @return bool
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function isMatchingDone($shopId)
+    {
+        $sql = new DbQuery();
+        $sql->select('cm.id_category');
+        $sql->from('fb_category_match', 'cm');
+        $sql->where('cm.id_shop = ' . (int) $shopId);
+
+        return (bool) Db::getInstance()->executeS($sql);
+    }
+
+    /**
+     * @param int $shopId
+     *
+     * @return int
+     */
+    public function getNumberOfMatchedCategories($shopId)
+    {
+        $sql = new DbQuery();
+        $sql->select('cm.id_category');
+        $sql->from('fb_category_match', 'cm');
+        $sql->where('cm.id_shop = ' . (int) $shopId);
+
+        Db::getInstance()->execute($sql);
+
+        return Db::getInstance()->numRows();
+    }
+
+    /**
+     * @param int $shopId
+     *
+     * @return int
+     */
+    public function getNumberOfTotalCategories($shopId)
+    {
+        $sql = new DbQuery();
+        $sql->select('c.id_category');
+        $sql->from('category', 'c');
+        $sql->innerJoin('category_shop', 'cp', 'cp.id_category = c.id_category');
+        $sql->where('cp.id_shop = ' . (int) $shopId . ' AND c.id_parent >=' . (int) $this->homeCategoryId);
+
+        Db::getInstance()->execute($sql);
+
+        return Db::getInstance()->numRows();
     }
 }
