@@ -149,7 +149,7 @@ class Ps_facebook extends Module
     public function __construct()
     {
         $this->name = 'ps_facebook';
-        $this->tab = 'advertising_marketing';
+        $this->tab = 'social_networks';
         $this->version = '1.4.1';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
