@@ -27,7 +27,7 @@ dist:
 
 # target: bundle-prod              	     - Bundle a production zip
 bundle-prod: dist ./vendor ./views/index.php
-    rm -f .env
+	rm -f .env
 	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
@@ -37,7 +37,7 @@ bundle-prod: dist ./vendor ./views/index.php
 
 # target: bundle-prod              	     - Bundle an integration zip
 bundle-inte: dist .env.inte ./vendor ./views/index.php
-    cp .env.inte .env
+	cp .env.inte .env
 	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
