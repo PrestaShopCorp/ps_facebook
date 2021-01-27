@@ -22,25 +22,19 @@ dist:
 	mkdir -p ./dist
 
 # target: bundle-prod              	     - Bundle a production zip
-bundle-prod: dist .env.prod ./vendor ./views/index.php
-	cp ".env.prod" ".env"
+bundle-prod: dist ./vendor ./views/index.php
 	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
-	  ${MODULE}/.env.inte \
-	  ${MODULE}/.env.prod \
 	  ${MODULE}/composer.phar \
 	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_prod.zip ./dist
 
 # target: bundle-prod              	     - Bundle an integration zip
-bundle-inte: dist .env.inte ./vendor ./views/index.php
-	cp ".env.inte" ".env"
+bundle-inte: dist ./vendor ./views/index.php
 	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
-	  ${MODULE}/.env.inte \
-	  ${MODULE}/.env.prod \
 	  ${MODULE}/composer.phar \
 	  ${MODULE}/Makefile
 	mv ../${PACKAGE}_inte.zip ./dist
