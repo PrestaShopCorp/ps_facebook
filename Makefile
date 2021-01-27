@@ -14,6 +14,10 @@ help:
 # target: build                 	     - Trigger a local build by default
 all: build
 
+# target: build                 	     - Clean up the repository
+clean:
+	git -c core.excludesfile=/dev/null clean -X -d -f
+
 # target: bundle              	         - Bundle local sources into a ZIP file
 bundle: bundle-prod bundle-inte
 
@@ -23,6 +27,7 @@ dist:
 
 # target: bundle-prod              	     - Bundle a production zip
 bundle-prod: dist ./vendor ./views/index.php
+    rm -f .env
 	cd .. && zip -r ${PACKAGE}_prod.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
@@ -31,7 +36,8 @@ bundle-prod: dist ./vendor ./views/index.php
 	mv ../${PACKAGE}_prod.zip ./dist
 
 # target: bundle-prod              	     - Bundle an integration zip
-bundle-inte: dist ./vendor ./views/index.php
+bundle-inte: dist .env.inte ./vendor ./views/index.php
+    cp .env.inte .env
 	cd .. && zip -r ${PACKAGE}_inte.zip ${MODULE} -x '*.git*' \
 	  ${MODULE}/_dev/\* \
 	  ${MODULE}/dist/\* \
@@ -41,7 +47,6 @@ bundle-inte: dist ./vendor ./views/index.php
 
 # target: build              	         - Setup PHP & Node.js locally
 build: build-front build-composer
->>>>>>> Enhance building and bundling
 
 # target: bash-app                     	 - Connect into app container
 ba: bash-app
