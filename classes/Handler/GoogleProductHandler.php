@@ -29,22 +29,24 @@ class GoogleProductHandler
     /**
      * @param array $googleProducts
      * @param int $shopId
+     * @param string $isoCode
      *
      * @return array
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProductsWithErrors(array $googleProducts, $shopId)
+    public function getInformationAboutGoogleProductsWithErrors(array $googleProducts, $shopId, $isoCode)
     {
         $googleProductsInformation = [];
-        foreach ($googleProducts as $googleProductId => $message) {
+        foreach ($googleProducts as $googleProductId => $messages) {
             $googleProductObj = GoogleProductUtility::googleProductToObject($googleProductId);
             $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
                 $googleProductObj,
-                $shopId
+                $shopId,
+                $isoCode
             );
             $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
-            $googleProductsInformation[$googleProductId]['message'] = $message;
+            $googleProductsInformation[$googleProductId]['messages'] = $messages;
         }
 
         return $googleProductsInformation;
@@ -93,8 +95,8 @@ class GoogleProductHandler
             $searchByMessage
         );
 
-        foreach ($googleProducts as $googleProductId => $message) {
-            $googleProductsInfo['message'] = $message;
+        foreach ($googleProducts as $googleProductId => $messages) {
+            $googleProductsInfo[$googleProductId]['messages'] = $messages;
         }
 
         return $googleProductsInfo;

@@ -20,7 +20,9 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\ContextPsFacebook;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
 
@@ -31,9 +33,15 @@ class FacebookDataProvider
      */
     protected $facebookClient;
 
-    public function __construct(FacebookClient $facebookClient)
+    /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    public function __construct(FacebookClient $facebookClient, ConfigurationAdapter $configurationAdapter)
     {
         $this->facebookClient = $facebookClient;
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     /**
@@ -65,5 +73,12 @@ class FacebookDataProvider
             $ad,
             $catalog
         );
+    }
+
+    public function getProductsInCatalogCount()
+    {
+        $catalogId = $this->configurationAdapter->get(Config::PS_FACEBOOK_CATALOG_ID);
+
+        return $this->facebookClient->getProductsInCatalogCount($catalogId);
     }
 }

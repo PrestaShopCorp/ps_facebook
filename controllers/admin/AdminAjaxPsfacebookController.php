@@ -332,8 +332,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+        $productsErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $this->ajaxDie(
             json_encode(
@@ -349,7 +359,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                             'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'errored' => 0, // TODO !1: complete object
+                            'lastSyncDate' => $lastFinishedSyncStartedAt,
+                            'catalog' => $productCount['product_count'],
+                            'errored' => count($productsErrors), // no distinction for base lang vs l10n errors
                         ],
                     ],
                 ]
@@ -505,7 +517,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId);
+        $isoCode = Context::getContext()->language->iso_code;
+        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId, $isoCode);
 
         $this->ajaxDie(
             json_encode(
