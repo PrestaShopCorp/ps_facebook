@@ -27,7 +27,7 @@ use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateExcep
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
-use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
@@ -513,12 +513,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
         $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
-        /** @var GoogleProductHandler $googleProductHandler */
-        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+        /** @var EventBusProductHandler $eventBusProductHandler */
+        $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
         $isoCode = Context::getContext()->language->iso_code;
-        $informationAboutProductsWithErrors = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($productsWithErrors, $shopId, $isoCode);
+        $informationAboutProductsWithErrors = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($productsWithErrors, $shopId, $isoCode);
 
         $this->ajaxDie(
             json_encode(
@@ -558,11 +558,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $searchByName = Tools::getValue('searchByName');
         $searchByMessage = Tools::getValue('searchByMessage');
 
-        /** @var GoogleProductHandler $googleProductHandler */
-        $googleProductHandler = $this->module->getService(GoogleProductHandler::class);
+        /** @var EventBusProductHandler $eventBusProductHandler */
+        $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProducts = $googleProductHandler->getFilteredInformationAboutGoogleProducts(
+        $informationAboutProducts = $eventBusProductHandler->getFilteredInformationAboutEventBusProducts(
             $productsWithErrors,
             $lastFinishedSyncStartedAt,
             $shopId,

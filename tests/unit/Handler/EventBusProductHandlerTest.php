@@ -3,20 +3,20 @@
 namespace Handler;
 
 use PHPUnit\Framework\TestCase;
-use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
-class GoogleProductHandlerTest extends TestCase
+class EventBusProductHandlerTest extends TestCase
 {
     /**
-     * @dataProvider getInformationAboutGoogleProductsDataProvider
+     * @dataProvider getInformationAboutEventBusProductsDataProvider
      *
-     * @param $googleProduct
+     * @param $eventBusProduct
      * @param $productRepoMocks
      * @param $result
      */
-    public function testGetInformationAboutGoogleProducts($googleProduct, $productRepoMocks, $result)
+    public function testGetInformationAboutEventBusProducts($eventBusProduct, $productRepoMocks, $result)
     {
         $productRepo = $this->getMockBuilder(ProductRepository::class)
             ->disableOriginalConstructor()
@@ -24,19 +24,19 @@ class GoogleProductHandlerTest extends TestCase
         foreach ($productRepoMocks as $key => $mock) {
             $productRepo
                 ->expects($this->at($key))
-                ->method('getInformationAboutGoogleProduct')
+                ->method('getInformationAboutEventBusProduct')
                 ->willReturn($mock);
         }
         $psFacebookTranslations = $this->getMockBuilder(PsFacebookTranslations::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $googleProductHandler = new GoogleProductHandler($productRepo, $psFacebookTranslations);
-        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1, 'eu');
+        $eventBusProductHandler = new EventBusProductHandler($productRepo, $psFacebookTranslations);
+        $informationAboutProducts = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($eventBusProduct, 1, 'eu');
 
         self::assertEquals($result, $informationAboutProducts);
     }
 
-    public function getInformationAboutGoogleProductsDataProvider()
+    public function getInformationAboutEventBusProductsDataProvider()
     {
         $isoCode = 'en';
 
@@ -52,7 +52,7 @@ class GoogleProductHandlerTest extends TestCase
 
         return [
             '1 product' => [
-                'googleProduct' => [$productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message']],
+                'eventBusProduct' => [$productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message']],
                 'productRepoMocks' => [
                     0 => [
                         [
@@ -74,7 +74,7 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products' => [
-                'googleProduct' => [
+                'eventBusProduct' => [
                     $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                     $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                 ],
@@ -114,7 +114,7 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products but one is missing in database' => [
-                'googleProduct' => [
+                'eventBusProduct' => [
                     $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                     $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
                 ],
