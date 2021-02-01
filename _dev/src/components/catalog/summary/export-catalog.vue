@@ -95,7 +95,9 @@
             {{ $t('catalogSummary.reportingLastSync') }}
             <span v-if="!reporting.syncDate" class="big mt-2">{{ reporting.syncDate }}</span>
             <span v-if="!reporting.syncTime" class="text-muted">{{ reporting.syncTime }}</span>
-            <div v-else class="mt-2 text-muted">{{ $t('catalogSummary.catalogExportWarning') }}</div>
+            <div v-else class="mt-2 text-muted">
+              {{ $t('catalogSummary.catalogExportWarning') }}
+            </div>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <b-col class="counter m-1 p-3">
