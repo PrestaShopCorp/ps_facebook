@@ -118,7 +118,7 @@
           </template>
           <template v-else>
             <b-td class="pl-4">
-              {{ $t('productScan.variant', [id_product_attribute])}}
+              {{ $t('productScan.variant', [id_product_attribute]) }}
             </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>

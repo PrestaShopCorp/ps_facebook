@@ -134,6 +134,8 @@ class AccessTokenProvider
                 ]
             )->json();
         } catch (Exception $e) {
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, '');
+            $this->userAccessToken = '';
             $this->errorHandler->handle(
                 new AccessTokenException(
                     'Failed to refresh access token',

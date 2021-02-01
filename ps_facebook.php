@@ -179,6 +179,7 @@ class Ps_facebook extends Module
             $this->templateBuffer = $this->getService(TemplateBuffer::class);
         }
 
+        $this->registerHook('displayFooter');
         $this->loadEnv();
     }
 
@@ -414,6 +415,7 @@ class Ps_facebook extends Module
     public function hookDisplayFooter()
     {
         $content = '';
+        /** @var MessengerHandler $messengerHandler */
         $messengerHandler = $this->getService(MessengerHandler::class);
         if ($messengerHandler->isReady()) {
             $this->context->smarty->assign($messengerHandler->handle());

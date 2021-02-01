@@ -220,6 +220,8 @@ class FacebookClient
         );
 
         if (!is_array($response)) {
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, '');
+
             return [];
         }
 

@@ -80,7 +80,6 @@
         class="see-less"
         @click="seeLess"
       >{{ $t('catalogSummary.showLess') }}</span>
-
     </div>
 
     <div v-else>
@@ -234,7 +233,6 @@
           class="see-less"
           @click="seeLess"
         >{{ $t('catalogSummary.showLess') }}</span>
-
       </div>
       <br v-if="!exportOn">
       <p
