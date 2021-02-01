@@ -93,8 +93,8 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="!reporting.syncDate" class="big mt-2">{{ reporting.syncDate }}</span>
-            <span v-if="!reporting.syncTime" class="text-muted">{{ reporting.syncTime }}</span>
+            <span v-if="reporting.hasSynced" class="big mt-2">{{ reporting.syncDate }}</span>
+            <span v-if="reporting.hasSynced" class="text-muted">{{ reporting.syncTime }}</span>
             <div v-else class="mt-2 text-muted">
               {{ $t('catalogSummary.catalogExportWarning') }}
             </div>
@@ -352,6 +352,7 @@ export default defineComponent({
       const syncDate = data.lastSyncDate ? new Date(data.lastSyncDate) : null;
 
       return {
+        hasSynced: !!data.lastSyncDate && syncDate.getFullYear() > 1999,
         syncDate: syncDate?.toLocaleDateString(
           undefined,
           {year: 'numeric', month: 'numeric', day: 'numeric'},
