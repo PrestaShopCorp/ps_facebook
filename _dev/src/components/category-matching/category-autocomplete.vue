@@ -48,7 +48,7 @@
       </template>
       <span
         v-else
-        class="text-muted select-title"
+        class="text-muted select-title title-on-select"
       >
         {{ $t('categoryMatching.autocomplete.select') }}
       </span>
@@ -252,6 +252,10 @@ export default defineComponent({
   .select-title {
     font-weight: normal!important;
     font-style: italic!important;
+  }
+  .title-on-select {
+    text-align: left!important;
+    display: block!important;
   }
 </style>
 <style lang="scss">

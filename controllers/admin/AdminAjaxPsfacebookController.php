@@ -256,7 +256,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $updateChildren = (bool) Tools::getValue('update_children');
         $shopId = $this->context->shop->id;
 
-        if (!$categoryId || !$googleCategoryId) {
+        if (!$categoryId || !$googleCategoryParentId) {
             $this->ajaxDie(
                 json_encode(
                     [

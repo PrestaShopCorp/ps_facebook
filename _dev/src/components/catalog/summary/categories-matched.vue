@@ -45,10 +45,10 @@
     <div class="w-75 p-3 mb-1">
       <div class="h-25">
         <span class="psfb-progress-txt">
-          {{ $t('categoryMatched.progressBarMatched')}}
+          {{ $t('categoryMatched.progressBarMatched') }}
         </span>
         <span class="float-right psfb-progress-txt">
-          {{ $t('categoryMatched.progressBarTotal')}}
+          {{ $t('categoryMatched.progressBarTotal') }}
         </span>
       </div>
       <b-progress

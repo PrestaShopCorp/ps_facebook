@@ -55,7 +55,7 @@ class CategoryMatchHandler
         $updateChildren,
         $shopId
     ) {
-        if ($updateChildren) {
+        if ($updateChildren === true) {
             $category = new Category($categoryId);
             $categoryChildrenIds = $category->getAllChildren();
             $this->googleCategoryRepository->updateCategoryChildrenMatch(

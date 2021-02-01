@@ -22,8 +22,8 @@
       <b-thead>
         <b-tr>
           <b-th>{{ $t('categoryMatching.tableMatching.firstTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
         </b-tr>
       </b-thead>
@@ -41,6 +41,7 @@
           :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
           :save-matching-callback="saveMatchingCallback"
           @rowClicked="getCurrentRow"
+          @propagationClicked="applyToAllChildren"
         >
           {{ category.shopCategoryName }}
         </editing-row>
@@ -110,12 +111,20 @@ export default defineComponent({
   },
   methods: {
     saveMatchingCallback(category) {
-      // condition for work with storybook
       if (this.overrideGetCurrentRow) {
         return Promise.resolve(true);
       }
-
       const updateParent = Number(category.propagate);
+      const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
+
+      currentCategory.googleCategoryId = category.fbSubcategoryId;
+      currentCategory.googleCategoryName = category.fbSubcategoryName;
+      currentCategory.googleCategoryParentName = category.fbCategoryName;
+      currentCategory.googleCategoryParentId = category.fbCategoryId;
+
+      if (category.fbSubcategoryName === undefined) {
+        category.fbSubcategoryName = '';
+      }
 
       return fetch(this.saveParentStatement, {
         method: 'POST',
@@ -129,14 +138,19 @@ export default defineComponent({
       });
     },
 
-    canShowCheckbox(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1;
+    applyToAllChildren(shopCategoryId) {
+      const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
 
-      if (category.deploy === this.NO_CHILDREN || floor === 3) {
-        return false;
-      }
-
-      return true;
+      this.categories.forEach(
+        (child) => {
+          if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
+            child.isParentCategory = true;
+            child.googleCategoryId = currentCategory.googleCategoryId;
+            child.googleCategoryName = currentCategory.googleCategoryName;
+            child.googleCategoryParentName = currentCategory.googleCategoryParentName;
+            child.googleCategoryParentId = currentCategory.googleCategoryParentId;
+          }
+        });
     },
 
     getCurrentRow(currentShopCategoryID) {
@@ -200,9 +214,14 @@ export default defineComponent({
       this.loading = true;
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
+      const nbrChildren = currentCategory.shopParentCategoryIds.split('/').length - 1;
+
+      if (nbrChildren === 3) {
+        return;
+      }
       currentCategory.deploy = this.FOLD;
 
-      if (this.overrideGetCurrentRow) {
+      if (this.overrideGetCurrentRow !== null) {
         if (Array.isArray(subcategory)) {
           subcategory.forEach((el) => {
             this.categories.splice(indexCtg, 0, el);
@@ -219,16 +238,19 @@ export default defineComponent({
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
         subcategory = res;
+        console.log(res);
         if (Array.isArray(subcategory)) {
           subcategory.forEach((el) => {
             this.categories.splice(indexCtg, 0, el);
             el.show = true;
             el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+            el.isParentCategory = this.canShowCheckbox(el) ? false : null;
           });
         } else {
           this.categories.splice(indexCtg, 0, subcategory);
           subcategory.show = true;
           subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
+          subcategory.isParentCategory = this.canShowCheckbox(subcategory) ? false : null;
         }
 
         if (subcategory.length !== 0) {

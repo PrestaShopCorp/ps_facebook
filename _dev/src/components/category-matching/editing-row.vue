@@ -22,6 +22,18 @@
       <slot />
     </b-td>
     <b-td>
+      <div
+        v-if="initialPropagation === true || initialPropagation === false"
+        class="propagate"
+      >
+        <b-checkbox
+          :id="`propagation-${shopCategoryId}`"
+          :checked="currentPropagation"
+          @change="changePropagation($event, shopCategoryId)"
+        />
+      </div>
+    </b-td>
+    <b-td>
       <category-autocomplete
         :language="language"
         :shop-category-id="shopCategoryId"
@@ -30,19 +42,6 @@
         :autocompletion-api="autocompletionApi"
         @onCategorySelected="categoryChanged"
       />
-    </b-td>
-    <b-td>
-      <div
-        v-if="initialPropagation === true || initialPropagation === false"
-        class="propagate"
-      >
-        <b-checkbox
-          :id="`propagation-${shopCategoryId}`"
-          :checked="currentPropagation"
-          @change="changePropagation"
-          :disabled="currentCategoryId <= 0 || currentCategoryId === null"
-        />
-      </div>
     </b-td>
     <b-td>
       <category-autocomplete
@@ -174,8 +173,9 @@ export default defineComponent({
     };
   },
   methods: {
-    changePropagation(checked) {
+    changePropagation(checked, shopCategoryId) {
       this.currentPropagation = checked;
+      this.$emit('propagationClicked', shopCategoryId);
     },
     getCurrentRow(categoryID) {
       this.$emit('rowClicked', categoryID);
@@ -187,10 +187,25 @@ export default defineComponent({
         this.currentSubcategoryId = null;
         this.currentSubcategoryName = null;
       }
+      const result = {
+        shopCategoryId: this.shopCategoryId,
+        fbCategoryId: this.currentCategoryId,
+        fbCategoryName: this.currentCategoryName.replace('&', '-'),
+        propagate: !!this.currentPropagation,
+      };
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
       if (checkbox) {
         checkbox.focus();
       }
+      this.saveMatchingCallback(result)
+        .then(() => {
+          this.loading = false;
+          this.error = null;
+        })
+        .catch((error) => {
+          this.loading = null;
+          this.error = error;
+        });
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;

@@ -16,6 +16,22 @@ const mixin = Vue.extend({
 
       return `psfb-match array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
+    canShowCheckbox(category) {
+      const floor = category.shopParentCategoryIds.split('/').length - 1;
+
+      if (category.deploy === this.NO_CHILDREN || floor === 3) {
+        return false;
+      }
+
+      return true;
+    },
+
+    findShopCategory(categories, shopCategoryId) {
+      return categories.find(
+        (child) => child.shopCategoryId === shopCategoryId,
+      );
+    },
+
   },
 });
 

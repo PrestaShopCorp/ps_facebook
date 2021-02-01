@@ -124,13 +124,6 @@ export default defineComponent({
     };
   },
   methods: {
-    categoryStyle(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1;
-      const isDeployed = category.deploy === this.FOLD ? 'opened' : (category.deploy === this.NO_CHILDREN || floor === 3 ? '' : 'closed');
-
-      return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
-    },
-
     getCurrentRow(currentShopCategoryID) {
       let subcategory;
       if (this.overrideGetCurrentRow) {
@@ -149,12 +142,17 @@ export default defineComponent({
       this.filterCategory = value;
 
       if (this.filterCategory === true) {
-        this.categories.forEach((el) => {
-          const result = !el.googleCategoryId;
-          el.show = result;
+        const childrens = this.categories.filter(
+          (child) => !child.googleCategoryId,
+        );
+        childrens.forEach((el) => {
+          el.show = false;
         });
       } else {
         this.categories.forEach((el) => {
+          if (el.shopParentCategoryIds.match(new RegExp('^$[0-9]/[0-9]+/$'))) {
+            console.log(el);
+          }
           el.show = true;
         });
       }
@@ -198,6 +196,11 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       let subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
+      const nbrChildren = currentCategory.shopParentCategoryIds.split('/').length - 1;
+
+      if (nbrChildren === 3) {
+        return;
+      }
       currentCategory.deploy = this.FOLD;
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {

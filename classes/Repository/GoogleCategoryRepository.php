@@ -105,7 +105,7 @@ class GoogleCategoryRepository
                 'google_category_name' => $googleCategoryName,
                 'google_category_parent_id' => (int) $googleCategoryParentId,
                 'google_category_parent_name' => $googleCategoryParentName,
-                'is_parent_category' => false,
+                'is_parent_category' => 1,
                 'id_shop' => (int) $shopId,
             ];
         }
