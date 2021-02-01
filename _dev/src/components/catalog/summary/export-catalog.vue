@@ -93,8 +93,9 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span class="big mt-2">{{ reporting.syncDate }}</span>
-            <span class="text-muted">{{ reporting.syncTime }}</span>
+            <span v-if="!reporting.syncDate" class="big mt-2">{{ reporting.syncDate }}</span>
+            <span v-if="!reporting.syncTime" class="text-muted">{{ reporting.syncTime }}</span>
+            <div v-else class="mt-2 text-muted">{{ $t('catalogSummary.catalogExportWarning') }}</div>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <b-col class="counter m-1 p-3">
@@ -121,7 +122,9 @@
       <b-link
         v-if="catalogId"
         class="view-button float-right ml-3 mb-2 mr-2 mt-2"
-        @click="viewCatalog"
+        @click="onViewCatalog"
+        target="_blank"
+        :href="viewCatalogUrl"
       >
         <i class="material-icons">launch</i>
         {{ $t('catalogSummary.viewCatalogButton') }}
@@ -359,7 +362,7 @@ export default defineComponent({
         errored: data.errored,
       };
     },
-    viewCatalog() {
+    viewCatalogUrl() {
       return `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
     },
   },
