@@ -179,7 +179,6 @@ class Ps_facebook extends Module
             $this->templateBuffer = $this->getService(TemplateBuffer::class);
         }
 
-        $this->registerHook('displayFooter');
         $this->loadEnv();
     }
 
