@@ -91,7 +91,6 @@ export default defineComponent({
       matchingDone: this.data ? this.data.matchingDone : false,
       matchingProgress: this.data ? this.data.matchingProgress : null,
       validation: this.data ? this.data.validation : null,
-      catalogId: this.data ? this.data.catalogId : null,
     };
   },
   created() {
@@ -128,7 +127,6 @@ export default defineComponent({
         this.matchingDone = res.matchingDone;
         this.matchingProgress = res.matchingProgress;
         this.validation = res.validation;
-        this.catalogId = res.catalogId;
         this.loading = false;
       }).catch((error) => {
         console.error(error);
