@@ -220,13 +220,13 @@ class PsFacebookTranslations
                         'editButton' => $this->module->l('Customize settings', 'PsFacebookTranslations'),
                     ],
                     'page_shop' => [
-                        'name' => $this->module->l('Facebook Page Shops', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a shop tab on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l("Facebook Page shop allows you to list products you're selling and connect with more customers on Facebook.", 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Manage', 'PsFacebookTranslations'),
                     ],
                     'page_cta' => [
-                        'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a button on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l('Add a button on your Facebook Page to get people to take an action from your page such as your shop.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Edit', 'PsFacebookTranslations'),
