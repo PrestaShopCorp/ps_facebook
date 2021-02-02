@@ -8,17 +8,17 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6a26f548831e6a8c26bfbb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd0be48c2c3483c8f1a51f696612a711'] = 'Sales channels';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be11c74c1dd7f307bb80183a90dc2067'] = 'Get started';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_bc77a4069560dbaeda21d023d3525522'] = 'Easily and quickly build your business presence into Facebook community!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- No credit card required 
-- Easy setup 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- No credit card required
+- Easy setup
 - Cancel anytime';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ebce4cfc471199c367d61bbc02e29f0e'] = 'Make your first steps with PrestaShop Facebook!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Manage your business';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d4dc9be37b7d8b65d15380a2ee76b768'] = 'Control your ad settings and business tools 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d4dc9be37b7d8b65d15380a2ee76b768'] = 'Control your ad settings and business tools
 from one place.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_187d8391715e5486cf16ef7208d60638'] = 'Understand your traffic';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40bd8e4a1d4cd9d762778fa8ebcbaa11'] = 'Use data from Facebook Pixel to understand actions people take on your website.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_487c03430cec1fb5515b532add3aa824'] = 'Boost your sales';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec01fe3728135f86d60a48008e85634c'] = 'Manage your product catalog and 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec01fe3728135f86d60a48008e85634c'] = 'Manage your product catalog and
 unlock the power of ads.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1d1dc32ede668d0832d5ae914fe823c8'] = 'Create and optimize better shopping experience';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_44647eb0f0026b124679b4d22bd6d76e'] = 'Thanks to the automatic synchronisation of the product catalogue and the mapping of your categories have an updated and more efficient Facebook catalogue.';
@@ -33,11 +33,11 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_089b82e17fe5e6e2b6e87a
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Export your product catalog';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7bdb4177430'] = 'Create Traffic and/or Dynamic Ads';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Reload';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. 
-At the moment PrestaShop Account is unable to work when two shops share the same domain. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance.
+At the moment PrestaShop Account is unable to work when two shops share the same domain.
 
-To register this shop, you must first: 
-- unregister your Facebook account from the other one using the same domain, 
+To register this shop, you must first:
+- unregister your Facebook account from the other one using the same domain,
 - or change the domain name of this shop.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'An unknown error occurred during onboarding process. Please reload and try again.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4dae92e5770'] = 'Your Facebook settings';
@@ -45,12 +45,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7c
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integrate your shop with Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Connect to Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business 
-- Create/Select page 
-- Create/Select ad account 
-- Create/Select install pixel 
-- Create/Select sync product catalog 
-- Create Facebook Shop & Instagram Shopping 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business
+- Create/Select page
+- Create/Select ad account
+- Create/Select install pixel
+- Create/Select sync product catalog
+- Create Facebook Shop & Instagram Shopping
 - Add Messenger plug-in in your shop';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'You authorize this Facebook account to connect to your store:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be7d6b16f9c7a60cfa48d414d053be03'] = 'Restart onboarding';
@@ -83,7 +83,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9be
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Your catalog in Facebook Business';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Share catalog';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Before buyers can purchase items from you, you\'ll need to upload your products information into a Facebook Product Catalog.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Please be aware of the following: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Please be aware of the following:
 1. All « active » products are exported to Facebook for their base language.
 2. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.
 3. It can take up to 24h for your PrestaShop product information to sync to Facebook.
@@ -145,11 +145,11 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1ebaedc380b26'] = 'The Chat Plugin allows you to integrate your Messenger experience directly into your website.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Add';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Customize settings';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5acb6031ca807620809cedddee2cf7a2'] = 'Facebook Page Shops';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5acb6031ca807620809cedddee2cf7a2'] = 'Add a shop tab on your Facebook page';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'Facebook Page shop allows you to list products you\'re selling and connect with more customers on Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Add';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34e34c43ec6b943c10a3cc1a1a16fb11'] = 'Manage';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_314b0a5db7c7de0426829ac8d339a2f4'] = 'Call-to-action';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_314b0a5db7c7de0426829ac8d339a2f4'] = 'Add a button on your Facebook page';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be0265b2d10db977c9ce9f54afa3bf83'] = 'Add a button on your Facebook Page to get people to take an action from your page such as your shop.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Add';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Edit';
