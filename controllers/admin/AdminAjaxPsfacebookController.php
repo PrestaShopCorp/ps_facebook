@@ -22,6 +22,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
@@ -284,6 +285,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFeatures()
     {
+        /** @var FbeFeatureDataProvider $fbeFeatureDataProvider */
         $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
@@ -584,6 +586,39 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )
         );
+    }
+
+    public function displayAjaxExportWholeCatalog()
+    {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+
+        try {
+            //todo: change url to match new API call to export the whole catalog
+            $response = $client->post(
+                '/account/' . $externalBusinessId . '/'
+            )->json();
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookCatalogExportException(
+                    'Failed to export the whole catalog',
+                    FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+            $this->ajaxDie(json_encode([
+                'success' => false,
+            ]));
+        }
+
+        //todo: need to talk about what information should we return when API returns fail code and what we should return if API just throws exception
+        $this->ajaxDie(json_encode([
+            'success' => true,
+            'response' => $response,
+        ]));
     }
 
     /**
