@@ -101,7 +101,7 @@ class PsFacebookTranslations
                     ],
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
-                        'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
+                        'editButton' => $this->module->l('Modify the account settings', 'PsFacebookTranslations'),
                         'unlinkButton' => $this->module->l('Logout', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
@@ -111,7 +111,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Your Facebook page will represent your business in your ads', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns', 'PsFacebookTranslations'),
-                        'manageFbeButton' => $this->module->l('Open advanced settings', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Go to Facebook Business', 'PsFacebookTranslations'),
                         'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
                         'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
