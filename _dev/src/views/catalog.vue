@@ -90,7 +90,7 @@ export default defineComponent({
 
 <style lang="scss">
   .ps-facebook-catalog-tab {
-    div.card {
+    div.card:not(.survey) {
       border: none !important;
       border-radius: 3px;
     }

@@ -3,7 +3,7 @@
     "configuration": {
       "introduction": {
         "getStarted": "Get started",
-        "subTitle": "Easily and quickly build your business presence into Facebook community",
+        "subTitle": "Easily and quickly build your business presence into Facebook community!",
         "proPoints": "- No credit card required \n- Easy setup \n- Cancel anytime",
         "resume": "Make your first steps with PrestaShop Facebook!",
         "proPoint1Title": "Manage your business",
@@ -29,7 +29,11 @@
         "shopInConflictError": "This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\n\n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.",
 
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-        "reloadButton": "Reload"
+        "reloadButton": "Reload",
+
+        "psAccountUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "psAccountUpgradeButton": "Upgrade PrestaShop Accounts",
+        "psAccountUpgradeDone": "PrestaShop Account has been successfully upgraded."
       },
       "facebook": {
         "title": "Your Facebook settings",
@@ -38,12 +42,12 @@
           "intro": "Integrate your shop with Facebook.",
           "connectButton": "Connect to Facebook",
           "description": "With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
-          "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Customize your Facebook Page with call-to-action"
+          "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
           "editButton": "Restart onboarding",
-          "unlinkButton": "Unlink",
+          "unlinkButton": "Logout",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
           "facebookPixel": "Facebook Pixel",
@@ -80,7 +84,7 @@
       "exportCatalogButton": "Share catalog",
       "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
       "catalogExportInfo": "Please be aware of the following: \n1. All « active » products are exported to Facebook for their base language.\n2. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.\n3. It can take up to 24h for your PrestaShop product information to sync to Facebook.\n4. The entire catalog is updated with a recurrent update every 24 hours.\n5. Each modification made to your catalog will be taken into account during the next synchronization.\n6. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn.",
-      "preApprovalScanTitle": "Pre-approval scan",
+      "preApprovalScanTitle": "Product scan before synchronization to facebook",
       "preApprovalScanIntro": "Check which products are ready to be synchronized and which ones have problems and will not be synchronized.",
       "preApprovalScanRefreshDate": "Last scan today at {0}",
       "preApprovalScanReadyToSync": "Ready to sync",
@@ -89,7 +93,7 @@
       "catalogExportDisclaimer": "By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.",
       "catalogExportPaused": "Paused",
       "catalogExportActivated": "Activated",
-      "catalogExportNotice": "It can take up to 24h for your PrestaShop product information to sync to Facebook. \nOnce products are published you can start tagging them on Instagram or create Facebook ads.",
+      "catalogExportNotice": "It can take up to 24h for your PrestaShop product information to sync to Facebook.",
       "catalogExportOperationPaused": "The operation is paused.",
       "viewButton": "View",
       "viewCatalogButton": "View catalog",
@@ -101,6 +105,15 @@
       "modalDeactivationTitle": "Confirm deactivation?",
       "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
     },
+    "productScan": {
+      "betaWarning": "This feature is still in beta.",
+      "lang": "Lang",
+      "cover": "Cover",
+      "description": "Desc",
+      "barcode": "Barcode / Brand",
+      "price": "Price",
+      "variant": "Variant #{0}"
+    },
     "syncReport": {
       "title": "Product status",
       "id": "ID",
@@ -111,7 +124,7 @@
     },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",
-      "intro": "To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.",
+      "intro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
       "counterSubTitle": "specified parent categories",
       "autocomplete": {
         "typeToFilter": "Type to filter",
@@ -122,12 +135,12 @@
       },
       "tableMatching": {
         "firstTd" : "Category on your site",
-        "secondTd" : "Facebook category",
+        "secondTd" : "Google category",
         "thirdTd" : "Parent category",
-        "fourthTd" : "Facebook subcategory"
+        "fourthTd" : "Google subcategory"
       }
     },
-    "integrate" : {
+    "integrate": {
       "buttons" : {
         "add": "Add",
         "syncProducts": "Sync products",
@@ -177,6 +190,11 @@
       "error" : {
         "failedToUpdateFeature": "Failed to update facebook feature."
       }
+    },
+    "survey": {
+      "title": "Give us your feedback!",
+      "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+      "button": "Let's begin"
     }
   }
 }

@@ -1,0 +1,3 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Config\Env:
+    class: PrestaShop\Module\PrestashopFacebook\Config\Env

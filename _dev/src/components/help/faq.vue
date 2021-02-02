@@ -28,7 +28,7 @@
           <div class="module-desc d-flex mb-4">
             <div class="module-img mr-3">
               <img
-                src="@/assets/logo.png"
+                src="@/assets/logo_highres.png"
                 width="75"
                 height="75"
                 alt=""

@@ -104,6 +104,8 @@
           />
         </feature-list>
       </div>
+
+      <survey />
     </div>
   </div>
 </template>
@@ -117,6 +119,7 @@ import Spinner from '../components/spinner/spinner.vue';
 import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
 import SuccessAlert from '../components/features/success-alert.vue';
+import Survey from '../components/survey/survey.vue';
 
 export default defineComponent({
   name: 'Integrate',
@@ -129,6 +132,7 @@ export default defineComponent({
     UnavailableFeature,
     AvailableFeature,
     SuccessAlert,
+    Survey,
   },
   mixins: [],
   props: {
@@ -264,6 +268,10 @@ export default defineComponent({
       };
       this.displaySuccessMessages(newEnabledFeatures);
       this.dynamicEnabledFeatures = newEnabledFeatures;
+
+      this.$segment.track(`Feature ${name} ${newStatus ? 'enabled' : 'disabled'}`, {
+        module: 'ps_facebook',
+      });
     },
     onWindowVisibilityChange() {
       // Watch when the page gets the focus, for instance
@@ -294,5 +302,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  #integrate {
+    div.card:not(.survey) {
+      border: none !important;
+      border-radius: 3px;
+    }
+  }
 </style>

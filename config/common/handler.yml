@@ -23,6 +23,7 @@ services:
       - '@ps_facebook.language'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
+      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler

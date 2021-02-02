@@ -1,7 +1,27 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
+use FacebookAds\Object\ServerSide\Normalizer;
+use FacebookAds\Object\ServerSide\Util;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -97,16 +117,16 @@ class PixelHandler
     protected function getCustomerInformation($customerInformation)
     {
         return [
-            'ct' => $customerInformation['city'],
-            'country' => $customerInformation['countryIso'],
-            'zp' => $customerInformation['postCode'],
-            'ph' => $customerInformation['phone'],
-            'gender' => $customerInformation['gender'],
-            'fn' => $customerInformation['firstname'],
-            'ln' => $customerInformation['lastname'],
-            'em' => $customerInformation['email'],
-            'bd' => $customerInformation['birthday'],
-            'st' => $customerInformation['stateIso'],
+            'ct' => Util::hash(Normalizer::normalize('ct', $customerInformation['city'])),
+            'country' => Util::hash(Normalizer::normalize('country', $customerInformation['countryIso'])),
+            'zp' => Util::hash(Normalizer::normalize('zp', $customerInformation['postCode'])),
+            'ph' => Util::hash(Normalizer::normalize('ph', $customerInformation['phone'])),
+            'gender' => Util::hash(Normalizer::normalize('gender', $customerInformation['gender'])),
+            'fn' => Util::hash(Normalizer::normalize('fn', $customerInformation['firstname'])),
+            'ln' => Util::hash(Normalizer::normalize('ln', $customerInformation['lastname'])),
+            'em' => Util::hash(Normalizer::normalize('em', $customerInformation['email'])),
+            'bd' => Util::hash(Normalizer::normalize('bd', $customerInformation['birthday'])),
+            'st' => Util::hash(Normalizer::normalize('st', $customerInformation['stateIso'])),
         ];
     }
 }

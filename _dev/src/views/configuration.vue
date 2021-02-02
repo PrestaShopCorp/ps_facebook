@@ -47,6 +47,9 @@
         @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
+      <PsAccountsUpdateNeeded
+        v-if="needsPsAccountsUpgrade"
+      />
       <b-alert
         v-if="psAccountShopInConflict"
         variant="danger"
@@ -77,6 +80,7 @@
         @onUninstallClick="onUninstallClick"
         class="m-3"
       />
+      <survey v-if="facebookConnected" />
       <div
         v-if="showGlass"
         class="glass"
@@ -114,7 +118,9 @@ import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
+import PsAccountsUpdateNeeded from '../components/warning/ps-accounts-update-needed.vue';
 
 const generateOpenPopup = (component, popupUrl) => {
   const canGeneratePopup = (
@@ -149,9 +155,11 @@ export default defineComponent({
     Messages,
     MultiStoreSelector,
     PsAccounts,
+    PsAccountsUpdateNeeded,
     NoConfig,
     FacebookNotConnected,
     FacebookConnected,
+    Survey,
   },
   mixins: [],
   props: {
@@ -225,6 +233,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
+    psAccountVersionCheck: {
+      type: Boolean,
+      required: false,
+      default: () => global.psAccountVersionCheck,
+    },
   },
   computed: {
     psAccountsOnboarded() {
@@ -256,6 +269,9 @@ export default defineComponent({
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
+    },
+    needsPsAccountsUpgrade() {
+      return this.psAccountVersionCheck && this.psAccountVersionCheck.needsPsAccountsUpgrade;
     },
   },
   data() {
@@ -519,7 +535,7 @@ export default defineComponent({
 
 <style lang="scss">
   .ps-facebook-configuration-tab {
-    div.card {
+    div.card:not(.survey) {
       border: none !important;
       border-radius: 3px;
     }

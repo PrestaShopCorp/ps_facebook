@@ -1,27 +1,21 @@
 <?php
-/*
- * 2007-2020 PrestaShop.
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
+ * https://opensource.org/licenses/AFL-3.0
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
  *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
- * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
- *
- *  @author    PrestaShop SA <contact@prestashop.com>
- *  @copyright 2007-2020 PrestaShop SA
- *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- *  International Registered Trademark & Property of PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
 namespace PrestaShop\Module\Ps_facebook\Translations;
@@ -66,7 +60,7 @@ class PsFacebookTranslations
             'configuration' => [
                 'introduction' => [
                     'getStarted' => $this->module->l('Get started', 'PsFacebookTranslations'),
-                    'subTitle' => $this->module->l('Build your business presence into Facebook community easily and quickly!', 'PsFacebookTranslations'),
+                    'subTitle' => $this->module->l('Easily and quickly build your business presence into Facebook community!', 'PsFacebookTranslations'),
                     'proPoints' => $this->module->l("- No credit card required \n- Easy setup \n- Cancel anytime", 'PsFacebookTranslations'),
                     'resume' => $this->module->l('Make your first steps with PrestaShop Facebook!', 'PsFacebookTranslations'),
                     'proPoint1Title' => $this->module->l('Manage your business', 'PsFacebookTranslations'),
@@ -92,6 +86,9 @@ class PsFacebookTranslations
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
                     'shopInConflictError' => $this->module->l("This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.", 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
+                    'psAccountUpgradeNeededWarning' => $this->module->l("The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.", 'PsFacebookTranslations'),
+                    'psAccountUpgradeButton' => $this->module->l('Upgrade PrestaShop Accounts', 'PsFacebookTranslations'),
+                    'psAccountUpgradeDone' => $this->module->l('PrestaShop Account has been successfully upgraded.', 'PsFacebookTranslations'),
                 ],
                 'facebook' => [
                     'title' => $this->module->l('Your Facebook settings', 'PsFacebookTranslations'),
@@ -100,12 +97,12 @@ class PsFacebookTranslations
                         'intro' => $this->module->l('Integrate your shop with Facebook.', 'PsFacebookTranslations'),
                         'connectButton' => $this->module->l('Connect to Facebook', 'PsFacebookTranslations'),
                         'description' => $this->module->l('With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.', 'PsFacebookTranslations'),
-                        'details' => $this->module->l("- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Customize your Facebook Page with call-to-action", 'PsFacebookTranslations'),
+                        'details' => $this->module->l("- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop", 'PsFacebookTranslations'),
                     ],
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
-                        'unlinkButton' => $this->module->l('Unlink', 'PsFacebookTranslations'),
+                        'unlinkButton' => $this->module->l('Logout', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
                         'facebookPixel' => $this->module->l('Facebook Pixel', 'PsFacebookTranslations'),
@@ -145,7 +142,7 @@ class PsFacebookTranslations
                 'exportCatalogButton' => $this->module->l('Share catalog', 'PsFacebookTranslations'),
                 'catalogExportIntro' => $this->module->l('Before buyers can purchase items from you, you\'ll need to upload your products information into a Facebook Product Catalog.', 'PsFacebookTranslations'),
                 'catalogExportInfo' => $this->module->l("Please be aware of the following: \n1. All « active » products are exported to Facebook for their base language.\n2. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.\n3. It can take up to 24h for your PrestaShop product information to sync to Facebook.\n4. The entire catalog is updated with a recurrent update every 24 hours.\n5. Each modification made to your catalog will be taken into account during the next synchronization.\n6. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn.", 'PsFacebookTranslations'),
-                'preApprovalScanTitle' => $this->module->l('Pre-approval scan', 'PsFacebookTranslations'),
+                'preApprovalScanTitle' => $this->module->l('Product scan before synchronization to facebook', 'PsFacebookTranslations'),
                 'preApprovalScanIntro' => $this->module->l('Check which products are ready to be synchronized and which ones have problems and will not be synchronized.', 'PsFacebookTranslations'),
                 'preApprovalScanRefreshDate' => $this->module->l('Last scan today at {0}', 'PsFacebookTranslations'),
                 'preApprovalScanReadyToSync' => $this->module->l('Ready to sync', 'PsFacebookTranslations'),
@@ -154,7 +151,7 @@ class PsFacebookTranslations
                 'catalogExportDisclaimer' => $this->module->l('By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.', 'PsFacebookTranslations'),
                 'catalogExportPaused' => $this->module->l('Paused', 'PsFacebookTranslations'),
                 'catalogExportActivated' => $this->module->l('Activated', 'PsFacebookTranslations'),
-                'catalogExportNotice' => $this->module->l("It can take up to 24h for your PrestaShop product information to sync to Facebook. \nOnce products are published you can start tagging them on Instagram or create Facebook ads.", 'PsFacebookTranslations'),
+                'catalogExportNotice' => $this->module->l('It can take up to 24h for your PrestaShop product information to sync to Facebook.', 'PsFacebookTranslations'),
                 'catalogExportOperationPaused' => $this->module->l('The operation is paused.', 'PsFacebookTranslations'),
                 'viewButton' => $this->module->l('View', 'PsFacebookTranslations'),
                 'viewCatalogButton' => $this->module->l('View catalog', 'PsFacebookTranslations'),
@@ -166,6 +163,15 @@ class PsFacebookTranslations
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
             ],
+            'productScan' => [
+                'betaWarning' => $this->module->l('This feature is still in beta.', 'PsFacebookTranslations'),
+                'lang' => $this->module->l('Lang', 'PsFacebookTranslations'),
+                'cover' => $this->module->l('Cover', 'PsFacebookTranslations'),
+                'description' => $this->module->l('Desc', 'PsFacebookTranslations'),
+                'barcode' => $this->module->l('Barcode / Brand', 'PsFacebookTranslations'),
+                'price' => $this->module->l('Price', 'PsFacebookTranslations'),
+                'variant' => $this->module->l('Variant #{0}', 'PsFacebookTranslations'),
+            ],
             'syncReport' => [
                 'title' => $this->module->l('Product status', 'PsFacebookTranslations'),
                 'id' => $this->module->l('ID', 'PsFacebookTranslations'),
@@ -176,7 +182,7 @@ class PsFacebookTranslations
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
-                'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category. We recommend that you choose the most specific category possible that applies to each item to help customers understand what type of item you’re selling.', 'PsFacebookTranslations'),
+                'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
                 'counterSubTitle' => $this->module->l('specified parent categories', 'PsFacebookTranslations'),
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
@@ -187,9 +193,9 @@ class PsFacebookTranslations
                 ],
                 'tableMatching' => [
                     'firstTd' => $this->module->l('Category on your site'),
-                    'secondTd' => $this->module->l('Facebook category'),
+                    'secondTd' => $this->module->l('Google category'),
                     'thirdTd' => $this->module->l('Parent category'),
-                    'fourthTd' => $this->module->l('Facebook subcategory'),
+                    'fourthTd' => $this->module->l('Google subcategory'),
                 ],
             ],
             'integrate' => [
@@ -240,6 +246,11 @@ class PsFacebookTranslations
                 'error' => [
                     'failedToUpdateFeature' => $this->module->l('Failed to update facebook feature.', 'PsFacebookTranslations'),
                 ],
+            ],
+            'survey' => [
+                'title' => $this->module->l('Give us your feedback!', 'PsFacebookTranslations'),
+                'text' => $this->module->l('Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!', 'PsFacebookTranslations'),
+                'button' => $this->module->l("Let's begin", 'PsFacebookTranslations'),
             ],
 
             'help' => [

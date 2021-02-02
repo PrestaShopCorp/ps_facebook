@@ -46,4 +46,4 @@ new Vue({
       global.psFacebookExternalBusinessId = externalBusinessId;
     },
   },
-}).$mount('#app');
+}).$mount('#psFacebookApp');
