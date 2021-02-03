@@ -224,10 +224,10 @@
         class="text"
         :class="{ expanded: seeMoreState }"
       >
-        <p
-          class="app foldable p-2 mb-0"
-          v-html="md2html($t('catalogSummary.catalogExportInfo'))"
-        />
+        <p class="app foldable p-2 mb-0">
+          <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
+          <a href="javascript:void(0);" @click="resetSync">{{ $t('catalogSummary.resetExportLink') }}</a>
+        </p>
         <span
           class="see-more"
           @click="seeMore"
@@ -440,6 +440,10 @@ export default defineComponent({
     seeLess() {
       this.seeMoreState = false;
     },
+    resetSync() {
+      // TODO !0
+      console.log('pouet');
+    }
   },
 });
 </script>
