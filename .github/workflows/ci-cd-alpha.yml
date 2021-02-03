@@ -10,7 +10,7 @@ on:
 env:
   MODULE_NAME: ps_facebook
   GCLOUD_TOKEN_PATH: ./token.json
-  PS_IMG_VERSION: prestashop/prestashop:1.7.6.9-7.2-apache
+  PS_IMG_VERSION: prestashop/prestashop:1.7-7.2-apache
 
 jobs:
 
