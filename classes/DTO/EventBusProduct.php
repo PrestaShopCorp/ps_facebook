@@ -2,11 +2,10 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
-class GoogleProduct
+class EventBusProduct
 {
     const POSITION_PRODUCT_ID = 0;
     const POSITION_PRODUCT_ATTRIBUTE_ID = 1;
-    const POSITION_COUNTRY_ISO_CODE = 2;
 
     /**
      * @var int
@@ -19,11 +18,6 @@ class GoogleProduct
     private $productAttributeId;
 
     /**
-     * @var string
-     */
-    private $landIsoCode;
-
-    /**
      * @return int
      */
     public function getProductId()
@@ -34,7 +28,7 @@ class GoogleProduct
     /**
      * @param int $productId
      *
-     * @return GoogleProduct
+     * @return EventBusProduct
      */
     public function setProductId($productId)
     {
@@ -54,31 +48,11 @@ class GoogleProduct
     /**
      * @param int $productAttributeId
      *
-     * @return GoogleProduct
+     * @return EventBusProduct
      */
     public function setProductAttributeId($productAttributeId)
     {
         $this->productAttributeId = $productAttributeId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLandIsoCode()
-    {
-        return $this->landIsoCode;
-    }
-
-    /**
-     * @param string $landIsoCode
-     *
-     * @return GoogleProduct
-     */
-    public function setLandIsoCode($landIsoCode)
-    {
-        $this->landIsoCode = $landIsoCode;
 
         return $this;
     }

@@ -3,20 +3,20 @@
 namespace Handler;
 
 use PHPUnit\Framework\TestCase;
-use PrestaShop\Module\PrestashopFacebook\Handler\GoogleProductHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
-class GoogleProductHandlerTest extends TestCase
+class EventBusProductHandlerTest extends TestCase
 {
     /**
-     * @dataProvider getInformationAboutGoogleProductsDataProvider
+     * @dataProvider getInformationAboutEventBusProductsDataProvider
      *
-     * @param $googleProduct
+     * @param $eventBusProduct
      * @param $productRepoMocks
      * @param $result
      */
-    public function testGetInformationAboutGoogleProducts($googleProduct, $productRepoMocks, $result)
+    public function testGetInformationAboutEventBusProducts($eventBusProduct, $productRepoMocks, $result)
     {
         $productRepo = $this->getMockBuilder(ProductRepository::class)
             ->disableOriginalConstructor()
@@ -24,35 +24,35 @@ class GoogleProductHandlerTest extends TestCase
         foreach ($productRepoMocks as $key => $mock) {
             $productRepo
                 ->expects($this->at($key))
-                ->method('getInformationAboutGoogleProduct')
+                ->method('getInformationAboutEventBusProduct')
                 ->willReturn($mock);
         }
         $psFacebookTranslations = $this->getMockBuilder(PsFacebookTranslations::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $googleProductHandler = new GoogleProductHandler($productRepo, $psFacebookTranslations);
-        $informationAboutProducts = $googleProductHandler->getInformationAboutGoogleProductsWithErrors($googleProduct, 1);
+        $eventBusProductHandler = new EventBusProductHandler($productRepo, $psFacebookTranslations);
+        $informationAboutProducts = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($eventBusProduct, 1, 'eu');
 
         self::assertEquals($result, $informationAboutProducts);
     }
 
-    public function getInformationAboutGoogleProductsDataProvider()
+    public function getInformationAboutEventBusProductsDataProvider()
     {
         $isoCode = 'en';
 
-        $productOneGoogleId = '1-1-en';
+        $productOneGoogleId = '1-1';
         $productOneId = 1;
         $productOneAttributeId = 1;
         $productOneName = 'Hummingbird printed t-shirt';
 
-        $productTwoGoogleId = '2-2-en';
+        $productTwoGoogleId = '2-2';
         $productTwoId = 2;
         $productTwoAttributeId = 2;
         $productTwoName = 'Hummingbird printed t-shirt2';
 
         return [
             '1 product' => [
-                'googleProduct' => [$productOneGoogleId => 'error message'],
+                'eventBusProduct' => [$productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message']],
                 'productRepoMocks' => [
                     0 => [
                         [
@@ -65,7 +65,7 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
@@ -74,7 +74,10 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products' => [
-                'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
+                'eventBusProduct' => [
+                    $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                ],
                 'productRepoMocks' => [
                     0 => [
                         [
@@ -95,14 +98,14 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
                         'iso_code' => $isoCode,
                     ],
                     $productTwoGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productTwoId,
                         'id_product_attribute' => $productTwoAttributeId,
                         'name' => $productTwoName,
@@ -111,11 +114,14 @@ class GoogleProductHandlerTest extends TestCase
                 ],
             ],
             '2 products but one is missing in database' => [
-                'googleProduct' => [$productOneGoogleId => 'error message', $productTwoGoogleId => 'error message'],
+                'eventBusProduct' => [
+                    $productOneGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                    $productTwoGoogleId => ['base' => 'error message', 'l10n' => 'error message'],
+                ],
                 'productRepoMocks' => [
                     0 => [
                         [
-                            'message' => 'error message',
+                            'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                             'id_product' => $productOneId,
                             'id_product_attribute' => $productOneAttributeId,
                             'name' => $productOneName,
@@ -126,14 +132,14 @@ class GoogleProductHandlerTest extends TestCase
                 ],
                 'result' => [
                     $productOneGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                         'id_product' => $productOneId,
                         'id_product_attribute' => $productOneAttributeId,
                         'name' => $productOneName,
                         'iso_code' => $isoCode,
                     ],
                     $productTwoGoogleId => [
-                        'message' => 'error message',
+                        'messages' => ['base' => 'error message', 'l10n' => 'error message'],
                     ],
                 ],
             ],

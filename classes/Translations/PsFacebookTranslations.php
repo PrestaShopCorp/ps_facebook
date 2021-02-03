@@ -101,7 +101,7 @@ class PsFacebookTranslations
                     ],
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
-                        'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
+                        'editButton' => $this->module->l('Modify the account settings', 'PsFacebookTranslations'),
                         'unlinkButton' => $this->module->l('Logout', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
@@ -111,7 +111,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Your Facebook page will represent your business in your ads', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns', 'PsFacebookTranslations'),
-                        'manageFbeButton' => $this->module->l('Open advanced settings', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Go to Facebook Business', 'PsFacebookTranslations'),
                         'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
                         'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
@@ -162,6 +162,9 @@ class PsFacebookTranslations
                 'exportCatalogButtonErrored' => $this->module->l('Failed! Try again', 'PsFacebookTranslations'),
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
+                'reportingLastSync' => $this->module->l('Last sync', 'PsFacebookTranslations'),
+                'reportingCatalogCount' => $this->module->l('Products in Facebook catalog', 'PsFacebookTranslations'),
+                'reportingErrorsCount' => $this->module->l('Errors due to catalog export', 'PsFacebookTranslations'),
             ],
             'productScan' => [
                 'betaWarning' => $this->module->l('This feature is still in beta.', 'PsFacebookTranslations'),
@@ -217,13 +220,13 @@ class PsFacebookTranslations
                         'editButton' => $this->module->l('Customize settings', 'PsFacebookTranslations'),
                     ],
                     'page_shop' => [
-                        'name' => $this->module->l('Facebook Page Shops', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a shop tab on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l("Facebook Page shop allows you to list products you're selling and connect with more customers on Facebook.", 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Manage', 'PsFacebookTranslations'),
                     ],
                     'page_cta' => [
-                        'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a button on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l('Add a button on your Facebook Page to get people to take an action from your page such as your shop.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Edit', 'PsFacebookTranslations'),

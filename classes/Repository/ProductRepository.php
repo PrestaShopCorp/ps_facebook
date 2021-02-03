@@ -23,7 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\DTO\GoogleProduct;
+use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
@@ -201,14 +201,15 @@ class ProductRepository
     }
 
     /**
-     * @param GoogleProduct $googleProduct
+     * @param EventBusProduct $eventBusProduct
      * @param int $shopId
+     * @param string $isoCode
      *
      * @return array|bool|\mysqli_result|\PDOStatement|resource|null
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProduct(GoogleProduct $googleProduct, $shopId)
+    public function getInformationAboutEventBusProduct(EventBusProduct $eventBusProduct, $shopId, $isoCode)
     {
         $sql = new DbQuery();
 
@@ -216,11 +217,11 @@ class ProductRepository
         $sql->select('l.iso_code');
 
         $sql->from('product_attribute', 'pa');
-        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($googleProduct->getLandIsoCode()) . '"');
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
-        $sql->where('pa.id_product = ' . (int) $googleProduct->getProductId());
-        $sql->where('pa.id_product_attribute = ' . (int) $googleProduct->getProductId());
+        $sql->where('pa.id_product = ' . (int) $eventBusProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $eventBusProduct->getProductAttributeId());
         $sql->where('pl.id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
@@ -242,7 +243,7 @@ class ProductRepository
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProducts(
+    public function getInformationAboutEventBusProducts(
         $syncUpdateDate,
         $shopId,
         $productsWithErrors,
@@ -260,6 +261,7 @@ class ProductRepository
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
+        // TODO !0: fix, format of $productsWithErrors is not "1-1-fr" anymore, but "1-1" (we lose the lang), keep only shop default lang instead.
         $sql->select('
             IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
             . $disapproved . '",
@@ -293,11 +295,11 @@ class ProductRepository
         $result = Db::getInstance()->executeS($sql);
         $products = [];
         foreach ($result as $product) {
-            $googleProductId = ProductCatalogUtility::makeProductId(
+            $eventBusProductId = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
                 $product['id_product_attribute']
             );
-            $products[$googleProductId] = $product;
+            $products[$eventBusProductId] = $product;
         }
 
         return $products;

@@ -46,7 +46,7 @@
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
-          "editButton": "Restart onboarding",
+          "editButton": "Modify the account settings",
           "unlinkButton": "Logout",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
@@ -56,7 +56,7 @@
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
           "facebookAdsTooltip": "Facebook Ads",
-          "manageFbeButton": "Open advanced settings",
+          "manageFbeButton": "Go to Facebook Business",
           "unlinkModalHeader": "Confirm uninstallation?",
           "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
         }
@@ -103,7 +103,10 @@
       "showLess": "Show less",
       "exportCatalogButtonErrored": "Failed! Try again",
       "modalDeactivationTitle": "Confirm deactivation?",
-      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
+      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.",
+      "reportingLastSync": "Last sync",
+      "reportingCatalogCount": "Products in Facebook catalog",
+      "reportingErrorsCount": "Errors due to catalog export"
     },
     "productScan": {
       "betaWarning": "This feature is still in beta.",
@@ -167,7 +170,7 @@
           "editButton": "Manage"
         },
         "page_cta" : {
-          "name": "Call-to-action",
+          "name": "Add a button on your Facebook page",
           "description": "Add a button on your Facebook Page to get people to take an action from your page such as your shop.",
           "addButton": "Add",
           "editButton": "Edit"

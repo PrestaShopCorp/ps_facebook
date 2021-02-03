@@ -24,6 +24,8 @@ FreshInstall.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -44,6 +46,8 @@ CategoryProgressing.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -64,6 +68,8 @@ SyncOn.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -84,6 +90,8 @@ SyncPaused.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -104,6 +112,8 @@ BothDone.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
