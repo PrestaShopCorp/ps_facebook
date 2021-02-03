@@ -4,9 +4,9 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
-use PrestaShop\Module\Ps_facebook\Utility\GoogleProductUtility;
+use PrestaShop\Module\Ps_facebook\Utility\EventBusProductUtility;
 
-class GoogleProductHandler
+class EventBusProductHandler
 {
     /**
      * @var ProductRepository
@@ -27,31 +27,33 @@ class GoogleProductHandler
     }
 
     /**
-     * @param array $googleProducts
+     * @param array $eventBusProducts
      * @param int $shopId
+     * @param string $isoCode
      *
      * @return array
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getInformationAboutGoogleProductsWithErrors(array $googleProducts, $shopId)
+    public function getInformationAboutEventBusProductsWithErrors(array $eventBusProducts, $shopId, $isoCode)
     {
-        $googleProductsInformation = [];
-        foreach ($googleProducts as $googleProductId => $message) {
-            $googleProductObj = GoogleProductUtility::googleProductToObject($googleProductId);
-            $googleProductInfo = $this->productRepository->getInformationAboutGoogleProduct(
-                $googleProductObj,
-                $shopId
+        $eventBusProductsInformation = [];
+        foreach ($eventBusProducts as $eventBusProductId => $messages) {
+            $eventBusProductObj = eventBusProductUtility::eventBusProductToObject($eventBusProductId);
+            $eventBusProductInfo = $this->productRepository->getInformationAbouteventBusProduct(
+                $eventBusProductObj,
+                $shopId,
+                $isoCode
             );
-            $googleProductsInformation[$googleProductId] = $googleProductInfo ? $googleProductInfo[0] : [];
-            $googleProductsInformation[$googleProductId]['message'] = $message;
+            $eventBusProductsInformation[$eventBusProductId] = $eventBusProductInfo ? $eventBusProductInfo[0] : [];
+            $eventBusProductsInformation[$eventBusProductId]['messages'] = $messages;
         }
 
-        return $googleProductsInformation;
+        return $eventBusProductsInformation;
     }
 
     /**
-     * @param array $googleProducts
+     * @param array $eventBusProducts
      * @param int $syncTimeStamp
      * @param int $shopId
      * @param int|false $page
@@ -66,8 +68,8 @@ class GoogleProductHandler
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getFilteredInformationAboutGoogleProducts(
-        array $googleProducts,
+    public function getFilteredInformationAboutEventBusProducts(
+        array $eventBusProducts,
         $syncTimeStamp,
         $shopId,
         $page,
@@ -79,8 +81,8 @@ class GoogleProductHandler
         $searchByMessage
     ) {
         $formattedSyncTimeDate = date('Y-m-d H:i:s', $syncTimeStamp);
-        $productsWithErrors = array_keys($googleProducts);
-        $googleProductsInfo = $this->productRepository->getInformationAboutGoogleProducts(
+        $productsWithErrors = array_keys($eventBusProducts);
+        $eventBusProductsInfo = $this->productRepository->getInformationAboutEventBusProducts(
             $formattedSyncTimeDate,
             $shopId,
             $productsWithErrors,
@@ -93,10 +95,10 @@ class GoogleProductHandler
             $searchByMessage
         );
 
-        foreach ($googleProducts as $googleProductId => $message) {
-            $googleProductsInfo['message'] = $message;
+        foreach ($eventBusProducts as $eventBusProductId => $messages) {
+            $eventBusProductsInfo[$eventBusProductId]['messages'] = $messages;
         }
 
-        return $googleProductsInfo;
+        return $eventBusProductsInfo;
     }
 }

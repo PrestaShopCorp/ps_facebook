@@ -103,7 +103,10 @@
       "showLess": "Show less",
       "exportCatalogButtonErrored": "Failed! Try again",
       "modalDeactivationTitle": "Confirm deactivation?",
-      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
+      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.",
+      "reportingLastSync": "Last sync",
+      "reportingCatalogCount": "Products in Facebook catalog",
+      "reportingErrorsCount": "Errors due to catalog export"
     },
     "productScan": {
       "betaWarning": "This feature is still in beta.",
