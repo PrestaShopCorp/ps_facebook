@@ -8,8 +8,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6a26f548831e6a8c26bfbb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd0be48c2c3483c8f1a51f696612a711'] = 'Verkoopkanalen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be11c74c1dd7f307bb80183a90dc2067'] = 'Aan de slag';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_bc77a4069560dbaeda21d023d3525522'] = 'Bouw uw zakelijke aanwezigheid in de Facebook community eenvoudig en snel op!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- Geen creditcard nodig. 
-- Eenvoudige installatie 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- Geen creditcard nodig.
+- Eenvoudige installatie
 - Annuleer wanneer u maar wilt';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ebce4cfc471199c367d61bbc02e29f0e'] = 'Zet uw eerste stappen met PrestaShop Facebook!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Beheer uw bedrijf';
@@ -31,10 +31,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_089b82e17fe5e6e2b6e87a
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Exporteer uw productcatalogus';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7bdb4177430'] = 'Creëer verkeer en/of dynamische advertenties';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Herladen';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'Dit domein is al gekoppeld aan PS Accounts en Facebook door een andere winkel van dit PrestaShop stadium. 
- Op dit moment kan PrestaShop Account niet werken wanneer twee winkels hetzelfde domein delen. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'Dit domein is al gekoppeld aan PS Accounts en Facebook door een andere winkel van dit PrestaShop stadium.
+ Op dit moment kan PrestaShop Account niet werken wanneer twee winkels hetzelfde domein delen.
 
- Om deze shop te registreren, moet u eerst: 
+ Om deze shop te registreren, moet u eerst:
 - uw Facebook-account uitschakelen van de andere winkel met hetzelfde domein,
 - of de domeinnaam van deze winkel wijzigen.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'Er is een onbekende fout opgetreden tijdens het registratieproces. Laadt u alstublieft opnieuw op en probeer het opnieuw.';
@@ -43,12 +43,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7c
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integreer uw winkel met Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Verbinding maken met Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'Met PS Facebook geniet u van een probleemloze, codevrije registratie en managementervaring voor zakelijke Facebook producten.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Creëer/selecteer bedrijf 
-- Creëer/selecteer pagina 
-- Creëer/selecteer advertentieaccount 
-- Creëer/selecteer installatiepixel 
-- Creëer/selecteer synchronisatie van productcatalogus 
-- Creëer Facebook winkel & Instagram winkelen 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Creëer/selecteer bedrijf
+- Creëer/selecteer pagina
+- Creëer/selecteer advertentieaccount
+- Creëer/selecteer installatiepixel
+- Creëer/selecteer synchronisatie van productcatalogus
+- Creëer Facebook winkel & Instagram winkelen
 - Pas uw Facebook pagina aan met call-to-action';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'U geeft dit Facebook account toestemming om verbinding te maken met uw winkel:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be7d6b16f9c7a60cfa48d414d053be03'] = 'Herstart registratie';
@@ -81,7 +81,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9be
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Uw catalogus in Facebook Business';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Deel catalogus';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Voordat kopers artikelen van u kunnen kopen, moet u uw productinformatie uploaden naar een Facebook productcatalogus.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Houd rekening met het volgende: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Houd rekening met het volgende:
 1. Alle "actieve" producten worden naar Facebook geëxporteerd voor hun basistaal.
 2. De export van productlocalisaties (voor vertalingen) is nog steeds in bèta en kan leiden tot een aantal onverwachte fouten.
 3. Het kan tot 24 uur duren voordat uw PrestaShop productinformatie gesynchroniseerd is met Facebook.
@@ -96,7 +96,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_04edc6c52b383554a9168a
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34a162a50c00c06f404eacc8eb02b1b1'] = 'Door het delen van uw catalogus gaat u ermee akkoord dat PrestaShop alle informatie met betrekking tot de catalogusproducten naar Facebook mag sturen.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e99180abf47a8b3a856e0bcb2656990a'] = 'Gepauzeerd';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_cb456215c3333db0551bd0788bc258c7'] = 'Geactiveerd';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Het kan tot 24 uur duren voordat uw PrestaShop productinformatie is gesynchroniseerd met Facebook. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Het kan tot 24 uur duren voordat uw PrestaShop productinformatie is gesynchroniseerd met Facebook.
  Zodra er producten zijn gepubliceerd, kunt u ze op Instagram taggen of Facebook advertenties maken.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_66edabb22fb8e6d2a7e9b91f85803130'] = 'De actie is gepauzeerd.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4351cfebe4b61d8aa5efa1d020710005'] = 'Bekijk';
@@ -142,11 +142,9 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1ebaedc380b26'] = 'Met de Chat Plugin kunt u uw Messenger ervaring direct in uw website integreren.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Voeg toe';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Instellingen naar wens aanpassen';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5acb6031ca807620809cedddee2cf7a2'] = 'Facebook Page Shops';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'Met Facebook Page shop kunt u producten die u verkoopt op een rijtje zetten en met meer klanten in contact komen op Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Voeg toe';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34e34c43ec6b943c10a3cc1a1a16fb11'] = 'Beheer';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_314b0a5db7c7de0426829ac8d339a2f4'] = 'Call-to-action';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be0265b2d10db977c9ce9f54afa3bf83'] = 'Voeg een knop toe op uw Facebook-pagina om mensen een actie te laten ondernemen vanaf uw pagina, zoals uw winkel.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Voeg toe';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Bewerk';

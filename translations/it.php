@@ -8,8 +8,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6a26f548831e6a8c26bfbb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd0be48c2c3483c8f1a51f696612a711'] = 'Canali di vendita';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be11c74c1dd7f307bb80183a90dc2067'] = 'Inizia subito!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_bc77a4069560dbaeda21d023d3525522'] = 'Crea la tua presenza aziendale nella comunità di Facebook in modo semplice e veloce!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- Non è richiesta la carta di credito 
-- Facile da impostare 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- Non è richiesta la carta di credito
+- Facile da impostare
 - Annulla in qualsiasi momento';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ebce4cfc471199c367d61bbc02e29f0e'] = 'Fai i tuoi primi passi con PrestaShop Facebook!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Gestisci la tua attività';
@@ -31,11 +31,11 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_089b82e17fe5e6e2b6e87a
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ac68c560c3e725cfd192e4b1e2985c79'] = 'Esporta il tuo catalogo prodotti';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7bdb4177430'] = 'Genera traffico e/o annunci dinamici';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Ricarica';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'Questo dominio è già stato collegato ad account PS e Facebook da un altro negozio su PrestaShop. 
- Attualmente, un account PrestaShop non è in grado di funzionare quando due negozi condividono lo stesso dominio. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3d81180d168e8f5159a54ade869481c7'] = 'Questo dominio è già stato collegato ad account PS e Facebook da un altro negozio su PrestaShop.
+ Attualmente, un account PrestaShop non è in grado di funzionare quando due negozi condividono lo stesso dominio.
 
- Per registrare questo negozio, devi prima: 
-- scollegare il tuo account Facebook dall\'altro account che sta usando lo stesso dominio, 
+ Per registrare questo negozio, devi prima:
+- scollegare il tuo account Facebook dall\'altro account che sta usando lo stesso dominio,
 - oppure cambiare il nome del dominio di questo negozio.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'Si è verificato un errore sconosciuto durante il processo di integrazione. Si prega di ricaricare e riprovare.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4dae92e5770'] = 'Le tue impostazioni di Facebook';
@@ -43,12 +43,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d66a1237caa8d2409bda7c
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integra il tuo negozio con Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Accedi a Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'Con PS Facebook, potrai usufruire di un\'esperienza di integrazione e gestione semplice e priva di codice sui prodotti business di Facebook.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Crea/Seleziona attività 
-- Crea/Seleziona pagina 
-- Crea/Seleziona account di annunci 
-- Crea/Seleziona installazione pixel 
-- Crea/Seleziona sincronizzazione catalogo prodotti 
-- Crea Facebook Shop & Instagram Shopping 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Crea/Seleziona attività
+- Crea/Seleziona pagina
+- Crea/Seleziona account di annunci
+- Crea/Seleziona installazione pixel
+- Crea/Seleziona sincronizzazione catalogo prodotti
+- Crea Facebook Shop & Instagram Shopping
 - Personalizza la tua pagina Facebook con un CTA';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'Stai autorizzando questo account Facebook a connettersi al tuo negozio:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be7d6b16f9c7a60cfa48d414d053be03'] = 'Riavvia integrazione';
@@ -81,7 +81,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63490c480d23c3f545b9be
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Il tuo catalogo su Facebook Business';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Condividi il catalogo';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Prima che gli acquirenti possano acquistare i tuoi articoli, dovrai caricare le informazioni sui tuoi prodotti in un catalogo su Facebook.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Ricorda di tener conto delle seguenti informazioni: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_203a2c4c41fd579f14064b7769dbff23'] = 'Ricorda di tener conto delle seguenti informazioni:
 1. Tutti i prodotti "attivi" vengono esportati su Facebook nella loro lingua originale.
 2. Le versioni localizzate dei prodotti (per le traduzioni) sono ancora nella versione beta ed esportarle potrebbe causare errori imprevisti.
 3. Potrebbero essere necessarie fino a 24 ore per sincronizzare le informazioni dei tuoi prodotti da PrestaShop a Facebook.
@@ -97,7 +97,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_04edc6c52b383554a9168a
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34a162a50c00c06f404eacc8eb02b1b1'] = 'Condividendo il tuo catalogo, accetti che PrestaShop possa inviare tutte le informazioni relative ai prodotti del catalogo a Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e99180abf47a8b3a856e0bcb2656990a'] = 'In pausa';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_cb456215c3333db0551bd0788bc258c7'] = 'Attivato';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Potrebbero essere necessarie 24 ore per sincronizzare le informazioni dei prodotti PrestaShop su Facebook. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Potrebbero essere necessarie 24 ore per sincronizzare le informazioni dei prodotti PrestaShop su Facebook.
  Una volta pubblicati i prodotti, puoi iniziare a taggarli su Instagram o creare annunci su Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_66edabb22fb8e6d2a7e9b91f85803130'] = 'L\'operazione è in pausa.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4351cfebe4b61d8aa5efa1d020710005'] = 'Vedi';
@@ -143,7 +143,6 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1ebaedc380b26'] = 'Grazie al Chat Plugin, potrai integrare Messenger direttamente sul tuo sito.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Aggiungi';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Personalizza le impostazioni';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5acb6031ca807620809cedddee2cf7a2'] = 'Facebook Page Shops';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'Facebook Page Shops ti permetterà di organizzare i prodotti che stai vendendo ed aumentare la tua clientela grazie a Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf2570c3cb84f9'] = 'Aggiungi';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34e34c43ec6b943c10a3cc1a1a16fb11'] = 'Gestisci';
