@@ -30,6 +30,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
+use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
@@ -82,8 +83,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         /** @var ConfigurationHandler $configurationHandler */
         $configurationHandler = $this->module->getService(ConfigurationHandler::class);
+        /** @var AccessTokenProvider $accessTokenProvider */
+        $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
 
         $response = $configurationHandler->handle($onboardingData);
+        $accessTokenProvider->refreshTokens();
 
         $this->ajaxDie(
             json_encode($response)
