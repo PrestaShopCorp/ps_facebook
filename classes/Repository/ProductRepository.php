@@ -175,6 +175,8 @@ class ProductRepository
         OR pl.name = "" OR pl.name is NULL
         ');
 
+        $sql->orderBy('p.id_product ASC, pas.id_product_attribute ASC, language ASC');
+
         if ($page > -1) {
             $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page));
         }

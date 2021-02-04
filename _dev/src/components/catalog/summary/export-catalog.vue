@@ -93,30 +93,35 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="reporting.hasSynced" class="big mt-2">{{ reporting.syncDate }}</span>
-            <span v-if="reporting.hasSynced" class="text-muted">{{ reporting.syncTime }}</span>
-            <div v-else class="mt-2 text-muted">
-              {{ $t('catalogSummary.catalogExportWarning') }}
-            </div>
+            <span v-if="reporting.hasSynced" class="big mt-2">{{ reporting.syncDate || '--' }}</span>
+            <span v-if="reporting.hasSynced" class="text-muted">{{ reporting.syncTime || '--' }}</span>
+            <b-alert
+              v-if="!reporting.hasSynced"
+              variant="warning"
+              show
+              class="warning smaller"
+            >
+              {{ $t('catalogSummary.catalogExportNotice') }}
+            </b-alert>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.reportingCatalogCount') }}
-            <span class="big mt-2">{{ reporting.catalog }}</span>
+            <span class="big mt-2">{{ reporting.catalog || '--' }}</span>
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
             <i class="material-icons">error_outline</i>
             {{ $t('catalogSummary.reportingErrorsCount') }}
             <br>
-            <b-link
+            <!--b-link
               class="float-right see-details mt-3"
               @click="onDetails"
             >
               {{ $t('catalogSummary.detailsButton') }}
-            </b-link>
-            <span class="big mt-2">{{ reporting.errored }}</span>
+            </b-link-->
+            <span class="big mt-2">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -585,6 +590,15 @@ export default defineComponent({
     }
     &:last-of-type > span {
       color: #C05C67;
+    }
+
+    & .warning.smaller {
+      font-size: smaller;
+      padding-left: 3.4rem !important;
+      padding-top: 0.3rem !important;
+      padding-bottom: 0.3rem !important;
+      margin-bottom: 0;
+      margin-top: 1rem;
     }
   }
   .green-number {
