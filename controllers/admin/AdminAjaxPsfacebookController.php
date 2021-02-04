@@ -592,11 +592,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $response = 200;
 
         try {
-            //todo: change url to match new API call to export the whole catalog
             $response = $client->post(
-                '/account/' . $externalBusinessId . '/'
+                '/account/' . $externalBusinessId . '/reset_product_sync'
             )->json();
         } catch (Exception $e) {
             $errorHandler = ErrorHandler::getInstance();
@@ -610,13 +610,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 false
             );
             $this->ajaxDie(json_encode([
-                'success' => false,
+                'response' => 500,
+                'message' => $e->getMessage(),
             ]));
         }
 
-        //todo: need to talk about what information should we return when API returns fail code and what we should return if API just throws exception
         $this->ajaxDie(json_encode([
-            'success' => true,
             'response' => $response,
         ]));
     }
