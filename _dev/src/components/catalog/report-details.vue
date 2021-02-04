@@ -70,6 +70,11 @@
                   {{ name }}
                 </b-link>
               </b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
             </b-tr>
             <b-tr :key="index + 'bis'" class="dashed">
               <b-td class="pl-4">
