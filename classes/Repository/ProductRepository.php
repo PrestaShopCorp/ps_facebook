@@ -196,7 +196,7 @@ class ProductRepository
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
 
         $sql->where('ps.id_shop = ' . (int) $shopId);
-        if ($onlyActive === true) {
+        if (isset($options['onlyActive'])) {
             $sql->where('ps.active = 1');
         }
 
