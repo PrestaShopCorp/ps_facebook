@@ -93,30 +93,39 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="reporting.hasSynced" class="big mt-2">{{ reporting.syncDate }}</span>
-            <span v-if="reporting.hasSynced" class="text-muted">{{ reporting.syncTime }}</span>
-            <div v-else class="mt-2 text-muted">
-              {{ $t('catalogSummary.catalogExportWarning') }}
-            </div>
+            <span v-if="reporting.hasSynced" class="big mt-2">
+              {{ reporting.syncDate || '--' }}
+            </span>
+            <span v-if="reporting.hasSynced" class="text-muted">
+              {{ reporting.syncTime || '--' }}
+            </span>
+            <b-alert
+              v-if="!reporting.hasSynced"
+              variant="warning"
+              show
+              class="warning smaller"
+            >
+              {{ $t('catalogSummary.catalogExportNotice') }}
+            </b-alert>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.reportingCatalogCount') }}
-            <span class="big mt-2">{{ reporting.catalog }}</span>
+            <span class="big mt-2">{{ reporting.catalog || '--' }}</span>
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
             <i class="material-icons">error_outline</i>
             {{ $t('catalogSummary.reportingErrorsCount') }}
             <br>
-            <b-link
+            <!--b-link
               class="float-right see-details mt-3"
               @click="onDetails"
             >
               {{ $t('catalogSummary.detailsButton') }}
-            </b-link>
-            <span class="big mt-2">{{ reporting.errored }}</span>
+            </b-link-->
+            <span class="big mt-2">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -224,10 +233,12 @@
         class="text"
         :class="{ expanded: seeMoreState }"
       >
-        <p
-          class="app foldable p-2 mb-0"
-          v-html="md2html($t('catalogSummary.catalogExportInfo'))"
-        />
+        <p class="app foldable p-2 mb-0">
+          <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
+          <a href="javascript:void(0);" @click="resetSync">
+            {{ $t('catalogSummary.resetExportLink') }}
+          </a>
+        </p>
         <span
           class="see-more"
           @click="seeMore"
@@ -241,6 +252,22 @@
         >{{ $t('catalogSummary.showLess') }}</span>
 
       </div>
+      <b-alert
+        v-if="resetLinkError"
+        variant="warning"
+        show
+        class="warning"
+      >
+        {{ $t('catalogSummary.resetExportError') }}
+      </b-alert>
+      <b-alert
+        v-if="resetLinkSuccess"
+        variant="success"
+        show
+        class="success"
+      >
+        {{ $t('catalogSummary.resetExportSuccess') }}
+      </b-alert>
       <br v-if="!exportOn">
       <p
         v-if="!exportOn"
@@ -327,6 +354,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookStartProductSyncRoute || null,
     },
+    resetProductSyncRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookExportWholeCatalog || null,
+    },
     catalogId: {
       type: String,
       required: false,
@@ -373,6 +405,8 @@ export default defineComponent({
     return {
       error: null,
       seeMoreState: false,
+      resetLinkError: null,
+      resetLinkSuccess: null,
     };
   },
   methods: {
@@ -439,6 +473,33 @@ export default defineComponent({
     },
     seeLess() {
       this.seeMoreState = false;
+    },
+    resetSync() {
+      if (!this.resetProductSyncRoute) {
+        return;
+      }
+
+      fetch(this.resetProductSyncRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error(res.statusText || res.status);
+        }
+        this.resetLinkSuccess = setTimeout(() => {
+          this.resetLinkSuccess = null;
+        }, 5000);
+      }).catch((error) => {
+        console.error(error);
+        this.resetLinkError = setTimeout(() => {
+          this.resetLinkError = null;
+        }, 5000);
+      });
     },
   },
 });
@@ -581,6 +642,15 @@ export default defineComponent({
     }
     &:last-of-type > span {
       color: #C05C67;
+    }
+
+    & .warning.smaller {
+      font-size: smaller;
+      padding-left: 3.4rem !important;
+      padding-top: 0.3rem !important;
+      padding-bottom: 0.3rem !important;
+      margin-bottom: 0;
+      margin-top: 1rem;
     }
   }
   .green-number {
