@@ -252,7 +252,7 @@
         show
         class="warning"
       >
-        ERROR !
+        {{ $t('catalogSummary.resetExportError') }}
       </b-alert>
       <b-alert
         v-if="resetLinkSuccess"
@@ -260,7 +260,7 @@
         show
         class="success"
       >
-        YES !
+        {{ $t('catalogSummary.resetExportSuccess') }}
       </b-alert>
       <br v-if="!exportOn">
       <p
