@@ -70,6 +70,11 @@
                   {{ name }}
                 </b-link>
               </b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
+              <b-td></b-td>
             </b-tr>
             <b-tr :key="index + 'bis'" class="dashed">
               <b-td class="pl-4">
@@ -122,7 +127,7 @@
               </b-td>
             </b-tr>
           </template>
-          <b-tr :key="index" v-else :class="!variantLabel(index) ? 'none' : 'dashed'">
+          <b-tr :key="index" v-else :class="!isNewVariant(index) ? 'none' : 'dashed'">
             <b-td class="pl-4">
               {{ variantLabel(index) }}
             </b-td>
@@ -234,8 +239,7 @@ export default defineComponent({
         this.loading = false;
       });
     },
-    variantLabel(index) {
-      // Show label only if previous variant in the array is different than the current one
+    isNewVariant(index) {
       const attribute = this.rows[index].id_product_attribute;
       const product = this.rows[index].id_product;
 
@@ -243,8 +247,16 @@ export default defineComponent({
         const previousAttribute = this.rows[index - 1].id_product_attribute;
         const previousProduct = this.rows[index - 1].id_product;
         if (attribute === previousAttribute && product === previousProduct) {
-          return '';
+          return false;
         }
+      }
+      return true;
+    },
+    variantLabel(index) {
+      // Show label only if previous variant in the array is different than the current one
+      const attribute = this.rows[index].id_product_attribute;
+      if (!attribute || !this.isNewVariant(index)) {
+        return '';
       }
       return this.$t('productScan.variant', [attribute]);
     },
