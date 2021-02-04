@@ -239,20 +239,6 @@ export default defineComponent({
         this.loading = false;
       });
     },
-    variantLabel(index) {
-      // Show label only if previous variant in the array is different than the current one
-      const attribute = this.rows[index].id_product_attribute;
-      const product = this.rows[index].id_product;
-
-      if (index > 0) {
-        const previousAttribute = this.rows[index - 1].id_product_attribute;
-        const previousProduct = this.rows[index - 1].id_product;
-        if (!attribute || (attribute === previousAttribute && product === previousProduct)) {
-          return '';
-        }
-      }
-      return this.$t('productScan.variant', [attribute]);
-    },
     isNewVariant(index) {
       const attribute = this.rows[index].id_product_attribute;
       const product = this.rows[index].id_product;
@@ -265,6 +251,14 @@ export default defineComponent({
         }
       }
       return true;
+    },
+    variantLabel(index) {
+      // Show label only if previous variant in the array is different than the current one
+      const attribute = this.rows[index].id_product_attribute;
+      if (!attribute || !this.isNewVariant(index)) {
+        return '';
+      }
+      return this.$t('productScan.variant', [attribute]);
     },
   },
 });
