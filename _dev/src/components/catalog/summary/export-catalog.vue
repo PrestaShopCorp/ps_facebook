@@ -246,6 +246,22 @@
         >{{ $t('catalogSummary.showLess') }}</span>
 
       </div>
+      <b-alert
+        v-if="resetLinkError"
+        variant="warning"
+        show
+        class="warning"
+      >
+        ERROR !
+      </b-alert>
+      <b-alert
+        v-if="resetLinkSuccess"
+        variant="success"
+        show
+        class="success"
+      >
+        YES !
+      </b-alert>
       <br v-if="!exportOn">
       <p
         v-if="!exportOn"
@@ -383,6 +399,8 @@ export default defineComponent({
     return {
       error: null,
       seeMoreState: false,
+      resetLinkError: null,
+      resetLinkSuccess: null,
     };
   },
   methods: {
@@ -467,15 +485,16 @@ export default defineComponent({
         if (!res.success) {
           throw new Error(res.statusText || res.status);
         }
-        console.error('SUCCESS #######');
+        this.resetLinkSuccess = setTimeout(() => {
+          this.resetLinkSuccess = null;
+        }, 5000);
       }).catch((error) => {
         console.error(error);
-        this.error = setTimeout(() => {
-          this.error = null;
+        this.resetLinkError = setTimeout(() => {
+          this.resetLinkError = null;
         }, 5000);
-        console.error('ERROR #######');
       });
-    }
+    },
   },
 });
 </script>
