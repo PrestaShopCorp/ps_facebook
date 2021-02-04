@@ -233,8 +233,16 @@ export default defineComponent({
         this.loading = false;
       });
     },
-  },
-  watch: {
+    variantLabel(index) {
+      if (index === 0 || !this.rows[index - 1]) {
+        return '';
+      }
+      const attribute = this.rows[index].id_product_attribute;
+      if (!attribute || (this.rows[index - 1].id_product_attribute !== attribute)) {
+        return '';
+      }
+      return this.$t('productScan.variant', [attribute]);
+    },
   },
 });
 </script>
