@@ -22,6 +22,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
@@ -284,6 +285,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFeatures()
     {
+        /** @var FbeFeatureDataProvider $fbeFeatureDataProvider */
         $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
@@ -584,6 +586,38 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             )
         );
+    }
+
+    public function displayAjaxExportWholeCatalog()
+    {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $response = 200;
+
+        try {
+            $response = $client->post(
+                '/account/' . $externalBusinessId . '/reset_product_sync'
+            )->json();
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookCatalogExportException(
+                    'Failed to export the whole catalog',
+                    FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+            $this->ajaxDie(json_encode([
+                'response' => 500,
+                'message' => $e->getMessage(),
+            ]));
+        }
+
+        $this->ajaxDie(json_encode([
+            'response' => $response,
+        ]));
     }
 
     /**
