@@ -486,11 +486,8 @@ export default defineComponent({
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
-        return res.json();
-      }).then((res) => {
-        if (!res.success) {
-          throw new Error(res.statusText || res.status);
-        }
+        // return res.json();
+      }).then(() => {
         this.resetLinkSuccess = setTimeout(() => {
           this.resetLinkSuccess = null;
         }, 5000);
@@ -649,7 +646,7 @@ export default defineComponent({
       padding-left: 3.4rem !important;
       padding-top: 0.3rem !important;
       padding-bottom: 0.3rem !important;
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       margin-top: 1rem;
     }
   }
