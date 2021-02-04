@@ -184,7 +184,7 @@ class ProductRepository
         return Db::getInstance()->executeS($sql);
     }
 
-    public function getProductsTotal($shopId, $onlyActive = false)
+    public function getProductsTotal($shopId, array $options = [])
     {
         $sql = new DbQuery();
 
