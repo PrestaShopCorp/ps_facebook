@@ -339,7 +339,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
         $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
-        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id, ['onlyActive' => true]);
 
         /** @var ProductSyncReportProvider $productSyncReportProvider */
         $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);

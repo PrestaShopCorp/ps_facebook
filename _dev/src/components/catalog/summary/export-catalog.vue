@@ -647,7 +647,7 @@ export default defineComponent({
       padding-top: 0.3rem !important;
       padding-bottom: 0.3rem !important;
       margin-bottom: 0 !important;
-      margin-top: 1rem;
+      margin-top: 0.9rem;
     }
   }
   .green-number {

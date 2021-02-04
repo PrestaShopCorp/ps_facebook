@@ -118,7 +118,7 @@
           </template>
           <template v-else>
             <b-td class="pl-4">
-              {{ id_product_attribute ? $t('productScan.variant', [id_product_attribute]) : '' }}
+              {{ variantLabel(index) }}
             </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>
@@ -228,8 +228,17 @@ export default defineComponent({
         this.loading = false;
       });
     },
-  },
-  watch: {
+    variantLabel(index) {
+      // Show label only if previous variant in the array is different than the current one
+      if (index === 0 || !this.rows[index - 1]) {
+        return '';
+      }
+      const attribute = this.rows[index].id_product_attribute;
+      if (!attribute || (this.rows[index - 1].id_product_attribute === attribute)) {
+        return '';
+      }
+      return this.$t('productScan.variant', [attribute]);
+    },
   },
 });
 </script>
