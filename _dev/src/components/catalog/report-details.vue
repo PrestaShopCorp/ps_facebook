@@ -257,11 +257,11 @@ export default defineComponent({
     text-transform: uppercase;
   }
 
-  tr.dashed > td {
-    border-top-style: dashed;
+  tr.dashed > td:first-of-type {
+    border-top-style: dashed !important;
   }
 
-  tr.none > td {
-    border-top: 0px none;
+  tr.none > td:first-of-type {
+    border-top: 0px none !important;
   }
 </style>
