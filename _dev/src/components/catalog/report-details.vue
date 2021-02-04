@@ -127,7 +127,7 @@
               </b-td>
             </b-tr>
           </template>
-          <b-tr :key="index" v-else :class="!variantLabel(index) ? 'none' : 'dashed'">
+          <b-tr :key="index" v-else :class="!isNewVariant(index) ? 'none' : 'dashed'">
             <b-td class="pl-4">
               {{ variantLabel(index) }}
             </b-td>
@@ -247,11 +247,24 @@ export default defineComponent({
       if (index > 0) {
         const previousAttribute = this.rows[index - 1].id_product_attribute;
         const previousProduct = this.rows[index - 1].id_product;
-        if (attribute === previousAttribute && product === previousProduct) {
+        if (!attribute || (attribute === previousAttribute && product === previousProduct)) {
           return '';
         }
       }
       return this.$t('productScan.variant', [attribute]);
+    },
+    isNewVariant(index) {
+      const attribute = this.rows[index].id_product_attribute;
+      const product = this.rows[index].id_product;
+
+      if (index > 0) {
+        const previousAttribute = this.rows[index - 1].id_product_attribute;
+        const previousProduct = this.rows[index - 1].id_product;
+        if (attribute === previousAttribute && product === previousProduct) {
+          return false;
+        }
+      }
+      return true;
     },
   },
 });
