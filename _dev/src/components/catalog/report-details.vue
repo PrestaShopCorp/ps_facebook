@@ -118,12 +118,7 @@
           </template>
           <template v-else>
             <b-td class="pl-4">
-              {{
-                (id_product_attribute && (index > 0) && rows[index - 1]
-                  && (rows[index - 1].id_product_attribute !== id_product_attribute))
-                  ? $t('productScan.variant', [id_product_attribute])
-                  : ''
-              }}
+              {{ variantLabel(index) }}
             </b-td>
             <b-td>{{ language }}</b-td>
             <b-td>
