@@ -93,8 +93,12 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="reporting.hasSynced" class="big mt-2">{{ reporting.syncDate || '--' }}</span>
-            <span v-if="reporting.hasSynced" class="text-muted">{{ reporting.syncTime || '--' }}</span>
+            <span v-if="reporting.hasSynced" class="big mt-2">
+              {{ reporting.syncDate || '--' }}
+            </span>
+            <span v-if="reporting.hasSynced" class="text-muted">
+              {{ reporting.syncTime || '--' }}
+            </span>
             <b-alert
               v-if="!reporting.hasSynced"
               variant="warning"
@@ -231,7 +235,9 @@
       >
         <p class="app foldable p-2 mb-0">
           <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
-          <a href="javascript:void(0);" @click="resetSync">{{ $t('catalogSummary.resetExportLink') }}</a>
+          <a href="javascript:void(0);" @click="resetSync">
+            {{ $t('catalogSummary.resetExportLink') }}
+          </a>
         </p>
         <span
           class="see-more"
