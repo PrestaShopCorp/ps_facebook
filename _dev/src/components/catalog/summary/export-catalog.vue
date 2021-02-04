@@ -646,7 +646,7 @@ export default defineComponent({
       padding-left: 3.4rem !important;
       padding-top: 0.3rem !important;
       padding-bottom: 0.3rem !important;
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       margin-top: 1rem;
     }
   }
