@@ -332,6 +332,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookStartProductSyncRoute || null,
     },
+    resetProductSyncRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookExportWholeCatalog || null,
+    },
     catalogId: {
       type: String,
       required: false,
@@ -446,8 +451,30 @@ export default defineComponent({
       this.seeMoreState = false;
     },
     resetSync() {
-      // TODO !0
-      console.log('pouet');
+      if (!this.resetProductSyncRoute) {
+        return;
+      }
+
+      fetch(this.resetProductSyncRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error(res.statusText || res.status);
+        }
+        console.error('SUCCESS #######');
+      }).catch((error) => {
+        console.error(error);
+        this.error = setTimeout(() => {
+          this.error = null;
+        }, 5000);
+        console.error('ERROR #######');
+      });
     }
   },
 });
