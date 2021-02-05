@@ -30,12 +30,12 @@ class Catalog implements JsonSerializable
     private $id;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $productSyncStarted;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $categoryMatchingStarted;
 
@@ -60,7 +60,7 @@ class Catalog implements JsonSerializable
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getProductSyncStarted()
     {
@@ -68,7 +68,7 @@ class Catalog implements JsonSerializable
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getCategoryMatchingStarted()
     {
