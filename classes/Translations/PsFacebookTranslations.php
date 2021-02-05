@@ -101,7 +101,7 @@ class PsFacebookTranslations
                     ],
                     'connected' => [
                         'description' => $this->module->l('You authorize this Facebook account to connect to your store:', 'PsFacebookTranslations'),
-                        'editButton' => $this->module->l('Restart onboarding', 'PsFacebookTranslations'),
+                        'editButton' => $this->module->l('Modify the account settings', 'PsFacebookTranslations'),
                         'unlinkButton' => $this->module->l('Logout', 'PsFacebookTranslations'),
                         'facebookBusinessManager' => $this->module->l('Facebook Business Manager', 'PsFacebookTranslations'),
                         'facebookBusinessManagerTooltip' => $this->module->l('Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place', 'PsFacebookTranslations'),
@@ -111,7 +111,7 @@ class PsFacebookTranslations
                         'facebookPageTooltip' => $this->module->l('Your Facebook page will represent your business in your ads', 'PsFacebookTranslations'),
                         'facebookAds' => $this->module->l('Facebook Ads', 'PsFacebookTranslations'),
                         'facebookAdsTooltip' => $this->module->l('Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns', 'PsFacebookTranslations'),
-                        'manageFbeButton' => $this->module->l('Open advanced settings', 'PsFacebookTranslations'),
+                        'manageFbeButton' => $this->module->l('Go to Facebook Business', 'PsFacebookTranslations'),
                         'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
                         'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
@@ -141,7 +141,10 @@ class PsFacebookTranslations
                 'productCatalogExport' => $this->module->l('Your catalog in Facebook Business', 'PsFacebookTranslations'),
                 'exportCatalogButton' => $this->module->l('Share catalog', 'PsFacebookTranslations'),
                 'catalogExportIntro' => $this->module->l('Before buyers can purchase items from you, you\'ll need to upload your products information into a Facebook Product Catalog.', 'PsFacebookTranslations'),
-                'catalogExportInfo' => $this->module->l("Please be aware of the following: \n1. All « active » products are exported to Facebook for their base language.\n2. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.\n3. It can take up to 24h for your PrestaShop product information to sync to Facebook.\n4. The entire catalog is updated with a recurrent update every 24 hours.\n5. Each modification made to your catalog will be taken into account during the next synchronization.\n6. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn.", 'PsFacebookTranslations'),
+                'catalogExportInfo' => $this->module->l("Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all « active » products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.", 'PsFacebookTranslations'),
+                'resetExportLink' => $this->module->l('If you want to re-export your entire catalog click here.', 'PsFacebookTranslations'),
+                'resetExportSuccess' => $this->module->l('Next export will contain all your catalog.', 'PsFacebookTranslations'),
+                'resetExportError' => $this->module->l('Unknown error occurred trying to reset export. Please try again later.', 'PsFacebookTranslations'),
                 'preApprovalScanTitle' => $this->module->l('Product scan before synchronization to facebook', 'PsFacebookTranslations'),
                 'preApprovalScanIntro' => $this->module->l('Check which products are ready to be synchronized and which ones have problems and will not be synchronized.', 'PsFacebookTranslations'),
                 'preApprovalScanRefreshDate' => $this->module->l('Last scan today at {0}', 'PsFacebookTranslations'),
@@ -162,6 +165,9 @@ class PsFacebookTranslations
                 'exportCatalogButtonErrored' => $this->module->l('Failed! Try again', 'PsFacebookTranslations'),
                 'modalDeactivationTitle' => $this->module->l('Confirm deactivation?', 'PsFacebookTranslations'),
                 'modalDeactivationText' => $this->module->l('You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.', 'PsFacebookTranslations'),
+                'reportingLastSync' => $this->module->l('Last sync', 'PsFacebookTranslations'),
+                'reportingCatalogCount' => $this->module->l('Products in Facebook catalog', 'PsFacebookTranslations'),
+                'reportingErrorsCount' => $this->module->l('Errors due to catalog export', 'PsFacebookTranslations'),
             ],
             'productScan' => [
                 'betaWarning' => $this->module->l('This feature is still in beta.', 'PsFacebookTranslations'),
@@ -217,13 +223,13 @@ class PsFacebookTranslations
                         'editButton' => $this->module->l('Customize settings', 'PsFacebookTranslations'),
                     ],
                     'page_shop' => [
-                        'name' => $this->module->l('Facebook Page Shops', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a shop tab on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l("Facebook Page shop allows you to list products you're selling and connect with more customers on Facebook.", 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Manage', 'PsFacebookTranslations'),
                     ],
                     'page_cta' => [
-                        'name' => $this->module->l('Call-to-action', 'PsFacebookTranslations'),
+                        'name' => $this->module->l('Add a button on your Facebook page', 'PsFacebookTranslations'),
                         'description' => $this->module->l('Add a button on your Facebook Page to get people to take an action from your page such as your shop.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Edit', 'PsFacebookTranslations'),
@@ -273,6 +279,11 @@ class PsFacebookTranslations
             'faq' => [
                 'title' => $this->module->l('FAQ', 'PsFacebookTranslations'),
                 'noFaq' => $this->module->l('No FAQ available.', 'PsFacebookTranslations'),
+            ],
+            'productStatuses' => [
+                'Approved' => $this->module->l('Approved'),
+                'Pending' => $this->module->l('Pending'),
+                'Disapproved' => $this->module->l('Disapproved'),
             ],
         ];
 

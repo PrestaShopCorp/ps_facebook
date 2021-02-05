@@ -46,7 +46,7 @@
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
-          "editButton": "Restart onboarding",
+          "editButton": "Modify the account settings",
           "unlinkButton": "Logout",
           "facebookBusinessManager": "Facebook Business Manager",
           "facebookBusinessManagerTooltip": "Facebook Business Manager",
@@ -56,7 +56,7 @@
           "facebookPageTooltip": "Facebook Page",
           "facebookAds": "Facebook Ads",
           "facebookAdsTooltip": "Facebook Ads",
-          "manageFbeButton": "Open advanced settings",
+          "manageFbeButton": "Go to Facebook Business",
           "unlinkModalHeader": "Confirm uninstallation?",
           "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
         }
@@ -83,7 +83,10 @@
       "productCatalogExport": "Your catalog in Facebook Business",
       "exportCatalogButton": "Share catalog",
       "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
-      "catalogExportInfo": "Please be aware of the following: \n1. All « active » products are exported to Facebook for their base language.\n2. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.\n3. It can take up to 24h for your PrestaShop product information to sync to Facebook.\n4. The entire catalog is updated with a recurrent update every 24 hours.\n5. Each modification made to your catalog will be taken into account during the next synchronization.\n6. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn.",
+      "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all « active » products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",
+      "resetExportLink": "If you want to re-export your entire catalog click here.",
+      "resetExportSuccess": "Next export will contain all your catalog.",
+      "resetExportError": "Unknown error occurred trying to reset export. Please try again later.",
       "preApprovalScanTitle": "Product scan before synchronization to facebook",
       "preApprovalScanIntro": "Check which products are ready to be synchronized and which ones have problems and will not be synchronized.",
       "preApprovalScanRefreshDate": "Last scan today at {0}",
@@ -103,7 +106,10 @@
       "showLess": "Show less",
       "exportCatalogButtonErrored": "Failed! Try again",
       "modalDeactivationTitle": "Confirm deactivation?",
-      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
+      "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated.",
+      "reportingLastSync": "Last sync",
+      "reportingCatalogCount": "Products in Facebook catalog",
+      "reportingErrorsCount": "Errors due to catalog export"
     },
     "productScan": {
       "betaWarning": "This feature is still in beta.",
@@ -167,7 +173,7 @@
           "editButton": "Manage"
         },
         "page_cta" : {
-          "name": "Call-to-action",
+          "name": "Add a button on your Facebook page",
           "description": "Add a button on your Facebook Page to get people to take an action from your page such as your shop.",
           "addButton": "Add",
           "editButton": "Edit"

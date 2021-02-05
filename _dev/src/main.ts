@@ -11,7 +11,7 @@ import i18n from './lib/i18n';
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueCollapse);
-Vue.use(psAccountsVueComponents);
+Vue.use(psAccountsVueComponents, {locale: i18n.locale});
 Vue.use(VueSegment, {
   // @ts-ignore
   id: global.psFacebookSegmentId,

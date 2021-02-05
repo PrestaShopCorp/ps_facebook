@@ -5,7 +5,9 @@
     class="m-3 mt-4 p-3 text-center survey"
   >
     <h3><i class="material-icons">mood</i>  {{ $t('survey.title') }}</h3>
-    <p class="small-text">{{ $t('survey.text') }}</p>
+    <p class="small-text">
+      {{ $t('survey.text') }}
+    </p>
     <b-button
       size="sm"
       variant="secondary"

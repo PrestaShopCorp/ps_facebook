@@ -17,38 +17,9 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
-
-namespace PrestaShop\Module\Ps_facebook\Utility;
-
-class ProductCatalogUtility
+function upgrade_module_1_4_1(Module $module)
 {
-    /**
-     * @param int $productId
-     * @param int|null $productAttributeId
-     * @param bool|string $isoCode
-     *
-     * @return string
-     */
-    public static function makeProductId($productId, $productAttributeId, $isoCode = false)
-    {
-        $eventBusProductId = implode(
-            '-',
-            [
-                (int) $productId,
-                (int) $productAttributeId,
-            ]
-        );
+    $module->registerHook('actionFacebookCallPixel');
 
-        if (!$isoCode) {
-            return $eventBusProductId;
-        }
-
-        return implode(
-            '-',
-            [
-                $eventBusProductId,
-                $isoCode,
-            ]
-        );
-    }
+    return true;
 }

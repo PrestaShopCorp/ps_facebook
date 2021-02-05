@@ -81,6 +81,24 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
         return $googleCategories;
     }
 
+    /**
+     * @param array $categoryIds
+     * @param int $shopId
+     *
+     * @return array|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getGoogleCategories(array $categoryIds, $shopId)
+    {
+        $categoryMatch = $this->googleCategoryRepository->getCategoryMatchesByCategoryIds($categoryIds, $shopId);
+        if (!is_array($categoryMatch)) {
+            return null;
+        }
+
+        return $categoryMatch;
+    }
+
     public function getCategoryPaths($topCategoryId, $langId, $shopId)
     {
         if ((int) $topCategoryId === 0) {

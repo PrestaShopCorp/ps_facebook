@@ -19,18 +19,23 @@
  */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
+use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
@@ -78,8 +83,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         /** @var ConfigurationHandler $configurationHandler */
         $configurationHandler = $this->module->getService(ConfigurationHandler::class);
+        /** @var AccessTokenProvider $accessTokenProvider */
+        $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
 
         $response = $configurationHandler->handle($onboardingData);
+        $accessTokenProvider->refreshTokens();
 
         $this->ajaxDie(
             json_encode($response)
@@ -281,6 +289,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFeatures()
     {
+        /** @var FbeFeatureDataProvider $fbeFeatureDataProvider */
         $fbeFeatureDataProvider = $this->module->getService(FbeFeatureDataProvider::class);
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
@@ -329,8 +338,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
-        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id);
+        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id, ['onlyActive' => true]);
+
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+        $productsErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $this->ajaxDie(
             json_encode(
@@ -346,7 +365,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                             'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'errored' => 0, // TODO !1: complete object
+                            'lastSyncDate' => $lastFinishedSyncStartedAt,
+                            'catalog' => $productCount['product_count'],
+                            'errored' => count($productsErrors), // no distinction for base lang vs l10n errors
                         ],
                     ],
                 ]
@@ -363,6 +384,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
+
+        $this->ajaxDie(
+            json_encode($googleCategories)
+        );
+    }
+
+    public function displayAjaxGetCategoriesByIds()
+    {
+        $categoryIds = Tools::getValue('id_categories');
+
+        /** @var FacebookCategoryClient $facebookCategoryClient */
+        $facebookCategoryClient = $this->module->getService(FacebookCategoryClient::class);
+        $googleCategories = $facebookCategoryClient->getGoogleCategories($categoryIds);
 
         $this->ajaxDie(
             json_encode($googleCategories)
@@ -463,6 +497,130 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(json_encode([
             'success' => $isUpgradeSuccessful,
+        ]));
+    }
+
+    public function displayAjaxGetProductSyncReporting()
+    {
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
+
+        /** @var EventBusProductHandler $eventBusProductHandler */
+        $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
+
+        $shopId = Context::getContext()->shop->id;
+        $isoCode = Context::getContext()->language->iso_code;
+        $informationAboutProductsWithErrors = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($productsWithErrors, $shopId, $isoCode);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'productsWithErrors' => $informationAboutProductsWithErrors,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxGetProductStatuses()
+    {
+        /** @var ProductSyncReportProvider $productSyncReportProvider */
+        $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
+        $syncReport = $productSyncReportProvider->getProductSyncReport();
+
+        if (!$syncReport) {
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+
+        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
+
+        $page = Tools::getValue('page');
+        $status = Tools::getValue('status');
+        $sortBy = Tools::getValue('sortBy');
+        $sortTo = Tools::getValue('sortTo');
+        $searchById = Tools::getValue('searchById');
+        $searchByName = Tools::getValue('searchByName');
+        $searchByMessage = Tools::getValue('searchByMessage');
+
+        /** @var EventBusProductHandler $eventBusProductHandler */
+        $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
+
+        $shopId = Context::getContext()->shop->id;
+        $informationAboutProducts = $eventBusProductHandler->getFilteredInformationAboutEventBusProducts(
+            $productsWithErrors,
+            $lastFinishedSyncStartedAt,
+            $shopId,
+            $page,
+            $status,
+            $sortBy,
+            $sortTo,
+            $searchById,
+            $searchByName,
+            $searchByMessage
+        );
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                    'products' => $informationAboutProducts,
+                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxExportWholeCatalog()
+    {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $response = 200;
+
+        try {
+            $response = $client->post(
+                '/account/' . $externalBusinessId . '/reset_product_sync'
+            )->json();
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookCatalogExportException(
+                    'Failed to export the whole catalog',
+                    FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+            $this->ajaxDie(json_encode([
+                'response' => 500,
+                'message' => $e->getMessage(),
+            ]));
+        }
+
+        $this->ajaxDie(json_encode([
+            'response' => $response,
         ]));
     }
 

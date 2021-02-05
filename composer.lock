@@ -70,12 +70,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk.git",
-                "reference": "6195c425374e641bf49cd758ac82fbb47c136a71"
+                "reference": "0f65feb9229dab8c19a5030dbcf9fb518e29b099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/6195c425374e641bf49cd758ac82fbb47c136a71",
-                "reference": "6195c425374e641bf49cd758ac82fbb47c136a71",
+                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/0f65feb9229dab8c19a5030dbcf9fb518e29b099",
+                "reference": "0f65feb9229dab8c19a5030dbcf9fb518e29b099",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
             "support": {
                 "source": "https://github.com/PrestaShopCorp/facebook-php-business-sdk/tree/guzzle5"
             },
-            "time": "2020-11-23T12:13:27+00:00"
+            "time": "2021-02-04T17:05:32+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -265,16 +265,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.4.2",
+            "version": "3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "17cb82dd625ccb17c74bf8f38563d3b260306483"
+                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/17cb82dd625ccb17c74bf8f38563d3b260306483",
-                "reference": "17cb82dd625ccb17c74bf8f38563d3b260306483",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
+                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
                 "shasum": ""
             },
             "require": {
@@ -334,7 +334,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2020-12-03T13:43:45+00:00"
+            "time": "2021-01-27T23:38:30+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -748,16 +748,16 @@
         },
         {
             "name": "prestashop/prestashop-accounts-auth",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/prestashop_accounts_auth.git",
-                "reference": "887b6472cf07028b88c057a1482dc09ce7038e70"
+                "reference": "b27f36f66f57832f854191f626fc89f5ce5ade73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/prestashop_accounts_auth/zipball/887b6472cf07028b88c057a1482dc09ce7038e70",
-                "reference": "887b6472cf07028b88c057a1482dc09ce7038e70",
+                "url": "https://api.github.com/repos/PrestaShopCorp/prestashop_accounts_auth/zipball/b27f36f66f57832f854191f626fc89f5ce5ade73",
+                "reference": "b27f36f66f57832f854191f626fc89f5ce5ade73",
                 "shasum": ""
             },
             "require": {
@@ -786,7 +786,7 @@
                 "MIT"
             ],
             "description": "PrestaShop Accounts composer library",
-            "time": "2020-12-03T13:43:03+00:00"
+            "time": "2021-01-05T09:31:13+00:00"
         },
         {
             "name": "psr/cache",
@@ -2217,16 +2217,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.17.1",
+            "version": "v2.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "5198b7308ed63f26799387fd7f3901c3db6bd7fd"
+                "reference": "18f8c9d184ba777380794a389fabc179896ba913"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/5198b7308ed63f26799387fd7f3901c3db6bd7fd",
-                "reference": "5198b7308ed63f26799387fd7f3901c3db6bd7fd",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/18f8c9d184ba777380794a389fabc179896ba913",
+                "reference": "18f8c9d184ba777380794a389fabc179896ba913",
                 "shasum": ""
             },
             "require": {
@@ -2248,18 +2248,19 @@
                 "symfony/stopwatch": "^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
-                "johnkary/phpunit-speedtrap": "^1.1 || ^2.0 || ^3.0",
                 "justinrainbow/json-schema": "^5.0",
                 "keradus/cli-executor": "^1.4",
                 "mikey179/vfsstream": "^1.6",
-                "php-coveralls/php-coveralls": "^2.4.1",
+                "php-coveralls/php-coveralls": "^2.4.2",
                 "php-cs-fixer/accessible-object": "^1.0",
                 "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.2",
                 "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.2.1",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.1",
+                "phpspec/prophecy-phpunit": "^1.1 || ^2.0",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.13 || ^9.5",
                 "phpunitgoodpractices/polyfill": "^1.5",
                 "phpunitgoodpractices/traits": "^1.9.1",
-                "symfony/phpunit-bridge": "^5.1",
+                "sanmai/phpunit-legacy-adapter": "^6.4 || ^8.2.1",
+                "symfony/phpunit-bridge": "^5.2.1",
                 "symfony/yaml": "^3.0 || ^4.0 || ^5.0"
             },
             "suggest": {
@@ -2311,7 +2312,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-12-08T13:47:02+00:00"
+            "time": "2021-01-26T00:22:21+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3113,16 +3114,16 @@
         },
         {
             "name": "prestashop/php-dev-tools",
-            "version": "v3.12",
+            "version": "v3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShop/php-dev-tools.git",
-                "reference": "4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62"
+                "reference": "ef4217ee7212e6b65d983371b3255ca38395de44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62",
-                "reference": "4459c09fbe6116bb7c1c6cc54ce3ba3f4de65b62",
+                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/ef4217ee7212e6b65d983371b3255ca38395de44",
+                "reference": "ef4217ee7212e6b65d983371b3255ca38395de44",
                 "shasum": ""
             },
             "require": {
@@ -3147,7 +3148,7 @@
                 "MIT"
             ],
             "description": "PrestaShop coding standards",
-            "time": "2020-12-10T08:15:43+00:00"
+            "time": "2021-01-18T15:07:05+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

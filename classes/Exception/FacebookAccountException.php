@@ -18,37 +18,11 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\Ps_facebook\Utility;
+namespace PrestaShop\Module\PrestashopFacebook\Exception;
 
-class ProductCatalogUtility
+use Exception;
+
+class FacebookAccountException extends Exception
 {
-    /**
-     * @param int $productId
-     * @param int|null $productAttributeId
-     * @param bool|string $isoCode
-     *
-     * @return string
-     */
-    public static function makeProductId($productId, $productAttributeId, $isoCode = false)
-    {
-        $eventBusProductId = implode(
-            '-',
-            [
-                (int) $productId,
-                (int) $productAttributeId,
-            ]
-        );
-
-        if (!$isoCode) {
-            return $eventBusProductId;
-        }
-
-        return implode(
-            '-',
-            [
-                $eventBusProductId,
-                $isoCode,
-            ]
-        );
-    }
+    const FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION = 1;
 }
