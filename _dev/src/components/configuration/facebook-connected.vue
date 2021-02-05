@@ -78,15 +78,15 @@
         variant="primary"
         split
         right
-        @click="openManageFbe"
+        @click="edit"
         class="ml-4 float-right"
       >
         <template #button-content>
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </template>
+        <b-dropdown-item @click="openManageFbe">
           {{ $t('configuration.facebook.connected.manageFbeButton') }}
           <i class="material-icons">open_in_new</i>
-        </template>
-        <b-dropdown-item @click="edit">
-          {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
         <b-dropdown-item
           data-toggle="modal"

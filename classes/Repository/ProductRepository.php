@@ -23,10 +23,29 @@ namespace PrestaShop\Module\PrestashopFacebook\Repository;
 use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
+use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
 
 class ProductRepository
 {
+    /**
+     * @var PsFacebookTranslations
+     */
+    private $facebookTranslations;
+
+    /**
+     * @var \Language
+     */
+    private $language;
+
+    public function __construct(PsFacebookTranslations $facebookTranslations, \Language $language)
+    {
+        $this->facebookTranslations = $facebookTranslations;
+        $this->language = $language;
+    }
+
     /**
      * Copy of prestashop Product::getIdProductAttributeByIdAttributes function
      * because old PS versions are missing this function
@@ -146,7 +165,7 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
-        $sql->where('ps.id_shop = ' . (int) $shopId);
+        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
@@ -156,6 +175,8 @@ class ProductRepository
         OR pl.name = "" OR pl.name is NULL
         ');
 
+        $sql->orderBy('p.id_product ASC, pas.id_product_attribute ASC, language ASC');
+
         if ($page > -1) {
             $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page));
         }
@@ -163,7 +184,7 @@ class ProductRepository
         return Db::getInstance()->executeS($sql);
     }
 
-    public function getProductsTotal($shopId)
+    public function getProductsTotal($shopId, array $options = [])
     {
         $sql = new DbQuery();
 
@@ -175,9 +196,117 @@ class ProductRepository
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
 
         $sql->where('ps.id_shop = ' . (int) $shopId);
+        if (isset($options['onlyActive'])) {
+            $sql->where('ps.active = 1');
+        }
 
         $res = Db::getInstance()->executeS($sql);
 
         return $res[0]['total'];
+    }
+
+    /**
+     * @param EventBusProduct $eventBusProduct
+     * @param int $shopId
+     * @param string $isoCode
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutEventBusProduct(EventBusProduct $eventBusProduct, $shopId, $isoCode)
+    {
+        $sql = new DbQuery();
+
+        $sql->select('pa.id_product, pa.id_product_attribute, pl.name');
+        $sql->select('l.iso_code');
+
+        $sql->from('product_attribute', 'pa');
+        $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
+
+        $sql->where('pa.id_product = ' . (int) $eventBusProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $eventBusProduct->getProductAttributeId());
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+
+        return Db::getInstance()->executeS($sql);
+    }
+
+    /**
+     * @param string $syncUpdateDate
+     * @param int $shopId
+     * @param array $productsWithErrors
+     * @param int $page
+     * @param string|null $status
+     * @param string|null $sortBy
+     * @param string $sortTo
+     * @param int|bool $searchById
+     * @param string|bool $searchByName
+     * @param string|bool $searchByMessage
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutEventBusProducts(
+        $syncUpdateDate,
+        $shopId,
+        $productsWithErrors,
+        $page = 1,
+        $status = null,
+        $sortBy = null,
+        $sortTo = 'ASC',
+        $searchById = false,
+        $searchByName = false,
+        $searchByMessage = false
+    ) {
+        $approved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Approved'];
+        $pending = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Pending'];
+        $disapproved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Disapproved'];
+        $sql = new DbQuery();
+
+        $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
+        // TODO !0: fix, format of $productsWithErrors is not "1-1-fr" anymore, but "1-1" (we lose the lang), keep only shop default lang instead.
+        $sql->select('
+            IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
+            . $disapproved . '",
+            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
+             ) as status
+        ');
+
+        $sql->from('product_shop', 'ps');
+        $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
+
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
+
+        if ($sortBy) {
+            $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
+        }
+        if ($searchById) {
+            $sql->where('ps.id_product LIKE "%' . (int) $searchById . '%"');
+        }
+        if ($searchByName) {
+            $sql->where('pl.name LIKE "%' . pSQL($searchByName) . '%"');
+        }
+        if ($searchByMessage) {
+            $sql->where('ps.id_product LIKE "%' . (int) $searchByMessage . '%"');
+        }
+        if ($status) {
+            $sql->having('ps.id_product LIKE "%' . pSQL($status) . '%"');
+        }
+
+        $result = Db::getInstance()->executeS($sql);
+        $products = [];
+        foreach ($result as $product) {
+            $eventBusProductId = ProductCatalogUtility::makeProductId(
+                $product['id_product'],
+                $product['id_product_attribute']
+            );
+            $products[$eventBusProductId] = $product;
+        }
+
+        return $products;
     }
 }

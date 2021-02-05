@@ -45,11 +45,6 @@
       />
     </b-card>
 
-    <!--b-card class="card m-3">
-      TODO : remove REPORTING component once new wireframes integrated.
-      <reporting :reporting="reporting" />
-    </b-card -->
-
     <survey />
   </div>
 </template>
@@ -63,7 +58,6 @@ import PAGES from './pages';
 import ExportCatalog from './summary/export-catalog.vue';
 import MatchCategories from './summary/match-categories.vue';
 import CategoriesMatched from './summary/categories-matched.vue';
-import Reporting from './summary/reporting.vue';
 import Survey from '../survey/survey.vue';
 
 export default defineComponent({
@@ -74,7 +68,6 @@ export default defineComponent({
     ExportCatalog,
     MatchCategories,
     CategoriesMatched,
-    Reporting,
     Survey,
   },
   props: {
@@ -134,7 +127,6 @@ export default defineComponent({
         this.matchingDone = res.matchingDone;
         this.matchingProgress = res.matchingProgress;
         this.validation = res.validation;
-        this.catalogId = res.catalogId;
         this.loading = false;
       }).catch((error) => {
         console.error(error);

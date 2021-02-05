@@ -108,9 +108,9 @@ export default {
       });
     },
     identifySegment() {
-      this.$segment.identify(this.$store.state.context.appContext.shopDomain, {
-        name: this.$store.state.context.appContext.shopUrl,
-        email: this.$store.state.context.appContext.user.email,
+      this.$segment.identify(this.$store.state.context.appContext?.shopDomain, {
+        name: this.$store.state.context.appContext?.shopUrl,
+        email: this.$store.state.context.appContext?.user?.email,
         language: this.$store.state.context.statei18nSettings.isoCode,
         version_ps: this.$store.state.context.appContext.psVersion,
         version_module: this.$store.state.context.appContext.moduleVersion,

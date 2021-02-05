@@ -2,9 +2,9 @@
 
 ## Installation
 
-Use `make docker-build` to install dependencies.
+Use `make build` to install dependencies (or `make docker-build` to run it within docker).
 
-Check other commands with `make`.
+Check other commands with `make help`.
 
 ## Requirements
 
@@ -16,7 +16,20 @@ You need a facebook developper account added to the PrestaShop Social Media app 
 
 Install module and connect to FBE in module BO
 
-## About 
+## Delivery
+
+### Automatic
+
+This package should be automatically delivered by the CI/CD, see the [github workflows](./github/workflows).
+Zips should be available for each [releases](./releases).
+
+### Manual
+
+1. Fill up `.env.inte` and `.env.prod` files
+2. Use `make bundle` to build up deliverable zips for integration and production purpose.
+3. Find zips within the `./dist` directory
+
+## About
 
 ### Compliancy with PrestaShop 1.6
 
@@ -25,7 +38,7 @@ This avoids potential misunderstanding about mismatching behavior of the module 
 
 ### Links
 
-* [List of standard Pixel events](https://developers.facebook.com/docs/facebook-pixel/reference/)
+- [List of standard Pixel events](https://developers.facebook.com/docs/facebook-pixel/reference/)
 
 ### Development
 
@@ -51,19 +64,40 @@ Some values of the Config class can be overwriten by having your own environment
 You can for instance have your own `.env` at the root of this project to replace the Facebook App ID
 or switch the API URLs to another domain.
 
+
+* **Using Pixel event in other modules**
+
+You can call custom Pixel event by using hook: actionFacebookCallPixel
+
+You also need to add some params in hook call
+
+*Required:* 
++ eventName
++ module
+
+*Optional:*
++ id_product
++ id_product_attribute
+
+Example:    
+```
+Hook::exec('actionFacebookCallPixel' ,['eventName' => 'AddToWishlist', 'module' => 'wishlist', 'id_product' => $productId, 'id_product_attribute' => $idProductAttribute]);
+```
+
+
 ### Tests
 
 This module follows [recommandations of the PrestaShop devdocs](https://devdocs.prestashop.com/1.7/modules/testing/) and is checked by PHP-CS-Fixer, PHPStan and PHPUnit before each release.
 
 Two sets of tests have been implemented in this module:
 
-* **Unit tests**
+- **Unit tests**
 
 ```
 vendor/bin/phpunit tests/unit/
 ```
 
-* **Integration tests**
+- **Integration tests**
 
 These tests run the calls to Facebook API to make sure the data the module relies on is still valid.
 It requires preliminary configuration, by setting your FBE configuration in a JSON config file.

@@ -24,6 +24,8 @@ FreshInstall.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -31,11 +33,11 @@ FreshInstall.args = {
   },
 };
 
-export const CategoryProgressing: any = Template.bind({});
-CategoryProgressing.args = {
+export const JustActivated: any = Template.bind({});
+JustActivated.args = {
   data: {
-    exportDone: false,
-    exportOn: false,
+    exportDone: true,
+    exportOn: true,
     matchingDone: true,
     matchingProgress: {total: 42, matched: 23},
     validation: {
@@ -43,9 +45,7 @@ CategoryProgressing.args = {
         syncable: 134,
         notSyncable: 12,
       },
-      reporting: {
-        errored: 42,
-      },
+      reporting: { },
     },
     catalogId: '34567890',
   },
@@ -64,6 +64,8 @@ SyncOn.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -84,6 +86,8 @@ SyncPaused.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
@@ -104,6 +108,8 @@ BothDone.args = {
         notSyncable: 12,
       },
       reporting: {
+        lastSyncDate: new Date(),
+        catalog: 42,
         errored: 42,
       },
     },
