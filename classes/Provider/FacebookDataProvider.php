@@ -64,7 +64,7 @@ class FacebookDataProvider
         $pages = $this->facebookClient->getPage($fbe['pages']);
         $ad = $this->facebookClient->getAd($fbe['ad_account_id']);
 
-        $productSyncStarted = (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START));
+        $productSyncStarted = (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START);
         $categoryMatchingStarted = false; // TODO : must be true only if all parent categories are matched !
         $catalog = new Catalog($fbe['catalog_id'], $productSyncStarted, $categoryMatchingStarted);
 
