@@ -254,7 +254,6 @@ export default defineComponent({
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
         && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
-      // TODO !1: must be true only if all parent categories are matched !
     },
     productSyncStarted() {
       return this.contextPsFacebook && this.contextPsFacebook.catalog

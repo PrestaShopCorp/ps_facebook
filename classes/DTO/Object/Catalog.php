@@ -30,13 +30,25 @@ class Catalog implements JsonSerializable
     private $id;
 
     /**
+     * @var boolean
+     */
+    private $productSyncStarted;
+
+    /**
+     * @var boolean
+     */
+    private $categoryMatchingStarted;
+
+    /**
      * Page constructor.
      *
      * @param string $id
      */
-    public function __construct($id)
+    public function __construct($id, $productSyncStarted, $categoryMatchingStarted)
     {
         $this->id = $id;
+        $this->productSyncStarted = $productSyncStarted;
+        $this->categoryMatchingStarted = $categoryMatchingStarted;
     }
 
     /**
@@ -47,10 +59,28 @@ class Catalog implements JsonSerializable
         return $this->id;
     }
 
+    /**
+     * @return boolean
+     */
+    public function getProductSyncStarted()
+    {
+        return $this->productSyncStarted;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCategoryMatchingStarted()
+    {
+        return $this->categoryMatchingStarted;
+    }
+
     public function jsonSerialize()
     {
         return [
             'id' => $this->getId(),
+            'productSyncStarted' => $this->getProductSyncStarted(),
+            'categoryMatchingStarted' => $this->getCategoryMatchingStarted(),
         ];
     }
 }
