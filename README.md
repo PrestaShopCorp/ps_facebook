@@ -1,4 +1,9 @@
-# ps_facebook
+![PrestaShop Facebook logo](views/img/logo-wordmark.png)
+
+# PrestaShop Facebook (ps_facebook)
+
+![PHP tests](https://github.com/PrestaShopCorp/ps_facebook/workflows/PHP%20tests/badge.svg)
+![JS tests](https://github.com/PrestaShopCorp/ps_facebook/workflows/JS%20tests/badge.svg)
 
 ## Installation
 
