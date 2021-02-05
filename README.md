@@ -42,6 +42,11 @@ This avoids potential misunderstanding about mismatching behavior of the module 
 
 ### Development
 
+The main branch receiving all kind of contributions (bug fixes, improvements & new features) is the `master` branch.
+
+In the future we may maintain several branches at the same time, for instance to fix the current version in production while we prepare new features for the next release.
+These branches would be defined as `[1-9]*.[1-9]*.x` (for instance `1.4.x`).
+
 * **Running with dev dependencies**
 
 ```
