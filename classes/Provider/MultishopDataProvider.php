@@ -45,12 +45,11 @@ class MultishopDataProvider
     }
 
     /**
-     * On a multishop context, several shop can have exactly the same domain.
-     * PS Accounts provide one shop id per domain, which makes some conflict when
-     * a different shops use the virtual directory.
-     * (same shop => same external business ID => conflicts on the FB onboarding)
+     * It appeared that PS Account is currently incompatible with multistore feature.
+     * While a new major version is prepared, we display a message if the merchant
+     * onboarded one other shop.
      *
-     * To revent this, we check if a shop is already onboarded with this domain and
+     * To revent this, we check if a shop is already onboarded and
      * warn the merchant accordingly.
      *
      * @param Shop $currentShop
@@ -70,12 +69,7 @@ class MultishopDataProvider
                 continue;
             }
 
-            if ($currentShop->domain !== $shopData['domain']
-                && $currentShop->domain_ssl !== $shopData['domain_ssl']) {
-                continue;
-            }
-
-            $this->segment->setMessage('Error: Multistore with same domain detected');
+            $this->segment->setMessage('Error: Warn about multistore incompatibility with PS Account');
             $this->segment->track();
 
             return true;
