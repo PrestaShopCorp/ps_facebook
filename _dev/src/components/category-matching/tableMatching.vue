@@ -128,6 +128,7 @@ export default defineComponent({
       if (category.fbSubcategoryName === undefined) {
         category.fbSubcategoryName = '';
       }
+      this.applyToAllChildren(category.shopCategoryId);
 
       return fetch(this.saveParentStatement, {
         method: 'POST',

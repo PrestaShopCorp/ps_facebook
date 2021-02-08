@@ -77,7 +77,7 @@
     },
     "catalogSummary":  {
       "categoryMatching": "Enhance your catalog",
-      "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category.",
+      "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
       "categoryMatchingNotice": "You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.",
       "matchCategoriesButton": "Map categories",
       "productCatalogExport": "Your catalog in Facebook Business",
@@ -131,7 +131,7 @@
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",
       "intro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
-      "counterSubTitle": "specified parent categories",
+      "counterSubTitle": "specified categories",
       "autocomplete": {
         "typeToFilter": "Type to filter",
         "select": "Select",
