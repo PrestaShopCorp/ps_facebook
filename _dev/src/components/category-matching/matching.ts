@@ -12,7 +12,15 @@ const mixin = Vue.extend({
   methods: {
     categoryStyle(category): String {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
-      const isDeployed = category.deploy === this.FOLD ? 'opened' : (category.deploy === this.NO_CHILDREN || floor === 3 ? '' : 'closed');
+      let isDeployed = '';
+
+      if (category.deploy === this.FOLD) {
+        isDeployed = 'opened';
+      } else if (category.deploy === this.NO_CHILDREN || floor === 3) {
+        isDeployed = '';
+      } else {
+        isDeployed = 'closed';
+      }
 
       return `psfb-match array-tree-lvl-${floor.toString()} ${isDeployed}`;
     },
@@ -69,7 +77,9 @@ const mixin = Vue.extend({
           if (undefined === this.findShopCategory(categories, el.shopCategoryId)) {
             hasCategories = true;
             categories.push(el);
+            /* eslint no-param-reassign: "error" */
             el.show = true;
+            /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           }
           hasCategories = false;
@@ -78,7 +88,9 @@ const mixin = Vue.extend({
         if (undefined === this.findShopCategory(categories, request.shopCategoryId)) {
           categories.push(request);
           hasCategories = true;
+          /* eslint no-param-reassign: "error" */
           request.show = true;
+          /* eslint no-param-reassign: "error" */
           request.shopParentCategoryIds = `${request.shopCategoryId}/`;
         }
         hasCategories = false;

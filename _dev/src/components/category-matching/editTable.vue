@@ -196,9 +196,9 @@ export default defineComponent({
     addChildren(currentCategory, subcategories) {
       const subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      const nbrChildren = currentCategory.shopParentCategoryIds.split('/').length - 1;
+      const categoryLevel = currentCategory.shopParentCategoryIds.split('/').length - 1;
 
-      if (nbrChildren === 3) {
+      if (categoryLevel === 3) {
         return;
       }
       currentCategory.deploy = this.FOLD;
