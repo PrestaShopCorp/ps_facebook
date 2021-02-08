@@ -101,6 +101,21 @@ const mixin = Vue.extend({
         hasCategoriesStatement: hasCategories,
       };
     },
+
+    setValuesFromRequest(request) {
+      request.forEach((el) => {
+        const propagation = (el.isParentCategory === '1');
+        /* eslint no-param-reassign: "error" */
+        el.show = true;
+        /* eslint no-param-reassign: "error" */
+        el.isParentCategory = propagation;
+        el.googleCategoryId = Number(el.googleCategoryId);
+        el.googleCategoryParentId = Number(el.googleCategoryParentId);
+        /* eslint no-param-reassign: "error" */
+        el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+      });
+      return request;
+    },
   },
 });
 

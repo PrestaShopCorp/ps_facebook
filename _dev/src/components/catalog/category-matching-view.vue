@@ -79,6 +79,7 @@ import {defineComponent} from '@vue/composition-api';
 import {BButton} from 'bootstrap-vue';
 import TableMatching from '../category-matching/tableMatching.vue';
 import Spinner from '../spinner/spinner.vue';
+import MixinMatching from '../category-matching/matching.ts';
 
 export default defineComponent({
   name: 'CatalogMatchingView',
@@ -87,7 +88,9 @@ export default defineComponent({
     Spinner,
     TableMatching,
   },
-  mixins: [],
+  mixins: [
+    MixinMatching,
+  ],
   props: {
     categoryMatchingRoute: {
       type: String,
@@ -152,21 +155,7 @@ export default defineComponent({
         }
         return res.json();
       })
-        .then((res) => {
-          res.forEach((el) => {
-            let propagation = null;
-            propagation = (el.isParentCategory === '1');
-            /* eslint no-param-reassign: "error" */
-            el.show = true;
-            /* eslint no-param-reassign: "error" */
-            el.isParentCategory = propagation;
-            el.googleCategoryId = Number(el.googleCategoryId);
-            el.googleCategoryParentId = Number(el.googleCategoryParentId);
-            /* eslint no-param-reassign: "error" */
-            el.shopParentCategoryIds = `${el.shopCategoryId}/`;
-          });
-          return res;
-        }).catch((error) => {
+        .then((res) => this.setValuesFromRequest(res)).catch((error) => {
           console.error(error);
         });
     },

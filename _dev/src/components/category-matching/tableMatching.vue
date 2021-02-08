@@ -143,11 +143,10 @@ export default defineComponent({
 
     applyToAllChildren(shopCategoryId) {
       const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
-
       this.categories.forEach(
         (child) => {
           if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
-            child.isParentCategory = true;
+            child.isParentCategory = child.deploy === this.HAS_CHILDREN;
             child.googleCategoryId = currentCategory.googleCategoryId;
             child.googleCategoryName = currentCategory.googleCategoryName;
             child.googleCategoryParentName = currentCategory.googleCategoryParentName;

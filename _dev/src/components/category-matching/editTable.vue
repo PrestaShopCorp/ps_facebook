@@ -143,16 +143,13 @@ export default defineComponent({
 
       if (this.filterCategory === true) {
         const childrens = this.categories.filter(
-          (child) => !child.googleCategoryId,
+          (child) => !child.googleCategoryParentId,
         );
         childrens.forEach((el) => {
           el.show = false;
         });
       } else {
         this.categories.forEach((el) => {
-          if (el.shopParentCategoryIds.match(new RegExp('^$[0-9]/[0-9]+/$'))) {
-            console.log(el);
-          }
           el.show = true;
         });
       }
@@ -249,7 +246,7 @@ export default defineComponent({
   },
   created() {
     this.categories.forEach((el) => {
-      if (!el.googleCategoryId) {
+      if (!el.googleCategoryParentId) {
         this.numberOfCategoryWithoutMatching += 1;
       }
     });
