@@ -149,8 +149,18 @@ export default defineComponent({
           el.show = false;
         });
       } else {
+        const parents = this.isParentCategory(this.categories);
         this.categories.forEach((el) => {
-          el.show = true;
+          parents.forEach((node) => {
+            if (node.shopCategoryId === el.shopCategoryId) {
+              el.show = true;
+              el.deploy = this.HAS_CHILDREN;
+            }
+            if (el.shopParentCategoryIds.startsWith(node.shopParentCategoryIds)
+            && el.shopCategoryId !== node.shopCategoryId) {
+              el.show = false;
+            }
+          });
         });
       }
     },

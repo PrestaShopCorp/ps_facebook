@@ -116,6 +116,19 @@ const mixin = Vue.extend({
       });
       return request;
     },
+
+    isParentCategory(categories) {
+      const parents: Object[] = [];
+
+      categories.forEach((element) => {
+        const floor = element.shopParentCategoryIds.split('/').length - 1;
+        if (floor === 1) {
+          parents.push(element);
+        }
+      });
+
+      return parents;
+    },
   },
 });
 

@@ -216,8 +216,7 @@ class PsFacebookTranslations
                 'title' => $this->module->l('Enhance your catalog: category mapping'),
                 'description' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.'),
                 'btn' => $this->module->l('View mapping'),
-                'progressBarMatched' => $this->module->l('Mapped categories'),
-                'progressBarTotal' => $this->module->l('Categories total'),
+                'progressBarTotal' => $this->module->l('categories mapped'),
             ],
             'integrate' => [
                 'buttons' => [
