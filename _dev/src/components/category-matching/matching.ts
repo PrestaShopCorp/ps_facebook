@@ -10,7 +10,7 @@ const mixin = Vue.extend({
     };
   },
   methods: {
-    categoryStyle(category) {
+    categoryStyle(category): String {
       const floor = category.shopParentCategoryIds.split('/').length - 1;
       const isDeployed = category.deploy === this.FOLD ? 'opened' : (category.deploy === this.NO_CHILDREN || floor === 3 ? '' : 'closed');
 
@@ -26,12 +26,69 @@ const mixin = Vue.extend({
       return true;
     },
 
-    findShopCategory(categories, shopCategoryId) {
+    findShopCategory(categories, shopCategoryId): Object {
       return categories.find(
         (child) => child.shopCategoryId === shopCategoryId,
       );
     },
 
+    formatDataFromRequest(request, currentCategory, categories, indexCtg, forStorybook = false) {
+      const subcategory = request;
+
+      if (Array.isArray(subcategory)) {
+        subcategory.forEach((el) => {
+          categories.splice(indexCtg, 0, el);
+          el.show = true;
+          el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
+          el.isParentCategory = this.canShowCheckbox(el) ? false : null;
+        });
+      } else {
+        categories.splice(indexCtg, 0, subcategory);
+        subcategory.show = true;
+        subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
+        subcategory.isParentCategory = this.canShowCheckbox(subcategory) ? false : null;
+      }
+
+      if (forStorybook === true) {
+        return null;
+      }
+
+      currentCategory.deploy = subcategory.length !== 0 ? this.FOLD : this.NO_CHILDREN;
+
+      return {
+        statement: currentCategory.deploy,
+        categories,
+      };
+    },
+
+    formatDataFromLazyLoading(request, categories) {
+      let hasCategories;
+
+      if (Array.isArray(request)) {
+        request.forEach((el) => {
+          if (undefined === this.findShopCategory(categories, el.shopCategoryId)) {
+            hasCategories = true;
+            categories.push(el);
+            el.show = true;
+            el.shopParentCategoryIds = `${el.shopCategoryId}/`;
+          }
+          hasCategories = false;
+        });
+      } else {
+        if (undefined === this.findShopCategory(categories, request.shopCategoryId)) {
+          categories.push(request);
+          hasCategories = true;
+          request.show = true;
+          request.shopParentCategoryIds = `${request.shopCategoryId}/`;
+        }
+        hasCategories = false;
+      }
+
+      return {
+        newCategories: categories,
+        hasCategoriesStatement: hasCategories,
+      };
+    },
   },
 });
 

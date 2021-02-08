@@ -194,7 +194,7 @@ export default defineComponent({
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
-      let subcategory = subcategories;
+      const subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       const nbrChildren = currentCategory.shopParentCategoryIds.split('/').length - 1;
 
@@ -203,25 +203,20 @@ export default defineComponent({
       }
       currentCategory.deploy = this.FOLD;
 
-      this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
-        subcategory = res;
-        if (Array.isArray(subcategory)) {
-          subcategory.forEach((el) => {
-            this.categories.splice(indexCtg, 0, el);
-            el.show = true;
-            el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-          });
-        } else {
-          this.categories.splice(indexCtg, 0, subcategory);
-          subcategory.show = true;
-          subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-        }
+      if (this.overrideGetCurrentRow !== null) {
+        this.formatDataFromRequest(
+          subcategory,
+          currentCategory,
+          this.categories,
+          indexCtg,
+          true,
+        );
+      }
 
-        if (subcategory.length !== 0) {
-          currentCategory.deploy = this.FOLD;
-        } else {
-          currentCategory.deploy = this.NO_CHILDREN;
-        }
+      this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
+        const resp = this.formatDataFromRequest(res, currentCategory, this.categories, indexCtg);
+        this.categories = resp.categories;
+        currentCategory.deploy = resp.statement;
       });
     },
 
@@ -231,29 +226,9 @@ export default defineComponent({
       ) {
         this.loading = true;
         this.$parent.fetchCategories(0, 1).then((res) => {
-          if (Array.isArray(res)) {
-            res.forEach((el) => {
-              if (undefined === this.categories.find(
-                (ctg) => el.shopCategoryId === ctg.shopCategoryId)
-              ) {
-                this.hasCategories = true;
-                this.categories.push(el);
-                el.show = true;
-                el.shopParentCategoryIds = `${el.shopCategoryId}/`;
-              }
-              this.hasCategories = false;
-            });
-          } else {
-            if (undefined === this.categories.find(
-              (ctg) => res.shopCategoryId === ctg.shopCategoryId)
-            ) {
-              this.categories.push(res);
-              this.hasCategories = true;
-              res.show = true;
-              res.shopParentCategoryIds = `${res.shopCategoryId}/`;
-            }
-            this.hasCategories = false;
-          }
+          const resp = this.formatDataFromLazyLoading(res, this.categories);
+          this.categories = resp.newCategories;
+          this.hasCategories = res.hasCategoriesStatement;
           this.loading = false;
         });
       }

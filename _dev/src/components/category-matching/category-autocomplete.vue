@@ -26,6 +26,7 @@
     class="m-2 category-matching-dropdown"
     boundary="scrollParent"
     menu-class="w-100"
+    no-flip
     :disabled="disabled"
     @show="beforeDropdownShown"
     @shown="afterDropdownShown"
