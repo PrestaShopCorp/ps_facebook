@@ -8,11 +8,13 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {CategoryMatchingView},
-  template: '<category-matching-view />',
+  template: '<category-matching-view  :matching-progress="matchingProgress" />',
 });
 
 export const Default: any = Template.bind({});
 Default.args = {
-
+  data: {
+    matchingProgress: {total: 42, matched: 32},
+  },
 };
 // TODO

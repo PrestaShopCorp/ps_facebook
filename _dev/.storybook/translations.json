@@ -132,6 +132,7 @@
       "title": "Enhance your catalog : category mapping",
       "intro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
       "counterSubTitle": "specified categories",
+      "edit":"Edit",
       "autocomplete": {
         "typeToFilter": "Type to filter",
         "select": "Select",
@@ -142,9 +143,15 @@
       "tableMatching": {
         "firstTd" : "Category on your site",
         "secondTd" : "Google category",
-        "thirdTd" : "Parent category",
+        "thirdTd" : "Apply to sub-categories?",
         "fourthTd" : "Google subcategory"
       }
+    },
+    "categoryMatched" : {
+      "title" : "Enhance your catalog: category mapping",
+      "description" : "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC for your items.",
+      "btn" : "View mapping",
+      "progressBarTotal" : "categories mapped"
     },
     "integrate": {
       "buttons" : {
