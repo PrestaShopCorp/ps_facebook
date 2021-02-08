@@ -155,11 +155,7 @@ export default defineComponent({
         .then((res) => {
           res.forEach((el) => {
             let propagation = null;
-            if (el.isParentCategory === '1') {
-              propagation = true;
-            } else {
-              propagation = false;
-            }
+            propagation = (el.isParentCategory === '1');
             /* eslint no-param-reassign: "error" */
             el.show = true;
             /* eslint no-param-reassign: "error" */
