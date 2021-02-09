@@ -311,6 +311,17 @@ class FacebookClient
 
             $response = $this->client->send($request);
         } catch (Exception $e) {
+            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
+            if ($exceptionContent['error']['code'] === Config::OAUTH_EXCEPTION_CODE) {
+                $this->uninstallFbe(
+                    $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+                    $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
+                );
+
+                $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+
+                return false;
+            }
             $this->errorHandler->handle(
                 new FacebookClientException(
                     'Facebook client failed when creating get request. Method: ' . $method,
@@ -319,7 +330,9 @@ class FacebookClient
                 ),
                 $e->getCode(),
                 false,
-                json_decode($e->getResponse()->getBody()->getContents(), true)
+                [
+                    'extra' => $exceptionContent,
+                ]
             );
 
             return false;

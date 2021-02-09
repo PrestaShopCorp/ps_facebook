@@ -69,6 +69,7 @@ class ErrorHandler
      * @param \Exception $error
      * @param mixed $code
      * @param bool|null $throw
+     * @param array|null $data
      *
      * @return void
      *
