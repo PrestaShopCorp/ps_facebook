@@ -21,6 +21,8 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 
 class Segment implements TrackerInterface
@@ -46,13 +48,19 @@ class Segment implements TrackerInterface
     private $env;
 
     /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    /**
      * Segment constructor.
      */
-    public function __construct(Context $context, Env $env)
+    public function __construct(Context $context, Env $env, ConfigurationAdapter $configurationAdapter)
     {
         $this->context = $context;
         $this->env = $env;
         $this->init();
+        $this->configurationAdapter = $configurationAdapter;
     }
 
     /**
@@ -88,6 +96,7 @@ class Segment implements TrackerInterface
         $ip = array_key_exists('REMOTE_ADDR', $_SERVER) === true ? $_SERVER['REMOTE_ADDR'] : '';
         $referer = array_key_exists('HTTP_REFERER', $_SERVER) === true ? $_SERVER['HTTP_REFERER'] : '';
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         \Segment::track([
             'userId' => $userId,
@@ -101,6 +110,8 @@ class Segment implements TrackerInterface
                     'referrer' => $referer,
                     'url' => $url,
                 ],
+                'shopId' => $this->context->shop->id,
+                'externalBusinessId' => $externalBusinessId
             ],
             'properties' => array_merge([
                 'module' => 'ps_facebook',
