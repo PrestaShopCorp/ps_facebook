@@ -29,8 +29,8 @@
       class="m-3"
     />
     <MultiStoreSelector
-      v-else-if="!contextPsAccounts.isShopContext"
-      :shops="contextPsAccounts.shops || []"
+      v-else-if="!contextPsAccounts.isShopContext && shops.length"
+      :shops="shops"
       class="m-3"
       @shop-selected="onShopSelected($event)"
     />
@@ -286,6 +286,7 @@ export default defineComponent({
       loading: true,
       popupReceptionDuplicate: false,
       openedPopup: null,
+      shops: this.contextPsAccounts.shops || [],
     };
   },
   created() {
