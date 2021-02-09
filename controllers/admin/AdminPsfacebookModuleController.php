@@ -319,10 +319,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     private function presentPsAccounts()
     {
-        if (!Module::isInstalled('ps_accounts') || false === Module::getInstanceByName('ps_accounts')) {
-            return [];
-        }
-
         $this->psAccountsEnvVarHotFix();
 
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
