@@ -79,11 +79,14 @@ class FbeFeatureDataProvider
                 return !in_array($key, Config::FBE_FEATURES_REQUIRING_PRODUCT_SYNC);
             }, ARRAY_FILTER_USE_KEY);
         }
+        $pageId = $this->configurationAdapter->get(Config::PS_FACEBOOK_PAGES);
+        $inboxUrl = "https://business.facebook.com/latest/inbox/all?asset_id={$pageId}";
 
         return [
             'enabledFeatures' => $enabledFeatures,
             'disabledFeatures' => $disabledFeatures,
             'unavailableFeatures' => $unavailableFeatures,
+            'inboxUrl' => $inboxUrl,
         ];
     }
 }
