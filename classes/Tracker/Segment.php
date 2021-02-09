@@ -111,7 +111,7 @@ class Segment implements TrackerInterface
                     'url' => $url,
                 ],
                 'shopId' => $this->context->shop->id,
-                'externalBusinessId' => $externalBusinessId
+                'externalBusinessId' => $externalBusinessId,
             ],
             'properties' => array_merge([
                 'module' => 'ps_facebook',
