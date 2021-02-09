@@ -70,13 +70,16 @@
                   {{ name }}
                 </b-link>
               </b-td>
-              <b-td></b-td>
-              <b-td></b-td>
-              <b-td></b-td>
-              <b-td></b-td>
-              <b-td></b-td>
+              <b-td />
+              <b-td />
+              <b-td />
+              <b-td />
+              <b-td />
             </b-tr>
-            <b-tr :key="index + 'bis'" class="dashed">
+            <b-tr
+              :key="index + 'bis'"
+              class="dashed"
+            >
               <b-td class="pl-4">
                 {{ variantLabel(index) }}
               </b-td>
@@ -127,7 +130,11 @@
               </b-td>
             </b-tr>
           </template>
-          <b-tr :key="index" v-else :class="!isNewVariant(index) ? 'none' : 'dashed'">
+          <b-tr
+            :key="index"
+            v-else
+            :class="!isNewVariant(index) ? 'none' : 'dashed'"
+          >
             <b-td class="pl-4">
               {{ variantLabel(index) }}
             </b-td>
