@@ -14,7 +14,10 @@
             </span>
             <tooltip :text="$t(`integrate.features.${name}.description`)" />
           </div>
-          <div class="align-self-center">
+          <div
+            class="align-self-center"
+            v-if="allowDisplayOfSwitch"
+          >
             <span class="d-none d-sm-inline">
               {{
                 $t(switchActivated ?
@@ -136,6 +139,11 @@ export default defineComponent({
       type: Boolean,
       required: true,
       default: false,
+    },
+    allowDisplayOfSwitch: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
     loading: {
       type: Boolean,

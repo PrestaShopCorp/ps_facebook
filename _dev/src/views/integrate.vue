@@ -51,6 +51,7 @@
             :active="properties.enabled"
             :manage-route="manageRoute"
             @onToggleSwitch="onToggleSwitch"
+            :allow-display-of-switch="disallowSwitch.indexOf(featureName) === -1"
           />
         </feature-list>
       </div>
@@ -174,6 +175,9 @@ export default defineComponent({
       loading: true,
       hiddenProp: null,
       visibilityChangeEvent: null,
+      disallowSwitch: [
+        'page_shop',
+      ],
     };
   },
   created() {
