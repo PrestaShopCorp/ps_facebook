@@ -48,6 +48,7 @@
               variant="primary"
               class="ml-4 align-self-center"
               :href="manageRoute.view_message_url"
+              target="_blank"
             >
               {{ $t(`integrate.features.${name}.checkMessages`) }}
             </b-button>
