@@ -21,6 +21,8 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
+use PrestaShop\AccountsAuth\DependencyInjection\PsAccountsServiceProvider;
+use PrestaShop\AccountsAuth\Repository\ConfigurationRepository;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
@@ -97,6 +99,9 @@ class Segment implements TrackerInterface
         $referer = array_key_exists('HTTP_REFERER', $_SERVER) === true ? $_SERVER['HTTP_REFERER'] : '';
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        /** @var ConfigurationRepository $configurationRepository */
+        $configurationRepository = PsAccountsServiceProvider::getInstance()
+            ->get(ConfigurationRepository::class);
 
         \Segment::track([
             'userId' => $userId,
@@ -110,7 +115,7 @@ class Segment implements TrackerInterface
                     'referrer' => $referer,
                     'url' => $url,
                 ],
-                'shopId' => $this->context->shop->id,
+                'shopId' => $configurationRepository->getShopUuid(),
                 'externalBusinessId' => $externalBusinessId,
             ],
             'properties' => array_merge([
