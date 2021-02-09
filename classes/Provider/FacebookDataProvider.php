@@ -57,6 +57,11 @@ class FacebookDataProvider
         if (isset($fbe['error']) || !$this->facebookClient->hasAccessToken()) {
             return null;
         }
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $hasFbeFeatures = (bool) $this->facebookClient->getFbeFeatures($externalBusinessId);
+        if (!$hasFbeFeatures) {
+            return null;
+        }
 
         $user = $this->facebookClient->getUserEmail();
         $businessManager = $this->facebookClient->getBusinessManager($fbe['business_manager_id']);
