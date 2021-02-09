@@ -318,7 +318,8 @@ class FacebookClient
                     $e
                 ),
                 $e->getCode(),
-                false
+                false,
+                json_decode($e->getResponse()->getBody()->getContents(), true)
             );
 
             return false;
