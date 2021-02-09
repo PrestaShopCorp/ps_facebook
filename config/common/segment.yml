@@ -4,3 +4,4 @@ services:
     arguments:
       - '@ps_facebook.context'
       - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
+      - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
