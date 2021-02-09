@@ -164,6 +164,7 @@
           "name": "Messenger Chat Plugin",
           "description": "The Chat Plugin allows you to integrate your Messenger experience directly into your website.",
           "addButton": "Add",
+          "checkMessages" : "Check my messages",
           "editButton": "Customize settings"
         },
         "page_shop" : {
