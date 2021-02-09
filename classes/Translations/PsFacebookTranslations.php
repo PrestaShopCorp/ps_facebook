@@ -220,6 +220,7 @@ class PsFacebookTranslations
                         'name' => $this->module->l('Messenger Chat Plugin', 'PsFacebookTranslations'),
                         'description' => $this->module->l('The Chat Plugin allows you to integrate your Messenger experience directly into your website.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
+                        'checkMessages' => $this->module->l('Check my messages', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Customize settings', 'PsFacebookTranslations'),
                     ],
                     'page_shop' => [

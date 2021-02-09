@@ -162,6 +162,7 @@ export default defineComponent({
       default: () => ({
         default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
         page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
+        view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${global.contextPsFacebook?.page?.id}`,
       }),
     },
   },

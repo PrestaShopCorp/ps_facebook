@@ -80,7 +80,6 @@
         class="see-less"
         @click="seeLess"
       >{{ $t('catalogSummary.showLess') }}</span>
-
     </div>
 
     <div v-else>
@@ -93,10 +92,16 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="reporting.hasSynced" class="big mt-2">
+            <span
+              v-if="reporting.hasSynced"
+              class="big mt-2"
+            >
               {{ reporting.syncDate || '--' }}
             </span>
-            <span v-if="reporting.hasSynced" class="text-muted">
+            <span
+              v-if="reporting.hasSynced"
+              class="text-muted"
+            >
               {{ reporting.syncTime || '--' }}
             </span>
             <b-alert
@@ -235,7 +240,10 @@
       >
         <p class="app foldable p-2 mb-0">
           <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
-          <a href="javascript:void(0);" @click="resetSync">
+          <a
+            href="javascript:void(0);"
+            @click="resetSync"
+          >
             {{ $t('catalogSummary.resetExportLink') }}
           </a>
         </p>
@@ -250,7 +258,6 @@
           class="see-less"
           @click="seeLess"
         >{{ $t('catalogSummary.showLess') }}</span>
-
       </div>
       <b-alert
         v-if="resetLinkError"

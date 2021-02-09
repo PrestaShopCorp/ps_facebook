@@ -43,6 +43,14 @@
         >
           <div class="flex-grow-1" />
           <div>
+            <b-button
+              v-if="name === 'messenger_chat'"
+              variant="primary"
+              class="ml-4 align-self-center"
+              :href="manageRoute.view_message_url"
+            >
+              {{ $t(`integrate.features.${name}.checkMessages`) }}
+            </b-button>
             <a
               class="align-self-center"
               @click="onManageClick(name)"
