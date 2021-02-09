@@ -71,8 +71,9 @@ class FbeFeatureDataProvider
         }, ARRAY_FILTER_USE_KEY);
 
         if (!$productsSynced) {
-            $unavailableFeatures = array_filter($features, function ($key) {
-                return in_array($key, Config::FBE_FEATURES_REQUIRING_PRODUCT_SYNC);
+            $unavailableFeatures = array_filter($features, function ($key) use ($enabledFeatures) {
+                return in_array($key, Config::FBE_FEATURES_REQUIRING_PRODUCT_SYNC)
+                    && in_array($key, $enabledFeatures);
             }, ARRAY_FILTER_USE_KEY);
 
             $disabledFeatures = array_filter($disabledFeatures, function ($key) {
