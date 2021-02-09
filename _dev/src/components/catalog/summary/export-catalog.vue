@@ -80,7 +80,6 @@
         class="see-less"
         @click="seeLess"
       >{{ $t('catalogSummary.showLess') }}</span>
-
     </div>
 
     <div v-else>
@@ -93,10 +92,16 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
-            <span v-if="reporting.hasSynced" class="big mt-2">
+            <span
+              v-if="reporting.hasSynced"
+              class="big mt-2"
+            >
               {{ reporting.syncDate || '--' }}
             </span>
-            <span v-if="reporting.hasSynced" class="text-muted">
+            <span
+              v-if="reporting.hasSynced"
+              class="text-muted"
+            >
               {{ reporting.syncTime || '--' }}
             </span>
             <b-alert
@@ -209,13 +214,6 @@
     <hr class="separator">
 
     <template v-if="!exportDoneOnce">
-      <b-alert
-        variant="warning"
-        show
-        class="warning"
-      >
-        {{ $t('catalogSummary.catalogExportWarning') }}
-      </b-alert>
       <b-button
         class="float-right ml-4"
         :variant="error ? 'danger' : 'primary'"
@@ -235,7 +233,10 @@
       >
         <p class="app foldable p-2 mb-0">
           <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
-          <a href="javascript:void(0);" @click="resetSync">
+          <a
+            href="javascript:void(0);"
+            @click="resetSync"
+          >
             {{ $t('catalogSummary.resetExportLink') }}
           </a>
         </p>
@@ -250,7 +251,6 @@
           class="see-less"
           @click="seeLess"
         >{{ $t('catalogSummary.showLess') }}</span>
-
       </div>
       <b-alert
         v-if="resetLinkError"
@@ -404,7 +404,7 @@ export default defineComponent({
   data() {
     return {
       error: null,
-      seeMoreState: false,
+      seeMoreState: true,
       resetLinkError: null,
       resetLinkSuccess: null,
     };
@@ -468,6 +468,7 @@ export default defineComponent({
       window.location.reload();
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
+
     seeMore() {
       this.seeMoreState = true;
     },
