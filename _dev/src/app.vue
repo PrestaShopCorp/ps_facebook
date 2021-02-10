@@ -108,7 +108,11 @@ export default {
       });
     },
     identifySegment() {
-      this.$segment.identify(this.$store.state.context.appContext?.shopDomain, {
+      if (!this.$segment) {
+        return;
+      }
+
+      this.$segment.identify(this.$store.state.context.appContext.shopId, {
         name: this.$store.state.context.appContext?.shopUrl,
         email: this.$store.state.context.appContext?.user?.email,
         language: this.$store.state.context.statei18nSettings.isoCode,
