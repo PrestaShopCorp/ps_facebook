@@ -51,6 +51,7 @@
             :active="properties.enabled"
             :manage-route="manageRoute"
             @onToggleSwitch="onToggleSwitch"
+            :allow-display-of-switch="disallowSwitch.indexOf(featureName) === -1"
           />
         </feature-list>
       </div>
@@ -162,6 +163,7 @@ export default defineComponent({
       default: () => ({
         default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
         page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
+        view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${global.contextPsFacebook?.page?.id}`,
       }),
     },
   },
@@ -174,6 +176,9 @@ export default defineComponent({
       loading: true,
       hiddenProp: null,
       visibilityChangeEvent: null,
+      disallowSwitch: [
+        'page_shop',
+      ],
     };
   },
   created() {

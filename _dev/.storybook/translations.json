@@ -26,7 +26,7 @@
         "stepCategoryMatchingOptional": "(optional but strongly recommended)",
         "stepProductSync": "Export your product catalog",
         "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
-        "shopInConflictError": "This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\n\n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.",
+        "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Facebook can only be configured on one shop. You must log out of your first shop to connect this one.",
 
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload",
@@ -164,6 +164,7 @@
           "name": "Messenger Chat Plugin",
           "description": "The Chat Plugin allows you to integrate your Messenger experience directly into your website.",
           "addButton": "Add",
+          "checkMessages" : "Check my messages",
           "editButton": "Customize settings"
         },
         "page_shop" : {

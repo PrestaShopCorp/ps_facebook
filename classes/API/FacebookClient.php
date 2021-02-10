@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
@@ -310,6 +311,22 @@ class FacebookClient
             );
 
             $response = $this->client->send($request);
+        } catch (ClientException $e) {
+            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating get request. Method: ' . $method,
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false,
+                [
+                    'extra' => $exceptionContent,
+                ]
+            );
+
+            return false;
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
