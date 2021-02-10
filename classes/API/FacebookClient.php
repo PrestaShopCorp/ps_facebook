@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
@@ -310,18 +311,8 @@ class FacebookClient
             );
 
             $response = $this->client->send($request);
-        } catch (Exception $e) {
+        } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            if ($exceptionContent['error']['code'] === Config::OAUTH_EXCEPTION_CODE) {
-                $this->uninstallFbe(
-                    $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
-                );
-
-                $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
-
-                return false;
-            }
             $this->errorHandler->handle(
                 new FacebookClientException(
                     'Facebook client failed when creating get request. Method: ' . $method,
@@ -333,6 +324,18 @@ class FacebookClient
                 [
                     'extra' => $exceptionContent,
                 ]
+            );
+
+            return false;
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook client failed when creating get request. Method: ' . $method,
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
             );
 
             return false;
