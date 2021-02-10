@@ -284,6 +284,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
+            'psAccountShopId' => $psAccountsService->getShopUuidV4(),
             'psAccountVersionCheck' => [
                 'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
                 'psAccountsVersion' => $psAccountsVersion,
