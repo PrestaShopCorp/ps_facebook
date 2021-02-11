@@ -20,6 +20,7 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
