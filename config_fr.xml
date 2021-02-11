@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>ps_facebook</name>
+    <displayName><![CDATA[PS Facebook]]></displayName>
+    <version><![CDATA[1.5.0]]></version>
+    <description><![CDATA[PS Facebook vous donne tous les outils dont vous avez besoin pour vendre et commercialiser avec succ&egrave;s sur Facebook et Instagram. D&eacute;couvrez de nouvelles possibilit&eacute;s pour vous aider &agrave; d&eacute;velopper votre entreprise et &agrave; g&eacute;rer tous vos comptes et produits Facebook &agrave; partir d&#039;un seul endroit.]]></description>
+    <author><![CDATA[PrestaShop]]></author>
+    <tab><![CDATA[advertising_marketing]]></tab>
+	<confirmUninstall><![CDATA[Vous êtes sûr de vouloir désinstaller ce module ?]]></confirmUninstall>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+	<limited_countries></limited_countries>
+</module>

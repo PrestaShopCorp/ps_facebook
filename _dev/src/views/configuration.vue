@@ -239,7 +239,7 @@ export default defineComponent({
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
     psAccountVersionCheck: {
-      type: Boolean,
+      type: Object,
       required: false,
       default: () => global.psAccountVersionCheck,
     },
