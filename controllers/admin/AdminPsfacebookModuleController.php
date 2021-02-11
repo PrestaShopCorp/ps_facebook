@@ -127,6 +127,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookEnsureTokensExchanged' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'EnsureTokensExchanged',
+                    'ajax' => 1,
+                ]
+            ),
             'psFacebookFbeOnboardingUninstallRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
