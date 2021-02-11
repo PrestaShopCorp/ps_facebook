@@ -456,6 +456,7 @@ export default defineComponent({
             if (!res2.success) {
               throw new Error('Error!');
             }
+            console.log('Tokens exchanged.');
           }).catch((error) => {
             console.error(error);
           });
