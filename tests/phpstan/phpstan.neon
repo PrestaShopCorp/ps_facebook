@@ -5,6 +5,7 @@ parameters:
   paths:
     - ../../classes
     - ../../controllers
+    - ../../upgrade
     - ../../ps_facebook.php
   reportUnmatchedIgnoredErrors: false
   checkMissingIterableValueType: false
