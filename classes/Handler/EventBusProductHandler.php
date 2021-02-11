@@ -40,7 +40,7 @@ class EventBusProductHandler
         $eventBusProductsInformation = [];
         foreach ($eventBusProducts as $eventBusProductId => $messages) {
             $eventBusProductObj = eventBusProductUtility::eventBusProductToObject($eventBusProductId);
-            $eventBusProductInfo = $this->productRepository->getInformationAbouteventBusProduct(
+            $eventBusProductInfo = $this->productRepository->getInformationAboutEventBusProduct(
                 $eventBusProductObj,
                 $shopId,
                 $isoCode

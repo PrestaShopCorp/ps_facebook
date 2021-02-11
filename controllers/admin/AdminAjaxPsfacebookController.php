@@ -585,8 +585,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 [
                     'success' => true,
-                    'products' => $informationAboutProducts,
+                    //'products' => $informationAboutProducts,
                     'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                    'list' => $informationAboutProducts,
+                    'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
                 ]
             )
         );

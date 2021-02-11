@@ -195,6 +195,11 @@ import {defineComponent} from '@vue/composition-api';
 import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
 import Spinner from '../spinner/spinner.vue';
 
+const VIEWS = {
+  PRESCAN: 'PRESCAN',
+  REPORTING: 'REPORTING',
+};
+
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
@@ -205,10 +210,15 @@ export default defineComponent({
   },
   mixins: [],
   props: {
-    getProductsWithErrorsRoute: {
+    getProductsWithErrorsRoute: { // prevalidation scan reporting call
       type: String,
       required: false,
       default: () => global.psFacebookGetProductsWithErrors || null,
+    },
+    getProductStatusesRoute: { // reporting from FB
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetProductStatuses || null,
     },
   },
   computed: {
@@ -216,6 +226,7 @@ export default defineComponent({
   data() {
     return {
       loading: true,
+      view: VIEWS.PRESCAN,
       rows: [],
       url: '',
     };
@@ -224,10 +235,15 @@ export default defineComponent({
     this.fetchData();
   },
   methods: {
-    fetchData() {
+    fetchData(page = 0) {
       this.loading = true;
+      this.rows = [];
 
-      fetch(this.getProductsWithErrorsRoute, {
+      const route = this.view === VIEWS.PRESCAN
+        ? this.getProductsWithErrorsRoute
+        : this.getProductStatusesRoute;
+      // TODO !1: support filters? status, sortBy, sortTo, searchById, searchByName, searchByMessage
+      fetch(`${route}?page=${page}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         // body: JSON.stringify({}),
