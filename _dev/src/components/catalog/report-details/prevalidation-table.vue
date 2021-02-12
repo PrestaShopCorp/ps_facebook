@@ -54,7 +54,7 @@
               :href="url.replace('/1?', `/${id_product}?`)"
               target="_blank"
             >
-              PEN
+              <i class="material-icons">edit</i>
             </b-link>
           </b-td>
         </b-tr>

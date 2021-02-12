@@ -31,138 +31,29 @@
         RIEN A VOIR ! VISUEL A METTRE !
       </b-td>
     </b-tr>
-    <template
+    <b-tr
       v-for="({
-        name, has_cover, has_description_or_short_description,
-        has_manufacturer_or_ean_or_upc_or_isbn,
-        has_price_tax_excl, language, id_product, id_product_attribute
-      }, index) in rows"
+        id_product, id_product_attribute, name, messages
+      }, index) in rows" :key="index"
     >
-      <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
-        <b-tr :key="index">
-          <b-td>
-            <b-link
-              :href="url.replace('/1?', `/${id_product}?`)"
-              target="_blank"
-            >
-              {{ name }}
-            </b-link>
-          </b-td>
-          <b-td />
-          <b-td />
-          <b-td />
-          <b-td />
-          <b-td />
-        </b-tr>
-        <b-tr
-          :key="index + 'bis'"
-          class="dashed"
+      <b-td>
+        {{ name }} {{ id_product_attribute }}
+      </b-td>
+      <b-td>
+        LANGs
+      </b-td>
+      <b-td>
+        {{ messages }}
+      </b-td>
+      <b-td class="float-right">
+        <b-link
+          :href="url.replace('/1?', `/${id_product}?`)"
+          target="_blank"
         >
-          <b-td class="pl-4">
-            {{ variantLabel(index) }}
-          </b-td>
-          <b-td>{{ language }}</b-td>
-          <b-td>
-            <i
-              v-if="has_cover === '0'"
-              class="material-icons text-danger"
-            >close</i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_description_or_short_description === '0'"
-              class="material-icons text-danger"
-            >
-              close
-            </i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-              class="material-icons text-danger"
-            >
-              close
-            </i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_price_tax_excl === '0'"
-              class="material-icons text-danger"
-            >close</i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-        </b-tr>
-      </template>
-      <b-tr
-        :key="index"
-        v-else
-        :class="!isNewVariant(index) ? 'none' : 'dashed'"
-      >
-        <b-td class="pl-4">
-          {{ variantLabel(index) }}
-        </b-td>
-        <b-td>{{ language }}</b-td>
-        <b-td>
-          <i
-            v-if="has_cover === '0'"
-            class="material-icons text-danger"
-          >close</i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-        <b-td>
-          <i
-            v-if="has_description_or_short_description === '0'"
-            class="material-icons text-danger"
-          >
-            close
-          </i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-        <b-td>
-          <i
-            v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-            class="material-icons text-danger"
-          >
-            close
-          </i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-        <b-td>
-          <i
-            v-if="has_price_tax_excl === '0'"
-            class="material-icons text-danger"
-          >close</i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-      </b-tr>
-    </template>
+          <i class="material-icons">edit</i>
+        </b-link>
+      </b-td>
+    </b-tr>
   </b-table-simple>
 
 </template>

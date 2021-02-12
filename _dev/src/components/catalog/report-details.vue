@@ -55,8 +55,16 @@
         <p>{{ $t('syncReport.reportingText') }}</p>
       </template>
 
-      <prevalidation-table v-if="view === 'PREVALIDATION' && prevalidationRows" :rows="prevalidationRows" :url="url" />
-      <reporting-table v-if="view === 'REPORTING' && reportingRows" :rows="reportingRows" :url="url" />
+      <prevalidation-table
+        v-if="view === 'PREVALIDATION' && prevalidationRows"
+        :rows="prevalidationRows"
+        :url="url"
+      />
+      <reporting-table
+        v-if="view === 'REPORTING' && reportingRows"
+        :rows="reportingRows"
+        :url="url"
+      />
     </b-card>
   </div>
 </template>
@@ -172,14 +180,14 @@ export default defineComponent({
         }
         return res.json();
       }).then((res) => {
-        console.log('#####1234345', JSON.stringify(res.list));
         const {
           list, url, success, lastFinishedSyncStartedAt,
         } = res;
         if (!success) {
           this.reportingRows = null;
         } else {
-          this.reportingRows = list;
+          this.reportingRows = Object.values(list);
+          console.log('####é12', this.reportingRows);
           this.url = url;
           this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
         }
