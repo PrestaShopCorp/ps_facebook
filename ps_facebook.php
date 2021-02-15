@@ -24,6 +24,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
@@ -260,7 +261,8 @@ class Ps_facebook extends Module
             $this,
             $this->getService(TabRepository::class),
             $this->getService(Segment::class),
-            $this->getService(ErrorHandler::class)
+            $this->getService(ErrorHandler::class),
+            $this->getService(ConfigurationHandler::class)
         );
 
         return $uninstaller->uninstall() &&
