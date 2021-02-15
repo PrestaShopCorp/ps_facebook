@@ -20,6 +20,7 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
@@ -69,6 +70,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $response = $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
 
         $this->ajaxDie(json_encode($response));
+    }
+
+    public function displayAjaxEnsureTokensExchanged()
+    {
+        $facebookClient = $this->module->getService(FacebookClient::class);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => $facebookClient->hasAccessToken(),
+                ]
+            )
+        );
     }
 
     /**

@@ -218,6 +218,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookFbeOnboardingSaveRoute || null,
     },
+    ensureTokensExchangedRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookEnsureTokensExchanged || null,
+    },
     fbeOnboardingUninstallRoute: {
       type: String,
       required: false,
@@ -234,7 +239,7 @@ export default defineComponent({
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
     psAccountVersionCheck: {
-      type: Boolean,
+      type: Object,
       required: false,
       default: () => global.psAccountVersionCheck,
     },
@@ -426,6 +431,7 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error!');
         }
+        console.log('Onboarding successfull.');
         this.$segment.track('PS Account & FBE connected', {
           module: 'ps_facebook',
         });
@@ -435,7 +441,30 @@ export default defineComponent({
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.psFacebookJustOnboarded = true;
+
+        // after successfully onboarded, wait 3secs,
+        // then call exchange tokens route to force system token to be retrieved.
+        setTimeout(() => {
+          fetch(this.ensureTokensExchangedRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+          }).then((res2) => {
+            if (!res2.ok) {
+              throw new Error(res2.statusText || res2.status);
+            }
+            return res2.json();
+          }).then((res2) => {
+            if (!res2.success) {
+              throw new Error('Error!');
+            }
+            console.log('Tokens exchanged.');
+          }).catch((error) => {
+            console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
+            console.error(error);
+          });
+        }, 3000);
       }).catch((error) => {
+        console.error('The pop-up gets blocked');
         console.error(error);
         this.$segment.track('The pop-up gets blocked', {
           module: 'ps_facebook',
@@ -460,6 +489,7 @@ export default defineComponent({
         && this.psAccountsToken) {
         if (this.dynamicExternalBusinessId) {
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+          console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
           return Promise.resolve();
         }
         return fetch(this.psFacebookRetrieveExternalBusinessId, {
@@ -475,6 +505,7 @@ export default defineComponent({
             throw new Error('Cannot retrieve ExternalBusinessId.');
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
+          console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
           this.$root.refreshExternalBusinessId(res.externalBusinessId);
         });
