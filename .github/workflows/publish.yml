@@ -1,4 +1,4 @@
-name: Publish to the Marketplace
+name: Publish
 
 on:
   release:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   publish_to_marketplace:
+    name: Publish to the Marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,3 +28,15 @@ jobs:
           ~/.composer/vendor/bin/publish-on-marketplace --archive=$PWD/${{ github.event.repository.name }}.zip --metadata-json=$PWD/.github/mktp-metadata.json --changelog="${{ github.event.release.body }}" --debug
         env:
           MARKETPLACE_API_KEY: ${{ secrets.MARKETPLACE_API_KEY }}
+  publish_to_sentry:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Sentry Release
+      uses: getsentry/action-release@v1.0.0
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      with:
+        environment: production
