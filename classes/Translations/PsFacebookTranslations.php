@@ -188,7 +188,7 @@ class PsFacebookTranslations
                 'error' => $this->module->l('Error type', 'PsFacebookTranslations'),
                 'prevalidationText' => $this->module->l('Products with detected problems and which couldn\'t be synced are listed below:', 'PsFacebookTranslations'),
                 'reportingText' => $this->module->l('Products with detected problems after catalog export are listed below:', 'PsFacebookTranslations'),
-                'lastSyncDate' => $this->module->l('Last sync {0}', 'PsFacebookTranslations'),
+                'lastSyncDate' => $this->module->l('Last sync {0} at {1}', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),

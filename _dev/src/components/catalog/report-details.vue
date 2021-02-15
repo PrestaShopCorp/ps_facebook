@@ -43,13 +43,21 @@
           name="radios-btn-default"
           buttons
           button-variant="outline-primary"
-        ></b-form-radio-group>
+        />
       </b-form-group>
 
-      <p v-if="view === 'PREVALIDATION'">{{ $t('syncReport.prevalidationText') }}</p>
+      <p v-if="view === 'PREVALIDATION'">
+        {{ $t('syncReport.prevalidationText') }}
+      </p>
       <template v-else>
-        <span v-if="lastSyncDate" class="text-muted text-italic">
-          {{ $t('syncReport.lastSyncDate', [lastSyncDate]) }}
+        <span
+          v-if="lastSyncDate"
+          class="text-muted text-italic"
+        >
+          {{ $t('syncReport.lastSyncDate', [
+            lastSyncDate.toLocaleDateString(undefined, { dateStyle: 'medium' }),
+            lastSyncDate.toLocaleTimeString(undefined),
+          ]) }}
         </span>
         <br v-if="lastSyncDate">
         <p>{{ $t('syncReport.reportingText') }}</p>
@@ -202,7 +210,9 @@ export default defineComponent({
         fetches.push(this.fetchPrevalidation(0));
       }
       if (this.forceReportingRows === null || Object.values(this.forceReportingRows).length > 0) {
-        this.reportingRows = this.forceReportingRows ? Object.values(this.forceReportingRows) : null;
+        this.reportingRows = this.forceReportingRows
+          ? Object.values(this.forceReportingRows)
+          : null;
       } else {
         fetches.push(this.fetchReporting(0));
       }

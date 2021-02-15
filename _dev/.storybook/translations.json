@@ -130,7 +130,7 @@
       "error": "Error type",
       "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
       "reportingText": "Products with detected problems after catalog export are listed below:",
-      "lastSyncDate": "Last sync {0}"
+      "lastSyncDate": "Last sync {0} at {1}"
     },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",

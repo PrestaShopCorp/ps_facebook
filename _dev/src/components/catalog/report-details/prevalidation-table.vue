@@ -38,11 +38,12 @@
       </b-td>
     </b-tr>
     <template
-      v-for="({name, cover, desc, isbn, price, languages, id_product, id_product_attribute}, index) in groupRows()"
+      v-for=
+        "({name, cover, desc, isbn, price, lang, id_product, id_product_attribute}, i) in getRows()"
     >
       <b-tr
-        v-if="(index === 0 || id_product !== rows[index - 1].id_product) && id_product_attribute"
-        :key="index + 'super'"
+        v-if="(i === 0 || id_product !== rows[i - 1].id_product) && id_product_attribute"
+        :key="i + 'super'"
       >
         <b-td>{{ name }}</b-td>
         <b-td />
@@ -61,14 +62,14 @@
         </b-td>
       </b-tr>
       <b-tr
-        :key="index"
+        :key="i"
         :class="id_product_attribute ? 'dashed' : ''"
       >
         <b-td :class="id_product_attribute ? 'pl-4' : ''">
-          {{ id_product_attribute ? variantLabel(index) : name }}
+          {{ id_product_attribute ? variantLabel(i) : name }}
         </b-td>
         <b-td>
-          <span v-for="l in languages" :key="l" class="badge badge-primary">{{ l }}</span>
+          <span v-for="l in lang" :key="l" class="badge badge-primary">{{ l }}</span>
         </b-td>
         <b-td>
           <i v-if="cover" class="material-icons text-success">done</i>
@@ -149,7 +150,7 @@ export default defineComponent({
       }
       return attribute;
     },
-    groupRows() {
+    getRows() {
       return this.dynamicRows.reduce((acc, allValues, i) => {
         const {
           language,
@@ -170,7 +171,7 @@ export default defineComponent({
             id_product,
             id_product_attribute,
             ...vals,
-            languages: [language],
+            lang: [language],
           });
         } else {
           const {id_product: prevIdProd, id_product_attribute: prevIdProdAttr} = acc[i - 1];
@@ -179,7 +180,7 @@ export default defineComponent({
             acc[i - 1].desc = acc[i - 1].desc && (has_description_or_short_description === '1');
             acc[i - 1].isbn = acc[i - 1].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
             acc[i - 1].price = acc[i - 1].price && (has_price_tax_excl === '1');
-            acc[i - 1].languages.push(language);
+            acc[i - 1].lang.push(language);
           } else {
             acc.push({
               cover: has_cover === '1',
@@ -189,7 +190,7 @@ export default defineComponent({
               id_product,
               id_product_attribute,
               ...vals,
-              languages: [language],
+              lang: [language],
             });
           }
         }
