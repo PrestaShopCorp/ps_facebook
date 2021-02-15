@@ -124,12 +124,12 @@
             <i class="material-icons">error_outline</i>
             {{ $t('catalogSummary.reportingErrorsCount') }}
             <br>
-            <!--b-link
+            <b-link
               class="float-right see-details mt-3"
-              @click="onDetails"
+              @click="onReportingDetails"
             >
               {{ $t('catalogSummary.detailsButton') }}
-            </b-link-->
+            </b-link>
             <span class="big mt-2">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
@@ -197,7 +197,7 @@
               </div>
               <b-link
                 class="float-right see-details"
-                @click="onDetails"
+                @click="onPrevalidationDetails"
               >
                 {{ $t('catalogSummary.detailsButton') }}
               </b-link>
@@ -452,8 +452,15 @@ export default defineComponent({
         }, 5000);
       });
     },
-    onDetails() {
-      this.$segment.track('See details 2', {
+    onPrevalidationDetails() {
+      this.$segment.track('See prevalidation scan details', {
+        module: 'ps_facebook',
+      });
+
+      this.$parent.goto(this.$parent.PAGES.prevalidationDetails);
+    },
+    onReportingDetails() {
+      this.$segment.track('See reporting details', {
         module: 'ps_facebook',
       });
 

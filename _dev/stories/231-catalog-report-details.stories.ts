@@ -5,12 +5,48 @@ export default {
   component: ReportDetails,
 };
 
-const prevalidation1 = {
+const prevalidation15 = {
   id_product: '15',
   id_product_attribute: null,
   name: 'Pack Mug + Affiche encadrée',
   id_lang: '1',
   language: 'fr',
+  has_manufacturer_or_ean_or_upc_or_isbn: '0',
+  has_cover: '1',
+  has_link: '1',
+  has_price_tax_excl: '1',
+  has_description_or_short_description: '1',
+};
+const prevalidation16a = {
+  id_product: '16',
+  id_product_attribute: 'a',
+  name: 'A T-shirt',
+  id_lang: '1',
+  language: 'fr',
+  has_manufacturer_or_ean_or_upc_or_isbn: '1',
+  has_cover: '1',
+  has_link: '1',
+  has_price_tax_excl: '1',
+  has_description_or_short_description: '1',
+};
+const prevalidation16bFr = {
+  id_product: '16',
+  id_product_attribute: 'b',
+  name: 'A T-shirt',
+  id_lang: '1',
+  language: 'fr',
+  has_manufacturer_or_ean_or_upc_or_isbn: '1',
+  has_cover: '1',
+  has_link: '1',
+  has_price_tax_excl: '1',
+  has_description_or_short_description: '1',
+};
+const prevalidation16bEn = {
+  id_product: '16',
+  id_product_attribute: 'b',
+  name: 'A T-shirt',
+  id_lang: '1',
+  language: 'en',
   has_manufacturer_or_ean_or_upc_or_isbn: '0',
   has_cover: '1',
   has_link: '1',
@@ -50,7 +86,7 @@ const Template = (args: any, {argTypes}: any) => ({
 export const PrevalidationErrors: any = Template.bind({});
 PrevalidationErrors.args = {
   forceView: 'PREVALIDATION',
-  forcePrevalidationRows: [prevalidation1],
+  forcePrevalidationRows: [prevalidation15, prevalidation16a, prevalidation16bEn, prevalidation16bFr],
   forceReportingRows: reporting,
 };
 
@@ -64,20 +100,20 @@ NoPrevalidationError.args = {
 export const Reporting: any = Template.bind({});
 Reporting.args = {
   forceView: 'REPORTING',
-  forcePrevalidationRows: [prevalidation1],
+  forcePrevalidationRows: [prevalidation15],
   forceReportingRows: reporting,
 };
 
 export const EmptyReporting: any = Template.bind({});
 EmptyReporting.args = {
   forceView: 'REPORTING',
-  forcePrevalidationRows: [prevalidation1],
+  forcePrevalidationRows: [prevalidation15],
   forceReportingRows: {},
 };
 
 export const NoReportingAvailable: any = Template.bind({});
 NoReportingAvailable.args = {
   forceView: 'PREVALIDATION',
-  forcePrevalidationRows: [prevalidation1],
+  forcePrevalidationRows: [prevalidation15],
   forceReportingRows: null,
 };

@@ -24,7 +24,10 @@
     <catalog-summary v-if="currentPage === PAGES.summary" />
     <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
     <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />
-    <catalog-report-details v-if="currentPage === PAGES.reportDetails" />
+    <catalog-report-details
+      v-if="(currentPage === PAGES.prevalidationDetails) || (currentPage === PAGES.reportDetails)"
+      :forceView="currentPage === PAGES.prevalidationDetails ? 'PREVALIDATION' : 'REPORTING'"
+    />
   </div>
 </template>
 

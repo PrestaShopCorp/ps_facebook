@@ -29,151 +29,80 @@
         <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
-    <b-tr v-if="rows.length === 0" class="empty-cell">
+    <b-tr
+      v-if="dynamicRows.length === 0"
+      class="empty-cell"
+    >
       <b-td colspan="7">
         RIEN A VOIR ! VISUEL A METTRE !
       </b-td>
     </b-tr>
     <template
-      v-for="({
-        name, has_cover, has_description_or_short_description,
-        has_manufacturer_or_ean_or_upc_or_isbn,
-        has_price_tax_excl, language, id_product, id_product_attribute
-      }, index) in rows"
+      v-for="({name, cover, desc, isbn, price, languages, id_product, id_product_attribute}, index) in groupRows()"
     >
-      <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
-        <b-tr :key="index">
-          <b-td>{{ name }}</b-td>
-          <b-td />
-          <b-td />
-          <b-td />
-          <b-td />
-          <b-td />
-          <b-td>
-            <b-link
-              :href="url.replace('/1?', `/${id_product}?`)"
-              target="_blank"
-            >
-              <i class="material-icons">edit</i>
-            </b-link>
-          </b-td>
-        </b-tr>
-        <b-tr
-          :key="index + 'bis'"
-          class="dashed"
-        >
-          <b-td class="pl-4">
-            {{ variantLabel(index) }}
-          </b-td>
-          <b-td>{{ language }}</b-td>
-          <b-td>
-            <i
-              v-if="has_cover === '0'"
-              class="material-icons text-danger"
-            >close</i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_description_or_short_description === '0'"
-              class="material-icons text-danger"
-            >
-              close
-            </i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-              class="material-icons text-danger"
-            >
-              close
-            </i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td>
-            <i
-              v-if="has_price_tax_excl === '0'"
-              class="material-icons text-danger"
-            >close</i>
-            <i
-              v-else
-              class="material-icons text-success"
-            >done</i>
-          </b-td>
-          <b-td />
-        </b-tr>
-      </template>
+      <b-tr
+        v-if="(index === 0 || id_product !== rows[index - 1].id_product) && id_product_attribute"
+        :key="index + 'super'"
+      >
+        <b-td>{{ name }}</b-td>
+        <b-td />
+        <b-td />
+        <b-td />
+        <b-td />
+        <b-td />
+        <b-td>
+          <b-link
+            :href="url.replace('/1?', `/${id_product}?`)"
+            target="_blank"
+            class="text-secondary"
+          >
+            <i class="material-icons">edit</i>
+          </b-link>
+        </b-td>
+      </b-tr>
       <b-tr
         :key="index"
-        v-else
-        :class="!isNewVariant(index) ? 'none' : 'dashed'"
+        :class="id_product_attribute ? 'dashed' : ''"
       >
-        <b-td class="pl-4">
-          {{ variantLabel(index) }}
-        </b-td>
-        <b-td>{{ language }}</b-td>
-        <b-td>
-          <i
-            v-if="has_cover === '0'"
-            class="material-icons text-danger"
-          >close</i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
+        <b-td :class="id_product_attribute ? 'pl-4' : ''">
+          {{ id_product_attribute ? variantLabel(index) : name }}
         </b-td>
         <b-td>
-          <i
-            v-if="has_description_or_short_description === '0'"
-            class="material-icons text-danger"
+          <span v-for="l in languages" :key="l" class="badge badge-primary">{{ l }}</span>
+        </b-td>
+        <b-td>
+          <i v-if="cover" class="material-icons text-success">done</i>
+          <i v-else class="material-icons text-danger">close</i>
+        </b-td>
+        <b-td>
+          <i v-if="desc" class="material-icons text-success">done</i>
+          <i v-else class="material-icons text-danger">close</i>
+        </b-td>
+        <b-td>
+          <i v-if="isbn" class="material-icons text-success">done</i>
+          <i v-else class="material-icons text-danger">close</i>
+        </b-td>
+        <b-td>
+          <i v-if="price" class="material-icons text-success">done</i>
+          <i v-else class="material-icons text-danger">close</i>
+        </b-td>
+        <b-td>
+          <b-link
+            v-if="!id_product_attribute"
+            :href="url.replace('/1?', `/${id_product}?`)"
+            target="_blank"
+            class="text-secondary"
           >
-            close
-          </i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
+            <i class="material-icons">edit</i>
+          </b-link>
         </b-td>
-        <b-td>
-          <i
-            v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-            class="material-icons text-danger"
-          >
-            close
-          </i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-        <b-td>
-          <i
-            v-if="has_price_tax_excl === '0'"
-            class="material-icons text-danger"
-          >close</i>
-          <i
-            v-else
-            class="material-icons text-success"
-          >done</i>
-        </b-td>
-        <b-td />
       </b-tr>
     </template>
   </b-table-simple>
-
 </template>
 
 <script>
+/* eslint-disable camelcase */
 import {defineComponent} from '@vue/composition-api';
 import {BTableSimple} from 'bootstrap-vue';
 
@@ -195,16 +124,17 @@ export default defineComponent({
   },
   data() {
     return {
+      dynamicRows: this.rows.map((row) => ({...row, page: 0})),
     };
   },
   methods: {
     isNewVariant(index) {
-      const attribute = this.rows[index].id_product_attribute;
-      const product = this.rows[index].id_product;
+      const attribute = this.dynamicRows[index].id_product_attribute;
+      const product = this.dynamicRows[index].id_product;
 
       if (index > 0) {
-        const previousAttribute = this.rows[index - 1].id_product_attribute;
-        const previousProduct = this.rows[index - 1].id_product;
+        const previousAttribute = this.dynamicRows[index - 1].id_product_attribute;
+        const previousProduct = this.dynamicRows[index - 1].id_product;
         if (attribute === previousAttribute && product === previousProduct) {
           return false;
         }
@@ -213,31 +143,80 @@ export default defineComponent({
     },
     variantLabel(index) {
       // Show label only if previous variant in the array is different than the current one
-      const attribute = this.rows[index].id_product_attribute;
+      const attribute = this.dynamicRows[index].id_product_attribute;
       if (!attribute || !this.isNewVariant(index)) {
         return '';
       }
       return attribute;
+    },
+    groupRows() {
+      return this.dynamicRows.reduce((acc, allValues, i) => {
+        const {
+          language,
+          has_cover,
+          has_description_or_short_description,
+          has_manufacturer_or_ean_or_upc_or_isbn,
+          has_price_tax_excl,
+          id_product,
+          id_product_attribute,
+          ...vals
+        } = allValues;
+        if (i === 0) {
+          acc.push({
+            cover: has_cover === '1',
+            desc: has_description_or_short_description === '1',
+            isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
+            price: has_price_tax_excl === '1',
+            id_product,
+            id_product_attribute,
+            ...vals,
+            languages: [language],
+          });
+        } else {
+          const {id_product: prevIdProd, id_product_attribute: prevIdProdAttr} = acc[i - 1];
+          if (prevIdProd === id_product && prevIdProdAttr === id_product_attribute) {
+            acc[i - 1].cover = acc[i - 1].cover && (has_cover === '1');
+            acc[i - 1].desc = acc[i - 1].desc && (has_description_or_short_description === '1');
+            acc[i - 1].isbn = acc[i - 1].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
+            acc[i - 1].price = acc[i - 1].price && (has_price_tax_excl === '1');
+            acc[i - 1].languages.push(language);
+          } else {
+            acc.push({
+              cover: has_cover === '1',
+              desc: has_description_or_short_description === '1',
+              isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
+              price: has_price_tax_excl === '1',
+              id_product,
+              id_product_attribute,
+              ...vals,
+              languages: [language],
+            });
+          }
+        }
+        return acc;
+      }, []);
     },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-  th {
-    text-transform: uppercase;
+  tr.dashed > td {
+    border-top: 1px dotted lightgrey !important;
   }
 
-  tr.dashed > td:first-of-type {
-    border-top-style: dashed !important;
-  }
-
-  tr.none > td:first-of-type {
-    border-top: 0px none !important;
+  tr > th:last-of-type, tr > td:last-of-type {
+    text-align: right;
   }
 
   tr.empty-cell > td {
     padding: 6rem 3rem;
     text-align: center;
+  }
+
+  span.badge {
+    margin-right: 0.25rem;
+    border-radius: 3px;
+    text-transform: uppercase;
   }
 </style>

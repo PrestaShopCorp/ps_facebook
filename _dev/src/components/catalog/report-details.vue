@@ -186,8 +186,7 @@ export default defineComponent({
         if (!success) {
           this.reportingRows = null;
         } else {
-          this.reportingRows = Object.values(list);
-          console.log('####é12', this.reportingRows);
+          this.reportingRows = Object.values(list || {});
           this.url = url;
           this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
         }
@@ -202,8 +201,8 @@ export default defineComponent({
       } else {
         fetches.push(this.fetchPrevalidation(0));
       }
-      if (this.forceReportingRows === null || this.forceReportingRows.length > 0) {
-        this.reportingRows = this.forceReportingRows;
+      if (this.forceReportingRows === null || Object.values(this.forceReportingRows).length > 0) {
+        this.reportingRows = this.forceReportingRows ? Object.values(this.forceReportingRows) : null;
       } else {
         fetches.push(this.fetchReporting(0));
       }
@@ -233,6 +232,17 @@ export default defineComponent({
       );
       this.views[1].text = this.$t('syncReport.views.reporting', [count]);
       this.views[1].disabled = (newValue === null);
+    },
+    view(newView, oldView) {
+      if (newView === oldView || !newView || !oldView) {
+        return;
+      }
+      this.$segment.track(
+        newView === 'PREVALIDATION' ? 'See prevalidation scan details' : 'See reporting details',
+        {
+          module: 'ps_facebook',
+        },
+      );
     },
   },
 });

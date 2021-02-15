@@ -26,7 +26,7 @@
         <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
-    <b-tr v-if="rows.length === 0" class="empty-cell">
+    <b-tr v-if="dynamicRows.length === 0" class="empty-cell">
       <b-td colspan="4">
         RIEN A VOIR ! VISUEL A METTRE !
       </b-td>
@@ -34,7 +34,7 @@
     <b-tr
       v-for="({
         id_product, id_product_attribute, name, messages
-      }, index) in rows" :key="index"
+      }, index) in dynamicRows" :key="index"
     >
       <b-td>
         {{ name }} {{ id_product_attribute }}
@@ -63,7 +63,7 @@ import {defineComponent} from '@vue/composition-api';
 import {BTableSimple} from 'bootstrap-vue';
 
 export default defineComponent({
-  name: 'PrevalidationTable',
+  name: 'ReportingTable',
   components: {
     BTableSimple,
   },
@@ -80,16 +80,17 @@ export default defineComponent({
   },
   data() {
     return {
+      dynamicRows: this.rows.map((row) => ({...row, page: 0})),
     };
   },
   methods: {
     isNewVariant(index) {
-      const attribute = this.rows[index].id_product_attribute;
-      const product = this.rows[index].id_product;
+      const attribute = this.dynamicRows[index].id_product_attribute;
+      const product = this.dynamicRows[index].id_product;
 
       if (index > 0) {
-        const previousAttribute = this.rows[index - 1].id_product_attribute;
-        const previousProduct = this.rows[index - 1].id_product;
+        const previousAttribute = this.dynamicRows[index - 1].id_product_attribute;
+        const previousProduct = this.dynamicRows[index - 1].id_product;
         if (attribute === previousAttribute && product === previousProduct) {
           return false;
         }
@@ -98,7 +99,7 @@ export default defineComponent({
     },
     variantLabel(index) {
       // Show label only if previous variant in the array is different than the current one
-      const attribute = this.rows[index].id_product_attribute;
+      const attribute = this.dynamicRows[index].id_product_attribute;
       if (!attribute || !this.isNewVariant(index)) {
         return '';
       }
@@ -109,10 +110,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  th {
-    text-transform: uppercase;
-  }
-
   tr.dashed > td:first-of-type {
     border-top-style: dashed !important;
   }
