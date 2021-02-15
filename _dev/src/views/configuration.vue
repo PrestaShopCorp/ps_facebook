@@ -29,8 +29,8 @@
       class="m-3"
     />
     <MultiStoreSelector
-      v-else-if="!contextPsAccounts.isShopContext"
-      :shops="contextPsAccounts.shops || []"
+      v-else-if="!contextPsAccounts.isShopContext && shops.length"
+      :shops="shops"
       class="m-3"
       @shop-selected="onShopSelected($event)"
     />
@@ -254,7 +254,6 @@ export default defineComponent({
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
         && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
-      // TODO !1: must be true only if all parent categories are matched !
     },
     productSyncStarted() {
       return this.contextPsFacebook && this.contextPsFacebook.catalog
@@ -287,6 +286,7 @@ export default defineComponent({
       loading: true,
       popupReceptionDuplicate: false,
       openedPopup: null,
+      shops: this.contextPsAccounts.shops || [],
     };
   },
   created() {

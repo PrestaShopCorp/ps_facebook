@@ -34,6 +34,7 @@ export default class ModuleContext extends VuexModule {
     email: (window as any).email,
     psVersion: (window as any).psVersion,
     moduleVersion: (window as any).moduleVersion,
+    shopId: (window as any).psAccountShopId,
   };
 
   stateTranslations: Record<string, any> = {...stateTranslations};

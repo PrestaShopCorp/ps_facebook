@@ -84,7 +84,7 @@ class PsFacebookTranslations
                     'stepProductSync' => $this->module->l('Export your product catalog', 'PsFacebookTranslations'),
                     'stepAdCampaign' => $this->module->l('Create Traffic and/or Dynamic Ads', 'PsFacebookTranslations'),
                     'reloadButton' => $this->module->l('Reload', 'PsFacebookTranslations'),
-                    'shopInConflictError' => $this->module->l("This domain has already been linked with PS Accounts and Facebook by another shop of this PrestaShop instance. \nAt the moment PrestaShop Account is unable to work when two shops share the same domain. \n\nTo register this shop, you must first: \n- unregister your Facebook account from the other one using the same domain, \n- or change the domain name of this shop.", 'PsFacebookTranslations'),
+                    'shopInConflictError' => $this->module->l('You are already connected to Facebook from another shop. At the moment, PrestaShop Facebook can only be configured on one shop. You must log out of your first shop to connect this one.', 'PsFacebookTranslations'),
                     'unknownOnboardingError' => $this->module->l('An unknown error occurred during onboarding process. Please reload and try again.', 'PsFacebookTranslations'),
                     'psAccountUpgradeNeededWarning' => $this->module->l("The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.", 'PsFacebookTranslations'),
                     'psAccountUpgradeButton' => $this->module->l('Upgrade PrestaShop Accounts', 'PsFacebookTranslations'),
@@ -220,6 +220,7 @@ class PsFacebookTranslations
                         'name' => $this->module->l('Messenger Chat Plugin', 'PsFacebookTranslations'),
                         'description' => $this->module->l('The Chat Plugin allows you to integrate your Messenger experience directly into your website.', 'PsFacebookTranslations'),
                         'addButton' => $this->module->l('Add', 'PsFacebookTranslations'),
+                        'checkMessages' => $this->module->l('Check my messages', 'PsFacebookTranslations'),
                         'editButton' => $this->module->l('Customize settings', 'PsFacebookTranslations'),
                     ],
                     'page_shop' => [

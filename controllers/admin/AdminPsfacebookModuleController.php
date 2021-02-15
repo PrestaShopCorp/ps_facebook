@@ -284,6 +284,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
+            'psAccountShopId' => $psAccountsService->getShopUuidV4(),
             'psAccountVersionCheck' => [
                 'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
                 'psAccountsVersion' => $psAccountsVersion,
@@ -319,10 +320,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     private function presentPsAccounts()
     {
-        if (!Module::isInstalled('ps_accounts') || false === Module::getInstanceByName('ps_accounts')) {
-            return [];
-        }
-
         $this->psAccountsEnvVarHotFix();
 
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);

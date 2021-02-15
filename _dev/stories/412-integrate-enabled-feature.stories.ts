@@ -23,6 +23,7 @@ EnabledOnFacebook.args = {
   manageRoute: {
     default: `https://www.facebook.com/facebook_business_extension?app_id=0&external_business_id=0`,
     page_cta: `https://www.facebook.com/0`,
+    view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=0`,
   },
 };
 
