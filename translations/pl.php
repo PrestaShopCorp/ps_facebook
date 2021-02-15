@@ -37,12 +37,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Zintegruj swój sklep z Facebookiem.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Połącz się z Facebookiem';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'Dzięki PS Facebook możesz cieszyć się beztarciową, bezkodową pracą na pokładzie i doświadczeniem w zarządzaniu produktami biznesowymi Facebooka.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business 
-- Create/Select page 
-- Create/Select ad account 
-- Create/Select install pixel 
-- Create/Select sync product catalog 
-- Create Facebook Shop & Instagram Shopping 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business
+- Create/Select page
+- Create/Select ad account
+- Create/Select install pixel
+- Create/Select sync product catalog
+- Create Facebook Shop & Instagram Shopping
 - Customize your Facebook page with call-to-action';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'Upoważniasz to konto na Facebooku do łączenia się z Twoim sklepem:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_104f3d1bf8a4000358de7b64821b5769'] = 'Zmodyfikuj moje konto';
@@ -50,7 +50,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0323de4f66a1700e2173e9
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_230111ab958aee6b6b8eee6b7466a16d'] = 'Business Manager na Facebooku';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_438ec56d3c6528104edf008846d36446'] = 'Konto biznesowe na Facebooku pozwala na zarządzanie kontami reklamowymi, stronami i osobami, które pracują nad nimi w tym samym miejscu';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b7ca35f100eec22e63e206481b8b4573'] = 'Facebook Pixel';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'Piksel z Facebooka jest kawałkiem kodu (Javascript), który automatycznie instalujemy na Twoich stronach internetowych. Pozwala &quot;śledzić&quot;, kto odwiedza Twoją stronę, śledzić konwersje reklam na Facebooku i tworzyć retargetowanie odbiorców';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'Piksel z Facebooka jest kawałkiem kodu (Javascript), który automatycznie instalujemy na Twoich stronach internetowych. Pozwala "śledzić", kto odwiedza Twoją stronę, śledzić konwersje reklam na Facebooku i tworzyć retargetowanie odbiorców';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_756b97abbc9f4c13c541b1adf847eaf0'] = 'Strona na Facebooku';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_716ea56fbf6096e16bac8ce638ac9b74'] = 'Twoja strona na Facebooku będzie reprezentować Twoją firmę w reklamach';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0a1068d4187d880068c65be6c5b16158'] = 'Facebook Ads';
@@ -74,10 +74,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e66e131ec90fd1609d07b9
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Twój katalog w serwisie Facebook Business';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Katalog akcji';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Zanim kupujący będą mogli kupować u Ciebie produkty, będziesz musiał załadować informacje o swoich produktach do Katalogu Produktów na Facebooku.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Proszę zwrócić uwagę na następujące kwestie: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Proszę zwrócić uwagę na następujące kwestie:
 1. Eksport katalogu odbywa się raz dziennie (w nocy)
 2. Synchronizacja informacji o produktach PrestaShop z Facebookiem może potrwać do 24 godzin.
-3. Do Facebooka eksportowane są tylko aktywne produkty. 
+3. Do Facebooka eksportowane są tylko aktywne produkty.
 4. Synchronizowane będą tylko produkty z wypełnionymi polami obowiązkowymi: krótki opis, ilość, cena, zdjęcie produktu, producent lub ean/upc/isbn.
 5. Eksport lokalizacji produktów (na potrzeby tłumaczeń) jest nadal w fazie beta i może generować nieoczekiwane błędy.
 6. W Twoim katalogu zostaną zaktualizowane tylko produkty, które uległy zmianie. ';
