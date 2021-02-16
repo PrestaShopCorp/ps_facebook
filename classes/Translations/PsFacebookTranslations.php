@@ -172,7 +172,7 @@ class PsFacebookTranslations
             'syncReport' => [
                 'title' => $this->module->l('Product status', 'PsFacebookTranslations'),
                 'views' => [
-                    'prevalidation' => $this->module->l( 'Before export{0}', 'PsFacebookTranslations'),
+                    'prevalidation' => $this->module->l('Before export{0}', 'PsFacebookTranslations'),
                     'reporting' => $this->module->l('After export{0}', 'PsFacebookTranslations'),
                     'oneError' => $this->module->l(' (1 error)', 'PsFacebookTranslations'),
                     'manyErrors' => $this->module->l(' ({0} errors)', 'PsFacebookTranslations'),

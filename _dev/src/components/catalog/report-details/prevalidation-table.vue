@@ -52,7 +52,7 @@
     </b-tr>
     <template
       v-for=
-        "({name, cover, desc, isbn, price, lang, id_product, id_product_attribute}, i) in getRows()"
+        "({name, cover, d, isbn, price, l, id_product, id_product_attribute}, i) in getRows()"
     >
       <b-tr
         v-if="(i === 0 || id_product !== rows[i - 1].id_product) && id_product_attribute"
@@ -84,14 +84,14 @@
           {{ id_product_attribute ? variantLabel(i) : name }}
         </b-td>
         <b-td>
-          <span v-for="l in lang" :key="l" class="badge badge-primary">{{ l }}</span>
+          <span v-for="lang in l" :key="lang" class="badge badge-primary">{{ lang }}</span>
         </b-td>
         <b-td>
           <i v-if="cover" class="material-icons text-success">done</i>
           <i v-else class="material-icons text-danger">close</i>
         </b-td>
         <b-td>
-          <i v-if="desc" class="material-icons text-success">done</i>
+          <i v-if="d" class="material-icons text-success">done</i>
           <i v-else class="material-icons text-danger">close</i>
         </b-td>
         <b-td>
@@ -182,32 +182,32 @@ export default defineComponent({
         if (i === 0) {
           acc.push({
             cover: has_cover === '1',
-            desc: has_description_or_short_description === '1',
+            d: has_description_or_short_description === '1',
             isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
             price: has_price_tax_excl === '1',
             id_product,
             id_product_attribute,
             ...vals,
-            lang: [language],
+            l: [language],
           });
         } else {
           const {id_product: prevIdProd, id_product_attribute: prevIdProdAttr} = acc[i - 1];
           if (prevIdProd === id_product && prevIdProdAttr === id_product_attribute) {
             acc[i - 1].cover = acc[i - 1].cover && (has_cover === '1');
-            acc[i - 1].desc = acc[i - 1].desc && (has_description_or_short_description === '1');
+            acc[i - 1].d = acc[i - 1].d && (has_description_or_short_description === '1');
             acc[i - 1].isbn = acc[i - 1].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
             acc[i - 1].price = acc[i - 1].price && (has_price_tax_excl === '1');
-            acc[i - 1].lang.push(language);
+            acc[i - 1].l.push(language);
           } else {
             acc.push({
               cover: has_cover === '1',
-              desc: has_description_or_short_description === '1',
+              d: has_description_or_short_description === '1',
               isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
               price: has_price_tax_excl === '1',
               id_product,
               id_product_attribute,
               ...vals,
-              lang: [language],
+              l: [language],
             });
           }
         }
