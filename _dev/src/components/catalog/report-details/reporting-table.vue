@@ -42,16 +42,21 @@
       v-for="({
         id_product, id_product_attribute, name, messages
       }, index) in dynamicRows" :key="index"
+      v-if="Object.keys(messages).length > 0"
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
-        {{ name }} #{{ id_product_attribute }}
+        {{ name }}{{ id_product_attribute > 0 ? ` (#${id_product_attribute})` : '' }}
       </b-td>
       <b-td>
-        LANGs
+        <span v-if="!!messages.base" class="badge badge-primary">{{ locale.split('-')[0] }}</span>
+        <span v-if="!!messages.l10n" class="badge badge-primary">{{ $t('syncReport.otherLanguage') }}</span>
       </b-td>
       <b-td>
-        {{ messages }}
+        <span v-if="Object.keys(messages).length === 1">{{ Object.values(messages)[0] }}</span>
+        <ul v-else>
+          <li v-for="(m, i) in Object.values(messages)" :key="i">{{ m }}</li>
+        </ul>
       </b-td>
       <b-td>
         <b-link
@@ -86,6 +91,11 @@ export default defineComponent({
     url: {
       type: String,
       required: true,
+    },
+    locale: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookLocale || 'en-US',
     },
   },
   data() {
@@ -127,6 +137,11 @@ export default defineComponent({
   tr.empty-cell > td {
     padding: 6rem 3rem;
     text-align: center;
+  }
+
+  tr > td > ul {
+    margin-bottom: 0;
+    padding-inline-start: 20px;
   }
 
   span.badge {

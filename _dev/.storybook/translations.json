@@ -135,7 +135,8 @@
       "errorTooltip": "This is the error given by Facebook when trying to export the product.",
       "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
       "reportingText": "Products with detected problems after catalog export are listed below:",
-      "lastSyncDate": "Last sync {0} at {1}"
+      "lastSyncDate": "Last sync {0} at {1}",
+      "otherLanguage": "Other"
     },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",

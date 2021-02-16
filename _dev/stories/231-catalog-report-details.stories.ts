@@ -63,6 +63,7 @@ const reporting = {
     status: 'Pending',
     messages: {
       base: 'Ongeldige waarde: Value passed at position 12 (id=1-1) is invalid: \'Invalid Date Range: The date range specified in property sale_price_effective_date is invalid.\'',
+      l10n: 'Another error occurred. This is a test.',
     },
   },
   '1-2': {
@@ -73,6 +74,16 @@ const reporting = {
     status: 'Pending',
     messages: {
       base: 'Ongeldige waarde: Value passed at position 19 (id=1-2) is invalid: \'Invalid Date Range: The date range specified in property sale_price_effective_date is invalid.\''
+    },
+  },
+  '2-0': {
+    id_product: '2',
+    id_product_attribute: '0',
+    name: 'T-shirt imprimé papou',
+    date_upd: '2021-02-12 08:42:43',
+    status: 'Pending',
+    messages: {
+      l10n: 'Ongeldige waarde: Value passed at position 19 (id=1-2) is invalid: \'Invalid Date Range: The date range specified in property sale_price_effective_date is invalid.\''
     },
   },
 };
