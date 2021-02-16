@@ -102,6 +102,16 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookGetCategories || null,
     },
+    overrideFetchData: {
+      type: Function,
+      required: false,
+      default: null,
+    },
+    overrideCategories: {
+      type: Function,
+      required: false,
+      default: null,
+    },
   },
   computed: {
   },
@@ -114,17 +124,26 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
     this.loading = true;
-    this.fetchCategories(0, 1).then((res) => {
-      this.categories = res;
+    this.fetchData();
+    if (this.overrideCategories !== null) {
+      this.categories = this.overrideCategories();
       this.loading = false;
-    });
+    } else {
+      this.fetchCategories(0, 1).then((res) => {
+        this.categories = res;
+        this.loading = false;
+      });
+    }
   },
   methods: {
     fetchData() {
       fetch(this.categoryMatchingRoute)
         .then((res) => {
+          if (this.overrideFetchData !== null) {
+            const response = this.overrideFetchData();
+            return response.json();
+          }
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
@@ -141,6 +160,7 @@ export default defineComponent({
     },
     fetchCategories(idCategory, page) {
       let mainCategoryId = idCategory;
+
       if (mainCategoryId === 0) {
         mainCategoryId = this.$store.state.context.appContext.defaultCategory.id_category;
       }

@@ -208,8 +208,8 @@ class PsFacebookTranslations
                     'required' => $this->module->l('Required'),
                     'checkboxTxt' => $this->module->l('Display unspecified categories only'),
                     'psCategoryName' => $this->module->l('Category on your site'),
-                    'fbCategoryName' => $this->module->l('Facebook category'),
-                    'fbSubcategoryName' => $this->module->l('Facebook subcategory'),
+                    'fbCategoryName' => $this->module->l('Google category'),
+                    'fbSubcategoryName' => $this->module->l('Google subcategory'),
                 ],
             ],
             'categoryMatched' => [

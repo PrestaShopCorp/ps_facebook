@@ -140,6 +140,13 @@
         "tooManyResults": "Too many results, please complete your search.",
         "fetchError": "An error occurred during search process."
       },
+      "editTable": {
+        "psCategoryName": "Category on your site",
+        "fbCategoryName": "Google category",
+        "fbSubcategoryName": "Google subcategory",
+        "checkboxTxt": "Display unspecified categories only",
+        "required": "Required"
+      },
       "tableMatching": {
         "firstTd" : "Category on your site",
         "secondTd" : "Google category",
