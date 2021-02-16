@@ -142,10 +142,10 @@ export default defineComponent({
       this.filterCategory = value;
 
       if (this.filterCategory === true) {
-        const childrens = this.categories.filter(
+        const children = this.categories.filter(
           (child) => !child.googleCategoryParentId,
         );
-        childrens.forEach((el) => {
+        children.forEach((el) => {
           el.show = false;
         });
       } else {
@@ -184,11 +184,11 @@ export default defineComponent({
     * hide children
     */
     hideChildren(currentCategory) {
-      const childrens = this.categories.filter(
+      const children = this.categories.filter(
         (child) => child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
         && child.shopCategoryId !== currentCategory.shopCategoryId,
       );
-      childrens.forEach((child) => {
+      children.forEach((child) => {
         child.show = false;
         if (child.deploy === this.FOLD) {
           child.deploy = this.UNFOLD;
