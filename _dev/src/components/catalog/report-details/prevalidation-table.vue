@@ -20,11 +20,24 @@
   <b-table-simple>
     <b-thead>
       <b-tr>
+        <b-th>{{ $t('syncReport.id') }}</b-th>
         <b-th>{{ $t('syncReport.name') }}</b-th>
-        <b-th>{{ $t('syncReport.language') }}</b-th>
-        <b-th>{{ $t('syncReport.image') }}</b-th>
-        <b-th>{{ $t('syncReport.description') }}</b-th>
-        <b-th>{{ $t('syncReport.barcode') }}</b-th>
+        <b-th>
+          {{ $t('syncReport.language') }}
+          <span><tooltip :text="$t('syncReport.languageTooltip')" /></span>
+        </b-th>
+        <b-th>
+          {{ $t('syncReport.image') }}
+          <span><tooltip :text="$t('syncReport.imageTooltip')" /></span>
+        </b-th>
+        <b-th>
+          {{ $t('syncReport.description') }}
+          <span><tooltip :text="$t('syncReport.descriptionTooltip')" /></span>
+        </b-th>
+        <b-th>
+          {{ $t('syncReport.barcode') }}
+          <span><tooltip :text="$t('syncReport.barcodeTooltip')" /></span>
+        </b-th>
         <b-th>{{ $t('syncReport.price') }}</b-th>
         <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
@@ -33,7 +46,7 @@
       v-if="dynamicRows.length === 0"
       class="empty-cell"
     >
-      <b-td colspan="7">
+      <b-td colspan="8">
         RIEN A VOIR ! VISUEL A METTRE !
       </b-td>
     </b-tr>
@@ -45,6 +58,7 @@
         v-if="(i === 0 || id_product !== rows[i - 1].id_product) && id_product_attribute"
         :key="i + 'super'"
       >
+        <b-td>{{ id_product }}</b-td>
         <b-td>{{ name }}</b-td>
         <b-td />
         <b-td />
@@ -65,6 +79,7 @@
         :key="i"
         :class="id_product_attribute ? 'dashed' : ''"
       >
+        <b-td>{{ id_product_attribute ? '' : id_product }}</b-td>
         <b-td :class="id_product_attribute ? 'pl-4' : ''">
           {{ id_product_attribute ? variantLabel(i) : name }}
         </b-td>
@@ -106,11 +121,13 @@
 /* eslint-disable camelcase */
 import {defineComponent} from '@vue/composition-api';
 import {BTableSimple} from 'bootstrap-vue';
+import Tooltip from '../../help/tooltip.vue';
 
 export default defineComponent({
   name: 'PrevalidationTable',
   components: {
     BTableSimple,
+    Tooltip,
   },
   props: {
     rows: {

@@ -20,14 +20,21 @@
   <b-table-simple>
     <b-thead>
       <b-tr>
+        <b-th>{{ $t('syncReport.id') }}</b-th>
         <b-th>{{ $t('syncReport.name') }}</b-th>
-        <b-th>{{ $t('syncReport.language') }}</b-th>
-        <b-th>{{ $t('syncReport.error') }}</b-th>
+        <b-th>
+          {{ $t('syncReport.language') }}
+          <span><tooltip :text="$t('syncReport.languageTooltip')" /></span>
+        </b-th>
+        <b-th>
+          {{ $t('syncReport.error') }}
+          <span><tooltip :text="$t('syncReport.errorTooltip')" /></span>
+        </b-th>
         <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
     <b-tr v-if="dynamicRows.length === 0" class="empty-cell">
-      <b-td colspan="4">
+      <b-td colspan="5">
         RIEN A VOIR ! VISUEL A METTRE !
       </b-td>
     </b-tr>
@@ -36,8 +43,9 @@
         id_product, id_product_attribute, name, messages
       }, index) in dynamicRows" :key="index"
     >
+      <b-td>{{ id_product }}</b-td>
       <b-td>
-        {{ name }} {{ id_product_attribute }}
+        {{ name }} #{{ id_product_attribute }}
       </b-td>
       <b-td>
         LANGs
@@ -45,7 +53,7 @@
       <b-td>
         {{ messages }}
       </b-td>
-      <b-td class="float-right">
+      <b-td>
         <b-link
           :href="url.replace('/1?', `/${id_product}?`)"
           target="_blank"
@@ -61,11 +69,13 @@
 <script>
 import {defineComponent} from '@vue/composition-api';
 import {BTableSimple} from 'bootstrap-vue';
+import Tooltip from '../../help/tooltip.vue';
 
 export default defineComponent({
   name: 'ReportingTable',
   components: {
     BTableSimple,
+    Tooltip,
   },
   props: {
     rows: {
@@ -110,16 +120,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  tr.dashed > td:first-of-type {
-    border-top-style: dashed !important;
-  }
-
-  tr.none > td:first-of-type {
-    border-top: 0px none !important;
+  tr > th:last-of-type, tr > td:last-of-type {
+    text-align: right;
   }
 
   tr.empty-cell > td {
     padding: 6rem 3rem;
     text-align: center;
+  }
+
+  span.badge {
+    margin-right: 0.25rem;
+    border-radius: 3px;
+    text-transform: uppercase;
   }
 </style>
