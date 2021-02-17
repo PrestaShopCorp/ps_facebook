@@ -25,6 +25,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use Ps_facebook;
 use Raven_Client;
+use Smarty_Template_Resource_Base;
 
 /**
  * Handle Error.
@@ -59,8 +60,12 @@ class ErrorHandler
                     'ps_facebook_is_installed' => \Module::isInstalled('ps_facebook'),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
+                'app_path' => $module->getLocalPath(),
+                'excluded_app_paths' => $module->getLocalPath() . '/vendor'
             ]
         );
+
+        $this->client->install();
     }
 
     /**
