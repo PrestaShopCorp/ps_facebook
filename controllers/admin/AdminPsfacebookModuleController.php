@@ -102,7 +102,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
             'contextPsAccounts' => (object) $this->presentPsAccounts(),
-            'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            // getOrRefreshToken() does not exist on very old versions of the lib
+            'psAccountsToken' => method_exists($psAccountsService, 'getOrRefreshToken') ? $psAccountsService->getOrRefreshToken() : '',
             'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
