@@ -189,12 +189,12 @@ class GoogleCategoryRepository
         $sql->where(
             'c.`id_parent` = ' . (int) $parentCategoryId . ' OR
             (
-                        c.`nleft` > (SELECT pc.`nleft` from `ps_category` as pc WHERE pc.id_category = '
+                        c.`nleft` > (SELECT pc.`nleft` from `' . _DB_PREFIX_ . 'category` as pc WHERE pc.id_category = '
             . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ') AND
-                        c.`nright` < (SELECT pc.`nright` from `ps_category` as pc WHERE pc.id_category = '
+                        c.`nright` < (SELECT pc.`nright` from `' . _DB_PREFIX_ . 'category` as pc WHERE pc.id_category = '
             . (int) $parentCategoryId . ' AND pc.`level_depth` >= ' . Config::MAX_CATEGORY_DEPTH . ')
-            )
-        ');
+            )'
+        );
         $sql->limit($limit, $offset);
 
         return Db::getInstance()->executeS($sql);

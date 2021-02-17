@@ -78,7 +78,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxConnectToFacebook()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $onboardingData = $inputs['onboarding'];
 
         /** @var ConfigurationHandler $configurationHandler */
@@ -110,7 +110,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxActivatePixel()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
@@ -180,12 +180,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-        $response = $client->post(
+        $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
             [
                 'json' => ['turnOn' => $turnOn],
@@ -308,7 +308,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxUpdateFeature()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         $featureManager = $this->module->getService(FbeFeatureManager::class);
 
@@ -431,7 +431,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxUpdateConversionApiData()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $success = true;
 
         if (isset($inputs['system_access_token'])) {

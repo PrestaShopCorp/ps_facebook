@@ -187,6 +187,7 @@ class ApiConversionHandler
      */
     protected function createSdkUserData($customerInformation)
     {
+        // \Context::getContext()->cookie doesn't have fbp and fbc
         $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
 

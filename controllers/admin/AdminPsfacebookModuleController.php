@@ -340,7 +340,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             return;
         }
 
-        foreach ($presentedData['shops'] as $groupKey => &$shopGroup) {
+        foreach ($presentedData['shops'] as &$shopGroup) {
             foreach ($shopGroup['shops'] as &$shop) {
                 $shop['url'] = $this->context->link->getAdminLink(
                     'AdminModules',
