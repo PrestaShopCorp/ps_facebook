@@ -64,7 +64,6 @@ class Installer
         $this->segment->track();
 
         return $this->installConfiguration() &&
-            $this->module->registerHook(\Ps_facebook::HOOK_LIST) &&
             $this->installTabs() &&
             $this->installTables();
     }
