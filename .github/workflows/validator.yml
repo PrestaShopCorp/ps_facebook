@@ -1,0 +1,21 @@
+name: Validator tests
+on: pull_request
+jobs:
+  validator-tests:
+    name: send test to validator
+    runs-on: ubuntu-latest
+    steps:
+      - name: send module to validator
+        uses: PrestaShopCorp/github-action-validator@v1.0
+        env:
+          VALIDATOR_API_KEY: ${{ secrets.VALIDATOR_API_KEY }}
+        with:
+          # Example of github_link: PrestaShopCorp/ps_checkout
+          github_link: ${{ github.event.repository.full_name }}
+          github_branch: ${{github.head_ref}}
+      - name: comment PR
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.JARVIS_TOKEN }}
+        with:
+          path: ./result_validator.txt
