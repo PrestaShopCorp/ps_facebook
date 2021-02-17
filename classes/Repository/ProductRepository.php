@@ -171,7 +171,7 @@ class ProductRepository
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
         OR is.id_image is NULL
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
-        OR ps.price = 0
+        OR ps.price <= 0
         OR pl.name = "" OR pl.name is NULL
         ');
 
@@ -266,7 +266,6 @@ class ProductRepository
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
-        // TODO !0: fix, format of $productsWithErrors is not "1-1-fr" anymore, but "1-1" (we lose the lang), keep only shop default lang instead.
         $sql->select('
             IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
             . $disapproved . '",

@@ -114,6 +114,11 @@
         </b-td>
       </b-tr>
     </template>
+    <b-tfoot v-if="loading">
+      <b-td class="loader-cell" colspan="8">
+        <div class="spinner" />
+      </b-td>
+    </b-tfoot>
   </b-table-simple>
 </template>
 
@@ -142,7 +147,9 @@ export default defineComponent({
   },
   data() {
     return {
-      dynamicRows: this.rows.map((row) => ({...row, page: 0})),
+      loading: false,
+      lastPage: 0,
+      dynamicRows: this.rows,
     };
   },
   methods: {
@@ -214,11 +221,42 @@ export default defineComponent({
         return acc;
       }, []);
     },
+    handleScroll() {
+      const de = document.documentElement;
+      if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
+        console.log('Requesting a new page:', this.lastPage + 1);
+        this.loading = true;
+        this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
+          if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
+            window.removeEventListener('scroll', this.handleScroll);
+          }
+          this.dynamicRows = this.rows;
+          console.log('new elements:', newPageCount);
+          this.lastPage += 1;
+        }).catch((error) => {
+          console.error(error);
+        }).then(() => {
+          setTimeout(() => { // used to debounce handleScroll
+            this.loading = false;
+          }, 500);
+        });
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 });
 </script>
 
 <style lang="scss" scoped>
+  tr > th {
+    white-space: nowrap;
+  }
+
   tr.dashed > td {
     border-top: 1px dotted lightgrey !important;
   }
@@ -229,6 +267,10 @@ export default defineComponent({
 
   tr.empty-cell > td {
     padding: 6rem 3rem;
+    text-align: center;
+  }
+
+  td.loader-cell {
     text-align: center;
   }
 

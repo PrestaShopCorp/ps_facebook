@@ -119,9 +119,9 @@ export default defineComponent({
       default: () => [],
     },
     forceReportingRows: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => [],
+      default: () => ({}),
     },
   },
   data() {
@@ -150,10 +150,8 @@ export default defineComponent({
   },
   methods: {
     fetchPrevalidation(page = 0) {
-      this.prevalidationRows = [];
       if (!this.getProductsWithErrorsRoute) {
-        console.error('No route to fetch prevalidation data.');
-        return Promise.resolve();
+        return Promise.reject(new Error('No route to fetch reporting data.'));
       }
       return fetch(`${this.getProductsWithErrorsRoute}&page=${page}`, {
         method: 'GET',
@@ -166,18 +164,19 @@ export default defineComponent({
       }).then((res) => {
         const {list, url, success} = res;
         if (success && list && list.length > 0) {
-          this.prevalidationRows = list;
+          const newPage = list.map((row) => ({...row, page}));
+          this.prevalidationRows = this.prevalidationRows
+            .filter((row) => row.page < page)
+            .concat(newPage);
           this.url = url;
+          return newPage.length;
         }
-      }).catch((error) => {
-        console.error(error);
+        return 0;
       });
     },
     fetchReporting(page = 0) {
-      this.reportingRows = [];
       if (!this.getProductStatusesRoute) {
-        console.error('No route to fetch reporting data.');
-        return Promise.resolve();
+        return Promise.reject(new Error('No route to fetch reporting data.'));
       }
       return fetch(`${this.getProductStatusesRoute}&page=${page}`, {
         method: 'GET',
@@ -191,15 +190,19 @@ export default defineComponent({
         const {
           list, url, success, lastFinishedSyncStartedAt,
         } = res;
+
         if (!success) {
-          this.reportingRows = null;
-        } else {
-          this.reportingRows = Object.values(list || {});
-          this.url = url;
-          this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
+          if (page === 0) {
+            this.reportingRows = null;
+          }
+          return 0;
         }
-      }).catch((error) => {
-        console.error(error);
+
+        const newPage = Object.values(list || {}).map((row) => ({...row, page}));
+        this.reportingRows = this.reportingRows.filter((row) => row.page < page).concat(newPage);
+        this.url = url;
+        this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
+        return newPage.length;
       });
     },
     fetchData() {
@@ -207,18 +210,21 @@ export default defineComponent({
       if (this.forcePrevalidationRows === null || this.forcePrevalidationRows.length > 0) {
         this.prevalidationRows = this.forcePrevalidationRows;
       } else {
-        fetches.push(this.fetchPrevalidation(0));
+        fetches.push(this.fetchPrevalidation());
       }
       if (this.forceReportingRows === null || Object.values(this.forceReportingRows).length > 0) {
         this.reportingRows = this.forceReportingRows
           ? Object.values(this.forceReportingRows)
           : null;
       } else {
-        fetches.push(this.fetchReporting(0));
+        fetches.push(this.fetchReporting());
       }
 
       this.loading = true;
       Promise.all(fetches).then(() => {
+        this.loading = false;
+      }).catch((error) => {
+        console.error(error);
         this.loading = false;
       });
     },

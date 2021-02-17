@@ -42,7 +42,7 @@
       v-for="({
         id_product, id_product_attribute, name, messages
       }, index) in dynamicRows" :key="index"
-      v-if="Object.keys(messages).length > 0"
+      v-if="messages && Object.keys(messages).length > 0"
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
@@ -50,12 +50,16 @@
       </b-td>
       <b-td>
         <span v-if="!!messages.base" class="badge badge-primary">{{ locale.split('-')[0] }}</span>
-        <span v-if="!!messages.l10n" class="badge badge-primary">{{ $t('syncReport.otherLanguage') }}</span>
+        <span v-if="!!messages.l10n" class="badge badge-primary">
+          {{ $t('syncReport.otherLanguage') }}
+        </span>
       </b-td>
       <b-td>
         <span v-if="Object.keys(messages).length === 1">{{ Object.values(messages)[0] }}</span>
         <ul v-else>
-          <li v-for="(m, i) in Object.values(messages)" :key="i">{{ m }}</li>
+          <li v-for="(m, i) in Object.values(messages)" :key="i">
+            {{ m }}
+          </li>
         </ul>
       </b-td>
       <b-td>
@@ -67,8 +71,12 @@
         </b-link>
       </b-td>
     </b-tr>
+    <b-tfoot v-if="loading">
+      <b-td class="loader-cell" colspan="8">
+        <div class="spinner" />
+      </b-td>
+    </b-tfoot>
   </b-table-simple>
-
 </template>
 
 <script>
@@ -100,7 +108,9 @@ export default defineComponent({
   },
   data() {
     return {
-      dynamicRows: this.rows.map((row) => ({...row, page: 0})),
+      loading: false,
+      lastPage: 0,
+      dynamicRows: this.rows,
     };
   },
   methods: {
@@ -125,11 +135,42 @@ export default defineComponent({
       }
       return attribute;
     },
+    handleScroll() {
+      const de = document.documentElement;
+      if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
+        console.log('Requesting a new page:', this.lastPage + 1);
+        this.loading = true;
+        this.$parent.fetchReporting(this.lastPage + 1).then((newPageCount) => {
+          if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
+            window.removeEventListener('scroll', this.handleScroll);
+          }
+          this.dynamicRows = this.rows;
+          console.log('new elements:', newPageCount);
+          this.lastPage += 1;
+        }).catch((error) => {
+          console.error(error);
+        }).then(() => {
+          setTimeout(() => { // used to debounce handleScroll
+            this.loading = false;
+          }, 500);
+        });
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 });
 </script>
 
 <style lang="scss" scoped>
+  tr > th {
+    white-space: nowrap;
+  }
+
   tr > th:last-of-type, tr > td:last-of-type {
     text-align: right;
   }
@@ -142,6 +183,10 @@ export default defineComponent({
   tr > td > ul {
     margin-bottom: 0;
     padding-inline-start: 20px;
+  }
+
+  td.loader-cell {
+    text-align: center;
   }
 
   span.badge {
