@@ -75,7 +75,7 @@ export default {
   },
   created() {
     this.getFbContext();
-    this.identifySegment();
+    this.$root.identifySegment();
   },
   methods: {
     getFbContext() {
@@ -107,24 +107,10 @@ export default {
         module: 'ps_facebook',
       });
     },
-    identifySegment() {
-      if (!this.$segment) {
-        return;
-      }
-
-      this.$segment.identify(this.$store.state.context.appContext.shopId, {
-        name: this.$store.state.context.appContext?.shopUrl,
-        email: this.$store.state.context.appContext?.user?.email,
-        language: this.$store.state.context.statei18nSettings.isoCode,
-        version_ps: this.$store.state.context.appContext.psVersion,
-        version_module: this.$store.state.context.appContext.moduleVersion,
-        module: 'ps_facebook',
-      });
-    },
   },
   watch: {
     $route() {
-      this.identifySegment();
+      this.$root.identifySegment();
     },
   },
 };
