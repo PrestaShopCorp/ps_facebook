@@ -490,6 +490,7 @@ export default defineComponent({
         if (this.dynamicExternalBusinessId) {
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
           console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
+          console.log('ShopId:', this.$store.state.context.appContext.shopId);
           return Promise.resolve();
         }
         return fetch(this.psFacebookRetrieveExternalBusinessId, {
@@ -506,8 +507,21 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
+          console.log('ShopId:', this.$store.state.context.appContext.shopId);
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
+
           this.$root.refreshExternalBusinessId(res.externalBusinessId);
+          if (this.$segment) {
+            this.$segment.identify(this.$store.state.context.appContext.shopId, {
+              name: this.$store.state.context.appContext?.shopUrl,
+              email: this.$store.state.context.appContext?.user?.email,
+              language: this.$store.state.context.statei18nSettings.isoCode,
+              version_ps: this.$store.state.context.appContext.psVersion,
+              version_module: this.$store.state.context.appContext.moduleVersion,
+              module: 'ps_facebook',
+              external_business_id: res.externalBusinessId,
+            });
+          }
         });
       }
 

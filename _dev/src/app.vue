@@ -119,6 +119,16 @@ export default {
         version_ps: this.$store.state.context.appContext.psVersion,
         version_module: this.$store.state.context.appContext.moduleVersion,
         module: 'ps_facebook',
+        external_business_id: this.$root.psFacebookExternalBusinessId,
+      });
+      console.log('#######', this.$store.state.context.appContext.shopId, {
+        name: this.$store.state.context.appContext?.shopUrl,
+        email: this.$store.state.context.appContext?.user?.email,
+        language: this.$store.state.context.statei18nSettings.isoCode,
+        version_ps: this.$store.state.context.appContext.psVersion,
+        version_module: this.$store.state.context.appContext.moduleVersion,
+        module: 'ps_facebook',
+        external_business_id: this.$root.psFacebookExternalBusinessId,
       });
     },
   },
