@@ -35,7 +35,7 @@
     </b-thead>
     <b-tr v-if="dynamicRows.length === 0" class="empty-cell">
       <b-td colspan="5">
-        RIEN A VOIR ! VISUEL A METTRE !
+        {{ $t('syncReport.reportingEmpty') }}
       </b-td>
     </b-tr>
     <b-tr
@@ -187,6 +187,17 @@ export default defineComponent({
 
   td.loader-cell {
     text-align: center;
+    height: 0;
+    padding: 0 !important;
+    border-top: none !important;
+    position: relative;
+
+    & > div {
+      position: absolute;
+      top: 10px;
+      height: 2rem !important;
+      width: 2rem !important;
+    }
   }
 
   span.badge {

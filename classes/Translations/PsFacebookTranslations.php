@@ -195,6 +195,8 @@ class PsFacebookTranslations
                 'reportingText' => $this->module->l('Products with detected problems after catalog export are listed below:', 'PsFacebookTranslations'),
                 'lastSyncDate' => $this->module->l('Last sync {0} at {1}', 'PsFacebookTranslations'),
                 'otherLanguage' => $this->module->l('Other', 'PsFacebookTranslations'),
+                'prevalidationEmpty' => $this->module->l('Well done! All your products are ready to be exported', 'PsFacebookTranslations'),
+                'reportingEmpty' => $this->module->l('Well done! All your products have been exported to your Facebook catalog.', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
