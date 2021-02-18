@@ -210,7 +210,8 @@ class ApiConversionHandler
     protected function sendEvents(array $events)
     {
         $request = (new EventRequest($this->pixelId))
-            ->setEvents($events);
+            ->setEvents($events)
+            ->setPartnerAgent(Config::PS_FACEBOOK_CAPI_PARTNER_AGENT);
 
         // A test event code can be set to check the events are properly sent to Facebook
         $testEventCode = $this->configurationAdapter->get(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
