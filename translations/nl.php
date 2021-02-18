@@ -148,7 +148,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be0265b2d10db977c9ce9f
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Bewerk';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c02eaee6ac5fdebf4c4e862efcde9e74'] = 'Om de verkoop te stimuleren, voegt u aan uw winkel toe...';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e3e5e11eb2d2958b24887366b8646b36'] = 'Functies niet beschikbaar op dit moment';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02020901ce00c217718a877'] = 'U hebt {0} toegevoegd!';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02021901ce00c217718a877'] = 'U hebt {0} toegevoegd!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0906215d4f114fd6d1561019392ef236'] = 'Bekijk uw winkel';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_06d2600d6cf39a3fc48891b2f76ea4f0'] = 'U moet eerst uw productcatalogus importeren, zodat u Facebook Shop en Instagram Shopping kunt opzetten en ook reclamecampagnes kunt maken.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d09041bede9aba7409ca3d182cc22496'] = 'U staat op het punt om deze functie uit te schakelen. Dit kan enkele functies beperken.';

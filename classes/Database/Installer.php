@@ -90,12 +90,12 @@ class Installer
             foreach (\Ps_facebook::CONFIGURATION_LIST as $name => $value) {
                 if (false === \Configuration::hasKey((string) $name, null, null, (int) $shopId)) {
                     $result = $result && \Configuration::updateValue(
-                            (string) $name,
-                            $value,
-                            false,
-                            null,
-                            (int) $shopId
-                        );
+                        (string) $name,
+                        $value,
+                        false,
+                        null,
+                        (int) $shopId
+                    );
                 }
             }
         }
@@ -115,13 +115,13 @@ class Installer
         foreach ($this->getTabs() as $tab) {
             try {
                 $installTabCompleted = $installTabCompleted && $this->installTab(
-                        $tab['className'],
-                        $tab['parent'],
-                        $tab['name'],
-                        $tab['module'],
-                        $tab['active'],
-                        $tab['icon']
-                    );
+                    $tab['className'],
+                    $tab['parent'],
+                    $tab['name'],
+                    $tab['module'],
+                    $tab['active'],
+                    $tab['icon']
+                );
             } catch (Exception $e) {
                 $this->errorHandler->handle(
                     new FacebookInstallerException(
@@ -132,7 +132,10 @@ class Installer
                     FacebookInstallerException::FACEBOOK_INSTALL_EXCEPTION,
                     false
                 );
-                $this->errors[] = sprintf($this->module->l('Failed to install %1s tab', self::CLASS_NAME), $tab['className']);
+                $this->errors[] = sprintf(
+                    $this->module->l('Failed to install %1s tab', self::CLASS_NAME),
+                    $tab['className']
+                );
 
                 return false;
             }

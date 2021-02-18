@@ -135,13 +135,13 @@ class Segment implements TrackerInterface
     {
         $dictionary = [
             \Shop::CONTEXT_SHOP => function () {
-                return $this->trackShop();
+                return self::trackShop();
             },
             \Shop::CONTEXT_GROUP => function () {
-                return $this->trackShopGroup();
+                return self::trackShopGroup();
             },
             \Shop::CONTEXT_ALL => function () {
-                return $this->trackAllShops();
+                return self::trackAllShops();
             },
         ];
 

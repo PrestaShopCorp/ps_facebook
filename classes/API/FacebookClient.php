@@ -29,7 +29,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
-use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;

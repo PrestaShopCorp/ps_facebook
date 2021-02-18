@@ -26,7 +26,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\Catalog;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
-use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 
 class ContextPsFacebook implements JsonSerializable
 {
