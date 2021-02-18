@@ -75,7 +75,7 @@ export default {
   },
   created() {
     this.getFbContext();
-    this.identifySegment();
+    this.$root.identifySegment();
   },
   methods: {
     getFbContext() {
@@ -125,7 +125,7 @@ export default {
   },
   watch: {
     $route() {
-      this.identifySegment();
+      this.$root.identifySegment();
     },
   },
 };
