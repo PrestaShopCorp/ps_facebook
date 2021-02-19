@@ -25,7 +25,7 @@
           <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
-          <b-th></b-th>
+          <b-th />
         </b-tr>
       </b-thead>
       <b-tbody>
