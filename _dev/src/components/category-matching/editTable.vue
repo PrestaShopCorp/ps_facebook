@@ -123,7 +123,7 @@ export default defineComponent({
   },
   methods: {
     getCurrentRow(currentShopCategoryID) {
-      let subcategory;
+      let subcategory = null;
       if (this.overrideGetCurrentRow) {
         const result = this.overrideGetCurrentRow(currentShopCategoryID);
         subcategory = result;

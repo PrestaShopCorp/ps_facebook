@@ -114,6 +114,12 @@ export default defineComponent({
     },
   },
   computed: {
+    matchingDone() {
+      if (this.matchingProgress.matched === this.matchingProgress.total) {
+        return 'matching-finished';
+      }
+      return '';
+    },
   },
   data() {
     return {
@@ -150,9 +156,6 @@ export default defineComponent({
         })
         .then((res) => {
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
-          if (res.matchingProgress.matched === res.matchingProgress.total) {
-            this.matchingDone = 'matching-finished';
-          }
         }).catch((error) => {
           console.error(error);
         });
