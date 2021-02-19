@@ -107,7 +107,7 @@ export default defineComponent({
   data() {
     return {
       categories: this.initialCategories,
-      loading: null,
+      loading: false,
     };
   },
   methods: {
@@ -235,8 +235,9 @@ export default defineComponent({
     },
 
     handleScroll() {
-      if (document.documentElement.scrollTop + window.innerHeight
-          === document.documentElement.scrollHeight
+      const de = document.documentElement;
+      if (this.loading === false && de.scrollTop + window.innerHeight
+          === de.scrollHeight
       ) {
         this.loading = true;
         this.$parent.fetchCategories(0, 1).then((res) => {
