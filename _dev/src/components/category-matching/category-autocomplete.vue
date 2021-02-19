@@ -357,7 +357,7 @@ export default defineComponent({
           &.disabled {
             font-style: italic;
             font-size: 0.85em!important;
-            background-color: white!important;
+            background-color: white;
           }
 
           &:not(.disabled):hover {
