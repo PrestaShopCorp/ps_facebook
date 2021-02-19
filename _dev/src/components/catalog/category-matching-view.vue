@@ -92,11 +92,6 @@ export default defineComponent({
     MixinMatching,
   ],
   props: {
-    categoryMatchingRoute: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookGetCatalogSummaryRoute || null,
-    },
     getCategoriesRoute: {
       type: String,
       required: false,
@@ -111,6 +106,11 @@ export default defineComponent({
       type: Array,
       required: false,
       default: null,
+    },
+    getCategoryMappingStatusRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategoryMappingStatus || null,
     },
   },
   computed: {
@@ -130,7 +130,7 @@ export default defineComponent({
   },
   created() {
     this.loading = true;
-    this.fetchData();
+    this.fetchCategoryMatchingCounters();
     if (this.forceCategories !== null) {
       this.categories = this.forceCategories;
       this.loading = false;
@@ -142,8 +142,8 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchData() {
-      fetch(this.categoryMatchingRoute)
+    fetchCategoryMatchingCounters() {
+      fetch(this.getCategoryMappingStatusRoute)
         .then((res) => {
           if (this.forceFetchData !== null) {
             return this.forceFetchData;
@@ -159,6 +159,7 @@ export default defineComponent({
           console.error(error);
         });
     },
+
     fetchCategories(idCategory, page) {
       let mainCategoryId = idCategory;
 

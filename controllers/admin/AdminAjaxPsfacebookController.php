@@ -406,6 +406,20 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         );
     }
 
+    /**
+     * @throws PrestaShopException
+     */
+    public function displayAjaxCategoryMappingCounters()
+    {
+        /** @var GoogleCategoryRepository $googleCategoryRepository */
+        $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
+        /** @var GoogleCategoryProvider $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
+        $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
+
+        $this->ajaxDie(json_encode(['matchingProgress' => $informationAboutCategoryMatching]));
+    }
+
     public function displayAjaxGetCategories()
     {
         $categoryId = (int) Tools::getValue('id_category');

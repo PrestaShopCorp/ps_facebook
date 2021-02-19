@@ -107,10 +107,10 @@ export default defineComponent({
       required: false,
       default: null,
     },
-    categoryMatchingRoute: {
+    getCategoryMappingStatusRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCatalogSummaryRoute || null,
+      default: () => global.psFacebookGetCategoryMappingStatus || null,
     },
     getCategoriesRoute: {
       type: String,
@@ -145,7 +145,7 @@ export default defineComponent({
   },
   created() {
     this.loading = true;
-    this.fetchData();
+    this.fetchCategoryMatchingCounters();
     if (this.forceCategories !== null) {
       this.categories = this.forceCategories;
       this.loading = false;
@@ -157,8 +157,8 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchData() {
-      fetch(this.categoryMatchingRoute)
+    fetchCategoryMatchingCounters() {
+      fetch(this.getCategoryMappingStatusRoute)
         .then((res) => {
           if (this.forceFetchData !== null) {
             return this.forceFetchData;
@@ -169,6 +169,7 @@ export default defineComponent({
           return res.json();
         })
         .then((res) => {
+          console.log(res);
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
         }).catch((error) => {
           console.error(error);
