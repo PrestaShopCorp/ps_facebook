@@ -30,6 +30,7 @@ export default class ModuleContext extends VuexModule {
   appContext: Record<string, any> = {
     ...stateContext,
     defaultCategory: (window as any).defaultCategory,
+    localeLang: (window as any).localeLang,
     shopDomain: (window as any).shopDomain,
     shopUrl: (window as any).shopUrl,
     email: (window as any).email,

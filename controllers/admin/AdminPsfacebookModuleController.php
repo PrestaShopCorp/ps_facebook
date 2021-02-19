@@ -284,6 +284,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,
             ],
+            'localeLang' => $this->context->language->locale,
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => $this->configurationAdapter->get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,

@@ -124,7 +124,6 @@ export default defineComponent({
   data() {
     return {
       categories: [],
-      matchingDone: null,
       loading: true,
       matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };

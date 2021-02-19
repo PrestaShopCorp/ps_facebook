@@ -25,6 +25,7 @@
           <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
+          <b-th></b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
@@ -40,6 +41,7 @@
           :initial-propagation="category.isParentCategory"
           :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
           :save-matching-callback="saveMatchingCallback"
+          :language="language"
           @rowClicked="getCurrentRow"
           @propagationClicked="applyToAllChildren"
         >
@@ -108,6 +110,7 @@ export default defineComponent({
     return {
       categories: this.initialCategories,
       loading: false,
+      language: this.$store.state.context.appContext.localeLang,
     };
   },
   methods: {

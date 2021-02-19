@@ -140,7 +140,6 @@ export default defineComponent({
     return {
       loading: true,
       categories: [],
-      matchingDone: null,
       matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
