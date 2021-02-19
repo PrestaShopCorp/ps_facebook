@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Listen for XDebug",
+          "type": "php",
+          "request": "launch",
+          "port": 9007,
+          "pathMappings": {
+              // In case the path differs between the server and the IDE,
+              // pathMappings allows the debugger to find the proper file.
+              // Format:
+              // "Path in Docker container": "Local path"
+              "/var/www/html/modules/ps_facebook": "${workspaceFolder}",
+              "/var/www/html": "/Users/mPoulain/Desktop/PrestaShop"
+          },
+      }
+  ]
+}

@@ -71,34 +71,28 @@ const mixin = Vue.extend({
 
     formatDataFromLazyLoading(request, categories) {
       let hasCategories;
-
+      const nbrCategories = categories.length;
       if (Array.isArray(request)) {
         request.forEach((el) => {
           if (undefined === this.findShopCategory(categories, el.shopCategoryId)) {
-            hasCategories = true;
             categories.push(el);
             /* eslint no-param-reassign: "error" */
             el.show = true;
             /* eslint no-param-reassign: "error" */
             el.shopParentCategoryIds = `${el.shopCategoryId}/`;
           }
-          hasCategories = false;
         });
-      } else {
-        if (undefined === this.findShopCategory(categories, request.shopCategoryId)) {
-          categories.push(request);
-          hasCategories = true;
-          /* eslint no-param-reassign: "error" */
-          request.show = true;
-          /* eslint no-param-reassign: "error" */
-          request.shopParentCategoryIds = `${request.shopCategoryId}/`;
-        }
-        hasCategories = false;
+      } else if (undefined === this.findShopCategory(categories, request.shopCategoryId)) {
+        categories.push(request);
+        /* eslint no-param-reassign: "error" */
+        request.show = true;
+        /* eslint no-param-reassign: "error" */
+        request.shopParentCategoryIds = `${request.shopCategoryId}/`;
       }
 
       return {
         newCategories: categories,
-        hasCategoriesStatement: hasCategories,
+        hasCategoriesStatement: nbrCategories === categories.length,
       };
     },
 

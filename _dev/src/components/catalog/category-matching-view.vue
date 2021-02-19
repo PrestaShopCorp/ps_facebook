@@ -102,13 +102,13 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookGetCategories || null,
     },
-    overrideFetchData: {
-      type: Function,
+    forceFetchData: {
+      type: Object,
       required: false,
       default: null,
     },
-    overrideCategories: {
-      type: Function,
+    forceCategories: {
+      type: Array,
       required: false,
       default: null,
     },
@@ -126,8 +126,8 @@ export default defineComponent({
   created() {
     this.loading = true;
     this.fetchData();
-    if (this.overrideCategories !== null) {
-      this.categories = this.overrideCategories();
+    if (this.forceCategories !== null) {
+      this.categories = this.forceCategories;
       this.loading = false;
     } else {
       this.fetchCategories(0, 1).then((res) => {
@@ -140,9 +140,8 @@ export default defineComponent({
     fetchData() {
       fetch(this.categoryMatchingRoute)
         .then((res) => {
-          if (this.overrideFetchData !== null) {
-            const response = this.overrideFetchData();
-            return response.json();
+          if (this.forceFetchData !== null) {
+            return this.forceFetchData;
           }
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

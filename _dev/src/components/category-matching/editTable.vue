@@ -62,7 +62,6 @@
     </b-table-simple>
     <b-tfoot v-if="loading">
       <div
-        v-if="hasCategories"
         id="spinner"
       />
     </b-tfoot>
@@ -119,7 +118,6 @@ export default defineComponent({
       loading: null,
       enableCheckbox: false,
       filterCategory: false,
-      hasCategories: false,
       numberOfCategoryWithoutMatching: 0,
     };
   },
@@ -235,8 +233,16 @@ export default defineComponent({
         this.$parent.fetchCategories(0, 1).then((res) => {
           const resp = this.formatDataFromLazyLoading(res, this.categories);
           this.categories = resp.newCategories;
-          this.hasCategories = res.hasCategoriesStatement;
-          this.loading = false;
+          console.log(resp.hasCategoriesStatement);
+          if (resp.hasCategoriesStatement === true) {
+            window.removeEventListener('scroll', this.handleScroll);
+          }
+        }).catch((error) => {
+          console.error(error);
+        }).then(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
         });
       }
     },
@@ -264,7 +270,12 @@ export default defineComponent({
     if (this.numberOfCategoryWithoutMatching === 0) {
       this.enableCheckbox = true;
     }
+  },
+  mounted() {
     window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   watch: {
   },

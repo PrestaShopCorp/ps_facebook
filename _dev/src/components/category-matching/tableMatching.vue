@@ -52,7 +52,6 @@
       v-if="loading"
     >
       <div
-        v-if="hasCategories"
         id="spinner"
       />
     </div>
@@ -109,7 +108,6 @@ export default defineComponent({
     return {
       categories: this.initialCategories,
       loading: null,
-      hasCategories: false,
     };
   },
   methods: {
@@ -244,8 +242,15 @@ export default defineComponent({
         this.$parent.fetchCategories(0, 1).then((res) => {
           const resp = this.formatDataFromLazyLoading(res, this.categories);
           this.categories = resp.newCategories;
-          this.hasCategories = res.hasCategoriesStatement;
-          this.loading = false;
+          if (resp.hasCategoriesStatement === true) {
+            window.removeEventListener('scroll', this.handleScroll);
+          }
+        }).catch((error) => {
+          console.error(error);
+        }).then(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
         });
       }
     },
@@ -262,8 +267,11 @@ export default defineComponent({
       return dictionary[currentCategory.deploy].call();
     },
   },
-  created() {
+  mounted() {
     window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   watch: {
   },
