@@ -112,7 +112,7 @@ class EventDataProvider
                 if ($controllerPage === 'product') {
                     return $this->getProductPageData();
                 }
-                if ($controllerPage === 'category' && $this->context->controller->controller_type === 'front') {
+                if ($controllerPage === 'category') {
                     return $this->getCategoryPageData();
                 }
                 if ($controllerPage === 'cms') {

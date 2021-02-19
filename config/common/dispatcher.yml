@@ -6,3 +6,4 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider'
+      - '@ps_facebook.context'
