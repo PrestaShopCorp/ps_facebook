@@ -82,6 +82,22 @@ class GoogleCategoryProvider implements GoogleCategoryProviderInterface
     }
 
     /**
+     * @param int $shopId
+     *
+     * @return array
+     */
+    public function getInformationAboutCategoryMatches($shopId)
+    {
+        $numberOfMatchedCategories = $this->googleCategoryRepository->getNumberOfMatchedCategories($shopId);
+        $totalCategories = $this->googleCategoryRepository->getNumberOfTotalCategories($shopId);
+
+        return [
+            'matched' => $numberOfMatchedCategories,
+            'total' => $totalCategories,
+        ];
+    }
+
+    /**
      * @param array $categoryIds
      * @param int $shopId
      *

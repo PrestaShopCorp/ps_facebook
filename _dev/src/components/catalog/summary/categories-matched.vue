@@ -28,17 +28,33 @@
     </div>
 
     <h1 class="title">
-      {{ $t('catalogSummary.categoryMatching') }}
+      {{ $t('categoryMatched.title') }}
     </h1>
 
     <b-link
       class="view-button float-right ml-3"
-      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
     >
-      {{ $t('catalogSummary.viewButton') }}
+      {{ $t('categoryMatched.btn') }}
     </b-link>
 
-    [TODO : when matching done or in progress]
+    <div class="d-flex justify-content-between">
+      <div class="text-category-mapping">
+        {{ $t('categoryMatched.description') }}
+      </div>
+      <div class="h-25 w-50">
+        <div class="text-progress-bar-status">
+          {{ progressBarData.matched }}/{{ progressBarData.total }}
+          {{ $t('categoryMatched.progressBarTotal') }}
+        </div>
+        <b-progress
+          class="psfb-progress-bar"
+          variant="success"
+          :value="progressBarData.matched"
+          :max="progressBarData.total"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,6 +80,7 @@ export default defineComponent({
   data() {
     return {
       illustration,
+      progressBarData: this.matchingProgress,
     };
   },
   methods: {
@@ -82,5 +99,25 @@ export default defineComponent({
     position: absolute;
     bottom: 0.8rem;
     right: 1rem;
+  }
+  .text-category-mapping {
+    width: 35%;
+  }
+
+  .text-progress-bar-status {
+    color: #70b580;
+    font-weight: 600;
+    width: 400px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .psfb-progress-bar {
+    margin-bottom: 5px;
+    height: 20px;
+    margin-top: 5px;
+    background-color: #D4E9D9!important;
+    border-radius: 20px;
+    width: 400px;
   }
 </style>

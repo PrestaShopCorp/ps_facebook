@@ -33,7 +33,6 @@
 
     <b-card
       class="card m-3"
-      hidden
     >
       <categories-matched
         v-if="matchingDone"

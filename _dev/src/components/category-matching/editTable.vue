@@ -1,5 +1,5 @@
 <!--**
- * 2007-2021 PrestaShop and Contributors
+ * 2007-2020 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -12,61 +12,69 @@
  * to license@prestashop.com so we can send you a copy immediately.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
+ * @copyright 2007-2020 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div class="display-table-matchingFb">
+  <div class="display-table-editTable">
+    <div class="d-none d-md-block">
+      <b-checkbox
+        :checked="filterCategory"
+        class="float-left mr-3"
+        @change="changeFilter"
+        disabled-field="notEnabled"
+        :disabled="enableCheckbox"
+      >
+        {{ $t('categoryMatching.editTable.checkboxTxt') }} ({{ numberOfCategoryWithoutMatching }})
+      </b-checkbox>
+    </div>
     <b-table-simple :responsive="true">
       <b-thead>
         <b-tr>
-          <b-th>{{ $t('categoryMatching.tableMatching.firstTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.psCategoryName') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.fbCategoryName') }}</b-th>
+          <b-th>{{ $t('categoryMatching.editTable.fbSubcategoryName') }}</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
-        <editing-row
+        <b-tr
           v-for="category in activeCategories"
           :key="category.shopCategoryId"
-          :category-style="categoryStyle(category)"
-          :shop-category-id="category.shopCategoryId"
-          :initial-category-name="category.googleCategoryParentName"
-          :initial-category-id="category.googleCategoryParentId"
-          :initial-subcategory-name="category.googleCategoryName"
-          :initial-subcategory-id="category.googleCategoryId"
-          :initial-propagation="category.isParentCategory"
-          :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
-          :save-matching-callback="saveMatchingCallback"
-          @rowClicked="getCurrentRow"
-          @propagationClicked="applyToAllChildren"
+          :class="categoryStyle(category)"
         >
-          {{ category.shopCategoryName }}
-        </editing-row>
+          <b-td
+            @click="getCurrentRow(category.shopCategoryId)"
+          >
+            {{ category.shopCategoryName }}
+          </b-td>
+          <b-td v-if="!category.googleCategoryParentName">
+            <b-badge variant="danger">
+              {{ $t('categoryMatching.editTable.required') }}
+            </b-badge>
+          </b-td>
+          <b-td v-else>
+            {{ category.googleCategoryParentName }}
+          </b-td>
+          <b-td> {{ category.googleCategoryName ? category.googleCategoryName : '-' }} </b-td>
+        </b-tr>
       </b-tbody>
     </b-table-simple>
-    <div
-      class="psfb-lazy-loading"
-      v-if="loading"
-    >
+    <b-tfoot v-if="loading">
       <div
         id="spinner"
       />
-    </div>
+    </b-tfoot>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import EditingRow from './editing-row.vue';
 import MixinMatching from './matching.ts';
 
 export default defineComponent({
-  name: 'TableMatching',
+  name: 'editTable',
   components: {
-    EditingRow,
   },
   mixins: [
     MixinMatching,
@@ -108,54 +116,14 @@ export default defineComponent({
     return {
       categories: this.initialCategories,
       loading: false,
+      enableCheckbox: false,
+      filterCategory: false,
+      numberOfCategoryWithoutMatching: 0,
     };
   },
   methods: {
-    saveMatchingCallback(category) {
-      if (this.overrideGetCurrentRow) {
-        return Promise.resolve(true);
-      }
-      const updateParent = Number(category.propagate);
-      const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
-
-      currentCategory.googleCategoryId = category.fbSubcategoryId;
-      currentCategory.googleCategoryName = category.fbSubcategoryName;
-      currentCategory.googleCategoryParentName = category.fbCategoryName;
-      currentCategory.googleCategoryParentId = category.fbCategoryId;
-
-      if (category.fbSubcategoryName === undefined) {
-        category.fbSubcategoryName = '';
-      }
-      this.applyToAllChildren(category.shopCategoryId);
-
-      return fetch(this.saveParentStatement, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${updateParent}`,
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return true;
-      });
-    },
-
-    applyToAllChildren(shopCategoryId) {
-      const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
-      this.categories.forEach(
-        (child) => {
-          if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
-            child.isParentCategory = child.deploy === this.HAS_CHILDREN;
-            child.googleCategoryId = currentCategory.googleCategoryId;
-            child.googleCategoryName = currentCategory.googleCategoryName;
-            child.googleCategoryParentName = currentCategory.googleCategoryParentName;
-            child.googleCategoryParentId = currentCategory.googleCategoryParentId;
-          }
-        });
-    },
-
     getCurrentRow(currentShopCategoryID) {
-      let subcategory;
+      let subcategory = null;
       if (this.overrideGetCurrentRow) {
         const result = this.overrideGetCurrentRow(currentShopCategoryID);
         subcategory = result;
@@ -165,11 +133,34 @@ export default defineComponent({
         (child) => child.shopCategoryId === currentShopCategoryID,
       );
 
-      if (this.canShowCheckbox(currentCtg) === false) {
-        currentCtg.isParentCategory = null;
-      }
-
       this.setAction(currentCtg, subcategory);
+    },
+
+    changeFilter(value) {
+      this.filterCategory = value;
+
+      if (this.filterCategory === true) {
+        const children = this.categories.filter(
+          (child) => !child.googleCategoryParentId,
+        );
+        children.forEach((el) => {
+          el.show = false;
+        });
+      } else {
+        const parents = this.isParentCategory(this.categories);
+        this.categories.forEach((el) => {
+          parents.forEach((node) => {
+            if (node.shopCategoryId === el.shopCategoryId) {
+              el.show = true;
+              el.deploy = this.HAS_CHILDREN;
+            }
+            if (el.shopParentCategoryIds.startsWith(node.shopParentCategoryIds)
+            && el.shopCategoryId !== node.shopCategoryId) {
+              el.show = false;
+            }
+          });
+        });
+      }
     },
 
     /**
@@ -183,10 +174,6 @@ export default defineComponent({
       filterChildren.forEach((child) => {
         /* eslint no-param-reassign: "error" */
         child.show = true;
-        if (this.canShowCheckbox(child) === false) {
-          /* eslint no-param-reassign: "error" */
-          child.isParentCategory = null;
-        }
       });
       currentCategory.deploy = this.FOLD;
     },
@@ -195,11 +182,11 @@ export default defineComponent({
     * hide children
     */
     hideChildren(currentCategory) {
-      const childrens = this.categories.filter(
+      const children = this.categories.filter(
         (child) => child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
         && child.shopCategoryId !== currentCategory.shopCategoryId,
       );
-      childrens.forEach((child) => {
+      children.forEach((child) => {
         child.show = false;
         if (child.deploy === this.FOLD) {
           child.deploy = this.UNFOLD;
@@ -212,7 +199,6 @@ export default defineComponent({
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
-      this.loading = true;
       const subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
       const categoryLevel = currentCategory.shopParentCategoryIds.split('/').length - 1;
@@ -223,7 +209,13 @@ export default defineComponent({
       currentCategory.deploy = this.FOLD;
 
       if (this.overrideGetCurrentRow !== null) {
-        this.formatDataFromRequest(subcategory, currentCategory, this.categories, indexCtg, true);
+        this.formatDataFromRequest(
+          subcategory,
+          currentCategory,
+          this.categories,
+          indexCtg,
+          true,
+        );
       }
 
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
@@ -231,7 +223,6 @@ export default defineComponent({
         this.categories = resp.categories;
         currentCategory.deploy = resp.statement;
       });
-      this.loading = false;
     },
 
     handleScroll() {
@@ -265,8 +256,20 @@ export default defineComponent({
         2: () => this.showChildren(currentCategory),
         3: () => this.hideChildren(currentCategory),
       };
+
       return dictionary[currentCategory.deploy].call();
     },
+  },
+  created() {
+    this.categories.forEach((el) => {
+      if (!el.googleCategoryParentId) {
+        this.numberOfCategoryWithoutMatching += 1;
+      }
+    });
+
+    if (this.numberOfCategoryWithoutMatching === 0) {
+      this.enableCheckbox = true;
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
@@ -278,21 +281,85 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-#psFacebookApp .display-table-matchingFb .table-responsive:after {
-  height: 24.6rem !important;
-  content: '';
-  display: block;
-}
 
-.display-table-matchingFb .psfb-lazy-loading {
-  width: 100%;
-  height: 40px;
+<style lang="scss" scoped>
+.display-table-editTable {
+  table tbody tr {
+    height: 50px;
+  }
+  .opened {
+    td:first-child:before {
+      font-family: Material Icons!important;
+      font-weight: 400!important;
+      font-style: normal!important;
+      font-size: 24px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_more"!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
+    }
+    td:first-child {
+      cursor: pointer!important;
+    }
+  }
+  .closed {
+    td:first-child:before {
+      font-family: Material Icons!important;
+      font-style: normal!important;
+      font-size: 15px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_less"!important;
+      transform: rotate(90deg)!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
+    }
+    td:first-child {
+      cursor: pointer!important;
+    }
+  }
+
+  .array-tree-lvl-2 {
+    td:first-child {
+      padding-left:40px!important;
+    }
+  }
+  .array-tree-lvl-3 {
+    td:first-child {
+      padding-left:80px!important;
+    }
+  }
+
   #spinner {
     color: #fff;
     background-color: #fff;
-    width: 3rem !important;
-    height: 3rem !important;
+    width: 1.3rem !important;
+    height: 1.3rem !important;
     border-radius: 2.5rem;
     border-right-color: #25b9d7;
     border-bottom-color: #25b9d7;

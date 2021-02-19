@@ -17,36 +17,11 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
-
-namespace PrestaShop\Module\PrestashopFacebook\Repository;
-
-use Db;
-use DbQuery;
-use PrestaShop\Module\PrestashopFacebook\Config\Config;
-
-class ShopRepository
+function upgrade_module_1_6_0()
 {
-    public function getShopDomainsAndConfiguration()
-    {
-        $sql = new DbQuery();
+    $sql = 'ALTER TABLE `' . _DB_PREFIX_ . 'fb_category_match` ADD `google_category_parent_id` INT(64) NOT NULL AFTER `google_category_id`;';
+    $sql .= 'ALTER TABLE `' . _DB_PREFIX_ . 'fb_category_match` ADD `google_category_parent_name` VARCHAR(255) NOT NULL AFTER `google_category_parent_id`;';
+    $sql .= 'ALTER TABLE `' . _DB_PREFIX_ . 'fb_category_match` ADD `google_category_name` VARCHAR(255) NOT NULL AFTER `google_category_id`;';
 
-        $sql->select('su.`id_shop`, `domain`, `domain_ssl`, c.`value` as acces_token_value');
-
-        $sql->from('shop_url', 'su');
-        $sql->leftJoin('configuration', 'c', 'su.id_shop = c.id_shop');
-
-        $sql->where('c.name LIKE "' . Config::PS_FACEBOOK_USER_ACCESS_TOKEN . '"');
-
-        return Db::getInstance()->executeS($sql);
-    }
-
-    public function getDefaultCategoryShop()
-    {
-        $sql = new DbQuery();
-
-        $sql->select('id_category');
-        $sql->from('shop');
-
-        return Db::getInstance()->executeS($sql)[0];
-    }
+    return Db::getInstance()->execute($sql);
 }

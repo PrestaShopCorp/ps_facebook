@@ -24,6 +24,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -46,12 +47,18 @@ class AdminPsfacebookModuleController extends ModuleAdminController
      */
     private $multishopDataProvider;
 
+    /**
+     * @var ShopRepository
+     */
+    private $shopRepository;
+
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
+        $this->shopRepository = $this->module->getService(ShopRepository::class);
         $this->bootstrap = false;
     }
 
@@ -96,6 +103,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             // (object) cast is useful for the js when the array is empty
             'contextPsAccounts' => (object) $this->presentPsAccounts(),
             'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
             'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
@@ -178,15 +186,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'getCategories',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookGetCategoriesByIds' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'getCategoriesByIds',
                     'ajax' => 1,
                 ]
             ),

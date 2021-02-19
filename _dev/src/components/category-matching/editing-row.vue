@@ -22,6 +22,18 @@
       <slot />
     </b-td>
     <b-td>
+      <div
+        v-if="initialPropagation === true || initialPropagation === false"
+        class="propagate"
+      >
+        <b-checkbox
+          :id="`propagation-${shopCategoryId}`"
+          :checked="currentPropagation"
+          @change="changePropagation($event, shopCategoryId)"
+        />
+      </div>
+    </b-td>
+    <b-td>
       <category-autocomplete
         :language="language"
         :shop-category-id="shopCategoryId"
@@ -30,19 +42,6 @@
         :autocompletion-api="autocompletionApi"
         @onCategorySelected="categoryChanged"
       />
-    </b-td>
-    <b-td>
-      <div
-        v-if="initialPropagation === true || initialPropagation === false"
-        class="propagate"
-      >
-        <b-checkbox
-          :id="`propagation-${shopCategoryId}`"
-          :checked="currentPropagation"
-          @change="changePropagation"
-          :disabled="currentCategoryId <= 0 || currentCategoryId === null"
-        />
-      </div>
     </b-td>
     <b-td>
       <category-autocomplete
@@ -174,8 +173,9 @@ export default defineComponent({
     };
   },
   methods: {
-    changePropagation(checked) {
+    changePropagation(checked, shopCategoryId) {
       this.currentPropagation = checked;
+      this.$emit('propagationClicked', shopCategoryId);
     },
     getCurrentRow(categoryID) {
       this.$emit('rowClicked', categoryID);
@@ -187,10 +187,25 @@ export default defineComponent({
         this.currentSubcategoryId = null;
         this.currentSubcategoryName = null;
       }
+      const result = {
+        shopCategoryId: this.shopCategoryId,
+        fbCategoryId: this.currentCategoryId,
+        fbCategoryName: this.currentCategoryName.replace('&', '-'),
+        propagate: !!this.currentPropagation,
+      };
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
       if (checkbox) {
         checkbox.focus();
       }
+      this.saveMatchingCallback(result)
+        .then(() => {
+          this.loading = false;
+          this.error = null;
+        })
+        .catch((error) => {
+          this.loading = null;
+          this.error = error;
+        });
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;
@@ -200,6 +215,7 @@ export default defineComponent({
       const result = {
         shopCategoryId: this.shopCategoryId,
         fbCategoryId: this.currentCategoryId,
+        fbCategoryName: this.currentCategoryName.replace('&', '-'),
         fbSubcategoryId: subcategoryId,
         fbSubcategoryName: subcategoryName,
         propagate: !!this.currentPropagation,
@@ -325,73 +341,73 @@ export default defineComponent({
   }
   .opened {
     td:first-child:before {
-      font-family: Material Icons;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 24px;
-      font-size: 1.5rem;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: normal;
-      word-wrap: normal;
-      white-space: nowrap;
-      direction: ltr;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: "liga";
-      content: "expand_more";
-      border: none;
-      display: inline-block;
-      vertical-align: middle;
-      width: auto;
-      line-height: 0;
+      font-family: Material Icons!important;
+      font-weight: 400!important;
+      font-style: normal!important;
+      font-size: 24px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_more"!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
     }
     td:first-child {
-      cursor: pointer;
+      cursor: pointer!important;
     }
   }
   .closed {
     td:first-child:before {
-      font-family: Material Icons;
-      font-style: normal;
-      font-size: 15px;
-      font-size: 1.5rem;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: normal;
-      word-wrap: normal;
-      white-space: nowrap;
-      direction: ltr;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: "liga";
-      content: "expand_less";
-      transform: rotate(90deg);
-      border: none;
-      display: inline-block;
-      vertical-align: middle;
-      width: auto;
-      line-height: 0;
+      font-family: Material Icons!important;
+      font-style: normal!important;
+      font-size: 15px!important;
+      font-size: 1.5rem!important;
+      line-height: 1!important;
+      text-transform: none!important;
+      letter-spacing: normal!important;
+      word-wrap: normal!important;
+      white-space: nowrap!important;
+      direction: ltr!important;
+      -webkit-font-smoothing: antialiased!important;
+      text-rendering: optimizeLegibility!important;
+      -moz-osx-font-smoothing: grayscale!important;
+      font-feature-settings: "liga"!important;
+      content: "expand_less"!important;
+      transform: rotate(90deg)!important;
+      border: none!important;
+      display: inline-block!important;
+      vertical-align: middle!important;
+      width: auto!important;
+      line-height: 0!important;
     }
     td:first-child {
-      cursor: pointer;
+      cursor: pointer!important;
     }
   }
 
   .array-tree-lvl-2 {
     td:first-child {
-      padding-left:40px;
+      padding-left:40px!important;
     }
   }
   .array-tree-lvl-3 {
     td:first-child {
-      padding-left:80px;
+      padding-left:80px!important;
     }
   }
 
   .propagate > * {
-    zoom: 1.2;
+    zoom: 1.2!important;
   }
 </style>

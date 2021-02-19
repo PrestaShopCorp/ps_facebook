@@ -74,16 +74,6 @@ class FacebookCategoryClient
         return reset($googleCategory);
     }
 
-    /**
-     * @param string $categoryIds
-     *
-     * @return array
-     */
-    public function getGoogleCategories($categoryIds)
-    {
-        return $this->get('taxonomy/' . $categoryIds);
-    }
-
     protected function get($id, array $fields = [], array $query = [])
     {
         $query = array_merge(

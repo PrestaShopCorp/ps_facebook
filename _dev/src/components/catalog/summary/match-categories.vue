@@ -33,7 +33,7 @@
     <b-button
       class="float-right ml-3"
       :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
-      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
+      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>
@@ -79,6 +79,7 @@ export default defineComponent({
   }
   .text {
     display: flow-root;
+    margin-bottom: 3.5rem!important;
 
     & > div {
       margin-top: 1em;
