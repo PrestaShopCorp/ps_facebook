@@ -121,15 +121,17 @@ export default defineComponent({
       const updateParent = Number(category.propagate);
       const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
 
-      currentCategory.googleCategoryId = category.fbSubcategoryId;
-      currentCategory.googleCategoryName = category.fbSubcategoryName;
-      currentCategory.googleCategoryParentName = category.fbCategoryName;
-      currentCategory.googleCategoryParentId = category.fbCategoryId;
+      if (category.propagate === true) {
+        currentCategory.googleCategoryId = category.fbSubcategoryId;
+        currentCategory.googleCategoryName = category.fbSubcategoryName;
+        currentCategory.googleCategoryParentName = category.fbCategoryName;
+        currentCategory.googleCategoryParentId = category.fbCategoryId;
 
-      if (category.fbSubcategoryName === undefined) {
-        category.fbSubcategoryName = '';
+        if (category.fbSubcategoryName === undefined) {
+          category.fbSubcategoryName = '';
+        }
+        this.applyToAllChildren(category.shopCategoryId);
       }
-      this.applyToAllChildren(category.shopCategoryId);
 
       return fetch(this.saveParentStatement, {
         method: 'POST',
@@ -149,7 +151,7 @@ export default defineComponent({
       this.categories.forEach(
         (child) => {
           if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
-            child.isParentCategory = child.deploy === this.HAS_CHILDREN;
+            child.isParentCategory = child.deploy === this.HAS_CHILDREN ? true : null;
             child.googleCategoryId = currentCategory.googleCategoryId;
             child.googleCategoryName = currentCategory.googleCategoryName;
             child.googleCategoryParentName = currentCategory.googleCategoryParentName;

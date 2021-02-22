@@ -236,8 +236,19 @@ export default defineComponent({
     categoryStyle(val) {
       this.categoryStyle = val;
     },
+    initialCategoryName(newVal) {
+      this.currentCategoryName = newVal;
+    },
+    initialSubcategoryName(newVal) {
+      this.currentSubcategoryName = newVal;
+    },
+    initialCategoryId(newVal) {
+      this.currentCategoryId = newVal;
+    },
+    initialSubcategoryId(newVal) {
+      this.currentSubcategoryId = newVal;
+    },
   },
-
 });
 </script>
 <style lang="scss" scoped>
