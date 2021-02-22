@@ -29,7 +29,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
-use PrestaShop\Module\PrestashopFacebook\DTO\Object\user;
+use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -281,6 +281,16 @@ class FacebookClient
         );
     }
 
+    public function disconnectFromFacebook()
+    {
+        $this->uninstallFbe(
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
+        );
+
+        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+    }
+
     /**
      * @param int|string $id
      * @param string $method
@@ -313,13 +323,8 @@ class FacebookClient
             $response = $this->client->send($request);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            if ($exceptionContent['error']['code'] === Config::OAUTH_EXCEPTION_CODE) {
-                $this->uninstallFbe(
-                    $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-                    $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
-                );
-
-                $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+            if (in_array($exceptionContent['error']['code'], Config::OAUTH_EXCEPTION_CODE)) {
+                $this->disconnectFromFacebook();
 
                 return false;
             }

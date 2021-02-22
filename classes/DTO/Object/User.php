@@ -22,7 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\DTO\Object;
 
 use JsonSerializable;
 
-class user implements JsonSerializable
+class User implements JsonSerializable
 {
     /**
      * @var string|null

@@ -265,16 +265,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.4.3",
+            "version": "3.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9"
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/511629a54465e89a31d3d7e4cf0935feab8b14c1",
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1",
                 "shasum": ""
             },
             "require": {
@@ -334,7 +334,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-27T23:38:30+00:00"
+            "time": "2021-02-16T09:40:01+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -383,12 +383,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "support": {
-                "email": "info@paragonie.com",
-                "issues": "https://github.com/paragonie/random_compat/issues",
-                "source": "https://github.com/paragonie/random_compat"
-            },
-            "time": "2020-10-15T10:06:57+00:00"
+            "time": "2021-10-15T10:06:57+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -443,7 +438,17 @@
                 "php",
                 "type"
             ],
-            "time": "2020-07-20T17:29:33+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-07-20T17:29:33+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -548,7 +553,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-17T05:42:04+00:00"
+            "time": "2021-12-17T05:42:04+00:00"
         },
         {
             "name": "prestashop/circuit-breaker",
@@ -649,7 +654,7 @@
                 "package",
                 "prestashop"
             ],
-            "time": "2020-09-08T14:13:23+00:00"
+            "time": "2021-09-08T14:13:23+00:00"
         },
         {
             "name": "prestashop/module-lib-faq",
@@ -690,11 +695,7 @@
                 }
             ],
             "description": "Library allowing modules to load FAQ from PrestaShop servers",
-            "support": {
-                "issues": "https://github.com/PrestaShopCorp/module-lib-faq/issues",
-                "source": "https://github.com/PrestaShopCorp/module-lib-faq/tree/v1.0"
-            },
-            "time": "2020-10-15T14:34:57+00:00"
+            "time": "2021-10-15T14:34:57+00:00"
         },
         {
             "name": "prestashop/module-lib-service-container",
@@ -744,7 +745,7 @@
                 "package",
                 "prestashop"
             ],
-            "time": "2020-10-21T08:35:58+00:00"
+            "time": "2021-10-21T08:35:58+00:00"
         },
         {
             "name": "prestashop/prestashop-accounts-auth",
@@ -928,7 +929,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2020-03-23T09:12:05+00:00"
+            "time": "2021-03-23T09:12:05+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -1022,7 +1023,7 @@
                 "promise",
                 "promises"
             ],
-            "time": "2020-05-12T15:16:56+00:00"
+            "time": "2021-05-12T15:16:56+00:00"
         },
         {
             "name": "segmentio/analytics-php",
@@ -1071,10 +1072,6 @@
                 "segment",
                 "segmentio"
             ],
-            "support": {
-                "issues": "https://github.com/segmentio/analytics-php/issues",
-                "source": "https://github.com/segmentio/analytics-php/tree/master"
-            },
             "time": "2017-08-18T22:13:00+00:00"
         },
         {
@@ -1139,7 +1136,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2020-02-12T18:38:11+00:00"
+            "time": "2021-02-12T18:38:11+00:00"
         },
         {
             "name": "symfony/cache",
@@ -1218,7 +1215,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/config",
@@ -1291,7 +1288,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -1371,7 +1368,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/dotenv",
@@ -1437,7 +1434,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/expression-language",
@@ -1497,7 +1494,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1556,7 +1553,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "symfony/polyfill-apcu",
@@ -1616,7 +1613,21 @@
                 "portable",
                 "shim"
             ],
-            "time": "2020-10-21T09:57:48+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-21T09:57:48+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1678,9 +1689,6 @@
                 "polyfill",
                 "portable"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -1695,7 +1703,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-23T09:01:57+00:00"
+            "time": "2021-10-23T09:01:57+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -1758,9 +1766,6 @@
                 "portable",
                 "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php70/tree/v1.19.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -1775,7 +1780,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-23T09:01:57+00:00"
+            "time": "2021-10-23T09:01:57+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -1843,7 +1848,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T10:57:07+00:00"
+            "time": "2021-10-24T10:57:07+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -2459,10 +2464,6 @@
             "keywords": [
                 "diff"
             ],
-            "support": {
-                "issues": "https://github.com/PHP-CS-Fixer/diff/issues",
-                "source": "https://github.com/PHP-CS-Fixer/diff/tree/v1.3.1"
-            },
             "time": "2020-10-14T08:39:05+00:00"
         },
         {
@@ -3718,11 +3719,6 @@
                 "phpcs",
                 "standards"
             ],
-            "support": {
-                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
-                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
-                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
-            },
             "time": "2020-10-23T02:01:07+00:00"
         },
         {
@@ -4126,9 +4122,6 @@
                 "portable",
                 "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.19.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4202,9 +4195,6 @@
                 "portable",
                 "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php72/tree/v1.19.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4342,12 +4332,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },

@@ -68,6 +68,10 @@ class EventDispatcher
      */
     public function dispatch($name, array $params)
     {
+        if (!$this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)) {
+            return;
+        }
+
         if (true === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
             $eventData = $this->eventDataProvider->generateEventData($name, $params);
 
