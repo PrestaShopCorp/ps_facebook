@@ -660,7 +660,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $isoCode = $this->context->language->iso_code;
 
-        if (!file_exists(_PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf')) {
+        if (!file_exists(_PS_ROOT_DIR_ . '/modules/' . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf')) {
             $isoCode = 'en';
         }
 
