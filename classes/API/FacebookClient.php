@@ -129,19 +129,21 @@ class FacebookClient
      */
     public function getPixel($adId, $pixelId)
     {
-        $responseContent = $this->get('act_' . $adId . '/adspixels', __FUNCTION__, ['name', 'last_fired_time', 'is_unavailable']);
-
         $name = $lastFiredTime = null;
         $isUnavailable = false;
 
-        if (isset($responseContent['data'])) {
-            foreach ($responseContent['data'] as $adPixel) {
-                if ($adPixel['id'] !== $pixelId) {
-                    continue;
+        if (!empty($adId)) {
+            $responseContent = $this->get('act_' . $adId . '/adspixels', __FUNCTION__, ['name', 'last_fired_time', 'is_unavailable']);
+
+            if (isset($responseContent['data'])) {
+                foreach ($responseContent['data'] as $adPixel) {
+                    if ($adPixel['id'] !== $pixelId) {
+                        continue;
+                    }
+                    $name = isset($adPixel['name']) ? $adPixel['name'] : null;
+                    $lastFiredTime = isset($adPixel['last_fired_time']) ? $adPixel['last_fired_time'] : null;
+                    $isUnavailable = isset($adPixel['is_unavailable']) ? $adPixel['is_unavailable'] : null;
                 }
-                $name = isset($adPixel['name']) ? $adPixel['name'] : null;
-                $lastFiredTime = isset($adPixel['last_fired_time']) ? $adPixel['last_fired_time'] : null;
-                $isUnavailable = isset($adPixel['is_unavailable']) ? $adPixel['is_unavailable'] : null;
             }
         }
 
