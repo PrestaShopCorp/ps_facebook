@@ -39,4 +39,14 @@ class ShopRepository
 
         return Db::getInstance()->executeS($sql);
     }
+
+    public function getDefaultCategoryShop()
+    {
+        $sql = new DbQuery();
+
+        $sql->select('id_category');
+        $sql->from('shop');
+
+        return Db::getInstance()->executeS($sql)[0];
+    }
 }

@@ -21,7 +21,7 @@
 use PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider;
 
-class ps_facebookAjaxModuleFrontController extends ModuleFrontController
+class Ps_facebookAjaxModuleFrontController extends ModuleFrontController
 {
     /** @var Ps_facebook */
     public $module;

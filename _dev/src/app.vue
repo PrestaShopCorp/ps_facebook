@@ -1,5 +1,5 @@
 <!--**
- * 2007-2020 PrestaShop and Contributors
+ * 2007-2021 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -12,7 +12,7 @@
  * to license@prestashop.com so we can send you a copy immediately.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2020 PrestaShop SA and Contributors
+ * @copyright 2007-2021 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *-->
@@ -75,7 +75,7 @@ export default {
   },
   created() {
     this.getFbContext();
-    this.identifySegment();
+    this.$root.identifySegment();
   },
   methods: {
     getFbContext() {
@@ -107,24 +107,10 @@ export default {
         module: 'ps_facebook',
       });
     },
-    identifySegment() {
-      if (!this.$segment) {
-        return;
-      }
-
-      this.$segment.identify(this.$store.state.context.appContext.shopId, {
-        name: this.$store.state.context.appContext?.shopUrl,
-        email: this.$store.state.context.appContext?.user?.email,
-        language: this.$store.state.context.statei18nSettings.isoCode,
-        version_ps: this.$store.state.context.appContext.psVersion,
-        version_module: this.$store.state.context.appContext.moduleVersion,
-        module: 'ps_facebook',
-      });
-    },
   },
   watch: {
     $route() {
-      this.identifySegment();
+      this.$root.identifySegment();
     },
   },
 };

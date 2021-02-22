@@ -19,7 +19,7 @@
  */
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
@@ -34,8 +34,10 @@ use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
+use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
@@ -71,6 +73,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode($response));
     }
 
+    public function displayAjaxEnsureTokensExchanged()
+    {
+        $facebookClient = $this->module->getService(FacebookClient::class);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => $facebookClient->hasAccessToken(),
+                ]
+            )
+        );
+    }
+
     /**
      * Receive the Facebook access token, store it in DB then regerate app data
      *
@@ -78,7 +93,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxConnectToFacebook()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $onboardingData = $inputs['onboarding'];
 
         /** @var ConfigurationHandler $configurationHandler */
@@ -110,7 +125,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxActivatePixel()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
@@ -180,12 +195,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRequireProductSyncStart()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-        $response = $client->post(
+        $client->post(
             '/account/' . $externalBusinessId . '/start_product_sync',
             [
                 'json' => ['turnOn' => $turnOn],
@@ -234,9 +249,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $categoryId = (int) Tools::getValue('category_id');
         $googleCategoryId = (int) Tools::getValue('google_category_id');
+        $googleCategoryName = Tools::getValue('google_category_name');
+        $googleCategoryParentId = (int) Tools::getValue('google_category_parent_id');
+        $googleCategoryParentName = Tools::getValue('google_category_parent_name');
         $updateChildren = (bool) Tools::getValue('update_children');
         $shopId = $this->context->shop->id;
-        if (!$categoryId || !$googleCategoryId) {
+
+        if (!$categoryId || !$googleCategoryParentId) {
             $this->ajaxDie(
                 json_encode(
                     [
@@ -247,7 +266,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
         try {
-            $categoryMatchHandler->updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId);
+            $categoryMatchHandler->updateCategoryMatch(
+                $categoryId,
+                $googleCategoryId,
+                $googleCategoryName,
+                $googleCategoryParentId,
+                $googleCategoryParentName,
+                $updateChildren,
+                $shopId
+            );
         } catch (Exception $e) {
             $this->ajaxDie(
                 json_encode(
@@ -308,7 +335,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxUpdateFeature()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         $featureManager = $this->module->getService(FbeFeatureManager::class);
 
@@ -338,9 +365,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         /** @var ProductRepository $productRepository */
         $productRepository = $this->module->getService(ProductRepository::class);
+        /** @var GoogleCategoryRepository $googleCategoryRepository */
+        $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
+        /** @var GoogleCategoryProvider $googleCategoryProvider */
+        $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
 
-        /** @var FacebookDataProvider $facebookDataProvider */
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
         $productCount = $facebookDataProvider->getProductsInCatalogCount();
         $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
         $productsTotal = $productRepository->getProductsTotal($this->context->shop->id, ['onlyActive' => true]);
@@ -356,8 +387,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
                     'exportOn' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON)),
-                    'matchingDone' => false, // true if a category match has been called once (at least 1 matching done)
-                    'matchingProgress' => ['total' => 42, 'matched' => 0],
+                    'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id),
+                    'matchingProgress' => $informationAboutCategoryMatching,
                     'validation' => [
                         'prevalidation' => [
                             'syncable' => $productsTotal - count($productsWithErrors),
@@ -384,19 +415,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
-
-        $this->ajaxDie(
-            json_encode($googleCategories)
-        );
-    }
-
-    public function displayAjaxGetCategoriesByIds()
-    {
-        $categoryIds = Tools::getValue('id_categories');
-
-        /** @var FacebookCategoryClient $facebookCategoryClient */
-        $facebookCategoryClient = $this->module->getService(FacebookCategoryClient::class);
-        $googleCategories = $facebookCategoryClient->getGoogleCategories($categoryIds);
 
         $this->ajaxDie(
             json_encode($googleCategories)
@@ -431,7 +449,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxUpdateConversionApiData()
     {
-        $inputs = json_decode(file_get_contents('php://input'), true);
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         $success = true;
 
         if (isset($inputs['system_access_token'])) {

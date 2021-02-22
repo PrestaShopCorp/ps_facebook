@@ -92,7 +92,7 @@ class Segment implements TrackerInterface
         return true;
     }
 
-    private function segmentTrack($userId)
+    private function segmentTrack($domainName)
     {
         $userAgent = array_key_exists('HTTP_USER_AGENT', $_SERVER) === true ? $_SERVER['HTTP_USER_AGENT'] : '';
         $ip = array_key_exists('REMOTE_ADDR', $_SERVER) === true ? $_SERVER['REMOTE_ADDR'] : '';
@@ -104,7 +104,7 @@ class Segment implements TrackerInterface
             ->get(ConfigurationRepository::class);
 
         \Segment::track([
-            'userId' => $userId,
+            'userId' => $configurationRepository->getShopUuid(),
             'event' => $this->message,
             'channel' => 'browser',
             'context' => [
@@ -115,8 +115,8 @@ class Segment implements TrackerInterface
                     'referrer' => $referer,
                     'url' => $url,
                 ],
-                'shopId' => $configurationRepository->getShopUuid(),
                 'externalBusinessId' => $externalBusinessId,
+                'name' => $domainName,
             ],
             'properties' => array_merge([
                 'module' => 'ps_facebook',
@@ -135,13 +135,13 @@ class Segment implements TrackerInterface
     {
         $dictionary = [
             \Shop::CONTEXT_SHOP => function () {
-                return $this->trackShop();
+                return self::trackShop();
             },
             \Shop::CONTEXT_GROUP => function () {
-                return $this->trackShopGroup();
+                return self::trackShopGroup();
             },
             \Shop::CONTEXT_ALL => function () {
-                return $this->trackAllShops();
+                return self::trackAllShops();
             },
         ];
 
