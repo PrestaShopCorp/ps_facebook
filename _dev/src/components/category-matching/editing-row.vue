@@ -175,7 +175,7 @@ export default defineComponent({
   methods: {
     changePropagation(checked, shopCategoryId) {
       this.currentPropagation = checked;
-      this.$emit('propagationClicked', shopCategoryId);
+      this.$emit('propagationClicked', shopCategoryId, checked);
     },
     getCurrentRow(categoryID) {
       this.$emit('rowClicked', categoryID);

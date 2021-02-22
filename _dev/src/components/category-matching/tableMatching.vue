@@ -121,16 +121,16 @@ export default defineComponent({
       const updateParent = Number(category.propagate);
       const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
 
-      if (category.propagate === true) {
-        currentCategory.googleCategoryId = category.fbSubcategoryId;
-        currentCategory.googleCategoryName = category.fbSubcategoryName;
-        currentCategory.googleCategoryParentName = category.fbCategoryName;
-        currentCategory.googleCategoryParentId = category.fbCategoryId;
+      // if (category.propagate === true) {
+      currentCategory.googleCategoryId = category.fbSubcategoryId;
+      currentCategory.googleCategoryName = category.fbSubcategoryName;
+      currentCategory.googleCategoryParentName = category.fbCategoryName;
+      currentCategory.googleCategoryParentId = category.fbCategoryId;
+      this.applyToAllChildren(category.shopCategoryId, category.propagate);
+      // }
 
-        if (category.fbSubcategoryName === undefined) {
-          category.fbSubcategoryName = '';
-        }
-        this.applyToAllChildren(category.shopCategoryId);
+      if (category.fbSubcategoryName === undefined) {
+        category.fbSubcategoryName = '';
       }
 
       return fetch(this.saveParentStatement, {
@@ -146,18 +146,20 @@ export default defineComponent({
       });
     },
 
-    applyToAllChildren(shopCategoryId) {
+    applyToAllChildren(shopCategoryId, event) {
       const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
-      this.categories.forEach(
-        (child) => {
-          if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
-            child.isParentCategory = child.deploy === this.HAS_CHILDREN ? true : null;
-            child.googleCategoryId = currentCategory.googleCategoryId;
-            child.googleCategoryName = currentCategory.googleCategoryName;
-            child.googleCategoryParentName = currentCategory.googleCategoryParentName;
-            child.googleCategoryParentId = currentCategory.googleCategoryParentId;
-          }
-        });
+      if (event === true) {
+        this.categories.forEach(
+          (child) => {
+            if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
+              child.isParentCategory = child.deploy === this.HAS_CHILDREN ? true : null;
+              child.googleCategoryId = currentCategory.googleCategoryId;
+              child.googleCategoryName = currentCategory.googleCategoryName;
+              child.googleCategoryParentName = currentCategory.googleCategoryParentName;
+              child.googleCategoryParentId = currentCategory.googleCategoryParentId;
+            }
+          });
+      }
     },
 
     getCurrentRow(currentShopCategoryID) {
