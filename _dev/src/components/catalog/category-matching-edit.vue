@@ -169,7 +169,6 @@ export default defineComponent({
           return res.json();
         })
         .then((res) => {
-          console.log(res);
           this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
         }).catch((error) => {
           console.error(error);
