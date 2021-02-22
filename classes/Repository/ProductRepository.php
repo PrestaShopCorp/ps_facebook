@@ -68,10 +68,10 @@ class ProductRepository
      */
     public function getIdProductAttributeByIdAttributes($idProduct, $idAttributes, $findBest = false)
     {
-        $idProduct = (int)$idProduct;
+        $idProduct = (int) $idProduct;
 
         if (!is_array($idAttributes) && is_numeric($idAttributes)) {
-            $idAttributes = [(int)$idAttributes];
+            $idAttributes = [(int) $idAttributes];
         }
 
         if (!is_array($idAttributes) || empty($idAttributes)) {
@@ -126,7 +126,7 @@ class ProductRepository
                         `' . _DB_PREFIX_ . 'product_attribute_combination` pac
                         INNER JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.id_product_attribute = pac.id_product_attribute
                     WHERE
-                        pa.id_product = ' . (int)$idProduct . '
+                        pa.id_product = ' . (int) $idProduct . '
                         AND pac.id_attribute IN (' . implode(',', array_map('intval', $orderred)) . ')
                     GROUP BY
                         pac.id_product_attribute
@@ -140,7 +140,7 @@ class ProductRepository
             throw new PrestaShopException('Can not retrieve the id_product_attribute');
         }
 
-        return (int)$idProductAttribute;
+        return (int) $idProductAttribute;
     }
 
     public function getProductsWithErrors($shopId, $page = -1)
@@ -151,7 +151,7 @@ class ProductRepository
         $sql->from('product', 'p');
         $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
-        $sql->where('ps.id_shop = ' . (int)$shopId . ' AND ps.active = 1');
+        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
 
         $result = Db::getInstance()->executeS($sql);
         $productIdsWithInvalidSalePrice = [];
@@ -186,7 +186,7 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
-        $sql->where('ps.id_shop = ' . (int)$shopId . ' AND ps.active = 1');
+        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
@@ -235,7 +235,7 @@ class ProductRepository
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
 
-        $sql->where('ps.id_shop = ' . (int)$shopId);
+        $sql->where('ps.id_shop = ' . (int) $shopId);
         if (isset($options['onlyActive'])) {
             $sql->where('ps.active = 1');
         }
@@ -265,9 +265,9 @@ class ProductRepository
         $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
-        $sql->where('pa.id_product = ' . (int)$eventBusProduct->getProductId());
-        $sql->where('pa.id_product_attribute = ' . (int)$eventBusProduct->getProductAttributeId());
-        $sql->where('pl.id_shop = ' . (int)$shopId);
+        $sql->where('pa.id_product = ' . (int) $eventBusProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int) $eventBusProduct->getProductAttributeId());
+        $sql->where('pl.id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
     }
@@ -318,20 +318,20 @@ class ProductRepository
         $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
 
-        $sql->where('pl.id_shop = ' . (int)$shopId);
+        $sql->where('pl.id_shop = ' . (int) $shopId);
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         if ($sortBy) {
             $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
         }
         if ($searchById) {
-            $sql->where('ps.id_product LIKE "%' . (int)$searchById . '%"');
+            $sql->where('ps.id_product LIKE "%' . (int) $searchById . '%"');
         }
         if ($searchByName) {
             $sql->where('pl.name LIKE "%' . pSQL($searchByName) . '%"');
         }
         if ($searchByMessage) {
-            $sql->where('ps.id_product LIKE "%' . (int)$searchByMessage . '%"');
+            $sql->where('ps.id_product LIKE "%' . (int) $searchByMessage . '%"');
         }
         if ($status) {
             $sql->having('ps.id_product LIKE "%' . pSQL($status) . '%"');
