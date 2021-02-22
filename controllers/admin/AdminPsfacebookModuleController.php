@@ -226,6 +226,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookGetCategoryMappingStatus' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'CategoryMappingCounters',
+                    'ajax' => 1,
+                ]
+            ),
             'psFacebookRetrieveFaq' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

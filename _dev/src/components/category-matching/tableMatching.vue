@@ -139,6 +139,7 @@ export default defineComponent({
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
+        this.$parent.fetchCategoryMatchingCounters();
         return true;
       });
     },
