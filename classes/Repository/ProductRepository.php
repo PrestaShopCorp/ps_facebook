@@ -27,6 +27,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
+use Product;
 
 class ProductRepository
 {
@@ -67,10 +68,10 @@ class ProductRepository
      */
     public function getIdProductAttributeByIdAttributes($idProduct, $idAttributes, $findBest = false)
     {
-        $idProduct = (int) $idProduct;
+        $idProduct = (int)$idProduct;
 
         if (!is_array($idAttributes) && is_numeric($idAttributes)) {
-            $idAttributes = [(int) $idAttributes];
+            $idAttributes = [(int)$idAttributes];
         }
 
         if (!is_array($idAttributes) || empty($idAttributes)) {
@@ -125,7 +126,7 @@ class ProductRepository
                         `' . _DB_PREFIX_ . 'product_attribute_combination` pac
                         INNER JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.id_product_attribute = pac.id_product_attribute
                     WHERE
-                        pa.id_product = ' . (int) $idProduct . '
+                        pa.id_product = ' . (int)$idProduct . '
                         AND pac.id_attribute IN (' . implode(',', array_map('intval', $orderred)) . ')
                     GROUP BY
                         pac.id_product_attribute
@@ -139,11 +140,30 @@ class ProductRepository
             throw new PrestaShopException('Can not retrieve the id_product_attribute');
         }
 
-        return (int) $idProductAttribute;
+        return (int)$idProductAttribute;
     }
 
     public function getProductsWithErrors($shopId, $page = -1)
     {
+        $sql = new DbQuery();
+        $sql->select('ps.id_product');
+        $sql->select('IF(pas.id_product_attribute IS NULL, 0, id_product_attribute) as id_product_attribute');
+        $sql->from('product', 'p');
+        $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
+        $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
+        $sql->where('ps.id_shop = ' . (int)$shopId . ' AND ps.active = 1');
+
+        $result = Db::getInstance()->executeS($sql);
+        $productIdsWithInvalidSalePrice = [];
+        $productAttributeIdsWithInvalidSalePrice = [];
+        foreach ($result as $product) {
+            $salePriceTaxExcluded = $this->getSalePriceTaxExcluded($product['id_product'], $product['id_product_attribute']);
+            if ($salePriceTaxExcluded <= 0) {
+                $productIdsWithInvalidSalePrice[] = $product['id_product'];
+                $productAttributeIdsWithInvalidSalePrice[] = $product['id_product_attribute'];
+            }
+        }
+
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pas.id_product_attribute, pl.name');
@@ -153,8 +173,9 @@ class ProductRepository
             ');
         $sql->select('IF(is.id_image IS NOT NULL, true, false) as has_cover');
         $sql->select('IF(pl.link_rewrite = "" OR pl.link_rewrite is NULL, false, true) as has_link');
-        $sql->select('IF(ps.price > 0, true, false) as has_price_tax_excl');
+        $sql->select('IF(ps.price + IFNULL(pas.price, 0) > 0, true, false) as has_price_tax_excl');
         $sql->select('IF((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL), false, true) as has_description_or_short_description');
+        $sql->select('true as correct_sales_price');
 
         $sql->from('product', 'p');
 
@@ -165,14 +186,22 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
-        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
+        $sql->where('ps.id_shop = ' . (int)$shopId . ' AND ps.active = 1');
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
         OR is.id_image is NULL
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
-        OR ps.price = 0
+        OR ps.price + IFNULL(pas.price, 0) < 0
         OR pl.name = "" OR pl.name is NULL
+        OR 
+        (
+            ps.id_product in (' . implode(',', $productIdsWithInvalidSalePrice) . ') AND 
+            (
+                pas.id_product_attribute in (' . implode(',', $productAttributeIdsWithInvalidSalePrice) . ') OR
+                pas.id_product_attribute IS NULL
+            )
+        )
         ');
 
         $sql->orderBy('p.id_product ASC, pas.id_product_attribute ASC, language ASC');
@@ -181,7 +210,18 @@ class ProductRepository
             $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page));
         }
 
-        return Db::getInstance()->executeS($sql);
+        $result = Db::getInstance()->executeS($sql);
+        foreach ($result as $key => &$value) {
+            if (!in_array($value['id_product'], $productIdsWithInvalidSalePrice)) {
+                continue;
+            }
+            if (in_array($value['id_product_attribute'], $productAttributeIdsWithInvalidSalePrice) || $value['id_product_attribute'] === null) {
+                $value['correct_sales_price'] = false;
+                continue;
+            }
+        }
+
+        return $result;
     }
 
     public function getProductsTotal($shopId, array $options = [])
@@ -195,7 +235,7 @@ class ProductRepository
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
 
-        $sql->where('ps.id_shop = ' . (int) $shopId);
+        $sql->where('ps.id_shop = ' . (int)$shopId);
         if (isset($options['onlyActive'])) {
             $sql->where('ps.active = 1');
         }
@@ -225,9 +265,9 @@ class ProductRepository
         $sql->innerJoin('lang', 'l', 'l.iso_code = "' . pSQL($isoCode) . '"');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = pa.id_product AND pl.id_lang = l.id_lang');
 
-        $sql->where('pa.id_product = ' . (int) $eventBusProduct->getProductId());
-        $sql->where('pa.id_product_attribute = ' . (int) $eventBusProduct->getProductAttributeId());
-        $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->where('pa.id_product = ' . (int)$eventBusProduct->getProductId());
+        $sql->where('pa.id_product_attribute = ' . (int)$eventBusProduct->getProductAttributeId());
+        $sql->where('pl.id_shop = ' . (int)$shopId);
 
         return Db::getInstance()->executeS($sql);
     }
@@ -278,20 +318,20 @@ class ProductRepository
         $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
 
-        $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->where('pl.id_shop = ' . (int)$shopId);
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         if ($sortBy) {
             $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
         }
         if ($searchById) {
-            $sql->where('ps.id_product LIKE "%' . (int) $searchById . '%"');
+            $sql->where('ps.id_product LIKE "%' . (int)$searchById . '%"');
         }
         if ($searchByName) {
             $sql->where('pl.name LIKE "%' . pSQL($searchByName) . '%"');
         }
         if ($searchByMessage) {
-            $sql->where('ps.id_product LIKE "%' . (int) $searchByMessage . '%"');
+            $sql->where('ps.id_product LIKE "%' . (int)$searchByMessage . '%"');
         }
         if ($status) {
             $sql->having('ps.id_product LIKE "%' . pSQL($status) . '%"');
@@ -308,5 +348,16 @@ class ProductRepository
         }
 
         return $products;
+    }
+
+    /**
+     * @param int $productId
+     * @param int $attributeId
+     *
+     * @return float
+     */
+    public function getSalePriceTaxExcluded($productId, $attributeId)
+    {
+        return Product::getPriceStatic($productId, false, $attributeId, 6);
     }
 }
