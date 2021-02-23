@@ -266,7 +266,6 @@ class ProductRepository
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
-        // TODO !0: fix, format of $productsWithErrors is not "1-1-fr" anymore, but "1-1" (we lose the lang), keep only shop default lang instead.
         $sql->select('
             IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
             . $disapproved . '",
