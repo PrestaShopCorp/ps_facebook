@@ -21,6 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Exception;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -54,22 +55,22 @@ class Uninstaller
     private $errorHandler;
 
     /**
-     * @var ConfigurationHandler
+     * @var FacebookClient
      */
-    private $configurationHandler;
+    private $facebookClient;
 
     public function __construct(
         \Ps_facebook $module,
         TabRepository $tabRepository,
         Segment $segment,
         ErrorHandler $errorHandler,
-        ConfigurationHandler $configurationHandler
+        FacebookClient $facebookClient
     ) {
         $this->module = $module;
         $this->tabRepository = $tabRepository;
         $this->segment = $segment;
         $this->errorHandler = $errorHandler;
-        $this->configurationHandler = $configurationHandler;
+        $this->facebookClient = $facebookClient;
     }
 
     /**
@@ -85,7 +86,7 @@ class Uninstaller
         foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
             \Configuration::deleteByName((string) $name);
         }
-        $this->configurationHandler->uninstallFbe();
+        $this->facebookClient->uninstallFbe();
 
         return $this->uninstallTabs() && $this->uninstallTables();
     }

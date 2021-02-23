@@ -124,10 +124,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var FacebookClient $facebookClient */
         $facebookClient = $this->module->getService(FacebookClient::class);
         // Disconnect from FB
-        $facebookClient->uninstallFbe(
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
-        );
+        $facebookClient->uninstallFbe();
 
         // Return new FB context
         $this->displayAjaxGetFbContext();

@@ -253,13 +253,13 @@ class FacebookClient
     /**
      * @see https://developers.facebook.com/docs/marketing-api/fbe/fbe2/guides/uninstall?locale=en_US#uninstall-fbe--v2-for-businesses
      *
-     * @param string $externalBusinessId
-     * @param string $accessToken
-     *
      * @return false|array
      */
-    public function uninstallFbe($externalBusinessId, $accessToken)
+    public function uninstallFbe()
     {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $accessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+
         $this->configurationHandler->cleanOnboardingConfiguration();
         $this->accessToken = '';
         $body = [
@@ -294,10 +294,7 @@ class FacebookClient
 
     public function disconnectFromFacebook()
     {
-        $this->uninstallFbe(
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
-            $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
-        );
+        $this->uninstallFbe();
 
         $this->configurationHandler->cleanOnboardingConfiguration();
     }
