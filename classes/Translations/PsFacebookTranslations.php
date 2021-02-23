@@ -134,7 +134,7 @@ class PsFacebookTranslations
 
             'catalogSummary' => [
                 'categoryMatching' => $this->module->l('Enhance your catalog', 'PsFacebookTranslations'),
-                'categoryMatchingIntro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category.', 'PsFacebookTranslations'),
+                'categoryMatchingIntro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
                 'categoryMatchingNotice' => $this->module->l('You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.', 'PsFacebookTranslations'),
                 'matchCategoriesButton' => $this->module->l('Map categories', 'PsFacebookTranslations'),
 
@@ -189,7 +189,8 @@ class PsFacebookTranslations
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
                 'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
-                'counterSubTitle' => $this->module->l('specified parent categories', 'PsFacebookTranslations'),
+                'counterSubTitle' => $this->module->l('specified categories', 'PsFacebookTranslations'),
+                'edit' => $this->module->l('Edit', 'PsFacebookTranslations'),
                 'autocomplete' => [
                     'typeToFilter' => $this->module->l('Type to filter', 'PsFacebookTranslations'),
                     'select' => $this->module->l('Select', 'PsFacebookTranslations'),
@@ -200,9 +201,22 @@ class PsFacebookTranslations
                 'tableMatching' => [
                     'firstTd' => $this->module->l('Category on your site'),
                     'secondTd' => $this->module->l('Google category'),
-                    'thirdTd' => $this->module->l('Parent category'),
+                    'thirdTd' => $this->module->l('Apply to sub-categories?'),
                     'fourthTd' => $this->module->l('Google subcategory'),
                 ],
+                'editTable' => [
+                    'required' => $this->module->l('Required'),
+                    'checkboxTxt' => $this->module->l('Display unspecified categories only'),
+                    'psCategoryName' => $this->module->l('Category on your site'),
+                    'fbCategoryName' => $this->module->l('Google category'),
+                    'fbSubcategoryName' => $this->module->l('Google subcategory'),
+                ],
+            ],
+            'categoryMatched' => [
+                'title' => $this->module->l('Enhance your catalog: category mapping'),
+                'description' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.'),
+                'btn' => $this->module->l('View mapping'),
+                'progressBarTotal' => $this->module->l('categories mapped'),
             ],
             'integrate' => [
                 'buttons' => [

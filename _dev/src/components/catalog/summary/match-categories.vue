@@ -1,5 +1,5 @@
 <!--**
- * 2007-2020 PrestaShop and Contributors
+ * 2007-2021 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -12,7 +12,7 @@
  * to license@prestashop.com so we can send you a copy immediately.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2020 PrestaShop SA and Contributors
+ * @copyright 2007-2021 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *-->
@@ -33,7 +33,7 @@
     <b-button
       class="float-right ml-3"
       :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
-      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
+      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>
@@ -79,6 +79,7 @@ export default defineComponent({
   }
   .text {
     display: flow-root;
+    margin-bottom: 3.5rem!important;
 
     & > div {
       margin-top: 1em;

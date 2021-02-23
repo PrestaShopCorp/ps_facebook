@@ -24,6 +24,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
+use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
@@ -31,7 +32,7 @@ use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
 
 /*
- * 2007-2020 PrestaShop.
+ * 2007-2021 PrestaShop.
  *
  * NOTICE OF LICENSE
  *
@@ -50,7 +51,7 @@ use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
  * needs please refer to http://www.prestashop.com for more information.
  *
  *  @author    PrestaShop SA <contact@prestashop.com>
- *  @copyright 2007-2020 PrestaShop SA
+ *  @copyright 2007-2021 PrestaShop SA
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
@@ -150,7 +151,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.5.0';
+        $this->version = '1.5.1';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '860395eb54512ec72d98615805274591';
@@ -210,22 +211,16 @@ class Ps_facebook extends Module
      */
     public function install()
     {
-        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
-        // does not have the _PS_ADMIN_DIR_ in this environment.
-        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
-        // $installer = $this->getService(Installer::class);
-        if (!parent::install()) {
-            $this->_errors[] = $this->l('Unable to install module');
-
-            return false;
-        }
-
         if (!(new PrestaShop\AccountsAuth\Installer\Install())->installPsAccounts()) {
             $this->_errors[] = $this->l('Unable to install ps accounts');
 
             return false;
         }
 
+        // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
+        // does not have the _PS_ADMIN_DIR_ in this environment.
+        // prestashop/module-lib-service-container:1.3.1 is known as incompatible
+        // $installer = $this->getService(Installer::class);
         $installer = new Installer(
             $this,
             $this->getService(Segment::class),
@@ -237,6 +232,14 @@ class Ps_facebook extends Module
 
             return false;
         }
+
+        if (!parent::install()) {
+            $this->_errors[] = $this->l('Unable to install module');
+
+            return false;
+        }
+
+        $this->registerHook(static::HOOK_LIST);
 
         return true;
     }
@@ -260,7 +263,8 @@ class Ps_facebook extends Module
             $this,
             $this->getService(TabRepository::class),
             $this->getService(Segment::class),
-            $this->getService(ErrorHandler::class)
+            $this->getService(ErrorHandler::class),
+            $this->getService(ConfigurationHandler::class)
         );
 
         return $uninstaller->uninstall() &&

@@ -24,7 +24,7 @@ class Config
 {
     const API_VERSION = 'v9.0';
 
-    const REQUIRED_PS_ACCOUNTS_VERSION = '3.1.13';
+    const REQUIRED_PS_ACCOUNTS_VERSION = '3.2.2';
 
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
@@ -58,4 +58,5 @@ class Config
     const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 
     const OAUTH_EXCEPTION_CODE = [33, 100, 190];
+    const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
 }
