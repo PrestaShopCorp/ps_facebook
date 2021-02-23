@@ -52,8 +52,10 @@ class CustomerInformationUtility
 
         $gender = null;
         if ($customer->id_gender !== 0) {
-            //todo: better to check gender type
-            $gender = (int) $customer->id_gender === 1 ? Gender::MALE : Gender::FEMALE;
+            $genderObj = new \Gender($customer->id_gender);
+            if ($genderObj->type !== 2) {
+                $gender = (int) $genderObj->type === 0 ? Gender::MALE : Gender::FEMALE;
+            }
         }
 
         $arrayReturned['gender'] = $gender;
