@@ -70,7 +70,6 @@ const mixin = Vue.extend({
     },
 
     formatDataFromLazyLoading(request, categories) {
-      let hasCategories;
       const nbrCategories = categories.length;
       if (Array.isArray(request)) {
         request.forEach((el) => {
@@ -122,6 +121,17 @@ const mixin = Vue.extend({
       });
 
       return parents;
+    },
+
+    isMainCategory(ctg) {
+      let ctgParentClass = '';
+
+      const floor = ctg.shopParentCategoryIds.split('/').length - 1;
+      if (floor === 1) {
+        ctgParentClass = 'main-category';
+      }
+
+      return ctgParentClass;
     },
   },
 });

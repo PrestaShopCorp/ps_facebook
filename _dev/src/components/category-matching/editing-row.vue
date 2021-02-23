@@ -18,7 +18,10 @@
  *-->
 <template>
   <b-tr :class="categoryStyle">
-    <b-td @click="getCurrentRow(shopCategoryId)">
+    <b-td
+      @click="getCurrentRow(shopCategoryId)"
+      :class="isMainCategory"
+    >
       <slot />
     </b-td>
     <b-td>
@@ -134,6 +137,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    isMainCategory: {
+      type: String,
+      required: true,
+    },
     initialSubcategoryName: {
       type: String,
       required: false,
@@ -191,7 +198,6 @@ export default defineComponent({
       if (checkbox) {
         checkbox.focus();
       }
-      this.$emit('onCategoryChanged', this.shopCategoryId);
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;
@@ -233,6 +239,12 @@ export default defineComponent({
     },
     initialSubcategoryId(newVal) {
       this.currentSubcategoryId = newVal;
+    },
+    initialPropagation(newVal) {
+      this.currentPropagation = newVal;
+    },
+    isMainCategory(newVal) {
+      this.isMainCategory = newVal;
     },
   },
 });
@@ -363,6 +375,9 @@ export default defineComponent({
     td:first-child {
       cursor: pointer!important;
     }
+  }
+  .main-category {
+    font-weight: bold;
   }
   .closed {
     td:first-child:before {

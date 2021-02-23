@@ -33,6 +33,7 @@
           v-for="category in activeCategories"
           :key="category.shopCategoryId"
           :category-style="categoryStyle(category)"
+          :is-main-category="isMainCategory(category)"
           :shop-category-id="category.shopCategoryId"
           :initial-category-name="category.googleCategoryParentName"
           :initial-category-id="category.googleCategoryParentId"
@@ -149,8 +150,13 @@ export default defineComponent({
       if (event === true) {
         this.categories.forEach(
           (child) => {
-            if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
-              child.isParentCategory = child.deploy === this.HAS_CHILDREN ? true : null;
+            if (child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
+              && child.shopCategoryId !== currentCategory.shopCategoryId) {
+              if (this.canShowCheckbox(child) === false) {
+                child.isParentCategory = null;
+              } else {
+                child.isParentCategory = true;
+              }
               child.googleCategoryId = currentCategory.googleCategoryId;
               child.googleCategoryName = currentCategory.googleCategoryName;
               child.googleCategoryParentName = currentCategory.googleCategoryParentName;
