@@ -15,8 +15,6 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
 
   PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler

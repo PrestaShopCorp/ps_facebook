@@ -32,6 +32,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\Pixel;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 
@@ -63,22 +64,30 @@ class FacebookClient
     private $errorHandler;
 
     /**
+     * @var ConfigurationHandler
+     */
+    private $configurationHandler;
+
+    /**
      * @param ApiClientFactoryInterface $apiClientFactory
      * @param AccessTokenProvider $accessTokenProvider
      * @param ConfigurationAdapter $configurationAdapter
      * @param ErrorHandler $errorHandler
+     * @param ConfigurationHandler $configurationHandler
      */
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler
+        ErrorHandler $errorHandler,
+        ConfigurationHandler $configurationHandler
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
         $this->errorHandler = $errorHandler;
+        $this->configurationHandler = $configurationHandler;
     }
 
     public function setAccessToken($accessToken)
@@ -251,6 +260,8 @@ class FacebookClient
      */
     public function uninstallFbe($externalBusinessId, $accessToken)
     {
+        $this->configurationHandler->cleanOnboardingConfiguration();
+        $this->accessToken = '';
         $body = [
             'fbe_external_business_id' => $externalBusinessId,
             'access_token' => $accessToken,
@@ -288,7 +299,17 @@ class FacebookClient
             $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
         );
 
-        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
+        $this->configurationHandler->cleanOnboardingConfiguration();
+    }
+
+    public function addFbeAttributeIfMissing(array &$onboardingParams)
+    {
+        if (!empty($onboardingParams['fbe']) && !isset($onboardingParams['fbe']['error'])) {
+            return;
+        }
+
+        $this->setAccessToken($onboardingParams['access_token']);
+        $onboardingParams['fbe'] = $this->getFbeAttribute($this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID));
     }
 
     /**

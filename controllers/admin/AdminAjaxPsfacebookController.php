@@ -20,6 +20,7 @@
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
@@ -85,21 +86,34 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationHandler = $this->module->getService(ConfigurationHandler::class);
         /** @var AccessTokenProvider $accessTokenProvider */
         $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        /** @var FacebookClient $facebookClient */
+        $facebookClient = $this->module->getService(FacebookClient::class);
 
-        $response = $configurationHandler->handle($onboardingData);
+        $facebookClient->addFbeAttributeIfMissing($onboardingData);
+        $configurationHandler->handle($onboardingData);
+        $facebookContext = $facebookDataProvider->getContext($onboardingData['fbe']);
+
         $accessTokenProvider->refreshTokens();
 
         $this->ajaxDie(
-            json_encode($response)
+            json_encode([
+                'success' => true,
+                'contextPsFacebook' => $facebookContext,
+            ])
         );
     }
 
     public function displayAjaxDisconnectFromFacebook()
     {
+        /** @var FacebookClient $facebookClient */
+        $facebookClient = $this->module->getService(FacebookClient::class);
         // Disconnect from FB
-        /** @var ConfigurationHandler $configurationHandler */
-        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
-        $configurationHandler->uninstallFbe();
+        $facebookClient->uninstallFbe(
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
+            $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)
+        );
 
         // Return new FB context
         $this->displayAjaxGetFbContext();
