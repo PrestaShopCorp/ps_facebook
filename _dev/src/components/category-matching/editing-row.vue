@@ -187,25 +187,11 @@ export default defineComponent({
         this.currentSubcategoryId = null;
         this.currentSubcategoryName = null;
       }
-      const result = {
-        shopCategoryId: this.shopCategoryId,
-        fbCategoryId: this.currentCategoryId,
-        fbCategoryName: this.currentCategoryName.replace('&', '-'),
-        propagate: !!this.currentPropagation,
-      };
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
       if (checkbox) {
         checkbox.focus();
       }
-      this.saveMatchingCallback(result)
-        .then(() => {
-          this.loading = false;
-          this.error = null;
-        })
-        .catch((error) => {
-          this.loading = null;
-          this.error = error;
-        });
+      this.$emit('onCategoryChanged', this.shopCategoryId);
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;

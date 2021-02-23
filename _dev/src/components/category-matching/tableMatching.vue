@@ -121,13 +121,11 @@ export default defineComponent({
       const updateParent = Number(category.propagate);
       const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
 
-      // if (category.propagate === true) {
       currentCategory.googleCategoryId = category.fbSubcategoryId;
       currentCategory.googleCategoryName = category.fbSubcategoryName;
       currentCategory.googleCategoryParentName = category.fbCategoryName;
       currentCategory.googleCategoryParentId = category.fbCategoryId;
       this.applyToAllChildren(category.shopCategoryId, category.propagate);
-      // }
 
       if (category.fbSubcategoryName === undefined) {
         category.fbSubcategoryName = '';
