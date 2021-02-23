@@ -23,7 +23,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 use Exception;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
-use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
