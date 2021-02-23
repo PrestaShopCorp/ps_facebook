@@ -192,7 +192,7 @@ class ProductRepository
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
         OR is.id_image is NULL
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
-        OR ps.price + IFNULL(pas.price, 0) < 0
+        OR ps.price + IFNULL(pas.price, 0) <= 0
         OR pl.name = "" OR pl.name is NULL
         OR 
         (
@@ -215,9 +215,9 @@ class ProductRepository
             if (!in_array($value['id_product'], $productIdsWithInvalidSalePrice)) {
                 continue;
             }
-            if (in_array($value['id_product_attribute'], $productAttributeIdsWithInvalidSalePrice) || $value['id_product_attribute'] === null) {
+            if (in_array($value['id_product_attribute'], $productAttributeIdsWithInvalidSalePrice)
+                || $value['id_product_attribute'] === null) {
                 $value['correct_sales_price'] = false;
-                continue;
             }
         }
 
