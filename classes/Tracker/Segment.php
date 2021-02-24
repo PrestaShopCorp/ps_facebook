@@ -104,7 +104,7 @@ class Segment implements TrackerInterface
             ->get(ConfigurationRepository::class);
 
         \Segment::track([
-            'userId' => $configurationRepository->getShopUuid(),
+            'userId' => $configurationRepository->getShopUuid() ?: $domainName,
             'event' => $this->message,
             'channel' => 'browser',
             'context' => [
