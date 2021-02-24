@@ -12,12 +12,26 @@ class FbeFeatureDataProviderTest extends TestCase
 {
     public function testFeaturesExist()
     {
-        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), new ConfigurationAdapterMock(1)))->getFbeFeatures();
+        $configurationAdapter = new ConfigurationAdapterMock(1);
+        $configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_ON, 1);
+        $actual = (new FbeFeatureDataProvider(new FacebookClientMock(), $configurationAdapter))->getFbeFeatures();
 
         $this->assertAllFeaturesExistOneTime($actual);
     }
 
     public function testEnabledFacebookFeatureIsFoundInEnabledFeaturesReponse()
+    {
+        $configurationAdapter = new ConfigurationAdapterMock(1);
+        $configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_ON, 1);
+        $facebookClient = (new FacebookClientMock())
+            ->switchFeature('messenger_chat', true);
+        $actual = (new FbeFeatureDataProvider($facebookClient, $configurationAdapter))->getFbeFeatures();
+
+        $this->assertAllFeaturesExistOneTime($actual);
+        $this->assertTrue($actual['enabledFeatures']['messenger_chat']['enabled']);
+    }
+
+    public function testEnabledFacebookFeatureIsFoundInEnabledFeaturesButWithoutProductSyncReponse()
     {
         $configurationAdapter = new ConfigurationAdapterMock(1);
         $facebookClient = (new FacebookClientMock())
