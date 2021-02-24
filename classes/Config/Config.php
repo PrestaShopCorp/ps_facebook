@@ -58,6 +58,6 @@ class Config
     const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 
     /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
-    const OAUTH_EXCEPTION_CODE = [33, 100, 190];
+    const OAUTH_EXCEPTION_CODE = [33, 190];
     const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
 }

@@ -341,7 +341,15 @@ class FacebookClient
             $response = $this->client->send($request);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            if (in_array($exceptionContent['error']['code'], Config::OAUTH_EXCEPTION_CODE)) {
+            $message = "Facebook client failed when creating get request. Method: {$method}.";
+
+            $exceptionCode = false;
+            if (!empty($exceptionContent['error']['code'])) {
+                $exceptionCode = $exceptionContent['error']['code'];
+                $message .= " Code: {$exceptionCode}";
+            }
+
+            if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
                 $this->disconnectFromFacebook();
 
                 return false;
@@ -349,7 +357,7 @@ class FacebookClient
 
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Facebook client failed when creating get request. Method: ' . $method,
+                    $message,
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),
