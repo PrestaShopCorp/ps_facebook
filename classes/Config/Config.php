@@ -57,6 +57,7 @@ class Config
     const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
     const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 
+    /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
     const OAUTH_EXCEPTION_CODE = [33, 100, 190];
     const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
 }

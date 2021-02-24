@@ -76,9 +76,6 @@ class EventDispatcher
      */
     public function dispatch($name, array $params)
     {
-        if (!$this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN)) {
-            return;
-        }
         // Events are related to actions on the shop, not the back office
         if (!in_array($this->context->controller->controller_type, ['front', 'modulefront'])) {
             return;
