@@ -171,7 +171,7 @@ export default defineComponent({
   },
   data() {
     return {
-      switchActivated: this.active,
+      switchActivated: this.active || !this.allowDisplayOfSwitch,
       isLoading: this.loading,
     };
   },
