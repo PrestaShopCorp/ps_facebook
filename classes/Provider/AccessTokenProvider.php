@@ -21,6 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
@@ -133,6 +134,22 @@ class AccessTokenProvider
                     ],
                 ]
             )->json();
+        } catch (ClientException $e) {
+            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $this->errorHandler->handle(
+                new AccessTokenException(
+                    'Failed to refresh access token',
+                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false,
+                [
+                    'extra' => $exceptionContent,
+                ]
+            );
+
+            return;
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new AccessTokenException(
