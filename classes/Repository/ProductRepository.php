@@ -154,8 +154,8 @@ class ProductRepository
         $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
 
         $result = Db::getInstance()->executeS($sql);
-        $productIdsWithInvalidSalePrice = [];
-        $productAttributeIdsWithInvalidSalePrice = [];
+        $productIdsWithInvalidSalePrice = [0];
+        $productAttributeIdsWithInvalidSalePrice = [0];
         foreach ($result as $product) {
             $salePriceTaxExcluded = $this->getSalePriceTaxExcluded($product['id_product'], $product['id_product_attribute']);
             if ($salePriceTaxExcluded <= 0) {
