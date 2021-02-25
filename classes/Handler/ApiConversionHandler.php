@@ -21,12 +21,14 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use FacebookAds\Api;
+use FacebookAds\Http\Exception\AuthorizationException;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookConversionAPIException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -48,9 +50,15 @@ class ApiConversionHandler
      */
     private $errorHandler;
 
+    /**
+     * @var FacebookClient
+     */
+    private $facebookClient;
+
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler
+        ErrorHandler $errorHandler,
+        FacebookClient $facebookClient
     ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->errorHandler = $errorHandler;
@@ -63,6 +71,7 @@ class ApiConversionHandler
             $this->configurationAdapter->get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN),
             false
         );
+        $this->facebookClient = $facebookClient;
     }
 
     public function handleEvent($params)
@@ -222,6 +231,12 @@ class ApiConversionHandler
 
         try {
             $request->execute();
+        } catch (AuthorizationException $e) {
+            if (in_array($e->getCode(), Config::OAUTH_EXCEPTION_CODE)) {
+                $this->facebookClient->disconnectFromFacebook();
+
+                return false;
+            }
         } catch (\Exception $e) {
             $this->errorHandler->handle(
                 new FacebookConversionAPIException(

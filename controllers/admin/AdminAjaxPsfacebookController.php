@@ -100,21 +100,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $configurationHandler = $this->module->getService(ConfigurationHandler::class);
         /** @var AccessTokenProvider $accessTokenProvider */
         $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
+        /** @var FacebookDataProvider $facebookDataProvider */
+        $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
+        /** @var FacebookClient $facebookClient */
+        $facebookClient = $this->module->getService(FacebookClient::class);
 
-        $response = $configurationHandler->handle($onboardingData);
+        $facebookClient->addFbeAttributeIfMissing($onboardingData);
+        $configurationHandler->handle($onboardingData);
+        $facebookContext = $facebookDataProvider->getContext($onboardingData['fbe']);
+
         $accessTokenProvider->refreshTokens();
 
         $this->ajaxDie(
-            json_encode($response)
+            json_encode([
+                'success' => true,
+                'contextPsFacebook' => $facebookContext,
+            ])
         );
     }
 
     public function displayAjaxDisconnectFromFacebook()
     {
+        /** @var FacebookClient $facebookClient */
+        $facebookClient = $this->module->getService(FacebookClient::class);
         // Disconnect from FB
-        /** @var ConfigurationHandler $configurationHandler */
-        $configurationHandler = $this->module->getService(ConfigurationHandler::class);
-        $configurationHandler->uninstallFbe();
+        $facebookClient->uninstallFbe();
 
         // Return new FB context
         $this->displayAjaxGetFbContext();

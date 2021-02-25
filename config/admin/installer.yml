@@ -13,4 +13,4 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\TabRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
-      - '@PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler'
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
