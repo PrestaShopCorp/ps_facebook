@@ -67,8 +67,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b56812
 - Create/Select page 
 - Create/Select ad account 
 - Create/Select install pixel 
-- Create/Select sync product catalog 
-- Create Facebook Shop & Instagram Shopping 
+ - Create/Select sync product catalog 
+ - Create Facebook Shop & Instagram Shopping 
 - Add Messenger plug-in in your shop';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'You authorize this Facebook account to connect to your store:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_104f3d1bf8a4000358de7b64821b5769'] = 'Modify the account settings';
@@ -147,7 +147,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'All status';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Enhance your catalog : category mapping';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5e8a207a6917e15f61a2074ef8f1d7e5'] = 'specified parent categories';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'specified categories';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4267fc283203518fbf3a46d1f53bb6b4'] = 'Type to filter';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e0626222614bdee31951d84c64e5e9ff'] = 'Select';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8e7672a024a6a0369d105feb2b5dab9b'] = 'No result for your search';
@@ -155,7 +155,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e5be071f98c1298d3ba7ce
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4f59ad772c46c6d2073add0af87415d6'] = 'An error occurred during search process.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_42a846a03863bf8980240407f0131e6f'] = 'Category on your site';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9e3c34aa34e5cfc5275d1bed9a3dcb87'] = 'Google category';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_52b68aaa602d202c340d9e4e9157f276'] = 'Parent category';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d8d6aeac43be9e0dac979819e81ceeea'] = 'Apply to sub-categories?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_f2e925b76d09d5c3f5e4bda2c651e547'] = 'Google subcategory';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7db59a7e372cf3c6433750f8078559a3'] = 'Sync products';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6297cdd34823b19402b792867ed42f70'] = 'Yes, confirm';
@@ -165,6 +165,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf25
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34e34c43ec6b943c10a3cc1a1a16fb11'] = 'Manage';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e2c0ec0e191'] = 'Messenger Chat Plugin';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1ebaedc380b26'] = 'The Chat Plugin allows you to integrate your Messenger experience directly into your website.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e456de96ee72154dee72e5ca9fa5745f'] = 'Check my messages';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Customize settings';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_a1625f6703621f0870e0909141b09f32'] = 'Add a shop tab on your Facebook page';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'Facebook Page shop allows you to list products you\'re selling and connect with more customers on Facebook.';
@@ -173,7 +174,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be0265b2d10db977c9ce9f
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Edit';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c02eaee6ac5fdebf4c4e862efcde9e74'] = 'To boost sales, add to your shop...';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e3e5e11eb2d2958b24887366b8646b36'] = 'Unavailable features at the moment';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02021901ce00c217718a877'] = 'You added {0}!';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02020901ce00c217718a877'] = 'You added {0}!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0906215d4f114fd6d1561019392ef236'] = 'View your shop';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_06d2600d6cf39a3fc48891b2f76ea4f0'] = 'You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d09041bede9aba7409ca3d182cc22496'] = 'You are about to disable this feature. This may limit some functionality.';
