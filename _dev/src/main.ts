@@ -50,8 +50,12 @@ new Vue({
       if (!this.$segment) {
         return;
       }
+
+      const userId = this.$store.state.context.appContext.shopId
+        || this.$store.state.context.appContext?.shopDomain;
+
       // @ts-ignore
-      this.$segment.identify(this.$store.state.context.appContext.shopId, {
+      this.$segment.identify(userId, {
         name: this.$store.state.context.appContext?.shopUrl,
         email: this.$store.state.context.appContext?.user?.email,
         language: this.$store.state.context.statei18nSettings.isoCode,
