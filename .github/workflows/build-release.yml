@@ -2,6 +2,9 @@ name: Build & Release draft
 
 on: [push, pull_request]
 
+env:
+  PS_IMG_VERSION: prestashop/prestashop:1.7.6.9-7.2-apache
+
 jobs:
   deploy:
     name: build dependencies & create artifact
@@ -83,6 +86,16 @@ jobs:
           source: "."
           target: "build"
 
+      - name: Delete old modules 1.7
+        continue-on-error: true
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PRODUCTION }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") rm -rf modules/ps_facebook'
+
       - name: Move modules
         uses: appleboy/ssh-action@master
         with:
@@ -99,8 +112,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console prestashop:module install ps_facebook'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module install ps_facebook'
       - name: Clear cache
         uses: appleboy/ssh-action@master
         with:
@@ -108,5 +121,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") bin/console cache:cl'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=prestashop/prestashop:1.7" -f "name=facebook") chmod -R 777 var/cache var/logs'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console cache:cl'
+            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") chmod -R 777 var/cache var/logs'
