@@ -52,13 +52,13 @@ const mixin = Vue.extend({
           categories.splice(indexCtg, 0, el);
           el.show = true;
           el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-          el.isParentCategory = this.canShowCheckbox(el) === false ? null : false;
+          el.isParentCategory = this.canShowCheckbox(el) ? false : null;
         });
       } else {
         categories.splice(indexCtg, 0, subcategory);
         subcategory.show = true;
         subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-        subcategory.isParentCategory = this.canShowCheckbox(subcategory) === false ? null : false;
+        subcategory.isParentCategory = this.canShowCheckbox(subcategory) ? false : null;
       }
 
       if (forStorybook === true) {
@@ -128,15 +128,9 @@ const mixin = Vue.extend({
     },
 
     isMainCategory(ctg) {
-      let ctgParentClass = '';
-
-      const floor = ctg.shopParentCategoryIds.split('/').length - 1;
-      if (floor === 1) {
-        ctgParentClass = 'main-category';
-      }
-
-      return ctgParentClass;
+      return ctg.shopParentCategoryIds.split('/').length - 1 === 1 ? 'main-category' : '';
     },
+
   },
 });
 
