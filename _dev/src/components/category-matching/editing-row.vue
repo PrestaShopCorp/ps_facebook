@@ -48,6 +48,7 @@
     </b-td>
     <b-td>
       <category-autocomplete
+        :key="currentCategoryId"
         :language="language"
         :shop-category-id="shopCategoryId"
         :initial-category-name="currentSubcategoryName"
@@ -209,7 +210,7 @@ export default defineComponent({
         fbCategoryId: this.currentCategoryId,
         fbCategoryName: this.currentCategoryName.replace('&', '-'),
         fbSubcategoryId: subcategoryId,
-        fbSubcategoryName: subcategoryName,
+        fbSubcategoryName: subcategoryName.replace('&', '-'),
         propagate: !!this.currentPropagation,
       };
       this.$emit('onCategoryMatched', result);

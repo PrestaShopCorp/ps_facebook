@@ -66,8 +66,16 @@
     <p class="py-3" v-html="md2html($t('categoryMatching.intro'))">
     </p>
 
+     <b-alert
+      v-if="errors"
+      show
+      variant="danger"
+    >
+      {{ $t('categoryMatching.errors') }}
+    </b-alert>
+
     <TableMatching
-      v-if="categories.length > 0"
+      v-if="categories"
       :initial-categories="categories"
     />
   </b-card>
@@ -125,6 +133,7 @@ export default defineComponent({
     return {
       categories: [],
       loading: true,
+      errors: false,
       matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
     };
   },
@@ -178,6 +187,7 @@ export default defineComponent({
         return res.json();
       })
         .then((res) => this.setValuesFromRequest(res)).catch((error) => {
+          this.errors = true;
           console.error(error);
         });
     },

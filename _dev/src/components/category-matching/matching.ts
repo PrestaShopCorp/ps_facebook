@@ -41,20 +41,24 @@ const mixin = Vue.extend({
     },
 
     formatDataFromRequest(request, currentCategory, categories, indexCtg, forStorybook = false) {
-      const subcategory = request;
+      let subcategory = request;
+      if (subcategory.length === 0) {
+        /* eslint no-param-reassign: "error" */
+        subcategory = [];
+      }
 
       if (Array.isArray(subcategory)) {
         subcategory.forEach((el) => {
           categories.splice(indexCtg, 0, el);
           el.show = true;
           el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-          el.isParentCategory = this.canShowCheckbox(el) ? false : null;
+          el.isParentCategory = this.canShowCheckbox(el) === false ? null : false;
         });
       } else {
         categories.splice(indexCtg, 0, subcategory);
         subcategory.show = true;
         subcategory.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategory.shopCategoryId}/`;
-        subcategory.isParentCategory = this.canShowCheckbox(subcategory) ? false : null;
+        subcategory.isParentCategory = this.canShowCheckbox(subcategory) === false ? null : false;
       }
 
       if (forStorybook === true) {

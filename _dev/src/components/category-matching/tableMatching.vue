@@ -147,11 +147,11 @@ export default defineComponent({
 
     applyToAllChildren(shopCategoryId, event) {
       const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
-      if (event === true) {
-        this.categories.forEach(
-          (child) => {
-            if (child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
-              && child.shopCategoryId !== currentCategory.shopCategoryId) {
+      this.categories.forEach(
+        (child) => {
+          if (child.shopParentCategoryIds.startsWith(currentCategory.shopParentCategoryIds)
+            && child.shopCategoryId !== currentCategory.shopCategoryId) {
+            if (event === true) {
               if (this.canShowCheckbox(child) === false) {
                 child.isParentCategory = null;
               } else {
@@ -161,9 +161,11 @@ export default defineComponent({
               child.googleCategoryName = currentCategory.googleCategoryName;
               child.googleCategoryParentName = currentCategory.googleCategoryParentName;
               child.googleCategoryParentId = currentCategory.googleCategoryParentId;
+            } else {
+              child.isParentCategory = this.canShowCheckbox(child) === false ? null : false;
             }
-          });
-      }
+          }
+        });
     },
 
     getCurrentRow(currentShopCategoryID) {
@@ -241,6 +243,9 @@ export default defineComponent({
       this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
         const resp = this.formatDataFromRequest(res, currentCategory, this.categories, indexCtg);
         this.categories = resp.categories;
+        if (currentCategory.deploy === this.NO_CHILDREN) {
+          currentCategory.isParentCategory = null;
+        }
         currentCategory.deploy = resp.statement;
       });
       this.loading = false;
