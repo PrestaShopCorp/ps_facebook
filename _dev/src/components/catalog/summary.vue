@@ -31,7 +31,6 @@
       />
     </b-card>
 
-    <!-- HIDDEN until feature is ready for production
     <b-card
       class="card m-3"
     >
@@ -44,7 +43,6 @@
         :is-primary-action="exportDone"
       />
     </b-card>
-    -->
 
     <survey />
   </div>
