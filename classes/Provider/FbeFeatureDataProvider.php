@@ -57,7 +57,7 @@ class FbeFeatureDataProvider
         }, ARRAY_FILTER_USE_KEY);
 
         foreach ($features as $featureName => $feature) {
-            if ($feature['enabled']) {
+            if ($feature['enabled'] || $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) !== false) {
                 $this->configurationAdapter->updateValue(Config::FBE_FEATURE_CONFIGURATION . $featureName, json_encode($feature));
             }
         }
