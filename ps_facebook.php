@@ -455,6 +455,14 @@ class Ps_facebook extends Module
      */
     private function isFirstCheckoutStep()
     {
+        if ($this->context->controller instanceof TheCheckoutModuleFrontController) {
+            return true;
+        }
+
+        if (!$this->context->controller instanceof OrderControllerCore) {
+            return false;
+        }
+
         $checkoutSteps = $this->getAllOrderSteps();
 
         /* Get the checkoutPaymentKey from the $checkoutSteps array */
