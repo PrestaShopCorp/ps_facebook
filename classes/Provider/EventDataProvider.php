@@ -125,7 +125,7 @@ class EventDataProvider
                 return $this->getContactEventData();
             case 'hookDisplayOrderConfirmation':
                 return $this->getOrderConfirmationEvent($params);
-            case 'hookDisplayPersonalInformationTop':
+            case 'InitiateCheckout':
                 return $this->getInitiateCheckoutEvent();
             case 'hookActionCartSave':
                 return $this->getAddToCartEventData();

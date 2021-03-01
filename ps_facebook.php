@@ -354,6 +354,13 @@ class Ps_facebook extends Module
     {
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        if ($this->context->controller instanceof OrderControllerCore) {
+            if ($this->isFirstCheckoutStep()) {
+                $eventDispatcher->dispatch('InitiateCheckout', $params);
+            }
+        }
+
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
@@ -455,11 +462,6 @@ class Ps_facebook extends Module
      */
     private function isFirstCheckoutStep()
     {
-        /* @phpstan-ignore-next-line */
-        if ($this->context->controller instanceof TheCheckoutModuleFrontController) {
-            return true;
-        }
-
         if (!$this->context->controller instanceof OrderControllerCore) {
             return false;
         }
