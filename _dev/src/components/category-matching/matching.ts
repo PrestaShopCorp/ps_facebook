@@ -41,11 +41,8 @@ const mixin = Vue.extend({
     },
 
     formatDataFromRequest(request, currentCategory, categories, indexCtg, forStorybook = false) {
-      let subcategory = request;
-      if (subcategory.length === 0) {
-        /* eslint no-param-reassign: "error" */
-        subcategory = [];
-      }
+      /* eslint no-param-reassign: "error" */
+      const subcategory = request.length ? request : [];
 
       if (Array.isArray(subcategory)) {
         subcategory.forEach((el) => {

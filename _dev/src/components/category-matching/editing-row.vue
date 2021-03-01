@@ -202,7 +202,7 @@ export default defineComponent({
             this.error = null;
           })
           .catch((error) => {
-            this.loading = null;
+            this.loading = false;
             this.error = error;
           });
       }
