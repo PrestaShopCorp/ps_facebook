@@ -199,12 +199,14 @@ class ApiConversionHandler
         // \Context::getContext()->cookie doesn't have fbp and fbc
         $fbp = isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : '';
         $fbc = isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '';
+        $httpUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $remoteAddr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 
         return (new UserData())
             ->setFbp($fbp)
             ->setFbc($fbc)
-            ->setClientIpAddress($_SERVER['REMOTE_ADDR'])
-            ->setClientUserAgent($_SERVER['HTTP_USER_AGENT'])
+            ->setClientIpAddress($remoteAddr)
+            ->setClientUserAgent($httpUserAgent)
             ->setEmail($customerInformation['email'])
             ->setFirstName($customerInformation['firstname'])
             ->setLastName($customerInformation['lastname'])
