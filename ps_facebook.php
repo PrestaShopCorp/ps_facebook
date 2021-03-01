@@ -455,6 +455,7 @@ class Ps_facebook extends Module
      */
     private function isFirstCheckoutStep()
     {
+        /* @phpstan-ignore-next-line */
         if ($this->context->controller instanceof TheCheckoutModuleFrontController) {
             return true;
         }
