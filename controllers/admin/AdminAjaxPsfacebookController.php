@@ -435,10 +435,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $categoryId = (int) Tools::getValue('id_category');
         $page = (int) Tools::getValue('page');
         $shopId = (int) $this->context->shop->id;
-
+        $langId = $this->context->language->id;
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
-        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $page, $shopId);
+        $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, $shopId, $page);
 
         $this->ajaxDie(
             json_encode($googleCategories)

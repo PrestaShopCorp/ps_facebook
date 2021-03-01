@@ -37,5 +37,5 @@ interface GoogleCategoryProviderInterface
      *
      * @return array|null
      */
-    public function getGoogleCategoryChildren($categoryId, $page, $shopId);
+    public function getGoogleCategoryChildren($categoryId, $langId, $shopId, $page);
 }

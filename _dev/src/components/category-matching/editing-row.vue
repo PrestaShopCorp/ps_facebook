@@ -184,6 +184,28 @@ export default defineComponent({
     changePropagation(checked, shopCategoryId) {
       this.currentPropagation = checked;
       this.$emit('propagationClicked', shopCategoryId, checked);
+
+      if (checked === true
+        && this.currentSubcategoryId !== 0
+        && this.currentCategoryId !== 0) {
+        const result = {
+          shopCategoryId: this.shopCategoryId,
+          fbCategoryId: this.currentCategoryId,
+          fbCategoryName: this.currentCategoryName.replace('&', '-'),
+          fbSubcategoryId: this.currentSubcategoryId,
+          fbSubcategoryName: this.currentSubcategoryName.replace('&', '-'),
+          propagate: !!this.currentPropagation,
+        };
+        this.saveMatchingCallback(result)
+          .then(() => {
+            this.loading = false;
+            this.error = null;
+          })
+          .catch((error) => {
+            this.loading = null;
+            this.error = error;
+          });
+      }
     },
     getCurrentRow(categoryID) {
       this.$emit('rowClicked', categoryID);

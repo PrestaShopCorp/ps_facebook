@@ -66,7 +66,7 @@
     <p class="py-3" v-html="md2html($t('categoryMatching.intro'))">
     </p>
 
-     <b-alert
+    <b-alert
       v-if="errors"
       show
       variant="danger"
