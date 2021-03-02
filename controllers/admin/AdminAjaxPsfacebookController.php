@@ -610,7 +610,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
-        $informationAboutProducts = $eventBusProductHandler->getFilteredInformationAboutEventBusProducts(
+        $informationAboutProducts = $eventBusProductHandler->getProductsInformation(
             $productsWithErrors,
             $lastFinishedSyncStartedAt,
             $shopId,

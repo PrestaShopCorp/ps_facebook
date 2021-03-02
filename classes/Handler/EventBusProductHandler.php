@@ -119,4 +119,36 @@ class EventBusProductHandler
 
         return $eventBusProductsInfo;
     }
+
+     /**
+     * @param array $eventBusProducts
+     * @param int $syncTimeStamp
+     * @param int $shopId
+     * @param int|false $page
+     *
+     * @return array
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getProductsInformation (
+        array $ProductsInfo,
+        $syncTimeStamp,
+        $shopId,
+        $page
+    ) {
+        $formattedSyncTimeDate = date('Y-m-d H:i:s', $syncTimeStamp);
+        $productsWithErrors = array_keys($ProductsInfo);
+        $ProductsInfo = $this->productRepository->getInformationAboutProducts(
+            $formattedSyncTimeDate,
+            $shopId,
+            $productsWithErrors,
+            $page
+        );
+
+        foreach ($ProductsInfo as $productId => $messages) {
+            $ProductsInfo[$productId]['messages'] = $messages;
+        }
+
+        return $ProductsInfo;
+    }
 }

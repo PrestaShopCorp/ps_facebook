@@ -194,9 +194,9 @@ class ProductRepository
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
         OR ps.price + IFNULL(pas.price, 0) <= 0
         OR pl.name = "" OR pl.name is NULL
-        OR 
+        OR
         (
-            ps.id_product in (' . implode(',', $productIdsWithInvalidSalePrice) . ') AND 
+            ps.id_product in (' . implode(',', $productIdsWithInvalidSalePrice) . ') AND
             (
                 pas.id_product_attribute in (' . implode(',', $productAttributeIdsWithInvalidSalePrice) . ') OR
                 pas.id_product_attribute IS NULL
@@ -358,5 +358,47 @@ class ProductRepository
     public function getSalePriceTaxExcluded($productId, $attributeId)
     {
         return Product::getPriceStatic($productId, false, $attributeId, 6);
+    }
+
+    /**
+     * @param string $syncUpdateDate
+     * @param int $shopId
+     * @param array $productsWithErrors
+     * @param int $page
+     *
+     * @return array|bool|\mysqli_result|\PDOStatement|resource|null
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function getInformationAboutProducts(
+        $syncUpdateDate,
+        $shopId,
+        $productsWithErrors,
+        $page = 1
+    ) {
+        $sql = new DbQuery();
+
+        $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
+        $sql->select('IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '")');
+
+        $sql->from('product_shop', 'ps');
+        $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
+        $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
+
+        $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
+
+        $result = Db::getInstance()->executeS($sql);
+        $products = [];
+        foreach ($result as $product) {
+            $eventBusProductId = ProductCatalogUtility::makeProductId(
+                $product['id_product'],
+                $product['id_product_attribute'],
+                $product['name']
+            );
+            $products[$eventBusProductId] = $product;
+        }
+
+        return $products;
     }
 }
