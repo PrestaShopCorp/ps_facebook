@@ -42,7 +42,6 @@
       v-for="({
         id_product, id_product_attribute, name, messages
       }, index) in dynamicRows" :key="index"
-      v-if="messages && Object.keys(messages).length > 0"
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
@@ -110,31 +109,10 @@ export default defineComponent({
     return {
       loading: false,
       lastPage: 0,
-      dynamicRows: this.rows,
+      dynamicRows: this.rows.filter(({messages}) => messages && Object.keys(messages).length > 0),
     };
   },
   methods: {
-    isNewVariant(index) {
-      const attribute = this.dynamicRows[index].id_product_attribute;
-      const product = this.dynamicRows[index].id_product;
-
-      if (index > 0) {
-        const previousAttribute = this.dynamicRows[index - 1].id_product_attribute;
-        const previousProduct = this.dynamicRows[index - 1].id_product;
-        if (attribute === previousAttribute && product === previousProduct) {
-          return false;
-        }
-      }
-      return true;
-    },
-    variantLabel(index) {
-      // Show label only if previous variant in the array is different than the current one
-      const attribute = this.dynamicRows[index].id_product_attribute;
-      if (!attribute || !this.isNewVariant(index)) {
-        return '';
-      }
-      return attribute;
-    },
     handleScroll() {
       const de = document.documentElement;
       if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
@@ -144,7 +122,8 @@ export default defineComponent({
           if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
             window.removeEventListener('scroll', this.handleScroll);
           }
-          this.dynamicRows = this.rows;
+          this.dynamicRows = this.rows
+            .filter(({messages}) => messages && Object.keys(messages).length > 0);
           console.log('new elements:', newPageCount);
           this.lastPage += 1;
         }).catch((error) => {
