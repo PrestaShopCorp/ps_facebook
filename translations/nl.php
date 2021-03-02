@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -33,6 +52,11 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Herladen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_30030ff165bcbf758790de62d2bdde3d'] = 'U bent al verbonden met Facebook vanuit een andere winkel. Echter, PrestaShop Facebook configuratie is momenteel slechts mogelijk op een winkel. U moet uitloggen uit uw eerste winkel om verbinding te maken.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'Er is een onbekende fout opgetreden tijdens het registratieproces. Laadt u alstublieft opnieuw op en probeer het opnieuw.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9dac30436ef9ef3006ba08896f4978bc'] = 'De versie van de PrestaShop Account module die op deze winkel draait (v{psAccountsVersion}) is ouder dan de minimaal vereiste v{requiredPsAccountsVersion}.
+
+ U kunt PrestaShop Facebook gebruiken, maar sommige functies (bijv. productsynchronisatie) zullen niet beschikbaar zijn totdat u PrestaShop Account bijwerkt.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9b4d55fbbf98565cf115ea97acc98296'] = 'PrestaShop account bijwerken';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_487690c4d2fd7e2519dbd83385dd9f21'] = 'PrestaShop Account is met succes bijgewerkt';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4dae92e5770'] = 'Uw Facebook-instellingen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integreer uw winkel met Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Verbinding maken met Facebook';
@@ -50,7 +74,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0323de4f66a1700e2173e9
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_230111ab958aee6b6b8eee6b7466a16d'] = 'Facebook Business Manager';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_438ec56d3c6528104edf008846d36446'] = 'Met uw Facebook bedrijfsaccount kunt u reclameaccounts, pagina\'s en de mensen die eraan werken op dezelfde plaats beheren';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b7ca35f100eec22e63e206481b8b4573'] = 'Facebook Pixel';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'De Facebook pixel is een stukje code (Javascript) dat wij automatisch op uw website pagina\'s installeren. Het stelt u in staat om &quot;bij te houden&quot; wie uw website bezoekt, conversies van uw Facebook advertenties bij te houden en een publiek te creëren voor retargeting';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'De Facebook pixel is een stukje code (Javascript) dat wij automatisch op uw website pagina\'s installeren. Het stelt u in staat om "bij te houden" wie uw website bezoekt, conversies van uw Facebook advertenties bij te houden en een publiek te creëren voor retargeting';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_756b97abbc9f4c13c541b1adf847eaf0'] = 'Facebook pagina';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_716ea56fbf6096e16bac8ce638ac9b74'] = 'Uw Facebook pagina zal uw bedrijf vertegenwoordigen in uw advertenties';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0a1068d4187d880068c65be6c5b16158'] = 'Facebook advertenties';
@@ -75,6 +99,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Deel catalogus';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Voordat kopers artikelen van u kunnen kopen, moet u uw productinformatie uploaden naar een Facebook productcatalogus.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Neem a.u.b. nota van de volgende elementen: 
+
 1. De export van de catalogus vindt één keer per dag plaats (tijdens de nacht)
 2. Het synchroniseren van uw PrestaShop productinformatie met Facebook kan tot 24 uur duren.
 3. Alleen "actieve" producten worden naar Facebook geëxporteerd. 
@@ -122,7 +147,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Alle statussen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Verbeter uw catalogus: categorie in kaart brengen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'Om uw catalogus te verbeteren en klanten te helpen uw artikelen online te ontdekken, voert u een Google productcategorie (GPC) in voor uw artikelen en voegt u vervolgens meer informatie toe die specifiek is voor elke categorie. Wij raden u aan de meest specifieke categorie te kiezen die van toepassing is op elk item om klanten te helpen begrijpen wat voor soort item u verkoopt.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5e8a207a6917e15f61a2074ef8f1d7e5'] = 'In kaart gebrachte categorieën';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'In kaart gebrachte categorieën';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4267fc283203518fbf3a46d1f53bb6b4'] = 'Type om te filteren';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e0626222614bdee31951d84c64e5e9ff'] = 'Selecteer';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8e7672a024a6a0369d105feb2b5dab9b'] = 'Geen resultaat voor uw zoekopdracht';
@@ -130,7 +155,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e5be071f98c1298d3ba7ce
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4f59ad772c46c6d2073add0af87415d6'] = 'Er is een fout opgetreden tijdens het zoekproces.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_42a846a03863bf8980240407f0131e6f'] = 'Categorie op uw site';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9e3c34aa34e5cfc5275d1bed9a3dcb87'] = 'Google categorie';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_52b68aaa602d202c340d9e4e9157f276'] = 'Toepassen op subcategorieën?';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d8d6aeac43be9e0dac979819e81ceeea'] = 'Toepassen op subcategorieën?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_f2e925b76d09d5c3f5e4bda2c651e547'] = 'Google subcategorie';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7db59a7e372cf3c6433750f8078559a3'] = 'Synchronisatie van producten';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6297cdd34823b19402b792867ed42f70'] = 'Ja, bevestig';
@@ -140,6 +165,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec211f7c20af43e742bf25
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34e34c43ec6b943c10a3cc1a1a16fb11'] = 'Beheer';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e2c0ec0e191'] = 'Messenger Chat Plugin';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1ebaedc380b26'] = 'Met de Chat Plugin kunt u uw Messenger ervaring direct in uw website integreren.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e456de96ee72154dee72e5ca9fa5745f'] = 'Mijn berichten bekijken';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Instellingen naar wens aanpassen';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_a1625f6703621f0870e0909141b09f32'] = 'Voeg een winkeltabblad toe aan uw Facebook-pagina';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'Met Facebook Page shop kunt u producten die u verkoopt op een rijtje zetten en met meer klanten in contact komen op Facebook.';

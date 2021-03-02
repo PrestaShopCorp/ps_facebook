@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -73,16 +74,6 @@ class FacebookCategoryClient
         return reset($googleCategory);
     }
 
-    /**
-     * @param string $categoryIds
-     *
-     * @return array
-     */
-    public function getGoogleCategories($categoryIds)
-    {
-        return $this->get('taxonomy/' . $categoryIds);
-    }
-
     protected function get($id, array $fields = [], array $query = [])
     {
         $query = array_merge(
@@ -102,6 +93,22 @@ class FacebookCategoryClient
             );
 
             $response = $this->client->send($request);
+        } catch (ClientException $e) {
+            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $this->errorHandler->handle(
+                new FacebookClientException(
+                    'Facebook category client failed when creating get request.',
+                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false,
+                [
+                    'extra' => $exceptionContent,
+                ]
+            );
+
+            return false;
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(

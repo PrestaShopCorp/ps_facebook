@@ -24,7 +24,7 @@ class Config
 {
     const API_VERSION = 'v9.0';
 
-    const REQUIRED_PS_ACCOUNTS_VERSION = '3.1.13';
+    const REQUIRED_PS_ACCOUNTS_VERSION = '3.2.2';
 
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
@@ -56,4 +56,8 @@ class Config
     const PSX_FACEBOOK_APP_ID = '726899634800479';
     const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
     const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
+
+    /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
+    const OAUTH_EXCEPTION_CODE = [33, 190];
+    const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
 }

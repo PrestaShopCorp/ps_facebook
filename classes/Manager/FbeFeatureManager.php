@@ -63,6 +63,8 @@ class FbeFeatureManager
         }
 
         $featureConfiguration->enabled = (bool) $state;
+        $this->configurationAdapter->updateValue(Config::FBE_FEATURE_CONFIGURATION . $featureName, json_encode($featureConfiguration));
+
         $configuration = [
             $featureName => $featureConfiguration,
         ];

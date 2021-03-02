@@ -1,5 +1,5 @@
 <!--**
- * 2007-2020 PrestaShop and Contributors
+ * 2007-2021 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -12,7 +12,7 @@
  * to license@prestashop.com so we can send you a copy immediately.
  *
  * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2020 PrestaShop SA and Contributors
+ * @copyright 2007-2021 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *-->
@@ -22,44 +22,57 @@
       <b-thead>
         <b-tr>
           <b-th>{{ $t('categoryMatching.tableMatching.firstTd') }}</b-th>
-          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.thirdTd') }}</b-th>
+          <b-th>{{ $t('categoryMatching.tableMatching.secondTd') }}</b-th>
           <b-th>{{ $t('categoryMatching.tableMatching.fourthTd') }}</b-th>
+          <b-th />
         </b-tr>
       </b-thead>
       <b-tbody>
         <editing-row
-          v-for="category in categories"
-          v-if="category.show"
+          v-for="category in activeCategories"
           :key="category.shopCategoryId"
           :category-style="categoryStyle(category)"
           :shop-category-id="category.shopCategoryId"
-          :initial-category-name="category.categoryName"
-          :initial-category-id="category.categoryId"
-          :initial-subcategory-name="category.subcategoryName"
-          :initial-subcategory-id="category.subcategoryId"
-          :initial-propagation="category.propagation"
+          :initial-category-name="category.googleCategoryParentName"
+          :initial-category-id="category.googleCategoryParentId"
+          :initial-subcategory-name="category.googleCategoryName"
+          :initial-subcategory-id="category.googleCategoryId"
+          :initial-propagation="category.isParentCategory"
           :autocompletion-api="'https://facebook-api.psessentials.net/taxonomy/'"
           :save-matching-callback="saveMatchingCallback"
+          :language="language"
           @rowClicked="getCurrentRow"
+          @propagationClicked="applyToAllChildren"
         >
           {{ category.shopCategoryName }}
         </editing-row>
       </b-tbody>
     </b-table-simple>
+    <div
+      class="psfb-lazy-loading"
+      v-if="loading"
+    >
+      <div
+        id="spinner"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
 import EditingRow from './editing-row.vue';
+import MixinMatching from './matching.ts';
 
 export default defineComponent({
   name: 'TableMatching',
   components: {
     EditingRow,
   },
-  mixins: [],
+  mixins: [
+    MixinMatching,
+  ],
   props: {
     initialCategories: {
       type: Array,
@@ -70,42 +83,79 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    getChildrensOfParentRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategory || null,
+    },
+    saveParentStatement: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookUpdateCategoryMatch || null,
+    },
+    getCategoriesRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetCategories || null,
+    },
   },
   computed: {
+    activeCategories() {
+      return this.categories.filter(
+        (category) => category.show,
+      );
+    },
   },
   data() {
     return {
       categories: this.initialCategories,
+      loading: false,
+      language: this.$store.state.context.appContext.localeLang,
     };
   },
   methods: {
-    saveMatchingCallback() {
-      return Promise.resolve(true);
-    },
+    saveMatchingCallback(category) {
+      if (this.overrideGetCurrentRow) {
+        return Promise.resolve(true);
+      }
+      const updateParent = Number(category.propagate);
+      const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
 
-    categoryStyle(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1;
+      currentCategory.googleCategoryId = category.fbSubcategoryId;
+      currentCategory.googleCategoryName = category.fbSubcategoryName;
+      currentCategory.googleCategoryParentName = category.fbCategoryName;
+      currentCategory.googleCategoryParentId = category.fbCategoryId;
 
-      let isDeployed = '';
-      if (category.deploy !== true) {
-        if (category.deploy !== null || floor !== 3) {
-          isDeployed = 'closed';
+      if (category.fbSubcategoryName === undefined) {
+        category.fbSubcategoryName = '';
+      }
+      this.applyToAllChildren(category.shopCategoryId);
+
+      return fetch(this.saveParentStatement, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${updateParent}`,
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
         }
-      } else {
-        isDeployed = 'opened';
-      }
-
-      return `array-tree-lvl-${floor.toString()} ${isDeployed}`;
+        this.$parent.fetchCategoryMatchingCounters();
+        return true;
+      });
     },
 
-    canShowCheckbox(category) {
-      const floor = category.shopParentCategoryIds.split('/').length - 1;
-
-      if (category.deploy === null || floor === 3) {
-        return false;
-      }
-
-      return true;
+    applyToAllChildren(shopCategoryId) {
+      const currentCategory = this.findShopCategory(this.categories, shopCategoryId);
+      this.categories.forEach(
+        (child) => {
+          if (child.shopParentCategoryIds.match(new RegExp(`^${currentCategory.shopParentCategoryIds}[0-9]+/$`))) {
+            child.isParentCategory = child.deploy === this.HAS_CHILDREN;
+            child.googleCategoryId = currentCategory.googleCategoryId;
+            child.googleCategoryName = currentCategory.googleCategoryName;
+            child.googleCategoryParentName = currentCategory.googleCategoryParentName;
+            child.googleCategoryParentId = currentCategory.googleCategoryParentId;
+          }
+        });
     },
 
     getCurrentRow(currentShopCategoryID) {
@@ -120,7 +170,7 @@ export default defineComponent({
       );
 
       if (this.canShowCheckbox(currentCtg) === false) {
-        currentCtg.propagation = null;
+        currentCtg.isParentCategory = null;
       }
 
       this.setAction(currentCtg, subcategory);
@@ -139,10 +189,10 @@ export default defineComponent({
         child.show = true;
         if (this.canShowCheckbox(child) === false) {
           /* eslint no-param-reassign: "error" */
-          child.propagation = null;
+          child.isParentCategory = null;
         }
       });
-      currentCategory.deploy = true;
+      currentCategory.deploy = this.FOLD;
     },
 
     /**
@@ -155,52 +205,112 @@ export default defineComponent({
       );
       childrens.forEach((child) => {
         child.show = false;
-        if (child.deploy === true) {
-          child.deploy = false;
+        if (child.deploy === this.FOLD) {
+          child.deploy = this.UNFOLD;
         }
       });
-      currentCategory.deploy = false;
+      currentCategory.deploy = this.UNFOLD;
     },
 
     /**
     * add subcategories
     */
     addChildren(currentCategory, subcategories) {
+      this.loading = true;
+      const subcategory = subcategories;
       const indexCtg = this.categories.indexOf(currentCategory) + 1;
-      currentCategory.deploy = true;
-      // TODO: Do call with fetch to PHP
+      const categoryLevel = currentCategory.shopParentCategoryIds.split('/').length - 1;
 
-      if (Array.isArray(subcategories)) {
-        subcategories.forEach((el) => {
-          this.categories.splice(indexCtg, 0, el);
-          el.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + el.shopCategoryId}/`;
-        });
-      } else {
-        this.categories.splice(indexCtg, 0, subcategories);
-        subcategories.shopParentCategoryIds = `${currentCategory.shopParentCategoryIds + subcategories.shopCategoryId}/`;
+      if (categoryLevel === 3) {
+        return;
       }
-      currentCategory.deploy = true;
+      currentCategory.deploy = this.FOLD;
+
+      if (this.overrideGetCurrentRow !== null) {
+        this.formatDataFromRequest(subcategory, currentCategory, this.categories, indexCtg, true);
+      }
+
+      this.$parent.fetchCategories(currentCategory.shopCategoryId, 1).then((res) => {
+        const resp = this.formatDataFromRequest(res, currentCategory, this.categories, indexCtg);
+        this.categories = resp.categories;
+        currentCategory.deploy = resp.statement;
+      });
+      this.loading = false;
     },
 
+    handleScroll() {
+      const de = document.documentElement;
+      if (this.loading === false && de.scrollTop + window.innerHeight
+          === de.scrollHeight
+      ) {
+        this.loading = true;
+        this.$parent.fetchCategories(0, 1).then((res) => {
+          const resp = this.formatDataFromLazyLoading(res, this.categories);
+          this.categories = resp.newCategories;
+          if (resp.hasCategoriesStatement === true) {
+            window.removeEventListener('scroll', this.handleScroll);
+          }
+        }).catch((error) => {
+          console.error(error);
+        }).then(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        });
+      }
+    },
     /**
     * call function
     */
     setAction(currentCategory, subcategories) {
       const dictionary = {
-        false: () => this.showChildren(currentCategory),
-        true: () => this.hideChildren(currentCategory),
-        undefined: () => this.addChildren(currentCategory, subcategories),
-        null: () => {},
+        0: () => {},
+        1: () => this.addChildren(currentCategory, subcategories),
+        2: () => this.showChildren(currentCategory),
+        3: () => this.hideChildren(currentCategory),
       };
       return dictionary[currentCategory.deploy].call();
     },
   },
-  created() {
-    if (this.categories.length === 0) {
-      // call php
-    }
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   watch: {
   },
 });
 </script>
+<style lang="scss" scoped>
+#psFacebookApp .display-table-matchingFb .table-responsive:after {
+  height: 24.6rem !important;
+  content: '';
+  display: block;
+}
+
+.display-table-matchingFb .psfb-lazy-loading {
+  width: 100%;
+  height: 40px;
+  #spinner {
+    color: #fff;
+    background-color: #fff;
+    width: 3rem !important;
+    height: 3rem !important;
+    border-radius: 2.5rem;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    position: absolute;
+    left: calc(50% - 0.6rem);
+  }
+}
+</style>

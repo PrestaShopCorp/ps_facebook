@@ -4,6 +4,7 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
+      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
 
   PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler
@@ -14,14 +15,11 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
 
   PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
     arguments:
       - '@ps_facebook.language'
-      - '@PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
 

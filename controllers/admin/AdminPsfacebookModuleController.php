@@ -24,6 +24,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
+use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -46,12 +47,18 @@ class AdminPsfacebookModuleController extends ModuleAdminController
      */
     private $multishopDataProvider;
 
+    /**
+     * @var ShopRepository
+     */
+    private $shopRepository;
+
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
+        $this->shopRepository = $this->module->getService(ShopRepository::class);
         $this->bootstrap = false;
     }
 
@@ -95,7 +102,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
             'contextPsAccounts' => (object) $this->presentPsAccounts(),
-            'psAccountsToken' => $psAccountsService->getOrRefreshToken(),
+            // getOrRefreshToken() does not exist on very old versions of the lib
+            'psAccountsToken' => method_exists($psAccountsService, 'getOrRefreshToken') ? $psAccountsService->getOrRefreshToken() : '',
+            'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
             'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
@@ -124,6 +133,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'ConnectToFacebook',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookEnsureTokensExchanged' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'EnsureTokensExchanged',
                     'ajax' => 1,
                 ]
             ),
@@ -172,15 +190,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetCategoriesByIds' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'getCategoriesByIds',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookGetFeaturesRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -214,6 +223,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'CatalogSummary',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookGetCategoryMappingStatus' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'CategoryMappingCounters',
                     'ajax' => 1,
                 ]
             ),
@@ -276,6 +294,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,
             ],
+            'localeLang' => $this->context->language->locale,
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => $this->configurationAdapter->get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,
@@ -340,7 +359,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             return;
         }
 
-        foreach ($presentedData['shops'] as $groupKey => &$shopGroup) {
+        foreach ($presentedData['shops'] as &$shopGroup) {
             foreach ($shopGroup['shops'] as &$shop) {
                 $shop['url'] = $this->context->link->getAdminLink(
                     'AdminModules',

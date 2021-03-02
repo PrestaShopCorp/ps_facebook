@@ -77,7 +77,7 @@
     },
     "catalogSummary":  {
       "categoryMatching": "Enhance your catalog",
-      "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Facebook product category (FPC) for your items and then add more information specific to each category.",
+      "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
       "categoryMatchingNotice": "You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.",
       "matchCategoriesButton": "Map categories",
       "productCatalogExport": "Your catalog in Facebook Business",
@@ -143,7 +143,8 @@
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",
       "intro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
-      "counterSubTitle": "specified parent categories",
+      "counterSubTitle": "specified categories",
+      "edit":"Edit",
       "autocomplete": {
         "typeToFilter": "Type to filter",
         "select": "Select",
@@ -151,12 +152,25 @@
         "tooManyResults": "Too many results, please complete your search.",
         "fetchError": "An error occurred during search process."
       },
+      "editTable": {
+        "psCategoryName": "Category on your site",
+        "fbCategoryName": "Google category",
+        "fbSubcategoryName": "Google subcategory",
+        "checkboxTxt": "Display unspecified categories only",
+        "required": "Required"
+      },
       "tableMatching": {
         "firstTd" : "Category on your site",
         "secondTd" : "Google category",
-        "thirdTd" : "Parent category",
+        "thirdTd" : "Apply to sub-categories?",
         "fourthTd" : "Google subcategory"
       }
+    },
+    "categoryMatched" : {
+      "title" : "Enhance your catalog: category mapping",
+      "description" : "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC for your items.",
+      "btn" : "View mapping",
+      "progressBarTotal" : "categories mapped"
     },
     "integrate": {
       "buttons" : {

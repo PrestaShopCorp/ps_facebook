@@ -112,7 +112,7 @@ class EventDataProvider
                 if ($controllerPage === 'product') {
                     return $this->getProductPageData();
                 }
-                if ($controllerPage === 'category' && $this->context->controller->controller_type === 'front') {
+                if ($controllerPage === 'category') {
                     return $this->getCategoryPageData();
                 }
                 if ($controllerPage === 'cms') {
@@ -409,7 +409,7 @@ class EventDataProvider
             'order_id' => $order->id,
             'currency' => $this->getCurrency(),
             'content_ids' => $productList,
-            'value' => floatval($order->total_paid_tax_excl),
+            'value' => (float) ($order->total_paid_tax_excl),
         ];
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
@@ -560,7 +560,7 @@ class EventDataProvider
 
     private function getCurrency()
     {
-        return strtolower($this->context->currency->iso_code);
+        return \Tools::strtolower($this->context->currency->iso_code);
     }
 
     private function getCategory($categoryId)

@@ -38,18 +38,43 @@ class CategoryMatchHandler
     /**
      * @param int $categoryId
      * @param int $googleCategoryId
+     * @param string $googleCategoryName
+     * @param int $googleCategoryParentId
+     * @param string $googleCategoryParentName
      * @param bool $updateChildren
      * @param int $shopId
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function updateCategoryMatch($categoryId, $googleCategoryId, $updateChildren, $shopId)
-    {
-        if ($updateChildren) {
+    public function updateCategoryMatch(
+        $categoryId,
+        $googleCategoryId,
+        $googleCategoryName,
+        $googleCategoryParentId,
+        $googleCategoryParentName,
+        $updateChildren,
+        $shopId
+    ) {
+        if ($updateChildren === true) {
             $category = new Category($categoryId);
             $categoryChildrenIds = $category->getAllChildren();
-            $this->googleCategoryRepository->updateCategoryChildrenMatch($categoryChildrenIds, $googleCategoryId, $shopId);
+            $this->googleCategoryRepository->updateCategoryChildrenMatch(
+                $categoryChildrenIds,
+                $googleCategoryId,
+                $googleCategoryName,
+                $googleCategoryParentId,
+                $googleCategoryParentName,
+                $shopId
+            );
         }
-        $this->googleCategoryRepository->updateCategoryMatch($categoryId, $googleCategoryId, $shopId, $updateChildren);
+        $this->googleCategoryRepository->updateCategoryMatch(
+            $categoryId,
+            $googleCategoryId,
+            $googleCategoryName,
+            $googleCategoryParentId,
+            $googleCategoryParentName,
+            $shopId,
+            $updateChildren
+        );
     }
 }
