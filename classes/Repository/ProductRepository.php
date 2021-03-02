@@ -194,9 +194,9 @@ class ProductRepository
         OR pl.link_rewrite = "" OR pl.link_rewrite is NULL
         OR ps.price + IFNULL(pas.price, 0) <= 0
         OR pl.name = "" OR pl.name is NULL
-        OR 
+        OR
         (
-            ps.id_product in (' . implode(',', $productIdsWithInvalidSalePrice) . ') AND 
+            ps.id_product in (' . implode(',', $productIdsWithInvalidSalePrice) . ') AND
             (
                 pas.id_product_attribute in (' . implode(',', $productAttributeIdsWithInvalidSalePrice) . ') OR
                 pas.id_product_attribute IS NULL

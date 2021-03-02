@@ -34,166 +34,57 @@
       <h1>{{ $t('syncReport.title') }}</h1>
 
       <br><br>
-      <b-alert
-        variant="warning"
-        show
-        class="warning"
-      >
-        {{ $t('productScan.betaWarning') }}
-      </b-alert>
+      <b-form-group v-slot="{ ariaDescribedby }">
+        <b-form-radio-group
+          id="btn-radios-1"
+          v-model="view"
+          :options="views"
+          :aria-describedby="ariaDescribedby"
+          name="radios-btn-default"
+          buttons
+          button-variant="outline-primary"
+        />
+      </b-form-group>
 
-      <b-table-simple>
-        <b-thead>
-          <b-tr>
-            <b-th>{{ $t('syncReport.name') }}</b-th>
-            <b-th>{{ $t('productScan.lang') }}</b-th>
-            <b-th>{{ $t('productScan.cover') }}</b-th>
-            <b-th>{{ $t('productScan.description') }}</b-th>
-            <b-th>{{ $t('productScan.barcode') }}</b-th>
-            <b-th>{{ $t('productScan.price') }}</b-th>
-          </b-tr>
-        </b-thead>
-        <template
-          v-for="({
-            name, has_cover, has_description_or_short_description,
-            has_manufacturer_or_ean_or_upc_or_isbn,
-            has_price_tax_excl, language, id_product, id_product_attribute
-          }, index) in rows"
+      <p v-if="view === 'PREVALIDATION'">
+        {{ $t('syncReport.prevalidationText') }}
+      </p>
+      <template v-else>
+        <span
+          v-if="lastSyncDate"
+          class="text-muted text-italic"
         >
-          <template v-if="index === 0 || id_product !== rows[index - 1].id_product">
-            <b-tr :key="index">
-              <b-td>
-                <b-link
-                  :href="url.replace('/1?', `/${id_product}?`)"
-                  target="_blank"
-                >
-                  {{ name }}
-                </b-link>
-              </b-td>
-              <b-td />
-              <b-td />
-              <b-td />
-              <b-td />
-              <b-td />
-            </b-tr>
-            <b-tr
-              :key="index + 'bis'"
-              class="dashed"
-            >
-              <b-td class="pl-4">
-                {{ variantLabel(index) }}
-              </b-td>
-              <b-td>{{ language }}</b-td>
-              <b-td>
-                <i
-                  v-if="has_cover === '0'"
-                  class="material-icons text-danger"
-                >close</i>
-                <i
-                  v-else
-                  class="material-icons text-success"
-                >done</i>
-              </b-td>
-              <b-td>
-                <i
-                  v-if="has_description_or_short_description === '0'"
-                  class="material-icons text-danger"
-                >
-                  close
-                </i>
-                <i
-                  v-else
-                  class="material-icons text-success"
-                >done</i>
-              </b-td>
-              <b-td>
-                <i
-                  v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-                  class="material-icons text-danger"
-                >
-                  close
-                </i>
-                <i
-                  v-else
-                  class="material-icons text-success"
-                >done</i>
-              </b-td>
-              <b-td>
-                <i
-                  v-if="has_price_tax_excl === '0'"
-                  class="material-icons text-danger"
-                >close</i>
-                <i
-                  v-else
-                  class="material-icons text-success"
-                >done</i>
-              </b-td>
-            </b-tr>
-          </template>
-          <b-tr
-            :key="index"
-            v-else
-            :class="!isNewVariant(index) ? 'none' : 'dashed'"
-          >
-            <b-td class="pl-4">
-              {{ variantLabel(index) }}
-            </b-td>
-            <b-td>{{ language }}</b-td>
-            <b-td>
-              <i
-                v-if="has_cover === '0'"
-                class="material-icons text-danger"
-              >close</i>
-              <i
-                v-else
-                class="material-icons text-success"
-              >done</i>
-            </b-td>
-            <b-td>
-              <i
-                v-if="has_description_or_short_description === '0'"
-                class="material-icons text-danger"
-              >
-                close
-              </i>
-              <i
-                v-else
-                class="material-icons text-success"
-              >done</i>
-            </b-td>
-            <b-td>
-              <i
-                v-if="has_manufacturer_or_ean_or_upc_or_isbn === '0'"
-                class="material-icons text-danger"
-              >
-                close
-              </i>
-              <i
-                v-else
-                class="material-icons text-success"
-              >done</i>
-            </b-td>
-            <b-td>
-              <i
-                v-if="has_price_tax_excl === '0'"
-                class="material-icons text-danger"
-              >close</i>
-              <i
-                v-else
-                class="material-icons text-success"
-              >done</i>
-            </b-td>
-          </b-tr>
-        </template>
-      </b-table-simple>
+          {{ $t('syncReport.lastSyncDate', [
+            lastSyncDate.toLocaleDateString(undefined, { dateStyle: 'medium' }),
+            lastSyncDate.toLocaleTimeString(undefined),
+          ]) }}
+        </span>
+        <br v-if="lastSyncDate">
+        <p>{{ $t('syncReport.reportingText') }}</p>
+      </template>
+
+      <prevalidation-table
+        v-if="view === 'PREVALIDATION' && prevalidationRows"
+        :rows="prevalidationRows"
+        :url="url"
+      />
+      <reporting-table
+        v-if="view === 'REPORTING' && reportingRows"
+        :rows="reportingRows"
+        :url="url"
+      />
     </b-card>
   </div>
 </template>
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {BButton, BCard, BTableSimple} from 'bootstrap-vue';
+import {
+  BButton, BCard, BFormGroup, BFormRadioGroup,
+} from 'bootstrap-vue';
 import Spinner from '../spinner/spinner.vue';
+import PrevalidationTable from './report-details/prevalidation-table.vue';
+import ReportingTable from './report-details/reporting-table.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
@@ -201,86 +92,180 @@ export default defineComponent({
     Spinner,
     BButton,
     BCard,
-    BTableSimple,
+    PrevalidationTable,
+    ReportingTable,
+    BFormGroup,
+    BFormRadioGroup,
   },
-  mixins: [],
   props: {
-    getProductsWithErrorsRoute: {
+    getProductsWithErrorsRoute: { // prevalidation scan reporting call
       type: String,
       required: false,
       default: () => global.psFacebookGetProductsWithErrors || null,
     },
-  },
-  computed: {
+    getProductStatusesRoute: { // reporting from FB
+      type: String,
+      required: false,
+      default: () => global.psFacebookGetProductStatuses || null,
+    },
+    forceView: {
+      type: String,
+      required: false,
+      default: () => 'PREVALIDATION',
+    },
+    forcePrevalidationRows: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    forceReportingRows: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
   },
   data() {
     return {
       loading: true,
-      rows: [],
+      views: [
+        {
+          text: this.$t('syncReport.views.prevalidation', ['']),
+          value: 'PREVALIDATION',
+        },
+        {
+          text: this.$t('syncReport.views.reporting', ['']),
+          value: 'REPORTING',
+          disabled: true,
+        },
+      ],
+      view: this.forceView,
+      prevalidationRows: [],
+      reportingRows: [],
       url: '',
+      lastSyncDate: null,
     };
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.loading = true;
-
-      fetch(this.getProductsWithErrorsRoute, {
+    fetchPrevalidation(page = 0) {
+      if (!this.getProductsWithErrorsRoute) {
+        return Promise.reject(new Error('No route to fetch reporting data.'));
+      }
+      return fetch(`${this.getProductsWithErrorsRoute}&page=${page}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        // body: JSON.stringify({}),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
         return res.json();
       }).then((res) => {
-        const {list, url} = res;
-        this.rows = list;
+        const {list, url, success} = res;
+        if (success && list && list.length > 0) {
+          const newPage = list.map((row) => ({...row, page}));
+          this.prevalidationRows = this.prevalidationRows
+            .filter((row) => row.page < page)
+            .concat(newPage);
+          this.url = url;
+          return newPage.length;
+        }
+        return 0;
+      });
+    },
+    fetchReporting(page = 0) {
+      if (!this.getProductStatusesRoute) {
+        return Promise.reject(new Error('No route to fetch reporting data.'));
+      }
+      return fetch(`${this.getProductStatusesRoute}&page=${page}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        const {
+          list, url, success, lastFinishedSyncStartedAt,
+        } = res;
+
+        if (!success) {
+          if (page === 0) {
+            this.reportingRows = null;
+          }
+          return 0;
+        }
+
+        const newPage = Object.values(list || {}).map((row) => ({...row, page}));
+        this.reportingRows = this.reportingRows.filter((row) => row.page < page).concat(newPage);
         this.url = url;
+        this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
+        return newPage.length;
+      });
+    },
+    fetchData() {
+      const fetches = [];
+      if (this.forcePrevalidationRows === null || this.forcePrevalidationRows.length > 0) {
+        this.prevalidationRows = this.forcePrevalidationRows;
+      } else {
+        fetches.push(this.fetchPrevalidation());
+      }
+      if (this.forceReportingRows === null || Object.values(this.forceReportingRows).length > 0) {
+        this.reportingRows = this.forceReportingRows
+          ? Object.values(this.forceReportingRows)
+          : null;
+      } else {
+        fetches.push(this.fetchReporting());
+      }
+
+      this.loading = true;
+      Promise.all(fetches).then(() => {
         this.loading = false;
       }).catch((error) => {
         console.error(error);
         this.loading = false;
       });
     },
-    isNewVariant(index) {
-      const attribute = this.rows[index].id_product_attribute;
-      const product = this.rows[index].id_product;
-
-      if (index > 0) {
-        const previousAttribute = this.rows[index - 1].id_product_attribute;
-        const previousProduct = this.rows[index - 1].id_product;
-        if (attribute === previousAttribute && product === previousProduct) {
-          return false;
-        }
-      }
-      return true;
+  },
+  watch: {
+    prevalidationRows(newValue) {
+      // eslint-disable-next-line no-nested-ternary
+      const count = newValue.length === 0 ? '' : (
+        newValue.length === 1
+          ? this.$t('syncReport.views.oneError')
+          : this.$t('syncReport.views.manyErrors', [newValue.length])
+      );
+      this.views[0].text = this.$t('syncReport.views.prevalidation', [count]);
     },
-    variantLabel(index) {
-      // Show label only if previous variant in the array is different than the current one
-      const attribute = this.rows[index].id_product_attribute;
-      if (!attribute || !this.isNewVariant(index)) {
-        return '';
+    reportingRows(newValue) {
+      // eslint-disable-next-line no-nested-ternary
+      const count = (!newValue || Object.keys(newValue).length === 0) ? '' : (
+        Object.keys(newValue).length === 1
+          ? this.$t('syncReport.views.oneError')
+          : this.$t('syncReport.views.manyErrors', [Object.keys(newValue).length])
+      );
+      this.views[1].text = this.$t('syncReport.views.reporting', [count]);
+      this.views[1].disabled = (newValue === null);
+    },
+    view(newView, oldView) {
+      if (newView === oldView || !newView || !oldView) {
+        return;
       }
-      return this.$t('productScan.variant', [attribute]);
+      this.$segment.track(
+        newView === 'PREVALIDATION' ? 'See prevalidation scan details' : 'See reporting details',
+        {
+          module: 'ps_facebook',
+        },
+      );
     },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-  th {
-    text-transform: uppercase;
-  }
-
-  tr.dashed > td:first-of-type {
-    border-top-style: dashed !important;
-  }
-
-  tr.none > td:first-of-type {
-    border-top: 0px none !important;
+  .text-italic {
+    font-style: italic;
   }
 </style>
