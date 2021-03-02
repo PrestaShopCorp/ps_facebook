@@ -120,8 +120,8 @@ class EventBusProductHandler
         return $eventBusProductsInfo;
     }
 
-     /**
-     * @param array $eventBusProducts
+    /**
+     * @param array $ProductsInfo
      * @param int $syncTimeStamp
      * @param int $shopId
      * @param int|false $page
@@ -130,7 +130,7 @@ class EventBusProductHandler
      *
      * @throws \PrestaShopDatabaseException
      */
-    public function getProductsInformation (
+    public function getProductsInformation(
         array $ProductsInfo,
         $syncTimeStamp,
         $shopId,

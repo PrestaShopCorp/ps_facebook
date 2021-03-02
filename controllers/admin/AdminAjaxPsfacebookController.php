@@ -614,13 +614,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $productsWithErrors,
             $lastFinishedSyncStartedAt,
             $shopId,
-            $page,
-            $status,
-            $sortBy,
-            $sortTo,
-            $searchById,
-            $searchByName,
-            $searchByMessage
+            $page
         );
 
         $this->ajaxDie(
