@@ -379,13 +379,13 @@ class ProductRepository
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
-        $sql->select('IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '")');
 
         $sql->from('product_shop', 'ps');
         $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->where('CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '")');
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         $result = Db::getInstance()->executeS($sql);
