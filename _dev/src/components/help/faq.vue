@@ -86,7 +86,7 @@
             />
           </div>
           <template v-else-if="faq && faq.categories">
-            <v-collapse-group
+            <div
               class="my-3"
               v-for="(categorie, index) in faq.categories"
               :key="index"
@@ -95,28 +95,24 @@
               <h3 class="categorie-title">
                 {{ categorie.title }}
               </h3>
-              <v-collapse-wrapper
+              <div
                 :ref="index + '_' + i"
                 v-for="(item, i) in categorie.blocks"
                 :key="i"
+                class="my-3 question"
               >
-                <div
-                  class="my-3 question"
-                  v-collapse-toggle
+                <details
+                  class="details"
+                  @click="onQuestionClick(index + '_' + i)"
                 >
-                  <a @click="onQuestionClick(index + '_' + i)">
+                  <summary>
                     <i class="material-icons">keyboard_arrow_right</i>
-                    {{ item.question }}</a>
-                </div>
-                <div
-                  class="answer"
-                  :class="'a' + i"
-                  v-collapse-content
-                >
-                  {{ item.answer }}
-                </div>
-              </v-collapse-wrapper>
-            </v-collapse-group>
+                    {{ item.question }}
+                  </summary>
+                  <p class="answer">{{ item.answer }}</p>
+                </details>
+              </div>
+            </div>
           </template>
           <template v-else>
             <b-alert
@@ -182,17 +178,22 @@ export default defineComponent({
   padding: 15px;
   background-color: #f7f7f7;
 }
-.question {
-  cursor: pointer;
+.details > summary {
+  list-style: none;
 }
-.icon-expand {
-  transform: rotate(90deg);
-  transition: all 0.3s;
-}
-.v-collapse-content {
+.details > summary::-webkit-details-marker {
   display: none;
 }
-.v-collapse-content-end {
-  display: block;
+.details .material-icons {
+  transition: transform .15s;
+}
+.details[open] .material-icons {
+  transform: rotate(90deg)
+}
+.details summary:focus {
+  box-shadow: 0 0 0 1px #25b9d7;
+  border-radius: 4px;
+  outline: none;
+  position: relative;
 }
 </style>
