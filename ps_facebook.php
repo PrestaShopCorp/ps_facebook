@@ -89,7 +89,6 @@ class Ps_facebook extends Module
         'actionObjectCustomerMessageAddAfter',
         'displayFooter',
         'actionNewsletterRegistrationAfter',
-        'actionSubmitAccountBefore',
         'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
@@ -402,13 +401,6 @@ class Ps_facebook extends Module
     }
 
     public function hookActionNewsletterRegistrationAfter(array $params)
-    {
-        /** @var EventDispatcher $eventDispatcher */
-        $eventDispatcher = $this->getService(EventDispatcher::class);
-        $eventDispatcher->dispatch(__FUNCTION__, $params);
-    }
-
-    public function hookActionSubmitAccountBefore(array $params)
     {
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
