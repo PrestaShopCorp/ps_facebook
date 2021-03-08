@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -8,17 +27,17 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6a26f548831e6a8c26bfbb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd0be48c2c3483c8f1a51f696612a711'] = 'Sales channels';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be11c74c1dd7f307bb80183a90dc2067'] = 'Get started';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_bc77a4069560dbaeda21d023d3525522'] = 'Easily and quickly build your business presence into Facebook community!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- No credit card required 
-- Easy setup 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- No credit card required
+- Easy setup
 - Cancel anytime';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ebce4cfc471199c367d61bbc02e29f0e'] = 'Make your first steps with PrestaShop Facebook!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Manage your business';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d4dc9be37b7d8b65d15380a2ee76b768'] = 'Control your ad settings and business tools 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d4dc9be37b7d8b65d15380a2ee76b768'] = 'Control your ad settings and business tools
 from one place.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_187d8391715e5486cf16ef7208d60638'] = 'Understand your traffic';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40bd8e4a1d4cd9d762778fa8ebcbaa11'] = 'Use data from Facebook Pixel to understand actions people take on your website.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_487c03430cec1fb5515b532add3aa824'] = 'Boost your sales';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec01fe3728135f86d60a48008e85634c'] = 'Manage your product catalog and 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec01fe3728135f86d60a48008e85634c'] = 'Manage your product catalog and
 unlock the power of ads.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1d1dc32ede668d0832d5ae914fe823c8'] = 'Create and optimize better shopping experience';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_44647eb0f0026b124679b4d22bd6d76e'] = 'Thanks to the automatic synchronisation of the product catalogue and the mapping of your categories have an updated and more efficient Facebook catalogue.';
@@ -44,12 +63,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integrate your shop with Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Connect to Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business 
-- Create/Select page 
-- Create/Select ad account 
-- Create/Select install pixel 
- - Create/Select sync product catalog 
- - Create Facebook Shop & Instagram Shopping 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Create/Select business
+- Create/Select page
+- Create/Select ad account
+- Create/Select install pixel
+ - Create/Select sync product catalog
+ - Create Facebook Shop & Instagram Shopping
 - Add Messenger plug-in in your shop';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'You authorize this Facebook account to connect to your store:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_104f3d1bf8a4000358de7b64821b5769'] = 'Modify the account settings';
@@ -81,12 +100,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e66e131ec90fd1609d07b9
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Your catalog in Facebook Business';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Share catalog';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Before buyers can purchase items from you, you\'ll need to upload your products information into a Facebook Product Catalog.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Please be aware of the following: 
-1. The export of the catalog is done once a day (during the night). 
-2. It can take up to 24h for your PrestaShop product information to sync to Facebook. 
-3. Only all « active » products are exported to Facebook for their base language. 
-4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. 
-5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Please be aware of the following:
+1. The export of the catalog is done once a day (during the night).
+2. It can take up to 24h for your PrestaShop product information to sync to Facebook.
+3. Only all « active » products are exported to Facebook for their base language.
+4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn.
+5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors.
 6. Only products that have been modified will be updated in your catalog.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5f496727a3f0b541172b35ad8fc28bae'] = 'If you want to re-export your entire catalog click here.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_272a555cad0c5b218f4305bb6505744c'] = 'Next export will contain all your catalog.';
@@ -127,10 +146,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Cause of rejection';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'All status';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Enhance your catalog : category mapping';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Important: 
- - The Google Category and Google Subcategory fields are mandatory for each of your PrestaShop categories 
-- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory 
-- Once you have mapped your categories and sub-categories, simply click on \'Go back\' 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Important:
+ - The Google Category and Google Subcategory fields are mandatory for each of your PrestaShop categories
+- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory
+- Once you have mapped your categories and sub-categories, simply click on \'Go back\'
 - Save time by applying your main category’s mapping to its sub-categories, by checking the \'Apply to sub categories\' box';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'specified categories';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Edit';

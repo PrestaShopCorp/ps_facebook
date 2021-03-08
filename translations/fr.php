@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -103,10 +122,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Cause du rejet';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Tous les statuts';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Améliorez votre catalogue : mapping des catégories';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Important : 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Important :
 - Les champs Catégorie Google et Sous catégorie Google sont obligatoires pour chacune de vos catégories PrestaShop
 - La sauvegarde de votre mapping de catégorie est automatique dès lors que vous avez lié votre catégorie prestaShop à une catégorie et sous catégorie Google
-- Une fois que vous avez mapper vos catégories et sous catégories, vous pouvez cliquer sur \'Retour\' 
+- Une fois que vous avez mapper vos catégories et sous catégories, vous pouvez cliquer sur \'Retour\'
 - Gagnez du temps en appliquant le mapping de votre catégorie principale à ses catégories \'enfants\', en cochant la case \'Appliquer aux sous catégories\'';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Catégories mappées';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Editer';

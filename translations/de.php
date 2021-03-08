@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -75,7 +94,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6d9588159696a53b9651e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_04edc6c52b383554a9168a989ffe3f00'] = 'Die Produkte werden exportiert und alle 24 Stunden aktualisiert.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34a162a50c00c06f404eacc8eb02b1b1'] = 'Durch die Freigabe Ihres Katalogs stimmen Sie zu, dass PrestaShop alle Informationen zu den Katalogprodukten an Facebook senden darf.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e99180abf47a8b3a856e0bcb2656990a'] = 'Pausiert';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Es kann bis zu 24 Stunden dauern, bis Ihre PrestaShop-Produktinformationen mit Facebook synchronisiert sind. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'Es kann bis zu 24 Stunden dauern, bis Ihre PrestaShop-Produktinformationen mit Facebook synchronisiert sind.
  Sobald Produkte veröffentlicht werden, können Sie damit beginnen, sie auf Instagram zu markieren oder Facebook-Anzeigen zu erstellen.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_66edabb22fb8e6d2a7e9b91f85803130'] = 'Die Operation wird unterbrochen.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4351cfebe4b61d8aa5efa1d020710005'] = 'Anzeigen';
@@ -104,10 +123,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Ursache der Ablehnung';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Alle Zustände';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Erweitern Sie Ihren Katalog : Kategoriezuordnung';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Wichtig: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Wichtig:
 - Die Felder Google Kategorie und Google Unterkategorie sind für jede Ihrer PrestaShop-Kategorien obligatorisch
 - Die Sicherung Ihrer Kategoriezuordnung erfolgt automatisch, sobald Sie Ihre prestaShop-Kategorie mit einer Kategorie und Google-Unterkategorie verknüpft haben
-- Wenn Sie Ihre Kategorien und Unterkategorien zugewiesen haben, können Sie auf \'Zurück klicken\' 
+- Wenn Sie Ihre Kategorien und Unterkategorien zugewiesen haben, können Sie auf \'Zurück klicken\'
 - Sparen Sie Zeit, indem Sie die Zuordnung Ihrer Hauptkategorie auf ihre untergeordneten \'Kategorien anwenden\', indem Sie das Kontrollkästchen \'Auf Unterkategorien anwenden aktivieren\'';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Zugeordnete Kategorien';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Bearbeiten';

@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -75,7 +94,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6d9588159696a53b9651e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_04edc6c52b383554a9168a989ffe3f00'] = 'Los productos serán exportados y luego actualizados cada 24 h.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34a162a50c00c06f404eacc8eb02b1b1'] = 'Al compartir tu catálogo, aceptas que PrestaShop pueda enviar toda la información relacionada con los productos del catálogo a Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e99180abf47a8b3a856e0bcb2656990a'] = 'Pausado';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'La información de tu producto PrestaShop puede precisar de horas para sincronizarse con Facebook. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'La información de tu producto PrestaShop puede precisar de horas para sincronizarse con Facebook.
 Una vez que los productos se publican, puedes empezar a etiquetarlos en Instagram o crear anuncios en Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_66edabb22fb8e6d2a7e9b91f85803130'] = 'La operación está en pausa.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4351cfebe4b61d8aa5efa1d020710005'] = 'Ver';
@@ -104,10 +123,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Causa del rechazo';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Todos los estados';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Mejora tu catálogo: mapeo de categorías';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Es importante: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Es importante:
 - Los campos Google Category y Google Subcategory son obligatorios para cada una de sus categorías de PrestaShop
 - La copia de seguridad de su mapeo de categorías es automática una vez que ha vinculado su categoría prestaShop a una categoría y subcategoría de Google
-- Una vez que haya asignado sus categorías y subcategorías, puede hacer clic en \'Atrás\' 
+- Una vez que haya asignado sus categorías y subcategorías, puede hacer clic en \'Atrás\'
 - Ahorre tiempo aplicando la asignación de su categoría principal a sus categorías \'hijas\', marcando la casilla \'Aplicar a las subcategorías\'';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Categorías mapeadas';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Editar';

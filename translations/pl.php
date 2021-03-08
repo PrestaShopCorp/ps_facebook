@@ -1,4 +1,23 @@
 <?php
+/**
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License version 3.0
+ * that is bundled with this package in the file LICENSE.md.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ */
+
 global $_MODULE;
 $_MODULE = array();
 
@@ -103,10 +122,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Przyczyna odrzucenia';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Wszystkie statusy';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Poszerz swój katalog : mapowanie kategorii';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Ważne: 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Ważne:
 - Pola Google Category i Google Subcategory są obowiązkowe dla każdej kategorii PrestaShop
 - Kopia zapasowa mapowania kategorii tworzy się automatycznie, gdy połączysz swoją kategorię prestaShop z kategorią i podkategorią Google
-- Kiedy już zmapujesz swoje kategorie i podkategorie, możesz kliknąć \'Powrót\' 
+- Kiedy już zmapujesz swoje kategorie i podkategorie, możesz kliknąć \'Powrót\'
 - Oszczędzaj czas, stosując mapowanie kategorii głównej do jej kategorii podrzędnych\', zaznaczając pole  \'Zastosuj do kategorii podrzędnych\'';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Odwzorowane kategorie';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Edycja';
