@@ -540,7 +540,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(json_encode([
             'success' => $isUpgradeSuccessful,
-            'message' => $this->module->l('Failed to upgrade ps_accounts module')
+            'message' => $moduleManager->getError('ps_accounts')
         ]));
     }
 
