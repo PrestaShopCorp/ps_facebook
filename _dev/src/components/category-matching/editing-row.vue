@@ -18,7 +18,10 @@
  *-->
 <template>
   <b-tr :class="categoryStyle">
-    <b-td @click="getCurrentRow(shopCategoryId)">
+    <b-td
+      @click="getCurrentRow(shopCategoryId)"
+      :class="isMainCategory"
+    >
       <slot />
     </b-td>
     <b-td>
@@ -45,6 +48,7 @@
     </b-td>
     <b-td>
       <category-autocomplete
+        :key="currentCategoryId"
         :language="language"
         :shop-category-id="shopCategoryId"
         :initial-category-name="currentSubcategoryName"
@@ -134,6 +138,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    isMainCategory: {
+      type: String,
+      required: true,
+    },
     initialSubcategoryName: {
       type: String,
       required: false,
@@ -175,7 +183,29 @@ export default defineComponent({
   methods: {
     changePropagation(checked, shopCategoryId) {
       this.currentPropagation = checked;
-      this.$emit('propagationClicked', shopCategoryId);
+      this.$emit('propagationClicked', shopCategoryId, checked);
+
+      if (checked === true
+        && this.currentSubcategoryId !== 0
+        && this.currentCategoryId !== 0) {
+        const result = {
+          shopCategoryId: this.shopCategoryId,
+          fbCategoryId: this.currentCategoryId,
+          fbCategoryName: this.currentCategoryName.replace('&', '-'),
+          fbSubcategoryId: this.currentSubcategoryId,
+          fbSubcategoryName: this.currentSubcategoryName.replace('&', '-'),
+          propagate: !!this.currentPropagation,
+        };
+        this.saveMatchingCallback(result)
+          .then(() => {
+            this.loading = false;
+            this.error = null;
+          })
+          .catch((error) => {
+            this.loading = false;
+            this.error = error;
+          });
+      }
     },
     getCurrentRow(categoryID) {
       this.$emit('rowClicked', categoryID);
@@ -187,25 +217,10 @@ export default defineComponent({
         this.currentSubcategoryId = null;
         this.currentSubcategoryName = null;
       }
-      const result = {
-        shopCategoryId: this.shopCategoryId,
-        fbCategoryId: this.currentCategoryId,
-        fbCategoryName: this.currentCategoryName.replace('&', '-'),
-        propagate: !!this.currentPropagation,
-      };
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
       if (checkbox) {
         checkbox.focus();
       }
-      this.saveMatchingCallback(result)
-        .then(() => {
-          this.loading = false;
-          this.error = null;
-        })
-        .catch((error) => {
-          this.loading = null;
-          this.error = error;
-        });
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;
@@ -217,7 +232,7 @@ export default defineComponent({
         fbCategoryId: this.currentCategoryId,
         fbCategoryName: this.currentCategoryName.replace('&', '-'),
         fbSubcategoryId: subcategoryId,
-        fbSubcategoryName: subcategoryName,
+        fbSubcategoryName: subcategoryName.replace('&', '-'),
         propagate: !!this.currentPropagation,
       };
       this.$emit('onCategoryMatched', result);
@@ -236,8 +251,25 @@ export default defineComponent({
     categoryStyle(val) {
       this.categoryStyle = val;
     },
+    initialCategoryName(newVal) {
+      this.currentCategoryName = newVal;
+    },
+    initialSubcategoryName(newVal) {
+      this.currentSubcategoryName = newVal;
+    },
+    initialCategoryId(newVal) {
+      this.currentCategoryId = newVal;
+    },
+    initialSubcategoryId(newVal) {
+      this.currentSubcategoryId = newVal;
+    },
+    initialPropagation(newVal) {
+      this.currentPropagation = newVal;
+    },
+    isMainCategory(newVal) {
+      this.isMainCategory = newVal;
+    },
   },
-
 });
 </script>
 <style lang="scss" scoped>
@@ -366,6 +398,9 @@ export default defineComponent({
     td:first-child {
       cursor: pointer!important;
     }
+  }
+  .main-category {
+    font-weight: bold;
   }
   .closed {
     td:first-child:before {

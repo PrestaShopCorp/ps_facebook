@@ -141,7 +141,7 @@ export default defineComponent({
 
       if (this.filterCategory === true) {
         const children = this.categories.filter(
-          (child) => !child.googleCategoryParentId,
+          (child) => child.googleCategoryParentId,
         );
         children.forEach((el) => {
           el.show = false;

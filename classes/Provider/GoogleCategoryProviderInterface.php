@@ -32,10 +32,11 @@ interface GoogleCategoryProviderInterface
 
     /**
      * @param int $categoryId
-     * @param int $page
+     * @param int $langId
      * @param int $shopId
+     * @param int $page
      *
      * @return array|null
      */
-    public function getGoogleCategoryChildren($categoryId, $page, $shopId);
+    public function getGoogleCategoryChildren($categoryId, $langId, $shopId, $page);
 }

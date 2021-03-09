@@ -41,7 +41,8 @@ const mixin = Vue.extend({
     },
 
     formatDataFromRequest(request, currentCategory, categories, indexCtg, forStorybook = false) {
-      const subcategory = request;
+      /* eslint no-param-reassign: "error" */
+      const subcategory = request.length ? request : [];
 
       if (Array.isArray(subcategory)) {
         subcategory.forEach((el) => {
@@ -70,7 +71,6 @@ const mixin = Vue.extend({
     },
 
     formatDataFromLazyLoading(request, categories) {
-      let hasCategories;
       const nbrCategories = categories.length;
       if (Array.isArray(request)) {
         request.forEach((el) => {
@@ -123,6 +123,11 @@ const mixin = Vue.extend({
 
       return parents;
     },
+
+    isMainCategory(ctg) {
+      return ctg.shopParentCategoryIds.split('/').length - 1 === 1 ? 'main-category' : '';
+    },
+
   },
 });
 
