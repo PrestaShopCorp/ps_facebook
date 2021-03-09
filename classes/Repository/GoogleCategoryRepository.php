@@ -212,7 +212,7 @@ class GoogleCategoryRepository
         $sql->select('case when c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
             ' then ' . self::NO_CHILDREN . ' else ' . self::HAS_CHILDREN . ' end deploy');
         $sql->from('category', 'c');
-        $sql->innerJoin('category_shop', 'cs', 'cs.id_category = c.id_Category');
+        $sql->innerJoin('category_shop', 'cs', 'cs.id_category = c.id_category');
         $sql->innerJoin('category_lang', 'cl', 'c.id_category = cl.id_category AND cl.id_lang = ' . (int) $langId);
         $sql->leftJoin(
             'fb_category_match',
