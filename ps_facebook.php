@@ -355,7 +355,7 @@ class Ps_facebook extends Module
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
 
-        if ($this->context->controller instanceof OrderControllerCore) {
+        if ($this->context->controller instanceof OrderController) {
             if ($this->isFirstCheckoutStep()) {
                 $eventDispatcher->dispatch('InitiateCheckout', $params);
             }
@@ -449,7 +449,7 @@ class Ps_facebook extends Module
      */
     private function isFirstCheckoutStep()
     {
-        if (!$this->context->controller instanceof OrderControllerCore) {
+        if (!$this->context->controller instanceof OrderController) {
             return false;
         }
 
