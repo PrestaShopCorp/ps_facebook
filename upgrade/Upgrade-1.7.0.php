@@ -26,6 +26,7 @@
 function upgrade_module_1_7_0($module)
 {
     $module->unregisterHook('actionSubmitAccountBefore');
+    $module->unregisterHook('displayPersonalInformationTop');
 
     return true;
 }
