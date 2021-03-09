@@ -64,8 +64,7 @@
       </div>
     </div>
 
-    <p class="py-3">
-      {{ $t('categoryMatching.intro') }}
+    <p class="py-3" v-html="md2html($t('categoryMatching.intro'))">
     </p>
 
     <b-button
@@ -85,6 +84,7 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
+import Showdown from 'showdown';
 import {BButton, BCard} from 'bootstrap-vue';
 import EditTable from '../category-matching/editTable.vue';
 import Spinner from '../spinner/spinner.vue';
@@ -196,6 +196,7 @@ export default defineComponent({
           console.error(error);
         });
     },
+    md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
   },

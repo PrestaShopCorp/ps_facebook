@@ -200,7 +200,7 @@ class PsFacebookTranslations
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),
-                'intro' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
+                'intro' => $this->module->l("Important: \n - The Google Category and Google Subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and sub-categories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its sub-categories, by checking the 'Apply to sub categories' box", 'PsFacebookTranslations'),
                 'counterSubTitle' => $this->module->l('specified categories', 'PsFacebookTranslations'),
                 'edit' => $this->module->l('Edit', 'PsFacebookTranslations'),
                 'autocomplete' => [
@@ -211,24 +211,25 @@ class PsFacebookTranslations
                     'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
                 ],
                 'tableMatching' => [
-                    'firstTd' => $this->module->l('Category on your site'),
-                    'secondTd' => $this->module->l('Google category'),
-                    'thirdTd' => $this->module->l('Apply to sub-categories?'),
-                    'fourthTd' => $this->module->l('Google subcategory'),
+                    'firstTd' => $this->module->l('Category on your site', 'PsFacebookTranslations'),
+                    'secondTd' => $this->module->l('Google category', 'PsFacebookTranslations'),
+                    'thirdTd' => $this->module->l('Apply to sub-categories?', 'PsFacebookTranslations'),
+                    'fourthTd' => $this->module->l('Google subcategory', 'PsFacebookTranslations'),
                 ],
                 'editTable' => [
-                    'required' => $this->module->l('Required'),
-                    'checkboxTxt' => $this->module->l('Display unspecified categories only'),
-                    'psCategoryName' => $this->module->l('Category on your site'),
-                    'fbCategoryName' => $this->module->l('Google category'),
-                    'fbSubcategoryName' => $this->module->l('Google subcategory'),
+                    'required' => $this->module->l('Mandatory', 'PsFacebookTranslations'),
+                    'checkboxTxt' => $this->module->l('Show unmapped categories', 'PsFacebookTranslations'),
+                    'psCategoryName' => $this->module->l('Category on your site', 'PsFacebookTranslations'),
+                    'fbCategoryName' => $this->module->l('Google category', 'PsFacebookTranslations'),
+                    'fbSubcategoryName' => $this->module->l('Google subcategory', 'PsFacebookTranslations'),
                 ],
+                'errors' => $this->module->l('An error occurred, please update the module.', 'PsFacebookTranslations'),
             ],
             'categoryMatched' => [
-                'title' => $this->module->l('Enhance your catalog: category mapping'),
-                'description' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.'),
-                'btn' => $this->module->l('View mapping'),
-                'progressBarTotal' => $this->module->l('categories mapped'),
+                'title' => $this->module->l('Improve your catalog: map your categories', 'PsFacebookTranslations'),
+                'description' => $this->module->l('To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.', 'PsFacebookTranslations'),
+                'btn' => $this->module->l('See your mapping', 'PsFacebookTranslations'),
+                'progressBarTotal' => $this->module->l('mapped categories', 'PsFacebookTranslations'),
             ],
             'integrate' => [
                 'buttons' => [

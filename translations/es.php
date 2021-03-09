@@ -27,16 +27,11 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6a26f548831e6a8c26bfbb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fd0be48c2c3483c8f1a51f696612a711'] = 'Canales de venta';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be11c74c1dd7f307bb80183a90dc2067'] = 'Empezar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_bc77a4069560dbaeda21d023d3525522'] = '¡Construye tu perfil en la comunidad de Facebook de forma fácil y rápida!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_2c8a235cd59fdd917bd237c711a33403'] = '- No se requiere tarjeta de crédito 
-- Fácil de configurar
-- Cancela cuando quieras';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ebce4cfc471199c367d61bbc02e29f0e'] = '¡Da tus primeros pasos en PrestaShop Facebook!';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Gestiona tu negoc&lt;span style=&quot;background-color: rgb(0, 139, 139);&quot;&gt;io&lt;/span&gt;';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d4dc9be37b7d8b65d15380a2ee76b768'] = 'Controla la configuración de tus anuncios y las herramientas de negocio desde un solo lugar.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Gestiona tu negoc&amp;lt;span style=&amp;quot;background-color: rgb(0, 139, 139);&amp;quot;&amp;gt;io&amp;lt;/span&amp;gt;';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_187d8391715e5486cf16ef7208d60638'] = 'Comprende tu tráfico';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_40bd8e4a1d4cd9d762778fa8ebcbaa11'] = 'Utiliza los datos de Facebook Pixel para entender las acciones que la gente realiza en tu sitio web.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_487c03430cec1fb5515b532add3aa824'] = 'Impulsa tus ventas';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec01fe3728135f86d60a48008e85634c'] = 'Gestiona tu catálogo de productos y libera el poder de los anuncios.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1d1dc32ede668d0832d5ae914fe823c8'] = 'Crea y optimiza una mejor experiencia de compra';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_44647eb0f0026b124679b4d22bd6d76e'] = 'Gracias a la sincronización automática del catálogo de productos y al mapeo de sus categorías tendrás un catálogo de Facebook actualizado y más eficiente.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e76bb43b7aead3b3e9f3c48ab97ec512'] = '¿Necesitas más funciones?';
@@ -52,27 +47,19 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7cc80ef98f59cfb1e545b7
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4d1c8263ba1036754f8db14a98f9f006'] = 'Refrescar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_30030ff165bcbf758790de62d2bdde3d'] = 'Ya estás conectado a Facebook desde otra tienda. Sin embargo, la configuración de Facebook de PrestaShop sólo es posible actualmente en una tienda. Debes salir de tu primera tienda para conectarte.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6c1e48b6beef01712d9aafda3e6ef24'] = 'Se ha producido un error desconocido durante el proceso de incorporación. Refresca la página y vuelve a intentarlo.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9dac30436ef9ef3006ba08896f4978bc'] = 'La versión del módulo PrestaShop Account que se ejecuta en esta tienda (v{psAccountsVersion}) es anterior a la v{requiredPsAccountsVersion} mínima requerida. Puede utilizar PrestaShop Facebook pero algunas funciones (por ejemplo, la sincronización de productos) no estarán disponibles hasta que actualice PrestaShop Account.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9b4d55fbbf98565cf115ea97acc98296'] = 'Actualizar la cuenta de PrestaShop';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_487690c4d2fd7e2519dbd83385dd9f21'] = 'La cuenta de PrestaShop ha sido actualizada con éxito';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c8cea8016279fea84b0f4dae92e5770'] = 'Tu configuración de Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7c7f92785f262b50cd3814c4d00402a7'] = 'Integra tu tienda con Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d056e5c7b397445e67d58e6e691537af'] = 'Conectar con Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_adaa95195e5b73bc16f1866470becadc'] = 'Con PS Facebook disfrutarás de una experiencia de incorporación y gestión sin fricciones y sin código para los productos empresariales de Facebook.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_3c5664d90fdcad28b568129a74195196'] = '- Crear/Seleccionar negocio 
-- Crear/Seleccionar página 
-- Crear/Seleccionar cuenta publicitaria 
-- Crear/Seleccionar instalar pixel 
-- Crear/Seleccionar sincronizar catálogo de productos 
-- Crear tienda de Facebook Shop e Instagram Shopping 
-- Personalizar tu página de Facebook con llamada a la acción';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6397bc80c224967733f8e7798e621f22'] = 'Autorizas a esta cuenta de Facebook a conectarse a tu tienda:';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_104f3d1bf8a4000358de7b64821b5769'] = 'Modificar mi cuenta';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0323de4f66a1700e2173e9bcdce02715'] = 'Desvincular';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_230111ab958aee6b6b8eee6b7466a16d'] = 'Administrador de anuncios de Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_438ec56d3c6528104edf008846d36446'] = 'La cuenta de empresa de Facebook te permite administrar cuentas publicitarias, páginas y la gente que trabaja en ellas en el mismo lugar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b7ca35f100eec22e63e206481b8b4573'] = 'El píxel de Facebook';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'El pixel de Facebook es un fragmento de código (Javascript) que instalamos automáticamente en las páginas de tu sitio web. Te permite "rastrear" quién visita tu sitio web, rastrear las conversiones de tus anuncios de Facebook y crear audiencias refocalizadas';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_63d3a87a06667b20e71ded264261b0f5'] = 'El pixel de Facebook es un fragmento de código (Javascript) que instalamos automáticamente en las páginas de tu sitio web. Te permite &quot;rastrear&quot; quién visita tu sitio web, rastrear las conversiones de tus anuncios de Facebook y crear audiencias refocalizadas';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_756b97abbc9f4c13c541b1adf847eaf0'] = 'Página de Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_716ea56fbf6096e16bac8ce638ac9b74'] = 'Tu página de Facebook representará tu empresa en tus anuncios';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0a1068d4187d880068c65be6c5b16158'] = 'Anuncios de Facebook';
@@ -96,14 +83,6 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e66e131ec90fd1609d07b9
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_1e3510483ab6ddf01795c0f88e4693a4'] = 'Tu catálogo en Facebook para empresas';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_96f12a47b0898acc78a799705e4e9368'] = 'Compartir el catálogo';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Antes de que los compradores puedan comprarte artículos, tendrás que subir la información de tus productos a un catálogo de productos de Facebook.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c50f9b11fc84'] = 'Tenga en cuenta lo siguiente: 
-
-1. La exportación del catálogo se realiza una vez al día (durante la noche)
-2. Sincronizar la información de tus productos de PrestaShop con Facebook puede llevar hasta 24 horas.
-3. Sólo se exportan a Facebook los productos activos. 
-4. Sólo se sincronizarán los productos con campos obligatorios: una breve descripción, cantidad, precio, imagen del producto, fabricante o ean/upc/isbn.
-5. La exportación de las localizaciones de los productos (para las traducciones) está todavía en fase beta y podría provocar errores inesperados.
-6. Sólo se actualizarán en su catálogo los productos que hayan sufrido cambios. ';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5f496727a3f0b541172b35ad8fc28bae'] = 'Si desea reexportar todo su catálogo, haga clic aquí';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_272a555cad0c5b218f4305bb6505744c'] = 'La siguiente exportación contendrá todos los productos de su catálogo.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b8ac4c461471c5279daf166cf9d5b2bf'] = 'Se ha producido un error desconocido al intentar restablecer la exportación. Por favor, inténtelo más tarde.';
@@ -115,7 +94,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_b6d9588159696a53b9651e
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_04edc6c52b383554a9168a989ffe3f00'] = 'Los productos serán exportados y luego actualizados cada 24 h.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_34a162a50c00c06f404eacc8eb02b1b1'] = 'Al compartir tu catálogo, aceptas que PrestaShop pueda enviar toda la información relacionada con los productos del catálogo a Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e99180abf47a8b3a856e0bcb2656990a'] = 'Pausado';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'La información de tu producto PrestaShop puede precisar de horas para sincronizarse con Facebook. 
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_0c2b1e238835ea5b79763d38f79ac75a'] = 'La información de tu producto PrestaShop puede precisar de horas para sincronizarse con Facebook.
 Una vez que los productos se publican, puedes empezar a etiquetarlos en Instagram o crear anuncios en Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_66edabb22fb8e6d2a7e9b91f85803130'] = 'La operación está en pausa.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4351cfebe4b61d8aa5efa1d020710005'] = 'Ver';
@@ -144,8 +123,13 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_ec53a8c4f07baed5d88250
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f6b83863459'] = 'Causa del rechazo';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Todos los estados';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Mejora tu catálogo: mapeo de categorías';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fad973d2cc78fd04a5e39a0117da5e67'] = 'Para mejorar tu catálogo y ayudar a los clientes a descubrir tus artículos en línea, introduce una categoría de productos de Google (GPC) para tus artículos y luego agrega más información específica de cada categoría. Recomendamos que elijas la categoría más específica posible que se aplique a cada artículo para ayudar a los clientes a entender qué tipo de artículo estás vendiendo.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Es importante:
+- Los campos Google Category y Google Subcategory son obligatorios para cada una de sus categorías de PrestaShop
+- La copia de seguridad de su mapeo de categorías es automática una vez que ha vinculado su categoría prestaShop a una categoría y subcategoría de Google
+- Una vez que haya asignado sus categorías y subcategorías, puede hacer clic en \'Atrás\'
+- Ahorre tiempo aplicando la asignación de su categoría principal a sus categorías \'hijas\', marcando la casilla \'Aplicar a las subcategorías\'';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Categorías mapeadas';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Editar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4267fc283203518fbf3a46d1f53bb6b4'] = 'Escriba para filtrar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e0626222614bdee31951d84c64e5e9ff'] = 'Seleccionar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8e7672a024a6a0369d105feb2b5dab9b'] = 'No se han encontrado resultados para tu búsqueda';
@@ -155,6 +139,12 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_42a846a03863bf89802404
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_9e3c34aa34e5cfc5275d1bed9a3dcb87'] = 'Categoría de Google';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_d8d6aeac43be9e0dac979819e81ceeea'] = '¿Aplicar a las subcategorías?';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_f2e925b76d09d5c3f5e4bda2c651e547'] = 'Subcategoría de Google';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e89ab59baea830bd940c300886c50efe'] = 'Obligatorio';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fe58d85fac3926fb7f37efbe6db83260'] = 'Mostrar categorías no mapeadas';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_888f3b805d7f777812243fe3a8ee62e7'] = 'Se ha producido un error, por favor, actualice el módulo.';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_cb12568d45dd69c0f5f1dfba437b011f'] = 'Mejore su catálogo: mapee sus categorías';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_cf8aef08ff3fdeee11c481c1b6f71c05'] = 'Ver su cartografía';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fbb5cc5fb85d3b4dbbdaf88b2a14c5fc'] = 'categorías mapeadas';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7db59a7e372cf3c6433750f8078559a3'] = 'Sincronizar productos';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6297cdd34823b19402b792867ed42f70'] = 'Sí, confirmo';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_313a9de3704b7755bb8580f480cbe3b5'] = 'Instagram Shopping';
@@ -166,10 +156,8 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_77ca1ea66fd6182e03b1eb
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e456de96ee72154dee72e5ca9fa5745f'] = 'Ver mis mensajes';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_eb708d56c1ce7a55ff69704151ef95a2'] = 'Personalizar la configuración';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_a1625f6703621f0870e0909141b09f32'] = 'Añade una pestaña de tienda en tu página de Facebook';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_22a752ec99f20cf385961ee540de426d'] = 'La página de Tiendas de Facebook te permite listar los productos que vendes y conectar con más clientes en Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_10e1cda7ed505e71ad8cb7cd03227eae'] = 'Añade un botón en tu página de Facebook';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_be0265b2d10db977c9ce9f54afa3bf83'] = 'Añade un botón en tu página de Facebook para que la gente reaccione desde tu página, como por ejemplo tu tienda.';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Editar';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_c02eaee6ac5fdebf4c4e862efcde9e74'] = 'Para aumentar las ventas, agrega a tu tienda...';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_e3e5e11eb2d2958b24887366b8646b36'] = 'Funcionalidades no disponibles en este momento';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02020901ce00c217718a877'] = '¡Has añadido {0}!';
@@ -195,5 +183,5 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_27590e5bda23b4a9c8d2a6
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Facebook';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Facebook te da todas las herramientas que necesitas para vender y comercializar con éxito en Facebook e Instagram. Descubre nuevas posibilidades para ayudarte a hacer crecer tu negocio y a administrar todas tus cuentas y productos de Facebook desde un solo lugar.';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_bb8956c67b82c7444a80c6b2433dd8b4'] = '¿Seguro que quieres desinstalar este módulo?';
-$_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'No se puede instalar el módulo';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_a6111d843740c2352137f7f8cf571103'] = 'No se puede instalar PrestaShop Account';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'No se puede instalar el módulo';
