@@ -534,13 +534,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
             $this->ajaxDie(json_encode([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]));
         }
 
         $this->ajaxDie(json_encode([
             'success' => $isUpgradeSuccessful,
-            'message' => $moduleManager->getError('ps_accounts')
+            'message' => $moduleManager->getError('ps_accounts'),
         ]));
     }
 
