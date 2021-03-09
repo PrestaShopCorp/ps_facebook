@@ -354,6 +354,13 @@ class Ps_facebook extends Module
     {
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        if ($this->context->controller instanceof OrderController) {
+            if ($this->isFirstCheckoutStep()) {
+                $eventDispatcher->dispatch('InitiateCheckout', $params);
+            }
+        }
+
         $eventDispatcher->dispatch(__FUNCTION__, $params);
 
         return $this->templateBuffer->flush();
@@ -434,19 +441,6 @@ class Ps_facebook extends Module
         $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
-    public function hookDisplayPersonalInformationTop(array $params)
-    {
-        if (!$this->isFirstCheckoutStep()) {
-            return false;
-        }
-
-        /** @var EventDispatcher $eventDispatcher */
-        $eventDispatcher = $this->getService(EventDispatcher::class);
-        $eventDispatcher->dispatch(__FUNCTION__, $params);
-
-        return $this->templateBuffer->flush();
-    }
-
     /**
      * Tells if we are in the Payment step from the order tunnel.
      * We use the ReflectionObject because it only exists from Prestashop 1.7.7
@@ -455,6 +449,10 @@ class Ps_facebook extends Module
      */
     private function isFirstCheckoutStep()
     {
+        if (!$this->context->controller instanceof OrderController) {
+            return false;
+        }
+
         $checkoutSteps = $this->getAllOrderSteps();
 
         /* Get the checkoutPaymentKey from the $checkoutSteps array */
