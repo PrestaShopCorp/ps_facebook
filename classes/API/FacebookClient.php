@@ -119,7 +119,7 @@ class FacebookClient
      */
     public function getBusinessManager($businessManagerId)
     {
-        $responseContent = $this->get((int) $businessManagerId, __FUNCTION__, ['name', 'created_time']);
+        $responseContent = $this->get($businessManagerId, __FUNCTION__, ['name', 'created_time']);
 
         return new FacebookBusinessManager(
             isset($responseContent['id']) ? $responseContent['id'] : $businessManagerId,
@@ -173,7 +173,7 @@ class FacebookClient
     public function getPage(array $pageIds)
     {
         $pageId = reset($pageIds);
-        $responseContent = $this->get((int) $pageId, __FUNCTION__, ['name', 'fan_count']);
+        $responseContent = $this->get($pageId, __FUNCTION__, ['name', 'fan_count']);
 
         $logoResponse = $this->get($pageId . '/photos', __FUNCTION__ . 'Photo', ['picture']);
 
@@ -312,7 +312,7 @@ class FacebookClient
     }
 
     /**
-     * @param int|string $id
+     * @param string $id
      * @param string $method
      * @param array $fields
      * @param array $query
