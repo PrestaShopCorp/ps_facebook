@@ -51,19 +51,19 @@ new Vue({
         return;
       }
 
-      const userId = this.$store.state.context.appContext.shopId
-        || this.$store.state.context.appContext?.shopDomain;
-
-      // @ts-ignore
-      this.$segment.identify(userId, {
-        name: this.$store.state.context.appContext?.shopUrl,
-        email: this.$store.state.context.appContext?.user?.email,
-        language: this.$store.state.context.statei18nSettings.isoCode,
-        version_ps: this.$store.state.context.appContext.psVersion,
-        version_module: this.$store.state.context.appContext.moduleVersion,
-        module: 'ps_facebook',
-        external_business_id: this.psFacebookExternalBusinessId,
-      });
+      const userId = this.$store.state.context?.appContext?.shopId;
+      if (userId) {
+        // @ts-ignore
+        this.$segment.identify(userId, {
+          name: this.$store.state.context.appContext.shopUrl,
+          email: this.$store.state.context.appContext.user?.email,
+          language: this.$store.state.context.statei18nSettings?.isoCode,
+          version_ps: this.$store.state.context.appContext.psVersion,
+          version_module: this.$store.state.context.appContext.moduleVersion,
+          module: 'ps_facebook',
+          external_business_id: this.psFacebookExternalBusinessId,
+        });
+      }
     },
   },
 }).$mount('#psFacebookApp');
