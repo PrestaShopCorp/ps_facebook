@@ -20,6 +20,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
+use Controller;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
@@ -47,6 +48,11 @@ class AccessTokenProvider
     private $errorHandler;
 
     /**
+     * @var Controller
+     */
+    private $controller;
+
+    /**
      * @var string
      */
     private $userAccessToken;
@@ -56,11 +62,16 @@ class AccessTokenProvider
      */
     private $systemAccessToken;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, Env $env, ErrorHandler $errorHandler)
-    {
+    public function __construct(
+        ConfigurationAdapter $configurationAdapter,
+        Env $env,
+        ErrorHandler $errorHandler,
+        Controller $controller
+    ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->env = $env;
         $this->errorHandler = $errorHandler;
+        $this->controller = $controller;
     }
 
     /**
@@ -100,7 +111,7 @@ class AccessTokenProvider
         if ((!$this->systemAccessToken
                 || !$tokenExpirationDate
                 || ($tokenExpirationDate - $currentTimestamp <= 86400))
-            && \Context::getContext()->controller->controller_type !== 'front'
+            && $this->controller->controller_type === 'moduleadmin'
             && $this->userAccessToken
         ) {
             $this->refreshTokens();
