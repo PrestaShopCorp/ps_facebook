@@ -123,10 +123,10 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6f65905b3e1fdea39ab13f
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_fc1d602b9aabf526cba30ab53e029e22'] = 'Tous les statuts';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_64d2442d7b419240d7357e053a5a816e'] = 'Améliorez votre catalogue : mapping des catégories';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6bbf6f431fe3ffa42aa667f2906fdc6b'] = 'Important :
-- Les champs Catégorie Google et Sous catégorie Google sont obligatoires pour chacune de vos catégories PrestaShop
-- La sauvegarde de votre mapping de catégorie est automatique dès lors que vous avez lié votre catégorie prestaShop à une catégorie et sous catégorie Google
-- Une fois que vous avez mapper vos catégories et sous catégories, vous pouvez cliquer sur \'Retour\'
-- Gagnez du temps en appliquant le mapping de votre catégorie principale à ses catégories \'enfants\', en cochant la case \'Appliquer aux sous catégories\'';
+- Les champs Catégorie Google et Sous-catégorie Google sont à remplir obligatoirement pour chacune de vos catégories PrestaShop,
+- La sauvegarde est automatique dès lors que vous avez lié votre catégorie PrestaShop à une catégorie et sous-catégorie Google,
+- Une fois que vous avez lié vos catégories et sous-catégories, vous pouvez cliquer sur "Retour",
+- En cochant la case "Appliquer aux sous catégories", vous pouvez appliquer le choix de votre catégorie « parent » à ses sous-catégories « enfants ».';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_35da7df90a2025079eba60a3b4a1c036'] = 'Catégories mappées';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_7dce122004969d56ae2e0245cb754d35'] = 'Editer';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_4267fc283203518fbf3a46d1f53bb6b4'] = 'Tapez pour filtrer';
