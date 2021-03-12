@@ -28,7 +28,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Env;
 class MessengerHandler
 {
     /**
-     * @var int
+     * @var string
      */
     private $pageId;
 
@@ -53,7 +53,7 @@ class MessengerHandler
         Env $env
     ) {
         $pageList = explode(',', $configurationAdapter->get('PS_FACEBOOK_PAGES'));
-        $this->pageId = (int) reset($pageList);
+        $this->pageId = reset($pageList);
         $this->lang = $lang;
         $this->configurationAdapter = $configurationAdapter;
         $this->env = $env;
