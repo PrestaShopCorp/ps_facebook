@@ -96,16 +96,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-    error: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    errorButton: {
-      type: String,
-      required: false,
-      default: null,
-    },
     alertSettings: {
       type: Object,
       required: false,
