@@ -186,7 +186,18 @@ export default defineComponent({
           id_product_attribute,
           ...vals
         } = allValues;
-        if (i === 0) {
+        const previousIndex = acc.length - 1;
+
+        if (i !== 0
+          && acc[previousIndex].id_product === id_product
+          && acc[previousIndex].id_product_attribute === id_product_attribute
+        ) {
+          acc[previousIndex].cover = acc[previousIndex].cover && (has_cover === '1');
+          acc[previousIndex].d = acc[previousIndex].d && (has_description_or_short_description === '1');
+          acc[previousIndex].isbn = acc[previousIndex].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
+          acc[previousIndex].price = acc[previousIndex].price && (has_price_tax_excl === '1');
+          acc[previousIndex].l.push(language);
+        } else {
           acc.push({
             cover: has_cover === '1',
             d: has_description_or_short_description === '1',
@@ -197,26 +208,6 @@ export default defineComponent({
             ...vals,
             l: [language],
           });
-        } else {
-          const {id_product: prevIdProd, id_product_attribute: prevIdProdAttr} = acc[i - 1];
-          if (prevIdProd === id_product && prevIdProdAttr === id_product_attribute) {
-            acc[i - 1].cover = acc[i - 1].cover && (has_cover === '1');
-            acc[i - 1].d = acc[i - 1].d && (has_description_or_short_description === '1');
-            acc[i - 1].isbn = acc[i - 1].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
-            acc[i - 1].price = acc[i - 1].price && (has_price_tax_excl === '1');
-            acc[i - 1].l.push(language);
-          } else {
-            acc.push({
-              cover: has_cover === '1',
-              d: has_description_or_short_description === '1',
-              isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
-              price: has_price_tax_excl === '1',
-              id_product,
-              id_product_attribute,
-              ...vals,
-              l: [language],
-            });
-          }
         }
         return acc;
       }, []);
