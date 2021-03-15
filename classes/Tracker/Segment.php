@@ -120,6 +120,7 @@ class Segment implements TrackerInterface
             ],
             'properties' => array_merge([
                 'module' => 'ps_facebook',
+                'email' => $configurationRepository->getFirebaseEmail(),
             ], $this->options),
         ]);
 
