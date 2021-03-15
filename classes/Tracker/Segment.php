@@ -94,17 +94,23 @@ class Segment implements TrackerInterface
 
     private function segmentTrack($domainName)
     {
+        /** @var ConfigurationRepository $configurationRepository */
+        $configurationRepository = PsAccountsServiceProvider::getInstance()
+            ->get(ConfigurationRepository::class);
+        $userId = $configurationRepository->getShopUuid();
+
+        if (!$userId) {
+            return;
+        }
+
         $userAgent = array_key_exists('HTTP_USER_AGENT', $_SERVER) === true ? $_SERVER['HTTP_USER_AGENT'] : '';
         $ip = array_key_exists('REMOTE_ADDR', $_SERVER) === true ? $_SERVER['REMOTE_ADDR'] : '';
         $referer = array_key_exists('HTTP_REFERER', $_SERVER) === true ? $_SERVER['HTTP_REFERER'] : '';
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        /** @var ConfigurationRepository $configurationRepository */
-        $configurationRepository = PsAccountsServiceProvider::getInstance()
-            ->get(ConfigurationRepository::class);
 
         \Segment::track([
-            'userId' => $configurationRepository->getShopUuid() ?: $domainName,
+            'userId' => $userId,
             'event' => $this->message,
             'channel' => 'browser',
             'context' => [
