@@ -29,16 +29,16 @@
     <b-alert
       variant="danger"
       dismissible
-      :show="!!error"
+      :show="!!alertSettings.error"
     >
       <p>
-        {{ $t(error) }}
+        {{ $t(alertSettings.error) }}
         <br>
         <b-button
           class="mt-2"
-          @click="reloadBrowser"
+          @click="reloadBrowser(alertSettings.merchandDisconnected)"
         >
-          {{ $t('configuration.messages.reloadButton') }}
+          {{ $t(alertSettings.errorButton) }}
         </b-button>
       </p>
     </b-alert>
@@ -101,6 +101,16 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    errorButton: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    alertSettings: {
+      type: Object,
+      required: false,
+      default: null,
+    },
   },
   methods: {
     onCategoryMatchingClick() {
@@ -112,8 +122,12 @@ export default defineComponent({
     onAdCampaignClick() {
       this.$emit('onAdCampaignClick');
     },
-    reloadBrowser() {
-      window.document.location.reload();
+    reloadBrowser(merchandDisconnected) {
+      if (merchandDisconnected === true) {
+        this.$parent.openPopup();
+      } else {
+        window.document.location.reload();
+      }
     },
   },
 });

@@ -63,8 +63,10 @@
       </div>
     </div>
 
-    <p class="py-3" v-html="md2html($t('categoryMatching.intro'))">
-    </p>
+    <p
+      class="py-3"
+      v-html="md2html($t('categoryMatching.intro'))"
+    />
 
     <TableMatching
       v-if="categories.length > 0"

@@ -60,4 +60,6 @@ class Config
     /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
     const OAUTH_EXCEPTION_CODE = [33, 190];
     const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
+
+    const PS_FACEBOOK_FORCED_DISCONNECT = 'PS_FACEBOOK_FORCED_DISCONNECT';
 }

@@ -41,7 +41,7 @@
         :category-matching-started="categoryMatchingStarted"
         :product-sync-started="productSyncStarted"
         :ad-campaign-started="adCampaignStarted"
-        :error="error"
+        :alert-settings="alertSettings"
         @onSyncCatalogClick="onSyncCatalogClick"
         @onCategoryMatchingClick="onCategoryMatchingClick"
         @onAdCampaignClick="onAdCampaignClick"
@@ -287,7 +287,7 @@ export default defineComponent({
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showGlass: false,
-      error: null,
+      alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
       openedPopup: null,
@@ -306,8 +306,9 @@ export default defineComponent({
       this.loading = true;
       fetch(global.psFacebookGetFbContextRoute)
         .then((res) => {
+          this.loading = false;
           if (!res.ok) {
-            throw new Error(res.statusText || res.status);
+            return res.json().then((errors) => { throw errors; });
           }
           return res.json();
         })
@@ -315,10 +316,12 @@ export default defineComponent({
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
-          this.loading = false;
         }).catch((error) => {
-          console.error(error);
-          this.error = 'configuration.messages.unknownOnboardingError';
+          this.alertSettings = {
+            error: error?.reason || 'configuration.messages.unknownOnboardingError',
+            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
+            merchandDisconnected: !!error.reason,
+          };
         });
     },
     onCategoryMatchingClick() {
@@ -349,7 +352,7 @@ export default defineComponent({
         .then((res) => {
           this.loading = false;
           if (!res.ok) {
-            throw new Error(res.statusText || res.status);
+            return res.json().then((errors) => { throw errors; });
           }
           return res.json();
         })
@@ -361,8 +364,11 @@ export default defineComponent({
           this.psFacebookJustOnboarded = false;
         }).catch((error) => {
           console.error(error);
-          // TODO: Replace me with uninstallation specific message
-          this.error = 'configuration.messages.unknownOnboardingError';
+          this.alertSettings = {
+            error: error?.reason || 'configuration.messages.unknownOnboardingError',
+            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
+            merchandDisconnected: !!error.reason,
+          };
         });
     },
     onPixelActivation() {
@@ -374,8 +380,9 @@ export default defineComponent({
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({event_status: newState}),
       }).then((res) => {
+        this.loading = false;
         if (!res.ok) {
-          throw new Error(res.statusText || res.status);
+          return res.json().then((errors) => { throw errors; });
         }
         return res.json();
       }).then((res) => {
@@ -388,7 +395,11 @@ export default defineComponent({
         });
       }).catch((error) => {
         console.error(error);
-        this.error = 'configuration.messages.unknownOnboardingError';
+        this.alertSettings = {
+          error: error?.reason || 'configuration.messages.unknownOnboardingError',
+          errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
+          merchandDisconnected: !!error.reason,
+        };
         this.$root.refreshContextPsFacebook({
           ...this.dynamicContextPsFacebook,
           pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
@@ -450,7 +461,7 @@ export default defineComponent({
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
           }).then((res2) => {
             if (!res2.ok) {
-              throw new Error(res2.statusText || res2.status);
+              return res2.json().then((errors) => { throw errors; });
             }
             return res2.json();
           }).then((res2) => {
@@ -469,7 +480,11 @@ export default defineComponent({
         this.$segment.track('The pop-up gets blocked', {
           module: 'ps_facebook',
         });
-        this.error = 'configuration.messages.unknownOnboardingError';
+        this.alertSettings = {
+          error: error?.reason || 'configuration.messages.unknownOnboardingError',
+          errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
+          merchandDisconnected: !!error.reason,
+        };
         this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
@@ -524,7 +539,11 @@ export default defineComponent({
           this.openedPopup = this.openPopup();
         }).catch((error) => {
           console.error(error);
-          this.error = 'configuration.messages.unknownOnboardingError';
+          this.alertSettings = {
+            error: error?.reason || 'configuration.messages.unknownOnboardingError',
+            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
+            merchandDisconnected: !!error.reason,
+          };
           this.showGlass = false;
           this.openedPopup = null;
           this.popupReceptionDuplicate = false;

@@ -64,8 +64,10 @@
       </div>
     </div>
 
-    <p class="py-3" v-html="md2html($t('categoryMatching.intro'))">
-    </p>
+    <p
+      class="py-3"
+      v-html="md2html($t('categoryMatching.intro'))"
+    />
 
     <b-button
       class="float-right ml-3"
