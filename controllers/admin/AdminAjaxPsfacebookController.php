@@ -24,6 +24,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookProductSyncException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -210,12 +211,35 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-        $client->post(
-            '/account/' . $externalBusinessId . '/start_product_sync',
-            [
-                'json' => ['turnOn' => $turnOn],
-            ]
-        )->json();
+        try {
+            $client->post(
+                '/account/' . $externalBusinessId . '/start_product_sync',
+                [
+                    'json' => ['turnOn' => $turnOn],
+                ]
+            )->json();
+        } catch (Exception $e) {
+            $errorHandler = ErrorHandler::getInstance();
+            $errorHandler->handle(
+                new FacebookProductSyncException(
+                    'Failed to start product sync',
+                    FacebookProductSyncException::FACEBOOK_PRODUCT_SYNC,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                        'turnOn' => false,
+                    ]
+                )
+            );
+        }
 
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_ON, $turnOn);
