@@ -217,7 +217,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'json' => ['turnOn' => $turnOn],
                 ]
-            )->json();
+            );
         } catch (Exception $e) {
             $errorHandler = ErrorHandler::getInstance();
             $errorHandler->handle(
