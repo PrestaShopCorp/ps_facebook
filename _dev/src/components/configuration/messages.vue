@@ -36,7 +36,7 @@
         <br>
         <b-button
           class="mt-2"
-          @click="reloadBrowser(alertSettings.merchandDisconnected)"
+          @click="setMerchandAction(alertSettings.error)"
         >
           {{ $t(alertSettings.errorButton) }}
         </b-button>
@@ -112,8 +112,8 @@ export default defineComponent({
     onAdCampaignClick() {
       this.$emit('onAdCampaignClick');
     },
-    reloadBrowser(merchandDisconnected) {
-      if (merchandDisconnected === true) {
+    setMerchandAction(errors) {
+      if (errors.length > 0) {
         this.$parent.openPopup();
       } else {
         window.document.location.reload();

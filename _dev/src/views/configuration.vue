@@ -319,8 +319,7 @@ export default defineComponent({
         }).catch((error) => {
           this.alertSettings = {
             error: error?.reason || 'configuration.messages.unknownOnboardingError',
-            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
-            merchandDisconnected: !!error.reason,
+            errorButton: error.reason ? 'connectButton.notConnected.connectButton' : 'configuration.messages.reloadButton',
           };
         });
     },
@@ -366,8 +365,7 @@ export default defineComponent({
           console.error(error);
           this.alertSettings = {
             error: error?.reason || 'configuration.messages.unknownOnboardingError',
-            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
-            merchandDisconnected: !!error.reason,
+            errorButton: error.reason ? 'connectButton.notConnected.connectButton' : 'configuration.messages.reloadButton',
           };
         });
     },
@@ -397,8 +395,7 @@ export default defineComponent({
         console.error(error);
         this.alertSettings = {
           error: error?.reason || 'configuration.messages.unknownOnboardingError',
-          errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
-          merchandDisconnected: !!error.reason,
+          errorButton: error.reason ? 'connectButton.notConnected.connectButton' : 'configuration.messages.reloadButton',
         };
         this.$root.refreshContextPsFacebook({
           ...this.dynamicContextPsFacebook,
@@ -450,6 +447,7 @@ export default defineComponent({
         this.loading = false;
         this.showGlass = false;
         this.openedPopup = null;
+        this.alertSettings = {};
         this.popupReceptionDuplicate = false;
         this.psFacebookJustOnboarded = true;
 
@@ -482,8 +480,7 @@ export default defineComponent({
         });
         this.alertSettings = {
           error: error?.reason || 'configuration.messages.unknownOnboardingError',
-          errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
-          merchandDisconnected: !!error.reason,
+          errorButton: error.reason ? 'connectButton.notConnected.connectButton' : 'configuration.messages.reloadButton',
         };
         this.loading = false;
         this.showGlass = false;
@@ -541,8 +538,7 @@ export default defineComponent({
           console.error(error);
           this.alertSettings = {
             error: error?.reason || 'configuration.messages.unknownOnboardingError',
-            errorButton: error.reason ? 'configuration.messages.connectFbButton' : 'configuration.messages.reloadButton',
-            merchandDisconnected: !!error.reason,
+            errorButton: error.reason ? 'connectButton.notConnected.connectButton' : 'configuration.messages.reloadButton',
           };
           this.showGlass = false;
           this.openedPopup = null;
