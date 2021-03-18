@@ -307,17 +307,23 @@ class ProductRepository
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
         $sql->select('
-            IF(CONCAT_WS("-", ps.id_product, pa.id_product_attribute) IN ( "' . implode(',', $productsWithErrors) . '"), "'
+            IF(CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, "0")) IN ( "' . implode('","', $productsWithErrors) . '"), "'
             . $disapproved . '",
-            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", " ' . $approved . '", "' . $pending . '" )
+            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", "' . $approved . '", "' . $pending . '" )
              ) as status
         ');
 
         $sql->from('product_shop', 'ps');
-        $sql->innerJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
+        $sql->leftJoin('product_attribute', 'pa', 'pa.id_product = ps.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
+        $sql->where('CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, 0)) IN ( "' . implode('","', $productsWithErrors) . '")');
+        
+        // GROUP BY Id product AND ID combination of attributes
+        $sql->groupBy('ps.id_product');
+        $sql->groupBy('pa.id_product_attribute');
+        
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         if ($sortBy) {
