@@ -230,23 +230,7 @@ export default defineComponent({
     },
   },
   watch: {
-    prevalidationRows(newValue) {
-      // eslint-disable-next-line no-nested-ternary
-      const count = newValue.length === 0 ? '' : (
-        newValue.length === 1
-          ? this.$t('syncReport.views.oneError')
-          : this.$t('syncReport.views.manyErrors', [newValue.length])
-      );
-      this.views[0].text = this.$t('syncReport.views.prevalidation', [count]);
-    },
     reportingRows(newValue) {
-      // eslint-disable-next-line no-nested-ternary
-      const count = (!newValue || Object.keys(newValue).length === 0) ? '' : (
-        Object.keys(newValue).length === 1
-          ? this.$t('syncReport.views.oneError')
-          : this.$t('syncReport.views.manyErrors', [Object.keys(newValue).length])
-      );
-      this.views[1].text = this.$t('syncReport.views.reporting', [count]);
       this.views[1].disabled = (newValue === null);
     },
     view(newView, oldView) {

@@ -276,7 +276,7 @@ class ProductRepository
      * @param string $syncUpdateDate
      * @param int $shopId
      * @param array $productsWithErrors
-     * @param int $page
+     * @param int|false $page
      * @param string|null $status
      * @param string|null $sortBy
      * @param string $sortTo
@@ -292,7 +292,7 @@ class ProductRepository
         $syncUpdateDate,
         $shopId,
         $productsWithErrors,
-        $page = 1,
+        $page = false,
         $status = null,
         $sortBy = null,
         $sortTo = 'ASC',
@@ -324,7 +324,9 @@ class ProductRepository
         $sql->groupBy('ps.id_product');
         $sql->groupBy('pa.id_product_attribute');
 
-        $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
+        if ($page !== false) {
+            $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
+        }
 
         if ($sortBy) {
             $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));

@@ -593,14 +593,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
 
-        $page = Tools::getValue('page');
-        $status = Tools::getValue('status');
-        $sortBy = Tools::getValue('sortBy');
-        $sortTo = Tools::getValue('sortTo');
-        $searchById = Tools::getValue('searchById');
-        $searchByName = Tools::getValue('searchByName');
-        $searchByMessage = Tools::getValue('searchByMessage');
-
         /** @var EventBusProductHandler $eventBusProductHandler */
         $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
@@ -608,14 +600,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $informationAboutProducts = $eventBusProductHandler->getFilteredInformationAboutEventBusProducts(
             $syncReport['errors'],
             $syncReport['lastFinishedSyncStartedAt'],
-            $shopId,
-            $page,
-            $status,
-            $sortBy,
-            $sortTo,
-            $searchById,
-            $searchByName,
-            $searchByMessage
+            $shopId
         );
 
         $this->ajaxDie(
