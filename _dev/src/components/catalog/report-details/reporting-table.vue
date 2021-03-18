@@ -33,7 +33,7 @@
         <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
-    <b-tr v-if="dynamicRows.length === 0" class="empty-cell">
+    <b-tr v-if="rows.length === 0" class="empty-cell">
       <b-td colspan="5">
         {{ $t('syncReport.reportingEmpty') }}
       </b-td>
@@ -41,7 +41,7 @@
     <b-tr
       v-for="({
         id_product, id_product_attribute, name, messages
-      }, index) in dynamicRows" :key="index"
+      }, index) in rows" :key="index"
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
@@ -108,39 +108,8 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      lastPage: 0,
-      dynamicRows: this.rows.filter(({messages}) => messages && Object.keys(messages).length > 0),
+      lastPage: 0
     };
-  },
-  methods: {
-    handleScroll() {
-      const de = document.documentElement;
-      if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
-        console.log('Requesting a new page:', this.lastPage + 1);
-        this.loading = true;
-        this.$parent.fetchReporting(this.lastPage + 1).then((newPageCount) => {
-          if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
-            window.removeEventListener('scroll', this.handleScroll);
-          }
-          this.dynamicRows = this.rows
-            .filter(({messages}) => messages && Object.keys(messages).length > 0);
-          console.log('new elements:', newPageCount);
-          this.lastPage += 1;
-        }).catch((error) => {
-          console.error(error);
-        }).then(() => {
-          setTimeout(() => { // used to debounce handleScroll
-            this.loading = false;
-          }, 500);
-        });
-      }
-    },
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
   },
 });
 </script>
