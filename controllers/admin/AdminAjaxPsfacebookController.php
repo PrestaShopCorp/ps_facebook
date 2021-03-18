@@ -598,7 +598,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
 
-        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
+        $productsWithErrors = isset($syncReport['errors']) ? array_filter($syncReport['errors'], [$this, 'filterErrorsWithoutMessage']) : [];
         $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $page = Tools::getValue('page');
@@ -693,5 +693,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         }
 
         return _MODULE_DIR_ . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf';
+    }
+
+    /**
+     * Hotfix as the Nest API should not return products without message
+     * 
+     * @return bool
+     */
+    private function filterErrorsWithoutMessage(array $productInError)
+    {
+        return !empty($productInError);
     }
 }
