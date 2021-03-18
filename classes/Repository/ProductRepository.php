@@ -319,11 +319,11 @@ class ProductRepository
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
         $sql->where('CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, 0)) IN ( "' . implode('","', $productsWithErrors) . '")');
-        
+
         // GROUP BY Id product AND ID combination of attributes
         $sql->groupBy('ps.id_product');
         $sql->groupBy('pa.id_product_attribute');
-        
+
         $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
 
         if ($sortBy) {
