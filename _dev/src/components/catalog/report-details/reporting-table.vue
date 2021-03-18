@@ -108,7 +108,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      lastPage: 0
+      lastPage: 0,
     };
   },
 });

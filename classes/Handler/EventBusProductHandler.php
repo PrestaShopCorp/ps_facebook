@@ -74,13 +74,6 @@ class EventBusProductHandler
      * @param array $eventBusProducts
      * @param int $syncTimeStamp
      * @param int $shopId
-     * @param int|false $page
-     * @param string|false $status
-     * @param string|false $sortBy
-     * @param string|false $sortTo
-     * @param int|false$searchById
-     * @param string|false $searchByName
-     * @param string|false $searchByMessage
      *
      * @return array
      *
