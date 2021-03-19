@@ -138,7 +138,8 @@
       "lastSyncDate": "Last sync {0} at {1}",
       "otherLanguage": "Other",
       "prevalidationEmpty": "Well done! All your products are ready to be exported",
-      "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog."
+      "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
+      "loadNextPage": "Load next results"
     },
     "categoryMatching": {
       "title": "Enhance your catalog : category mapping",

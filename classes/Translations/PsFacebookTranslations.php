@@ -197,6 +197,7 @@ class PsFacebookTranslations
                 'otherLanguage' => $this->module->l('Other', 'PsFacebookTranslations'),
                 'prevalidationEmpty' => $this->module->l('Well done! All your products are ready to be exported', 'PsFacebookTranslations'),
                 'reportingEmpty' => $this->module->l('Well done! All your products have been exported to your Facebook catalog.', 'PsFacebookTranslations'),
+                'loadNextPage' => $this->module->l('Load next results', 'PsFacebookTranslations'),
             ],
             'categoryMatching' => [
                 'title' => $this->module->l('Enhance your catalog : category mapping', 'PsFacebookTranslations'),

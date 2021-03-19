@@ -119,6 +119,16 @@
         <div class="spinner" />
       </b-td>
     </b-tfoot>
+    <b-tfoot v-else>
+      <b-td class="text-center" colspan="8">
+        <b-button
+          variant="link"
+          @click="loadNextPage"
+        >
+          {{ $t('syncReport.loadNextPage') }}
+        </b-button>
+      </b-td>
+    </b-tfoot>
   </b-table-simple>
 </template>
 
@@ -215,6 +225,10 @@ export default defineComponent({
     handleScroll() {
       const de = document.documentElement;
       if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
+        this.loadNextPage();
+      }
+    },
+    loadNextPage() {
         console.log('Requesting a new page:', this.lastPage + 1);
         this.loading = true;
         this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
@@ -231,7 +245,6 @@ export default defineComponent({
             this.loading = false;
           }, 500);
         });
-      }
     },
   },
   mounted() {
