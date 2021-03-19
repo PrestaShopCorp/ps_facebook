@@ -389,8 +389,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var ProductSyncReportProvider $productSyncReportProvider */
         $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
         $syncReport = $productSyncReportProvider->getProductSyncReport();
-        $productsErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
-        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
 
         $this->ajaxDie(
             json_encode(
@@ -406,9 +404,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                             'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
                         ],
                         'reporting' => [
-                            'lastSyncDate' => $lastFinishedSyncStartedAt,
+                            'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
                             'catalog' => $productCount['product_count'],
-                            'errored' => count($productsErrors), // no distinction for base lang vs l10n errors
+                            'errored' => count($syncReport['errors']), // no distinction for base lang vs l10n errors
                         ],
                     ],
                 ]
@@ -561,22 +559,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
 
-        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
-        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
-
         /** @var EventBusProductHandler $eventBusProductHandler */
         $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
         $isoCode = Context::getContext()->language->iso_code;
-        $informationAboutProductsWithErrors = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($productsWithErrors, $shopId, $isoCode);
+        $informationAboutProductsWithErrors = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($syncReport['errors'], $shopId, $isoCode);
 
         $this->ajaxDie(
             json_encode(
                 [
                     'success' => true,
                     'productsWithErrors' => $informationAboutProductsWithErrors,
-                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                    'lastFinishedSyncStartedAt' => $syncReport['lastFinishedSyncStartedAt'],
                 ]
             )
         );
@@ -598,39 +593,21 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             );
         }
 
-        $productsWithErrors = isset($syncReport['errors']) ? $syncReport['errors'] : [];
-        $lastFinishedSyncStartedAt = isset($syncReport['lastFinishedSyncStartedAt']) ? $syncReport['lastFinishedSyncStartedAt'] : 0;
-
-        $page = Tools::getValue('page');
-        $status = Tools::getValue('status');
-        $sortBy = Tools::getValue('sortBy');
-        $sortTo = Tools::getValue('sortTo');
-        $searchById = Tools::getValue('searchById');
-        $searchByName = Tools::getValue('searchByName');
-        $searchByMessage = Tools::getValue('searchByMessage');
-
         /** @var EventBusProductHandler $eventBusProductHandler */
         $eventBusProductHandler = $this->module->getService(EventBusProductHandler::class);
 
         $shopId = Context::getContext()->shop->id;
         $informationAboutProducts = $eventBusProductHandler->getFilteredInformationAboutEventBusProducts(
-            $productsWithErrors,
-            $lastFinishedSyncStartedAt,
-            $shopId,
-            $page,
-            $status,
-            $sortBy,
-            $sortTo,
-            $searchById,
-            $searchByName,
-            $searchByMessage
+            $syncReport['errors'],
+            $syncReport['lastFinishedSyncStartedAt'],
+            $shopId
         );
 
         $this->ajaxDie(
             json_encode(
                 [
                     'success' => true,
-                    'lastFinishedSyncStartedAt' => $lastFinishedSyncStartedAt,
+                    'lastFinishedSyncStartedAt' => $syncReport['lastFinishedSyncStartedAt'],
                     'list' => $informationAboutProducts,
                     'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
                 ]

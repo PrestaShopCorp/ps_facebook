@@ -70,6 +70,31 @@ class ProductSyncReportProvider
             return false;
         }
 
+        return $this->fixMissingValues($response);
+    }
+
+    private function fixMissingValues($response)
+    {
+        if (!isset($response['errors'])) {
+            $response['errors'] = [];
+        }
+
+        if (!isset($response['lastFinishedSyncStartedAt'])) {
+            $response['lastFinishedSyncStartedAt'] = 0;
+        }
+
+        $response['errors'] = array_filter($response['errors'], [$this, 'filterErrorsWithoutMessage']);
+
         return $response;
+    }
+
+    /**
+     * Hotfix as the Nest API should not return products without message
+     *
+     * @return bool
+     */
+    private function filterErrorsWithoutMessage(array $productInError)
+    {
+        return !empty($productInError);
     }
 }

@@ -74,13 +74,6 @@ class EventBusProductHandler
      * @param array $eventBusProducts
      * @param int $syncTimeStamp
      * @param int $shopId
-     * @param int|false $page
-     * @param string|false $status
-     * @param string|false $sortBy
-     * @param string|false $sortTo
-     * @param int|false$searchById
-     * @param string|false $searchByName
-     * @param string|false $searchByMessage
      *
      * @return array
      *
@@ -89,28 +82,14 @@ class EventBusProductHandler
     public function getFilteredInformationAboutEventBusProducts(
         array $eventBusProducts,
         $syncTimeStamp,
-        $shopId,
-        $page,
-        $status,
-        $sortBy,
-        $sortTo,
-        $searchById,
-        $searchByName,
-        $searchByMessage
+        $shopId
     ) {
         $formattedSyncTimeDate = date('Y-m-d H:i:s', $syncTimeStamp);
         $productsWithErrors = array_keys($eventBusProducts);
         $eventBusProductsInfo = $this->productRepository->getInformationAboutEventBusProducts(
             $formattedSyncTimeDate,
             $shopId,
-            $productsWithErrors,
-            $page,
-            $status,
-            $sortBy,
-            $sortTo,
-            $searchById,
-            $searchByName,
-            $searchByMessage
+            $productsWithErrors
         );
 
         foreach ($eventBusProducts as $eventBusProductId => $messages) {
