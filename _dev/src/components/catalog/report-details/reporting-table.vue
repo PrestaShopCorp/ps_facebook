@@ -48,8 +48,8 @@
         {{ name }}{{ id_product_attribute > 0 ? ` (#${id_product_attribute})` : '' }}
       </b-td>
       <b-td>
-        <span v-if="!!messages.base" class="badge badge-primary">{{ locale.split('-')[0] }}</span>
-        <span v-if="!!messages.l10n" class="badge badge-primary">
+        <span v-if="!!messages.base" class="badge badge-secondary">{{ locale.split('-')[0] }}</span>
+        <span v-if="!!messages.l10n" class="badge badge-secondary">
           {{ $t('syncReport.otherLanguage') }}
         </span>
       </b-td>
@@ -66,6 +66,7 @@
           :href="url.replace('/1?', `/${id_product}?`)"
           target="_blank"
           v-if="id_product"
+          class="text-secondary"
         >
           <i class="material-icons">edit</i>
         </b-link>

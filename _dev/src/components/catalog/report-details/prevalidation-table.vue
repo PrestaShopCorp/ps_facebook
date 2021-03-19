@@ -84,7 +84,7 @@
           {{ id_product_attribute ? variantLabel(i) : name }}
         </b-td>
         <b-td>
-          <span v-for="lang in l" :key="lang" class="badge badge-primary">{{ lang }}</span>
+          <span v-for="lang in l" :key="lang" class="badge badge-secondary">{{ lang }}</span>
         </b-td>
         <b-td>
           <i v-if="cover" class="material-icons text-success">done</i>
@@ -229,22 +229,22 @@ export default defineComponent({
       }
     },
     loadNextPage() {
-        console.log('Requesting a new page:', this.lastPage + 1);
-        this.loading = true;
-        this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
-          if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
-            window.removeEventListener('scroll', this.handleScroll);
-          }
-          this.dynamicRows = this.rows;
-          console.log('new elements:', newPageCount);
-          this.lastPage += 1;
-        }).catch((error) => {
-          console.error(error);
-        }).then(() => {
-          setTimeout(() => { // used to debounce handleScroll
-            this.loading = false;
-          }, 500);
-        });
+      console.log('Requesting a new page:', this.lastPage + 1);
+      this.loading = true;
+      this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
+        if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
+          window.removeEventListener('scroll', this.handleScroll);
+        }
+        this.dynamicRows = this.rows;
+        console.log('new elements:', newPageCount);
+        this.lastPage += 1;
+      }).catch((error) => {
+        console.error(error);
+      }).then(() => {
+        setTimeout(() => { // used to debounce handleScroll
+          this.loading = false;
+        }, 500);
+      });
     },
   },
   mounted() {
