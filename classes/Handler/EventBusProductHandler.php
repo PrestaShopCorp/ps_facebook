@@ -72,7 +72,7 @@ class EventBusProductHandler
 
     /**
      * @param array $eventBusProducts
-     * @param int $syncTimeStamp
+     * @param string $lastSyncDate
      * @param int $shopId
      *
      * @return array
@@ -81,10 +81,10 @@ class EventBusProductHandler
      */
     public function getFilteredInformationAboutEventBusProducts(
         array $eventBusProducts,
-        $syncTimeStamp,
+        $lastSyncDate,
         $shopId
     ) {
-        $formattedSyncTimeDate = date('Y-m-d H:i:s', $syncTimeStamp);
+        $formattedSyncTimeDate = date('Y-m-d H:i:s', strtotime($lastSyncDate));
         $productsWithErrors = array_keys($eventBusProducts);
         $eventBusProductsInfo = $this->productRepository->getInformationAboutEventBusProducts(
             $formattedSyncTimeDate,
