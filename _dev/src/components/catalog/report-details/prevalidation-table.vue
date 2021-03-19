@@ -119,7 +119,7 @@
         <div class="spinner" />
       </b-td>
     </b-tfoot>
-    <b-tfoot v-else>
+    <b-tfoot v-else-if="paginationEnabled">
       <b-td class="text-center" colspan="8">
         <b-button
           variant="link"
@@ -160,6 +160,7 @@ export default defineComponent({
       loading: false,
       lastPage: 0,
       dynamicRows: this.rows,
+      paginationEnabled: true,
     };
   },
   methods: {
@@ -234,6 +235,7 @@ export default defineComponent({
       this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
         if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
           window.removeEventListener('scroll', this.handleScroll);
+          this.paginationEnabled = false;
         }
         this.dynamicRows = this.rows;
         console.log('new elements:', newPageCount);
