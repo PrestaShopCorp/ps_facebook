@@ -65,7 +65,14 @@
         class="spinner"
       />
       <div
-        v-if="loading === false"
+        v-else-if="error"
+        class="error"
+        :title="error"
+      >
+        <i class="material-icons">error</i>
+      </div>
+      <div
+        v-else-if="loading === false"
         class="saved"
       >
         <svg
@@ -87,13 +94,6 @@
             d="M14.1 27.2l7.1 7.2 16.7-16.8"
           />
         </svg>
-      </div>
-      <div
-        v-if="error"
-        class="error"
-        :title="error"
-      >
-        <i class="material-icons">error</i>
       </div>
     </b-td>
   </b-tr>
@@ -276,8 +276,8 @@ export default defineComponent({
   .spinner {
     color: #fff;
     background-color: #fff;
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 1.4rem!important;
+    height: 1.4rem!important;
     border-radius: 2.5rem;
     border-right-color: #25b9d7;
     border-bottom-color: #25b9d7;
@@ -315,8 +315,7 @@ export default defineComponent({
   }
 
   .checkmark {
-    width: 56px;
-    height: 56px;
+    width: 100%;
     border-radius: 50%;
     display: block;
     stroke-width: 2;
