@@ -308,7 +308,12 @@ export default defineComponent({
         .then((res) => {
           this.loading = false;
           if (!res.ok) {
-            return res.json().then((errors) => { throw errors; });
+            return res.json().then(
+              (errors) => { throw errors; },
+            )
+              .catch(() => {
+                throw new Error(res.statusText || res.status);
+              });
           }
           return res.json();
         })
@@ -450,7 +455,7 @@ export default defineComponent({
             headers: {'Content-Type': 'application/json', Accept: 'application/json'},
           }).then((res2) => {
             if (!res2.ok) {
-              throw new Error(res2.status || res2.statusText);
+              throw new Error(res2.statusText || res2.status);
             }
             return res2.json();
           }).then((res2) => {
