@@ -348,7 +348,7 @@ export default defineComponent({
         .then((res) => {
           this.loading = false;
           if (!res.ok) {
-            return res.json().then((errors) => { throw errors; });
+            throw new Error(res.statusText || res.status);
           }
           return res.json();
         })
@@ -374,12 +374,12 @@ export default defineComponent({
       }).then((res) => {
         this.loading = false;
         if (!res.ok) {
-          return res.json().then((errors) => { throw errors; });
+          throw new Error(res.statusText || res.status);
         }
         return res.json();
       }).then((res) => {
         if (!res.success) {
-          throw new Error(res.statusText || res.status);
+          throw new Error('Error');
         }
         this.$root.refreshContextPsFacebook({
           ...this.dynamicContextPsFacebook,
