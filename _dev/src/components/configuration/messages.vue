@@ -29,16 +29,16 @@
     <b-alert
       variant="danger"
       dismissible
-      :show="!!error"
+      :show="!!alertSettings.error"
     >
       <p>
-        {{ $t(error) }}
+        {{ $t(alertSettings.error) }}
         <br>
         <b-button
           class="mt-2"
-          @click="reloadBrowser"
+          @click="setMerchandAction(alertSettings.error)"
         >
-          {{ $t('configuration.messages.reloadButton') }}
+          {{ $t(alertSettings.errorButton) }}
         </b-button>
       </p>
     </b-alert>
@@ -96,8 +96,8 @@ export default defineComponent({
       required: false,
       default: false,
     },
-    error: {
-      type: String,
+    alertSettings: {
+      type: Object,
       required: false,
       default: null,
     },
@@ -112,8 +112,12 @@ export default defineComponent({
     onAdCampaignClick() {
       this.$emit('onAdCampaignClick');
     },
-    reloadBrowser() {
-      window.document.location.reload();
+    setMerchandAction(errors) {
+      if (errors.length > 0) {
+        this.$parent.openPopup();
+      } else {
+        window.document.location.reload();
+      }
     },
   },
 });

@@ -111,6 +111,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $facebookContext = $facebookDataProvider->getContext($onboardingData['fbe']);
 
         $accessTokenProvider->refreshTokens();
+        $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, false);
 
         $this->ajaxDie(
             json_encode([
@@ -259,6 +260,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxGetFbContext()
     {
+        if ($this->configurationAdapter->get(Config::PS_FACEBOOK_FORCED_DISCONNECT) == true) {
+            // $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, false);
+            http_response_code(401);
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'error' => true,
+                        'reason' => $this->module->l('We are sorry but the link to Facebook has expired, please reconnect'),
+                    ]
+            ));
+        }
         /** @var FbeDataProvider $fbeDataProvider */
         $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
 

@@ -353,6 +353,7 @@ class FacebookClient
 
             if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
                 $this->disconnectFromFacebook();
+                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
 
                 return false;
             }

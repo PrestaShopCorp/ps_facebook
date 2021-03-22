@@ -88,7 +88,8 @@ export default {
         })
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.error(error);
         });
     },

@@ -236,6 +236,7 @@ class ApiConversionHandler
         } catch (AuthorizationException $e) {
             if (in_array($e->getCode(), Config::OAUTH_EXCEPTION_CODE)) {
                 $this->facebookClient->disconnectFromFacebook();
+                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
 
                 return false;
             }
