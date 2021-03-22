@@ -130,7 +130,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big mt-2">{{ reporting.errored || '--' }}</span>
+            <span class="big red-number mt-2">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -148,65 +148,74 @@
       <br clear="both">
     </div>
 
-    <hr class="separator">
-
     <template>
-      <div class="float-right">
-        <i
-          class="material-icons refresh-icon"
-          @click="rescan"
-        >loop</i>
-      </div>
       <h3>
         {{ $t('catalogSummary.preApprovalScanTitle') }}
-        <span class="refreshDate text-muted">
-          {{ $t('catalogSummary.preApprovalScanRefreshDate', [(new Date()).toLocaleTimeString()]) }}
-        </span>
       </h3>
       <p>{{ $t('catalogSummary.preApprovalScanIntro') }}</p>
 
       <b-container fluid>
         <b-row align-v="stretch">
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="pb-3 px-2"
-          >
-            <div class="app pt-1 pb-3 px-2">
-              <div class="text-uppercase text-muted small-text pb-1">
-                {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
-              </div>
+          <b-col class="counter m-1 p-3">
+            <i class="material-icons">sync</i>
+            {{ $t('catalogSummary.preApprovalScanRefreshDate', ['']) }}
+            <br>
+            <button
+              class="btn btn-outline-secondary btn-sm float-right mt-3"
+              title="Rescan"
+              @click="rescan"
+            >
+              {{ $t('catalogSummary.preApprovalScanRescan') }}
+            </button>
+            <span
+              class="big mt-2"
+            >
+              {{ (new Date()).toLocaleDateString(
+                    undefined,
+                    {year: 'numeric', month: 'numeric', day: 'numeric'},
+                  )
+              }}
+            </span>
+            <span
+              class="text-muted"
+            >
+              {{ (new Date()).toLocaleTimeString(
+                  undefined,
+                  {hour: '2-digit', minute: '2-digit'},
+                )
+              }}
+            </span>
+          </b-col>
+          <div class="w-100 d-block d-sm-none" />
+          <b-col class="counter m-1 p-3">
+            <i class="material-icons">store</i>
+            {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
+            <span class="big mt-2">
               <span class="green-number">
                 {{ prevalidation.syncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
-            </div>
+            </span>
           </b-col>
-          <div class="w-100 d-block d-sm-none" />
-          <div class="w-100 d-none d-sm-block d-md-none" />
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="pb-3 px-2"
-          >
-            <div class="app pt-1 pb-3 px-2">
-              <div class="text-uppercase text-muted small-text pb-1">
-                {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
-              </div>
-              <b-link
-                class="float-right see-details"
-                @click="onPrevalidationDetails"
-              >
-                {{ $t('catalogSummary.detailsButton') }}
-              </b-link>
+          <div class="w-100 d-block d-md-none" />
+          <b-col class="counter m-1 p-3">
+            <i class="material-icons">error_outline</i>
+            {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
+            <br>
+            <b-link
+              class="float-right see-details mt-3"
+              @click="onPrevalidationDetails"
+            >
+              {{ $t('catalogSummary.detailsButton') }}
+            </b-link>
+            <span class="big mt-2">
               <span class="red-number">
                 {{ prevalidation.notSyncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
-            </div>
+            </span>
           </b-col>
+
         </b-row>
       </b-container>
     </template>
@@ -645,9 +654,6 @@ export default defineComponent({
       font-size: 1.5em;
       font-weight: 700;
     }
-    &:last-of-type > span {
-      color: #C05C67;
-    }
 
     & .warning.smaller {
       font-size: smaller;
@@ -659,12 +665,10 @@ export default defineComponent({
     }
   }
   .green-number {
-    font-size: 1.3em;
     font-weight: 700;
     color: #70B580;
   }
   .red-number {
-    font-size: 1.3em;
     font-weight: 700;
     color: #C05C67;
   }
