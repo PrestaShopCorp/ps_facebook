@@ -65,6 +65,7 @@
         <b-link
           :href="url.replace('/1?', `/${id_product}?`)"
           target="_blank"
+          v-if="id_product"
         >
           <i class="material-icons">edit</i>
         </b-link>
