@@ -149,12 +149,6 @@
     </div>
 
     <template>
-      <div class="float-right">
-        <i
-          class="material-icons refresh-icon"
-          @click="rescan"
-        >loop</i>
-      </div>
       <h3>
         {{ $t('catalogSummary.preApprovalScanTitle') }}
       </h3>
@@ -165,6 +159,14 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.preApprovalScanRefreshDate', ['']) }}
+            <br>
+            <button
+              class="btn btn-outline-secondary btn-sm float-right mt-3"
+              title="Rescan"
+              @click="rescan"
+            >
+              {{ $t('catalogSummary.preApprovalScanRescan') }}
+            </button>
             <span
               class="big mt-2"
             >

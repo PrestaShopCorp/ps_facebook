@@ -150,6 +150,7 @@ class PsFacebookTranslations
                 'preApprovalScanRefreshDate' => $this->module->l('Last scan today at {0}', 'PsFacebookTranslations'),
                 'preApprovalScanReadyToSync' => $this->module->l('Ready to sync', 'PsFacebookTranslations'),
                 'preApprovalScanNonSyncable' => $this->module->l('Non-syncable', 'PsFacebookTranslations'),
+                'preApprovalScanRescan' => $this->module->l('Rescan', 'PsFacebookTranslations'),
                 'catalogExportWarning' => $this->module->l('Products will be exported then updated every 24h.', 'PsFacebookTranslations'),
                 'catalogExportDisclaimer' => $this->module->l('By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.', 'PsFacebookTranslations'),
                 'catalogExportPaused' => $this->module->l('Paused', 'PsFacebookTranslations'),

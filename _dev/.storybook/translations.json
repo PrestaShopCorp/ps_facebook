@@ -92,6 +92,7 @@
       "preApprovalScanRefreshDate": "Last scan today at {0}",
       "preApprovalScanReadyToSync": "Ready to sync",
       "preApprovalScanNonSyncable": "Non-syncable",
+      "preApprovalScanRescan": "Rescan",
       "catalogExportWarning": "Products will be exported then updated every 24h.",
       "catalogExportDisclaimer": "By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.",
       "catalogExportPaused": "Paused",
