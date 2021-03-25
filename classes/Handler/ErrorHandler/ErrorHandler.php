@@ -32,7 +32,7 @@ use Raven_Client;
 class ErrorHandler
 {
     /**
-     * @var Raven_Client
+     * @var ModuleFilteredRavenClient
      */
     protected $client;
 
@@ -47,8 +47,8 @@ class ErrorHandler
         $module = Module::getInstanceByName('ps_facebook');
         $env = $module->getService(Env::class);
 
-        $this->client = new Raven_Client(
-            $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
+        $this->client = new ModuleFilteredRavenClient(
+                $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
             [
                 'level' => 'warning',
                 'tags' => [
@@ -61,6 +61,11 @@ class ErrorHandler
                 ],
             ]
         );
+        // We use realpath to get errors even if module is behind a symbolic link
+        $this->client->setAppPath(realpath(_PS_MODULE_DIR_ . 'ps_facebook/'));
+        // Useless as it will exclude everything even if specified in the app path
+        //$this->client->setExcludedAppPaths([_PS_ROOT_DIR_]);
+        $this->client->install();
     }
 
     /**
