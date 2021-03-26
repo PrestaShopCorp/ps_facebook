@@ -66,7 +66,7 @@ class AccessTokenProvider
         ConfigurationAdapter $configurationAdapter,
         Env $env,
         ErrorHandler $errorHandler,
-        Controller $controller
+        $controller
     ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->env = $env;
@@ -111,6 +111,7 @@ class AccessTokenProvider
         if ((!$this->systemAccessToken
                 || !$tokenExpirationDate
                 || ($tokenExpirationDate - $currentTimestamp <= 86400))
+            && isset($this->controller->controller_type)
             && $this->controller->controller_type === 'moduleadmin'
             && $this->userAccessToken
         ) {
