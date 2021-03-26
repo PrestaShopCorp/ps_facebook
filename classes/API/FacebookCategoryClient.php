@@ -65,6 +65,10 @@ class FacebookCategoryClient
     {
         $googleCategoryId = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId($categoryId, $shopId);
 
+        if (empty($googleCategoryId)) {
+            return null;
+        }
+
         $googleCategory = $this->get('taxonomy/' . $googleCategoryId);
 
         if (!is_array($googleCategory)) {
