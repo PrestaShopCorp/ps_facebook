@@ -40,7 +40,7 @@ services:
       - '@ps_facebook.context'
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient'
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
 
   PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider'

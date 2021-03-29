@@ -25,7 +25,7 @@ use Context;
 use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient;
+use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
@@ -71,9 +71,9 @@ class EventDataProvider
     private $availabilityProvider;
 
     /**
-     * @var FacebookCategoryClient
+     * @var GoogleCategoryRepository
      */
-    private $facebookCategoryClient;
+    private $googleCategoryRepository;
 
     /**
      * @var GoogleCategoryProvider
@@ -87,7 +87,7 @@ class EventDataProvider
         Context $context,
         ps_facebook $module,
         ProductAvailabilityProviderInterface $availabilityProvider,
-        FacebookCategoryClient $facebookCategoryClient,
+        GoogleCategoryRepository $googleCategoryRepository,
         GoogleCategoryProvider $googleCategoryProvider
     ) {
         $this->toolsAdapter = $toolsAdapter;
@@ -97,7 +97,7 @@ class EventDataProvider
         $this->productRepository = $productRepository;
         $this->module = $module;
         $this->availabilityProvider = $availabilityProvider;
-        $this->facebookCategoryClient = $facebookCategoryClient;
+        $this->googleCategoryRepository = $googleCategoryRepository;
         $this->googleCategoryProvider = $googleCategoryProvider;
     }
 
@@ -178,7 +178,10 @@ class EventDataProvider
         ];
 
         $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-        $category = $this->getCategory($product['id_category_default']);
+        $category = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId(
+            $product['id_category_default'],
+            $this->context->shop->id
+        ) ?: '';
 
         $this->context->smarty->assign(
             [
@@ -561,15 +564,5 @@ class EventDataProvider
     private function getCurrency()
     {
         return \Tools::strtolower($this->context->currency->iso_code);
-    }
-
-    private function getCategory($categoryId)
-    {
-        $googleCategory = $this->facebookCategoryClient->getGoogleCategory(
-            $categoryId,
-            $this->context->shop->id
-        );
-
-        return $googleCategory ? $googleCategory['id'] : '';
     }
 }
