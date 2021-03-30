@@ -29,6 +29,7 @@ use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\Module\Ps_facebook\Utility\CustomerInformationUtility;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
+use PrestaShopException;
 use Product;
 use Ps_facebook;
 
@@ -273,10 +274,14 @@ class EventDataProvider
         $attributeGroups = $this->toolsAdapter->getValue('group');
 
         if ($attributeGroups) {
-            $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
-                $idProduct,
-                $attributeGroups
-            );
+            try {
+                $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
+                    $idProduct,
+                    $attributeGroups
+                );
+            } catch (PrestaShopException $e) {
+                return false;
+            }
         }
 
         if ($action !== 'update') {
@@ -545,10 +550,14 @@ class EventDataProvider
             $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
         }
 
-        $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
-            $productId,
-            $attributeIds
-        );
+        try {
+            $idProductAttribute = $this->productRepository->getIdProductAttributeByIdAttributes(
+                $productId,
+                $attributeIds
+            );
+        } catch (PrestaShopException $e) {
+            $idProductAttribute = 0;
+        }
 
         $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute);
 
