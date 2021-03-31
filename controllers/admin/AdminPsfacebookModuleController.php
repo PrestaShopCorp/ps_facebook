@@ -23,6 +23,7 @@ use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
@@ -59,6 +60,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $this->env = $this->module->getService(Env::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->shopRepository = $this->module->getService(ShopRepository::class);
+        $this->module->getService(ErrorHandler::class);
         $this->bootstrap = false;
     }
 

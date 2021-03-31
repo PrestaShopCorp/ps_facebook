@@ -40,10 +40,16 @@ class ProductSyncReportProvider
      */
     private $env;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, Env $env)
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
+    public function __construct(ConfigurationAdapter $configurationAdapter, Env $env, ErrorHandler $errorHandler)
     {
         $this->configurationAdapter = $configurationAdapter;
         $this->env = $env;
+        $this->errorHandler = $errorHandler;
     }
 
     public function getProductSyncReport()
@@ -56,8 +62,7 @@ class ProductSyncReportProvider
                 "/account/{$businessId}/reporting"
             )->json();
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookAccountException(
                     'Failed to get product sync reporting',
                     FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,

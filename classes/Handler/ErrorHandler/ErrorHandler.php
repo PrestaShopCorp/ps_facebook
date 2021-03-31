@@ -23,7 +23,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 use Module;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
-use Ps_facebook;
 
 /**
  * Handle Error.
@@ -35,17 +34,8 @@ class ErrorHandler
      */
     protected $client;
 
-    /**
-     * @var ErrorHandler
-     */
-    private static $instance;
-
-    public function __construct()
+    public function __construct(Module $module, Env $env)
     {
-        /** @var Ps_facebook */
-        $module = Module::getInstanceByName('ps_facebook');
-        $env = $module->getService(Env::class);
-
         $this->client = new ModuleFilteredRavenClient(
             $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
             [
@@ -54,14 +44,14 @@ class ErrorHandler
                     'php_version' => phpversion(),
                     'ps_facebook_version' => $module->version,
                     'prestashop_version' => _PS_VERSION_,
-                    'ps_facebook_is_enabled' => \Module::isEnabled('ps_facebook'),
-                    'ps_facebook_is_installed' => \Module::isInstalled('ps_facebook'),
+                    'ps_facebook_is_enabled' => Module::isEnabled($module->name),
+                    'ps_facebook_is_installed' => Module::isInstalled($module->name),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
             ]
         );
         // We use realpath to get errors even if module is behind a symbolic link
-        $this->client->setAppPath(realpath(_PS_MODULE_DIR_ . 'ps_facebook/'));
+        $this->client->setAppPath(realpath(_PS_MODULE_DIR_ . $module->name . '/'));
         // Useless as it will exclude everything even if specified in the app path
         //$this->client->setExcludedAppPaths([_PS_ROOT_DIR_]);
         $this->client->install();
@@ -84,18 +74,6 @@ class ErrorHandler
             http_response_code($code);
             throw $error;
         }
-    }
-
-    /**
-     * @return ErrorHandler
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new ErrorHandler();
-        }
-
-        return self::$instance;
     }
 
     /**
