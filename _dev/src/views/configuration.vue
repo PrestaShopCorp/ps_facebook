@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading" />
+  <spinner v-if="loading && !showGlass" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -82,7 +82,7 @@
       />
       <survey v-if="facebookConnected" />
       <div
-        v-if="showGlass"
+        v-if="showGlass && !loading"
         class="glass"
         @click="glassClicked"
       >
@@ -104,6 +104,21 @@
           <i class="material-icons">close</i>
         </div>
       </div>
+      <div
+        v-if="showGlass && loading"
+        class="glass"
+      >
+        <div class="refocus">
+          <h2>
+            You are almost there
+          </h2>
+          <p>
+            Acknowledging your permissions with Facebook services.<br/>
+            This can take several seconds...
+          </p>
+          <span><spinner /></span>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -122,7 +137,7 @@ import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import PsAccountsUpdateNeeded from '../components/warning/ps-accounts-update-needed.vue';
 
-const generateOpenPopup = (component, popupUrl) => {
+const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, popupUrl) => {
   const canGeneratePopup = (
     component.contextPsAccounts.currentShop
     && component.contextPsAccounts.currentShop.url
@@ -145,7 +160,7 @@ const generateOpenPopup = (component, popupUrl) => {
     component.onFbeOnboardClosed,
     component.onFbeOnboardResponded,
   ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
-};
+});
 
 export default defineComponent({
   name: 'Configuration',
@@ -295,7 +310,7 @@ export default defineComponent({
     };
   },
   created() {
-    if (!this.contextPsFacebook || !this.externalBusinessId) {
+    if ((!this.contextPsFacebook || !this.externalBusinessId) && global.psFacebookGetFbContextRoute) {
       this.fetchData();
     } else {
       this.loading = false;
@@ -406,7 +421,7 @@ export default defineComponent({
       this.showGlass = false;
       this.openedPopup = null;
     },
-    onFbeOnboardResponded(response) {
+    onFbeOnboardResponded(response, save = this.saveFbeOnboarding.bind(this)) {
       if (this.popupReceptionDuplicate) {
         console.log('duplicated response received');
         return;
@@ -421,53 +436,14 @@ export default defineComponent({
       }
       this.loading = true;
 
-      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
-      fetch(this.fbeOnboardingSaveRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({onboarding: response}),
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return res.json();
-      }).then((res) => {
-        if (!res.success) {
-          throw new Error('Error!');
-        }
-        console.log('Onboarding successfull.');
-        this.$segment.track('PS Account & FBE connected', {
-          module: 'ps_facebook',
-        });
-        this.$root.refreshContextPsFacebook(res.contextPsFacebook);
-        this.loading = false;
-        this.showGlass = false;
+      save().then(() => {
         this.openedPopup = null;
         this.alertSettings = {};
         this.popupReceptionDuplicate = false;
-        this.psFacebookJustOnboarded = true;
 
-        // after successfully onboarded, wait 3secs,
+        // after successfully onboarded, wait 4secs,
         // then call exchange tokens route to force system token to be retrieved.
-        setTimeout(() => {
-          fetch(this.ensureTokensExchangedRoute, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-          }).then((res2) => {
-            if (!res2.ok) {
-              throw new Error(res2.statusText || res2.status);
-            }
-            return res2.json();
-          }).then((res2) => {
-            if (!res2.success) {
-              throw new Error('Error!');
-            }
-            console.log('Tokens exchanged.');
-          }).catch((error) => {
-            console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
-            console.error(error);
-          });
-        }, 3000);
+        setTimeout(this.ensureTokensExchanged.bind(this, true), 4000);
       }).catch((error) => {
         console.error('The pop-up gets blocked');
         console.error(error);
@@ -480,6 +456,61 @@ export default defineComponent({
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
+      });
+    },
+    saveFbeOnboarding(response) {
+      // Save access_token, fbe?, and more on PHP side. And gets back contextPsFacebook in response.
+      return fetch(this.fbeOnboardingSaveRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({onboarding: response}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (!res.success) {
+          throw new Error('Error!');
+        }
+        console.log('Onboarding successfull on PrestaShop side.');
+        if (this.$segment) {
+          this.$segment.track('PS Account & FBE connected', {
+            module: 'ps_facebook',
+          });
+        }
+        this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+      });
+    },
+    ensureTokensExchanged(tryAgain = false) {
+      fetch(this.ensureTokensExchangedRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res2) => {
+        if (!res2.ok) {
+          throw new Error(res2.statusText || res2.status);
+        }
+        return res2.json();
+      }).then((res2) => {
+        if (!res2.success) {
+          throw new Error('Error!');
+        }
+        console.log('Tokens exchanged.');
+        this.loading = false;
+        this.showGlass = false;
+        this.psFacebookJustOnboarded = true;
+      }).catch((error) => {
+        console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
+        console.error(error);
+
+        if (tryAgain) {
+          console.log('We will try again in several seconds...');
+          // TODO !0: message to display : "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more..."
+          setTimeout(this.ensureTokensExchanged.bind(this, false), 8000);
+        } else {
+          // TODO !0: message to display : "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support."
+          // TODO !0: a button to close glass. no more.
+        }
       });
     },
     onShopSelected(shopSelected) {
@@ -495,7 +526,9 @@ export default defineComponent({
         if (this.dynamicExternalBusinessId) {
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
           console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
-          console.log('ShopId:', this.$store.state.context.appContext.shopId);
+          if (this.$store.state) {
+            console.log('ShopId:', this.$store.state.context.appContext.shopId);
+          }
           return Promise.resolve();
         }
         return fetch(this.psFacebookRetrieveExternalBusinessId, {
@@ -512,7 +545,9 @@ export default defineComponent({
           }
           this.dynamicExternalBusinessId = res.externalBusinessId;
           console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
-          console.log('ShopId:', this.$store.state.context.appContext.shopId);
+          if (this.$store.state) {
+            console.log('ShopId:', this.$store.state.context.appContext.shopId);
+          }
           this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
 
           this.$root.refreshExternalBusinessId(res.externalBusinessId);
@@ -621,8 +656,27 @@ export default defineComponent({
         max-width: 460px;
       }
 
+      & > h2 {
+        color: white;
+        font-family: "Open Sans";
+        font-size: 18px;
+        letter-spacing: 0;
+        line-height: 21px;
+        text-align: center;
+        text-shadow: 3px 5px 10px rgba(0,0,0,0.4);
+        max-width: 460px;
+      }
+
       & > a {
         font-weight: 600;
+      }
+
+      & > span {
+        text-align: center;
+
+        & .spinner {
+          top: 3rem;
+        }
       }
     }
     & > .closeCross {

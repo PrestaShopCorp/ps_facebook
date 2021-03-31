@@ -143,9 +143,11 @@ export default defineComponent({
   methods: {
     onHide() {
       this.$emit('onHide');
-      this.$segment.track('PS Facebook installed', {
-        module: 'ps_facebook',
-      });
+      if (this.$segment) {
+        this.$segment.track('PS Facebook installed', {
+          module: 'ps_facebook',
+        });
+      }
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
