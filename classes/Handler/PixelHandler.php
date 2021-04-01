@@ -72,10 +72,14 @@ class PixelHandler
             $userData = $params['user'];
         }
 
-        $content = [];
+        $content = $eventData = [];
+        if (isset($params['eventID'])) {
+            $eventData = $this->formatPixel(
+                ['eventID' => $params['eventID']]
+            );
+        }
         if (isset($params['custom_data'])) {
-            $customData = $params['custom_data'];
-            $content = $this->formatPixel($customData);
+            $content = $this->formatPixel($params['custom_data']);
         }
 
         $smartyVariables = [
@@ -84,6 +88,7 @@ class PixelHandler
             'type' => $eventType,
             'content' => $content,
             'track' => $track,
+            'eventData' => $eventData,
         ];
 
         if (isset($userData)) {

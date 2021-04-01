@@ -81,13 +81,18 @@ class EventDispatcher
             return;
         }
 
-        if (true === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
-            $eventData = $this->eventDataProvider->generateEventData($name, $params);
-
-            if ($eventData) {
-                $this->conversionHandler->handleEvent($eventData);
-            }
-            $this->pixelHandler->handleEvent($eventData);
+        if (false === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
+            return;
         }
+
+        $eventData = $this->eventDataProvider->generateEventData($name, $params);
+        if (isset($eventData['event_type'])) {
+            $eventData['eventID'] = uniqid($eventData['event_type'] . '_');
+        }
+
+        if ($eventData) {
+            $this->conversionHandler->handleEvent($eventData);
+        }
+        $this->pixelHandler->handleEvent($eventData);
     }
 }
