@@ -57,7 +57,7 @@ class ProductSyncReportProvider
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'), $this->configurationAdapter);
             $response = $client->get(
                 "/account/{$businessId}/reporting"
             )->json();

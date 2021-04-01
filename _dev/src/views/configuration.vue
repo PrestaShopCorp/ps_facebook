@@ -108,15 +108,31 @@
         v-if="showGlass && loading"
         class="glass"
       >
-        <div class="refocus">
+        <div v-if="exchangeTokensErrored" class="refocus">
+          <i class="material-icons fixed-size-large mb-2">warning</i>
+          <p>{{ $t('configuration.facebook.exchangeTokens.errored') }}</p>
+          <b-button
+            variant="primary"
+            class="mt-2 error-button"
+            @click="onFbeTokensExchangeFailedConfirm"
+          >
+            {{ $t('configuration.facebook.exchangeTokens.understood') }}
+          </b-button>
+        </div>
+        <div v-else class="refocus">
           <h2>
-            You are almost there
+            {{ $t('configuration.facebook.exchangeTokens.almostThere') }}
           </h2>
           <p>
-            Acknowledging your permissions with Facebook services.<br/>
-            This can take several seconds...
+            {{ $t('configuration.facebook.exchangeTokens.acknowledging') }}
+            <br/>
+            {{ $t('configuration.facebook.exchangeTokens.takesTime') }}
           </p>
-          <span><spinner /></span>
+          <span class="exchangeTokensLoader"><spinner /></span>
+          <p v-if="exchangeTokensTryAgain">
+            <i class="material-icons float-left fixed-size-big">warning</i>
+            {{ $t('configuration.facebook.exchangeTokens.tryAgain') }}
+          </p>
         </div>
       </div>
     </template>
@@ -258,6 +274,11 @@ export default defineComponent({
       required: false,
       default: () => global.psAccountVersionCheck,
     },
+    retrieveTokensRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookRetrieveTokensRoute || null,
+    },
   },
   computed: {
     psAccountsOnboarded() {
@@ -307,6 +328,8 @@ export default defineComponent({
       popupReceptionDuplicate: false,
       openedPopup: null,
       shops: this.contextPsAccounts.shops || [],
+      exchangeTokensTryAgain: false,
+      exchangeTokensErrored: false,
     };
   },
   created() {
@@ -336,6 +359,8 @@ export default defineComponent({
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
+
+          // TODO !0: call a fetch on this.retrieveTokensRoute (GET), and check for response.suspensionReason
         }).catch((error) => {
           this.setErrorsFromFbCall(error);
         });
@@ -443,7 +468,7 @@ export default defineComponent({
 
         // after successfully onboarded, wait 4secs,
         // then call exchange tokens route to force system token to be retrieved.
-        setTimeout(this.ensureTokensExchanged.bind(this, true), 4000);
+        setTimeout(this.ensureTokensExchanged.bind(this, true), 5000);
       }).catch((error) => {
         console.error('The pop-up gets blocked');
         console.error(error);
@@ -483,6 +508,8 @@ export default defineComponent({
       });
     },
     ensureTokensExchanged(tryAgain = false) {
+      this.exchangeTokensTryAgain = false;
+      this.exchangeTokensErrored = false;
       fetch(this.ensureTokensExchangedRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
@@ -504,14 +531,37 @@ export default defineComponent({
         console.error(error);
 
         if (tryAgain) {
-          console.log('We will try again in several seconds...');
-          // TODO !0: message to display : "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more..."
-          setTimeout(this.ensureTokensExchanged.bind(this, false), 8000);
+          console.log('We will try again in 10 seconds...');
+          this.exchangeTokensTryAgain = true;
+          setTimeout(this.ensureTokensExchanged.bind(this, false), 10000);
         } else {
-          // TODO !0: message to display : "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support."
-          // TODO !0: a button to close glass. no more.
+          // failure, force un-onboarding
+          console.log('Exchange tokens failed, un-onboard now...');
+          fetch(this.fbeOnboardingUninstallRoute)
+            .then((res) => {
+              this.exchangeTokensErrored = true;
+              if (!res.ok) {
+                throw new Error(res.statusText || res.status);
+              }
+              return res.json();
+            })
+            .then((json) => {
+              this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+              this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
+              this.createExternalBusinessId();
+              this.facebookConnected = false;
+              this.psFacebookJustOnboarded = false;
+            }).catch((err) => {
+              console.error(err);
+              this.setErrorsFromFbCall(err);
+            });
         }
       });
+    },
+    onFbeTokensExchangeFailedConfirm() {
+      this.exchangeTokensErrored = false;
+      this.loading = false;
+      this.showGlass = false;
     },
     onShopSelected(shopSelected) {
       window.location.href = shopSelected.url;
@@ -690,6 +740,28 @@ export default defineComponent({
         color: #fff;
         font-size: 2.6em !important;
       }
+    }
+
+    & .exchangeTokensLoader {
+      margin-bottom: 6rem;
+
+      & > div {
+        box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    & .fixed-size-large {
+      font-size: 64pt;
+      text-shadow: 3px 5px 10px rgba(0,0,0,.1);
+    }
+
+    & .fixed-size-big {
+      font-size: 30pt;
+      text-shadow: 3px 5px 10px rgba(0,0,0,.1);
+    }
+
+    & .error-button {
+      box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
     }
   }
 </style>

@@ -73,6 +73,8 @@ class ConfigurationHandler
             Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE,
             Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
             Config::PS_FACEBOOK_PRODUCT_SYNC_ON,
+            Config::PS_FACEBOOK_FORCED_DISCONNECT,
+            Config::PS_FACEBOOK_SUSPENSION_REASON,
         ];
 
         foreach ($dataConfigurationKeys as $key) {

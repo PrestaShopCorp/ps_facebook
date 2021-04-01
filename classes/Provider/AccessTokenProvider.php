@@ -128,7 +128,7 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $accessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
-        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'), $this->configurationAdapter);
 
         $managerId = $this->configurationAdapter->get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID);
         if (!$managerId) {
@@ -188,5 +188,36 @@ class AccessTokenProvider
             $this->systemAccessToken = $response['system']['access_token'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $this->systemAccessToken);
         }
+    }
+
+    /**
+     * Exchange existing tokens with new ones, then store them in the DB + make them available in this class
+     *
+     * @return void
+     */
+    public function retrieveTokens()
+    {
+        $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'), $this->configurationAdapter);
+
+        try {
+            $response = $client->get(
+                '/account/' . $externalBusinessId . '/app_tokens',
+            )->json();
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new AccessTokenException(
+                    'Failed to retrieve access token',
+                    AccessTokenException::ACCESS_TOKEN_RETRIEVE_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+
+            return;
+        }
+
+        return $response;
     }
 }

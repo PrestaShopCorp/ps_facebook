@@ -21,7 +21,10 @@
 namespace PrestaShop\Module\Ps_facebook\Client;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Message\RequestInterface;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class PsApiClient extends Client
 {
@@ -29,12 +32,13 @@ class PsApiClient extends Client
      * Create the Guzzle Client with defined data
      *
      * @param string $baseUrl
+     * @param ConfigurationAdapter $configurationAdapter
      *
      * @return self
      */
-    public static function create($baseUrl)
+    public static function create($baseUrl, ConfigurationAdapter $configurationAdapter)
     {
-        return new self([
+        $client = new self([
             'base_url' => $baseUrl,
             'defaults' => [
                 'timeout' => 10,
@@ -46,5 +50,24 @@ class PsApiClient extends Client
                 ],
             ],
         ]);
+        $client->setConfigurationAdapter($configurationAdapter);
+
+        return $client;
+    }
+
+    public function setConfigurationAdapter(ConfigurationAdapter $configurationAdapter)
+    {
+        $this->configurationAdapter = $configurationAdapter;
+    }
+
+    // TODO : use an event subscriber instead
+    public function send(RequestInterface $request)
+    {
+        $call = parent::send($request);
+        $suspension = $call->getHeader('X-Account-Suspended') ?: $call->getHeader('x-account-suspended');
+        if (!empty($suspension)) {
+            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SUSPENSION_REASON, $suspension);
+        }
+        return $call;
     }
 }

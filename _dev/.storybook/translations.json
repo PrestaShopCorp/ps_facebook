@@ -59,6 +59,14 @@
           "manageFbeButton": "Go to Facebook Business",
           "unlinkModalHeader": "Confirm uninstallation?",
           "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
+        },
+        "exchangeTokens": {
+          "almostThere": "You are almost there",
+          "acknowledging": "Acknowledging your permissions with Facebook services.",
+          "takesTime": "This can take several seconds...",
+          "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
+          "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
+          "understood": "I understand"
         }
       },
       "app": {
