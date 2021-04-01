@@ -505,9 +505,7 @@ export default defineComponent({
         }
         // return res.json();
       }).then(() => {
-        this.resetLinkSuccess = setTimeout(() => {
-          this.resetLinkSuccess = null;
-        }, 5000);
+        this.resetLinkSuccess = '👌';
       }).catch((error) => {
         console.error(error);
         this.resetLinkError = setTimeout(() => {

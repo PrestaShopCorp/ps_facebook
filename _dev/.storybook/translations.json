@@ -85,7 +85,7 @@
       "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
       "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all « active » products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",
       "resetExportLink": "If you want to re-export your entire catalog click here.",
-      "resetExportSuccess": "Next export will contain all your catalog.",
+      "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Unknown error occurred trying to reset export. Please try again later.",
       "preApprovalScanTitle": "Product scan before synchronization to facebook",
       "preApprovalScanIntro": "Check which products are ready to be synchronized and which ones have problems and will not be synchronized.",
