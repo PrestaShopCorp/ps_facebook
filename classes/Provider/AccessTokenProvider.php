@@ -193,7 +193,7 @@ class AccessTokenProvider
     /**
      * Exchange existing tokens with new ones, then store them in the DB + make them available in this class
      *
-     * @return void
+     * @return array|null
      */
     public function retrieveTokens()
     {
@@ -202,7 +202,7 @@ class AccessTokenProvider
 
         try {
             $response = $client->get(
-                '/account/' . $externalBusinessId . '/app_tokens',
+                '/account/' . $externalBusinessId . '/app_tokens'
             )->json();
         } catch (Exception $e) {
             $this->errorHandler->handle(
@@ -215,7 +215,7 @@ class AccessTokenProvider
                 false
             );
 
-            return;
+            return null;
         }
 
         return $response;

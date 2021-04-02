@@ -29,6 +29,11 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 class PsApiClient extends Client
 {
     /**
+     * @var ConfigurationAdapter
+     */
+    private $configurationAdapter;
+
+    /**
      * Create the Guzzle Client with defined data
      *
      * @param string $baseUrl
@@ -68,6 +73,7 @@ class PsApiClient extends Client
         if (!empty($suspension)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SUSPENSION_REASON, $suspension);
         }
+
         return $call;
     }
 }

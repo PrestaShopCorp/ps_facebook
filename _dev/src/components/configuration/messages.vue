@@ -28,14 +28,13 @@
 
     <b-alert
       variant="danger"
-      dismissible
       :show="!!alertSettings.error"
     >
-      <p>
+      <p class="clearfix">
         {{ $t(alertSettings.error) }}
         <br>
         <b-button
-          class="mt-2"
+          class="mt-2 float-right"
           @click="setMerchandAction(alertSettings.error)"
         >
           {{ $t(alertSettings.errorButton) }}

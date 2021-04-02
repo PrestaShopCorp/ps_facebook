@@ -333,7 +333,8 @@ export default defineComponent({
     };
   },
   created() {
-    if ((!this.contextPsFacebook || !this.externalBusinessId) && global.psFacebookGetFbContextRoute) {
+    if ((!this.contextPsFacebook || !this.externalBusinessId)
+      && global.psFacebookGetFbContextRoute) {
       this.fetchData();
     } else {
       this.loading = false;
@@ -344,11 +345,8 @@ export default defineComponent({
       this.loading = true;
       fetch(global.psFacebookGetFbContextRoute)
         .then((res) => {
-          this.loading = false;
           if (!res.ok) {
-            return res.json().then(
-              (errors) => { throw errors; },
-            )
+            return res.json().then((errors) => { throw errors; })
               .catch(() => {
                 throw new Error(res.statusText || res.status);
               });
@@ -360,10 +358,46 @@ export default defineComponent({
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
 
-          // TODO !0: call a fetch on this.retrieveTokensRoute (GET), and check for response.suspensionReason
+          return this.fetchTokens()
+            .then(() => {
+              this.loading = false;
+            });
         }).catch((error) => {
+          this.loading = false;
           this.setErrorsFromFbCall(error);
         });
+    },
+    fetchTokens() {
+      if (!this.facebookConnected) {
+        return Promise.resolve();
+      }
+
+      const suspendedHandler = (res) => {
+        if (!res || !res.suspensionReason) {
+          return;
+        }
+        console.error('Your account is suspended:', res.suspensionReason);
+        this.setErrorsFromFbCall({reason: 'configuration.messages.accountSuspended'});
+      };
+
+      if (!this.retrieveTokensRoute) {
+        return Promise.resolve().then(
+          suspendedHandler.bind(this, {suspensionReason: 'Suspension status cannot be fetched!'}),
+        );
+      }
+
+      // We don't care about tokens, we just need to know if suspension is true...
+      return fetch(this.retrieveTokensRoute, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then(suspendedHandler.bind(this)).catch((error) => {
+        console.error(error);
+      });
     },
     onCategoryMatchingClick() {
       this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
