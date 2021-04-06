@@ -17,27 +17,14 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  *}
 {if !empty($type)}
-    {if !empty($content)}
-        {literal}
-            <script>
-                fbq(
-                    '{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}',
-                    '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}',
-                    {/literal}{$content nofilter}{literal},
-                    {/literal}{if !empty($eventData)}{$eventData nofilter}{/if}{literal}
-                );
-            </script>
-        {/literal}
-    {else}
-        {literal}
-            <script>
-                fbq(
-                    '{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}',
-                    '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}',
-                    {},
-                    {/literal}{if !empty($eventData)}{$eventData nofilter}{/if}{literal}
-                );
-            </script>
-        {/literal}
-    {/if}
+    {literal}
+        <script>
+            fbq(
+                '{/literal}{$track|escape:'htmlall':'UTF-8'}{literal}',
+                '{/literal}{$type|escape:'htmlall':'UTF-8'}{literal}',
+                {/literal}{$content nofilter}{literal},
+                {/literal}{$eventData nofilter}{literal}
+            );
+        </script>
+    {/literal}
 {/if}
