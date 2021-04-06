@@ -71,7 +71,7 @@ class PixelHandler
         if (isset($params['user'])) {
             $userData = $params['user'];
         }
-
+        
         $content = $eventData = [];
         if (isset($params['eventID'])) {
             $eventData = $this->formatPixel(
@@ -109,7 +109,7 @@ class PixelHandler
      */
     protected function formatPixel($params)
     {
-        return json_encode($params);
+        return json_encode((object) $params);
     }
 
     /**
