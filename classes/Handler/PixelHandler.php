@@ -71,7 +71,7 @@ class PixelHandler
         if (isset($params['user'])) {
             $userData = $params['user'];
         }
-        
+
         $content = $eventData = [];
         if (isset($params['eventID'])) {
             $eventData = ['eventID' => $params['eventID']];

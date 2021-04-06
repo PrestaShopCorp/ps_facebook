@@ -86,9 +86,6 @@ class EventDispatcher
         }
 
         $eventData = $this->eventDataProvider->generateEventData($name, $params);
-        if (isset($eventData['event_type'])) {
-            $eventData['eventID'] = uniqid($eventData['event_type'] . '_');
-        }
 
         if ($eventData) {
             $this->conversionHandler->handleEvent($eventData);

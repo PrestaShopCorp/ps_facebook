@@ -509,6 +509,8 @@ class EventDataProvider
     /**
      * Generate the array with data that are used for all events
      *
+     * @see https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events
+     *
      * @param string $eventType
      */
     private function getCommonData($eventType)
@@ -517,6 +519,7 @@ class EventDataProvider
             'event_type' => $eventType,
             'event_time' => time(),
             'user' => CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer),
+            'eventID' => uniqid($eventType . '_'),
         ];
     }
 
