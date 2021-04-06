@@ -178,7 +178,6 @@ class EventDataProvider
             'value' => $product['price_tax_exc'],
         ];
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
         $category = $this->googleCategoryRepository->getGoogleCategoryIdByCategoryId(
             $product['id_category_default'],
             $this->context->shop->id
@@ -193,12 +192,9 @@ class EventDataProvider
         );
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
             'event_source_url' => $productUrl,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getCategoryPageData()
@@ -225,15 +221,10 @@ class EventDataProvider
             'content_ids' => array_column($prods, 'id_product'),
         ];
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
             'event_source_url' => $categoryUrl,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getCMSPageData()
@@ -247,8 +238,6 @@ class EventDataProvider
 
         $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         $customData = [
             'content_name' => \Tools::replaceAccentedChars($cms->meta_title) . ' ' . $this->locale,
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
@@ -256,11 +245,8 @@ class EventDataProvider
         ];
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getAddToCartEventData()
@@ -297,7 +283,6 @@ class EventDataProvider
         }
 
         $productName = Product::getProductName($idProduct, $idProductAttribute);
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $customData = [
             'content_name' => pSQL($productName),
@@ -307,40 +292,26 @@ class EventDataProvider
         ];
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getCompleteRegistrationEventData()
     {
         $type = 'CompleteRegistration';
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $customData = [
             'content_name' => 'authentication',
         ];
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getContactEventData()
     {
-        $type = 'Contact';
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
-        return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
-        ];
+        return $this->getCommonData('Contact');
     }
 
     private function getCustomisationEventData($params)
@@ -352,27 +323,14 @@ class EventDataProvider
         $attributeIds = $params['attributeIds'];
         $customData = $this->getCustomAttributeData($productId, $idLang, $attributeIds);
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getCustomEventData()
     {
-        $type = 'CustomizeProduct';
-
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
-        return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
-        ];
+        return $this->getCommonData('CustomizeProduct');
     }
 
     private function getSearchEventData($params)
@@ -391,14 +349,9 @@ class EventDataProvider
             $customData['num_items'] = $quantity;
         }
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getOrderConfirmationEvent($params)
@@ -419,20 +372,15 @@ class EventDataProvider
             'content_ids' => $productList,
             'value' => (float) ($order->total_paid_tax_excl),
         ];
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getInitiateCheckoutEvent()
     {
         $type = 'InitiateCheckout';
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $cart = $this->context->cart;
         $contents = $this->getProductContent($cart);
@@ -445,28 +393,21 @@ class EventDataProvider
         ];
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     private function getShopSubscriptionEvent($params)
     {
         $type = 'Subscribe';
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
 
         $customData = [
             'content_name' => pSQL($params['email']),
         ];
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     /**
@@ -510,8 +451,6 @@ class EventDataProvider
 
         $type = pSQL($params['eventName']);
 
-        $user = CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer);
-
         $customData = [
             'custom_properties' => [
                 'module' => pSQL($params['module']),
@@ -527,11 +466,8 @@ class EventDataProvider
         }
 
         return [
-            'event_type' => $type,
-            'event_time' => time(),
-            'user' => $user,
             'custom_data' => $customData,
-        ];
+        ] + $this->getCommonData($type);
     }
 
     /**
@@ -567,6 +503,20 @@ class EventDataProvider
             'custom_properties' => [
                 'custom_attributes' => $attributes,
             ],
+        ];
+    }
+
+    /**
+     * Generate the array with data that are used for all events
+     *
+     * @param string $eventType
+     */
+    private function getCommonData($eventType)
+    {
+        return [
+            'event_type' => $eventType,
+            'event_time' => time(),
+            'user' => CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer),
         ];
     }
 
