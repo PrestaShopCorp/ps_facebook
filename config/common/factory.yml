@@ -9,4 +9,4 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory
     arguments:
      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
-     - ['@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber']
+     - '@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber'

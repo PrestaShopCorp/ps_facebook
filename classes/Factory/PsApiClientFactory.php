@@ -33,17 +33,14 @@ class PsApiClientFactory implements ApiClientFactoryInterface
     private $baseUrl;
 
     /**
-     * @var array<SubscriberInterface>
+     * @var SubscriberInterface
      */
-    private $eventSubscribers;
+    private $eventSubscriber;
 
-    /**
-     * @param array<SubscriberInterface> $eventSubscribers
-     */
-    public function __construct(Env $env, array $eventSubscribers)
+    public function __construct(Env $env, SubscriberInterface $eventSubscriber)
     {
         $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
-        $this->eventSubscribers = $eventSubscribers;
+        $this->eventSubscriber = $eventSubscriber;
     }
 
     /**
@@ -64,9 +61,7 @@ class PsApiClientFactory implements ApiClientFactoryInterface
             ],
         ]);
         $emitter = $client->getEmitter();
-        foreach ($this->eventSubscribers as $subscriber) {
-            $emitter->attach($subscriber);
-        }
+        $emitter->attach($this->eventSubscriber);
 
         return $client;
     }
