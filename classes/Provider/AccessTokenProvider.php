@@ -22,13 +22,13 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Controller;
 use Exception;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
+use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
-use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class AccessTokenProvider
 {
@@ -36,11 +36,6 @@ class AccessTokenProvider
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
-
-    /**
-     * @var Env
-     */
-    private $env;
 
     /**
      * @var ErrorHandler
@@ -51,6 +46,11 @@ class AccessTokenProvider
      * @var Controller
      */
     private $controller;
+
+    /**
+     * @var Client
+     */
+    private $psApiClient;
 
     /**
      * @var string
@@ -64,14 +64,14 @@ class AccessTokenProvider
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        Env $env,
         ErrorHandler $errorHandler,
-        $controller
+        $controller,
+        ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->env = $env;
         $this->errorHandler = $errorHandler;
         $this->controller = $controller;
+        $this->psApiClient = $psApiClientFactory->createClient();
     }
 
     /**
@@ -128,7 +128,6 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $accessToken = $this->configurationAdapter->get(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
-        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'), $this->configurationAdapter);
 
         $managerId = $this->configurationAdapter->get(Config::PS_FACEBOOK_BUSINESS_MANAGER_ID);
         if (!$managerId) {
@@ -137,7 +136,7 @@ class AccessTokenProvider
         }
 
         try {
-            $response = $client->post(
+            $response = $this->psApiClient->post(
                 '/account/' . $externalBusinessId . '/exchange_tokens',
                 [
                     'json' => [
@@ -198,10 +197,9 @@ class AccessTokenProvider
     public function retrieveTokens()
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'), $this->configurationAdapter);
 
         try {
-            $response = $client->get(
+            $response = $this->psApiClient->get(
                 '/account/' . $externalBusinessId . '/app_tokens'
             )->json();
         } catch (Exception $e) {

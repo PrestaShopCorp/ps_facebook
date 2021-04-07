@@ -18,33 +18,41 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\Ps_facebook\Client;
+namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Event\SubscriberInterface;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
-use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 
-class PsApiClient extends Client
+class PsApiClientFactory implements ApiClientFactoryInterface
 {
     /**
-     * @var ConfigurationAdapter
+     * @var string
      */
-    private $configurationAdapter;
+    private $baseUrl;
 
     /**
-     * Create the Guzzle Client with defined data
-     *
-     * @param string $baseUrl
-     * @param ConfigurationAdapter $configurationAdapter
-     *
-     * @return self
+     * @var array<SubscriberInterface>
      */
-    public static function create($baseUrl, ConfigurationAdapter $configurationAdapter)
+    private $eventSubscribers;
+
+    /**
+     * @param array<SubscriberInterface> $eventSubscribers
+     */
+    public function __construct(Env $env, array $eventSubscribers)
     {
-        $client = new self([
-            'base_url' => $baseUrl,
+        $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
+        $this->eventSubscribers = $eventSubscribers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createClient()
+    {
+        $client = new Client([
+            'base_url' => $this->baseUrl,
             'defaults' => [
                 'timeout' => 10,
                 'verify' => false,
@@ -55,25 +63,11 @@ class PsApiClient extends Client
                 ],
             ],
         ]);
-        $client->setConfigurationAdapter($configurationAdapter);
-
-        return $client;
-    }
-
-    public function setConfigurationAdapter(ConfigurationAdapter $configurationAdapter)
-    {
-        $this->configurationAdapter = $configurationAdapter;
-    }
-
-    // TODO : use an event subscriber instead
-    public function send(RequestInterface $request)
-    {
-        $call = parent::send($request);
-        $suspension = $call->getHeader('X-Account-Suspended') ?: $call->getHeader('x-account-suspended');
-        if (!empty($suspension)) {
-            $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SUSPENSION_REASON, $suspension);
+        $emitter = $client->getEmitter();
+        foreach ($this->eventSubscribers as $subscriber) {
+            $emitter->attach($subscriber);
         }
 
-        return $call;
+        return $client;
     }
 }
