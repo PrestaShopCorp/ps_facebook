@@ -351,6 +351,9 @@ class Ps_facebook extends Module
 
     public function hookDisplayHeader(array $params)
     {
+        // Call this class in this so the error handler is instanciated early after call to the constructor
+        $this->getService(ErrorHandler::class);
+
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
 

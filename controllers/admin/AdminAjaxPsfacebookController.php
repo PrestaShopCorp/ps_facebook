@@ -59,11 +59,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $env;
 
+    /**
+     * @var ErrorHandler
+     */
+    private $errorHandler;
+
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
+        $this->errorHandler = $this->module->getService(ErrorHandler::class);
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -165,8 +171,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     ]
                 )->json();
             } catch (Exception $e) {
-                $errorHandler = ErrorHandler::getInstance();
-                $errorHandler->handle(
+                $this->errorHandler->handle(
                     new FacebookOnboardException(
                         'Failed to onboard on facebook',
                         FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
@@ -180,9 +185,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             }
 
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
-                /** @var ErrorHandler $errorHandler */
-                $errorHandler = $this->module->getService(ErrorHandler::class);
-                $errorHandler->handle(
+                $this->errorHandler->handle(
                     new FacebookOnboardException(
                         $response['message'],
                         FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
@@ -220,8 +223,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 ]
             );
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookProductSyncException(
                     'Failed to start product sync',
                     FacebookProductSyncException::FACEBOOK_PRODUCT_SYNC,
@@ -556,8 +558,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             /* @phpstan-ignore-next-line */
             $isUpgradeSuccessful = $moduleManager->upgrade('ps_accounts');
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookPsAccountsUpdateException(
                     'Failed to upgrade ps_accounts',
                     FacebookPsAccountsUpdateException::FACEBOOK_PS_ACCOUNTS_UPGRADE_EXCEPTION,
@@ -662,8 +663,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 '/account/' . $externalBusinessId . '/reset_product_sync'
             )->json();
         } catch (Exception $e) {
-            $errorHandler = ErrorHandler::getInstance();
-            $errorHandler->handle(
+            $this->errorHandler->handle(
                 new FacebookCatalogExportException(
                     'Failed to export the whole catalog',
                     FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,

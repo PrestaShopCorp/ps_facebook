@@ -31,6 +31,9 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler
+    arguments:
+      - '@ps_facebook'
+      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
 
   PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler
