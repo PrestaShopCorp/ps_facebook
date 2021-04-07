@@ -423,6 +423,7 @@ export default defineComponent({
     },
     onUninstallClick() {
       this.loading = true;
+      // FIXME: Duplicated by ensureTokensExchanged()
       fetch(this.fbeOnboardingUninstallRoute)
         .then((res) => {
           this.loading = false;
@@ -500,7 +501,7 @@ export default defineComponent({
         this.alertSettings = {};
         this.popupReceptionDuplicate = false;
 
-        // after successfully onboarded, wait 4secs,
+        // after successfully onboarded, wait a few seconds,
         // then call exchange tokens route to force system token to be retrieved.
         setTimeout(this.ensureTokensExchanged.bind(this, true), 5000);
       }).catch((error) => {
@@ -541,7 +542,7 @@ export default defineComponent({
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
       });
     },
-    ensureTokensExchanged(tryAgain = false) {
+    ensureTokensExchanged(tryAgainOnError = false) {
       this.exchangeTokensTryAgain = false;
       this.exchangeTokensErrored = false;
       fetch(this.ensureTokensExchangedRoute, {
@@ -564,13 +565,14 @@ export default defineComponent({
         console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
         console.error(error);
 
-        if (tryAgain) {
+        if (tryAgainOnError) {
           console.log('We will try again in 10 seconds...');
           this.exchangeTokensTryAgain = true;
           setTimeout(this.ensureTokensExchanged.bind(this, false), 10000);
         } else {
           // failure, force un-onboarding
           console.log('Exchange tokens failed, un-onboard now...');
+          // FIXME: Duplicates content of this.onUninstallClick()
           fetch(this.fbeOnboardingUninstallRoute)
             .then((res) => {
               this.exchangeTokensErrored = true;
