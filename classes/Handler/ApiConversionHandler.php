@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use FacebookAds\Api;
 use FacebookAds\Http\Exception\AuthorizationException;
+use FacebookAds\Object\ServerSide\ActionSource;
 use FacebookAds\Object\ServerSide\Content;
 use FacebookAds\Object\ServerSide\CustomData;
 use FacebookAds\Object\ServerSide\Event;
@@ -187,6 +188,7 @@ class ApiConversionHandler
         if (isset($eventSourceUrl)) {
             $event->setEventSourceUrl($eventSourceUrl);
         }
+        $event->setActionSource(ActionSource::WEBSITE);
 
         $this->sendEvents([$event]);
     }
