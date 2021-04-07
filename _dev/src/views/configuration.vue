@@ -495,7 +495,7 @@ export default defineComponent({
       }
       this.loading = true;
 
-      save().then(() => {
+      save(response).then(() => {
         this.openedPopup = null;
         this.alertSettings = {};
         this.popupReceptionDuplicate = false;
