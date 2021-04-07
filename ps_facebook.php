@@ -396,6 +396,12 @@ class Ps_facebook extends Module
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
     {
+        if (isset($params['object'])
+            && $params['object'] instanceof CustomerMessage
+            && $params['object']->private) {
+            return;
+        }
+
         /** @var EventDispatcher $eventDispatcher */
         $eventDispatcher = $this->getService(EventDispatcher::class);
         $eventDispatcher->dispatch(__FUNCTION__, $params);
