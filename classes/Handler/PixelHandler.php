@@ -72,18 +72,21 @@ class PixelHandler
             $userData = $params['user'];
         }
 
-        $content = [];
+        $content = $eventData = [];
+        if (isset($params['eventID'])) {
+            $eventData = ['eventID' => $params['eventID']];
+        }
         if (isset($params['custom_data'])) {
-            $customData = $params['custom_data'];
-            $content = $this->formatPixel($customData);
+            $content = $params['custom_data'];
         }
 
         $smartyVariables = [
             'pixel_fc' => $this->module->front_controller,
             'id_pixel' => $pixel_id,
             'type' => $eventType,
-            'content' => $content,
+            'content' => $this->formatPixel($content),
             'track' => $track,
+            'eventData' => $this->formatPixel($eventData),
         ];
 
         if (isset($userData)) {
@@ -104,7 +107,7 @@ class PixelHandler
      */
     protected function formatPixel($params)
     {
-        return json_encode($params);
+        return json_encode((object) $params);
     }
 
     /**

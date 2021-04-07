@@ -188,6 +188,9 @@ class ApiConversionHandler
         if (isset($eventSourceUrl)) {
             $event->setEventSourceUrl($eventSourceUrl);
         }
+        if (isset($params['eventID'])) {
+            $event->setEventId($params['eventID']);
+        }
         $event->setActionSource(ActionSource::WEBSITE);
 
         $this->sendEvents([$event]);
