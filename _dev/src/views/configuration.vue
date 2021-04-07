@@ -557,7 +557,10 @@ export default defineComponent({
         if (!res2.success) {
           throw new Error('Error!');
         }
-        console.log('Tokens exchanged.');
+        console.log('Tokens exchanged - FBE fully onboarded.');
+        this.$segment.track('FBE fully onboarded', {
+          module: 'ps_facebook',
+        });
         this.loading = false;
         this.showGlass = false;
         this.psFacebookJustOnboarded = true;
@@ -572,6 +575,9 @@ export default defineComponent({
         } else {
           // failure, force un-onboarding
           console.log('Exchange tokens failed, un-onboard now...');
+          this.$segment.track('Exchange tokens failed, un-onboard now', {
+            module: 'ps_facebook',
+          });
           // FIXME: Duplicates content of this.onUninstallClick()
           fetch(this.fbeOnboardingUninstallRoute)
             .then((res) => {
