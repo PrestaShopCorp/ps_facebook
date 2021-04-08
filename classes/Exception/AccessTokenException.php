@@ -25,4 +25,5 @@ use Exception;
 class AccessTokenException extends Exception
 {
     const ACCESS_TOKEN_REFRESH_EXCEPTION = 1;
+    const ACCESS_TOKEN_RETRIEVE_EXCEPTION = 2;
 }

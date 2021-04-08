@@ -115,6 +115,14 @@ class PsFacebookTranslations
                         'unlinkModalHeader' => $this->module->l('Confirm uninstallation?', 'PsFacebookTranslations'),
                         'unlinkModalText' => $this->module->l('You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook.', 'PsFacebookTranslations'),
                     ],
+                    'exchangeTokens' => [
+                        'almostThere' => $this->module->l('You are almost there', 'PsFacebookTranslations'),
+                        'acknowledging' => $this->module->l('Acknowledging your permissions with Facebook services.', 'PsFacebookTranslations'),
+                        'takesTime' => $this->module->l('This can take several seconds...', 'PsFacebookTranslations'),
+                        'tryAgain' => $this->module->l('Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...', 'PsFacebookTranslations'),
+                        'errored' => $this->module->l('Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.', 'PsFacebookTranslations'),
+                        'understood' => $this->module->l('I understand', 'PsFacebookTranslations'),
+                    ],
                 ],
                 'app' => [
                     'like' => $this->module->l('like', 'PsFacebookTranslations'),

@@ -21,11 +21,11 @@
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookProductSyncException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
+use PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
@@ -40,7 +40,6 @@ use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterfac
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
-use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 use PrestaShop\ModuleLibFaq\Faq;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
@@ -55,9 +54,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     private $configurationAdapter;
 
     /**
-     * @var Env
+     * @var PsApiClientFactory
      */
-    private $env;
+    private $clientFactory;
 
     /**
      * @var ErrorHandler
@@ -68,7 +67,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
-        $this->env = $this->module->getService(Env::class);
+        $this->clientFactory = $this->module->getService(PsApiClientFactory::class);
         $this->errorHandler = $this->module->getService(ErrorHandler::class);
     }
 
@@ -118,6 +117,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $accessTokenProvider->refreshTokens();
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, false);
+        $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_SUSPENSION_REASON);
 
         $this->ajaxDie(
             json_encode([
@@ -159,7 +159,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+            $client = $this->clientFactory->createClient();
             try {
                 $response = $client->post(
                     '/account/onboard',
@@ -214,7 +214,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $client = $this->clientFactory->createClient();
         try {
             $client->post(
                 '/account/' . $externalBusinessId . '/start_product_sync',
@@ -655,7 +655,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxExportWholeCatalog()
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
+        $client = $this->clientFactory->createClient();
         $response = 200;
 
         try {
@@ -680,6 +680,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(json_encode([
             'response' => $response,
+        ]));
+    }
+
+    public function displayAjaxRetrieveTokens()
+    {
+        /** @var AccessTokenProvider $accessTokenProvider */
+        $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
+        $tokens = $accessTokenProvider->retrieveTokens();
+
+        $this->ajaxDie(json_encode([
+            'tokens' => $tokens,
+            'suspensionReason' => $this->configurationAdapter->get(Config::PS_FACEBOOK_SUSPENSION_REASON),
         ]));
     }
 

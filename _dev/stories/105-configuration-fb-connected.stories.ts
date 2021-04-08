@@ -10,6 +10,7 @@ const contextPsFacebook = {
     name: 'La Fanchonette',
     email: 'fanchonette@ps.com',
     createdAt: Date.now(),
+    id: '12345689',
   },
   pixel: {
     name: 'La Fanchonette Test Pixel',

@@ -3,9 +3,9 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
       - '@ps_facebook.controller'
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
 
   PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
 
@@ -58,5 +58,5 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'

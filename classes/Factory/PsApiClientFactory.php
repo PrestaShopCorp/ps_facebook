@@ -18,24 +18,38 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\Ps_facebook\Client;
+namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Event\SubscriberInterface;
 use PrestaShop\AccountsAuth\Service\PsAccountsService;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 
-class PsApiClient extends Client
+class PsApiClientFactory implements ApiClientFactoryInterface
 {
     /**
-     * Create the Guzzle Client with defined data
-     *
-     * @param string $baseUrl
-     *
-     * @return self
+     * @var string
      */
-    public static function create($baseUrl)
+    private $baseUrl;
+
+    /**
+     * @var SubscriberInterface
+     */
+    private $eventSubscriber;
+
+    public function __construct(Env $env, SubscriberInterface $eventSubscriber)
     {
-        return new self([
-            'base_url' => $baseUrl,
+        $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
+        $this->eventSubscriber = $eventSubscriber;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createClient()
+    {
+        $client = new Client([
+            'base_url' => $this->baseUrl,
             'defaults' => [
                 'timeout' => 10,
                 'verify' => false,
@@ -46,5 +60,9 @@ class PsApiClient extends Client
                 ],
             ],
         ]);
+        $emitter = $client->getEmitter();
+        $emitter->attach($this->eventSubscriber);
+
+        return $client;
     }
 }

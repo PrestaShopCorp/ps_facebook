@@ -58,6 +58,18 @@ window.contextPsAccounts = {
   superAdminEmail: 'nobody@prestashop.com',
   ssoResendVerificationEmail: null,
   manageAccountLink: 'https://perdu.com',
+  isShopContext: true,
+};
+
+// Mock to simulate a FB onboarding popup
+window.psFacebookGenerateOpenPopup = (component) => () => {
+  component.onFbeOnboardOpened();
+  console.log('Simulating FB popup...');
+  setTimeout(() => {
+    component.onFbeOnboardResponded({
+      access_token: 'azeazeaze'
+    }, () => Promise.resolve());
+  }, 3000);
 };
 
 // i18n and store

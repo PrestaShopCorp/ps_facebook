@@ -21,12 +21,12 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Exception;
+use GuzzleHttp\Client;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
+use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
-use PrestaShop\Module\Ps_facebook\Client\PsApiClient;
 
 class ProductSyncReportProvider
 {
@@ -36,20 +36,23 @@ class ProductSyncReportProvider
     private $configurationAdapter;
 
     /**
-     * @var Env
+     * @var Client
      */
-    private $env;
+    private $psApiClient;
 
     /**
      * @var ErrorHandler
      */
     private $errorHandler;
 
-    public function __construct(ConfigurationAdapter $configurationAdapter, Env $env, ErrorHandler $errorHandler)
-    {
+    public function __construct(
+        ConfigurationAdapter $configurationAdapter,
+        ApiClientFactoryInterface $psApiClientFactory,
+        ErrorHandler $errorHandler
+    ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->env = $env;
         $this->errorHandler = $errorHandler;
+        $this->psApiClient = $psApiClientFactory->createClient();
     }
 
     public function getProductSyncReport()
@@ -57,8 +60,7 @@ class ProductSyncReportProvider
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $client = PsApiClient::create($this->env->get('PSX_FACEBOOK_API_URL'));
-            $response = $client->get(
+            $response = $this->psApiClient->get(
                 "/account/{$businessId}/reporting"
             )->json();
         } catch (Exception $e) {

@@ -116,7 +116,6 @@ export default defineComponent({
       fetch(this.catalogSummaryRoute, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        // body: JSON.stringify({}),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);

@@ -7,10 +7,18 @@ export default {
   component: Configuration,
 };
 
+const params = ':contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" '
+  + ':externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" '
+  + ':currency="currency" :timezone="timezone" :locale="locale" '
+  + ':pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" '
+  + ':psFacebookUiUrl="psFacebookUiUrl" '
+  + ':psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" '
+  + ':psFacebookAppId="psFacebookAppId"';
+
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Configuration},
-  template: '<configuration :contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" :externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" :currency="currency" :timezone="timezone" :locale="locale" :pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" :psFacebookUiUrl="psFacebookUiUrl" :psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" :psFacebookAppId="psFacebookAppId" />',
+  template: `<configuration ${params} />`,
 });
 
 export const NoPsAccountOnboarded: any = Template.bind({});
@@ -44,6 +52,7 @@ NoPsAccountOnboarded.args = {
     superAdminEmail: 'nobody@prestashop.com',
     ssoResendVerificationEmail: null,
     manageAccountLink: 'https://perdu.com',
+    isShopContext: true,
   },
   contextPsFacebook: null,
   psFacebookAppId: '1234567890',
@@ -85,6 +94,7 @@ FullConnected.args = {
       name: 'La Fanchonette',
       email: 'fanchonette@ps.com',
       createdAt: Date.now(),
+      id: '12345689',
     },
     pixel: {
       name: 'La Fanchonette Test Pixel',
