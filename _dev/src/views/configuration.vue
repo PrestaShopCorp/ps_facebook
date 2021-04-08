@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading && !showGlass" />
+  <spinner v-if="loading && !showPopupGlass" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -82,7 +82,7 @@
       />
       <survey v-if="facebookConnected" />
       <div
-        v-if="showGlass && !loading"
+        v-if="showPopupGlass && !loading"
         class="glass"
         @click="glassClicked"
       >
@@ -105,7 +105,7 @@
         </div>
       </div>
       <div
-        v-if="showGlass && loading"
+        v-if="showPopupGlass && loading"
         class="glass"
       >
         <div v-if="exchangeTokensErrored" class="refocus">
@@ -322,7 +322,7 @@ export default defineComponent({
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
-      showGlass: false,
+      showPopupGlass: false,
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
@@ -415,11 +415,11 @@ export default defineComponent({
     },
     onFbeOnboardClick() {
       this.openedPopup = this.openPopup();
-      this.showGlass = true;
+      this.showPopupGlass = true;
     },
     onEditClick() {
       this.openedPopup = this.openPopup();
-      this.showGlass = true;
+      this.showPopupGlass = true;
     },
     onUninstallClick() {
       this.loading = true;
@@ -475,10 +475,10 @@ export default defineComponent({
       });
     },
     onFbeOnboardOpened() {
-      this.showGlass = true;
+      this.showPopupGlass = true;
     },
     onFbeOnboardClosed() {
-      this.showGlass = false;
+      this.showPopupGlass = false;
       this.openedPopup = null;
     },
     onFbeOnboardResponded(response, save = this.saveFbeOnboarding.bind(this)) {
@@ -490,7 +490,7 @@ export default defineComponent({
       console.log('response received', response);
 
       if (!response.access_token) {
-        this.showGlass = false;
+        this.showPopupGlass = false;
         this.openedPopup = null;
         return;
       }
@@ -514,7 +514,7 @@ export default defineComponent({
         }
         this.setErrorsFromFbCall(error);
         this.loading = false;
-        this.showGlass = false;
+        this.showPopupGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
@@ -566,7 +566,7 @@ export default defineComponent({
           });
         }
         this.loading = false;
-        this.showGlass = false;
+        this.showPopupGlass = false;
         this.psFacebookJustOnboarded = true;
       }).catch((error) => {
         console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
@@ -609,7 +609,7 @@ export default defineComponent({
     onFbeTokensExchangeFailedConfirm() {
       this.exchangeTokensErrored = false;
       this.loading = false;
-      this.showGlass = false;
+      this.showPopupGlass = false;
     },
     onShopSelected(shopSelected) {
       window.location.href = shopSelected.url;
@@ -663,7 +663,7 @@ export default defineComponent({
         }).catch((error) => {
           console.error(error);
           this.setErrorsFromFbCall(error);
-          this.showGlass = false;
+          this.showPopupGlass = false;
           this.openedPopup = null;
           this.popupReceptionDuplicate = false;
           this.$forceUpdate();
