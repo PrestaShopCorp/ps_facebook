@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading && !showPopupGlass" />
+  <spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
   <div
     id="configuration"
     class="ps-facebook-configuration-tab"
@@ -82,7 +82,7 @@
       />
       <survey v-if="facebookConnected" />
       <div
-        v-if="showPopupGlass && !loading"
+        v-if="showPopupGlass"
         class="glass"
         @click="glassClicked"
       >
@@ -105,7 +105,7 @@
         </div>
       </div>
       <div
-        v-if="showPopupGlass && loading"
+        v-if="showTokensGlass"
         class="glass"
       >
         <div v-if="exchangeTokensErrored" class="refocus">
@@ -323,6 +323,7 @@ export default defineComponent({
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showPopupGlass: false,
+      showTokensGlass: false,
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
@@ -495,6 +496,7 @@ export default defineComponent({
         return;
       }
       this.loading = true;
+      this.showTokensGlass = true;
 
       save(response).then(() => {
         this.openedPopup = null;
@@ -514,7 +516,7 @@ export default defineComponent({
         }
         this.setErrorsFromFbCall(error);
         this.loading = false;
-        this.showPopupGlass = false;
+        this.showTokensGlass = false;
         this.openedPopup = null;
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
@@ -566,7 +568,7 @@ export default defineComponent({
           });
         }
         this.loading = false;
-        this.showPopupGlass = false;
+        this.showTokensGlass = false;
         this.psFacebookJustOnboarded = true;
       }).catch((error) => {
         console.error('Tokens exchange failure. Please refresh the page, or you will need to onboard again in 1 hour.');
@@ -609,7 +611,7 @@ export default defineComponent({
     onFbeTokensExchangeFailedConfirm() {
       this.exchangeTokensErrored = false;
       this.loading = false;
-      this.showPopupGlass = false;
+      this.showTokensGlass = false;
     },
     onShopSelected(shopSelected) {
       window.location.href = shopSelected.url;
