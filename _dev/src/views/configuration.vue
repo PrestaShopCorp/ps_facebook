@@ -761,7 +761,7 @@ export default defineComponent({
       }
 
       & > h2 {
-        color: white;
+        color: white !important;
         font-family: "Open Sans";
         font-size: 18px;
         letter-spacing: 0;
