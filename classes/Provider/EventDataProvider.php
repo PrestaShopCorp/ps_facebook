@@ -515,11 +515,13 @@ class EventDataProvider
      */
     private function getCommonData($eventType)
     {
+        $time = time();
+
         return [
             'event_type' => $eventType,
-            'event_time' => time(),
+            'event_time' => $time,
             'user' => CustomerInformationUtility::getCustomerInformationForPixel($this->context->customer),
-            'eventID' => uniqid($eventType . '_'),
+            'eventID' => uniqid($eventType . '_' . $time . '_', true),
         ];
     }
 
