@@ -507,9 +507,11 @@ export default defineComponent({
       }).catch((error) => {
         console.error('The pop-up gets blocked');
         console.error(error);
-        this.$segment.track('The pop-up gets blocked', {
-          module: 'ps_facebook',
-        });
+        if (this.$segment) {
+          this.$segment.track('The pop-up gets blocked', {
+            module: 'ps_facebook',
+          });
+        }
         this.setErrorsFromFbCall(error);
         this.loading = false;
         this.showGlass = false;
@@ -558,9 +560,11 @@ export default defineComponent({
           throw new Error('Error!');
         }
         console.log('Tokens exchanged - FBE fully onboarded.');
-        this.$segment.track('FBE fully onboarded', {
-          module: 'ps_facebook',
-        });
+        if (this.$segment) {
+          this.$segment.track('FBE fully onboarded', {
+            module: 'ps_facebook',
+          });
+        }
         this.loading = false;
         this.showGlass = false;
         this.psFacebookJustOnboarded = true;
@@ -575,9 +579,11 @@ export default defineComponent({
         } else {
           // failure, force un-onboarding
           console.log('Exchange tokens failed, un-onboard now...');
-          this.$segment.track('Exchange tokens failed, un-onboard now', {
-            module: 'ps_facebook',
-          });
+          if (this.$segment) {
+            this.$segment.track('Exchange tokens failed, un-onboard now', {
+              module: 'ps_facebook',
+            });
+          }
           // FIXME: Duplicates content of this.onUninstallClick()
           fetch(this.fbeOnboardingUninstallRoute)
             .then((res) => {
@@ -670,18 +676,22 @@ export default defineComponent({
       } else {
         this.openedPopup = this.openPopup();
       }
-      this.$segment.track('Click on black screen', {
-        module: 'ps_facebook',
-      });
+      if (this.$segment) {
+        this.$segment.track('Click on black screen', {
+          module: 'ps_facebook',
+        });
+      }
     },
     closePopup(event) {
       event.stopPropagation(); // avoid popup to be focused before close
       if (this.openedPopup) {
         this.openedPopup.close();
       }
-      this.$segment.track('Click on the cross to close the pop-in', {
-        module: 'ps_facebook',
-      });
+      if (this.$segment) {
+        this.$segment.track('Click on the cross to close the pop-in', {
+          module: 'ps_facebook',
+        });
+      }
     },
     setErrorsFromFbCall(error) {
       this.alertSettings = {
