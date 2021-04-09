@@ -22,7 +22,6 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Controller;
 use Exception;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -48,9 +47,9 @@ class AccessTokenProvider
     private $controller;
 
     /**
-     * @var Client
+     * @var ApiClientFactoryInterface
      */
-    private $psApiClient;
+    private $psApiClientFactory;
 
     /**
      * @var string
@@ -71,7 +70,7 @@ class AccessTokenProvider
         $this->configurationAdapter = $configurationAdapter;
         $this->errorHandler = $errorHandler;
         $this->controller = $controller;
-        $this->psApiClient = $psApiClientFactory->createClient();
+        $this->psApiClientFactory = $psApiClientFactory;
     }
 
     /**
@@ -136,7 +135,7 @@ class AccessTokenProvider
         }
 
         try {
-            $response = $this->psApiClient->post(
+            $response = $this->psApiClientFactory->createClient()->post(
                 '/account/' . $externalBusinessId . '/exchange_tokens',
                 [
                     'json' => [
@@ -199,7 +198,7 @@ class AccessTokenProvider
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $response = $this->psApiClient->get(
+            $response = $this->psApiClientFactory->createClient()->get(
                 '/account/' . $externalBusinessId . '/app_tokens'
             )->json();
         } catch (Exception $e) {
