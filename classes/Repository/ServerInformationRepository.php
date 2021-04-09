@@ -21,24 +21,30 @@
 namespace PrestaShop\Module\PrestashopFacebook\Repository;
 
 use Exception;
-use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class ServerInformationRepository
 {
+    /**
+     * @var bool
+     */
+    private $isPsAccountsOnboarded;
+
+    public function __construct(PsAccounts $psAccountsFacade)
+    {
+        try {
+            $this->isPsAccountsOnboarded = (bool) $psAccountsFacade->getPsAccountsService()->getOrRefreshToken();
+        } catch (Exception $e) {
+            $this->isPsAccountsOnboarded = false;
+        }
+    }
+
     /**
      * @return array
      */
     public function getHealthCheckData()
     {
-        $psAccountsService = new PsAccountsService();
-
-        try {
-            $isPsAccountsOnboarded = (bool) $psAccountsService->getOrRefreshToken();
-        } catch (Exception $e) {
-            $isPsAccountsOnboarded = false;
-        }
-
         $isFacebookSystemTokenSet = false;
         if (\Configuration::get(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN)) {
             $isFacebookSystemTokenSet = true;
@@ -46,7 +52,7 @@ class ServerInformationRepository
 
         return [
             'ps_accounts' => \Module::isInstalled('ps_accounts'),
-            'ps_accounts_onboarded' => $isPsAccountsOnboarded,
+            'ps_accounts_onboarded' => $this->isPsAccountsOnboarded,
             'ps_eventbus' => \Module::isInstalled('ps_eventbus'),
             'ps_facebook_system_token_set' => $isFacebookSystemTokenSet,
             'pixel_enabled' => (bool) \Configuration::get(Config::PS_FACEBOOK_PIXEL_ENABLED),
