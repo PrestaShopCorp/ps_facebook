@@ -39,7 +39,6 @@
           <span><tooltip :text="$t('syncReport.barcodeTooltip')" /></span>
         </b-th>
         <b-th>{{ $t('syncReport.price') }}</b-th>
-        <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
     <b-tr
@@ -59,21 +58,23 @@
         :key="i + 'super'"
       >
         <b-td>{{ id_product }}</b-td>
-        <b-td>{{ name }}</b-td>
-        <b-td />
-        <b-td />
-        <b-td />
-        <b-td />
-        <b-td />
         <b-td>
           <b-link
+            v-if="!id_product_attribute"
             :href="url.replace('/1?', `/${id_product}?`)"
             target="_blank"
-            class="text-secondary"
           >
-            <i class="material-icons">edit</i>
+            {{ name }}
           </b-link>
+          <span v-else>
+            {{ name }}
+          </span>
         </b-td>
+        <b-td />
+        <b-td />
+        <b-td />
+        <b-td />
+        <b-td />
       </b-tr>
       <b-tr
         :key="i"
@@ -81,7 +82,16 @@
       >
         <b-td>{{ id_product_attribute ? '' : id_product }}</b-td>
         <b-td :class="id_product_attribute ? 'pl-4' : ''">
-          {{ id_product_attribute ? variantLabel(i) : name }}
+          <b-link
+            v-if="!id_product_attribute"
+            :href="url.replace('/1?', `/${id_product}?`)"
+            target="_blank"
+          >
+            {{ id_product_attribute ? variantLabel(i) : name }}
+          </b-link>
+          <span v-else>
+            {{ id_product_attribute ? variantLabel(i) : name }}
+          </span>
         </b-td>
         <b-td>
           <span v-for="lang in l" :key="lang" class="badge badge-secondary">{{ lang }}</span>
@@ -101,16 +111,6 @@
         <b-td>
           <i v-if="price" class="material-icons text-success">done</i>
           <i v-else class="material-icons text-danger">close</i>
-        </b-td>
-        <b-td>
-          <b-link
-            v-if="!id_product_attribute"
-            :href="url.replace('/1?', `/${id_product}?`)"
-            target="_blank"
-            class="text-secondary"
-          >
-            <i class="material-icons">edit</i>
-          </b-link>
         </b-td>
       </b-tr>
     </template>
@@ -265,10 +265,6 @@ export default defineComponent({
 
   tr.dashed > td {
     border-top: 1px dotted lightgrey !important;
-  }
-
-  tr > th:last-of-type, tr > td:last-of-type {
-    text-align: right;
   }
 
   tr.empty-cell > td {
