@@ -232,13 +232,13 @@ export default defineComponent({
     loadNextPage() {
       console.log('Requesting a new page:', this.lastPage + 1);
       this.loading = true;
-      this.$parent.fetchPrevalidation(this.lastPage + 1).then((newPageCount) => {
-        if (newPageCount === 0) { // no more elements to fetch, do not trigger handleScroll again.
+      this.$parent.fetchPrevalidation(this.lastPage + 1).then((displayLoadMoreButton) => {
+        // no more elements to fetch, do not trigger handleScroll again.
+        if (displayLoadMoreButton === false) {
           window.removeEventListener('scroll', this.handleScroll);
           this.paginationEnabled = false;
         }
         this.dynamicRows = this.rows;
-        console.log('new elements:', newPageCount);
         this.lastPage += 1;
       }).catch((error) => {
         console.error(error);

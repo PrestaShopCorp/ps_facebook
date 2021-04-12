@@ -162,16 +162,18 @@ export default defineComponent({
         }
         return res.json();
       }).then((res) => {
-        const {list, url, success} = res;
+        const {
+          list, url, success, hasMoreProducts,
+        } = res;
         if (success && list && list.length > 0) {
           const newPage = list.map((row) => ({...row, page}));
           this.prevalidationRows = this.prevalidationRows
             .filter((row) => row.page < page)
             .concat(newPage);
           this.url = url;
-          return newPage.length;
+          return hasMoreProducts;
         }
-        return 0;
+        return false;
       });
     },
     fetchReporting(page = 0) {
