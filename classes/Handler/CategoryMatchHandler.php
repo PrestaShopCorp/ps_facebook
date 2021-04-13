@@ -37,7 +37,7 @@ class CategoryMatchHandler
 
     /**
      * @param int $categoryId
-     * @param int $googleCategoryId
+     * @param int|null $googleCategoryId
      * @param string $googleCategoryName
      * @param int $googleCategoryParentId
      * @param string $googleCategoryParentName
