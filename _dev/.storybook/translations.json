@@ -161,7 +161,8 @@
         "select": "Select",
         "noResult": "No result for your search",
         "tooManyResults": "Too many results, please complete your search.",
-        "fetchError": "An error occurred during search process."
+        "fetchError": "An error occurred during search process.",
+        "unassign": "Unassign category"
       },
       "editTable": {
         "psCategoryName": "Category on your site",

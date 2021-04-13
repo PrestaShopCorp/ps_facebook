@@ -134,8 +134,15 @@ export default defineComponent({
 
       return fetch(this.saveParentStatement, {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `category_id=${category.shopCategoryId}&google_category_id=${category.fbSubcategoryId}&google_category_name=${category.fbSubcategoryName}&google_category_parent_name=${category.fbCategoryName}&google_category_parent_id=${category.fbCategoryId}&update_children=${updateParent}`,
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          category_id: category.shopCategoryId,
+          google_category_id: category.fbSubcategoryId,
+          google_category_name: category.fbSubcategoryName,
+          google_category_parent_name: category.fbCategoryName,
+          google_category_parent_id: category.fbCategoryId,
+          update_children: updateParent,
+        }),
       }).then((res) => {
         if (!res.ok) {
           throw new Error(res.statusText || res.status);

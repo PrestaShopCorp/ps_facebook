@@ -295,15 +295,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var CategoryMatchHandler $categoryMatchHandler */
         $categoryMatchHandler = $this->module->getService(CategoryMatchHandler::class);
 
-        $categoryId = (int) Tools::getValue('category_id');
-        $googleCategoryId = (int) Tools::getValue('google_category_id');
-        $googleCategoryName = Tools::getValue('google_category_name');
-        $googleCategoryParentId = (int) Tools::getValue('google_category_parent_id');
-        $googleCategoryParentName = Tools::getValue('google_category_parent_name');
-        $updateChildren = (bool) Tools::getValue('update_children');
-        $shopId = $this->context->shop->id;
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
-        if (!$categoryId || !$googleCategoryParentId) {
+        $categoryId = isset($inputs['category_id']) ? (int) $inputs['category_id'] : null;
+        $googleCategoryId = isset($inputs['google_category_id']) ? (int) $inputs['google_category_id'] : null;
+        $googleCategoryName = isset($inputs['google_category_name']) ? $inputs['google_category_name'] : null;
+        $googleCategoryParentId = isset($inputs['google_category_parent_id']) ? (int) $inputs['google_category_parent_id'] : null;
+        $googleCategoryParentName = isset($inputs['google_category_parent_name']) ? $inputs['google_category_parent_name'] : null;
+        $updateChildren = isset($inputs['update_children']) ? (bool) $inputs['update_children'] : false;
+
+        if (!$categoryId) {
             $this->ajaxDie(
                 json_encode(
                     [
@@ -321,7 +322,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $googleCategoryParentId,
                 $googleCategoryParentName,
                 $updateChildren,
-                $shopId
+                $this->context->shop->id
             );
         } catch (Exception $e) {
             $this->ajaxDie(

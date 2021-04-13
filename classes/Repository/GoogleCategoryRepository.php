@@ -123,6 +123,37 @@ class GoogleCategoryRepository
      * @param int $categoryId
      * @param int $shopId
      *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function unsetCategoryMatch(
+        $categoryId,
+        $shopId
+    ) {
+        Db::getInstance()->delete(
+            'fb_category_match',
+            '`id_category` = ' . (int) $categoryId . ' AND `id_shop` = ' . (int) $shopId
+        );
+    }
+
+    /**
+     * @param PrestaShopCollection $childCategories
+     * @param int $shopId
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function unsetCategoryChildrenMatch(
+        PrestaShopCollection $childCategories,
+        $shopId
+    ) {
+        foreach ($childCategories as $category) {
+            $this->unsetCategoryMatch($category->id, $shopId);
+        }
+    }
+
+    /**
+     * @param int $categoryId
+     * @param int $shopId
+     *
      * @return int
      */
     public function getGoogleCategoryIdByCategoryId($categoryId, $shopId)
