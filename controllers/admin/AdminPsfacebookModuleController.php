@@ -111,6 +111,10 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
             'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
             'psFacebookSegmentId' => $this->env->get('PSX_FACEBOOK_SEGMENT_API_KEY'),
+            'psFacebookHealthCheckRoute' => $this->context->link->getModuleLink(
+                $this->module->name,
+                'apiHealthCheck'
+            ),
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
