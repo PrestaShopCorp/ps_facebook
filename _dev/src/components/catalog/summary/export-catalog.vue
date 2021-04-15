@@ -160,10 +160,12 @@
             <i class="material-icons">sync</i>
             {{ $t('catalogSummary.preApprovalScanRefreshDate', ['']) }}
             <br>
+            <span class="spinner float-right mt-3 mr-3" v-if="scanInProgress" />
             <button
               class="btn btn-outline-secondary btn-sm float-right mt-3"
               title="Rescan"
               @click="rescan"
+              v-else
             >
               {{ $t('catalogSummary.preApprovalScanRescan') }}
             </button>
@@ -337,6 +339,7 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
+import Spinner from '../../spinner/spinner.vue';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -344,6 +347,7 @@ export default defineComponent({
     BButton,
     BAlert,
     BLink,
+    Spinner,
   },
   props: {
     validation: {
@@ -368,6 +372,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookExportWholeCatalog || null,
     },
+    runPrevalidationScanRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookRunPrevalidationScanRoute || null,
+    },
     catalogId: {
       type: String,
       required: false,
@@ -381,9 +390,7 @@ export default defineComponent({
         : this.$t('catalogSummary.exportCatalogButton');
     },
     prevalidation() {
-      return (this.validation && this.validation.prevalidation)
-        ? this.validation.prevalidation
-        : {syncable: '--', notSyncable: '--'};
+      return this.prevalidationObject || {syncable: '--', notSyncable: '--'};
     },
     reporting() {
       const data = this.validation ? this.validation.reporting : {
@@ -418,6 +425,8 @@ export default defineComponent({
       seeMoreState: true,
       resetLinkError: null,
       resetLinkSuccess: null,
+      scanInProgress: false,
+      prevalidationObject: this.validation.prevalidation,
     };
   },
   methods: {
@@ -483,7 +492,23 @@ export default defineComponent({
       });
     },
     rescan() {
-      window.location.reload();
+      this.scanInProgress = true;
+      this.prevalidationObject = null;
+
+      fetch(this.runPrevalidationScanRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      }).then((res) => {
+        this.scanInProgress = false;
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((json) => {
+        this.prevalidationObject = json.validation.prevalidation;
+      }).catch((error) => {
+        console.error(error);
+      });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
 
@@ -678,5 +703,23 @@ export default defineComponent({
   }
   .view-button {
     font-weight: 700;
+  }
+  .spinner {
+    color: #fff;
+    background-color: inherit !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 4rem !important;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
   }
 </style>

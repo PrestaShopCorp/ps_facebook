@@ -44,7 +44,7 @@ class PrevalidationScanCacheProvider
      */
     public function set($cacheKey, $content)
     {
-        $this->filesystem->dumpFile($cacheKey, $content);
+        $this->filesystem->dumpFile($this->getCacheFilePath($cacheKey), $content);
     }
 
     public function clear()
