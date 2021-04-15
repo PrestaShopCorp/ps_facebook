@@ -60,3 +60,14 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider
+    arguments:
+      - '@ps_facebook'
+      - '@ps_facebook.cache'
+
+  PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider:
+    class: PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider'

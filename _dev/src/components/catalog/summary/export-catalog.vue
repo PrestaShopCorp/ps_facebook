@@ -381,7 +381,9 @@ export default defineComponent({
         : this.$t('catalogSummary.exportCatalogButton');
     },
     prevalidation() {
-      return this.validation ? this.validation.prevalidation : {syncable: 0, notSyncable: 0};
+      return (this.validation && this.validation.prevalidation)
+        ? this.validation.prevalidation
+        : {syncable: '--', notSyncable: '--'};
     },
     reporting() {
       const data = this.validation ? this.validation.reporting : {

@@ -23,6 +23,7 @@ use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPrevalidationScanException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookProductSyncException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory;
@@ -30,6 +31,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
@@ -37,6 +39,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface;
+use PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
@@ -411,8 +414,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxCatalogSummary()
     {
-        /** @var ProductRepository $productRepository */
-        $productRepository = $this->module->getService(ProductRepository::class);
+        /** @var PrevalidationScanDataProvider $prevalidationScanDataProvider */
+        $prevalidationScanDataProvider = $this->module->getService(PrevalidationScanDataProvider::class);
         /** @var GoogleCategoryRepository $googleCategoryRepository */
         $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
         /** @var GoogleCategoryProvider $googleCategoryProvider */
@@ -421,8 +424,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
         $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
         $productCount = $facebookDataProvider->getProductsInCatalogCount();
-        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id);
-        $productsTotal = $productRepository->getProductsTotal($this->context->shop->id, ['onlyActive' => true]);
 
         /** @var ProductSyncReportProvider $productSyncReportProvider */
         $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
@@ -436,11 +437,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id),
                     'matchingProgress' => $informationAboutCategoryMatching,
                     'validation' => [
-                        'prevalidation' => [
-                            'syncable' => $productsTotal - count($productsWithErrors),
-                            'notSyncable' => count($productsWithErrors),
-                            'errors' => array_slice($productsWithErrors, 0, 20), // only 20 first errors.
-                        ],
+                        'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary(),
                         'reporting' => [
                             'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
                             'catalog' => $productCount['product_count'],
@@ -453,12 +450,40 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     }
 
     /**
+     * Drop cache of pre validation scan then regenerate it.
+     * End the method by returning the new summary status.
+     */
+    public function displayAjaxRunPrevalidationScan()
+    {
+        try {
+            /** @var PrevalidationScanRefreshHandler $prevalidationScanRefreshHandler */
+            $prevalidationScanRefreshHandler = $this->module->getService(PrevalidationScanRefreshHandler::class);
+            $prevalidationScanRefreshHandler->run();
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookPrevalidationScanException(
+                    'Failed to run pre validation scan',
+                    FacebookPrevalidationScanException::FACEBOOK_PRE_VALIDATION_SCAN_UPDATE_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                false
+            );
+
+            $this->ajaxDie(json_encode([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]));
+        }
+
+        return $this->displayAjaxCatalogSummary();
+    }
+
+    /**
      * @throws PrestaShopException
      */
     public function displayAjaxCategoryMappingCounters()
     {
-        /** @var GoogleCategoryRepository $googleCategoryRepository */
-        $googleCategoryRepository = $this->module->getService(GoogleCategoryRepository::class);
         /** @var GoogleCategoryProvider $googleCategoryProvider */
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
         $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
@@ -534,13 +559,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxGetProductsWithErrors()
     {
         $page = (int) Tools::getValue('page');
-        if (!$page || $page < 0) {
+        if ($page < 0) {
             $page = 0;
         }
 
-        /** @var ProductRepository $productRepository */
-        $productRepository = $this->module->getService(ProductRepository::class);
-        $productsWithErrors = $productRepository->getProductsWithErrors($this->context->shop->id, $page);
+        /** @var PrevalidationScanDataProvider $prevalidationScanDataProvider */
+        $prevalidationScanDataProvider = $this->module->getService(PrevalidationScanDataProvider::class);
+        $productsWithErrors = $prevalidationScanDataProvider->getPageOfPrevalidationScan($page);
 
         $this->ajaxDie(json_encode([
             'success' => true,
