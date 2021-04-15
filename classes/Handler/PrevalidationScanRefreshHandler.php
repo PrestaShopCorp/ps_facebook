@@ -91,6 +91,7 @@ class PrevalidationScanRefreshHandler
         return [
             'syncable' => $productsTotal - $numberOfProductsWithError,
             'notSyncable' => $numberOfProductsWithError,
+            'lastScanDate' => date(DATE_ISO8601),
         ];
     }
 }

@@ -172,20 +172,12 @@
             <span
               class="big mt-2"
             >
-              {{ (new Date()).toLocaleDateString(
-                    undefined,
-                    {year: 'numeric', month: 'numeric', day: 'numeric'},
-                  )
-              }}
+              {{ prevalidation.lastScanDate }}
             </span>
             <span
               class="text-muted"
             >
-              {{ (new Date()).toLocaleTimeString(
-                  undefined,
-                  {hour: '2-digit', minute: '2-digit'},
-                )
-              }}
+              {{ prevalidation.lastScanTime }}
             </span>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
@@ -390,7 +382,25 @@ export default defineComponent({
         : this.$t('catalogSummary.exportCatalogButton');
     },
     prevalidation() {
-      return this.prevalidationObject || {syncable: '--', notSyncable: '--'};
+      if (!this.prevalidationObject) {
+        return {syncable: '--', notSyncable: '--'};
+      }
+
+      const lastScanDate = this.prevalidationObject.lastScanDate
+        ? new Date(this.prevalidationObject.lastScanDate)
+        : null;
+
+      return {
+        ...this.prevalidationObject,
+        lastScanDate: lastScanDate?.toLocaleDateString(
+          undefined,
+          {year: 'numeric', month: 'numeric', day: 'numeric'},
+        ),
+        lastScanTime: lastScanDate?.toLocaleTimeString(
+          undefined,
+          {hour: '2-digit', minute: '2-digit'},
+        ),
+      };
     },
     reporting() {
       const data = this.validation ? this.validation.reporting : {
