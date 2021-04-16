@@ -27,7 +27,7 @@ class PrevalidationScanCacheProvider
     public function __construct(Ps_facebook $module, $cachePath)
     {
         $this->cachePath = $cachePath . '/' . $module->name . '/';
-        $this->filesystem = new Filesystem;
+        $this->filesystem = new Filesystem();
     }
 
     /**
@@ -49,7 +49,7 @@ class PrevalidationScanCacheProvider
 
     public function clear()
     {
-        $this->filesystem->mkdir($this->cachePath, 0777, true);
+        $this->filesystem->mkdir($this->cachePath);
 
         $finder = Finder::create();
         $files = $finder->files()->in($this->cachePath)->name('*.json');

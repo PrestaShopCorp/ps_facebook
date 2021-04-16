@@ -42,7 +42,6 @@ use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterfac
 use PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
-use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
 use PrestaShop\ModuleLibFaq\Faq;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
