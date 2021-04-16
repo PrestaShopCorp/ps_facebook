@@ -176,6 +176,15 @@
             >
               {{ $t('catalogSummary.preApprovalScanRescan') }}
             </button>
+            <b-alert
+              v-if="scanProcess.error"
+              variant="warning"
+              show
+              class="warning smaller col-8"
+            >
+              {{ $t('catalogSummary.preApprovalScanError') }}
+              {{ scanProcess.error }}
+            </b-alert>
             <span
               class="big mt-2"
               v-if="scanProcess.inProgress"
@@ -454,6 +463,7 @@ export default defineComponent({
         inProgress: false,
         numberOfProductChecked: 0,
         page: 0,
+        error: null,
       },
       prevalidationObject: this.validation.prevalidation,
     };
@@ -526,6 +536,7 @@ export default defineComponent({
         inProgress: true,
         numberOfProductChecked: 0,
         page: 0,
+        error: null,
       };
       this.prevalidationObject = null;
 
@@ -578,7 +589,7 @@ export default defineComponent({
         return res.json();
       }).then((json) => {
         if (!json.success) {
-          throw new Error(json.message || 'Scan did not end properly');
+          throw new Error(json.message || 'N/A');
         }
         this.scanProcess.inProgress = !json.complete;
         this.scanProcess.numberOfProductChecked = json.progress;
@@ -595,6 +606,7 @@ export default defineComponent({
         });
       }).catch((error) => {
         this.scanProcess.inProgress = false;
+        this.scanProcess.error = error;
         console.error(error);
       });
     },
