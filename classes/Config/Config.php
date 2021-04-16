@@ -48,7 +48,7 @@ class Config
     const CATEGORIES_PER_PAGE = 50;
     const MAX_CATEGORY_DEPTH = 3;
 
-    const REPORTS_PER_PAGE = 200;
+    const REPORTS_PER_PAGE = 1000;
 
     // Data that can be overwritten by .env file if using the Env class
     const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';

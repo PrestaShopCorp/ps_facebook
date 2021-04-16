@@ -54,29 +54,48 @@ class PrevalidationScanRefreshHandler
         $this->shopId = $shopId;
     }
 
-    public function run()
+    /**
+     * @param int $page
+     *
+     * @return array
+     */
+    public function run($page = 0)
     {
-        $this->prevalidationScanCacheProvider->clear();
+        if ($page === 0) {
+            $this->prevalidationScanCacheProvider->clear();
+        }
 
-        $numberOfProductsWithError = 0;
-        $page = 0;
+        $products = $this->productRepository->getProductsWithErrors($this->shopId, $page);
+        $this->prevalidationScanCacheProvider->set(
+            PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $page,
+            json_encode($products)
+        );
+        $numberOfProductsWithError = count($products) + Config::REPORTS_PER_PAGE * $page;
 
-        do {
-            $products = $this->productRepository->getProductsWithErrors($this->shopId, $page);
+        if (count($products) === Config::REPORTS_PER_PAGE) {
+            // We reached the maximum number of results, this is likely meaning
+            // that we have another page to work with.
+            return [
+                'success' => true,
+                'complete' => false,
+                'page_done' => $page,
+                'progress' => $numberOfProductsWithError,
+            ];
+        }
 
-            $this->prevalidationScanCacheProvider->set(
-                PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $page,
-                json_encode($products)
-            );
-
-            $numberOfProductsWithError += count($products);
-            ++$page;
-        } while (count($products) === Config::REPORTS_PER_PAGE);
+        // This was the last page, we store and return the summary
+        $summary = $this->generateSummaryData($numberOfProductsWithError);
 
         $this->prevalidationScanCacheProvider->set(
             PrevalidationScanCacheProvider::CACHE_KEY_SUMMARY,
-            json_encode($this->generateSummaryData($numberOfProductsWithError))
+            json_encode($summary)
         );
+
+        return [
+            'success' => true,
+            'complete' => true,
+            'prevalidation' => $summary,
+        ];
     }
 
     /**

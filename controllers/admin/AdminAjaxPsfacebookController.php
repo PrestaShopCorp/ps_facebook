@@ -454,10 +454,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRunPrevalidationScan()
     {
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
         try {
             /** @var PrevalidationScanRefreshHandler $prevalidationScanRefreshHandler */
             $prevalidationScanRefreshHandler = $this->module->getService(PrevalidationScanRefreshHandler::class);
-            $prevalidationScanRefreshHandler->run();
+
+            return $this->ajaxDie(json_encode(
+                $prevalidationScanRefreshHandler->run((int) $inputs['page'] ?: 0)
+            ));
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookPrevalidationScanException(
@@ -474,8 +478,6 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 'message' => $e->getMessage(),
             ]));
         }
-
-        return $this->displayAjaxCatalogSummary();
     }
 
     /**

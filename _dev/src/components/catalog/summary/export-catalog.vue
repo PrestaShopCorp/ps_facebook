@@ -158,13 +158,16 @@
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
-            {{ $t( scanInProgress
+            {{ $t( scanProcess.inProgress
                 ? 'catalogSummary.preApprovalScanRefreshInProgress'
                 : 'catalogSummary.preApprovalScanRefreshDate',
               [''])
             }}
             <br>
-            <span class="spinner float-right mt-3 mr-3" v-if="scanInProgress" />
+            <span
+              class="spinner float-right mt-3 mr-3"
+              v-if="scanProcess.inProgress"
+            />
             <button
               class="btn btn-outline-secondary btn-sm float-right mt-3"
               title="Rescan"
@@ -173,6 +176,14 @@
             >
               {{ $t('catalogSummary.preApprovalScanRescan') }}
             </button>
+            <span
+              class="big mt-2"
+              v-if="scanProcess.inProgress"
+            >
+              {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
+                [scanProcess.numberOfProductChecked])
+              }}
+            </span>
             <span
               class="big mt-2"
             >
@@ -439,7 +450,11 @@ export default defineComponent({
       seeMoreState: true,
       resetLinkError: null,
       resetLinkSuccess: null,
-      scanInProgress: false,
+      scanProcess: {
+        inProgress: false,
+        numberOfProductChecked: 0,
+        page: 0,
+      },
       prevalidationObject: this.validation.prevalidation,
     };
   },
@@ -506,22 +521,17 @@ export default defineComponent({
       });
     },
     rescan() {
-      this.scanInProgress = true;
+      this.scanProcess = {
+        ...this.scanProcess,
+        inProgress: true,
+        numberOfProductChecked: 0,
+        page: 0,
+      };
       this.prevalidationObject = null;
 
-      fetch(this.runPrevalidationScanRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-      }).then((res) => {
-        this.scanInProgress = false;
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return res.json();
-      }).then((json) => {
-        this.prevalidationObject = json.validation.prevalidation;
-      }).catch((error) => {
-        console.error(error);
+      this.fetchScanPage();
+      this.$segment.track('Scan of products triggered', {
+        module: 'ps_facebook',
       });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
@@ -554,6 +564,45 @@ export default defineComponent({
         }, 5000);
       });
     },
+    fetchScanPage() {
+      return fetch(this.runPrevalidationScanRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+          page: this.scanProcess.page,
+        }),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((json) => {
+        if (!json.success) {
+          throw new Error(json.message || 'Scan did not end properly');
+        }
+        this.scanProcess.inProgress = !json.complete;
+        this.scanProcess.numberOfProductChecked = json.progress;
+        if (this.scanProcess.inProgress) {
+          // Load next page
+          this.scanProcess.page += 1;
+          this.fetchScanPage();
+          return;
+        }
+        this.prevalidationObject = json.prevalidation;
+        this.$segment.track('Scan of products done', {
+          module: 'ps_facebook',
+          numberOfPages: this.scanProcess.page,
+        });
+      }).catch((error) => {
+        this.scanProcess.inProgress = false;
+        console.error(error);
+      });
+    },
+  },
+  mounted() {
+    if (this.validation.prevalidation === null) {
+      this.rescan();
+    }
   },
 });
 </script>
