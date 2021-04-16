@@ -158,7 +158,11 @@
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
-            {{ $t('catalogSummary.preApprovalScanRefreshDate', ['']) }}
+            {{ $t( scanInProgress
+                ? 'catalogSummary.preApprovalScanRefreshInProgress'
+                : 'catalogSummary.preApprovalScanRefreshDate',
+              [''])
+            }}
             <br>
             <span class="spinner float-right mt-3 mr-3" v-if="scanInProgress" />
             <button

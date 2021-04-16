@@ -156,6 +156,7 @@ class PsFacebookTranslations
                 'preApprovalScanTitle' => $this->module->l('Product scan before synchronization to facebook', 'PsFacebookTranslations'),
                 'preApprovalScanIntro' => $this->module->l('Check which products are ready to be synchronized and which ones have problems and will not be synchronized.', 'PsFacebookTranslations'),
                 'preApprovalScanRefreshDate' => $this->module->l('Last scan today at {0}', 'PsFacebookTranslations'),
+                'preApprovalScanRefreshInProgress' => $this->module->l('Scan is in progress...', 'PsFacebookTranslations'),
                 'preApprovalScanReadyToSync' => $this->module->l('Ready to sync', 'PsFacebookTranslations'),
                 'preApprovalScanNonSyncable' => $this->module->l('Non-syncable', 'PsFacebookTranslations'),
                 'preApprovalScanRescan' => $this->module->l('Rescan', 'PsFacebookTranslations'),

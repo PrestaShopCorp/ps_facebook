@@ -99,6 +99,7 @@
       "preApprovalScanTitle": "Product scan before synchronization to facebook",
       "preApprovalScanIntro": "Check which products are ready to be synchronized and which ones have problems and will not be synchronized.",
       "preApprovalScanRefreshDate": "Last scan today at {0}",
+      "preApprovalScanRefreshInProgress": "Scan is in progress...",
       "preApprovalScanReadyToSync": "Ready to sync",
       "preApprovalScanNonSyncable": "Non-syncable",
       "preApprovalScanRescan": "Rescan",
