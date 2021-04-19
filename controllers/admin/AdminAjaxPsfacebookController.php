@@ -81,12 +81,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxEnsureTokensExchanged()
     {
-        $facebookClient = $this->module->getService(FacebookClient::class);
+        /** @var AccessTokenProvider */
+        $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
 
         $this->ajaxDie(
             json_encode(
                 [
-                    'success' => $facebookClient->hasAccessToken(),
+                    'success' => $accessTokenProvider->getSystemAccessToken(),
                 ]
             )
         );
