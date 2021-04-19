@@ -94,13 +94,13 @@
             {{ $t('catalogSummary.reportingLastSync') }}
             <span
               v-if="reporting.hasSynced"
-              class="big mt-2"
+              class="big mt-2 ml-md-4"
             >
               {{ reporting.syncDate || '--' }}
             </span>
             <span
               v-if="reporting.hasSynced"
-              class="text-muted"
+              class="text-muted ml-md-4"
             >
               {{ reporting.syncTime || '--' }}
             </span>
@@ -117,7 +117,7 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.reportingCatalogCount') }}
-            <span class="big mt-2">{{ reporting.catalog || '--' }}</span>
+            <span class="big mt-2 ml-md-4">{{ reporting.catalog || '--' }}</span>
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
@@ -130,7 +130,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big red-number mt-2">{{ reporting.errored || '--' }}</span>
+            <span class="big red-number mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -186,7 +186,7 @@
               {{ scanProcess.error }}
             </b-alert>
             <span
-              class="big mt-2"
+              class="big mt-2 ml-md-4"
               v-if="scanProcess.inProgress"
             >
               {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
@@ -194,12 +194,12 @@
               }}
             </span>
             <span
-              class="big mt-2"
+              class="big mt-2 ml-md-4"
             >
               {{ prevalidation.lastScanDate }}
             </span>
             <span
-              class="text-muted"
+              class="text-muted ml-md-4"
             >
               {{ prevalidation.lastScanTime }}
             </span>
@@ -208,7 +208,7 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
-            <span class="big mt-2">
+            <span class="big mt-2 ml-md-4">
               <span class="green-number">
                 {{ prevalidation.syncable }}
               </span>
@@ -226,7 +226,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big mt-2">
+            <span class="big mt-2 ml-md-4">
               <span class="red-number">
                 {{ prevalidation.notSyncable }}
               </span>
@@ -738,7 +738,6 @@ export default defineComponent({
     & > i {
       float: left;
       margin-right: 0.6rem;
-      margin-bottom: 3.5rem;
       font-size: 1.85rem;
       color: #6C868E;
     }
