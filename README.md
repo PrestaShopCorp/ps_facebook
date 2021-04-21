@@ -41,7 +41,42 @@ Zips should be available for each [releases](./releases).
 This module is not compliant with PS 1.6 as some Pixel events could not be implemented properly on this version (i.e `CustomizeProduct`).
 This avoids potential misunderstanding about mismatching behavior of the module with different versions of PrestaShop.
 
-### Links
+### Facebook Pixel
+
+* **Pixel & GDPR**
+
+Based of the [Facebook documentation about GDPR](https://developers.facebook.com/docs/facebook-pixel/implementation/gdpr/),
+a user may revoke his consent to use Pixel. This can be notified to Facebook by calling `fbq('consent', 'revoke');`.
+Cookies management modules are available on the PrestaShop marketplace to allow the management of Facebook features
+to each user.
+
+For third-party module developers, this module will revoke the consent to use Pixel if the proper JS variable is
+set in the page content before the initialization of this module:
+
+```js
+window.doNotConsentToPixel = true;
+```
+
+* **Using Pixel event in other modules**
+
+You can call custom Pixel event by using hook: actionFacebookCallPixel
+
+You also need to add some params in hook call
+
+*Required:* 
++ eventName
++ module
+
+*Optional:*
++ id_product
++ id_product_attribute
+
+Example:    
+```
+Hook::exec('actionFacebookCallPixel' ,['eventName' => 'AddToWishlist', 'module' => 'wishlist', 'id_product' => $productId, 'id_product_attribute' => $idProductAttribute]);
+```
+
+* **Documentation**
 
 - [List of standard Pixel events](https://developers.facebook.com/docs/facebook-pixel/reference/)
 
@@ -73,26 +108,6 @@ Some values of the Config class can be overwriten by having your own environment
 
 You can for instance have your own `.env` at the root of this project to replace the Facebook App ID
 or switch the API URLs to another domain.
-
-
-* **Using Pixel event in other modules**
-
-You can call custom Pixel event by using hook: actionFacebookCallPixel
-
-You also need to add some params in hook call
-
-*Required:* 
-+ eventName
-+ module
-
-*Optional:*
-+ id_product
-+ id_product_attribute
-
-Example:    
-```
-Hook::exec('actionFacebookCallPixel' ,['eventName' => 'AddToWishlist', 'module' => 'wishlist', 'id_product' => $productId, 'id_product_attribute' => $idProductAttribute]);
-```
 
 
 ### Tests

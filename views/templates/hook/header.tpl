@@ -26,6 +26,9 @@
     n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+    // Allow third-party modules to disable Pixel
+    fbq('consent', !!window.doNotConsentToPixel ? 'revoke' : 'grant');
 {/literal}
 {strip}
     {if isset($userInfos)}
