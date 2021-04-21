@@ -22,10 +22,10 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookDependencyUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPrevalidationScanException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookProductSyncException;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPsAccountsUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory;
 use PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
@@ -577,19 +577,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         ]));
     }
 
-    public function displayAjaxUpgradePsAccounts()
+    public function displayAjaxUpgradePsEventBus()
     {
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
         $isUpgradeSuccessful = false;
         try {
             /* @phpstan-ignore-next-line */
-            $isUpgradeSuccessful = $moduleManager->upgrade('ps_accounts');
+            $isUpgradeSuccessful = $moduleManager->upgrade('ps_eventbus');
         } catch (Exception $e) {
             $this->errorHandler->handle(
-                new FacebookPsAccountsUpdateException(
-                    'Failed to upgrade ps_accounts',
-                    FacebookPsAccountsUpdateException::FACEBOOK_PS_ACCOUNTS_UPGRADE_EXCEPTION,
+                new FacebookDependencyUpdateException(
+                    'Failed to upgrade ps_eventbus',
+                    FacebookDependencyUpdateException::FACEBOOK_DEPENDENCY_UPGRADE_EXCEPTION,
                     $e
                 ),
                 $e->getCode(),
@@ -604,7 +604,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $this->ajaxDie(json_encode([
             'success' => $isUpgradeSuccessful,
-            'message' => $moduleManager->getError('ps_accounts'),
+            'message' => $moduleManager->getError('ps_eventbus'),
         ]));
     }
 

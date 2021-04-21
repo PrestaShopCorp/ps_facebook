@@ -31,9 +31,9 @@
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
         "reloadButton": "Reload",
 
-        "psAccountUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
-        "psAccountUpgradeButton": "Upgrade PrestaShop Accounts",
-        "psAccountUpgradeDone": "PrestaShop Account has been successfully upgraded.",
+        "psEventBusUpgradeNeededWarning": "The version of the module PrestaShop Event Bus running on this shop (v{psEventBusVersion}) is older than the minimum required v{requiredPsEventBusVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Event Bus.",
+        "psEventBusUpgradeButton": "Upgrade PrestaShop Event Bus",
+        "psEventBusUpgradeDone": "PrestaShop Event Bus has been successfully upgraded.",
         "accountSuspended": "We seem to lack permissions on your Facebook account to be able to sync your products. To resolve this issue, please reonboard to put the permissions back to the correct state."
       },
       "facebook": {

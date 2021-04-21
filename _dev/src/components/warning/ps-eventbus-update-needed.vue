@@ -25,7 +25,7 @@
   >
     <div>
       <p
-        v-html="md2html($t('configuration.messages.psAccountUpgradeNeededWarning', this))"
+        v-html="md2html($t('configuration.messages.psEventBusUpgradeNeededWarning', this))"
       />
       <div
         v-if="loading"
@@ -37,7 +37,7 @@
         class="mt-2"
         @click="onUpgradeClick"
       >
-        {{ $t('configuration.messages.psAccountUpgradeButton') }}
+        {{ $t('configuration.messages.psEventBusUpgradeButton') }}
       </b-button>
     </div>
   </b-alert>
@@ -48,7 +48,7 @@
     show
     dismissible
   >
-    {{ $t('configuration.messages.psAccountUpgradeDone') }}
+    {{ $t('configuration.messages.psEventBusUpgradeDone') }}
   </b-alert>
 </template>
 
@@ -72,20 +72,20 @@ export default defineComponent({
     };
   },
   props: {
-    psAccountsVersion: {
+    psEventBusVersion: {
       type: String,
       required: false,
-      default: () => global.psAccountVersionCheck.psAccountsVersion || null,
+      default: () => global.psEventBusVersionCheck.psEventBusVersion || null,
     },
-    requiredPsAccountsVersion: {
+    requiredPsEventBusVersion: {
       type: String,
       required: false,
-      default: () => global.psAccountVersionCheck.requiredPsAccountsVersion || null,
+      default: () => global.psEventBusVersionCheck.requiredPsEventBusVersion || null,
     },
-    psFacebookUpgradePsAccounts: {
+    psFacebookUpgradePsEventBus: {
       type: String,
       required: false,
-      default: () => global.psAccountVersionCheck.psFacebookUpgradePsAccounts || null,
+      default: () => global.psEventBusVersionCheck.psFacebookUpgradePsEventBus || null,
     },
   },
   methods: {
@@ -93,7 +93,7 @@ export default defineComponent({
     onUpgradeClick() {
       this.loading = true;
 
-      fetch(this.psFacebookUpgradePsAccounts, {
+      fetch(this.psFacebookUpgradePsEventBus, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
       }).then((res) => {
@@ -107,13 +107,13 @@ export default defineComponent({
         }
         this.loading = false;
         this.upgradeDone = true;
-        this.$segment.track('PS Account upgraded from alert', {
+        this.$segment.track('PS EventBus upgraded from alert', {
           module: 'ps_facebook',
         });
       }).catch((error) => {
         console.error(error);
         this.loading = false;
-        this.$segment.track('Upgrade of PS Accounts failed', {
+        this.$segment.track('Upgrade of PS EventBus failed', {
           module: 'ps_facebook',
         });
       });

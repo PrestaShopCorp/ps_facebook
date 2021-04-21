@@ -47,8 +47,8 @@
         @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
-      <PsAccountsUpdateNeeded
-        v-if="needsPsAccountsUpgrade"
+      <PsEventBusUpdateNeeded
+        v-if="needsPsEventBusUpgrade"
       />
       <b-alert
         v-if="psAccountShopInConflict"
@@ -151,7 +151,7 @@ import FacebookConnected from '../components/configuration/facebook-connected.vu
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
-import PsAccountsUpdateNeeded from '../components/warning/ps-accounts-update-needed.vue';
+import PsEventBusUpdateNeeded from '../components/warning/ps-eventbus-update-needed.vue';
 
 const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, popupUrl) => {
   const canGeneratePopup = (
@@ -186,7 +186,7 @@ export default defineComponent({
     Messages,
     MultiStoreSelector,
     PsAccounts,
-    PsAccountsUpdateNeeded,
+    PsEventBusUpdateNeeded,
     NoConfig,
     FacebookNotConnected,
     FacebookConnected,
@@ -269,10 +269,10 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookRetrieveExternalBusinessId || null,
     },
-    psAccountVersionCheck: {
+    psEventBusVersionCheck: {
       type: Object,
       required: false,
-      default: () => global.psAccountVersionCheck,
+      default: () => global.psEventBusVersionCheck,
     },
     retrieveTokensRoute: {
       type: String,
@@ -311,8 +311,8 @@ export default defineComponent({
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
     },
-    needsPsAccountsUpgrade() {
-      return this.psAccountVersionCheck && this.psAccountVersionCheck.needsPsAccountsUpgrade;
+    needsPsEventBusUpgrade() {
+      return this.psEventBusVersionCheck && this.psEventBusVersionCheck.needsPsEventBusUpgrade;
     },
   },
   data() {
