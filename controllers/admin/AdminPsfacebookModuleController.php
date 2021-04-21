@@ -84,16 +84,16 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ]);
         }
 
-        $needsPsAccountsUpgrade = false;
-        $psAccountsVersion = null;
-        if (Module::isInstalled('ps_accounts')) {
-            $psAccounts = Module::getInstanceByName('ps_accounts');
-            if ($psAccounts !== false) {
-                $psAccountsVersion = $psAccounts->version;
+        $needsPsEventBusUpgrade = false;
+        $psEventBusVersion = null;
+        if (Module::isInstalled('ps_eventbus')) {
+            $psEventBus = Module::getInstanceByName('ps_eventbus');
+            if ($psEventBus !== false) {
+                $psEventBusVersion = $psEventBus->version;
 
-                $needsPsAccountsUpgrade = version_compare(
-                    $psAccountsVersion,
-                    Config::REQUIRED_PS_ACCOUNTS_VERSION,
+                $needsPsEventBusUpgrade = version_compare(
+                    $psEventBusVersion,
+                    Config::REQUIRED_PS_EVENTBUS_VERSION,
                     '<'
                 );
             }
@@ -336,16 +336,16 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
             'psAccountShopId' => $psAccountShopId,
-            'psAccountVersionCheck' => [
-                'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
-                'psAccountsVersion' => $psAccountsVersion,
-                'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
-                'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
+            'psEventBusVersionCheck' => [
+                'needsPsEventBusUpgrade' => $needsPsEventBusUpgrade,
+                'psEventBusVersion' => $psEventBusVersion,
+                'requiredPsAccountsVersion' => Config::REQUIRED_PS_EVENTBUS_VERSION,
+                'psFacebookUpgradePsEventBus' => $this->context->link->getAdminLink(
                     'AdminAjaxPsfacebook',
                     true,
                     [],
                     [
-                        'action' => 'UpgradePsAccounts',
+                        'action' => 'UpgradePsEventBus',
                         'ajax' => 1,
                     ]
                 ),

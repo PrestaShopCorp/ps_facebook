@@ -22,7 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Exception;
 
 use Exception;
 
-class FacebookPsAccountsUpdateException extends Exception
+class FacebookDependencyUpdateException extends Exception
 {
-    const FACEBOOK_PS_ACCOUNTS_UPGRADE_EXCEPTION = 1;
+    const FACEBOOK_DEPENDENCY_UPGRADE_EXCEPTION = 1;
 }
