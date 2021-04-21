@@ -47,6 +47,9 @@
         @onAdCampaignClick="onAdCampaignClick"
         class="m-3"
       />
+      <PsAccountsUpdateNeeded
+        v-if="needsPsAccountsUpgrade"
+      />
       <b-alert
         v-if="psAccountShopInConflict"
         variant="danger"
@@ -148,6 +151,7 @@ import FacebookConnected from '../components/configuration/facebook-connected.vu
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
+import PsAccountsUpdateNeeded from '../components/warning/ps-accounts-update-needed.vue';
 
 const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, popupUrl) => {
   const canGeneratePopup = (
@@ -182,6 +186,7 @@ export default defineComponent({
     Messages,
     MultiStoreSelector,
     PsAccounts,
+    PsAccountsUpdateNeeded,
     NoConfig,
     FacebookNotConnected,
     FacebookConnected,
@@ -305,6 +310,9 @@ export default defineComponent({
         !c.catalog
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
+    },
+    needsPsAccountsUpgrade() {
+      return this.psAccountVersionCheck && this.psAccountVersionCheck.needsPsAccountsUpgrade;
     },
   },
   data() {
