@@ -35,6 +35,35 @@
       class="m-3"
     >
       <template v-slot:header>
+        Module status
+      </template>
+
+      <b-card-body class="row">
+        <div class="col-6">
+          <p class="h3">
+            External Business ID
+          </p>
+          <pre>{{ $root.psFacebookExternalBusinessId }}</pre>
+
+          <p class="h3">
+            Health Check
+          </p>
+          <pre>{{ healthCheckContent }}</pre>
+        </div>
+        <div class="col-6">
+          <p class="h3">
+            Facebook Business Extension data
+          </p>
+          <pre>{{ contextPsFacebook }}</pre>
+        </div>
+      </b-card-body>
+    </b-card>
+
+    <b-card
+      no-body
+      class="m-3"
+    >
+      <template v-slot:header>
         Conversion API data management
       </template>
 
@@ -48,6 +77,7 @@
               type="text"
               id="text-system-access-token"
               aria-describedby="system-access-token-help-block"
+              :disabled="isLoading"
             />
             <b-form-text id="system-access-token-help-block">
               You can replace the System Access Token stored in the database if the one
@@ -80,6 +110,7 @@
               placeholder="New Test Code"
               aria-describedby="event-test-code-help-block"
               v-model="testEventCode"
+              :disabled="isLoading"
             />
             <b-form-text id="event-test-code-help-block">
               The test events tool is used to verify the events are properly sent from the shop
@@ -132,6 +163,8 @@ export default defineComponent({
     return {
       systemAccessToken: null,
       testEventCode: null,
+      isLoading: false,
+      healthCheckContent: {},
     };
   },
   computed: {
@@ -140,6 +173,9 @@ export default defineComponent({
         return this.$root.contextPsFacebook.pixel.id;
       }
       return null;
+    },
+    contextPsFacebook() {
+      return JSON.stringify(this.$root.contextPsFacebook, null, 2) || 'Loading...';
     },
   },
   methods: {
@@ -179,6 +215,22 @@ export default defineComponent({
         console.error(error);
       });
     },
+    callHeathCheck() {
+      fetch(global.psFacebookHealthCheckRoute)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        }).then((res) => {
+          this.healthCheckContent = res;
+        }).catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.callHeathCheck();
   },
 });
 </script>
