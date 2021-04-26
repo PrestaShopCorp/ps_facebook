@@ -37,7 +37,7 @@ class CategoryMatchHandler
 
     /**
      * @param int $categoryId
-     * @param int $googleCategoryId
+     * @param int|null $googleCategoryId
      * @param string $googleCategoryName
      * @param int $googleCategoryParentId
      * @param string $googleCategoryParentName
@@ -55,9 +55,14 @@ class CategoryMatchHandler
         $updateChildren,
         $shopId
     ) {
+        if ($googleCategoryId === null) {
+            return $this->unsetCategoryMatch($categoryId, $updateChildren, $shopId);
+        }
+
         if ($updateChildren === true) {
             $category = new Category($categoryId);
             $categoryChildrenIds = $category->getAllChildren();
+
             $this->googleCategoryRepository->updateCategoryChildrenMatch(
                 $categoryChildrenIds,
                 $googleCategoryId,
@@ -67,6 +72,7 @@ class CategoryMatchHandler
                 $shopId
             );
         }
+
         $this->googleCategoryRepository->updateCategoryMatch(
             $categoryId,
             $googleCategoryId,
@@ -75,6 +81,33 @@ class CategoryMatchHandler
             $googleCategoryParentName,
             $shopId,
             $updateChildren
+        );
+    }
+
+    /**
+     * @param int $categoryId
+     * @param bool $updateChildren
+     * @param int $shopId
+     *
+     * @throws \PrestaShopDatabaseException
+     */
+    public function unsetCategoryMatch(
+        $categoryId,
+        $updateChildren,
+        $shopId
+    ) {
+        if ($updateChildren === true) {
+            $category = new Category($categoryId);
+            $categoryChildrenIds = $category->getAllChildren();
+
+            $this->googleCategoryRepository->unsetCategoryChildrenMatch(
+                $categoryChildrenIds,
+                $shopId
+            );
+        }
+        $this->googleCategoryRepository->unsetCategoryMatch(
+            $categoryId,
+            $shopId
         );
     }
 }

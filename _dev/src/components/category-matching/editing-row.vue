@@ -196,15 +196,7 @@ export default defineComponent({
           fbSubcategoryName: this.currentSubcategoryName.replace('&', '-'),
           propagate: !!this.currentPropagation,
         };
-        this.saveMatchingCallback(result)
-          .then(() => {
-            this.loading = false;
-            this.error = null;
-          })
-          .catch((error) => {
-            this.loading = false;
-            this.error = error;
-          });
+        this.triggerSaveOfCategoryMatching(result);
       }
     },
     getCurrentRow(categoryID) {
@@ -221,6 +213,20 @@ export default defineComponent({
       if (checkbox) {
         checkbox.focus();
       }
+      if (categoryId) {
+        return;
+      }
+
+      // Trigger save when category is unset
+      const result = {
+        shopCategoryId: this.shopCategoryId,
+        fbCategoryId: this.currentCategoryId,
+        fbCategoryName: this.currentCategoryName.replace('&', '-'),
+        fbSubcategoryId: null,
+        fbSubcategoryName: null,
+        propagate: !!this.currentPropagation,
+      };
+      this.triggerSaveOfCategoryMatching(result);
     },
     subcategoryChanged(subcategoryId, subcategoryName) {
       this.loading = true;
@@ -236,6 +242,9 @@ export default defineComponent({
         propagate: !!this.currentPropagation,
       };
       this.$emit('onCategoryMatched', result);
+      this.triggerSaveOfCategoryMatching(result);
+    },
+    triggerSaveOfCategoryMatching(result) {
       this.saveMatchingCallback(result)
         .then(() => {
           this.loading = false;

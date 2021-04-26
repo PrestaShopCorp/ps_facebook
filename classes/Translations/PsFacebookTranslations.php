@@ -222,6 +222,7 @@ class PsFacebookTranslations
                     'noResult' => $this->module->l('No result for your search', 'PsFacebookTranslations'),
                     'tooManyResults' => $this->module->l('Too many results, please complete your search.', 'PsFacebookTranslations'),
                     'fetchError' => $this->module->l('An error occurred during search process.', 'PsFacebookTranslations'),
+                    'unassign' => $this->module->l('Unassign category', 'PsFacebookTranslations'),
                 ],
                 'tableMatching' => [
                     'firstTd' => $this->module->l('Category on your site', 'PsFacebookTranslations'),

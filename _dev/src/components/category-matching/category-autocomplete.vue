@@ -68,8 +68,15 @@
       />
 
       <i v-if="tooManyProposals">{{ $t('categoryMatching.autocomplete.tooManyResults') }}</i>
-      <i v-if="fetchError">{{ $t('categoryMatching.autocomplete.fetchError') }}</i>
+      <i v-if="fetchError"></i>
     </li>
+    <b-dropdown-item
+      variant="inverse"
+      v-if="currentCategoryId"
+      @click="() => categoryRemoved()"
+    >
+      <i>{{ $t('categoryMatching.autocomplete.unassign') }}</i>
+    </b-dropdown-item>
     <b-dropdown-item
       v-for="category in categories || [{id: -1, name: '...'}]"
       :key="category.id"
@@ -149,7 +156,7 @@ export default defineComponent({
       loading: false,
       tooManyProposals: false,
       fetchError: null,
-      debouncedFetchCategories: debounce(this.fetchCategories.bind(this), 2000, false),
+      debouncedFetchCategories: debounce(this.fetchCategories.bind(this), 1000, false),
     };
   },
   methods: {
@@ -166,10 +173,11 @@ export default defineComponent({
       this.currentCategoryName = categoryName;
       this.currentCategoryId = categoryId;
     },
+    categoryRemoved() {
+      this.categoryChosen(0, '');
+    },
     afterDropdownHidden() {
-      if (this.currentCategoryId > 0) {
-        this.$emit('onCategorySelected', this.currentCategoryId, this.currentCategoryName);
-      }
+      this.$emit('onCategorySelected', this.currentCategoryId, this.currentCategoryName);
     },
     filterChange(value) {
       this.currentFilter = (value.length >= 3 || value.length === 0) ? value : this.currentFilter;

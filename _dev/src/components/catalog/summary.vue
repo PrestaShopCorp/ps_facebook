@@ -31,7 +31,6 @@
       />
     </b-card>
 
-    <!-- HIDDEN UNTIL FEATURE IS READY ON FACEBOOK SIDE
     <b-card
       class="card m-3"
     >
@@ -44,7 +43,6 @@
         :is-primary-action="exportDone"
       />
     </b-card>
-    -->
 
     <survey />
   </div>
