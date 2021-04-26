@@ -94,13 +94,13 @@
             {{ $t('catalogSummary.reportingLastSync') }}
             <span
               v-if="reporting.hasSynced"
-              class="big mt-2"
+              class="big mt-2 ml-md-4"
             >
               {{ reporting.syncDate || '--' }}
             </span>
             <span
               v-if="reporting.hasSynced"
-              class="text-muted"
+              class="text-muted ml-md-4"
             >
               {{ reporting.syncTime || '--' }}
             </span>
@@ -117,7 +117,7 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.reportingCatalogCount') }}
-            <span class="big mt-2">{{ reporting.catalog || '--' }}</span>
+            <span class="big mt-2 ml-md-4">{{ reporting.catalog || '--' }}</span>
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
@@ -130,7 +130,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big red-number mt-2">{{ reporting.errored || '--' }}</span>
+            <span class="big red-number mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -158,39 +158,57 @@
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
-            {{ $t('catalogSummary.preApprovalScanRefreshDate', ['']) }}
+            {{ $t( scanProcess.inProgress
+                ? 'catalogSummary.preApprovalScanRefreshInProgress'
+                : 'catalogSummary.preApprovalScanRefreshDate',
+              [''])
+            }}
             <br>
+            <span
+              class="spinner float-right mt-3 mr-3"
+              v-if="scanProcess.inProgress"
+            />
             <button
               class="btn btn-outline-secondary btn-sm float-right mt-3"
               title="Rescan"
               @click="rescan"
+              v-else
             >
               {{ $t('catalogSummary.preApprovalScanRescan') }}
             </button>
-            <span
-              class="big mt-2"
+            <b-alert
+              v-if="scanProcess.error"
+              variant="warning"
+              show
+              class="warning smaller col-8"
             >
-              {{ (new Date()).toLocaleDateString(
-                    undefined,
-                    {year: 'numeric', month: 'numeric', day: 'numeric'},
-                  )
+              {{ $t('catalogSummary.preApprovalScanError') }}
+              {{ scanProcess.error }}
+            </b-alert>
+            <span
+              class="big mt-2 ml-md-4"
+              v-if="scanProcess.inProgress"
+            >
+              {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
+                [scanProcess.numberOfProductChecked])
               }}
             </span>
             <span
-              class="text-muted"
+              class="big mt-2 ml-md-4"
             >
-              {{ (new Date()).toLocaleTimeString(
-                  undefined,
-                  {hour: '2-digit', minute: '2-digit'},
-                )
-              }}
+              {{ prevalidation.lastScanDate }}
+            </span>
+            <span
+              class="text-muted ml-md-4"
+            >
+              {{ prevalidation.lastScanTime }}
             </span>
           </b-col>
           <div class="w-100 d-block d-sm-none" />
           <b-col class="counter m-1 p-3">
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
-            <span class="big mt-2">
+            <span class="big mt-2 ml-md-4">
               <span class="green-number">
                 {{ prevalidation.syncable }}
               </span>
@@ -208,7 +226,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big mt-2">
+            <span class="big mt-2 ml-md-4">
               <span class="red-number">
                 {{ prevalidation.notSyncable }}
               </span>
@@ -337,6 +355,7 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
+import Spinner from '../../spinner/spinner.vue';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -344,6 +363,7 @@ export default defineComponent({
     BButton,
     BAlert,
     BLink,
+    Spinner,
   },
   props: {
     validation: {
@@ -368,6 +388,11 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookExportWholeCatalog || null,
     },
+    runPrevalidationScanRoute: {
+      type: String,
+      required: false,
+      default: () => global.psFacebookRunPrevalidationScanRoute || null,
+    },
     catalogId: {
       type: String,
       required: false,
@@ -381,7 +406,25 @@ export default defineComponent({
         : this.$t('catalogSummary.exportCatalogButton');
     },
     prevalidation() {
-      return this.validation ? this.validation.prevalidation : {syncable: 0, notSyncable: 0};
+      if (!this.prevalidationObject) {
+        return {syncable: '--', notSyncable: '--'};
+      }
+
+      const lastScanDate = this.prevalidationObject.lastScanDate
+        ? new Date(this.prevalidationObject.lastScanDate)
+        : null;
+
+      return {
+        ...this.prevalidationObject,
+        lastScanDate: lastScanDate?.toLocaleDateString(
+          undefined,
+          {year: 'numeric', month: 'numeric', day: 'numeric'},
+        ),
+        lastScanTime: lastScanDate?.toLocaleTimeString(
+          undefined,
+          {hour: '2-digit', minute: '2-digit'},
+        ),
+      };
     },
     reporting() {
       const data = this.validation ? this.validation.reporting : {
@@ -416,6 +459,13 @@ export default defineComponent({
       seeMoreState: true,
       resetLinkError: null,
       resetLinkSuccess: null,
+      scanProcess: {
+        inProgress: false,
+        numberOfProductChecked: 0,
+        page: 0,
+        error: null,
+      },
+      prevalidationObject: this.validation.prevalidation,
     };
   },
   methods: {
@@ -481,7 +531,19 @@ export default defineComponent({
       });
     },
     rescan() {
-      window.location.reload();
+      this.scanProcess = {
+        ...this.scanProcess,
+        inProgress: true,
+        numberOfProductChecked: 0,
+        page: 0,
+        error: null,
+      };
+      this.prevalidationObject = null;
+
+      this.fetchScanPage();
+      this.$segment.track('Scan of products triggered', {
+        module: 'ps_facebook',
+      });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
 
@@ -513,6 +575,46 @@ export default defineComponent({
         }, 5000);
       });
     },
+    fetchScanPage() {
+      return fetch(this.runPrevalidationScanRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+          page: this.scanProcess.page,
+        }),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((json) => {
+        if (!json.success) {
+          throw new Error(json.message || 'N/A');
+        }
+        this.scanProcess.inProgress = !json.complete;
+        this.scanProcess.numberOfProductChecked = json.progress;
+        if (this.scanProcess.inProgress) {
+          // Load next page
+          this.scanProcess.page += 1;
+          this.fetchScanPage();
+          return;
+        }
+        this.prevalidationObject = json.prevalidation;
+        this.$segment.track('Scan of products done', {
+          module: 'ps_facebook',
+          numberOfPages: this.scanProcess.page,
+        });
+      }).catch((error) => {
+        this.scanProcess.inProgress = false;
+        this.scanProcess.error = error;
+        console.error(error);
+      });
+    },
+  },
+  mounted() {
+    if (this.validation.prevalidation === null) {
+      this.rescan();
+    }
   },
 });
 </script>
@@ -636,7 +738,6 @@ export default defineComponent({
     & > i {
       float: left;
       margin-right: 0.6rem;
-      margin-bottom: 3.5rem;
       font-size: 1.85rem;
       color: #6C868E;
     }
@@ -676,5 +777,23 @@ export default defineComponent({
   }
   .view-button {
     font-weight: 700;
+  }
+  .spinner {
+    color: #fff;
+    background-color: inherit !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 4rem !important;
+    border-right-color: #25b9d7;
+    border-bottom-color: #25b9d7;
+    border-width: .1875rem;
+    border-style: solid;
+    font-size: 0;
+    outline: none;
+    display: inline-block;
+    border-left-color: #bbcdd2;
+    border-top-color: #bbcdd2;
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
   }
 </style>

@@ -40,3 +40,10 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
       - '@PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations'
+
+  PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler:
+    class: PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler
+    arguments:
+      - '@PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider'
+      - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
+      - '@=service("ps_facebook.shop").id'

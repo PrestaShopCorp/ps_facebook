@@ -652,6 +652,8 @@ export default defineComponent({
 
           this.$root.refreshExternalBusinessId(res.externalBusinessId);
           this.$root.identifySegment();
+        }).catch((error) => {
+          this.setErrorsFromFbCall(error);
         });
       }
 
