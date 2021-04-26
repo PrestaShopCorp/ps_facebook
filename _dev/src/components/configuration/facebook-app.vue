@@ -197,6 +197,9 @@ export default defineComponent({
       this.$segment.track('Click on pixel switch CTA', {
         module: 'ps_facebook',
       });
+      this.$segment.track(`Feature Pixel ${this.switchActivated ? 'enabled' : 'disabled'}`, {
+        module: 'ps_facebook',
+      });
     },
     onStats() {
       this.$segment.track('Click on view stat CTA', {
