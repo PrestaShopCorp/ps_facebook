@@ -24,6 +24,7 @@ class Config
 {
     const API_VERSION = 'v10.0';
 
+    const COMPLIANT_PS_ACCOUNTS_VERSION = '3.0.0';
     const REQUIRED_PS_ACCOUNTS_VERSION = '4.0.0';
     const REQUIRED_PS_EVENTBUS_VERSION = '1.3.3';
 

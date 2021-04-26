@@ -2,7 +2,7 @@ services:
   PrestaShop\PsAccountsInstaller\Installer\Installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
     arguments:
-      - '3'
+      - !php/const PrestaShop\Module\PrestashopFacebook\Config\Config::COMPLIANT_PS_ACCOUNTS_VERSION
 
   PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
