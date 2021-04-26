@@ -210,7 +210,7 @@ class Ps_facebook extends Module
      */
     public function install()
     {
-        if (!(new PrestaShop\PsAccountsInstaller\Installer\Installer('4'))->install()) {
+        if (!(new PrestaShop\PsAccountsInstaller\Installer\Installer(Config::REQUIRED_PS_ACCOUNTS_VERSION))->install()) {
             $this->_errors[] = $this->l('Unable to install ps accounts');
 
             return false;
