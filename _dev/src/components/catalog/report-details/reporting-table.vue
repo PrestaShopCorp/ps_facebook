@@ -30,7 +30,6 @@
           {{ $t('syncReport.error') }}
           <span><tooltip :text="$t('syncReport.errorTooltip')" /></span>
         </b-th>
-        <b-th>{{ $t('syncReport.action') }}</b-th>
       </b-tr>
     </b-thead>
     <b-tr v-if="rows.length === 0" class="empty-cell">
@@ -45,7 +44,16 @@
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
-        {{ name }}{{ id_product_attribute > 0 ? ` (#${id_product_attribute})` : '' }}
+        <b-link
+          :href="url.replace('/1?', `/${id_product}?`)"
+          target="_blank"
+          v-if="id_product"
+        >
+          {{ name }}{{ id_product_attribute > 0 ? ` (#${id_product_attribute})` : '' }}
+        </b-link>
+        <span v-else>
+          {{ name }}{{ id_product_attribute > 0 ? ` (#${id_product_attribute})` : '' }}
+        </span>
       </b-td>
       <b-td>
         <span v-if="!!messages.base" class="badge badge-secondary">{{ locale.split('-')[0] }}</span>
@@ -60,16 +68,6 @@
             {{ m }}
           </li>
         </ul>
-      </b-td>
-      <b-td>
-        <b-link
-          :href="url.replace('/1?', `/${id_product}?`)"
-          target="_blank"
-          v-if="id_product"
-          class="text-secondary"
-        >
-          <i class="material-icons">edit</i>
-        </b-link>
       </b-td>
     </b-tr>
     <b-tfoot v-if="loading">
@@ -119,10 +117,6 @@ export default defineComponent({
 <style lang="scss" scoped>
   tr > th {
     white-space: nowrap;
-  }
-
-  tr > th:last-of-type, tr > td:last-of-type {
-    text-align: right;
   }
 
   tr.empty-cell > td {

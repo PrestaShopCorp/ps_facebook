@@ -200,7 +200,6 @@ class PsFacebookTranslations
                 'barcode' => $this->module->l('Barcode/Brand', 'PsFacebookTranslations'),
                 'barcodeTooltip' => $this->module->l('The brand name, unique manufacturer part number (MPN) or Global Trade Item Number (GTIN) of the item. You only need to enter one of these, not all of them. For GTIN, enter the item\'s UPC, EAN, JAN or ISBN. Character limit: 100.', 'PsFacebookTranslations'),
                 'price' => $this->module->l('Price', 'PsFacebookTranslations'),
-                'action' => $this->module->l('Action', 'PsFacebookTranslations'),
                 'error' => $this->module->l('Error type', 'PsFacebookTranslations'),
                 'errorTooltip' => $this->module->l('This is the error given by Facebook when trying to export the product.', 'PsFacebookTranslations'),
                 'prevalidationText' => $this->module->l('Products with detected problems and which couldn\'t be synced are listed below:', 'PsFacebookTranslations'),

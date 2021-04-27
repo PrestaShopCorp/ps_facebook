@@ -573,6 +573,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(json_encode([
             'success' => true,
             'list' => $productsWithErrors,
+            'hasMoreProducts' => count($productsWithErrors) === Config::REPORTS_PER_PAGE,
             'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
         ]));
     }
