@@ -733,7 +733,6 @@ export default defineComponent({
   .counter {
     border-radius: 3px;
     border: 1px solid #DCE1E3;
-    height: 100%;
 
     & > i {
       float: left;
