@@ -71,7 +71,9 @@
           <meta property="product:weight:value" content="{$product.weight}">
           <meta property="product:weight:units" content="{$product.weight_unit}">
       {/if}
-      <meta property="product:brand" content="{$product_manufacturer->name}">
+      {if isset($product_manufacturer->id)}
+        <meta property="product:brand" content="{$product_manufacturer->name}">
+      {/if}
       <meta property="og:availability" content="{$product_availability}">
       <meta property="product:condition" content="{$product.embedded_attributes.condition}">
       <meta property="product:retailer_item_id" content="{$retailer_item_id}">
