@@ -29,9 +29,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
-    "@storybook/addon-essentials": "6.1.11",
-    "@storybook/addon-links": "6.1.11",
-    "@storybook/vue": "6.1.11",
+    "@storybook/addon-essentials": "6.2.9",
+    "@storybook/addon-knobs": "^6.2.9",
+    "@storybook/addon-links": "6.2.9",
+    "@storybook/vue": "6.2.9",
     "@types/debounce": "^1.2.0",
     "@types/showdown": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^2.33.0",

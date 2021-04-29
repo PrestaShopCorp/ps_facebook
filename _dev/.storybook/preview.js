@@ -18,6 +18,7 @@
  */
 import { configure, addDecorator } from '@storybook/vue';
 import Vue from 'vue';
+import { select } from '@storybook/addon-knobs'
 
 // import vue plugins
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
@@ -72,14 +73,33 @@ window.psFacebookGenerateOpenPopup = (component) => () => {
   }, 3000);
 };
 
+const messages = require('./translations.json');
+const locales = Object.keys(messages);
+
 // i18n and store
 Vue.use(VueI18n);
 addDecorator(() => ({
   template: '<story/>',
   i18n: new VueI18n({
     locale: 'en',
-    messages: require('./translations.json'),
+    locales: locales,
+    messages: messages,
   }),
+  props: {
+    storybookLocale: {
+      type: String,
+      default: select('I18n locale', locales, 'en'),
+    },
+  },
+  watch: {
+    // add a watcher to toggle language
+    storybookLocale: {
+      handler() {
+        this.$i18n.locale = this.storybookLocale;
+      },
+      immediate: true,
+    },
+  },
   store: require('../src/store'),
 }));
 

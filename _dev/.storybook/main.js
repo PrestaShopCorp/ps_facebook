@@ -26,6 +26,7 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    "@storybook/addon-knobs",
   ],
   webpackFinal: async (config) => {
     config.module.rules.push({
