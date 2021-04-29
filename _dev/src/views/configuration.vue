@@ -17,125 +17,177 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
-  <div
-    id="configuration"
-    class="ps-facebook-configuration-tab"
-    v-else
-  >
-    <introduction
-      v-if="!psAccountsOnboarded && showIntroduction"
-      @onHide="showIntroduction = false"
-      class="m-3"
-    />
-    <MultiStoreSelector
-      v-else-if="!contextPsAccounts.isShopContext && shops.length"
-      :shops="shops"
-      class="m-3"
-      @shop-selected="onShopSelected($event)"
-    />
-    <template v-else>
-      <messages
-        :show-onboard-succeeded="psFacebookJustOnboarded"
-        :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
-        :category-matching-started="categoryMatchingStarted"
-        :product-sync-started="productSyncStarted"
-        :ad-campaign-started="adCampaignStarted"
-        :alert-settings="alertSettings"
-        @onSyncCatalogClick="onSyncCatalogClick"
-        @onCategoryMatchingClick="onCategoryMatchingClick"
-        @onAdCampaignClick="onAdCampaignClick"
+  <div>
+    <spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
+    <div
+      id="configuration"
+      class="ps-facebook-configuration-tab"
+      v-else
+    >
+      <introduction
+        v-if="!psAccountsOnboarded && showIntroduction"
+        @onHide="showIntroduction = false"
         class="m-3"
       />
-      <PsAccountsUpdateNeeded
-        v-if="needsPsAccountsUpgrade"
-      />
-      <b-alert
-        v-if="psAccountShopInConflict"
-        variant="danger"
+      <MultiStoreSelector
+        v-else-if="!contextPsAccounts.isShopContext && shops.length"
+        :shops="shops"
         class="m-3"
-        show
-        v-html="md2html($t('configuration.messages.shopInConflictError'))"
+        @shop-selected="onShopSelected($event)"
       />
-      <ps-accounts
-        v-else
-        :context="contextPsAccounts"
-        class="m-3"
-      />
+      <template v-else>
+        <messages
+          :show-onboard-succeeded="psFacebookJustOnboarded"
+          :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
+          :category-matching-started="categoryMatchingStarted"
+          :product-sync-started="productSyncStarted"
+          :ad-campaign-started="adCampaignStarted"
+          :alert-settings="alertSettings"
+          @onSyncCatalogClick="onSyncCatalogClick"
+          @onCategoryMatchingClick="onCategoryMatchingClick"
+          @onAdCampaignClick="onAdCampaignClick"
+          class="m-3"
+        />
+        <PsAccountsUpdateNeeded
+          v-if="needsPsAccountsUpgrade"
+        />
+        <b-alert
+          v-if="psAccountShopInConflict"
+          variant="danger"
+          class="m-3"
+          show
+          v-html="md2html($t('configuration.messages.shopInConflictError'))"
+        />
+        <ps-accounts
+          v-else
+          :context="contextPsAccounts"
+          class="m-3"
+        />
 
-      <facebook-not-connected
-        v-if="!facebookConnected"
-        @onFbeOnboardClick="onFbeOnboardClick"
-        class="m-3"
-        :active="psAccountsOnboarded"
-        :can-connect="!!dynamicExternalBusinessId"
-      />
-      <facebook-connected
-        v-else
-        :ps-facebook-app-id="psFacebookAppId"
-        :external-business-id="dynamicExternalBusinessId"
-        :context-ps-facebook="dynamicContextPsFacebook"
-        @onEditClick="onEditClick"
-        @onPixelActivation="onPixelActivation"
-        @onUninstallClick="onUninstallClick"
-        class="m-3"
-      />
-      <survey v-if="facebookConnected" />
-      <div
-        v-if="showPopupGlass"
-        class="glass"
-        @click="glassClicked"
-      >
-        <div class="refocus">
-          <img
-            class="m-3"
-            src="@/assets/facebook_white_logo.svg"
-            width="56"
-            height="56"
-            alt="PS Facebook logo"
+        <facebook-not-connected
+          v-if="!facebookConnected"
+          @onFbeOnboardClick="onFbeOnboardClick"
+          class="m-3"
+          :active="psAccountsOnboarded"
+          :can-connect="!!dynamicExternalBusinessId"
+        />
+        <facebook-connected
+          v-else
+          :ps-facebook-app-id="psFacebookAppId"
+          :external-business-id="dynamicExternalBusinessId"
+          :context-ps-facebook="dynamicContextPsFacebook"
+          @onEditClick="onEditClick"
+          @onPixelActivation="onPixelActivation"
+          @onUninstallClick="onUninstallClick"
+          class="m-3"
+        />
+        <survey v-if="facebookConnected" />
+        <div
+          v-if="showPopupGlass"
+          class="glass"
+          @click="glassClicked"
+        >
+          <div class="refocus">
+            <img
+              class="m-3"
+              src="@/assets/facebook_white_logo.svg"
+              width="56"
+              height="56"
+              alt="PS Facebook logo"
+            >
+            <p>{{ $t('configuration.glass.text') }}</p>
+            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+          </div>
+          <div
+            class="closeCross p-1 m-4"
+            @click="closePopup"
           >
-          <p>{{ $t('configuration.glass.text') }}</p>
-          <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+            <i class="material-icons">close</i>
+          </div>
         </div>
         <div
-          class="closeCross p-1 m-4"
-          @click="closePopup"
+          v-if="showTokensGlass"
+          class="glass"
         >
-          <i class="material-icons">close</i>
-        </div>
-      </div>
-      <div
-        v-if="showTokensGlass"
-        class="glass"
-      >
-        <div v-if="exchangeTokensErrored" class="refocus">
-          <i class="material-icons fixed-size-large mb-2">warning</i>
-          <p>{{ $t('configuration.facebook.exchangeTokens.errored') }}</p>
-          <b-button
-            variant="primary"
-            class="mt-2 error-button"
-            @click="onFbeTokensExchangeFailedConfirm"
+          <div
+            v-if="exchangeTokensErrored"
+            class="refocus"
           >
-            {{ $t('configuration.facebook.exchangeTokens.understood') }}
-          </b-button>
+            <i class="material-icons fixed-size-large mb-2">warning</i>
+            <p>{{ $t('configuration.facebook.exchangeTokens.errored') }}</p>
+            <b-button
+              variant="primary"
+              class="mt-2 error-button"
+              @click="onFbeTokensExchangeFailedConfirm"
+            >
+              {{ $t('configuration.facebook.exchangeTokens.understood') }}
+            </b-button>
+          </div>
+          <div
+            v-else
+            class="refocus"
+          >
+            <h2>
+              {{ $t('configuration.facebook.exchangeTokens.almostThere') }}
+            </h2>
+            <p>
+              {{ $t('configuration.facebook.exchangeTokens.acknowledging') }}
+              <br>
+              {{ $t('configuration.facebook.exchangeTokens.takesTime') }}
+            </p>
+            <span class="exchangeTokensLoader"><spinner /></span>
+            <p v-if="exchangeTokensTryAgain">
+              <i class="material-icons float-left fixed-size-big">warning</i>
+              {{ $t('configuration.facebook.exchangeTokens.tryAgain') }}
+            </p>
+          </div>
         </div>
-        <div v-else class="refocus">
-          <h2>
-            {{ $t('configuration.facebook.exchangeTokens.almostThere') }}
-          </h2>
-          <p>
-            {{ $t('configuration.facebook.exchangeTokens.acknowledging') }}
-            <br/>
-            {{ $t('configuration.facebook.exchangeTokens.takesTime') }}
-          </p>
-          <span class="exchangeTokensLoader"><spinner /></span>
-          <p v-if="exchangeTokensTryAgain">
-            <i class="material-icons float-left fixed-size-big">warning</i>
-            {{ $t('configuration.facebook.exchangeTokens.tryAgain') }}
-          </p>
+      </template>
+    </div>
+
+    <!-- Confirmation modal for FBE uninstallation -->
+    <div
+      id="ps_facebook_modal_unlink"
+      class="modal"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div class="modal-content tw-rounded-none">
+          <div class="modal-header">
+            <slot name="header">
+              <div class="tw-flex tw-items-center">
+                <h5 class="modal-title tw-pl-3">
+                  {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
+                </h5>
+              </div>
+            </slot>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ $t('configuration.facebook.connected.unlinkModalText') }}
+          </div>
+          <div class="modal-footer">
+            <b-button
+              variant="primary"
+              target="_blank"
+              data-dismiss="modal"
+              @click="onUninstallClick"
+            >
+              {{ $t('integrate.buttons.modalConfirm') }}
+            </b-button>
+          </div>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -437,12 +489,15 @@ export default defineComponent({
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
           this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
           this.createExternalBusinessId();
-          this.facebookConnected = false;
           this.psFacebookJustOnboarded = false;
         }).catch((error) => {
           console.error(error);
           this.setErrorsFromFbCall(error);
         });
+
+      this.$segment.track('Click on unlink', {
+        module: 'ps_facebook',
+      });
     },
     onPixelActivation() {
       const actualState = this.dynamicContextPsFacebook.pixel.isActive;

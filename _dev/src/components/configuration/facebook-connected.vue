@@ -59,7 +59,7 @@
     >
       <img
         class="mr-3"
-        :src="facebookLogo"
+        src="@/assets/facebook_logo.svg"
         alt="colors"
       >
 
@@ -104,7 +104,7 @@
     >
       <img
         class="mr-3 mb-3"
-        :src="facebookLogo"
+        src="@/assets/facebook_logo.svg"
         alt="colors"
       >
 
@@ -138,50 +138,6 @@
         </span>
       </div>
     </b-card-body>
-
-    <!-- Confirmation modal for FBE uninstallation -->
-    <div
-      id="ps_facebook_modal_unlink"
-      class="modal"
-    >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content tw-rounded-none">
-          <div class="modal-header">
-            <slot name="header">
-              <div class="tw-flex tw-items-center">
-                <h5 class="modal-title tw-pl-3">
-                  {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
-                </h5>
-              </div>
-            </slot>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ $t('configuration.facebook.connected.unlinkModalText') }}
-          </div>
-          <div class="modal-footer">
-            <b-button
-              variant="primary"
-              target="_blank"
-              data-dismiss="modal"
-              @click="uninstall"
-            >
-              {{ $t('integrate.buttons.modalConfirm') }}
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <b-card-body
       v-if="!folded"
@@ -283,7 +239,6 @@ import {
   BDropdownItem,
 } from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
-import facebookLogo from '../../assets/facebook_logo.svg';
 
 export default defineComponent({
   name: 'FacebookConnected',
@@ -324,7 +279,6 @@ export default defineComponent({
   },
   data() {
     return {
-      facebookLogo,
       folded: !this.startExpanded,
     };
   },
@@ -364,12 +318,6 @@ export default defineComponent({
     openManageFbe() {
       window.open(this.fbeUrl, '_blank');
       this.$segment.track('Click on Open advanced Settings', {
-        module: 'ps_facebook',
-      });
-    },
-    uninstall() {
-      this.$emit('onUninstallClick');
-      this.$segment.track('Click on unlink', {
         module: 'ps_facebook',
       });
     },
