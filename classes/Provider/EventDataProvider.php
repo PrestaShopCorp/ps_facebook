@@ -218,7 +218,7 @@ class EventDataProvider
             'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $this->locale,
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::CATEGORY_TYPE,
-            'content_ids' => array_column($prods, 'id_product'),
+            'content_ids' => $prods ? array_column($prods, 'id_product') : null,
         ];
 
         return [
