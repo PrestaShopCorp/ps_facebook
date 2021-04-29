@@ -89,7 +89,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->ajaxDie(
             json_encode(
                 [
-                    'success' => $accessTokenProvider->getSystemAccessToken(),
+                    'success' => (bool) $accessTokenProvider->getSystemAccessToken(),
                 ]
             )
         );
