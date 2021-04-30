@@ -388,6 +388,7 @@ class EventDataProvider
             'order_id' => $order->id,
             'currency' => $this->getCurrency(),
             'content_ids' => $productList,
+            'content_type' => self::PRODUCT_TYPE,
             'value' => (float) ($order->total_paid_tax_excl),
         ];
 
