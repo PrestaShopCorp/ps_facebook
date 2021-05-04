@@ -8,6 +8,7 @@ imports:
   - { resource: common/dispatcher.yml }
   - { resource: common/factory.yml }
   - { resource: common/handler.yml }
+  - { resource: common/presenter.yml }
   - { resource: common/provider.yml }
   - { resource: common/repository.yml }
   - { resource: common/translations.yml }

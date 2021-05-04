@@ -1,0 +1,5 @@
+services:
+  PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter:
+    class: 'PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter'
+    arguments:
+      - '@ps_facebook.context'

@@ -33,13 +33,22 @@
         "stepCategoryMatching": "Kategorien zuordnen",
         "stepCategoryMatchingOptional": "(optional, aber dringend empfohlen)",
         "stepProductSync": "Exportieren Sie Ihren Produktkatalog",
-        "stepAdCampaign": "Verkehrsabh\u00e4ngige und/oder dynamische Anzeigen erstellen",
+        "stepAdCampaign": "Verkehrsabh\u00e4ngige und\/oder dynamische Anzeigen erstellen",
         "reloadButton": "Neu laden",
         "shopInConflictError": "Sie sind bereits \u00fcber einen anderen Shop mit Facebook verbunden. Allerdings ist die PrestaShop Facebook-Konfiguration derzeit nur bei einem Shop m\u00f6glich. Sie m\u00fcssen sich von Ihrem ersten Shop abmelden, um eine Verbindung herzustellen.",
         "unknownOnboardingError": "W\u00e4hrend des Onboarding-Prozesses ist ein unbekannter Fehler aufgetreten. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
-        "psAccountUpgradeNeededWarning": "Die Version des PrestaShop-Konto-Moduls, das auf diesem Shop l\u00e4uft (v{psAccountsVersion}), ist \u00e4lter als die mindestens erforderliche v{requiredPsAccountsVersion}. Sie k\u00f6nnen PrestaShop Facebook verwenden, aber einige Funktionen (z. B. die Produktsynchronisierung) sind nicht verf\u00fcgbar, bis Sie Ihr PrestaShop-Konto aktualisieren.",
-        "psAccountUpgradeButton": "PrestaShop-Konto aktualisieren",
-        "psAccountUpgradeDone": "PrestaShop-Konto wurde erfolgreich aktualisiert"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "PrestaShop-Konto aktualisieren",
+        "AccountsUpgradeDone": "PrestaShop-Konto wurde erfolgreich aktualisiert",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Ihre Facebook-Einstellungen",
@@ -48,7 +57,7 @@
           "intro": "Integrieren Sie Ihren Shop in Facebook.",
           "connectButton": "Mit Facebook verbinden",
           "description": "Genie\u00dfen Sie mit PS Facebook ein reibungsloses, codierungsloses Onboarding- und Management-Erlebnis f\u00fcr Facebook-Gesch\u00e4ftsprodukte.",
-          "details": "- Unternehmen erstellen/ausw\u00e4hlen\n- Seite erstellen/ausw\u00e4hlen\n- Werbekonto erstellen/ausw\u00e4hlen\n- Pixel erstellen/installieren\n- Produktkatalog zum Synchronisieren erstellen/ausw\u00e4hlen\n- Facebook-Shop & Instagram Shopping erstellen\n- Facebook-Seite mit Aktionsaufruf anpassen"
+          "details": "- Unternehmen erstellen\/ausw\u00e4hlen\n- Seite erstellen\/ausw\u00e4hlen\n- Werbekonto erstellen\/ausw\u00e4hlen\n- Pixel erstellen\/installieren\n- Produktkatalog zum Synchronisieren erstellen\/ausw\u00e4hlen\n- Facebook-Shop & Instagram Shopping erstellen\n- Facebook-Seite mit Aktionsaufruf anpassen"
         },
         "connected": {
           "description": "Sie autorisieren dieses Facebook-Konto, sich mit Ihrem Gesch\u00e4ft zu verbinden:",
@@ -98,7 +107,7 @@
       "productCatalogExport": "Ihr Katalog in Facebook Business",
       "exportCatalogButton": "Katalog teilen",
       "catalogExportIntro": "Bevor K\u00e4ufer Artikel bei Ihnen kaufen k\u00f6nnen, m\u00fcssen Sie Ihre Produktinformationen in einen Facebook-Produktkatalog hochladen.",
-      "catalogExportInfo": "Bitte beachten Sie Folgendes: \n\n1. Der Export des Katalogs erfolgt einmal am Tag (w\u00e4hrend der Nacht)\n2. Die Synchronisierung Ihrer PrestaShop-Produktinformationen mit Facebook kann bis zu 24 Stunden dauern.\n3. Nur aktive Produkte werden an Facebook exportiert. \n4. Es werden nur Produkte mit Pflichtfeldern synchronisiert: eine Kurzbeschreibung, Menge, Preis, Produktbild, Hersteller oder ean/upc/isbn.\n5. Der Export von Produktlokalisierungen (f\u00fcr \u00dcbersetzungen) befindet sich noch im Beta-Stadium und k\u00f6nnte unerwartete Fehler ausl\u00f6sen.\n6. Nur Produkte, die \u00c4nderungen erfahren haben, werden in Ihrem Katalog aktualisiert. ",
+      "catalogExportInfo": "Bitte beachten Sie Folgendes: \n\n1. Der Export des Katalogs erfolgt einmal am Tag (w\u00e4hrend der Nacht)\n2. Die Synchronisierung Ihrer PrestaShop-Produktinformationen mit Facebook kann bis zu 24 Stunden dauern.\n3. Nur aktive Produkte werden an Facebook exportiert. \n4. Es werden nur Produkte mit Pflichtfeldern synchronisiert: eine Kurzbeschreibung, Menge, Preis, Produktbild, Hersteller oder ean\/upc\/isbn.\n5. Der Export von Produktlokalisierungen (f\u00fcr \u00dcbersetzungen) befindet sich noch im Beta-Stadium und k\u00f6nnte unerwartete Fehler ausl\u00f6sen.\n6. Nur Produkte, die \u00c4nderungen erfahren haben, werden in Ihrem Katalog aktualisiert. ",
       "resetExportLink": "Wenn Sie Ihren gesamten Katalog reexportieren m\u00f6chten, klicken Sie hier",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Beim Versuch, den Export zur\u00fcckzusetzen, ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es sp\u00e4ter noch einmal.",
@@ -146,7 +155,7 @@
       "imageTooltip": "Hauptbild deines Artikels. Die Bilder m\u00fcssen mindestens 500 x 500 Pixel gro\u00df sein. Die Dateigr\u00f6\u00dfe darf 8 MB nicht \u00fcberschreiten. Zul\u00e4ssige Dateiformate f\u00fcr Bilder sind: JPG, GIF oder PNG. Mehr dazu: Spezifikationen zu Produktbildern",
       "description": "Beschreibung",
       "descriptionTooltip": "Eine kurze, aussagekr\u00e4ftige Beschreibung des Artikels. Nenne spezifische und einzigartige Features deiner Artikel, zum Beispiel Farbe oder Material des Produkts. Verwende regul\u00e4ren Text (kein HTML), verwende keine Schreibweise nur in Gro\u00dfbuchstaben und f\u00fcge keine Links ein. Mehr dazu: Spezifikationen zu Produktbeschreibungen. Max. 5.000 Zeichen.",
-      "barcode": "Barcode / Marke",
+      "barcode": "Barcode \/ Marke",
       "barcodeTooltip": "Der Markenname, eine individuelle Hersteller-Teilenummer (MPN) oder eine Global Trade Item Number (GTIN) des Artikels. Du musst nur eine dieser drei Angaben machen. Wenn du dich f\u00fcr GTIN entscheidest, gib die UPC, EAN, JAN oder ISBN des Artikels ein. Max. 100 Zeichen",
       "price": "PREIS",
       "error": "Error type",
@@ -265,7 +274,10 @@
         "contactUs": "Kontaktieren Sie uns"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "Keine FAQ verf\u00fcgbar." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "Keine FAQ verf\u00fcgbar."
+    },
     "productStatuses": {
       "Approved": "Freigegeben",
       "Pending": "Warten",
@@ -306,13 +318,22 @@
         "stepCategoryMatching": "Map categories",
         "stepCategoryMatchingOptional": "(optional but strongly recommended)",
         "stepProductSync": "Export your product catalog",
-        "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
+        "stepAdCampaign": "Create Traffic and\/or Dynamic Ads",
         "reloadButton": "Reload",
         "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Facebook can only be configured on one shop. You must log out of your first shop to connect this one.",
         "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-        "psAccountUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{psAccountsVersion}) is older than the minimum required v{requiredPsAccountsVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
-        "psAccountUpgradeButton": "Upgrade PrestaShop Accounts",
-        "psAccountUpgradeDone": "PrestaShop Account has been successfully upgraded."
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Upgrade PrestaShop Accounts",
+        "AccountsUpgradeDone": "PrestaShop Account has been successfully upgraded.",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Your Facebook settings",
@@ -321,7 +342,7 @@
           "intro": "Integrate your shop with Facebook.",
           "connectButton": "Connect to Facebook",
           "description": "With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
-          "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
+          "details": "- Create\/Select business \n- Create\/Select page \n- Create\/Select ad account \n- Create\/Select install pixel \n - Create\/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
         },
         "connected": {
           "description": "You authorize this Facebook account to connect to your store:",
@@ -371,7 +392,7 @@
       "productCatalogExport": "Your catalog in Facebook Business",
       "exportCatalogButton": "Share catalog",
       "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
-      "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all \u00ab active \u00bb products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",
+      "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all \u00ab active \u00bb products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean\/upc\/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",
       "resetExportLink": "If you want to re-export your entire catalog click here.",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Unknown error occurred trying to reset export. Please try again later.",
@@ -419,7 +440,7 @@
       "imageTooltip": "The main image of your item. Images must be in JPG, GIF or PNG format, at least 500 x 500 pixels and up to 8 MB. See product image specifications.",
       "description": "Description",
       "descriptionTooltip": "A short, relevant description of the item. Include specific and unique product features like material or color. Use plain text (not HTML) and don't enter text in all capital letters or include any links. See product description specifications. Character limit: 5,000.",
-      "barcode": "Barcode/Brand",
+      "barcode": "Barcode\/Brand",
       "barcodeTooltip": "The brand name, unique manufacturer part number (MPN) or Global Trade Item Number (GTIN) of the item. You only need to enter one of these, not all of them. For GTIN, enter the item's UPC, EAN, JAN or ISBN. Character limit: 100.",
       "price": "Price",
       "error": "Error type",
@@ -512,7 +533,9 @@
         "disableFeatureModalText": "You are about to disable this feature. This may limit some functionality.",
         "noFeatures": "Features could not be retrieved from Facebook. This may be caused by the token expiration and can be fixed by restarting the onboarding."
       },
-      "error": { "failedToUpdateFeature": "Failed to update facebook feature." }
+      "error": {
+        "failedToUpdateFeature": "Failed to update facebook feature."
+      }
     },
     "survey": {
       "title": "Give us your feedback!",
@@ -536,7 +559,10 @@
         "contactUs": "Contact us"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "No FAQ available." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "No FAQ available."
+    },
     "productStatuses": {
       "Approved": "Approved",
       "Pending": "Pending",
@@ -558,7 +584,7 @@
         "subTitle": "\u00a1Construye tu perfil en la comunidad de Facebook de forma f\u00e1cil y r\u00e1pida!",
         "proPoints": "- No se requiere tarjeta de cr\u00e9dito \n- F\u00e1cil de configurar\n- Cancela cuando quieras",
         "resume": "\u00a1Da tus primeros pasos en PrestaShop Facebook!",
-        "proPoint1Title": "Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;/span&amp;amp;gt;",
+        "proPoint1Title": "Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;\/span&amp;amp;gt;",
         "proPoint1Description": "Controla la configuraci\u00f3n de tus anuncios y las herramientas de negocio desde un solo lugar.",
         "proPoint2Title": "Comprende tu tr\u00e1fico",
         "proPoint2Description": "Utiliza los datos de Facebook Pixel para entender las acciones que la gente realiza en tu sitio web.",
@@ -577,13 +603,22 @@
         "stepCategoryMatching": "Categor\u00edas de mapas",
         "stepCategoryMatchingOptional": "(opcional, pero muy recomendado)",
         "stepProductSync": "Exporta tu cat\u00e1logo de productos",
-        "stepAdCampaign": "Genera tr\u00e1fico y/o crea anuncios din\u00e1micos",
+        "stepAdCampaign": "Genera tr\u00e1fico y\/o crea anuncios din\u00e1micos",
         "reloadButton": "Refrescar",
         "shopInConflictError": "Ya est\u00e1s conectado a Facebook desde otra tienda. Sin embargo, la configuraci\u00f3n de Facebook de PrestaShop s\u00f3lo es posible actualmente en una tienda. Debes salir de tu primera tienda para conectarte.",
         "unknownOnboardingError": "Se ha producido un error desconocido durante el proceso de incorporaci\u00f3n. Refresca la p\u00e1gina y vuelve a intentarlo.",
-        "psAccountUpgradeNeededWarning": "La versi\u00f3n del m\u00f3dulo PrestaShop Account que se ejecuta en esta tienda (v{psAccountsVersion}) es anterior a la v{requiredPsAccountsVersion} m\u00ednima requerida. Puede utilizar PrestaShop Facebook pero algunas funciones (por ejemplo, la sincronizaci\u00f3n de productos) no estar\u00e1n disponibles hasta que actualice PrestaShop Account.",
-        "psAccountUpgradeButton": "Actualizar la cuenta de PrestaShop",
-        "psAccountUpgradeDone": "La cuenta de PrestaShop ha sido actualizada con \u00e9xito"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Actualizar la cuenta de PrestaShop",
+        "AccountsUpgradeDone": "La cuenta de PrestaShop ha sido actualizada con \u00e9xito",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Tu configuraci\u00f3n de Facebook",
@@ -592,7 +627,7 @@
           "intro": "Integra tu tienda con Facebook.",
           "connectButton": "Conectar con Facebook",
           "description": "Con PS Facebook disfrutar\u00e1s de una experiencia de incorporaci\u00f3n y gesti\u00f3n sin fricciones y sin c\u00f3digo para los productos empresariales de Facebook.",
-          "details": "- Crear/Seleccionar negocio\n- Crear/Seleccionar p\u00e1gina\n- Crear/Seleccionar cuenta publicitaria\n- Crear/Seleccionar instalar pixel\n- Crear/Seleccionar sincronizar cat\u00e1logo de productos\n- Crear tienda de Facebook Shop e Instagram Shopping\n- Personalizar tu p\u00e1gina de Facebook con llamada a la acci\u00f3n"
+          "details": "- Crear\/Seleccionar negocio\n- Crear\/Seleccionar p\u00e1gina\n- Crear\/Seleccionar cuenta publicitaria\n- Crear\/Seleccionar instalar pixel\n- Crear\/Seleccionar sincronizar cat\u00e1logo de productos\n- Crear tienda de Facebook Shop e Instagram Shopping\n- Personalizar tu p\u00e1gina de Facebook con llamada a la acci\u00f3n"
         },
         "connected": {
           "description": "Autorizas a esta cuenta de Facebook a conectarse a tu tienda:",
@@ -642,7 +677,7 @@
       "productCatalogExport": "Tu cat\u00e1logo en Facebook para empresas",
       "exportCatalogButton": "Compartir el cat\u00e1logo",
       "catalogExportIntro": "Antes de que los compradores puedan comprarte art\u00edculos, tendr\u00e1s que subir la informaci\u00f3n de tus productos a un cat\u00e1logo de productos de Facebook.",
-      "catalogExportInfo": "Tenga en cuenta lo siguiente: \n\n1. La exportaci\u00f3n del cat\u00e1logo se realiza una vez al d\u00eda (durante la noche)\n2. Sincronizar la informaci\u00f3n de tus productos de PrestaShop con Facebook puede llevar hasta 24 horas.\n3. S\u00f3lo se exportan a Facebook los productos activos. \n4. S\u00f3lo se sincronizar\u00e1n los productos con campos obligatorios: una breve descripci\u00f3n, cantidad, precio, imagen del producto, fabricante o ean/upc/isbn.\n5. La exportaci\u00f3n de las localizaciones de los productos (para las traducciones) est\u00e1 todav\u00eda en fase beta y podr\u00eda provocar errores inesperados.\n6. S\u00f3lo se actualizar\u00e1n en su cat\u00e1logo los productos que hayan sufrido cambios. ",
+      "catalogExportInfo": "Tenga en cuenta lo siguiente: \n\n1. La exportaci\u00f3n del cat\u00e1logo se realiza una vez al d\u00eda (durante la noche)\n2. Sincronizar la informaci\u00f3n de tus productos de PrestaShop con Facebook puede llevar hasta 24 horas.\n3. S\u00f3lo se exportan a Facebook los productos activos. \n4. S\u00f3lo se sincronizar\u00e1n los productos con campos obligatorios: una breve descripci\u00f3n, cantidad, precio, imagen del producto, fabricante o ean\/upc\/isbn.\n5. La exportaci\u00f3n de las localizaciones de los productos (para las traducciones) est\u00e1 todav\u00eda en fase beta y podr\u00eda provocar errores inesperados.\n6. S\u00f3lo se actualizar\u00e1n en su cat\u00e1logo los productos que hayan sufrido cambios. ",
       "resetExportLink": "Si desea reexportar todo su cat\u00e1logo, haga clic aqu\u00ed",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Se ha producido un error desconocido al intentar restablecer la exportaci\u00f3n. Por favor, int\u00e9ntelo m\u00e1s tarde.",
@@ -690,7 +725,7 @@
       "imageTooltip": "La imagen principal del art\u00edculo. Las im\u00e1genes deben estar en formato JPG, GIF o PNG, tener unas dimensiones de al menos 500 \u00d7 500 p\u00edxeles y ocupar un m\u00e1ximo de 8 MB. Consulta las especificaciones de las im\u00e1genes de los productos.",
       "description": "Descripci\u00f3n",
       "descriptionTooltip": "Descripci\u00f3n breve y relevante del art\u00edculo. Incluye caracter\u00edsticas espec\u00edficas y \u00fanicas del producto, como el material o el color. Utiliza texto sin formato (no HTML) y no escribas texto que est\u00e9 todo en may\u00fasculas ni que incluya enlaces. Consulta las especificaciones de las descripciones de los productos. L\u00edmite de caracteres: 5000.",
-      "barcode": "C\u00f3digo de barras / Marca",
+      "barcode": "C\u00f3digo de barras \/ Marca",
       "barcodeTooltip": "Nombre de la marca, n\u00famero de pieza de fabricante (MPN) \u00fanico o n\u00famero mundial de art\u00edculo comercial (GTIN) del art\u00edculo. Solo debes introducir uno de estos datos, no todos. Para el GTIN, introduce el UPC, EAN, JAN o ISBN del art\u00edculo. L\u00edmite de caracteres: 100.",
       "price": "Precio",
       "error": "Error type",
@@ -796,7 +831,7 @@
       "title": "Ayuda para PrestaShop Metrics",
       "allowsYouTo": {
         "title": "Este m\u00f3dulo te permite:",
-        "business": "Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;/span&amp;amp;gt;",
+        "business": "Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;\/span&amp;amp;gt;",
         "account": "Administra tu cuenta publicitaria",
         "traffic": "Comprende tu tr\u00e1fico",
         "inventory": "Crea y gestiona el inventario",
@@ -857,9 +892,18 @@
         "reloadButton": "Recharger",
         "shopInConflictError": "Vous \u00eates d\u00e9j\u00e0 connect\u00e9 \u00e0 Facebook depuis une autre boutique. Pour l'instant, PrestaShop Facebook ne peut \u00eatre configur\u00e9 que sur une seule boutique. Vous devez vous d\u00e9connecter de votre premi\u00e8re boutique pour connecter celle-ci.",
         "unknownOnboardingError": "Une erreur inconnue s'est produite lors de l'onboarding. Veuillez recharger et r\u00e9essayer.",
-        "psAccountUpgradeNeededWarning": "La version du module PrestaShop Account fonctionnant sur cette boutique (v{psAccountsVersion}) est plus ancienne que le minimum requis v{requiredPsAccountsVersion}.\n\nVous pouvez utiliser PrestaShop Facebook mais certaines fonctionnalit\u00e9s (par exemple la synchronisation des produits) ne seront pas disponibles tant que vous n'aurez pas mis \u00e0 jour PrestaShop Account.",
-        "psAccountUpgradeButton": "Mettre \u00e0 jour PrestaShop Account",
-        "psAccountUpgradeDone": "PrestaShop Account a bien \u00e9t\u00e9 mis \u00e0 jour"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Mettre \u00e0 jour PrestaShop Account",
+        "AccountsUpgradeDone": "PrestaShop Account a bien \u00e9t\u00e9 mis \u00e0 jour",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Vos param\u00e8tres Facebook",
@@ -868,7 +912,7 @@
           "intro": "Int\u00e9grez votre boutique \u00e0 Facebook.",
           "connectButton": "Se connecter \u00e0 Facebook",
           "description": "Avec PrestaShop Facebook, profitez d'une exp\u00e9rience d'int\u00e9gration et de gestion sans friction et sans code des fonctionnalit\u00e9s business de Facebook",
-          "details": "- Cr\u00e9er/s\u00e9lectionner une entreprise \n- Cr\u00e9er/S\u00e9lectionner une page \n- Cr\u00e9er/S\u00e9lectionner un compte de publicit\u00e9 \n- Cr\u00e9er/S\u00e9lectionner un pixel d'installation \n- Cr\u00e9er/S\u00e9lectionner un catalogue de produits synchronis\u00e9s \n- Cr\u00e9er un magasin sur Facebook et des achats sur Instagram \n- Ajouter le plug-in Messenger dans votre boutique"
+          "details": "- Cr\u00e9er\/s\u00e9lectionner une entreprise \n- Cr\u00e9er\/S\u00e9lectionner une page \n- Cr\u00e9er\/S\u00e9lectionner un compte de publicit\u00e9 \n- Cr\u00e9er\/S\u00e9lectionner un pixel d'installation \n- Cr\u00e9er\/S\u00e9lectionner un catalogue de produits synchronis\u00e9s \n- Cr\u00e9er un magasin sur Facebook et des achats sur Instagram \n- Ajouter le plug-in Messenger dans votre boutique"
         },
         "connected": {
           "description": "Vous autorisez le compte Facebook suivant \u00e0 se connecter \u00e0 votre boutique :",
@@ -918,7 +962,7 @@
       "productCatalogExport": "Votre catalogue dans Facebook Business",
       "exportCatalogButton": "Partager mon catalogue",
       "catalogExportIntro": "Avant que des clients puissent vous acheter des articles, vous devez importer vos produits dans le catalogue de produits Facebook.",
-      "catalogExportInfo": "Veuillez prendre connaissance des \u00e9l\u00e9ments suivants : \n\n1. L'export du catalogue a lieu une fois par jour (durant la nuit)\n2. La synchronisation de vos informations produits PrestaShop avec Facebook peut prendre jusqu'\u00e0 24 heures.\n3. Uniquement les produits \"actifs\" sont export\u00e9s vers Facebook. \n4. Seuls les produits dont les champs obligatoires sont remplis seront synchronis\u00e9s : uen description courte, la quantit\u00e9, le prix, l'image produit, un fabricant ou un ean/upc/isbn.\n5. L'exportation des localisations de produits (pour les traductions) est encore en b\u00eata et pourrait d\u00e9clencher des erreurs inattendues.\n6. Uniquement les produits ayant subis des modifications seront mis \u00e0 jour sur votre catalogue.",
+      "catalogExportInfo": "Veuillez prendre connaissance des \u00e9l\u00e9ments suivants : \n\n1. L'export du catalogue a lieu une fois par jour (durant la nuit)\n2. La synchronisation de vos informations produits PrestaShop avec Facebook peut prendre jusqu'\u00e0 24 heures.\n3. Uniquement les produits \"actifs\" sont export\u00e9s vers Facebook. \n4. Seuls les produits dont les champs obligatoires sont remplis seront synchronis\u00e9s : uen description courte, la quantit\u00e9, le prix, l'image produit, un fabricant ou un ean\/upc\/isbn.\n5. L'exportation des localisations de produits (pour les traductions) est encore en b\u00eata et pourrait d\u00e9clencher des erreurs inattendues.\n6. Uniquement les produits ayant subis des modifications seront mis \u00e0 jour sur votre catalogue.",
       "resetExportLink": "Si vous souhaitez r\u00e9-exporter l'ensemble de votre catalogue cliquez ici.",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Une erreur inconnue s'est produite en essayant de r\u00e9initialiser l'export. Veuillez r\u00e9essayer plus tard.",
@@ -966,7 +1010,7 @@
       "imageTooltip": "Image principale de votre article. Les images doivent \u00eatre au format JPG, GIF ou PNG, contenir au moins 500 x 500 pixels et ne pas d\u00e9passer 8 Mo. Reportez-vous aux sp\u00e9cifications relatives aux images de produits.",
       "description": "Description",
       "descriptionTooltip": "Description courte et pertinente de l\u2019article. Pr\u00e9cisez certaines caract\u00e9ristiques sp\u00e9cifiques et uniques du produit, telles que la mati\u00e8re ou la couleur. Utilisez du texte brut (non HTML), ne saisissez pas de lettres majuscules et n\u2019int\u00e9grez aucun lien. Reportez-vous aux sp\u00e9cifications relatives aux descriptions de produits. Limite de caract\u00e8res : 5 000.",
-      "barcode": "Code-barre / Marque",
+      "barcode": "Code-barre \/ Marque",
       "barcodeTooltip": "Nom de la marque, num\u00e9ro de pi\u00e8ce fabriquant (MPN) ou num\u00e9ro d\u2019identification commerciale international (GTIN) de l\u2019article. Vous n\u2019avez pas besoin de saisir toutes ces donn\u00e9es, une seule suffit. Pour le GTIN, saisissez le code UPC, EAN, JAN ou ISBN de l\u2019article. Limite de caract\u00e8res : 100.",
       "price": "Prix",
       "error": "Error type",
@@ -1085,7 +1129,10 @@
         "contactUs": "Contactez-nous"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "Pas de FAQ disponible." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "Pas de FAQ disponible."
+    },
     "productStatuses": {
       "Approved": "Approuv\u00e9",
       "Pending": "En attente",
@@ -1126,13 +1173,22 @@
         "stepCategoryMatching": "Categorie di mappe",
         "stepCategoryMatchingOptional": "(facoltativo, ma fortemente raccomandato)",
         "stepProductSync": "Esporta il tuo catalogo prodotti",
-        "stepAdCampaign": "Genera traffico e/o annunci dinamici",
+        "stepAdCampaign": "Genera traffico e\/o annunci dinamici",
         "reloadButton": "Ricarica",
         "shopInConflictError": "Hai gi\u00e0 effettuato l'accesso a Facebook con un altro negozio. Oppure la configurazione di PrestaShop Facebook \u00e8 attualmente possibile su un solo negozio. Esci dal primo negozio per poter effettuare la connessione.",
         "unknownOnboardingError": "Si \u00e8 verificato un errore sconosciuto durante il processo di integrazione. Si prega di ricaricare e riprovare.",
-        "psAccountUpgradeNeededWarning": "La versione del modulo PrestaShop Account attiva su questo negozio (v{psAccountsVersion}) \u00e8 pi\u00f9 vecchia rispetto ai requisiti minimi previsti v{requiredPsAccountsVersion}.\n\n Puoi continuare a usare PrestaShop Facebook, ma alcune funzioni (come, ad esempio, la sincronizzazione dei prodotti) non saranno disponibili fino a quando non avrai aggiornato PrestaShop Account.",
-        "psAccountUpgradeButton": "Aggiorna PrestaShop Account",
-        "psAccountUpgradeDone": "PrestaShop Account \u00e8 stato aggiornato con successo"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Aggiorna PrestaShop Account",
+        "AccountsUpgradeDone": "PrestaShop Account \u00e8 stato aggiornato con successo",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Le tue impostazioni di Facebook",
@@ -1141,7 +1197,7 @@
           "intro": "Integra il tuo negozio con Facebook.",
           "connectButton": "Accedi a Facebook",
           "description": "Con PS Facebook, potrai usufruire di un'esperienza di integrazione e gestione semplice e priva di codice sui prodotti business di Facebook.",
-          "details": "- Crea/Seleziona attivit\u00e0 \n- Crea/Seleziona pagina \n- Crea/Seleziona account di annunci \n- Crea/Seleziona installazione pixel \n- Crea/Seleziona sincronizzazione catalogo prodotti \n- Crea Facebook Shop & Instagram Shopping \n- Personalizza la tua pagina Facebook con un CTA"
+          "details": "- Crea\/Seleziona attivit\u00e0 \n- Crea\/Seleziona pagina \n- Crea\/Seleziona account di annunci \n- Crea\/Seleziona installazione pixel \n- Crea\/Seleziona sincronizzazione catalogo prodotti \n- Crea Facebook Shop & Instagram Shopping \n- Personalizza la tua pagina Facebook con un CTA"
         },
         "connected": {
           "description": "Stai autorizzando questo account Facebook a connettersi al tuo negozio:",
@@ -1191,7 +1247,7 @@
       "productCatalogExport": "Il tuo catalogo su Facebook Business",
       "exportCatalogButton": "Condividi il catalogo",
       "catalogExportIntro": "Prima che gli acquirenti possano acquistare i tuoi articoli, dovrai caricare le informazioni sui tuoi prodotti in un catalogo su Facebook.",
-      "catalogExportInfo": "Si prega di prendere nota di quanto segue: \n\n1. L'esportazione del catalogo avviene una volta al giorno (durante la notte)\n2. La sincronizzazione su Facebook delle informazioni relative ai tuoi prodotti PrestaShop pu\u00f2 richiedere fino a 24 ore.\n3. Solo i prodotti \"attivi\" vengono esportati su Facebook. \n4. Solo i prodotti con campi obbligatori gi\u00e0 compilati saranno sincronizzati: una breve descrizione, quantit\u00e0, prezzo, immagine del prodotto, produttore o codice ean/upc/isbn.\n5. L'esportazione delle localizzazioni dei prodotti (per le traduzioni) \u00e8 ancora in versione beta e potrebbe generare errori imprevisti.\n6. Solo i prodotti a cui sono state apportate modifiche saranno aggiornati nel tuo catalogo. ",
+      "catalogExportInfo": "Si prega di prendere nota di quanto segue: \n\n1. L'esportazione del catalogo avviene una volta al giorno (durante la notte)\n2. La sincronizzazione su Facebook delle informazioni relative ai tuoi prodotti PrestaShop pu\u00f2 richiedere fino a 24 ore.\n3. Solo i prodotti \"attivi\" vengono esportati su Facebook. \n4. Solo i prodotti con campi obbligatori gi\u00e0 compilati saranno sincronizzati: una breve descrizione, quantit\u00e0, prezzo, immagine del prodotto, produttore o codice ean\/upc\/isbn.\n5. L'esportazione delle localizzazioni dei prodotti (per le traduzioni) \u00e8 ancora in versione beta e potrebbe generare errori imprevisti.\n6. Solo i prodotti a cui sono state apportate modifiche saranno aggiornati nel tuo catalogo. ",
       "resetExportLink": "Se desideri ripetere l'esportazione di tutto il tuo catalogo, clicca qui",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Si \u00e8 verificato un errore sconosciuto durante il tentativo di riavvio dell'esportazione. Si prega di riprovare pi\u00f9 tardi.",
@@ -1217,7 +1273,7 @@
       "showMore": "Visualizza altro",
       "showLess": "Visualizza meno",
       "exportCatalogButtonErrored": "Operazione non riuscita! Riprova",
-      "modalDeactivationTitle": "Sei sicuro/a di voler confermare la disattivazione?",
+      "modalDeactivationTitle": "Sei sicuro\/a di voler confermare la disattivazione?",
       "modalDeactivationText": "Stai per disattivare la sincronizzazione del tuo catalogo con Facebook Business. La sincronizzazione dei prodotti verr\u00e0 interrotta sino a quando non avrai riattivato l'esportazione del catalogo.",
       "reportingLastSync": "Ultima sincronizzazione",
       "reportingCatalogCount": "Prodotti nel catalogo di Facebook",
@@ -1239,7 +1295,7 @@
       "imageTooltip": "Immagine principale dell'articolo. Le immagini devono essere nei formati JPG, GIF o PNG e avere almeno 500 x 500 pixel per un massimo di 8 MB. Guarda le specifiche dell'immagine del prodotto.",
       "description": "Descrizione",
       "descriptionTooltip": "Una descrizione breve e pertinente dell'articolo. Aggiungi alcune caratteristiche uniche e specifiche del prodotto, come materiale o colore. Utilizza testo semplice (non HTML), non digitare maiuscole e non aggiungere link. Guarda le specifiche della descrizione del prodotto. Limite di caratteri: 5 000.",
-      "barcode": "Codice a barre / Marchio",
+      "barcode": "Codice a barre \/ Marchio",
       "barcodeTooltip": "Nome del brand, codice componente del fabbricante (MPN) oppure Global Trade Item Number (GTIN) dell'articolo. Devi inserirne solo uno. Per il GTIN, inserisci UPC, EAN, JAN o ISBN dell'articolo. Limite di caratteri: 100.",
       "price": "Premio",
       "error": "Error type",
@@ -1328,7 +1384,7 @@
       },
       "warning": {
         "productsNotSynced": "Prima di tutto, dovrai importare il catalogo prodotti in modo da poter impostare Facebook Shops e Shopping su Instagram e creare campagne promozionali.",
-        "disableFeatureModalHeader": "Sei sicuro/a di voler confermare la disattivazione?",
+        "disableFeatureModalHeader": "Sei sicuro\/a di voler confermare la disattivazione?",
         "disableFeatureModalText": "Stai per disattivare questa funzione. Ci\u00f2 potrebbe limitare alcune funzioni.",
         "noFeatures": "Facebook non ha potuto recuperare queste funzioni. Ci\u00f2 potrebbe essere avvenuto a causa della scadenza del token e pu\u00f2 essere risolto riavviando il processo di integrazione."
       },
@@ -1358,7 +1414,10 @@
         "contactUs": "Contattaci"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "Nessuna FAQ disponibile." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "Nessuna FAQ disponibile."
+    },
     "productStatuses": {
       "Approved": "Approvato",
       "Pending": "In attesa di",
@@ -1399,13 +1458,22 @@
         "stepCategoryMatching": "Kaart categorie\u00ebn",
         "stepCategoryMatchingOptional": "(optioneel maar sterk aanbevolen)",
         "stepProductSync": "Exporteer uw productcatalogus",
-        "stepAdCampaign": "Cre\u00eber verkeer en/of dynamische advertenties",
+        "stepAdCampaign": "Cre\u00eber verkeer en\/of dynamische advertenties",
         "reloadButton": "Herladen",
         "shopInConflictError": "U bent al verbonden met Facebook vanuit een andere winkel. Echter, PrestaShop Facebook configuratie is momenteel slechts mogelijk op een winkel. U moet uitloggen uit uw eerste winkel om verbinding te maken.",
         "unknownOnboardingError": "Er is een onbekende fout opgetreden tijdens het registratieproces. Laadt u alstublieft opnieuw op en probeer het opnieuw.",
-        "psAccountUpgradeNeededWarning": "De versie van de PrestaShop Account module die op deze winkel draait (v{psAccountsVersion}) is ouder dan de minimaal vereiste v{requiredPsAccountsVersion}.\n\n U kunt PrestaShop Facebook gebruiken, maar sommige functies (bijv. productsynchronisatie) zullen niet beschikbaar zijn totdat u PrestaShop Account bijwerkt.",
-        "psAccountUpgradeButton": "PrestaShop account bijwerken",
-        "psAccountUpgradeDone": "PrestaShop Account is met succes bijgewerkt"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "PrestaShop account bijwerken",
+        "AccountsUpgradeDone": "PrestaShop Account is met succes bijgewerkt",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Uw Facebook-instellingen",
@@ -1414,7 +1482,7 @@
           "intro": "Integreer uw winkel met Facebook.",
           "connectButton": "Verbinding maken met Facebook",
           "description": "Met PS Facebook geniet u van een probleemloze, codevrije registratie en managementervaring voor zakelijke Facebook producten.",
-          "details": "- Cre\u00eber/selecteer bedrijf \n- Cre\u00eber/selecteer pagina \n- Cre\u00eber/selecteer advertentieaccount \n- Cre\u00eber/selecteer installatiepixel \n- Cre\u00eber/selecteer synchronisatie van productcatalogus \n- Cre\u00eber Facebook winkel & Instagram winkelen \n- Pas uw Facebook pagina aan met call-to-action"
+          "details": "- Cre\u00eber\/selecteer bedrijf \n- Cre\u00eber\/selecteer pagina \n- Cre\u00eber\/selecteer advertentieaccount \n- Cre\u00eber\/selecteer installatiepixel \n- Cre\u00eber\/selecteer synchronisatie van productcatalogus \n- Cre\u00eber Facebook winkel & Instagram winkelen \n- Pas uw Facebook pagina aan met call-to-action"
         },
         "connected": {
           "description": "U geeft dit Facebook account toestemming om verbinding te maken met uw winkel:",
@@ -1464,7 +1532,7 @@
       "productCatalogExport": "Uw catalogus in Facebook Business",
       "exportCatalogButton": "Deel catalogus",
       "catalogExportIntro": "Voordat kopers artikelen van u kunnen kopen, moet u uw productinformatie uploaden naar een Facebook productcatalogus.",
-      "catalogExportInfo": "Neem a.u.b. nota van de volgende elementen: \n\n1. De export van de catalogus vindt \u00e9\u00e9n keer per dag plaats (tijdens de nacht)\n2. Het synchroniseren van uw PrestaShop productinformatie met Facebook kan tot 24 uur duren.\n3. Alleen \"actieve\" producten worden naar Facebook ge\u00ebxporteerd. \n4. Alleen producten waarvan de verplichte velden zijn ingevuld, zullen worden gesynchroniseerd: een korte beschrijving, hoeveelheid, prijs, productafbeelding, fabrikant of ean/upc/isbn.\n5. De export van product lokalisaties (voor vertalingen) is nog in beta en kan onverwachte fouten veroorzaken.\n6. Alleen producten die wijzigingen hebben ondergaan, worden in uw catalogus bijgewerkt. ",
+      "catalogExportInfo": "Neem a.u.b. nota van de volgende elementen: \n\n1. De export van de catalogus vindt \u00e9\u00e9n keer per dag plaats (tijdens de nacht)\n2. Het synchroniseren van uw PrestaShop productinformatie met Facebook kan tot 24 uur duren.\n3. Alleen \"actieve\" producten worden naar Facebook ge\u00ebxporteerd. \n4. Alleen producten waarvan de verplichte velden zijn ingevuld, zullen worden gesynchroniseerd: een korte beschrijving, hoeveelheid, prijs, productafbeelding, fabrikant of ean\/upc\/isbn.\n5. De export van product lokalisaties (voor vertalingen) is nog in beta en kan onverwachte fouten veroorzaken.\n6. Alleen producten die wijzigingen hebben ondergaan, worden in uw catalogus bijgewerkt. ",
       "resetExportLink": "Indien u uw volledige catalogus opnieuw wenst te exporteren klik hier",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Er is een onbekende fout opgetreden bij de poging om de export te resetten. Probeer het later nog eens.",
@@ -1512,7 +1580,7 @@
       "imageTooltip": "Primaire afbeelding van je artikel. Afbeeldingen moeten in JPG-, GIF- of PNG-indeling, minimaal 500 x 500 pixels en maximaal 8 MB zijn. Zie specificaties productafbeelding.",
       "description": "Beschrijving",
       "descriptionTooltip": "Een korte, relevante omschrijving van het artikel. Voeg specifieke en unieke productkenmerken toe, zoals materiaal of kleur. Gebruik gewone tekst (geen HTML) en voer geen tekst in die bestaat uit alleen maar hoofdletters of links. Zie specificaties productbeschrijving. Tekenlimiet: 5000.",
-      "barcode": "Streepjescode / Merk",
+      "barcode": "Streepjescode \/ Merk",
       "barcodeTooltip": "De merknaam, het unieke fabrieksonderdeelnummer (MPN) of artikelnummer (GTIN) van het artikel. Je hoeft maar \u00e9\u00e9n van deze toe te voegen, niet allemaal. Voor de GTIN voer je de UPC, EAN, JAN of ISBN van het artikel in. Tekenlimiet: 100.",
       "price": "Prijs",
       "error": "Error type",
@@ -1631,7 +1699,10 @@
         "contactUs": "Neem contact met ons op"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "Geen FAQ beschikbaar." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "Geen FAQ beschikbaar."
+    },
     "productStatuses": {
       "Approved": "Goedgekeurd",
       "Pending": "In afwachting van",
@@ -1672,13 +1743,22 @@
         "stepCategoryMatching": "Kategorie map",
         "stepCategoryMatchingOptional": "(opcjonalnie, ale zdecydowanie zalecane)",
         "stepProductSync": "Eksportuj sw\u00f3j katalog produkt\u00f3w",
-        "stepAdCampaign": "Tworzenie reklam drogowych i/lub dynamicznych",
+        "stepAdCampaign": "Tworzenie reklam drogowych i\/lub dynamicznych",
         "reloadButton": "Prze\u0142adunek",
-        "shopInConflictError": "Jeste\u015b ju\u017c po\u0142\u0105czony/-a z Facebookiem poprzez inny sklep. Lub konfiguracja PrestaShop Facebook jest obecnie mo\u017cliwa tylko w odniesieniu do jednego sklepu. Aby si\u0119 po\u0142\u0105czy\u0107, musisz si\u0119 wylogowa\u0107 z pierwszego sklepu.",
+        "shopInConflictError": "Jeste\u015b ju\u017c po\u0142\u0105czony\/-a z Facebookiem poprzez inny sklep. Lub konfiguracja PrestaShop Facebook jest obecnie mo\u017cliwa tylko w odniesieniu do jednego sklepu. Aby si\u0119 po\u0142\u0105czy\u0107, musisz si\u0119 wylogowa\u0107 z pierwszego sklepu.",
         "unknownOnboardingError": "Podczas procesu pok\u0142adowego wyst\u0105pi\u0142 nieznany b\u0142\u0105d. Prosz\u0119 prze\u0142adowa\u0107 i spr\u00f3bowa\u0107 jeszcze raz.",
-        "psAccountUpgradeNeededWarning": "Wersja modu\u0142u PrestaShop Account uruchomiona w tym sklepie (v{psAccountsVersion}) jest starsza ni\u017c minimalna wymagana v{requiredPsAccountsVersion}. Mo\u017cesz u\u017cywa\u0107 PrestaShop Facebook, ale niekt\u00f3re funkcje (np. synchronizacja produkt\u00f3w) nie b\u0119d\u0105 dost\u0119pne do czasu aktualizacji PrestaShop Account.",
-        "psAccountUpgradeButton": "Zaktualizuj konto PrestaShop",
-        "psAccountUpgradeDone": "Konto PrestaShop zosta\u0142o pomy\u015blnie zaktualizowane"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Zaktualizuj konto PrestaShop",
+        "AccountsUpgradeDone": "Konto PrestaShop zosta\u0142o pomy\u015blnie zaktualizowane",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "Twoje ustawienia na Facebooku",
@@ -1687,7 +1767,7 @@
           "intro": "Zintegruj sw\u00f3j sklep z Facebookiem.",
           "connectButton": "Po\u0142\u0105cz si\u0119 z Facebookiem",
           "description": "Dzi\u0119ki PS Facebook mo\u017cesz cieszy\u0107 si\u0119 beztarciow\u0105, bezkodow\u0105 prac\u0105 na pok\u0142adzie i do\u015bwiadczeniem w zarz\u0105dzaniu produktami biznesowymi Facebooka.",
-          "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n- Create/Select sync product catalog \n- Create Facebook Shop & Instagram Shopping \n- Customize your Facebook page with call-to-action"
+          "details": "- Create\/Select business \n- Create\/Select page \n- Create\/Select ad account \n- Create\/Select install pixel \n- Create\/Select sync product catalog \n- Create Facebook Shop & Instagram Shopping \n- Customize your Facebook page with call-to-action"
         },
         "connected": {
           "description": "Upowa\u017cniasz to konto na Facebooku do \u0142\u0105czenia si\u0119 z Twoim sklepem:",
@@ -1737,7 +1817,7 @@
       "productCatalogExport": "Tw\u00f3j katalog w serwisie Facebook Business",
       "exportCatalogButton": "Katalog akcji",
       "catalogExportIntro": "Zanim kupuj\u0105cy b\u0119d\u0105 mogli kupowa\u0107 u Ciebie produkty, b\u0119dziesz musia\u0142 za\u0142adowa\u0107 informacje o swoich produktach do Katalogu Produkt\u00f3w na Facebooku.",
-      "catalogExportInfo": "Prosz\u0119 zwr\u00f3ci\u0107 uwag\u0119 na nast\u0119puj\u0105ce kwestie: \n\n1. Eksport katalogu odbywa si\u0119 raz dziennie (w nocy)\n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem mo\u017ce potrwa\u0107 do 24 godzin.\n3. Do Facebooka eksportowane s\u0105 tylko aktywne produkty. \n4. Synchronizowane b\u0119d\u0105 tylko produkty z wype\u0142nionymi polami obowi\u0105zkowymi: kr\u00f3tki opis, ilo\u015b\u0107, cena, zdj\u0119cie produktu, producent lub ean/upc/isbn.\n5. Eksport lokalizacji produkt\u00f3w (na potrzeby t\u0142umacze\u0144) jest nadal w fazie beta i mo\u017ce generowa\u0107 nieoczekiwane b\u0142\u0119dy.\n6. W Twoim katalogu zostan\u0105 zaktualizowane tylko produkty, kt\u00f3re uleg\u0142y zmianie. ",
+      "catalogExportInfo": "Prosz\u0119 zwr\u00f3ci\u0107 uwag\u0119 na nast\u0119puj\u0105ce kwestie: \n\n1. Eksport katalogu odbywa si\u0119 raz dziennie (w nocy)\n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem mo\u017ce potrwa\u0107 do 24 godzin.\n3. Do Facebooka eksportowane s\u0105 tylko aktywne produkty. \n4. Synchronizowane b\u0119d\u0105 tylko produkty z wype\u0142nionymi polami obowi\u0105zkowymi: kr\u00f3tki opis, ilo\u015b\u0107, cena, zdj\u0119cie produktu, producent lub ean\/upc\/isbn.\n5. Eksport lokalizacji produkt\u00f3w (na potrzeby t\u0142umacze\u0144) jest nadal w fazie beta i mo\u017ce generowa\u0107 nieoczekiwane b\u0142\u0119dy.\n6. W Twoim katalogu zostan\u0105 zaktualizowane tylko produkty, kt\u00f3re uleg\u0142y zmianie. ",
       "resetExportLink": "Je\u015bli chcesz ponownie wyeksportowa\u0107 ca\u0142y sw\u00f3j katalog kliknij tutaj",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Podczas pr\u00f3by zresetowania eksportu wyst\u0105pi\u0142 nieznany b\u0142\u0105d. Prosimy spr\u00f3bowa\u0107 ponownie p\u00f3\u017aniej.",
@@ -1785,7 +1865,7 @@
       "imageTooltip": " G\u0142\u00f3wnego obrazu przedstawiaj\u0105cego artyku\u0142. Obrazy musz\u0105 by\u0107 w formacie JPG, GIF lub PNG, a tak\u017ce musz\u0105 mie\u0107 rozdzielczo\u015b\u0107 co najmniej 500 \u00d7 500 pikseli oraz rozmiar do 8 MB. Zobacz specyfikacje obrazu produktu.",
       "description": "Opis",
       "descriptionTooltip": "Kr\u00f3tki, trafny opis artyku\u0142u. Powinien uwzgl\u0119dnia\u0107 unikatowe cechy produktu, takie jak materia\u0142 czy kolor. W opisie u\u017cywaj zwyk\u0142ego tekstu (nie w formacie HTML), nie u\u017cywaj samych wielkich liter i nie dodawaj link\u00f3w. Zobacz specyfikacje opisu produktu. Limit znak\u00f3w: 5000.",
-      "barcode": "Kod kreskowy / Marka",
+      "barcode": "Kod kreskowy \/ Marka",
       "barcodeTooltip": "Nazwa marki, unikatowy numer cz\u0119\u015bci producenta (ang. Manufacturer Part Number \u2013 MPN) lub globalny numer jednostki handlowej (ang. Global Trade Item Number \u2013 GTIN) artyku\u0142u. Wystarczy wprowadzi\u0107 jedn\u0105 z tych warto\u015bci \u2013 nie wszystkie. Numerem GTIN artyku\u0142u mo\u017ce by\u0107 numer UPC, EAN, JAN lub ISBN. Limit znak\u00f3w: 100.",
       "price": "Prix",
       "error": "Error type",
@@ -1904,7 +1984,10 @@
         "contactUs": "Skontaktuj si\u0119 z nami"
       }
     },
-    "faq": { "title": "FAQ", "noFaq": "Brak dost\u0119pnych FAQ." },
+    "faq": {
+      "title": "FAQ",
+      "noFaq": "Brak dost\u0119pnych FAQ."
+    },
     "productStatuses": {
       "Approved": "Zatwierdzony",
       "Pending": "W trakcie realizacji",
@@ -1945,13 +2028,22 @@
         "stepCategoryMatching": "Categorias do mapa",
         "stepCategoryMatchingOptional": "(opcional mas fortemente recomendado)",
         "stepProductSync": "Exporte o seu cat\u00e1logo de produtos",
-        "stepAdCampaign": "Crie Tr\u00e1fego e/ou An\u00fancios Din\u00e2micos",
+        "stepAdCampaign": "Crie Tr\u00e1fego e\/ou An\u00fancios Din\u00e2micos",
         "reloadButton": "Recarregar",
         "shopInConflictError": "J\u00e1 se encontra ligado ao Facebook a partir de outra loja. No entanto, a configura\u00e7\u00e3o PrestaShop Facebook s\u00f3 \u00e9 atualmente poss\u00edvel numa \u00fanica loja. Tem de sair da sua primeira loja para se ligar.",
         "unknownOnboardingError": "Ocorreu um erro desconhecido durante o processo de embarque. Por favor, recarregue e tente novamente.",
-        "psAccountUpgradeNeededWarning": "A vers\u00e3o do m\u00f3dulo PrestaShop Account que corre nesta loja (v{psAccountsVersion}) \u00e9 mais antiga do que o m\u00ednimo requerido v{requiredPsAccountsVersion}. Pode utilizar o PrestaShop Facebook, mas algumas funcionalidades (por exemplo, a sincroniza\u00e7\u00e3o de produtos) n\u00e3o estar\u00e3o dispon\u00edveis at\u00e9 que atualize a PrestaShop Account.",
-        "psAccountUpgradeButton": "Atualize a PrestaShop Account",
-        "psAccountUpgradeDone": "A PrestaShop Account foi atualizada com sucesso"
+        "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+        "AccountsUpgradeButton": "Atualize a PrestaShop Account",
+        "AccountsUpgradeDone": "A PrestaShop Account foi atualizada com sucesso",
+        "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+        "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+        "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+        "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+        "EventBusInstallButton": "Install PrestaShop EventBus",
+        "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+        "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+        "EventBusEnableButton": "Enable PrestaShop EventBus",
+        "EventBusEnableDone": "PrestaShop EventBus is enabled."
       },
       "facebook": {
         "title": "As suas defini\u00e7\u00f5es do Facebook",
@@ -1960,7 +2052,7 @@
           "intro": "Integre a sua loja no Facebook.",
           "connectButton": "Ligue-se ao Facebook",
           "description": "Com o PS Facebook, desfrute de uma experi\u00eancia sem fric\u00e7\u00f5es, sem c\u00f3digo a bordo e de gest\u00e3o de produtos empresariais do Facebook.",
-          "details": "- Criar/Selecionar neg\u00f3cio \n- Criar/Selecionar p\u00e1gina \n- Criar/Selecionar conta de an\u00fancio \n- Criar/Selecionar instalar pixel \n- Criar/Selecionar sincronizar cat\u00e1logo de produtos \n- Criar loja Facebook & Instagram Shopping \n- Personalizar a sua p\u00e1gina Facebook com chamada para a\u00e7\u00e3o"
+          "details": "- Criar\/Selecionar neg\u00f3cio \n- Criar\/Selecionar p\u00e1gina \n- Criar\/Selecionar conta de an\u00fancio \n- Criar\/Selecionar instalar pixel \n- Criar\/Selecionar sincronizar cat\u00e1logo de produtos \n- Criar loja Facebook & Instagram Shopping \n- Personalizar a sua p\u00e1gina Facebook com chamada para a\u00e7\u00e3o"
         },
         "connected": {
           "description": "Autoriza esta conta do Facebook a ligar-se \u00e0 sua loja:",
@@ -2010,7 +2102,7 @@
       "productCatalogExport": "O seu cat\u00e1logo no Facebook Business",
       "exportCatalogButton": "Partilhar cat\u00e1logo",
       "catalogExportIntro": "Antes dos compradores lhe poderem comprar artigos, ter\u00e1 de carregar a informa\u00e7\u00e3o dos seus produtos para um Facebook Product Catalog.",
-      "catalogExportInfo": "Por favor, tome nota do seguinte: \n\n1. A exporta\u00e7\u00e3o do cat\u00e1logo realiza-se uma vez por dia (durante a noite)\n2. A sincroniza\u00e7\u00e3o da informa\u00e7\u00e3o do seu produto PrestaShop com o Facebook pode demorar at\u00e9 24 horas.\n3. Apenas produtos \"ativos\" s\u00e3o exportados para o Facebook. \n4. Apenas os produtos com campos obrigat\u00f3rios ser\u00e3o sincronizados: uma breve descri\u00e7\u00e3o, quantidade, pre\u00e7o, imagem do produto, fabricante ou ean/upc/isbn.\n5. A exporta\u00e7\u00e3o de localiza\u00e7\u00f5es de produtos (para tradu\u00e7\u00f5es) ainda est\u00e1 em beta e pode desencadear erros inesperados.\n6. Apenas os produtos que tenham sofrido altera\u00e7\u00f5es ser\u00e3o atualizados no seu cat\u00e1logo. ",
+      "catalogExportInfo": "Por favor, tome nota do seguinte: \n\n1. A exporta\u00e7\u00e3o do cat\u00e1logo realiza-se uma vez por dia (durante a noite)\n2. A sincroniza\u00e7\u00e3o da informa\u00e7\u00e3o do seu produto PrestaShop com o Facebook pode demorar at\u00e9 24 horas.\n3. Apenas produtos \"ativos\" s\u00e3o exportados para o Facebook. \n4. Apenas os produtos com campos obrigat\u00f3rios ser\u00e3o sincronizados: uma breve descri\u00e7\u00e3o, quantidade, pre\u00e7o, imagem do produto, fabricante ou ean\/upc\/isbn.\n5. A exporta\u00e7\u00e3o de localiza\u00e7\u00f5es de produtos (para tradu\u00e7\u00f5es) ainda est\u00e1 em beta e pode desencadear erros inesperados.\n6. Apenas os produtos que tenham sofrido altera\u00e7\u00f5es ser\u00e3o atualizados no seu cat\u00e1logo. ",
       "resetExportLink": "Se deseja exportar novamente todo o seu cat\u00e1logo, clique aqui",
       "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
       "resetExportError": "Ocorreu um erro desconhecido quando tentou reiniciar a exporta\u00e7\u00e3o. Por favor, tente novamente mais tarde.",
@@ -2058,7 +2150,7 @@
       "imageTooltip": "Imagem principal do teu artigo. As imagens t\u00eam de estar no formato JPG, GIF ou PNG com, pelo menos, 500 x 500 p\u00edxeis e at\u00e9 8 MB. Consulta as especifica\u00e7\u00f5es de imagens de produtos.",
       "description": "Descri\u00e7\u00e3o",
       "descriptionTooltip": "Uma descri\u00e7\u00e3o breve e relevante sobre o artigo. Inclui funcionalidades espec\u00edficas e individuais do produto, como o material ou a cor. Utiliza texto simples (que n\u00e3o seja HTML) e n\u00e3o insiras texto apenas em mai\u00fasculas ou liga\u00e7\u00f5es. Consulta as especifica\u00e7\u00f5es de descri\u00e7\u00f5es de produtos. Limite de carateres: 5000.",
-      "barcode": "C\u00f3digo de barras / Marca",
+      "barcode": "C\u00f3digo de barras \/ Marca",
       "barcodeTooltip": "O nome da marca, o n\u00famero de pe\u00e7a \u00fanico do fabricante (MPN) ou o Global Trade Item Number (GTIN \u2013 n\u00famero de venda global) do artigo. S\u00f3 precisas de inserir um destes, n\u00e3o todos. No caso do GTIN, insere o UPC, EAN, JAN ou ISBN do artigo. Limite de carateres: 100.",
       "price": "Pr\u00e9mio",
       "error": "Error type",

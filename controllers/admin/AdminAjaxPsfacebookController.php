@@ -578,18 +578,32 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         ]));
     }
 
-    public function displayAjaxUpgradePsEventBus()
+    public function displayAjaxManageModule()
     {
+        $moduleName = Tools::getValue('module_name');
+        $moduleAction = Tools::getValue('module_action');
+
+        if (!in_array($moduleName, ['ps_accounts', 'ps_eventbus'])
+            || !in_array($moduleAction, ['enable', 'install', 'upgrade'])) {
+            http_response_code(401);
+            $this->ajaxDie(
+                json_encode([
+                    'success' => false,
+                    'message' => 'Module name and/or action are invalid',
+                ]));
+        }
+
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
-        $isUpgradeSuccessful = false;
+
+        $isActionSuccessful = false;
         try {
             /* @phpstan-ignore-next-line */
-            $isUpgradeSuccessful = $moduleManager->upgrade('ps_eventbus');
+            $isActionSuccessful = $moduleManager->{$moduleAction}($moduleName);
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookDependencyUpdateException(
-                    'Failed to upgrade ps_eventbus',
+                    "Failed to $moduleAction $moduleName",
                     FacebookDependencyUpdateException::FACEBOOK_DEPENDENCY_UPGRADE_EXCEPTION,
                     $e
                 ),
@@ -604,8 +618,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         }
 
         $this->ajaxDie(json_encode([
-            'success' => $isUpgradeSuccessful,
-            'message' => $moduleManager->getError('ps_eventbus'),
+            'success' => $isActionSuccessful,
+            'message' => $moduleManager->getError($moduleName),
         ]));
     }
 

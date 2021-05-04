@@ -22,6 +22,7 @@ use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
@@ -43,6 +44,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     private $env;
 
     /**
+     * @var ModuleUpgradePresenter
+     */
+    private $moduleUpgradePresenter;
+
+    /**
      * @var MultishopDataProvider
      */
     private $multishopDataProvider;
@@ -57,6 +63,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
+        $this->moduleUpgradePresenter = $this->module->getService(ModuleUpgradePresenter::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->shopRepository = $this->module->getService(ShopRepository::class);
         $this->module->getService(ErrorHandler::class);
@@ -82,21 +89,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             Media::addJsDef([
                 'psFacebookExternalBusinessId' => $externalBusinessId,
             ]);
-        }
-
-        $needsPsEventBusUpgrade = false;
-        $psEventBusVersion = null;
-        if (Module::isInstalled('ps_eventbus')) {
-            $psEventBus = Module::getInstanceByName('ps_eventbus');
-            if ($psEventBus !== false) {
-                $psEventBusVersion = $psEventBus->version;
-
-                $needsPsEventBusUpgrade = version_compare(
-                    $psEventBusVersion,
-                    Config::REQUIRED_PS_EVENTBUS_VERSION,
-                    '<'
-                );
-            }
         }
 
         try {
@@ -336,20 +328,14 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
             'psAccountShopId' => $psAccountShopId,
-            'psEventBusVersionCheck' => [
-                'needsPsEventBusUpgrade' => $needsPsEventBusUpgrade,
-                'psEventBusVersion' => $psEventBusVersion,
-                'requiredPsAccountsVersion' => Config::REQUIRED_PS_EVENTBUS_VERSION,
-                'psFacebookUpgradePsEventBus' => $this->context->link->getAdminLink(
-                    'AdminAjaxPsfacebook',
-                    true,
-                    [],
-                    [
-                        'action' => 'UpgradePsEventBus',
-                        'ajax' => 1,
-                    ]
-                ),
-            ],
+            'psEventBusVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
+                'ps_eventbus',
+                Config::REQUIRED_PS_EVENTBUS_VERSION
+            ),
+            'psAccountsVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
+                'ps_accounts',
+                Config::REQUIRED_PS_ACCOUNTS_VERSION
+            ),
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
