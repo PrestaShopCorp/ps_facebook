@@ -322,9 +322,9 @@ class PsFacebookTranslations
                 'noFaq' => $this->module->l('No FAQ available.', 'PsFacebookTranslations'),
             ],
             'productStatuses' => [
-                'Approved' => $this->module->l('Approved'),
-                'Pending' => $this->module->l('Pending'),
-                'Disapproved' => $this->module->l('Disapproved'),
+                'Approved' => $this->module->l('Approved', 'PsFacebookTranslations'),
+                'Pending' => $this->module->l('Pending', 'PsFacebookTranslations'),
+                'Disapproved' => $this->module->l('Disapproved', 'PsFacebookTranslations'),
             ],
         ];
 
