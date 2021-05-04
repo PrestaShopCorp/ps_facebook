@@ -106,17 +106,16 @@ class EventDataProvider
     {
         switch ($name) {
             case 'hookDisplayHeader':
-                $controllerPage = $this->context->controller->php_self;
                 if (true === \Tools::isSubmit('submitCustomizedData')) {
                     return $this->getCustomEventData();
                 }
-                if ($controllerPage === 'product') {
+                if ($this->context->controller instanceof \ProductControllerCore) {
                     return $this->getProductPageData();
                 }
-                if ($controllerPage === 'category') {
+                if ($this->context->controller instanceof \CategoryControllerCore) {
                     return $this->getCategoryPageData();
                 }
-                if ($controllerPage === 'cms') {
+                if ($this->context->controller instanceof \CmsControllerCore) {
                     return $this->getCMSPageData();
                 }
                 break;
@@ -147,7 +146,7 @@ class EventDataProvider
     {
         $type = 'ViewContent';
 
-        /** @var \ProductController|\ProductControllerCore $controller */
+        /** @var \ProductControllerCore $controller */
         $controller = $this->context->controller;
         $product = $controller->getTemplateVarProduct();
 
@@ -201,7 +200,7 @@ class EventDataProvider
     {
         $type = 'ViewCategory';
 
-        /** @var \CategoryController|\CategoryControllerCore $controller */
+        /** @var \CategoryControllerCore $controller */
         $controller = $this->context->controller;
         $category = $controller->getCategory();
 
@@ -232,7 +231,7 @@ class EventDataProvider
         $type = 'ViewCMS';
         $cms = new \CMS((int) $this->toolsAdapter->getValue('id_cms'), $this->context->language->id);
 
-        /** @var \CmsController $controller */
+        /** @var \CmsControllerCore $controller */
         $controller = $this->context->controller;
         $breadcrumbs = $controller->getBreadcrumbLinks();
 
