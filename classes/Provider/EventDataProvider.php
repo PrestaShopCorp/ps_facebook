@@ -213,11 +213,21 @@ class EventDataProvider
         $breadcrumbs = $controller->getBreadcrumbLinks();
         $breadcrumb = implode(' > ', array_column($breadcrumbs['links'], 'title'));
 
+        $contentIds = [];
+        if ($prods) {
+            foreach ($prods as $product) {
+                $contentIds[] = ProductCatalogUtility::makeProductId(
+                    $product['id_product'],
+                    $product['id_product_attribute']
+                );
+            }
+        }
+
         $customData = [
             'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $this->locale,
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::CATEGORY_TYPE,
-            'content_ids' => array_column($prods, 'id_product'),
+            'content_ids' => $contentIds ?: null,
         ];
 
         return [
@@ -286,7 +296,12 @@ class EventDataProvider
         $customData = [
             'content_name' => pSQL($productName),
             'content_type' => self::PRODUCT_TYPE,
-            'content_ids' => [$idProduct],
+            'content_ids' => [
+                ProductCatalogUtility::makeProductId(
+                    $idProduct,
+                    $idProductAttribute
+                ),
+            ],
             'num_items' => pSQL($quantity),
         ];
 
@@ -359,7 +374,10 @@ class EventDataProvider
         $order = $this->module->psVersionIs17 ? $params['order'] : $params['objOrder'];
         $productList = [];
         foreach ($order->getProducts() as $product) {
-            $productList[] = $product['id_product'];
+            $productList[] = ProductCatalogUtility::makeProductId(
+                $product['id_product'],
+                $product['id_product_attribute']
+            );
         }
 
         $type = 'Purchase';
@@ -369,6 +387,7 @@ class EventDataProvider
             'order_id' => $order->id,
             'currency' => $this->getCurrency(),
             'content_ids' => $productList,
+            'content_type' => self::PRODUCT_TYPE,
             'value' => (float) ($order->total_paid_tax_excl),
         ];
 
@@ -494,11 +513,11 @@ class EventDataProvider
             $idProductAttribute = 0;
         }
 
-        $psProductId = ProductCatalogUtility::makeProductId($productId, $idProductAttribute);
-
         return [
             'content_type' => self::PRODUCT_TYPE,
-            'content_ids' => [$psProductId],
+            'content_ids' => [
+                ProductCatalogUtility::makeProductId($productId, $idProductAttribute),
+            ],
             'custom_properties' => [
                 'custom_attributes' => $attributes,
             ],
