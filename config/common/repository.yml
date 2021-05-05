@@ -18,3 +18,5 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Repository\ServerInformationRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ServerInformationRepository
+    arguments:
+      - '@PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'

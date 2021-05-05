@@ -21,11 +21,11 @@
 namespace PrestaShop\Module\Ps_facebook\Tracker;
 
 use Context;
-use PrestaShop\AccountsAuth\DependencyInjection\PsAccountsServiceProvider;
-use PrestaShop\AccountsAuth\Repository\ConfigurationRepository;
+use Exception;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class Segment implements TrackerInterface
 {
@@ -55,14 +55,20 @@ class Segment implements TrackerInterface
     private $configurationAdapter;
 
     /**
-     * Segment constructor.
+     * @var string
      */
-    public function __construct(Context $context, Env $env, ConfigurationAdapter $configurationAdapter)
+    private $userId;
+
+    public function __construct(Context $context, Env $env, ConfigurationAdapter $configurationAdapter, PsAccounts $psAccountsFacade)
     {
         $this->context = $context;
         $this->env = $env;
         $this->init();
         $this->configurationAdapter = $configurationAdapter;
+        try {
+            $this->userId = $psAccountsFacade->getPsAccountsService()->getShopUuidV4();
+        } catch (Exception $e) {
+        }
     }
 
     /**
@@ -94,12 +100,7 @@ class Segment implements TrackerInterface
 
     private function segmentTrack($domainName)
     {
-        /** @var ConfigurationRepository $configurationRepository */
-        $configurationRepository = PsAccountsServiceProvider::getInstance()
-            ->get(ConfigurationRepository::class);
-        $userId = $configurationRepository->getShopUuid();
-
-        if (!$userId) {
+        if (empty($this->userId)) {
             return;
         }
 
@@ -110,7 +111,7 @@ class Segment implements TrackerInterface
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         \Segment::track([
-            'userId' => $userId,
+            'userId' => $this->userId,
             'event' => $this->message,
             'channel' => 'browser',
             'context' => [
@@ -126,7 +127,6 @@ class Segment implements TrackerInterface
             ],
             'properties' => array_merge([
                 'module' => 'ps_facebook',
-                'email' => $configurationRepository->getFirebaseEmail(),
             ], $this->options),
         ]);
 

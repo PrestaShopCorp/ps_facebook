@@ -21,11 +21,13 @@
     variant="warning"
     class="m-3"
     show
-    v-if="!upgradeDone"
+    v-if="!actionNeededDone && actionNeeded"
   >
     <div>
       <p
-        v-html="md2html($t('configuration.messages.psAccountUpgradeNeededWarning', this))"
+        v-html="md2html(
+          $t(`configuration.messages.${moduleName}${actionNeeded}NeededWarning`, this)
+        )"
       />
       <div
         v-if="loading"
@@ -35,20 +37,20 @@
         v-else
         variant="primary"
         class="mt-2"
-        @click="onUpgradeClick"
+        @click="onActionClick"
       >
-        {{ $t('configuration.messages.psAccountUpgradeButton') }}
+        {{ $t(`configuration.messages.${moduleName}${actionNeeded}Button`) }}
       </b-button>
     </div>
   </b-alert>
   <b-alert
-    v-else
+    v-else-if="actionNeededDone"
     variant="success"
     class="m-3"
     show
     dismissible
   >
-    {{ $t('configuration.messages.psAccountUpgradeDone') }}
+    {{ $t(`configuration.messages.${moduleName}${actionNeeded}Done`) }}
   </b-alert>
 </template>
 
@@ -60,40 +62,71 @@ import {
 } from 'bootstrap-vue';
 
 export default defineComponent({
-  name: 'Configuration',
+  name: 'ModuleUpdateNeeded',
   components: {
     BAlert,
   },
   mixins: [],
   data() {
     return {
-      upgradeDone: false,
+      actionNeededDone: false,
       loading: false,
     };
   },
   props: {
-    psAccountsVersion: {
+    moduleName: {
       type: String,
-      required: false,
-      default: () => global.psAccountVersionCheck.psAccountsVersion || null,
+      required: true,
     },
-    requiredPsAccountsVersion: {
-      type: String,
-      required: false,
-      default: () => global.psAccountVersionCheck.requiredPsAccountsVersion || null,
+    moduleVersionCheck: {
+      type: Object,
+      required: true,
     },
-    psFacebookUpgradePsAccounts: {
-      type: String,
-      required: false,
-      default: () => global.psAccountVersionCheck.psFacebookUpgradePsAccounts || null,
+  },
+  computed: {
+    actionNeeded() {
+      /* if (this.moduleVersionCheck.needsUpgrade) {
+        return 'Upgrade';
+      } */
+      if (this.moduleName === 'Accounts') {
+        // No need to check ps_accounts is enabled & installed,
+        // as it is handled by the libraries
+        return null;
+      }
+      if (this.moduleVersionCheck.needsInstall) {
+        return 'Install';
+      }
+      if (this.moduleVersionCheck.needsEnable) {
+        return 'Enable';
+      }
+      return null;
+    },
+    actionRoute() {
+      if (this.actionNeeded === 'Upgrade') {
+        return this.moduleVersionCheck.psFacebookUpgradeRoute;
+      }
+      if (this.actionNeeded === 'Install') {
+        return this.moduleVersionCheck.psFacebookInstallRoute;
+      }
+      if (this.actionNeeded === 'Enable') {
+        return this.moduleVersionCheck.psFacebookEnableRoute;
+      }
+      return null;
+    },
+    // Specific to the upgrade
+    currentVersion() {
+      return this.moduleVersionCheck.currentVersion || null;
+    },
+    requiredVersion() {
+      return this.moduleVersionCheck.requiredVersion || null;
     },
   },
   methods: {
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
-    onUpgradeClick() {
+    onActionClick() {
       this.loading = true;
 
-      fetch(this.psFacebookUpgradePsAccounts, {
+      fetch(this.actionRoute, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
       }).then((res) => {
@@ -106,14 +139,14 @@ export default defineComponent({
           throw new Error('Error!');
         }
         this.loading = false;
-        this.upgradeDone = true;
-        this.$segment.track('PS Account upgraded from alert', {
+        this.actionNeededDone = true;
+        this.$segment.track(`${this.moduleName} upgraded from alert`, {
           module: 'ps_facebook',
         });
       }).catch((error) => {
         console.error(error);
         this.loading = false;
-        this.$segment.track('Upgrade of PS Accounts failed', {
+        this.$segment.track(`Upgrade of ${this.moduleName} failed`, {
           module: 'ps_facebook',
         });
       });
@@ -121,6 +154,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-</style>

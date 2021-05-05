@@ -18,15 +18,15 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
-use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
+use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -44,6 +44,11 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     private $env;
 
     /**
+     * @var ModuleUpgradePresenter
+     */
+    private $moduleUpgradePresenter;
+
+    /**
      * @var MultishopDataProvider
      */
     private $multishopDataProvider;
@@ -58,6 +63,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
+        $this->moduleUpgradePresenter = $this->module->getService(ModuleUpgradePresenter::class);
         $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->shopRepository = $this->module->getService(ShopRepository::class);
         $this->module->getService(ErrorHandler::class);
@@ -66,7 +72,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
-        $psAccountsService = new PsAccountsService();
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
@@ -86,26 +91,21 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ]);
         }
 
-        $needsPsAccountsUpgrade = false;
-        $psAccountsVersion = null;
-        if (Module::isInstalled('ps_accounts')) {
-            $psAccounts = Module::getInstanceByName('ps_accounts');
-            if ($psAccounts !== false) {
-                $psAccountsVersion = $psAccounts->version;
-
-                $needsPsAccountsUpgrade = version_compare(
-                    $psAccountsVersion,
-                    Config::REQUIRED_PS_ACCOUNTS_VERSION,
-                    '<'
-                );
-            }
+        try {
+            $psAccountsService = $this->module->getService(PsAccounts::class)->getPsAccountsService();
+            $psAccountsToken = $psAccountsService->getOrRefreshToken();
+            $psAccountShopId = $psAccountsService->getShopUuidV4();
+        } catch (Exception $e) {
+            $psAccountsToken = '';
+            $psAccountShopId = null;
         }
 
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
-            'contextPsAccounts' => (object) $this->presentPsAccounts(),
-            // getOrRefreshToken() does not exist on very old versions of the lib
-            'psAccountsToken' => method_exists($psAccountsService, 'getOrRefreshToken') ? $psAccountsService->getOrRefreshToken() : '',
+            'contextPsAccounts' => (object) $this->module->getService(PsAccounts::class)
+                ->getPsAccountsPresenter()
+                ->present($this->module->name),
+            'psAccountsToken' => $psAccountsToken,
             'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
@@ -327,21 +327,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
-            'psAccountShopId' => $psAccountsService->getShopUuidV4(),
-            'psAccountVersionCheck' => [
-                'needsPsAccountsUpgrade' => $needsPsAccountsUpgrade,
-                'psAccountsVersion' => $psAccountsVersion,
-                'requiredPsAccountsVersion' => Config::REQUIRED_PS_ACCOUNTS_VERSION,
-                'psFacebookUpgradePsAccounts' => $this->context->link->getAdminLink(
-                    'AdminAjaxPsfacebook',
-                    true,
-                    [],
-                    [
-                        'action' => 'UpgradePsAccounts',
-                        'ajax' => 1,
-                    ]
-                ),
-            ],
+            'psAccountShopId' => $psAccountShopId,
+            'psEventBusVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
+                'ps_eventbus',
+                Config::REQUIRED_PS_EVENTBUS_VERSION
+            ),
+            'psAccountsVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
+                'ps_accounts',
+                Config::REQUIRED_PS_ACCOUNTS_VERSION
+            ),
         ]);
         $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/app.tpl');
 
@@ -358,70 +352,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $access_token = Tools::getValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
         if (!empty($access_token)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
-        }
-    }
-
-    private function presentPsAccounts()
-    {
-        $this->psAccountsEnvVarHotFix();
-
-        $psAccountPresenter = new PsAccountsPresenter($this->module->name);
-
-        return $this->psAccountsHotFix($psAccountPresenter->present());
-    }
-
-    /**
-     * Quickfix for multishop with PS Accounts.
-     * The shop in the Context class is always defined, even if multistore. This means the multistore selector
-     * is never displayed at the moment.
-
-     * TODO : Move in https://github.com/PrestaShopCorp/prestashop_accounts_vue_components
-     */
-    private function psAccountsHotFix(array $presentedData)
-    {
-        if (!isset($presentedData['shops'])) {
-            return;
-        }
-
-        foreach ($presentedData['shops'] as &$shopGroup) {
-            foreach ($shopGroup['shops'] as &$shop) {
-                $shop['url'] = $this->context->link->getAdminLink(
-                    'AdminModules',
-                    true,
-                    [],
-                    [
-                        'configure' => $this->module->name,
-                        'setShopContext' => 's-' . $shop['id'],
-                    ]
-                );
-            }
-        }
-
-        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
-
-        return $presentedData;
-    }
-
-    /**
-     * Quickfix for multishop with PS Accounts.
-     * Some env var are used without being checked first, and this may break the whole script execution if the version installed is old.
-     * We set them with a default value until these checks exist.
-     */
-    private function psAccountsEnvVarHotFix()
-    {
-        $envVarUsed = [
-            'ACCOUNTS_SVC_API_URL',
-            'BILLING_SVC_API_URL',
-            'SENTRY_CREDENTIALS',
-            'SSO_RESEND_VERIFICATION_EMAIL',
-            'ACCOUNTS_SVC_UI_URL',
-            'SSO_MANAGE_ACCOUNT',
-        ];
-
-        foreach ($envVarUsed as $envVar) {
-            if (!isset($_ENV[$envVar])) {
-                $_ENV[$envVar] = null;
-            }
         }
     }
 }
