@@ -35,6 +35,10 @@ class PrevalidationScanCacheProvider
      */
     public function get($cacheKey)
     {
+        if (!file_exists($this->getCacheFilePath($cacheKey))) {
+            return null;
+        }
+
         return file_get_contents($this->getCacheFilePath($cacheKey));
     }
 
