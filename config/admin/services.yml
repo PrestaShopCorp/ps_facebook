@@ -1,4 +1,3 @@
 imports:
   - { resource: ../common.yml }
-  - { resource: accounts.yml }
   - { resource: installer.yml }
