@@ -18,6 +18,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
@@ -91,21 +92,12 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             ]);
         }
 
-        try {
-            $psAccountsService = $this->module->getService(PsAccounts::class)->getPsAccountsService();
-            $psAccountsToken = $psAccountsService->getOrRefreshToken();
-            $psAccountShopId = $psAccountsService->getShopUuidV4();
-        } catch (Exception $e) {
-            $psAccountsToken = '';
-            $psAccountShopId = null;
-        }
+        $psAccountsData = $this->getPsAccountsData();
 
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
-            'contextPsAccounts' => (object) $this->module->getService(PsAccounts::class)
-                ->getPsAccountsPresenter()
-                ->present($this->module->name),
-            'psAccountsToken' => $psAccountsToken,
+            'contextPsAccounts' => (object) $this->getPsAccountsContext(),
+            'psAccountsToken' => $psAccountsData['psAccountsToken'],
             'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
             'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
@@ -327,7 +319,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'email' => $this->context->employee->email,
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
-            'psAccountShopId' => $psAccountShopId,
+            'psAccountShopId' => $psAccountsData['psAccountShopId'],
             'psEventBusVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
                 'ps_eventbus',
                 Config::REQUIRED_PS_EVENTBUS_VERSION
@@ -352,6 +344,129 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $access_token = Tools::getValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN);
         if (!empty($access_token)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
+        }
+    }
+
+    private function getPsAccountsData()
+    {
+        $data = [
+            'psAccountsToken' => '',
+            'psAccountShopId' => null,
+        ];
+
+        $useNewLib = false;
+        $moduleName = 'ps_accounts';
+        $moduleInstance = null;
+        if (Module::isInstalled($moduleName)) {
+            $moduleInstance = Module::getInstanceByName($moduleName);
+            if ($moduleInstance !== false) {
+                $currentVersion = $moduleInstance->version;
+
+                $useNewLib = version_compare(
+                    $currentVersion,
+                    '4.0.0',
+                    '<'
+                );
+            }
+        }
+
+        if ($useNewLib) {
+            try {
+                $psAccountsService = $this->module->getService(PsAccounts::class)->getPsAccountsService();
+                $data['psAccountsToken'] = $psAccountsService->getOrRefreshToken();
+                $data['psAccountShopId'] = $psAccountsService->getShopUuidV4();
+            } catch (Exception $e) {}
+
+            return $data;
+        }
+
+        $psAccountsService = new PsAccountsService();
+        $data['psAccountsToken'] = method_exists($psAccountsService, 'getOrRefreshToken') ? $psAccountsService->getOrRefreshToken() : '';
+        $data['psAccountShopId'] = $psAccountsService->getShopUuidV4();
+        return $data;
+    }
+
+    private function getPsAccountsContext()
+    {
+        $useNewLib = false;
+        $moduleName = 'ps_accounts';
+        $moduleInstance = null;
+        if (Module::isInstalled($moduleName)) {
+            $moduleInstance = Module::getInstanceByName($moduleName);
+            if ($moduleInstance !== false) {
+                $currentVersion = $moduleInstance->version;
+
+                $useNewLib = version_compare(
+                    $currentVersion,
+                    '4.0.0',
+                    '<'
+                );
+            }
+        }
+
+        if ($useNewLib) {
+            return $this->module->getService(PsAccounts::class)
+                ->getPsAccountsPresenter()
+                ->present($this->module->name);
+        }
+
+        $this->psAccountsEnvVarHotFix();
+        $psAccountPresenter = new PsAccountsPresenter($this->module->name);
+        return $this->psAccountsHotFix($psAccountPresenter->present());
+    }
+
+
+    /**
+     * Quickfix for multishop with PS Accounts.
+     * The shop in the Context class is always defined, even if multistore. This means the multistore selector
+     * is never displayed at the moment.
+     * TODO : Move in https://github.com/PrestaShopCorp/prestashop_accounts_vue_components
+     */
+    private function psAccountsHotFix(array $presentedData)
+    {
+        if (!isset($presentedData['shops'])) {
+            return;
+        }
+
+        foreach ($presentedData['shops'] as &$shopGroup) {
+            foreach ($shopGroup['shops'] as &$shop) {
+                $shop['url'] = $this->context->link->getAdminLink(
+                    'AdminModules',
+                    true,
+                    [],
+                    [
+                        'configure' => $this->module->name,
+                        'setShopContext' => 's-' . $shop['id'],
+                    ]
+                );
+            }
+        }
+
+        $presentedData['isShopContext'] = Shop::getContext() === Shop::CONTEXT_SHOP;
+
+        return $presentedData;
+    }
+
+    /**
+     * Quickfix for multishop with PS Accounts.
+     * Some env var are used without being checked first, and this may break the whole script execution if the version installed is old.
+     * We set them with a default value until these checks exist.
+     */
+    private function psAccountsEnvVarHotFix()
+    {
+        $envVarUsed = [
+            'ACCOUNTS_SVC_API_URL',
+            'BILLING_SVC_API_URL',
+            'SENTRY_CREDENTIALS',
+            'SSO_RESEND_VERIFICATION_EMAIL',
+            'ACCOUNTS_SVC_UI_URL',
+            'SSO_MANAGE_ACCOUNT',
+        ];
+
+        foreach ($envVarUsed as $envVar) {
+            if (!isset($_ENV[$envVar])) {
+                $_ENV[$envVar] = null;
+            }
         }
     }
 }
