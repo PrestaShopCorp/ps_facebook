@@ -19,6 +19,7 @@
  */
 
 use PrestaShop\AccountsAuth\Presenter\PsAccountsPresenter;
+use PrestaShop\AccountsAuth\Service\PsAccountsService;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
@@ -365,7 +366,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 $useNewLib = version_compare(
                     $currentVersion,
                     '4.0.0',
-                    '<'
+                    '>='
                 );
             }
         }
@@ -375,7 +376,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 $psAccountsService = $this->module->getService(PsAccounts::class)->getPsAccountsService();
                 $data['psAccountsToken'] = $psAccountsService->getOrRefreshToken();
                 $data['psAccountShopId'] = $psAccountsService->getShopUuidV4();
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+            }
 
             return $data;
         }
@@ -383,6 +385,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $psAccountsService = new PsAccountsService();
         $data['psAccountsToken'] = method_exists($psAccountsService, 'getOrRefreshToken') ? $psAccountsService->getOrRefreshToken() : '';
         $data['psAccountShopId'] = $psAccountsService->getShopUuidV4();
+
         return $data;
     }
 
@@ -399,7 +402,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 $useNewLib = version_compare(
                     $currentVersion,
                     '4.0.0',
-                    '<'
+                    '>='
                 );
             }
         }
@@ -412,9 +415,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         $this->psAccountsEnvVarHotFix();
         $psAccountPresenter = new PsAccountsPresenter($this->module->name);
+
         return $this->psAccountsHotFix($psAccountPresenter->present());
     }
-
 
     /**
      * Quickfix for multishop with PS Accounts.
