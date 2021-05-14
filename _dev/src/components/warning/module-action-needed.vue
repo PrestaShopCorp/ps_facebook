@@ -85,9 +85,9 @@ export default defineComponent({
   },
   computed: {
     actionNeeded() {
-      /* if (this.moduleVersionCheck.needsUpgrade) {
+      if (this.moduleVersionCheck.needsUpgrade) {
         return 'Upgrade';
-      } */
+      }
       if (this.moduleName === 'Accounts') {
         // No need to check ps_accounts is enabled & installed,
         // as it is handled by the libraries
