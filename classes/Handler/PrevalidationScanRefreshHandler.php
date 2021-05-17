@@ -67,7 +67,7 @@ class PrevalidationScanRefreshHandler
 
         $products = $this->productRepository->getProductsWithErrors($this->shopId, $page);
         $this->prevalidationScanCacheProvider->set(
-            PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $page,
+            PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $this->shopId . '_' . $page,
             json_encode($products)
         );
         $numberOfProductsWithError = count($products) + Config::REPORTS_PER_PAGE * $page;
@@ -87,7 +87,7 @@ class PrevalidationScanRefreshHandler
         $summary = $this->generateSummaryData($numberOfProductsWithError);
 
         $this->prevalidationScanCacheProvider->set(
-            PrevalidationScanCacheProvider::CACHE_KEY_SUMMARY,
+            PrevalidationScanCacheProvider::CACHE_KEY_SUMMARY . $this->shopId,
             json_encode($summary)
         );
 

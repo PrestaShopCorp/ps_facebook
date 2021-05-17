@@ -438,7 +438,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'matchingDone' => $googleCategoryRepository->isMatchingDone($this->context->shop->id),
                     'matchingProgress' => $informationAboutCategoryMatching,
                     'validation' => [
-                        'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary(),
+                        'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary($this->context->shop->id),
                         'reporting' => [
                             'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
                             'catalog' => $productCount['product_count'],
@@ -568,7 +568,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         /** @var PrevalidationScanDataProvider $prevalidationScanDataProvider */
         $prevalidationScanDataProvider = $this->module->getService(PrevalidationScanDataProvider::class);
-        $productsWithErrors = $prevalidationScanDataProvider->getPageOfPrevalidationScan($page);
+        $productsWithErrors = $prevalidationScanDataProvider->getPageOfPrevalidationScan(
+            $this->context->shop->id,
+            $page
+        );
 
         $this->ajaxDie(json_encode([
             'success' => true,

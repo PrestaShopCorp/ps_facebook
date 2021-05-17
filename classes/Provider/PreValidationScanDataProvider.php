@@ -17,22 +17,23 @@ class PrevalidationScanDataProvider
     /**
      * @return array|null
      */
-    public function getPrevalidationScanSummary()
+    public function getPrevalidationScanSummary($shopId)
     {
         return json_decode($this->preValidationCacheProvider->get(
-            PrevalidationScanCacheProvider::CACHE_KEY_SUMMARY
+            PrevalidationScanCacheProvider::CACHE_KEY_SUMMARY . $shopId
         ));
     }
 
     /**
      * @param int $page
+     * @param int $shopId
      *
      * @return array|null
      */
-    public function getPageOfPrevalidationScan($page)
+    public function getPageOfPrevalidationScan($shopId, $page)
     {
         return json_decode($this->preValidationCacheProvider->get(
-            PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $page
+            PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $shopId . '_' . $page
         ));
     }
 }
