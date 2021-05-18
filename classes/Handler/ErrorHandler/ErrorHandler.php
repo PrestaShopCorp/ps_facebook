@@ -48,12 +48,16 @@ class ErrorHandler
                     'ps_facebook_is_installed' => Module::isInstalled($module->name),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
+                'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~ E_USER_DEPRECATED /*& ~E_NOTICE*/,
             ]
         );
         // We use realpath to get errors even if module is behind a symbolic link
         $this->client->setAppPath(realpath(_PS_MODULE_DIR_ . $module->name . '/'));
-        // Useless as it will exclude everything even if specified in the app path
-        //$this->client->setExcludedAppPaths([_PS_ROOT_DIR_]);
+        // - Do no not add the shop root folder, it will exclude everything even if specified in the app path.
+        // - Excluding vendor/ avoids errors comming from one of your libraries library when called by another module.
+        $this->client->setExcludedAppPaths([
+            realpath(_PS_MODULE_DIR_ . $module->name . '/vendor/'),
+        ]);
         $this->client->install();
     }
 
