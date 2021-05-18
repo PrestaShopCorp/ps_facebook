@@ -373,7 +373,7 @@ class EventDataProvider
         /** @var Order $order */
         $order = $this->module->psVersionIs17 ? $params['order'] : $params['objOrder'];
         $productList = [];
-        foreach ($order->getProducts() as $product) {
+        foreach ($order->getCartProducts() as $product) {
             $productList[] = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
                 $product['id_product_attribute']
