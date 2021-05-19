@@ -22,20 +22,26 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use FacebookAds\Object\Values\ProductItemAvailabilityValues;
 use Product;
+use StockAvailable;
 
 class ProductAvailabilityProvider implements ProductAvailabilityProviderInterface
 {
     /**
      * @param int $productId
+     * @param int $productAttributeId
      *
      * @return string
      *
      * @throws \PrestaShopDatabaseException
      * @throws \PrestaShopException
      */
-    public function getProductAvailability($productId)
+    public function getProductAvailability($productId, $productAttributeId)
     {
         $product = new Product($productId);
+
+        if ((int) StockAvailable::getQuantityAvailableByProduct($productId, $productAttributeId)) {
+            return ProductItemAvailabilityValues::IN_STOCK;
+        }
 
         switch ($product->out_of_stock) {
             case 1:
@@ -46,7 +52,7 @@ class ProductAvailabilityProvider implements ProductAvailabilityProviderInterfac
                 return $isAvailable ? ProductItemAvailabilityValues::AVAILABLE_FOR_ORDER : ProductItemAvailabilityValues::OUT_OF_STOCK;
             case 0:
             default:
-                return ProductItemAvailabilityValues::DISCONTINUED;
+                return ProductItemAvailabilityValues::OUT_OF_STOCK;
         }
     }
 }
