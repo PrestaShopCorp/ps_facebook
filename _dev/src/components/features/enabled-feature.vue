@@ -19,23 +19,22 @@
             v-if="allowDisplayOfSwitch"
           >
             <span class="d-none d-sm-inline">
-              {{
-                $t(switchActivated ?
-                  'configuration.app.activated' :
-                  'configuration.app.disabled')
-              }}
+              {{ statusText }}
             </span>
             <div
               class="switch-input switch-input-lg ml-1"
-              :class="[switchActivated ? '-checked' : null, isLoading ? 'disabled' : null]"
+              :class="[
+                switchActivated && !frozenSwitch ? '-checked' : null,
+                isLoading || frozenSwitch ? 'disabled' : null
+              ]"
               @click="switchClick()"
               data-toggle="modal"
-              :data-target="switchActivated ? `#modal_${name}` : null"
+              :data-target="switchActivated && !frozenSwitch ? `#modal_${name}` : null"
             >
               <input
                 class="switch-input-lg"
                 type="checkbox"
-                :checked="switchActivated"
+                :checked="switchActivated && !frozenSwitch"
               >
             </div>
           </div>
@@ -149,6 +148,11 @@ export default defineComponent({
       required: true,
       default: false,
     },
+    frozenSwitch: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     allowDisplayOfSwitch: {
       type: Boolean,
       required: false,
@@ -175,8 +179,22 @@ export default defineComponent({
       isLoading: this.loading,
     };
   },
+  computed: {
+    statusText() {
+      if (this.frozenSwitch) {
+        return this.$t('configuration.app.moduleDisabled');
+      }
+      if (!this.switchActivated) {
+        return this.$t('configuration.app.disabled');
+      }
+      return this.$t('configuration.app.activated');
+    },
+  },
   methods: {
     switchClick() {
+      if (this.frozenSwitch) {
+        return;
+      }
       if (!this.isLoading) {
         if (!this.switchActivated) {
           this.updateFeatureState();
