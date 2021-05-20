@@ -81,6 +81,7 @@
           :ps-facebook-app-id="psFacebookAppId"
           :external-business-id="dynamicExternalBusinessId"
           :context-ps-facebook="dynamicContextPsFacebook"
+          :is-module-enabled="isModuleEnabled"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
           @onUninstallClick="onUninstallClick"
@@ -290,6 +291,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: () => global.psFacebookTimezone || 'Europe/Paris',
+    },
+    isModuleEnabled: {
+      type: Boolean,
+      required: false,
+      default: () => global.psFacebookModuleEnabled ?? true,
     },
     locale: {
       type: String,

@@ -140,6 +140,7 @@ class PsFacebookTranslations
                     'lastActive' => $this->module->l('Last active', 'PsFacebookTranslations'),
                     'activated' => $this->module->l('Activated', 'PsFacebookTranslations'),
                     'disabled' => $this->module->l('Disabled', 'PsFacebookTranslations'),
+                    'moduleDisabled' => $this->module->l('Module is disabled', 'PsFacebookTranslations'),
                     'viewStats' => $this->module->l('View stats', 'PsFacebookTranslations'),
                     'informationCannotBeDisplayedWarning' => $this->module->l('This information cannot be displayed at the moment', 'PsFacebookTranslations'),
                 ],

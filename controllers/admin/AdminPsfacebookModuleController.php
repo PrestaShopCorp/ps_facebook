@@ -315,6 +315,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psFacebookCurrency' => $defaultCurrency->iso_code,
             'psFacebookTimezone' => $this->configurationAdapter->get('PS_TIMEZONE'),
             'psFacebookLocale' => $defaultLanguage->locale,
+            'psFacebookModuleEnabled' => Module::isEnabled($this->module->name),
             'shopDomain' => Tools::getShopDomain(false),
             'shopUrl' => Tools::getShopDomainSsl(true),
             'email' => $this->context->employee->email,
