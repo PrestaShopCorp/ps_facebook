@@ -58,6 +58,13 @@ class ErrorHandler
         $this->client->setExcludedAppPaths([
             realpath(_PS_MODULE_DIR_ . $module->name . '/vendor/'),
         ]);
+        $this->client->setExcludedDomains(['127.0.0.1', 'localhost', '.local']);
+
+        // Other conditions can be done here to prevent the call of this method:
+        // - PHP versions,
+        // - PS versions,
+        // - Integration environment,
+        // - ...
         $this->client->install();
     }
 
