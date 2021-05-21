@@ -89,6 +89,7 @@ class ModuleFilteredRavenClient extends Raven_Client
     public function setExcludedDomains(array $domains)
     {
         $this->excluded_domains = $domains;
+
         return $this;
     }
 
@@ -119,6 +120,7 @@ class ModuleFilteredRavenClient extends Raven_Client
                 }
             }
         }
+
         return false;
     }
 }

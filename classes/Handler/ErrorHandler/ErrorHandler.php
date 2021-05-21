@@ -48,7 +48,7 @@ class ErrorHandler
                     'ps_facebook_is_installed' => Module::isInstalled($module->name),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
-                'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~ E_USER_DEPRECATED /*& ~E_NOTICE*/,
+                'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED /*& ~E_NOTICE*/ ,
             ]
         );
         // We use realpath to get errors even if module is behind a symbolic link
@@ -60,11 +60,19 @@ class ErrorHandler
         ]);
         $this->client->setExcludedDomains(['127.0.0.1', 'localhost', '.local']);
 
-        // Other conditions can be done here to prevent the call of this method:
+        // Other conditions can be done here to prevent the full installation of the client:
         // - PHP versions,
         // - PS versions,
         // - Integration environment,
         // - ...
+        if ($env->get('PSX_FACEBOOK_APP_ID') !== Config::PSX_FACEBOOK_APP_ID) {
+            return;
+        }
+
+        if (version_compare(phpversion(), '7.4.0', '>=') && version_compare(_PS_VERSION_, '1.7.8.0', '<')) {
+            return;
+        }
+
         $this->client->install();
     }
 
