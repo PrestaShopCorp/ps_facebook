@@ -185,7 +185,10 @@ class EventDataProvider
         $this->context->smarty->assign(
             [
                 'retailer_item_id' => $fbProductId,
-                'product_availability' => $this->availabilityProvider->getProductAvailability((int) $product['id_product']),
+                'product_availability' => $this->availabilityProvider->getProductAvailability(
+                    (int) $product['id_product'],
+                    (int) $product['id_product_attribute']
+                ),
                 'item_group_id' => $category,
             ]
         );

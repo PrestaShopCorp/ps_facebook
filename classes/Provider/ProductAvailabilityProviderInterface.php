@@ -27,5 +27,5 @@ interface ProductAvailabilityProviderInterface
      *
      * @return string
      */
-    public function getProductAvailability($productId);
+    public function getProductAvailability($productId, $productAttributeId);
 }
