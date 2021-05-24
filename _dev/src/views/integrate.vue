@@ -52,6 +52,7 @@
             :manage-route="manageRoute"
             @onToggleSwitch="onToggleSwitch"
             :allow-display-of-switch="disallowSwitch.indexOf(featureName) === -1"
+            :frozen-switch="!isModuleEnabled"
           />
         </feature-list>
       </div>
@@ -165,6 +166,11 @@ export default defineComponent({
         page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
         view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${global.contextPsFacebook?.page?.id}`,
       }),
+    },
+    isModuleEnabled: {
+      type: Boolean,
+      required: false,
+      default: () => global.psFacebookModuleEnabled ?? true,
     },
   },
   data() {

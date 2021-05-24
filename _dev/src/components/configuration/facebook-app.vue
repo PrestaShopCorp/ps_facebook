@@ -43,17 +43,20 @@
         class="switchy float-right mb-1 ml-2"
       >
         <span class="d-none d-sm-inline">
-          {{ $t(switchActivated ? 'configuration.app.activated' : 'configuration.app.disabled') }}
+          {{ statusText }}
         </span>
         <div
           class="switch-input switch-input-lg ml-1"
-          :class="switchActivated ? '-checked' : null"
+          :class="[
+            switchActivated && !frozenSwitch ? '-checked' : null,
+            frozenSwitch ? 'disabled' : null,
+          ]"
           @click="switchClick"
         >
           <input
             class="switch-input-lg"
             type="checkbox"
-            :checked="switchActivated"
+            :checked="switchActivated && !frozenSwitch"
           >
         </div>
       </div>
@@ -169,6 +172,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    frozenSwitch: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     tooltip: {
       type: String,
       required: false,
@@ -190,8 +198,22 @@ export default defineComponent({
       switchActivated: this.activationSwitch,
     };
   },
+  computed: {
+    statusText() {
+      if (this.frozenSwitch) {
+        return this.$t('configuration.app.moduleDisabled');
+      }
+      if (!this.switchActivated) {
+        return this.$t('configuration.app.disabled');
+      }
+      return this.$t('configuration.app.activated');
+    },
+  },
   methods: {
     switchClick() {
+      if (this.frozenSwitch) {
+        return;
+      }
       this.switchActivated = !this.switchActivated;
       this.$emit('onActivation', this.switchActivated);
       this.$segment.track('Click on pixel switch CTA', {
@@ -233,6 +255,21 @@ export default defineComponent({
 
     .switchy {
       margin-top: 2.5rem;
+
+      .switch-input {
+        &:not(.-checked) {
+          background: #c05c67 !important;
+          &::after {
+            color: #c05c67 !important;
+          }
+        }
+        &.disabled {
+          background: #eee !important;
+          &::after {
+            color: #6c868e !important;
+          }
+        }
+      }
     }
   }
 </style>

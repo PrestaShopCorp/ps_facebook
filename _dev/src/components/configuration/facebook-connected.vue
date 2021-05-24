@@ -176,6 +176,7 @@
               :last-active="contextPsFacebook.pixel.lastActive"
               :url="pixelUrl"
               :activation-switch="contextPsFacebook.pixel.isActive"
+              :frozen-switch="!isModuleEnabled"
               @onActivation="pixelActivation"
             />
           </b-col>
@@ -272,6 +273,11 @@ export default defineComponent({
       default: null,
     },
     startExpanded: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    isModuleEnabled: {
       type: Boolean,
       required: false,
       default: true,
