@@ -168,6 +168,7 @@ class Ps_facebook extends Module
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.7.0.0', 'max' => _PS_VERSION_];
 
+        // Needed during PrestaShop installation, where Link class in not initialized
         if ($this->context->link !== null) {
             $this->front_controller = $this->context->link->getModuleLink(
                 $this->name,
