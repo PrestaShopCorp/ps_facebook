@@ -693,16 +693,16 @@
         },
         {
             "name": "prestashop/module-lib-service-container",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/module-lib-service-container.git",
-                "reference": "8a64bd83c71fdb077fbd05fbf2677b16ec2d8e53"
+                "reference": "96f4f551b96cffb1f78462cd4722f0d2b057abda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/module-lib-service-container/zipball/8a64bd83c71fdb077fbd05fbf2677b16ec2d8e53",
-                "reference": "8a64bd83c71fdb077fbd05fbf2677b16ec2d8e53",
+                "url": "https://api.github.com/repos/PrestaShopCorp/module-lib-service-container/zipball/96f4f551b96cffb1f78462cd4722f0d2b057abda",
+                "reference": "96f4f551b96cffb1f78462cd4722f0d2b057abda",
                 "shasum": ""
             },
             "require": {
@@ -739,7 +739,7 @@
                 "package",
                 "prestashop"
             ],
-            "time": "2020-10-21T08:35:58+00:00"
+            "time": "2021-06-01T15:21:20+00:00"
         },
         {
             "name": "prestashop/prestashop-accounts-auth",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "segmentio/analytics-php",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/segmentio/analytics-php.git",
-                "reference": "e0aef0001b6d3a375341888b7bb98e34de62ecae"
+                "reference": "7e25b2f6094632bbfb79e33ca024d533899a2ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/segmentio/analytics-php/zipball/e0aef0001b6d3a375341888b7bb98e34de62ecae",
-                "reference": "e0aef0001b6d3a375341888b7bb98e34de62ecae",
+                "url": "https://api.github.com/repos/segmentio/analytics-php/zipball/7e25b2f6094632bbfb79e33ca024d533899a2ffe",
+                "reference": "7e25b2f6094632bbfb79e33ca024d533899a2ffe",
                 "shasum": ""
             },
             "require": {
@@ -1104,7 +1104,7 @@
                 "segment",
                 "segmentio"
             ],
-            "time": "2021-03-11T21:29:11+00:00"
+            "time": "2021-05-31T22:44:22+00:00"
         },
         {
             "name": "sentry/sentry",
@@ -1930,16 +1930,16 @@
     "packages-dev": [
         {
             "name": "composer/semver",
-            "version": "3.2.4",
+            "version": "3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "a02fdf930a3c1c3ed3a49b5f63859c0c20e10464"
+                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/a02fdf930a3c1c3ed3a49b5f63859c0c20e10464",
-                "reference": "a02fdf930a3c1c3ed3a49b5f63859c0c20e10464",
+                "url": "https://api.github.com/repos/composer/semver/zipball/31f3ea725711245195f62e54ffa402d8ef2fdba9",
+                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9",
                 "shasum": ""
             },
             "require": {
@@ -2002,7 +2002,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-13T08:59:24+00:00"
+            "time": "2021-05-24T12:41:47+00:00"
         },
         {
             "name": "composer/xdebug-handler",
