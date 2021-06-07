@@ -17,7 +17,7 @@ Vue.use(VueSegment, {
   id: global.psFacebookSegmentId,
   router,
   debug: process.env.NODE_ENV !== 'production',
-  pageCategory: 'ps_facebook',
+  pageCategory: '[FBK]',
 });
 
 new Vue({
