@@ -17,7 +17,7 @@ Vue.use(VueSegment, {
   id: global.psFacebookSegmentId,
   router,
   debug: process.env.NODE_ENV !== 'production',
-  pageCategory: 'ps_facebook',
+  pageCategory: '[FBK]',
 });
 
 new Vue({
@@ -59,8 +59,7 @@ new Vue({
           email: this.$store.state.context.appContext.user?.email,
           language: this.$store.state.context.statei18nSettings?.isoCode,
           version_ps: this.$store.state.context.appContext.psVersion,
-          version_module: this.$store.state.context.appContext.moduleVersion,
-          module: 'ps_facebook',
+          fbk_module_version: this.$store.state.context.appContext.moduleVersion,
           external_business_id: this.psFacebookExternalBusinessId,
         });
       }
