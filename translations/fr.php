@@ -135,7 +135,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f335ab78d4901060542c5
 1. L\'export du catalogue a lieu une fois par jour (durant la nuit)
 2. La synchronisation de vos informations produits PrestaShop avec Facebook peut prendre jusqu\'à 24 heures.
 3. Uniquement les produits "actifs" sont exportés vers Facebook. 
-4. Seuls les produits dont les champs obligatoires sont remplis seront synchronisés : uen description courte, la quantité, le prix, l\'image produit, un fabricant ou un ean/upc/isbn.
+4. Seuls les produits dont les champs obligatoires sont remplis seront synchronisés : une description courte, la quantité, le prix, l\'image produit, un fabricant ou un ean/upc/isbn.
 5. L\'exportation des localisations de produits (pour les traductions) est encore en bêta et pourrait déclencher des erreurs inattendues.
 6. Uniquement les produits ayant subis des modifications seront mis à jour sur votre catalogue.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_8f56ed998fa18bebe7f00e2c0ec0e191'] = 'Plugin Messenger Chat';
