@@ -758,11 +758,31 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     private function getReadme()
     {
         $isoCode = $this->context->language->iso_code;
+        $baseUrl = 'https://storage.googleapis.com/psessentials-documentation/' . $this->module->name;
 
-        if (!file_exists(_PS_ROOT_DIR_ . '/modules/' . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf')) {
+        if (!$this->checkFileExist($baseUrl . '/user_guide_' . $isoCode . '.pdf')) {
             $isoCode = 'en';
         }
 
-        return _MODULE_DIR_ . $this->module->name . '/docs/user_guide_' . $isoCode . '.pdf';
+        return $baseUrl . '/user_guide_' . $isoCode . '.pdf';
+    }
+
+    /**
+     * Use cUrl to get HTTP headers and detect any HTTP 404
+     *
+     * @param string $docUrl
+     *
+     * @return bool
+     */
+    private function checkFileExist($docUrl)
+    {
+        $ch = curl_init($docUrl);
+
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return $retcode < 400;
     }
 }
