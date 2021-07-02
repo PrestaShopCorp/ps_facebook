@@ -74,7 +74,7 @@ class ProductSyncReportProvider
                 false
             );
 
-            return false;
+            $response = [];
         }
 
         return $this->fixMissingValues($response);
