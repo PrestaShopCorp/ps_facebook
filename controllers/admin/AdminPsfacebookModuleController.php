@@ -76,6 +76,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
+        $psAccounts = $this->module->getService(PsAccounts::class)->getPsAccountsService();
+
         $this->context->smarty->assign([
             'id_pixel' => pSQL($this->configurationAdapter->get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL($this->configurationAdapter->get('PS_FBE_ACCESS_TOKEN')),
@@ -83,6 +85,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'version' => $this->module->version,
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
+            'urlAccountsVueCdn' => $psAccounts->getAccountsVueCdn(),
         ]);
 
         $defaultCurrency = $this->context->currency;

@@ -243,7 +243,13 @@ export default defineComponent({
     Introduction,
     Messages,
     MultiStoreSelector,
-    PsAccounts,
+    PsAccounts: async () => {
+      let psAccounts = window?.psaccountsVue?.PsAccounts;
+      if (!psAccounts) {
+        psAccounts = require('prestashop_accounts_vue_components').PsAccounts;
+      }
+      return psAccounts;
+    },
     ModuleActionNeeded,
     NoConfig,
     FacebookNotConnected,

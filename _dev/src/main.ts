@@ -20,49 +20,53 @@ Vue.use(VueSegment, {
   pageCategory: '[FBK]',
 });
 
-new Vue({
-  router,
-  store,
-  i18n,
-  template: '<App :contextPsFacebook="contextPsFacebook" />',
-  components: {App},
-  data() {
-    return {
-      // @ts-ignore
-      contextPsFacebook: global.contextPsFacebook,
-      // @ts-ignore
-      psFacebookExternalBusinessId: global.psFacebookExternalBusinessId,
-    };
-  },
-  methods: {
-    refreshContextPsFacebook(context) {
-      this.contextPsFacebook = context;
-      // @ts-ignore
-      global.contextPsFacebook = context;
-    },
-    refreshExternalBusinessId(externalBusinessId) {
-      this.psFacebookExternalBusinessId = externalBusinessId;
-      // @ts-ignore
-      global.psFacebookExternalBusinessId = externalBusinessId;
-    },
-    identifySegment() {
-      // @ts-ignore
-      if (!this.$segment) {
-        return;
-      }
+window.Vue = Vue;
 
-      const userId = this.$store.state.context?.appContext?.shopId;
-      if (userId) {
+window.onload = () => {
+  new Vue({
+    router,
+    store,
+    i18n,
+    template: '<App :contextPsFacebook="contextPsFacebook" />',
+    components: {App},
+    data() {
+      return {
         // @ts-ignore
-        this.$segment.identify(userId, {
-          name: this.$store.state.context.appContext.shopUrl,
-          email: this.$store.state.context.appContext.user?.email,
-          language: this.$store.state.context.statei18nSettings?.isoCode,
-          version_ps: this.$store.state.context.appContext.psVersion,
-          fbk_module_version: this.$store.state.context.appContext.moduleVersion,
-          external_business_id: this.psFacebookExternalBusinessId,
-        });
-      }
+        contextPsFacebook: global.contextPsFacebook,
+        // @ts-ignore
+        psFacebookExternalBusinessId: global.psFacebookExternalBusinessId,
+      };
     },
-  },
-}).$mount('#psFacebookApp');
+    methods: {
+      refreshContextPsFacebook(context) {
+        this.contextPsFacebook = context;
+        // @ts-ignore
+        global.contextPsFacebook = context;
+      },
+      refreshExternalBusinessId(externalBusinessId) {
+        this.psFacebookExternalBusinessId = externalBusinessId;
+        // @ts-ignore
+        global.psFacebookExternalBusinessId = externalBusinessId;
+      },
+      identifySegment() {
+        // @ts-ignore
+        if (!this.$segment) {
+          return;
+        }
+
+        const userId = this.$store.state.context?.appContext?.shopId;
+        if (userId) {
+          // @ts-ignore
+          this.$segment.identify(userId, {
+            name: this.$store.state.context.appContext.shopUrl,
+            email: this.$store.state.context.appContext.user?.email,
+            language: this.$store.state.context.statei18nSettings?.isoCode,
+            version_ps: this.$store.state.context.appContext.psVersion,
+            fbk_module_version: this.$store.state.context.appContext.moduleVersion,
+            external_business_id: this.psFacebookExternalBusinessId,
+          });
+        }
+      },
+    },
+  }).$mount('#psFacebookApp');
+};
