@@ -97,6 +97,13 @@
       "glass": {
         "text": "Sie sehen keinen gesicherten Facebook-Browser? Wir helfen Ihnen, das Fenster neu zu starten, um die Konfiguration abzuschlie\u00dfen. M\u00f6glicherweise m\u00fcssen Sie Popup-Fenster in Ihrem Browser zulassen, um fortzufahren.",
         "link": "Weiter"
+      },
+      "multiShopSelector": {
+        "title": "Modus Multi-Boutiquen aktiviert",
+        "subtitle": "Für diesen Dienst müssen Sie Ihre Filialen einzeln konfigurieren, können jedoch dasselbe Konto verwenden.",
+        "selectStore": "Bitte wählen Sie eine Premierenboutique zum Anspruch an der unten stehenden Liste",
+        "tips": "In der ersten konfigurierten Boutique können Sie sich bei der Auswahl der weiteren Boutiquen ebenso wie bei der Auswahl der Boutiquen mit horizontaler Menüführung an die weiteren Boutiquen wenden.",
+        "configure": "Konfigurator"
       }
     },
     "catalogSummary": {
@@ -382,6 +389,13 @@
       "glass": {
         "text": "You don\u2019t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
         "link": "Continue"
+      },
+      "multiShopSelector": {
+        "title": "Multi-store mode activated",
+        "subtitle": "You must configure your stores one by one for this service but you will be able to use the same account.",
+        "selectStore": "Please select the first store to configure from the list below",
+        "tips": "After you are done with the first shop, you can configure the others by selecting them one by one in the shop selector, in the horizontal menu",
+        "configure": "Configure"
       }
     },
     "catalogSummary": {
@@ -667,6 +681,13 @@
       "glass": {
         "text": "\u00bfNo ves el navegador seguro de Facebook? Te ayudamos a relanzar la ventana para finalizar la configuraci\u00f3n. Es posible que tengas que activar las ventanas emergentes en tu navegador para continuar.",
         "link": "Continuar"
+      },
+      "multiShopSelector": {
+        "title": "Modo multitienda activado",
+        "subtitle": "Para este servicio, necesitas configurar tus tiendas una por una, pero podrás usar la misma cuenta.",
+        "selectStore": "Selecciona una tienda de la siguiente lista",
+        "tips": "Una vez configurada la primera tienda, puedes continuar con las demás seleccionándolas una a una en el selector de tiendas del menú horizontal.",
+        "configure": "Configurar"
       }
     },
     "catalogSummary": {
@@ -952,6 +973,13 @@
       "glass": {
         "text": "Vous ne voyez pas le navigateur s\u00e9curis\u00e9 de Facebook ? Nous vous aidons \u00e0 relancer la fen\u00eatre pour terminer la configuration. Vous devrez peut-\u00eatre activer les fen\u00eatres pop-up dans votre navigateur pour continuer.",
         "link": "Continuer"
+      },
+      "multiShopSelector": {
+        "title": "Mode multi-boutiques activé",
+        "subtitle": "Pour ce service, vous devez configurer vos boutiques une par une, mais vous pourrez utiliser le même compte.",
+        "selectStore": "Merci de sélectionner une première boutique à partir de la liste ci-dessous",
+        "tips": "Une fois la première boutique configurée, vous pouvez poursuivre avec les autres en les sélectionnant une par une dans le sélecteur de boutiques du menu horizontal.",
+        "configure": "Configurer"
       }
     },
     "catalogSummary": {
@@ -1237,6 +1265,13 @@
       "glass": {
         "text": "Non riesci a visualizzare il browser sicuro di Facebook? Permettici di aiutarti a ricaricare la finestra per completare la configurazione. Potrebbe essere necessario attivare le finestre popup del browser per continuare.",
         "link": "Continua"
+      },
+      "multiShopSelector": {
+        "title": "Modalità multi-negozio attiva",
+        "subtitle": "Per usufruirne, dovrai configurare i tuoi negozi uno alla volta, tuttavia, potrai farlo usando lo stesso account.",
+        "selectStore": "Seleziona il primo negozio nella lista qui sotto",
+        "tips": "Una volta configurato il primo negozio, potrai continuare con gli altri, selezionandoli uno per volta tramite il selettore del menu orizzontale.",
+        "configure": "Configura"
       }
     },
     "catalogSummary": {
@@ -1522,6 +1557,13 @@
       "glass": {
         "text": "Ziet u de beveiligde browser van Facebook niet? Wij helpen u het venster opnieuw te openen om de configuratie af te ronden. Het kan zijn dat u pop-up vensters in uw browser moet activeren om verder te kunnen gaan.",
         "link": "Ga verder"
+      },
+      "multiShopSelector": {
+        "title": "Multi-shop modus geactiveerd",
+        "subtitle": "Voor deze dienst moet u uw winkels één voor één configureren, maar u kunt wel hetzelfde account gebruiken.",
+        "selectStore": "Selecteer alstublieft een eerste winkel uit onderstaande lijst",
+        "tips": "Zodra de eerste winkel is geconfigureerd, kunt u verder gaan met de andere winkels door ze één voor één te selecteren in de winkelselector van het horizontale menu.",
+        "configure": "Configureren"
       }
     },
     "catalogSummary": {
@@ -1807,6 +1849,13 @@
       "glass": {
         "text": "Nie widzisz zabezpieczonej przegl\u0105darki na Facebooku? Pomo\u017cemy Ci ponownie uruchomi\u0107 okno, aby zako\u0144czy\u0107 konfiguracj\u0119. Mo\u017ce by\u0107 konieczne w\u0142\u0105czenie wyskakuj\u0105cych okienek w przegl\u0105darce, aby kontynuowa\u0107.",
         "link": "Kontynuuj"
+      },
+      "multiShopSelector": {
+        "title": "Włączony tryb Multi-shop",
+        "subtitle": "Choć dla tej usługi należy skonfigurować swoje sklepy jeden po drugim, będzie można korzystać z tego samego konta.",
+        "selectStore": "Wybierz pierwszy sklep z poniższej listy",
+        "tips": "Po skonfigurowaniu pierwszego sklepu można kontynuować pracę z pozostałymi, wybierając je jeden po drugim w selektorze sklepów w menu poziomym.",
+        "configure": "Konfiguruj"
       }
     },
     "catalogSummary": {
@@ -2092,6 +2141,13 @@
       "glass": {
         "text": "N\u00e3o v\u00ea o navegador seguro do Facebook? Ajudamo-lo a abrir a janela para terminar a configura\u00e7\u00e3o. Poder\u00e1 ter de ativar janelas popup no seu navegador para continuar.",
         "link": "Continuar"
+      },
+      "multiShopSelector": {
+        "title": "Modo multi-loja ativado",
+        "subtitle": "Para este serviço, é necessário configurar as suas lojas uma a uma, mas pode usar a mesma conta.",
+        "selectStore": "Selecione uma primeira loja da lista abaixo",
+        "tips": "Uma vez configurada a primeira loja, pode continuar com as outras selecionando-as uma a uma no seletor de lojas do menu horizontal.",
+        "configure": "Configurar"
       }
     },
     "catalogSummary": {
