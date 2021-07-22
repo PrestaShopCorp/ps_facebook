@@ -199,7 +199,6 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {PsAccounts} from 'prestashop_accounts_vue_components';
 import Showdown from 'showdown';
 import MultiStoreSelector from '../components/selector/MultiStoreSelector.vue';
 import Spinner from '../components/spinner/spinner.vue';
@@ -245,11 +244,12 @@ export default defineComponent({
     Messages,
     MultiStoreSelector,
     PsAccounts: async () => {
-      let psAccounts = window?.psaccountsVue?.PsAccounts;
-      if (!psAccounts) {
-        psAccounts = require('prestashop_accounts_vue_components').PsAccounts;
+      let PsAccounts = window?.psaccountsVue?.PsAccounts;
+      if (!PsAccounts) {
+        // eslint-disable-next-line global-require
+        PsAccounts = require('prestashop_accounts_vue_components').PsAccounts;
       }
-      return psAccounts;
+      return PsAccounts;
     },
     ModuleActionNeeded,
     NoConfig,
