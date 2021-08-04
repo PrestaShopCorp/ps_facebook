@@ -74,6 +74,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
+        (new PrestaShop\PsAccountsInstaller\Installer\Installer(Config::REQUIRED_PS_ACCOUNTS_VERSION))->install();
+
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         $this->context->smarty->assign([
