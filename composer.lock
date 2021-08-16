@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25fb1bd2cbac0d02726eb069e960bb28",
+    "content-hash": "f1b788bbc8fee842d4ffe329fdb19c8a",
     "packages": [
         {
             "name": "facebook/graph-sdk",
@@ -442,16 +442,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.31",
+            "version": "2.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4"
+                "reference": "f5c4c19880d45d0be3e7d24ae8ac434844a898cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/233a920cb38636a43b18d428f9a8db1f0a1a08f4",
-                "reference": "233a920cb38636a43b18d428f9a8db1f0a1a08f4",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/f5c4c19880d45d0be3e7d24ae8ac434844a898cd",
+                "reference": "f5c4c19880d45d0be3e7d24ae8ac434844a898cd",
                 "shasum": ""
             },
             "require": {
@@ -543,7 +543,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-06T13:56:45+00:00"
+            "time": "2021-06-12T12:12:59+00:00"
         },
         {
             "name": "prestashop/circuit-breaker",
@@ -785,16 +785,16 @@
         },
         {
             "name": "prestashop/prestashop-accounts-installer",
-            "version": "dev-main",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/prestashop-accounts-installer.git",
-                "reference": "10a92b7987d0fc0a8d40bd8c606605d382917db8"
+                "reference": "f038af2408968d1045330b32aa1fed65fcaf4c9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/prestashop-accounts-installer/zipball/10a92b7987d0fc0a8d40bd8c606605d382917db8",
-                "reference": "10a92b7987d0fc0a8d40bd8c606605d382917db8",
+                "url": "https://api.github.com/repos/PrestaShopCorp/prestashop-accounts-installer/zipball/f038af2408968d1045330b32aa1fed65fcaf4c9b",
+                "reference": "f038af2408968d1045330b32aa1fed65fcaf4c9b",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +817,7 @@
                 "MIT"
             ],
             "description": "Utility package to install `ps_accounts` module or present data to trigger manual install from psx configuration page.",
-            "time": "2021-04-22T11:57:18+00:00"
+            "time": "2021-07-23T15:40:36+00:00"
         },
         {
             "name": "psr/cache",
@@ -2006,21 +2006,21 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "964adcdd3a28bf9ed5d9ac6450064e0d71ed7496"
+                "reference": "84674dd3a7575ba617f5a76d7e9e29a7d3891339"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/964adcdd3a28bf9ed5d9ac6450064e0d71ed7496",
-                "reference": "964adcdd3a28bf9ed5d9ac6450064e0d71ed7496",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/84674dd3a7575ba617f5a76d7e9e29a7d3891339",
+                "reference": "84674dd3a7575ba617f5a76d7e9e29a7d3891339",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0",
-                "psr/log": "^1.0"
+                "psr/log": "^1 || ^2 || ^3"
             },
             "require-dev": {
                 "phpstan/phpstan": "^0.12.55",
@@ -2061,7 +2061,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-05T19:37:51+00:00"
+            "time": "2021-07-31T17:03:58+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2247,16 +2247,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.19.0",
+            "version": "v2.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "d5b8a9d852b292c2f8a035200fa6844b1f82300b"
+                "reference": "1fa4af92841f67362c053728989b262fba8eb1ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/d5b8a9d852b292c2f8a035200fa6844b1f82300b",
-                "reference": "d5b8a9d852b292c2f8a035200fa6844b1f82300b",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1fa4af92841f67362c053728989b262fba8eb1ec",
+                "reference": "1fa4af92841f67362c053728989b262fba8eb1ec",
                 "shasum": ""
             },
             "require": {
@@ -2348,7 +2348,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-03T21:43:24+00:00"
+            "time": "2021-08-02T17:52:09+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3103,6 +3103,49 @@
             "time": "2017-06-30T09:13:00+00:00"
         },
         {
+            "name": "prestashop/autoindex",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PrestaShopCorp/autoindex.git",
+                "reference": "92e10242f94a99163dece280f6bd7b7c2b79c158"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PrestaShopCorp/autoindex/zipball/92e10242f94a99163dece280f6bd7b7c2b79c158",
+                "reference": "92e10242f94a99163dece280f6bd7b7c2b79c158",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^3.1",
+                "php": ">=5.6",
+                "symfony/console": "^3.4",
+                "symfony/finder": "^3.4"
+            },
+            "bin": [
+                "bin/autoindex"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PrestaShop\\AutoIndex\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "PrestaShop SA",
+                    "email": "contact@prestashop.com"
+                }
+            ],
+            "description": "Automatically add an 'index.php' in all the current or specified directories and all sub-directories.",
+            "homepage": "https://github.com/PrestaShopCorp/autoindex",
+            "time": "2020-03-11T13:37:03+00:00"
+        },
+        {
             "name": "prestashop/header-stamp",
             "version": "v1.7",
             "source": {
@@ -3150,21 +3193,22 @@
         },
         {
             "name": "prestashop/php-dev-tools",
-            "version": "v3.15.1",
+            "version": "v3.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShop/php-dev-tools.git",
-                "reference": "ed7af694ddd0c7d0f712c3e7c07757c80d042755"
+                "reference": "578bffb03fb683fa6f35e07c7c32db8d2781abef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/ed7af694ddd0c7d0f712c3e7c07757c80d042755",
-                "reference": "ed7af694ddd0c7d0f712c3e7c07757c80d042755",
+                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/578bffb03fb683fa6f35e07c7c32db8d2781abef",
+                "reference": "578bffb03fb683fa6f35e07c7c32db8d2781abef",
                 "shasum": ""
             },
             "require": {
                 "friendsofphp/php-cs-fixer": "^2.14",
                 "php": ">=5.6.0",
+                "prestashop/autoindex": "^1.0",
                 "prestashop/header-stamp": "^1.0",
                 "squizlabs/php_codesniffer": "^3.4",
                 "symfony/console": "~3.2 || ~4.0 || ~5.0",
@@ -3187,7 +3231,7 @@
                 "MIT"
             ],
             "description": "PrestaShop coding standards",
-            "time": "2021-05-12T08:40:17+00:00"
+            "time": "2021-06-22T08:28:47+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4424,8 +4468,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "facebook/php-business-sdk": 20,
-        "prestashop/prestashop-accounts-installer": 20
+        "facebook/php-business-sdk": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

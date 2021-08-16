@@ -214,12 +214,6 @@ class Ps_facebook extends Module
      */
     public function install()
     {
-        if (!(new PrestaShop\PsAccountsInstaller\Installer\Installer(Config::REQUIRED_PS_ACCOUNTS_VERSION))->install()) {
-            $this->_errors[] = $this->l('Unable to install ps accounts');
-
-            return false;
-        }
-
         // We can't init the Installer in CLI, as it has been declared in the admin container and PrestaShop
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
