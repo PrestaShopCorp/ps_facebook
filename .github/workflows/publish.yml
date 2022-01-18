@@ -5,6 +5,54 @@ on:
     types: [released]
 
 jobs:
+  upload_release_asset_integration:
+    name: Upload the integration zip asset to the release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Get tag
+        id: get_tag
+        run: |
+          echo ::set-output name=TAG::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo ::set-output name=MAJOR::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 1)
+          echo ::set-output name=MINOR::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 2)
+          echo ::set-output name=PATCH::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 3)
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: ${{ github.event.repository.name }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.G_PROJECT_INTEGRATION }}
+          service_account_key: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
+          export_default_credentials: true
+
+      - name: Copy env files
+        run: |
+          gcloud components install beta
+          gcloud beta secrets versions access latest --secret="facebook-module" >> ps_facebook/ps_facebook/.env
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
+
+      - name: Write .env file with specific CDN URL
+        if: "github.event.release.prerelease"
+        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxmarketing-cdn/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
+
+      - name: Prepare the integration zip
+        run: |
+          cd ${{ github.event.repository.name }}
+          zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip ${{ github.event.repository.name }}  -x '*.git*'
+      - name: Publish the integration zip
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip
+          asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip
+          asset_content_type: application/zip
   publish_to_marketplace:
     name: Publish to the Marketplace
     runs-on: ubuntu-latest

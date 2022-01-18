@@ -80,10 +80,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $this->context->smarty->assign([
             'id_pixel' => pSQL($this->configurationAdapter->get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL($this->configurationAdapter->get('PS_FBE_ACCESS_TOKEN')),
-            'pathApp' => $this->module->getPathUri() . 'views/js/app.js',
-            'version' => $this->module->version,
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
-            'chunkVendor' => $this->module->getPathUri() . 'views/js/chunk-vendors.js',
+            'pathApp' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/app.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'app.js',
+            'chunkVendor' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/chunk-vendors.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'chunk-vendors.js'
         ]);
 
         $defaultCurrency = $this->context->currency;

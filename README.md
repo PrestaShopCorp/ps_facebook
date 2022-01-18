@@ -17,6 +17,13 @@ This module is compliant with PHP 5.6+ and PrestaShop 1.7, (tested with PS 1.7.2
 
 You need a facebook developper account added to the PrestaShop Social Media app (ID:726899634800479) to manage its settings.
 
+## CDN usage
+
+If you want to use local vue app, set on your .env USE_LOCAL_VUE_APP at 1.
+```
+USE_LOCAL_VUE_APP=1
+```
+
 ## Usage
 
 Install module and connect to FBE in module BO

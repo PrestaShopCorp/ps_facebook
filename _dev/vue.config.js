@@ -33,5 +33,5 @@ module.exports = {
   filenameHashing: false,
   outputDir: '../views/',
   assetsDir: '',
-  publicPath: '../modules/ps_facebook/views/',
+  publicPath: process.env.VUE_APP_CDN_URL || '../modules/ps_facebook/views/',
 };
