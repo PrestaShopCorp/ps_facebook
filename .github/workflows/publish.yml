@@ -5,11 +5,27 @@ on:
     types: [released]
 
 jobs:
-  upload_release_asset_integration:
-    name: Upload the integration zip asset to the release
+  build:
+    name: build dependencies & create artifact
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: npm
+          cache-dependency-path: '_dev/package-lock.json'
+
+      - name: Install & build
+        working-directory: _dev
+        run: |
+          npm install
+          npm run build
+      - name: Install composer dependencies
+        run: composer install --no-dev -o
+
       - name: Get tag
         id: get_tag
         run: |
@@ -17,6 +33,51 @@ jobs:
           echo ::set-output name=MAJOR::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 1)
           echo ::set-output name=MINOR::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 2)
           echo ::set-output name=PATCH::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 3)
+      - name: Write .env file with specific CDN URL
+        if: "github.event.release.prerelease"
+        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxfacebook-cdn/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
+
+
+      - name: Clean-up project
+        uses: PrestaShopCorp/github-action-clean-before-deploy@v1.0
+        with:
+          paths: 'crowdin.yml'
+
+      - name: Create & upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ github.event.repository.name }}
+          path: ../
+
+  upload_release_asset_production:
+    name: Upload the production zip asset to the release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: ${{ github.event.repository.name }}
+
+      - name: Prepare the production zip
+        run: |
+          cd ${{ github.event.repository.name }}
+          zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip ${{ github.event.repository.name }} -x '*.git*'
+      - name: Publish the production zip
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip
+          asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
+
+  upload_release_asset_integration:
+    name: Upload the integration zip asset to the release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Download artifact
         uses: actions/download-artifact@v1
         with:
@@ -36,10 +97,6 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
 
-      - name: Write .env file with specific CDN URL
-        if: "github.event.release.prerelease"
-        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxfacebook-cdn/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
-
       - name: Prepare the integration zip
         run: |
           cd ${{ github.event.repository.name }}
@@ -53,6 +110,8 @@ jobs:
           asset_path: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip
           asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip
           asset_content_type: application/zip
+
+
   publish_to_marketplace:
     name: Publish to the Marketplace
     runs-on: ubuntu-latest
