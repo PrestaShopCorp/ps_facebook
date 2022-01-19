@@ -30,7 +30,6 @@ use Product;
 
 class ProductRepository
 {
-
     /**
      * @var \Language
      */

@@ -30,7 +30,6 @@ class EventBusProductHandler
      */
     private $productRepository;
 
-
     public function __construct(
         ProductRepository $productRepository
     ) {
