@@ -21,7 +21,6 @@
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\Module\Ps_facebook\Utility\EventBusProductUtility;
 
 class EventBusProductHandler
@@ -31,17 +30,11 @@ class EventBusProductHandler
      */
     private $productRepository;
 
-    /**
-     * @var PsFacebookTranslations
-     */
-    private $facebookTranslations;
 
     public function __construct(
-        ProductRepository $productRepository,
-        PsFacebookTranslations $facebookTranslations
+        ProductRepository $productRepository
     ) {
         $this->productRepository = $productRepository;
-        $this->facebookTranslations = $facebookTranslations;
     }
 
     /**

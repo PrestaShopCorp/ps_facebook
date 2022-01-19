@@ -24,26 +24,20 @@ use Db;
 use DbQuery;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
 use Product;
 
 class ProductRepository
 {
-    /**
-     * @var PsFacebookTranslations
-     */
-    private $facebookTranslations;
 
     /**
      * @var \Language
      */
     private $language;
 
-    public function __construct(PsFacebookTranslations $facebookTranslations, \Language $language)
+    public function __construct(\Language $language)
     {
-        $this->facebookTranslations = $facebookTranslations;
         $this->language = $language;
     }
 
@@ -300,16 +294,12 @@ class ProductRepository
         $searchByName = false,
         $searchByMessage = false
     ) {
-        $approved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Approved'];
-        $pending = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Pending'];
-        $disapproved = $this->facebookTranslations->getTranslations()[$this->language->iso_code]['productStatuses']['Disapproved'];
         $sql = new DbQuery();
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
         $sql->select('
-            IF(CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, "0")) IN ( "' . implode('","', $productsWithErrors) . '"), "'
-            . $disapproved . '",
-            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", "' . $approved . '", "' . $pending . '" )
+            IF(CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, "0")) IN ( "' . implode('","', $productsWithErrors) . '"), "disapproved",
+            IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", "approved", "pending" )
              ) as status
         ');
 

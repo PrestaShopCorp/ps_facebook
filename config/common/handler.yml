@@ -39,7 +39,6 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
-      - '@PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler

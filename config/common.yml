@@ -12,7 +12,6 @@ imports:
   - { resource: common/presenter.yml }
   - { resource: common/provider.yml }
   - { resource: common/repository.yml }
-  - { resource: common/translations.yml }
   - { resource: common/manager.yml }
   - { resource: common/segment.yml }
 
