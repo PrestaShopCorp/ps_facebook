@@ -67,7 +67,6 @@ foreach (scandir($inputTranslationsPath) as $file) {
         continue;
     }
 
-
     $iso_code = substr($file, 0, strpos($file, '.'));
 
     Context::getContext()->setLanguageIsoCode($iso_code);
@@ -76,4 +75,3 @@ foreach (scandir($inputTranslationsPath) as $file) {
 
     file_put_contents($getFileLang, json_encode($translationsClass->getTranslations(), JSON_PRETTY_PRINT));
 }
-
