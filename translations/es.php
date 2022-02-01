@@ -98,7 +98,7 @@ $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_54a60c7be5b26c880860b2
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5b896a4349ec8fc52ab3811e6b269634'] = 'Antes de que los compradores puedan comprarte artículos, tendrás que subir la información de tus productos a un catálogo de productos de Facebook.';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5ceb78a2a02020901ce00c217718a877'] = '¡Has añadido {0}!';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5d2ccc360b06bc4971f919a1679ce2a7'] = 'Productos en el catálogo de Facebook';
-$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;/span&amp;amp;gt;';
+$_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5dc9594a927d475e497f1c40fea29d72'] = 'Gestiona tu negocio';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_5f496727a3f0b541172b35ad8fc28bae'] = 'Si desea reexportar todo su catálogo, haga clic aquí';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_619a66aa55a19ba50773c6ea2cffff68'] = 'Se refiere a la lengua en la que está presente el error';
 $_MODULE['<{ps_facebook}prestashop>psfacebooktranslations_6297cdd34823b19402b792867ed42f70'] = 'Sí, confirmo';
