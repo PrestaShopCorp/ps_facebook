@@ -1,0 +1,286 @@
+{
+  "general": {
+    "tabs": {
+      "configuration": "Konfiguruj",
+      "catalog": "Katalog produktów",
+      "help": "Pomoc",
+      "integrate": "Kanały sprzedaży"
+    }
+  },
+  "configuration": {
+    "introduction": {
+      "getStarted": "Zaczynać",
+      "subTitle": "Zbuduj swoją obecność biznesową w społeczności Facebooka łatwo i szybko!",
+      "proPoints": "- Karta kredytowa nie jest wymagana. \n- Łatwa konfiguracja\n- Możliwość rezygnacji w dowolnym momencie",
+      "resume": "Zrób swoje pierwsze kroki z PrestaShop Facebook!",
+      "proPoint1Title": "Zarządzaj swoją firmą",
+      "proPoint1Description": "Kontroluj ustawienia reklam i narzędzi biznesowych z jednego miejsca.",
+      "proPoint2Title": "Zrozumieć swój ruch",
+      "proPoint2Description": "Użyj danych z Facebooka Pixel, aby zrozumieć działania, które ludzie podejmują na Twojej stronie.",
+      "proPoint3Title": "Zwiększyć sprzedaż",
+      "proPoint3Description": "Zarządzaj swoim katalogiem produktów i uwolnij moc reklam.",
+      "proPoint4Title": "Tworzenie i optymalizacja lepszych wrażeń z zakupów",
+      "proPoint4Description": "Dzięki automatycznej synchronizacji katalogu produktów i mapowaniu Twoich kategorii masz zaktualizowany i bardziej wydajny katalog na Facebooku.",
+      "needMoreFeatures": "Potrzebujesz więcej funkcji?",
+      "seeDetailedPlans": "Zobacz szczegółowe plany"
+    },
+    "messages": {
+      "success": "PrestaShop Facebook jest teraz aktywny!",
+      "stepperTitle": "Przewodnik krok po kroku",
+      "stepPsAccount": "Podłącz swoje konto PrestaShop",
+      "stepPsFacebook": "Podłącz swój sklep do Facebooka",
+      "stepCategoryMatching": "Kategorie map",
+      "stepCategoryMatchingOptional": "(opcjonalnie, ale zdecydowanie zalecane)",
+      "stepProductSync": "Eksportuj swój katalog produktów",
+      "stepAdCampaign": "Tworzenie reklam drogowych i/lub dynamicznych",
+      "reloadButton": "Przeładunek",
+      "shopInConflictError": "Jesteś już połączony/-a z Facebookiem poprzez inny sklep. Lub konfiguracja PrestaShop Facebook jest obecnie możliwa tylko w odniesieniu do jednego sklepu. Aby się połączyć, musisz się wylogować z pierwszego sklepu.",
+      "unknownOnboardingError": "Podczas procesu pokładowego wystąpił nieznany błąd. Proszę przeładować i spróbować jeszcze raz.",
+      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeButton": "Zaktualizuj konto PrestaShop",
+      "AccountsUpgradeDone": "Konto PrestaShop zostało pomyślnie zaktualizowane",
+      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+      "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+      "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+      "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+      "EventBusInstallButton": "Install PrestaShop EventBus",
+      "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+      "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+      "EventBusEnableButton": "Enable PrestaShop EventBus",
+      "EventBusEnableDone": "PrestaShop EventBus is enabled."
+    },
+    "facebook": {
+      "title": "Twoje ustawienia na Facebooku",
+      "notConnected": {
+        "title": "Podłącz swój sklep do Facebooka",
+        "intro": "Zintegruj swój sklep z Facebookiem.",
+        "connectButton": "Połącz się z Facebookiem",
+        "description": "Dzięki PS Facebook możesz cieszyć się beztarciową, bezkodową pracą na pokładzie i doświadczeniem w zarządzaniu produktami biznesowymi Facebooka.",
+        "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n- Create/Select sync product catalog \n- Create Facebook Shop & Instagram Shopping \n- Customize your Facebook page with call-to-action"
+      },
+      "connected": {
+        "description": "Upoważniasz to konto na Facebooku do łączenia się z Twoim sklepem:",
+        "editButton": "Zmodyfikuj moje konto",
+        "unlinkButton": "Link",
+        "facebookBusinessManager": "Business Manager na Facebooku",
+        "facebookBusinessManagerTooltip": "Konto biznesowe na Facebooku pozwala na zarządzanie kontami reklamowymi, stronami i osobami, które pracują nad nimi w tym samym miejscu",
+        "facebookPixel": "Facebook Pixel",
+        "facebookPixelTooltip": "Piksel z Facebooka jest kawałkiem kodu (Javascript), który automatycznie instalujemy na Twoich stronach internetowych. Pozwala &amp;quot;śledzić&amp;quot;, kto odwiedza Twoją stronę, śledzić konwersje reklam na Facebooku i tworzyć retargetowanie odbiorców",
+        "facebookPage": "Strona na Facebooku",
+        "facebookPageTooltip": "Twoja strona na Facebooku będzie reprezentować Twoją firmę w reklamach",
+        "facebookAds": "Facebook Ads",
+        "facebookAdsTooltip": "Konto Facebook Ads pozwala handlowcom na dostęp do narzędzia do zarządzania reklamami, do tworzenia, edycji i analizy płatnych kampanii promocyjnych na Facebooku",
+        "manageFbeButton": "Przejdź do Facebook Business",
+        "unlinkModalHeader": "Potwierdzasz dezinstalację?",
+        "unlinkModalText": "Masz zamiar usunąć Facebook Business Extension. Nie będziesz już miał dostępu do zapisanych ustawień Facebooka."
+      },
+      "exchangeTokens": {
+        "almostThere": "You are almost there",
+        "acknowledging": "Acknowledging your permissions with Facebook services.",
+        "takesTime": "This can take several seconds...",
+        "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
+        "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
+        "understood": "I understand"
+      }
+    },
+    "app": {
+      "like": "like",
+      "likes": "likes",
+      "createdAt": "Stworzony",
+      "lastActive": "Ostatni aktywny",
+      "activated": "Aktywowany",
+      "disabled": "Wyłączone",
+      "moduleDisabled": "Module is disabled",
+      "viewStats": "Statystyki widoku",
+      "informationCannotBeDisplayedWarning": "Ta informacja nie może być wyświetlana w tym momencie"
+    },
+    "glass": {
+      "text": "Nie widzisz zabezpieczonej przeglądarki na Facebooku? Pomożemy Ci ponownie uruchomić okno, aby zakończyć konfigurację. Może być konieczne włączenie wyskakujących okienek w przeglądarce, aby kontynuować.",
+      "link": "Kontynuuj"
+    }
+  },
+  "catalogSummary": {
+    "categoryMatching": "Poszerz swój katalog",
+    "categoryMatchingIntro": "Aby wzbogacić swój katalog i pomóc klientom odkryć Twoje produkty online, wpisz na Googleu kategorię produktów (GPC) dla swoich produktów, a następnie dodaj więcej informacji specyficznych dla każdej kategorii. Zalecamy wybranie jak najbardziej specyficznej kategorii, która ma zastosowanie do każdego przedmiotu, aby pomóc klientom zrozumieć, jaki rodzaj przedmiotu sprzedajesz.",
+    "categoryMatchingNotice": "Musisz** wybrać przynajmniej jeden z tych typów kategorii: 1) do korzystania z kasy na Facebooku oraz 2) do wzbogacenia katalogu o atrybuty charakterystyczne dla danej kategorii. Oba typy kategorii są opcjonalne, ale warunkowo wymagane.",
+    "matchCategoriesButton": "Kategorie map",
+    "productCatalogExport": "Twój katalog w serwisie Facebook Business",
+    "exportCatalogButton": "Katalog akcji",
+    "catalogExportIntro": "Zanim kupujący będą mogli kupować u Ciebie produkty, będziesz musiał załadować informacje o swoich produktach do Katalogu Produktów na Facebooku.",
+    "catalogExportInfo": "Proszę zwrócić uwagę na następujące kwestie: \n\n1. Eksport katalogu odbywa się raz dziennie (w nocy)\n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem może potrwać do 24 godzin.\n3. Do Facebooka eksportowane są tylko aktywne produkty. \n4. Synchronizowane będą tylko produkty z wypełnionymi polami obowiązkowymi: krótki opis, ilość, cena, zdjęcie produktu, producent lub ean/upc/isbn.\n5. Eksport lokalizacji produktów (na potrzeby tłumaczeń) jest nadal w fazie beta i może generować nieoczekiwane błędy.\n6. W Twoim katalogu zostaną zaktualizowane tylko produkty, które uległy zmianie. ",
+    "resetExportLink": "Jeśli chcesz ponownie wyeksportować cały swój katalog kliknij tutaj",
+    "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
+    "resetExportError": "Podczas próby zresetowania eksportu wystąpił nieznany błąd. Prosimy spróbować ponownie później.",
+    "preApprovalScanTitle": "Skanowanie wstępne",
+    "preApprovalScanIntro": "Sprawdź, które produkty są gotowe do synchronizacji, a które mają problemy i nie będą synchronizowane.",
+    "preApprovalScanRefreshDate": "Ostatni skan dzisiaj o {0}",
+    "preApprovalScanRefreshInProgress": "Scan is in progress...",
+    "preApprovalScanReadyToSync": "Gotowy do synchronizacji",
+    "preApprovalScanNonSyncable": "Niezsynchronizowany",
+    "preApprovalScanRescan": "Re-scanner",
+    "preApprovalScanProductsCheckedWhileInProgress": "{0} checked",
+    "preApprovalScanError": "Something went wrong while scanning products.",
+    "catalogExportWarning": "Produkty będą eksportowane i aktualizowane co godziny.",
+    "catalogExportDisclaimer": "Dzieląc się swoim katalogiem, zgadzasz się, że PrestaShop może wysyłać wszystkie informacje związane z produktami katalogowymi na Facebook.",
+    "catalogExportPaused": "Wstrzymany",
+    "catalogExportActivated": "Aktywowany",
+    "catalogExportNotice": "Synchronizacja informacji o produktach PrestaShop z Facebookiem może trwać do godzin. Gdy produkty zostaną opublikowane, możesz zacząć oznaczać je na Instagram lub tworzyć reklamy na Facebooku.",
+    "catalogExportOperationPaused": "Operacja jest wstrzymana.",
+    "viewButton": "Widok",
+    "viewCatalogButton": "Zobacz katalog",
+    "backButton": "Wróć",
+    "detailsButton": "Zobacz szczegóły",
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
+    "exportCatalogButtonErrored": "Nie udało się! Spróbuj jeszcze raz",
+    "modalDeactivationTitle": "Potwierdzasz dezaktywację?",
+    "modalDeactivationText": "Masz zamiar wyłączyć synchronizację katalogu z Facebook Business. Produkty nie zostaną zsynchronizowane do momentu ponownego uruchomienia eksportu katalogów.",
+    "reportingLastSync": "Ostatnia synchronizacja",
+    "reportingCatalogCount": "Produkty w katalogu Facebook",
+    "reportingErrorsCount": "Błędy przy eksporcie katalogów"
+  },
+  "syncReport": {
+    "title": "Status produktu",
+    "views": {
+      "prevalidation": "Before export{0}",
+      "reporting": "After export{0}",
+      "oneError": " (1 error)",
+      "manyErrors": " ({0} errors)"
+    },
+    "id": "ID",
+    "name": "Nazwa",
+    "language": "Język",
+    "languageTooltip": "Odnosi się do języka, w którym występuje błąd",
+    "image": "Obraz",
+    "imageTooltip": " Głównego obrazu przedstawiającego artykuł. Obrazy muszą być w formacie JPG, GIF lub PNG, a także muszą mieć rozdzielczość co najmniej 500 × 500 pikseli oraz rozmiar do 8 MB. Zobacz specyfikacje obrazu produktu.",
+    "description": "Opis",
+    "descriptionTooltip": "Krótki, trafny opis artykułu. Powinien uwzględniać unikatowe cechy produktu, takie jak materiał czy kolor. W opisie używaj zwykłego tekstu (nie w formacie HTML), nie używaj samych wielkich liter i nie dodawaj linków. Zobacz specyfikacje opisu produktu. Limit znaków: 5000.",
+    "barcode": "Kod kreskowy / Marka",
+    "barcodeTooltip": "Nazwa marki, unikatowy numer części producenta (ang. Manufacturer Part Number – MPN) lub globalny numer jednostki handlowej (ang. Global Trade Item Number – GTIN) artykułu. Wystarczy wprowadzić jedną z tych wartości – nie wszystkie. Numerem GTIN artykułu może być numer UPC, EAN, JAN lub ISBN. Limit znaków: 100.",
+    "price": "Prix",
+    "error": "Error type",
+    "errorTooltip": "This is the error given by Facebook when trying to export the product.",
+    "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
+    "reportingText": "Products with detected problems after catalog export are listed below:",
+    "lastSyncDate": "Last sync {0} at {1}",
+    "otherLanguage": "Other",
+    "prevalidationEmpty": "Well done! All your products are ready to be exported",
+    "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
+    "loadNextPage": "Load next results"
+  },
+  "categoryMatching": {
+    "title": "Poszerz swój katalog : mapowanie kategorii",
+    "intro": "Ważne:\n- Pola Google Category i Google Subcategory są obowiązkowe dla każdej kategorii PrestaShop\n- Kopia zapasowa mapowania kategorii tworzy się automatycznie, gdy połączysz swoją kategorię prestaShop z kategorią i podkategorią Google\n- Kiedy już zmapujesz swoje kategorie i podkategorie, możesz kliknąć 'Powrót'\n- Oszczędzaj czas, stosując mapowanie kategorii głównej do jej kategorii podrzędnych', zaznaczając pole  'Zastosuj do kategorii podrzędnych'",
+    "counterSubTitle": "Odwzorowane kategorie",
+    "edit": "Edycja",
+    "autocomplete": {
+      "typeToFilter": "Typ do filtrowania",
+      "select": "Select",
+      "noResult": "Brak wyniku wyszukiwania",
+      "tooManyResults": "Zbyt wiele wyników, proszę zakończyć wyszukiwanie.",
+      "fetchError": "Podczas procesu wyszukiwania wystąpił błąd.",
+      "unassign": "Unassign category"
+    },
+    "tableMatching": {
+      "firstTd": "Kategoria na twojej stronie",
+      "secondTd": "Kategoria Google",
+      "thirdTd": "Stosować do podkategorii?",
+      "fourthTd": "Podkategoria Google"
+    },
+    "editTable": {
+      "required": "Obowiązkowe",
+      "checkboxTxt": "Pokaż niezmapowane kategorie",
+      "psCategoryName": "Kategoria na twojej stronie",
+      "fbCategoryName": "Kategoria Google",
+      "fbSubcategoryName": "Podkategoria Google"
+    },
+    "errors": "Wystąpił błąd, zaktualizuj moduł."
+  },
+  "categoryMatched": {
+    "title": "Ulepsz swój katalog: zmapuj swoje kategorie",
+    "description": "Aby wzbogacić swój katalog i pomóc klientom odkryć Twoje produkty online, wpisz na Googleu kategorię produktów (GPC) dla swoich produktów, a następnie dodaj więcej informacji specyficznych dla każdej kategorii. Zalecamy wybranie jak najbardziej specyficznej kategorii, która ma zastosowanie do każdego przedmiotu, aby pomóc klientom zrozumieć, jaki rodzaj przedmiotu sprzedajesz.",
+    "btn": "Zobacz wynik swojego zmapowania",
+    "progressBarTotal": "Zmapowane kategorie"
+  },
+  "integrate": {
+    "buttons": {
+      "syncProducts": "Produkty Sync",
+      "modalConfirm": "Tak, potwierdzić"
+    },
+    "features": {
+      "ig_shopping": {
+        "name": "Zakupy Instagram",
+        "description": "Instagram Shopping daje Twojej firmie wciągającą witrynę sklepową dla ludzi, którzy odkryją Twoje najlepsze produkty.",
+        "addButton": "Dodaj",
+        "editButton": "Zarządzaj"
+      },
+      "messenger_chat": {
+        "name": "Wtyczka do czatu komunikatora",
+        "description": "Wtyczka Czat pozwala na zintegrowanie Twoich doświadczeń Messengera bezpośrednio z Twoją stroną internetową.",
+        "addButton": "Dodaj",
+        "checkMessages": "Zobacz moje wiadomości",
+        "editButton": "Dostosowywanie ustawień"
+      },
+      "page_shop": {
+        "name": "Dodaj zakładkę sklepu na swojej stronie na Facebooku",
+        "description": "Sklep internetowy na Facebooku umożliwia sporządzanie list produktów, które sprzedajesz, oraz łączenie się z większą liczbą klientów na Facebooku.",
+        "addButton": "Dodaj",
+        "editButton": "Zarządzaj"
+      },
+      "page_cta": {
+        "name": "Dodaj przycisk na swojej stronie na Facebooku",
+        "description": "Dodaj przycisk na swojej stronie na Facebooku, aby skłonić ludzi do podjęcia akcji z Twojej strony, takiej jak Twój sklep.",
+        "addButton": "Dodaj",
+        "editButton": "Edycja"
+      }
+    },
+    "headings": {
+      "availableFeatures": "Aby zwiększyć sprzedaż, dodaj do swojego sklepu...",
+      "unavailableFeatures": "Niedostępne funkcje w chwili obecnej"
+    },
+    "success": {
+      "featureEnabled": "Dodałeś {0}!",
+      "shopLink": "Zobacz swój sklep"
+    },
+    "warning": {
+      "productsNotSynced": "Najpierw musisz zaimportować swój katalog produktów, aby móc założyć Facebook Shop i Instagram Shopping, a także tworzyć kampanie reklamowe.",
+      "disableFeatureModalHeader": "Potwierdzasz dezaktywację?",
+      "disableFeatureModalText": "Masz zamiar wyłączyć tę funkcję. Może to ograniczyć niektóre funkcje.",
+      "noFeatures": "Funkcje nie mogły zostać pobrane z Facebooka. Może to być spowodowane wygaśnięciem żetonu i może być naprawione przez ponowne uruchomienie pokładu."
+    },
+    "error": {
+      "failedToUpdateFeature": "Nie udało się zaktualizować funkcji Facebooka."
+    }
+  },
+  "survey": {
+    "title": "Give us your feedback!",
+    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+    "button": "Let's begin"
+  },
+  "help": {
+    "title": "Pomoc dla PrestaShop Facebook",
+    "allowsYouTo": {
+      "title": "Ten moduł pozwala na:",
+      "business": "Zarządzaj swoją firmą",
+      "account": "Zarządzaj swoim kontem reklamowym",
+      "traffic": "Zrozumieć swój ruch",
+      "inventory": "Tworzenie i zarządzanie inwentaryzacją",
+      "people": "Dotrzeć do większej liczby osób"
+    },
+    "help": {
+      "needHelp": "Potrzebujesz pomocy? Znajdź tutaj dokumentację dotyczącą tego modułu.",
+      "downloadPdf": "Pobierz plik PDF",
+      "couldntFindAnyAnswer": "Nie znalazłeś żadnej odpowiedzi na swoje pytanie?",
+      "contactUs": "Skontaktuj się z nami"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "noFaq": "Brak dostępnych FAQ."
+  },
+  "productStatuses": {
+    "Approved": "Zatwierdzony",
+    "Pending": "W toku",
+    "Disapproved": "Niezatwierdzony"
+  }
+}
