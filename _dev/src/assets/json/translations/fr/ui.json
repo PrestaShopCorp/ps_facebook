@@ -1,7 +1,7 @@
 {
   "general": {
     "tabs": {
-      "configuration": "Configurer",
+      "configuration": "Configuration",
       "catalog": "Catalogue produit",
       "help": "Aide",
       "integrate": "Canaux de vente"
@@ -27,7 +27,7 @@
     "messages": {
       "success": "PrestaShop Facebook est maintenant activé !",
       "stepperTitle": "Etapes à suivre",
-      "stepPsAccount": "Connecter son compte PrestaShop",
+      "stepPsAccount": "Connectez votre compte PrestaShop",
       "stepPsFacebook": "Connecter sa boutique à Facebook",
       "stepCategoryMatching": "Mapper mes catégories",
       "stepCategoryMatchingOptional": "(facultatif mais fortement recommandé)",
@@ -128,7 +128,7 @@
     "catalogExportOperationPaused": "L'opération est mise en pause",
     "viewButton": "Voir",
     "viewCatalogButton": "Voir le catalogue",
-    "backButton": "Retour",
+    "backButton": "Précédent",
     "detailsButton": "Voir le détail",
     "showMore": "Voir plus",
     "showLess": "Voir moins",
@@ -260,7 +260,7 @@
   "help": {
     "title": "Aide pour PrestaShop Facebook",
     "allowsYouTo": {
-      "title": "Ce module vous permet de :",
+      "title": "Ce module vous permet de :",
       "business": "Gérer votre entreprise",
       "account": "Gérer votre compte Ads",
       "traffic": "Comprendre votre trafic",
@@ -268,10 +268,10 @@
       "people": "Créer et optimiser une meilleure expérience d'achat"
     },
     "help": {
-      "needHelp": "Besoin d'aide ? Vous trouverez ici la documentation de ce module.",
+      "needHelp": "Besoin d'aide ? Retrouvez ici la documentation de ce module.",
       "downloadPdf": "Télécharger le PDF",
       "couldntFindAnyAnswer": "Vous n'avez pas trouvé de réponse à votre question ?",
-      "contactUs": "Contactez-nous"
+      "contactUs": "Nous contacter"
     }
   },
   "faq": {
