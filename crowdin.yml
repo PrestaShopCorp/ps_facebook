@@ -3,5 +3,3 @@ preserve_hierarchy: false
 files:
   - source: /en/**/ui.json
     translation: /%two_letters_code%/**/%original_file_name%
-    skip_untranslated_strings: true
-    skip_untranslated_files: true
