@@ -149,7 +149,7 @@
     },
     "id": "ID",
     "name": "Nome",
-    "language": "Língua",
+    "language": "Idioma",
     "languageTooltip": "Refere-se à língua em que o erro está presente",
     "image": "Imagem",
     "imageTooltip": "Imagem principal do teu artigo. As imagens têm de estar no formato JPG, GIF ou PNG com, pelo menos, 500 x 500 píxeis e até 8 MB. Consulta as especificações de imagens de produtos.",
@@ -175,7 +175,7 @@
     "edit": "Editar",
     "autocomplete": {
       "typeToFilter": "Tipo a filtrar",
-      "select": "Selecione",
+      "select": "Select",
       "noResult": "Nenhum resultado para a sua pesquisa",
       "tooManyResults": "Demasiados resultados, por favor complete a sua pesquisa.",
       "fetchError": "Ocorreu um erro desconhecido durante o processo de embarque.",
@@ -279,8 +279,8 @@
     "noFaq": "Não existem FAQs disponíveis."
   },
   "productStatuses": {
-    "Approved": "Zatwierdzony",
+    "Approved": "Aprovado",
     "Pending": "Pendente",
-    "Disapproved": "Desaprovado"
+    "Disapproved": "Não aprovado"
   }
 }
