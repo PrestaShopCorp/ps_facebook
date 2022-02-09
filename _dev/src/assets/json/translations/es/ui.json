@@ -1,7 +1,7 @@
 {
   "general": {
     "tabs": {
-      "configuration": "Configurar",
+      "configuration": "Configuración",
       "catalog": "Catálogo de productos",
       "help": "Ayuda",
       "integrate": "Canales de venta"
@@ -27,7 +27,7 @@
     "messages": {
       "success": "¡PrestaShop Facebook ya está activado!",
       "stepperTitle": "Guía paso a paso",
-      "stepPsAccount": "Conectar tu cuenta de PrestaShop",
+      "stepPsAccount": "Conecta tu cuenta PrestaShop",
       "stepPsFacebook": "Conecta tu tienda a Facebook",
       "stepCategoryMatching": "Categorías de mapas",
       "stepCategoryMatchingOptional": "(opcional, pero muy recomendado)",
@@ -89,7 +89,7 @@
       "createdAt": "Creado",
       "lastActive": "Último activo",
       "activated": "Activado",
-      "disabled": "Inhabilitado",
+      "disabled": "Desactivado",
       "moduleDisabled": "Module is disabled",
       "viewStats": "Ver estadísticas",
       "informationCannotBeDisplayedWarning": "Esta información no puede ser mostrada en este momento"
@@ -122,7 +122,7 @@
     "preApprovalScanError": "Something went wrong while scanning products.",
     "catalogExportWarning": "Los productos serán exportados y luego actualizados cada 24 h.",
     "catalogExportDisclaimer": "Al compartir tu catálogo, aceptas que PrestaShop pueda enviar toda la información relacionada con los productos del catálogo a Facebook.",
-    "catalogExportPaused": "Pausado",
+    "catalogExportPaused": "En pausa",
     "catalogExportActivated": "Activado",
     "catalogExportNotice": "La información de tu producto PrestaShop puede precisar de horas para sincronizarse con Facebook.\nUna vez que los productos se publican, puedes empezar a etiquetarlos en Instagram o crear anuncios en Facebook.",
     "catalogExportOperationPaused": "La operación está en pausa.",
@@ -149,7 +149,7 @@
     },
     "id": "ID",
     "name": "Nombre",
-    "language": "Lengua",
+    "language": "Idioma",
     "languageTooltip": "Se refiere a la lengua en la que está presente el error",
     "image": "Imagen",
     "imageTooltip": "La imagen principal del artículo. Las imágenes deben estar en formato JPG, GIF o PNG, tener unas dimensiones de al menos 500 × 500 píxeles y ocupar un máximo de 8 MB. Consulta las especificaciones de las imágenes de los productos.",
@@ -175,7 +175,7 @@
     "edit": "Editar",
     "autocomplete": {
       "typeToFilter": "Escriba para filtrar",
-      "select": "Seleccionar",
+      "select": "Select",
       "noResult": "No se han encontrado resultados para tu búsqueda",
       "tooManyResults": "Demasiados resultados, afina tu búsqueda.",
       "fetchError": "Se ha producido un error durante el proceso.",
@@ -271,11 +271,11 @@
       "needHelp": "¿Necesitas ayuda? Encuentra aquí la documentación de este módulo.",
       "downloadPdf": "Descargar PDF",
       "couldntFindAnyAnswer": "¿No encontraste ninguna respuesta a tu pregunta?",
-      "contactUs": "Contacta con nosotros"
+      "contactUs": "Contacto"
     }
   },
   "faq": {
-    "title": "FAQ",
+    "title": "PREGUNTAS FRECUENTES",
     "noFaq": "No hay preguntas frecuentes disponibles."
   },
   "productStatuses": {
