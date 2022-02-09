@@ -1,0 +1,286 @@
+{
+  "general": {
+    "tabs": {
+      "configuration": "Configureer",
+      "catalog": "Productcatalogus",
+      "help": "Help",
+      "integrate": "Verkoopkanalen"
+    }
+  },
+  "configuration": {
+    "introduction": {
+      "getStarted": "Aan de slag",
+      "subTitle": "Bouw uw zakelijke aanwezigheid in de Facebook community eenvoudig en snel op!",
+      "proPoints": "- Geen creditcard nodig. \n- Eenvoudige installatie \n- Annuleer wanneer u maar wilt",
+      "resume": "Zet uw eerste stappen met PrestaShop Facebook!",
+      "proPoint1Title": "Beheer uw bedrijf",
+      "proPoint1Description": "Controleer uw advertentie-instellingen en zakelijke tools vanaf één plek.",
+      "proPoint2Title": "Begrijp uw traffic",
+      "proPoint2Description": "Gebruik gegevens van Facebook Pixel om inzicht te krijgen in de acties die mensen ondernemen op uw website.",
+      "proPoint3Title": "Verhoog uw verkoop",
+      "proPoint3Description": "Beheer uw productcatalogus en ontgrendel de kracht van advertenties.",
+      "proPoint4Title": "Creëer een betere winkelervaring en optimaliseer deze",
+      "proPoint4Description": "Dankzij de automatische synchronisatie van de productcatalogus en het in kaart brengen van uw categorieën heeft u een bijgewerkte en efficiëntere Facebook catalogus.",
+      "needMoreFeatures": "Hebt u meer functies nodig?",
+      "seeDetailedPlans": "Zie gedetailleerde abonnementen"
+    },
+    "messages": {
+      "success": "PrestaShop Facebook is nu geactiveerd!",
+      "stepperTitle": "Stap-voor-stap handleiding",
+      "stepPsAccount": "Koppel uw Prestashop account",
+      "stepPsFacebook": "Koppel uw winkel aan Facebook",
+      "stepCategoryMatching": "Kaart categorieën",
+      "stepCategoryMatchingOptional": "(optioneel maar sterk aanbevolen)",
+      "stepProductSync": "Exporteer uw productcatalogus",
+      "stepAdCampaign": "Creëer verkeer en/of dynamische advertenties",
+      "reloadButton": "Herladen",
+      "shopInConflictError": "U bent al verbonden met Facebook vanuit een andere winkel. Echter, PrestaShop Facebook configuratie is momenteel slechts mogelijk op een winkel. U moet uitloggen uit uw eerste winkel om verbinding te maken.",
+      "unknownOnboardingError": "Er is een onbekende fout opgetreden tijdens het registratieproces. Laadt u alstublieft opnieuw op en probeer het opnieuw.",
+      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeButton": "PrestaShop account bijwerken",
+      "AccountsUpgradeDone": "PrestaShop Account is met succes bijgewerkt",
+      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+      "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+      "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+      "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+      "EventBusInstallButton": "Install PrestaShop EventBus",
+      "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+      "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+      "EventBusEnableButton": "Enable PrestaShop EventBus",
+      "EventBusEnableDone": "PrestaShop EventBus is enabled."
+    },
+    "facebook": {
+      "title": "Uw Facebook-instellingen",
+      "notConnected": {
+        "title": "Koppel uw winkel aan Facebook",
+        "intro": "Integreer uw winkel met Facebook.",
+        "connectButton": "Verbinding maken met Facebook",
+        "description": "Met PS Facebook geniet u van een probleemloze, codevrije registratie en managementervaring voor zakelijke Facebook producten.",
+        "details": "- Creëer/selecteer bedrijf \n- Creëer/selecteer pagina \n- Creëer/selecteer advertentieaccount \n- Creëer/selecteer installatiepixel \n- Creëer/selecteer synchronisatie van productcatalogus \n- Creëer Facebook winkel & Instagram winkelen \n- Pas uw Facebook pagina aan met call-to-action"
+      },
+      "connected": {
+        "description": "U geeft dit Facebook account toestemming om verbinding te maken met uw winkel:",
+        "editButton": "Mijn account wijzigen",
+        "unlinkButton": "Ontkoppel",
+        "facebookBusinessManager": "Facebook Business Manager",
+        "facebookBusinessManagerTooltip": "Met uw Facebook bedrijfsaccount kunt u reclameaccounts, pagina's en de mensen die eraan werken op dezelfde plaats beheren",
+        "facebookPixel": "Facebook Pixel",
+        "facebookPixelTooltip": "De Facebook pixel is een stukje code (Javascript) dat wij automatisch op uw website pagina's installeren. Het stelt u in staat om &amp;quot;bij te houden&amp;quot; wie uw website bezoekt, conversies van uw Facebook advertenties bij te houden en een publiek te creëren voor retargeting",
+        "facebookPage": "Facebook pagina",
+        "facebookPageTooltip": "Uw Facebook pagina zal uw bedrijf vertegenwoordigen in uw advertenties",
+        "facebookAds": "Facebook advertenties",
+        "facebookAdsTooltip": "Facebook Ads account geeft handelaren toegang tot hun tool voor advertentiebeheer, om betaalde promotionele Facebook campagnes te maken, te bewerken en te analyseren",
+        "manageFbeButton": "Ga naar Facebook Business",
+        "unlinkModalHeader": "Deïnstallatie bevestigen?",
+        "unlinkModalText": "U staat op het punt om Facebook Business Extension te verwijderen. U zult geen toegang meer hebben tot de opgeslagen instellingen van Facebook."
+      },
+      "exchangeTokens": {
+        "almostThere": "You are almost there",
+        "acknowledging": "Acknowledging your permissions with Facebook services.",
+        "takesTime": "This can take several seconds...",
+        "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
+        "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
+        "understood": "I understand"
+      }
+    },
+    "app": {
+      "like": "like",
+      "likes": "likes",
+      "createdAt": "Gemaakt op",
+      "lastActive": "Laatst actief",
+      "activated": "Geactiveerd",
+      "disabled": "Uitgeschakeld",
+      "moduleDisabled": "Module is disabled",
+      "viewStats": "Bekijk de statistieken",
+      "informationCannotBeDisplayedWarning": "Deze informatie kan momenteel niet worden weergegeven"
+    },
+    "glass": {
+      "text": "Ziet u de beveiligde browser van Facebook niet? Wij helpen u het venster opnieuw te openen om de configuratie af te ronden. Het kan zijn dat u pop-up vensters in uw browser moet activeren om verder te kunnen gaan.",
+      "link": "Ga verder"
+    }
+  },
+  "catalogSummary": {
+    "categoryMatching": "Verbeter uw catalogus",
+    "categoryMatchingIntro": "Om uw catalogus te verbeteren en klanten te helpen uw artikelen online te ontdekken, voert u een Google productcategorie (GPC) in voor uw artikelen en voegt u vervolgens meer informatie toe die specifiek is voor elke categorie. Wij raden u aan de meest specifieke categorie te kiezen die van toepassing is op elk item om klanten te helpen begrijpen wat voor soort item u verkoopt.",
+    "categoryMatchingNotice": "U **moet** ten minste één van deze categorie types kiezen: 1) om ter plaatse Facebook checkout te gebruiken en 2) om uw catalogus te verrijken met attributen die specifiek bij een categorie horen. Beide categorietypes zijn optioneel, maar voorwaardelijk verplicht.",
+    "matchCategoriesButton": "Kaart categorieën",
+    "productCatalogExport": "Uw catalogus in Facebook Business",
+    "exportCatalogButton": "Deel catalogus",
+    "catalogExportIntro": "Voordat kopers artikelen van u kunnen kopen, moet u uw productinformatie uploaden naar een Facebook productcatalogus.",
+    "catalogExportInfo": "Neem a.u.b. nota van de volgende elementen: \n\n1. De export van de catalogus vindt één keer per dag plaats (tijdens de nacht)\n2. Het synchroniseren van uw PrestaShop productinformatie met Facebook kan tot 24 uur duren.\n3. Alleen \"actieve\" producten worden naar Facebook geëxporteerd. \n4. Alleen producten waarvan de verplichte velden zijn ingevuld, zullen worden gesynchroniseerd: een korte beschrijving, hoeveelheid, prijs, productafbeelding, fabrikant of ean/upc/isbn.\n5. De export van product lokalisaties (voor vertalingen) is nog in beta en kan onverwachte fouten veroorzaken.\n6. Alleen producten die wijzigingen hebben ondergaan, worden in uw catalogus bijgewerkt. ",
+    "resetExportLink": "Indien u uw volledige catalogus opnieuw wenst te exporteren klik hier",
+    "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
+    "resetExportError": "Er is een onbekende fout opgetreden bij de poging om de export te resetten. Probeer het later nog eens.",
+    "preApprovalScanTitle": "Scan voor voorafgaande goedkeuring",
+    "preApprovalScanIntro": "Controleer welke producten klaar zijn om gesynchroniseerd te worden en welke producten problemen hebben en niet gesynchroniseerd zullen worden.",
+    "preApprovalScanRefreshDate": "Laatste scan vandaag op {0}",
+    "preApprovalScanRefreshInProgress": "Scan is in progress...",
+    "preApprovalScanReadyToSync": "Klaar om te synchroniseren",
+    "preApprovalScanNonSyncable": "Niet synchroniseerbaar",
+    "preApprovalScanRescan": "Re-scanner",
+    "preApprovalScanProductsCheckedWhileInProgress": "{0} checked",
+    "preApprovalScanError": "Something went wrong while scanning products.",
+    "catalogExportWarning": "De producten worden geëxporteerd en vervolgens elk uur geüpdatet.",
+    "catalogExportDisclaimer": "Door het delen van uw catalogus gaat u ermee akkoord dat PrestaShop alle informatie met betrekking tot de catalogusproducten naar Facebook mag sturen.",
+    "catalogExportPaused": "Gepauzeerd",
+    "catalogExportActivated": "Geactiveerd",
+    "catalogExportNotice": "Het kan tot 24 uur duren voordat uw PrestaShop productinformatie is gesynchroniseerd met Facebook.\n Zodra er producten zijn gepubliceerd, kunt u ze op Instagram taggen of Facebook advertenties maken.",
+    "catalogExportOperationPaused": "De actie is gepauzeerd.",
+    "viewButton": "Bekijk",
+    "viewCatalogButton": "Bekijk de catalogus",
+    "backButton": "Terug naar",
+    "detailsButton": "Zie details",
+    "showMore": "Toon meer",
+    "showLess": "Toon minder",
+    "exportCatalogButtonErrored": "Mislukt! Probeer het nog eens",
+    "modalDeactivationTitle": "Deactivering bevestigen?",
+    "modalDeactivationText": "U staat op het punt om de synchronisatie van uw catalogus met Facebook Business uit te schakelen. Producten worden pas gesynchroniseerd als de export van de catalogus opnieuw wordt geactiveerd.",
+    "reportingLastSync": "Laatste synchronisatie",
+    "reportingCatalogCount": "Producten in Facebook catalogus",
+    "reportingErrorsCount": "Fouten door catalogusexport"
+  },
+  "syncReport": {
+    "title": "Status van het product",
+    "views": {
+      "prevalidation": "Before export{0}",
+      "reporting": "After export{0}",
+      "oneError": " (1 error)",
+      "manyErrors": " ({0} errors)"
+    },
+    "id": "ID",
+    "name": "Naam",
+    "language": "Taal",
+    "languageTooltip": "Verwijst naar de taal waarin de fout zich voordoet",
+    "image": "Afbeelding",
+    "imageTooltip": "Primaire afbeelding van je artikel. Afbeeldingen moeten in JPG-, GIF- of PNG-indeling, minimaal 500 x 500 pixels en maximaal 8 MB zijn. Zie specificaties productafbeelding.",
+    "description": "Beschrijving",
+    "descriptionTooltip": "Een korte, relevante omschrijving van het artikel. Voeg specifieke en unieke productkenmerken toe, zoals materiaal of kleur. Gebruik gewone tekst (geen HTML) en voer geen tekst in die bestaat uit alleen maar hoofdletters of links. Zie specificaties productbeschrijving. Tekenlimiet: 5000.",
+    "barcode": "Streepjescode / Merk",
+    "barcodeTooltip": "De merknaam, het unieke fabrieksonderdeelnummer (MPN) of artikelnummer (GTIN) van het artikel. Je hoeft maar één van deze toe te voegen, niet allemaal. Voor de GTIN voer je de UPC, EAN, JAN of ISBN van het artikel in. Tekenlimiet: 100.",
+    "price": "Prijs",
+    "error": "Error type",
+    "errorTooltip": "This is the error given by Facebook when trying to export the product.",
+    "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
+    "reportingText": "Products with detected problems after catalog export are listed below:",
+    "lastSyncDate": "Last sync {0} at {1}",
+    "otherLanguage": "Other",
+    "prevalidationEmpty": "Well done! All your products are ready to be exported",
+    "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
+    "loadNextPage": "Load next results"
+  },
+  "categoryMatching": {
+    "title": "Verbeter uw catalogus: categorie in kaart brengen",
+    "intro": "Belangrijk:\n- De velden Google Categorie en Google Subcategorie zijn verplicht voor elk van uw PrestaShop categorieën\n- De back-up van uw categorie mapping is automatisch zodra u uw prestaShop categorie hebt gekoppeld aan een categorie en subcategorie van Google\n- Zodra u uw categorieën en subcategorieën in kaart hebt gebracht, kunt u op 'Terug' klikken\n- Bespaar tijd door de mapping van uw hoofdcategorie toe te passen op de 'kind'-categorieën', door het vakje 'Toepassen op subcategorieën' aan te vinken",
+    "counterSubTitle": "In kaart gebrachte categorieën",
+    "edit": "Bewerk",
+    "autocomplete": {
+      "typeToFilter": "Type om te filteren",
+      "select": "Select",
+      "noResult": "Geen resultaat voor uw zoekopdracht",
+      "tooManyResults": "Te veel resultaten, vul uw zoekopdracht aan.",
+      "fetchError": "Er is een fout opgetreden tijdens het zoekproces.",
+      "unassign": "Unassign category"
+    },
+    "tableMatching": {
+      "firstTd": "Categorie op uw site",
+      "secondTd": "Google categorie",
+      "thirdTd": "Toepassen op subcategorieën?",
+      "fourthTd": "Google subcategorie"
+    },
+    "editTable": {
+      "required": "Verplicht",
+      "checkboxTxt": "Toon niet in kaart gebrachte categorieën",
+      "psCategoryName": "Categorie op uw site",
+      "fbCategoryName": "Google categorie",
+      "fbSubcategoryName": "Google subcategorie"
+    },
+    "errors": "Er is een fout opgetreden, gelieve de module bij te werken."
+  },
+  "categoryMatched": {
+    "title": "Verbeter uw catalogus: breng uw categorieën in kaart",
+    "description": "Om uw catalogus te verbeteren en klanten te helpen uw artikelen online te ontdekken, voert u een Google productcategorie (GPC) in voor uw artikelen en voegt u vervolgens meer informatie toe die specifiek is voor elke categorie. Wij raden u aan de meest specifieke categorie te kiezen die van toepassing is op elk item om klanten te helpen begrijpen wat voor soort item u verkoopt.",
+    "btn": "Bekijk uw mapping",
+    "progressBarTotal": "In kaart gebrachte categorieën"
+  },
+  "integrate": {
+    "buttons": {
+      "syncProducts": "Synchronisatie van producten",
+      "modalConfirm": "Ja, bevestig"
+    },
+    "features": {
+      "ig_shopping": {
+        "name": "Instagram shopping",
+        "description": "Instagram Shopping geeft uw bedrijf een meeslepende winkeletalage voor mensen die uw beste producten willen ontdekken.",
+        "addButton": "Voeg toe",
+        "editButton": "Beheer"
+      },
+      "messenger_chat": {
+        "name": "Messenger Chat Plugin",
+        "description": "Met de Chat Plugin kunt u uw Messenger ervaring direct in uw website integreren.",
+        "addButton": "Voeg toe",
+        "checkMessages": "Mijn berichten bekijken",
+        "editButton": "Instellingen naar wens aanpassen"
+      },
+      "page_shop": {
+        "name": "Voeg een winkeltabblad toe aan uw Facebook-pagina",
+        "description": "Met Facebook Page shop kunt u producten die u verkoopt op een rijtje zetten en met meer klanten in contact komen op Facebook.",
+        "addButton": "Voeg toe",
+        "editButton": "Beheer"
+      },
+      "page_cta": {
+        "name": "Voeg een knop toe aan uw Facebook-pagina",
+        "description": "Voeg een knop toe op uw Facebook-pagina om mensen een actie te laten ondernemen vanaf uw pagina, zoals uw winkel.",
+        "addButton": "Voeg toe",
+        "editButton": "Bewerk"
+      }
+    },
+    "headings": {
+      "availableFeatures": "Om de verkoop te stimuleren, voegt u aan uw winkel toe...",
+      "unavailableFeatures": "Functies niet beschikbaar op dit moment"
+    },
+    "success": {
+      "featureEnabled": "U hebt {0} toegevoegd!",
+      "shopLink": "Bekijk uw winkel"
+    },
+    "warning": {
+      "productsNotSynced": "U moet eerst uw productcatalogus importeren, zodat u Facebook Shop en Instagram Shopping kunt opzetten en ook reclamecampagnes kunt maken.",
+      "disableFeatureModalHeader": "Deactivering bevestigen?",
+      "disableFeatureModalText": "U staat op het punt om deze functie uit te schakelen. Dit kan enkele functies beperken.",
+      "noFeatures": "Functies konden niet worden opgehaald van Facebook. Dit kan worden veroorzaakt door het verstrijken van de geldigheidsduur van de token en kan worden verholpen door het herstarten van de registratie."
+    },
+    "error": {
+      "failedToUpdateFeature": "Het bijwerken van de facebook functie is mislukt."
+    }
+  },
+  "survey": {
+    "title": "Give us your feedback!",
+    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+    "button": "Let's begin"
+  },
+  "help": {
+    "title": "Hulp voor Prestashop Metrics",
+    "allowsYouTo": {
+      "title": "Met deze module kunt u:",
+      "business": "Beheer uw bedrijf",
+      "account": "Beheer uw advertentie account",
+      "traffic": "Begrijp uw traffic",
+      "inventory": "Inventarisatie opbouwen en beheren",
+      "people": "Bereik meer mensen"
+    },
+    "help": {
+      "needHelp": "Hulp nodig? Hier vindt u de documentatie van deze module.",
+      "downloadPdf": "Download de PDF",
+      "couldntFindAnyAnswer": "Kon u geen antwoord vinden op uw vraag?",
+      "contactUs": "Neem contact met ons op"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "noFaq": "Geen FAQ beschikbaar."
+  },
+  "productStatuses": {
+    "Approved": "Goedgekeurd",
+    "Pending": "In afwachting van",
+    "Disapproved": "Afgekeurd"
+  }
+}
