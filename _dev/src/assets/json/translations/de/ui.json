@@ -175,7 +175,7 @@
     "edit": "Bearbeiten",
     "autocomplete": {
       "typeToFilter": "Zu filternder Typ",
-      "select": "Auswählen",
+      "select": "Select",
       "noResult": "Kein Ergebnis für Ihre Suche",
       "tooManyResults": "Zu viele Ergebnisse, bitte geben Sie mehr Suchkriterien ein.",
       "fetchError": "Während der Suche ist ein Fehler aufgetreten.",
@@ -279,8 +279,8 @@
     "noFaq": "Keine FAQ verfügbar."
   },
   "productStatuses": {
-    "Approved": "Freigegeben",
-    "Pending": "Warten",
+    "Approved": "Genehmigt",
+    "Pending": "Anhängig",
     "Disapproved": "Abgelehnt"
   }
 }
