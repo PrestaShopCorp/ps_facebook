@@ -5,7 +5,6 @@ namespace Handler;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 
 class EventBusProductHandlerTest extends TestCase
 {
@@ -27,10 +26,7 @@ class EventBusProductHandlerTest extends TestCase
                 ->method('getInformationAboutEventBusProduct')
                 ->willReturn($mock);
         }
-        $psFacebookTranslations = $this->getMockBuilder(PsFacebookTranslations::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventBusProductHandler = new EventBusProductHandler($productRepo, $psFacebookTranslations);
+        $eventBusProductHandler = new EventBusProductHandler($productRepo);
         $informationAboutProducts = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($eventBusProduct, 1, 'eu');
 
         self::assertEquals($result, $informationAboutProducts);

@@ -19,10 +19,8 @@
 import {Module, VuexModule} from 'vuex-module-decorators';
 
 const {contextPsAccounts} = window || {};
-const {translations} = window || {};
 const {i18nSettings} = window || {};
 const stateContext = contextPsAccounts || {};
-const stateTranslations = translations || {};
 const statei18nSettings = i18nSettings || {};
 
 @Module({namespaced: true})
@@ -38,8 +36,6 @@ export default class ModuleContext extends VuexModule {
     moduleVersion: (window as any).moduleVersion,
     shopId: (window as any).psAccountShopId,
   };
-
-  stateTranslations: Record<string, any> = {...stateTranslations};
 
   statei18nSettings: Record<string, any> = {...statei18nSettings};
 

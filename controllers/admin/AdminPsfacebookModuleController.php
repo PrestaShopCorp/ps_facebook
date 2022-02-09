@@ -27,7 +27,6 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
-use PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -309,7 +308,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'translations' => (new PsFacebookTranslations($this->module))->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,

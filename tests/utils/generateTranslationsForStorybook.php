@@ -1,7 +1,7 @@
 <?php
 
 $inputTranslationsPath = __DIR__ . '/../../translations';
-$outputTranslationsJsonFile = __DIR__ . '/../../_dev/.storybook/translations.json';
+$outputTranslationsJsonFile = __DIR__ . '/../../_dev/src/assets/json/translations/';
 
 require_once __DIR__ . '/../../classes/Translations/PsFacebookTranslations.php';
 $translationsClassName = 'PrestaShop\Module\Ps_facebook\Translations\PsFacebookTranslations';
@@ -71,8 +71,7 @@ foreach (scandir($inputTranslationsPath) as $file) {
 
     Context::getContext()->setLanguageIsoCode($iso_code);
     require $inputTranslationsPath . '/' . $file;
+    $getFileLang = $outputTranslationsJsonFile . $iso_code . '/ui.json';
 
-    $translations += $translationsClass->getTranslations();
+    file_put_contents($getFileLang, json_encode($translationsClass->getTranslations(), JSON_PRETTY_PRINT));
 }
-
-file_put_contents($outputTranslationsJsonFile, json_encode($translations));

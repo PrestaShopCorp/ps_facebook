@@ -75,11 +75,6 @@ class ConfigurationData implements JsonSerializable
     private $psFacebookFbeUiUrl;
 
     /**
-     * @var array
-     */
-    private $translations;
-
-    /**
      * @var string
      */
     private $isoCode;
@@ -290,26 +285,6 @@ class ConfigurationData implements JsonSerializable
     }
 
     /**
-     * @return array
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
-
-    /**
-     * @param array $translations
-     *
-     * @return ConfigurationData
-     */
-    public function setTranslations($translations)
-    {
-        $this->translations = $translations;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getIsoCode()
@@ -362,7 +337,6 @@ class ConfigurationData implements JsonSerializable
             'psFacebookPixelActivationRoute' => $this->getPsFacebookPixelActivationRoute(),
             'psFacebookFbeOnboardingSaveRoute' => $this->getPsFacebookFbeOnboardingSaveRoute(),
             'psFacebookFbeUiUrl' => $this->getPsFacebookFbeUiUrl(),
-            'translations' => $this->getTranslations(),
             'i18nSettings' => [
                 'isoCode' => $this->getIsoCode(),
                 'languageLocale' => $this->getLanguageCode(),

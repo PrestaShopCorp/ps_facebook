@@ -1,0 +1,286 @@
+{
+  "general": {
+      "tabs": {
+          "configuration": "Konfiguruj",
+          "catalog": "Katalog produkt\u00f3w",
+          "help": "Pomoc",
+          "integrate": "Kana\u0142y sprzeda\u017cy"
+      }
+  },
+  "configuration": {
+      "introduction": {
+          "getStarted": "Zaczyna\u0107",
+          "subTitle": "Zbuduj swoj\u0105 obecno\u015b\u0107 biznesow\u0105 w spo\u0142eczno\u015bci Facebooka \u0142atwo i szybko!",
+          "proPoints": "- Karta kredytowa nie jest wymagana. \n- \u0141atwa konfiguracja\n- Mo\u017cliwo\u015b\u0107 rezygnacji w dowolnym momencie",
+          "resume": "Zr\u00f3b swoje pierwsze kroki z PrestaShop Facebook!",
+          "proPoint1Title": "Zarz\u0105dzaj swoj\u0105 firm\u0105",
+          "proPoint1Description": "Kontroluj ustawienia reklam i narz\u0119dzi biznesowych z jednego miejsca.",
+          "proPoint2Title": "Zrozumie\u0107 sw\u00f3j ruch",
+          "proPoint2Description": "U\u017cyj danych z Facebooka Pixel, aby zrozumie\u0107 dzia\u0142ania, kt\u00f3re ludzie podejmuj\u0105 na Twojej stronie.",
+          "proPoint3Title": "Zwi\u0119kszy\u0107 sprzeda\u017c",
+          "proPoint3Description": "Zarz\u0105dzaj swoim katalogiem produkt\u00f3w i uwolnij moc reklam.",
+          "proPoint4Title": "Tworzenie i optymalizacja lepszych wra\u017ce\u0144 z zakup\u00f3w",
+          "proPoint4Description": "Dzi\u0119ki automatycznej synchronizacji katalogu produkt\u00f3w i mapowaniu Twoich kategorii masz zaktualizowany i bardziej wydajny katalog na Facebooku.",
+          "needMoreFeatures": "Potrzebujesz wi\u0119cej funkcji?",
+          "seeDetailedPlans": "Zobacz szczeg\u00f3\u0142owe plany"
+      },
+      "messages": {
+          "success": "PrestaShop Facebook jest teraz aktywny!",
+          "stepperTitle": "Przewodnik krok po kroku",
+          "stepPsAccount": "Pod\u0142\u0105cz swoje konto PrestaShop",
+          "stepPsFacebook": "Pod\u0142\u0105cz sw\u00f3j sklep do Facebooka",
+          "stepCategoryMatching": "Kategorie map",
+          "stepCategoryMatchingOptional": "(opcjonalnie, ale zdecydowanie zalecane)",
+          "stepProductSync": "Eksportuj sw\u00f3j katalog produkt\u00f3w",
+          "stepAdCampaign": "Tworzenie reklam drogowych i\/lub dynamicznych",
+          "reloadButton": "Prze\u0142adunek",
+          "shopInConflictError": "Jeste\u015b ju\u017c po\u0142\u0105czony\/-a z Facebookiem poprzez inny sklep. Lub konfiguracja PrestaShop Facebook jest obecnie mo\u017cliwa tylko w odniesieniu do jednego sklepu. Aby si\u0119 po\u0142\u0105czy\u0107, musisz si\u0119 wylogowa\u0107 z pierwszego sklepu.",
+          "unknownOnboardingError": "Podczas procesu pok\u0142adowego wyst\u0105pi\u0142 nieznany b\u0142\u0105d. Prosz\u0119 prze\u0142adowa\u0107 i spr\u00f3bowa\u0107 jeszcze raz.",
+          "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+          "AccountsUpgradeButton": "Zaktualizuj konto PrestaShop",
+          "AccountsUpgradeDone": "Konto PrestaShop zosta\u0142o pomy\u015blnie zaktualizowane",
+          "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+          "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
+          "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
+          "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
+          "EventBusInstallButton": "Install PrestaShop EventBus",
+          "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
+          "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
+          "EventBusEnableButton": "Enable PrestaShop EventBus",
+          "EventBusEnableDone": "PrestaShop EventBus is enabled."
+      },
+      "facebook": {
+          "title": "Twoje ustawienia na Facebooku",
+          "notConnected": {
+              "title": "Pod\u0142\u0105cz sw\u00f3j sklep do Facebooka",
+              "intro": "Zintegruj sw\u00f3j sklep z Facebookiem.",
+              "connectButton": "Po\u0142\u0105cz si\u0119 z Facebookiem",
+              "description": "Dzi\u0119ki PS Facebook mo\u017cesz cieszy\u0107 si\u0119 beztarciow\u0105, bezkodow\u0105 prac\u0105 na pok\u0142adzie i do\u015bwiadczeniem w zarz\u0105dzaniu produktami biznesowymi Facebooka.",
+              "details": "- Create\/Select business \n- Create\/Select page \n- Create\/Select ad account \n- Create\/Select install pixel \n- Create\/Select sync product catalog \n- Create Facebook Shop & Instagram Shopping \n- Customize your Facebook page with call-to-action"
+          },
+          "connected": {
+              "description": "Upowa\u017cniasz to konto na Facebooku do \u0142\u0105czenia si\u0119 z Twoim sklepem:",
+              "editButton": "Zmodyfikuj moje konto",
+              "unlinkButton": "Link",
+              "facebookBusinessManager": "Business Manager na Facebooku",
+              "facebookBusinessManagerTooltip": "Konto biznesowe na Facebooku pozwala na zarz\u0105dzanie kontami reklamowymi, stronami i osobami, kt\u00f3re pracuj\u0105 nad nimi w tym samym miejscu",
+              "facebookPixel": "Facebook Pixel",
+              "facebookPixelTooltip": "Piksel z Facebooka jest kawa\u0142kiem kodu (Javascript), kt\u00f3ry automatycznie instalujemy na Twoich stronach internetowych. Pozwala &amp;quot;\u015bledzi\u0107&amp;quot;, kto odwiedza Twoj\u0105 stron\u0119, \u015bledzi\u0107 konwersje reklam na Facebooku i tworzy\u0107 retargetowanie odbiorc\u00f3w",
+              "facebookPage": "Strona na Facebooku",
+              "facebookPageTooltip": "Twoja strona na Facebooku b\u0119dzie reprezentowa\u0107 Twoj\u0105 firm\u0119 w reklamach",
+              "facebookAds": "Facebook Ads",
+              "facebookAdsTooltip": "Konto Facebook Ads pozwala handlowcom na dost\u0119p do narz\u0119dzia do zarz\u0105dzania reklamami, do tworzenia, edycji i analizy p\u0142atnych kampanii promocyjnych na Facebooku",
+              "manageFbeButton": "Przejd\u017a do Facebook Business",
+              "unlinkModalHeader": "Potwierdzasz dezinstalacj\u0119?",
+              "unlinkModalText": "Masz zamiar usun\u0105\u0107 Facebook Business Extension. Nie b\u0119dziesz ju\u017c mia\u0142 dost\u0119pu do zapisanych ustawie\u0144 Facebooka."
+          },
+          "exchangeTokens": {
+              "almostThere": "You are almost there",
+              "acknowledging": "Acknowledging your permissions with Facebook services.",
+              "takesTime": "This can take several seconds...",
+              "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
+              "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
+              "understood": "I understand"
+          }
+      },
+      "app": {
+          "like": "like",
+          "likes": "likes",
+          "createdAt": "Stworzony",
+          "lastActive": "Ostatni aktywny",
+          "activated": "Aktywowany",
+          "disabled": "Niepe\u0142nosprawni",
+          "moduleDisabled": "Module is disabled",
+          "viewStats": "Statystyki widoku",
+          "informationCannotBeDisplayedWarning": "Ta informacja nie mo\u017ce by\u0107 wy\u015bwietlana w tym momencie"
+      },
+      "glass": {
+          "text": "Nie widzisz zabezpieczonej przegl\u0105darki na Facebooku? Pomo\u017cemy Ci ponownie uruchomi\u0107 okno, aby zako\u0144czy\u0107 konfiguracj\u0119. Mo\u017ce by\u0107 konieczne w\u0142\u0105czenie wyskakuj\u0105cych okienek w przegl\u0105darce, aby kontynuowa\u0107.",
+          "link": "Kontynuuj"
+      }
+  },
+  "catalogSummary": {
+      "categoryMatching": "Poszerz sw\u00f3j katalog",
+      "categoryMatchingIntro": "Aby wzbogaci\u0107 sw\u00f3j katalog i pom\u00f3c klientom odkry\u0107 Twoje produkty online, wpisz na Googleu kategori\u0119 produkt\u00f3w (GPC) dla swoich produkt\u00f3w, a nast\u0119pnie dodaj wi\u0119cej informacji specyficznych dla ka\u017cdej kategorii. Zalecamy wybranie jak najbardziej specyficznej kategorii, kt\u00f3ra ma zastosowanie do ka\u017cdego przedmiotu, aby pom\u00f3c klientom zrozumie\u0107, jaki rodzaj przedmiotu sprzedajesz.",
+      "categoryMatchingNotice": "Musisz** wybra\u0107 przynajmniej jeden z tych typ\u00f3w kategorii: 1) do korzystania z kasy na Facebooku oraz 2) do wzbogacenia katalogu o atrybuty charakterystyczne dla danej kategorii. Oba typy kategorii s\u0105 opcjonalne, ale warunkowo wymagane.",
+      "matchCategoriesButton": "Kategorie map",
+      "productCatalogExport": "Tw\u00f3j katalog w serwisie Facebook Business",
+      "exportCatalogButton": "Katalog akcji",
+      "catalogExportIntro": "Zanim kupuj\u0105cy b\u0119d\u0105 mogli kupowa\u0107 u Ciebie produkty, b\u0119dziesz musia\u0142 za\u0142adowa\u0107 informacje o swoich produktach do Katalogu Produkt\u00f3w na Facebooku.",
+      "catalogExportInfo": "Prosz\u0119 zwr\u00f3ci\u0107 uwag\u0119 na nast\u0119puj\u0105ce kwestie: \n\n1. Eksport katalogu odbywa si\u0119 raz dziennie (w nocy)\n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem mo\u017ce potrwa\u0107 do 24 godzin.\n3. Do Facebooka eksportowane s\u0105 tylko aktywne produkty. \n4. Synchronizowane b\u0119d\u0105 tylko produkty z wype\u0142nionymi polami obowi\u0105zkowymi: kr\u00f3tki opis, ilo\u015b\u0107, cena, zdj\u0119cie produktu, producent lub ean\/upc\/isbn.\n5. Eksport lokalizacji produkt\u00f3w (na potrzeby t\u0142umacze\u0144) jest nadal w fazie beta i mo\u017ce generowa\u0107 nieoczekiwane b\u0142\u0119dy.\n6. W Twoim katalogu zostan\u0105 zaktualizowane tylko produkty, kt\u00f3re uleg\u0142y zmianie. ",
+      "resetExportLink": "Je\u015bli chcesz ponownie wyeksportowa\u0107 ca\u0142y sw\u00f3j katalog kliknij tutaj",
+      "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
+      "resetExportError": "Podczas pr\u00f3by zresetowania eksportu wyst\u0105pi\u0142 nieznany b\u0142\u0105d. Prosimy spr\u00f3bowa\u0107 ponownie p\u00f3\u017aniej.",
+      "preApprovalScanTitle": "Skanowanie wst\u0119pne",
+      "preApprovalScanIntro": "Sprawd\u017a, kt\u00f3re produkty s\u0105 gotowe do synchronizacji, a kt\u00f3re maj\u0105 problemy i nie b\u0119d\u0105 synchronizowane.",
+      "preApprovalScanRefreshDate": "Ostatni skan dzisiaj o {0}",
+      "preApprovalScanRefreshInProgress": "Scan is in progress...",
+      "preApprovalScanReadyToSync": "Gotowy do synchronizacji",
+      "preApprovalScanNonSyncable": "Niezsynchronizowany",
+      "preApprovalScanRescan": "Re-scanner",
+      "preApprovalScanProductsCheckedWhileInProgress": "{0} checked",
+      "preApprovalScanError": "Something went wrong while scanning products.",
+      "catalogExportWarning": "Produkty b\u0119d\u0105 eksportowane i aktualizowane co godziny.",
+      "catalogExportDisclaimer": "Dziel\u0105c si\u0119 swoim katalogiem, zgadzasz si\u0119, \u017ce PrestaShop mo\u017ce wysy\u0142a\u0107 wszystkie informacje zwi\u0105zane z produktami katalogowymi na Facebook.",
+      "catalogExportPaused": "Zatrzymany",
+      "catalogExportActivated": "Aktywowany",
+      "catalogExportNotice": "Synchronizacja informacji o produktach PrestaShop z Facebookiem mo\u017ce trwa\u0107 do godzin. Gdy produkty zostan\u0105 opublikowane, mo\u017cesz zacz\u0105\u0107 oznacza\u0107 je na Instagram lub tworzy\u0107 reklamy na Facebooku.",
+      "catalogExportOperationPaused": "Operacja jest wstrzymana.",
+      "viewButton": "Widok",
+      "viewCatalogButton": "Zobacz katalog",
+      "backButton": "Z powrotem",
+      "detailsButton": "Zobacz szczeg\u00f3\u0142y",
+      "showMore": "Poka\u017c wi\u0119cej",
+      "showLess": "Poka\u017c mniej",
+      "exportCatalogButtonErrored": "Nie uda\u0142o si\u0119! Spr\u00f3buj jeszcze raz",
+      "modalDeactivationTitle": "Potwierdzasz dezaktywacj\u0119?",
+      "modalDeactivationText": "Masz zamiar wy\u0142\u0105czy\u0107 synchronizacj\u0119 katalogu z Facebook Business. Produkty nie zostan\u0105 zsynchronizowane do momentu ponownego uruchomienia eksportu katalog\u00f3w.",
+      "reportingLastSync": "Ostatnia synchronizacja",
+      "reportingCatalogCount": "Produkty w katalogu Facebook",
+      "reportingErrorsCount": "B\u0142\u0119dy przy eksporcie katalog\u00f3w"
+  },
+  "syncReport": {
+      "title": "Status produktu",
+      "views": {
+          "prevalidation": "Before export{0}",
+          "reporting": "After export{0}",
+          "oneError": " (1 error)",
+          "manyErrors": " ({0} errors)"
+      },
+      "id": "ID",
+      "name": "Nazwa",
+      "language": "J\u0119zyk",
+      "languageTooltip": "Odnosi si\u0119 do j\u0119zyka, w kt\u00f3rym wyst\u0119puje b\u0142\u0105d",
+      "image": "Obraz",
+      "imageTooltip": " G\u0142\u00f3wnego obrazu przedstawiaj\u0105cego artyku\u0142. Obrazy musz\u0105 by\u0107 w formacie JPG, GIF lub PNG, a tak\u017ce musz\u0105 mie\u0107 rozdzielczo\u015b\u0107 co najmniej 500 \u00d7 500 pikseli oraz rozmiar do 8 MB. Zobacz specyfikacje obrazu produktu.",
+      "description": "Opis",
+      "descriptionTooltip": "Kr\u00f3tki, trafny opis artyku\u0142u. Powinien uwzgl\u0119dnia\u0107 unikatowe cechy produktu, takie jak materia\u0142 czy kolor. W opisie u\u017cywaj zwyk\u0142ego tekstu (nie w formacie HTML), nie u\u017cywaj samych wielkich liter i nie dodawaj link\u00f3w. Zobacz specyfikacje opisu produktu. Limit znak\u00f3w: 5000.",
+      "barcode": "Kod kreskowy \/ Marka",
+      "barcodeTooltip": "Nazwa marki, unikatowy numer cz\u0119\u015bci producenta (ang. Manufacturer Part Number \u2013 MPN) lub globalny numer jednostki handlowej (ang. Global Trade Item Number \u2013 GTIN) artyku\u0142u. Wystarczy wprowadzi\u0107 jedn\u0105 z tych warto\u015bci \u2013 nie wszystkie. Numerem GTIN artyku\u0142u mo\u017ce by\u0107 numer UPC, EAN, JAN lub ISBN. Limit znak\u00f3w: 100.",
+      "price": "Prix",
+      "error": "Error type",
+      "errorTooltip": "This is the error given by Facebook when trying to export the product.",
+      "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
+      "reportingText": "Products with detected problems after catalog export are listed below:",
+      "lastSyncDate": "Last sync {0} at {1}",
+      "otherLanguage": "Other",
+      "prevalidationEmpty": "Well done! All your products are ready to be exported",
+      "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
+      "loadNextPage": "Load next results"
+  },
+  "categoryMatching": {
+      "title": "Poszerz sw\u00f3j katalog : mapowanie kategorii",
+      "intro": "Wa\u017cne:\n- Pola Google Category i Google Subcategory s\u0105 obowi\u0105zkowe dla ka\u017cdej kategorii PrestaShop\n- Kopia zapasowa mapowania kategorii tworzy si\u0119 automatycznie, gdy po\u0142\u0105czysz swoj\u0105 kategori\u0119 prestaShop z kategori\u0105 i podkategori\u0105 Google\n- Kiedy ju\u017c zmapujesz swoje kategorie i podkategorie, mo\u017cesz klikn\u0105\u0107 'Powr\u00f3t'\n- Oszcz\u0119dzaj czas, stosuj\u0105c mapowanie kategorii g\u0142\u00f3wnej do jej kategorii podrz\u0119dnych', zaznaczaj\u0105c pole  'Zastosuj do kategorii podrz\u0119dnych'",
+      "counterSubTitle": "Odwzorowane kategorie",
+      "edit": "Edycja",
+      "autocomplete": {
+          "typeToFilter": "Typ do filtrowania",
+          "select": "Wybierz",
+          "noResult": "Brak wyniku wyszukiwania",
+          "tooManyResults": "Zbyt wiele wynik\u00f3w, prosz\u0119 zako\u0144czy\u0107 wyszukiwanie.",
+          "fetchError": "Podczas procesu wyszukiwania wyst\u0105pi\u0142 b\u0142\u0105d.",
+          "unassign": "Unassign category"
+      },
+      "tableMatching": {
+          "firstTd": "Kategoria na twojej stronie",
+          "secondTd": "Kategoria Google",
+          "thirdTd": "Stosowa\u0107 do podkategorii?",
+          "fourthTd": "Podkategoria Google"
+      },
+      "editTable": {
+          "required": "Obowi\u0105zkowe",
+          "checkboxTxt": "Poka\u017c niezmapowane kategorie",
+          "psCategoryName": "Kategoria na twojej stronie",
+          "fbCategoryName": "Kategoria Google",
+          "fbSubcategoryName": "Podkategoria Google"
+      },
+      "errors": "Wyst\u0105pi\u0142 b\u0142\u0105d, zaktualizuj modu\u0142."
+  },
+  "categoryMatched": {
+      "title": "Ulepsz sw\u00f3j katalog: zmapuj swoje kategorie",
+      "description": "Aby wzbogaci\u0107 sw\u00f3j katalog i pom\u00f3c klientom odkry\u0107 Twoje produkty online, wpisz na Googleu kategori\u0119 produkt\u00f3w (GPC) dla swoich produkt\u00f3w, a nast\u0119pnie dodaj wi\u0119cej informacji specyficznych dla ka\u017cdej kategorii. Zalecamy wybranie jak najbardziej specyficznej kategorii, kt\u00f3ra ma zastosowanie do ka\u017cdego przedmiotu, aby pom\u00f3c klientom zrozumie\u0107, jaki rodzaj przedmiotu sprzedajesz.",
+      "btn": "Zobacz wynik swojego zmapowania",
+      "progressBarTotal": "Zmapowane kategorie"
+  },
+  "integrate": {
+      "buttons": {
+          "syncProducts": "Produkty Sync",
+          "modalConfirm": "Tak, potwierdzi\u0107"
+      },
+      "features": {
+          "ig_shopping": {
+              "name": "Zakupy Instagram",
+              "description": "Instagram Shopping daje Twojej firmie wci\u0105gaj\u0105c\u0105 witryn\u0119 sklepow\u0105 dla ludzi, kt\u00f3rzy odkryj\u0105 Twoje najlepsze produkty.",
+              "addButton": "Dodaj",
+              "editButton": "Zarz\u0105dzaj"
+          },
+          "messenger_chat": {
+              "name": "Wtyczka do czatu komunikatora",
+              "description": "Wtyczka Czat pozwala na zintegrowanie Twoich do\u015bwiadcze\u0144 Messengera bezpo\u015brednio z Twoj\u0105 stron\u0105 internetow\u0105.",
+              "addButton": "Dodaj",
+              "checkMessages": "Zobacz moje wiadomo\u015bci",
+              "editButton": "Dostosowywanie ustawie\u0144"
+          },
+          "page_shop": {
+              "name": "Dodaj zak\u0142adk\u0119 sklepu na swojej stronie na Facebooku",
+              "description": "Sklep internetowy na Facebooku umo\u017cliwia sporz\u0105dzanie list produkt\u00f3w, kt\u00f3re sprzedajesz, oraz \u0142\u0105czenie si\u0119 z wi\u0119ksz\u0105 liczb\u0105 klient\u00f3w na Facebooku.",
+              "addButton": "Dodaj",
+              "editButton": "Zarz\u0105dzaj"
+          },
+          "page_cta": {
+              "name": "Dodaj przycisk na swojej stronie na Facebooku",
+              "description": "Dodaj przycisk na swojej stronie na Facebooku, aby sk\u0142oni\u0107 ludzi do podj\u0119cia akcji z Twojej strony, takiej jak Tw\u00f3j sklep.",
+              "addButton": "Dodaj",
+              "editButton": "Edycja"
+          }
+      },
+      "headings": {
+          "availableFeatures": "Aby zwi\u0119kszy\u0107 sprzeda\u017c, dodaj do swojego sklepu...",
+          "unavailableFeatures": "Niedost\u0119pne funkcje w chwili obecnej"
+      },
+      "success": {
+          "featureEnabled": "Doda\u0142e\u015b {0}!",
+          "shopLink": "Zobacz sw\u00f3j sklep"
+      },
+      "warning": {
+          "productsNotSynced": "Najpierw musisz zaimportowa\u0107 sw\u00f3j katalog produkt\u00f3w, aby m\u00f3c za\u0142o\u017cy\u0107 Facebook Shop i Instagram Shopping, a tak\u017ce tworzy\u0107 kampanie reklamowe.",
+          "disableFeatureModalHeader": "Potwierdzasz dezaktywacj\u0119?",
+          "disableFeatureModalText": "Masz zamiar wy\u0142\u0105czy\u0107 t\u0119 funkcj\u0119. Mo\u017ce to ograniczy\u0107 niekt\u00f3re funkcje.",
+          "noFeatures": "Funkcje nie mog\u0142y zosta\u0107 pobrane z Facebooka. Mo\u017ce to by\u0107 spowodowane wyga\u015bni\u0119ciem \u017cetonu i mo\u017ce by\u0107 naprawione przez ponowne uruchomienie pok\u0142adu."
+      },
+      "error": {
+          "failedToUpdateFeature": "Nie uda\u0142o si\u0119 zaktualizowa\u0107 funkcji Facebooka."
+      }
+  },
+  "survey": {
+      "title": "Give us your feedback!",
+      "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+      "button": "Let's begin"
+  },
+  "help": {
+      "title": "Pomoc dla PrestaShop Facebook",
+      "allowsYouTo": {
+          "title": "Korzy\u015bci zapewniane przed modu\u0142:",
+          "business": "Zarz\u0105dzaj swoj\u0105 firm\u0105",
+          "account": "Zarz\u0105dzaj swoim kontem reklamowym",
+          "traffic": "Zrozumie\u0107 sw\u00f3j ruch",
+          "inventory": "Tworzenie i zarz\u0105dzanie inwentaryzacj\u0105",
+          "people": "Dotrze\u0107 do wi\u0119kszej liczby os\u00f3b"
+      },
+      "help": {
+          "needHelp": "Potrzebujesz pomocy? Znajd\u017a tutaj dokumentacj\u0119 tego modu\u0142u.",
+          "downloadPdf": "Pobierz plik PDF",
+          "couldntFindAnyAnswer": "Nie znalaz\u0142e\u015b \u017cadnej odpowiedzi na swoje pytanie?",
+          "contactUs": "Skontaktuj si\u0119 z nami"
+      }
+  },
+  "faq": {
+      "title": "FAQ",
+      "noFaq": "Brak dost\u0119pnych FAQ."
+  },
+  "productStatuses": {
+      "Approved": "Zatwierdzony",
+      "Pending": "W trakcie realizacji",
+      "Disapproved": "Niezatwierdzony"
+  }
+}
