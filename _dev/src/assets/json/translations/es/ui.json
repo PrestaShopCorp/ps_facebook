@@ -163,7 +163,7 @@
     "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
     "reportingText": "Products with detected problems after catalog export are listed below:",
     "lastSyncDate": "Last sync {0} at {1}",
-    "otherLanguage": "Other",
+    "otherLanguage": "Otro",
     "prevalidationEmpty": "Well done! All your products are ready to be exported",
     "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
     "loadNextPage": "Load next results"
