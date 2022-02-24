@@ -29,6 +29,8 @@ class Config
     const REQUIRED_PS_EVENTBUS_VERSION = '1.3.3';
 
     const USE_LOCAL_VUE_APP = false;
+    const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';
+
 
     const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
