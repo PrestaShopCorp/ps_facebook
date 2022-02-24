@@ -1,0 +1,29 @@
+name: CDN Publish
+
+on:
+  release:
+    types: [prereleased, released]
+
+env:
+  WORKFLOW: facebook-storage.yml
+  NODE_VERSION: 14
+  VUE_PATH: _dev
+  BUILD_PATH: views
+
+jobs:
+  publish:
+    name: CDN publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag
+        id: get_tag
+        run: echo ::set-output name=TAG::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - name: Trigger storage
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: ${{ env.WORKFLOW }}
+          repo: PrestaShopCorp/services-deployment
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: 'refs/heads/main'
+          inputs: '{ "version": "${{ steps.get_tag.outputs.TAG }}", "nodeVersion": "${{ steps.get_tag.outputs.NODE_VERSION }}", "vuejsPath": "${{ steps.get_tag.outputs.VUE_PATH }}", "vuejsBuildPath": "${{ steps.get_tag.outputs.BUILD_PATH }}", "isRelease": "${{ !github.event.release.prerelease && true || false }}" }'
