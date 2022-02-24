@@ -82,7 +82,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'access_token' => pSQL($this->configurationAdapter->get('PS_FBE_ACCESS_TOKEN')),
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'pathApp' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/app.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'app.js',
-            'chunkVendor' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/chunk-vendors.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'chunk-vendors.js'
+            'chunkVendor' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/chunk-vendors.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'chunk-vendors.js',
         ]);
 
         $defaultCurrency = $this->context->currency;
