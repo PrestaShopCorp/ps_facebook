@@ -35,7 +35,7 @@ jobs:
           echo ::set-output name=PATCH::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 3)
       - name: Write .env file with specific CDN URL
         if: "github.event.release.prerelease"
-        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxfacebook-cdn/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
+        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxfacebook/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
 
 
       - name: Clean-up project
