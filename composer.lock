@@ -62,6 +62,7 @@
                 "facebook",
                 "sdk"
             ],
+            "abandoned": true,
             "time": "2018-12-11T22:56:31+00:00"
         },
         {
@@ -70,12 +71,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk.git",
-                "reference": "876baa6c0bda4ebb981f7de3a6f66b86315e6440"
+                "reference": "1097cec8868be8fde9cb997f9b8d7444c39459c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/876baa6c0bda4ebb981f7de3a6f66b86315e6440",
-                "reference": "876baa6c0bda4ebb981f7de3a6f66b86315e6440",
+                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/1097cec8868be8fde9cb997f9b8d7444c39459c2",
+                "reference": "1097cec8868be8fde9cb997f9b8d7444c39459c2",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +106,7 @@
             "support": {
                 "source": "https://github.com/PrestaShopCorp/facebook-php-business-sdk/tree/guzzle5"
             },
-            "time": "2021-03-31T16:28:01+00:00"
+            "time": "2022-03-02T17:00:49+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
