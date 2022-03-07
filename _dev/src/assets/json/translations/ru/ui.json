@@ -84,8 +84,8 @@
       }
     },
     "app": {
-      "like": "например,",
-      "likes": "нравится",
+      "like": "like",
+      "likes": "likes",
       "createdAt": "Создано",
       "lastActive": "Последний активный",
       "activated": "Активированный",
