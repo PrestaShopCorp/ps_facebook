@@ -84,8 +84,8 @@
       }
     },
     "app": {
-      "like": "wie",
-      "likes": "mag",
+      "like": "like",
+      "likes": "like",
       "createdAt": "Erstellt",
       "lastActive": "Zuletzt aktiv",
       "activated": "Aktiviert",
