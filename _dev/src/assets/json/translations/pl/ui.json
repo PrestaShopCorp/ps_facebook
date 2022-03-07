@@ -84,8 +84,8 @@
       }
     },
     "app": {
-      "like": "jak",
-      "likes": "lubi",
+      "like": "like",
+      "likes": "likes",
       "createdAt": "Stworzony",
       "lastActive": "Ostatni aktywny",
       "activated": "Aktywowany",
