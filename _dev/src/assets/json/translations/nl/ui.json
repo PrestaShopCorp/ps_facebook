@@ -84,8 +84,8 @@
       }
     },
     "app": {
-      "like": "zoals",
-      "likes": "houdt van",
+      "like": "like",
+      "likes": "likes",
       "createdAt": "Gemaakt op",
       "lastActive": "Laatst actief",
       "activated": "Geactiveerd",
