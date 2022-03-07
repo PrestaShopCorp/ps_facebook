@@ -48,7 +48,7 @@ class ErrorHandler
                     'ps_facebook_is_installed' => Module::isInstalled($module->name),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
-                'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED /*& ~E_NOTICE*/ ,
+                'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE & ~E_USER_NOTICE,
             ]
         );
         // We use realpath to get errors even if module is behind a symbolic link

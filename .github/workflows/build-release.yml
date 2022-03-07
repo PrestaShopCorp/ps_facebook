@@ -1,125 +1,41 @@
-name: Build & Release draft
+name: Build module artifact & deploy
 
 on: [push, pull_request]
 
-env:
-  PS_IMG_VERSION: prestashop/prestashop:1.7.6.9-7.2-apache
-
 jobs:
-  deploy:
-    name: build dependencies & create artifact
+  build:
+    name: Build dependencies & create artifact
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Build JS dependencies
-        uses: PrestaShopCorp/github-action-build-js/12@v1.0
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
         with:
-          cmd: npm
-          path: ./_dev
-      - name: Install composer dependencies
-        run: composer install --no-dev -o
+          node-version: '14'
+          cache: npm
+          cache-dependency-path: '_dev/package-lock.json'
+
+      - name: Install & build
+        working-directory: _dev
+        run: |
+          npm install
+          npm run build
+
+      - name: Install dev composer dependencies
+        run: composer install
+
+      - name: Generate index.php
+        run: vendor/bin/autoindex
+
+      - name: Install prod composer dependencies
+        run: composer install --no-dev
+
       - name: Clean-up project
         uses: PrestaShopCorp/github-action-clean-before-deploy@v1.0
+
       - name: Create & upload artifact
         uses: actions/upload-artifact@v1
         with:
           name: ${{ github.event.repository.name }}
           path: ../
-  update_release_draft:
-    runs-on: ubuntu-latest
-    needs: [deploy]
-    if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: ${{ github.event.repository.name }}
-      - id: release_info
-        uses: toolmantim/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Prepare for Release
-        run: |
-          cd ${{ github.event.repository.name }}
-          zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
-      - name: Clean existing assets
-        shell: bash
-        run: |
-          curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
-          assets=`bin/hub api -t repos/${{ github.repository }}/releases/${{ steps.release_info.outputs.id }}/assets | awk '/\].url/ { print $2 }'`
-          for asset in $assets
-          do
-            bin/hub api -X DELETE $asset
-          done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to GitHub Release
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release_info.outputs.upload_url }}
-          asset_path: ./${{ github.event.repository.name }}/${{ github.event.repository.name }}.zip
-          asset_name: ${{ github.event.repository.name }}.zip
-          asset_content_type: application/zip
-
-  ci_cd_stable:
-    name: CI/CD push production ps_facebook
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: deploy
-    if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
-    steps:
-
-      - name: Download artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: ${{ github.event.repository.name }}
-
-      - name: Copy modules
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_PRODUCTION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "."
-          target: "build"
-
-      - name: Delete old modules 1.7
-        continue-on-error: true
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_PRODUCTION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") rm -rf modules/ps_facebook'
-
-      - name: Move modules
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_PRODUCTION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'cp -R build/ps_facebook/ps_facebook ${{ secrets.MODULE_PATH }}'
-            sudo su -c 'chown -R www-data:www-data ${{ secrets.MODULE_PATH }}/ps_facebook'
-      - name: Install modules
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_PRODUCTION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module uninstall ps_facebook || true'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console prestashop:module install ps_facebook'
-      - name: Clear cache
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_PRODUCTION }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") bin/console cache:cl'
-            sudo su -c 'docker exec $(docker ps -q -f "ancestor=${{ env.PS_IMG_VERSION }}" -f "name=facebook") chmod -R 777 var/cache var/logs'
