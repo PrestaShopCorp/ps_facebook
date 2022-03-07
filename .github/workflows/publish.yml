@@ -2,7 +2,13 @@ name: Publish
 
 on:
   release:
-    types: [released]
+    types: [published]
+
+env:
+  NODE_VERSION: 14
+  CDN_URL_ENV_NAME: PSX_FACEBOOK_CDN_URL
+  GLOUD_CDN_BUCKET: psxfacebook
+  GLOUD_SECRET_NAME: facebook-module
 
 jobs:
   build:
@@ -14,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{env.NODE_VERSION}}
           cache: npm
           cache-dependency-path: '_dev/package-lock.json'
 
@@ -35,7 +41,7 @@ jobs:
           echo ::set-output name=PATCH::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '.' -f 3)
       - name: Write .env file with specific CDN URL
         if: "github.event.release.prerelease"
-        run: echo 'PSX_FACEBOOK_CDN_URL=https://storage.googleapis.com/psxfacebook/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
+        run: echo '${{CDN_URL_ENV_NAME}}=https://storage.googleapis.com/${{env.GLOUD_CDN_BUCKET}}/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
 
 
       - name: Clean-up project
@@ -93,7 +99,7 @@ jobs:
       - name: Copy env files
         run: |
           gcloud components install beta
-          gcloud beta secrets versions access latest --secret="facebook-module" >> ps_facebook/ps_facebook/.env
+          gcloud beta secrets versions access latest --secret="${{env.GLOUD_SECRET_NAME}}" >> ${{ github.event.repository.name }}/${{ github.event.repository.name }}/.env
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
 
