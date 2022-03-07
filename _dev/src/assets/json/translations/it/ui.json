@@ -84,8 +84,8 @@
       }
     },
     "app": {
-      "like": "come",
-      "likes": "ama",
+      "like": "like",
+      "likes": "likes",
       "createdAt": "Creato",
       "lastActive": "Ultima connessione",
       "activated": "Attivato",
