@@ -62,7 +62,7 @@
         "description": "Autoriza esta conta do Facebook a ligar-se à sua loja:",
         "editButton": "Modificar a minha conta",
         "unlinkButton": "Desbloqueio",
-        "facebookBusinessManager": "Gerente de Negócios do Facebook",
+        "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "Conta comercial Facebook permite-lhe gerir contas de publicidade, Páginas e as pessoas que nelas trabalham no mesmo local",
         "facebookPixel": "Pixel do Facebook",
         "facebookPixelTooltip": "O Facebook Pixel é um pedaço de código (Javascript) que instalamos automaticamente nas páginas do seu website. Permite-lhe rastrear quem visita o seu website, rastrear conversões dos seus anúncios no Facebook e criar redirecionamentos de audiências",
