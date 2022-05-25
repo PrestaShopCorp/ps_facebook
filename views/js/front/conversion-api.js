@@ -21,7 +21,6 @@ $(document).ready(function () {
         if (params.eventType === 'updatedProductCombination') {
             var productId = $('input[name="id_product"]').val();
             var $productAttributes = $(params.event.handleObj.selector);
-            var selectedAttribute = $(params.event.originalEvent.srcElement);
             var attributes = [];
             $productAttributes.each(function (key, attribute) {
                 if ($(attribute).is("input") && !$(attribute).is(':checked')) {
