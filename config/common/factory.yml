@@ -1,12 +1,15 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory
+    public: true
 
   PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory
+    public: true
 
   PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory
+    public: true
     arguments:
      - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
      - '@PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'

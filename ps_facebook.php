@@ -81,7 +81,6 @@ class Ps_facebook extends Module
     const HOOK_LIST = [
         'displayHeader',
         'actionCustomerAccountAdd',
-        'actionObjectContactAddAfter',
         'actionCartSave',
         'actionSearch',
         'displayOrderConfirmation',
@@ -89,7 +88,6 @@ class Ps_facebook extends Module
         'actionObjectCustomerMessageAddAfter',
         'displayFooter',
         'actionNewsletterRegistrationAfter',
-        'displayPersonalInformationTop',
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
         'actionFacebookCallPixel',

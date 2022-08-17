@@ -54,21 +54,76 @@ class PsApiClientFactory implements ApiClientFactoryInterface
      */
     public function createClient()
     {
-        $client = new Client([
-            'base_url' => $this->baseUrl,
-            'defaults' => [
-                'timeout' => 10,
-                'verify' => false,
+
+        if ($this->isGuzzleVersionGreaterThan5()) {
+            $client = new Client([
+                'base_url' => $this->baseUrl,
                 'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->psAccountsFacade->getPsAccountsService()->getOrRefreshToken(),
                 ],
-            ],
-        ]);
+                'timeout' => 60,
+            ]);
+        } else {
+            $client = new Client([
+                'base_url' => $this->baseUrl,
+                'defaults' => [
+                    'timeout' => 10,
+                    'verify' => false,
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $this->psAccountsFacade->getPsAccountsService()->getOrRefreshToken(),
+                    ],
+                ],
+            ]);
+        }
         $emitter = $client->getEmitter();
         $emitter->attach($this->eventSubscriber);
 
         return $client;
+    }
+
+    protected function isGuzzleVersionGreaterThan5()
+    {
+        if ($this->guzzleIsDetected()) {
+            $guzzleVersion = $this->guzzleMajorVersionNumber();
+
+            return $guzzleVersion > 5;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function guzzleIsDetected()
+    {
+        return interface_exists("\GuzzleHttp\ClientInterface");
+    }
+
+    /**
+     * @return int|null
+     */
+    private function guzzleMajorVersionNumber()
+    {
+        // Guzzle 7
+        if (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
+            return (int) \GuzzleHttp\ClientInterface::MAJOR_VERSION;
+        }
+
+        // Before Guzzle 7
+        if (defined('\GuzzleHttp\ClientInterface::VERSION')) {
+            return (int) \GuzzleHttp\ClientInterface::VERSION[0];
+        }
+
+        return null;
+    }
+
+    private function handleResponse($response)
+    {
+        $responseHandler = new ResponseApiHandler();
+
+        return $responseHandler->handleResponse($response);
     }
 }

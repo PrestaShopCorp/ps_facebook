@@ -1,6 +1,7 @@
 services:
   PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient:
     class: PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
@@ -8,6 +9,7 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\API\FacebookClient:
     class: PrestaShop\Module\PrestashopFacebook\API\FacebookClient
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider'
@@ -17,5 +19,6 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber:
     class: PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'

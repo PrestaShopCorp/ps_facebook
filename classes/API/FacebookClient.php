@@ -435,9 +435,11 @@ class FacebookClient
 
         try {
             $request = $this->client->createRequest(
-                $method,
-                "/{$this->sdkVersion}/{$id}",
-                $options
+                [
+                    $method,
+                    "/{$this->sdkVersion}/{$id}",
+                    $options
+                ]
             );
 
             $response = $this->client->send($request);

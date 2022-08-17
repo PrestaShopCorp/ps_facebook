@@ -1,6 +1,7 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher:
     class: PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler'
