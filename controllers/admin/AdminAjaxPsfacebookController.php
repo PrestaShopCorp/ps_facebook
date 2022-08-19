@@ -165,14 +165,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $client = $this->clientFactory->createClient();
             try {
                 $response = $client->post(
-                    '/account/onboard',
+                    'https://facebook-api.psessentials.net/account/onboard',
                     [
                         'json' => [
                             // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
                             'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
                         ],
                     ]
-                )->json();
+                );
+                $response = json_decode($response->getBody()->getContents(), true);
             } catch (Exception $e) {
                 $this->errorHandler->handle(
                     new FacebookOnboardException(
