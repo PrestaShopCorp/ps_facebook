@@ -77,53 +77,9 @@ class PsApiClientFactory implements ApiClientFactoryInterface
                 ],
             ]);
         }
-        $emitter = $client->getEmitter();
-        $emitter->attach($this->eventSubscriber);
+        // $emitter = $client->getEmitter();
+        // $emitter->attach($this->eventSubscriber);
 
         return $client;
-    }
-
-    protected function isGuzzleVersionGreaterThan5()
-    {
-        if ($this->guzzleIsDetected()) {
-            $guzzleVersion = $this->guzzleMajorVersionNumber();
-
-            return $guzzleVersion > 5;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    private function guzzleIsDetected()
-    {
-        return interface_exists("\GuzzleHttp\ClientInterface");
-    }
-
-    /**
-     * @return int|null
-     */
-    private function guzzleMajorVersionNumber()
-    {
-        // Guzzle 7
-        if (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
-            return (int) \GuzzleHttp\ClientInterface::MAJOR_VERSION;
-        }
-
-        // Before Guzzle 7
-        if (defined('\GuzzleHttp\ClientInterface::VERSION')) {
-            return (int) \GuzzleHttp\ClientInterface::VERSION[0];
-        }
-
-        return null;
-    }
-
-    private function handleResponse($response)
-    {
-        $responseHandler = new ResponseApiHandler();
-
-        return $responseHandler->handleResponse($response);
     }
 }
