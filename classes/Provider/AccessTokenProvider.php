@@ -145,7 +145,7 @@ class AccessTokenProvider
                             'userAccessToken' => $accessToken,
                             'businessManagerId' => $managerId,
                         ],
-                    ],
+                    ]
                 )
             );
             $response = json_decode($response->getBody()->getContents(), true);
