@@ -20,14 +20,19 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
-use GuzzleHttp\Client;
+use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
 
 class GoogleCategoryEssentialsApiClientFactory implements ApiClientFactoryInterface
 {
     const API_URL = 'https://facebook-api.psessentials.net';
 
+    public function __construct(ClientFactory $clientFactory)
+    {
+        $this->clientFactory = $clientFactory;
+    }
+
     public function createClient()
     {
-        return new Client(['base_url' => self::API_URL]);
+        return $this->clientFactory->getClient(['base_url' => self::API_URL]);
     }
 }

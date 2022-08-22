@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Exception;
-use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
@@ -36,7 +36,7 @@ class ProductSyncReportProvider
     private $configurationAdapter;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $psApiClient;
 

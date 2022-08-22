@@ -21,8 +21,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
@@ -35,6 +35,7 @@ use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
+use Psr\Http\Client\ClientInterface;
 
 class FacebookClient
 {
@@ -49,7 +50,7 @@ class FacebookClient
     private $sdkVersion;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $client;
 
@@ -340,7 +341,7 @@ class FacebookClient
                 ]
             );
 
-            $response = $this->client->send($request);
+            $response = $this->client->sendRequest($request);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
             $message = "Facebook client failed when creating get request. Method: {$method}.";
@@ -434,15 +435,13 @@ class FacebookClient
         ];
 
         try {
-            $request = $this->client->createRequest(
-                [
-                    $method,
-                    "/{$this->sdkVersion}/{$id}",
-                    $options
-                ]
+            $request = new Request(
+                $method,
+                "/{$this->sdkVersion}/{$id}",
+                $options
             );
 
-            $response = $this->client->send($request);
+            $response = $this->client->sendRequest($request);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
             $this->errorHandler->handle(

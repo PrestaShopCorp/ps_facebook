@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
-use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
@@ -31,7 +31,7 @@ use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 class FacebookCategoryClient
 {
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $client;
 
@@ -96,7 +96,7 @@ class FacebookCategoryClient
                 ]
             );
 
-            $response = $this->client->send($request);
+            $response = $this->client->sendRequest($request);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
             $this->errorHandler->handle(

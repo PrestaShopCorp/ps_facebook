@@ -6,27 +6,27 @@
         "optimize-autoloader": true,
         "prepend-autoloader": false,
         "platform": {
-            "php": "5.6"
+            "php": "7.2.5"
         }
     },
     "require": {
-        "php": ">=5.6",
-        "guzzlehttp/guzzle": "~5.3",
+        "php": ">=7.2.5",
         "prestashop/circuit-breaker": "^3.0",
         "facebook/php-business-sdk": "dev-guzzle5",
         "vlucas/phpdotenv": "3.4",
         "facebook/graph-sdk": "^5.7",
         "prestashop/prestashop-accounts-installer": "^1.0.1",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
-        "prestashop/module-lib-faq": "^2.0",
+        "prestashop/module-lib-faq": "^2.2",
         "prestashop/module-lib-service-container": "^2.0",
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
-        "prestashop/prestashop-accounts-auth": "^2.3"
+        "prestashop/prestashop-accounts-auth": "^2.3",
+        "prestashop/module-lib-guzzle-adapter": "^0.4"
     },
     "require-dev": {
-        "prestashop/php-dev-tools": "^3.0",
-        "phpunit/phpunit": "^5.7"
+        "prestashop/php-dev-tools": "^4.2",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
