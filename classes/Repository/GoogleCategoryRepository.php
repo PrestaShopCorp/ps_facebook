@@ -28,8 +28,8 @@ use PrestaShopCollection;
 
 class GoogleCategoryRepository
 {
-    const NO_CHILDREN = 0;
-    const HAS_CHILDREN = 1;
+    public const NO_CHILDREN = 0;
+    public const HAS_CHILDREN = 1;
 
     /**
      * @var int

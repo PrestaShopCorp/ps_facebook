@@ -35,9 +35,9 @@ use Ps_facebook;
 
 class EventDataProvider
 {
-    const PRODUCT_TYPE = 'product';
+    public const PRODUCT_TYPE = 'product';
 
-    const CATEGORY_TYPE = 'product_group';
+    public const CATEGORY_TYPE = 'product_group';
 
     /**
      * @var Context

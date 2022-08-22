@@ -24,7 +24,12 @@ use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
 
 class GoogleCategoryEssentialsApiClientFactory implements ApiClientFactoryInterface
 {
-    const API_URL = 'https://facebook-api.psessentials.net';
+    public const API_URL = 'https://facebook-api.psessentials.net';
+
+    /**
+     * @var ClientFactory
+     */
+    private $clientFactory;
 
     public function __construct(ClientFactory $clientFactory)
     {

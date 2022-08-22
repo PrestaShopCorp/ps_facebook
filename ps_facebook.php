@@ -68,17 +68,17 @@ class Ps_facebook extends Module
      */
     private $serviceContainer;
 
-    const MODULE_ADMIN_CONTROLLERS = [
+    public const MODULE_ADMIN_CONTROLLERS = [
         'AdminAjaxPsfacebook',
         'AdminPsfacebookModule',
     ];
 
-    const FRONT_CONTROLLERS = [
+    public const FRONT_CONTROLLERS = [
         'FrontAjaxFacebookWebhooks',
         'FrontAjaxFacebookAjax',
     ];
 
-    const HOOK_LIST = [
+    public const HOOK_LIST = [
         'displayHeader',
         'actionCustomerAccountAdd',
         'actionCartSave',
@@ -93,7 +93,7 @@ class Ps_facebook extends Module
         'actionFacebookCallPixel',
     ];
 
-    const CONFIGURATION_LIST = [
+    public const CONFIGURATION_LIST = [
         Config::PS_PIXEL_ID,
         Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
         Config::PS_FACEBOOK_PROFILES,

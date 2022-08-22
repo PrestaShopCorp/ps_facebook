@@ -21,12 +21,13 @@
 namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
-use Psr\Http\Client\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
+use Psr\Http\Client\ClientInterface;
 
 class FacebookCategoryClient
 {
@@ -88,7 +89,7 @@ class FacebookCategoryClient
         );
 
         try {
-            $request = $this->client->createRequest(
+            $request = new Request(
                 'GET',
                 "/{$id}",
                 [

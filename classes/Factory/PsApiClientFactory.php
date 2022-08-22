@@ -41,7 +41,7 @@ class PsApiClientFactory implements ApiClientFactoryInterface
      * @var SubscriberInterface
      */
     private $eventSubscriber;
-    
+
     /**
      * @var ClientFactory
      */

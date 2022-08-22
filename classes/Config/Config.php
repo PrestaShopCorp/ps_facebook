@@ -22,50 +22,50 @@ namespace PrestaShop\Module\PrestashopFacebook\Config;
 
 class Config
 {
-    const API_VERSION = 'v13.0';
+    public const API_VERSION = 'v13.0';
 
-    const COMPLIANT_PS_ACCOUNTS_VERSION = '3.0.0';
-    const REQUIRED_PS_ACCOUNTS_VERSION = '4.0.0';
-    const REQUIRED_PS_EVENTBUS_VERSION = '1.3.3';
+    public const COMPLIANT_PS_ACCOUNTS_VERSION = '3.0.0';
+    public const REQUIRED_PS_ACCOUNTS_VERSION = '4.0.0';
+    public const REQUIRED_PS_EVENTBUS_VERSION = '1.3.3';
 
-    const USE_LOCAL_VUE_APP = false;
-    const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';
+    public const USE_LOCAL_VUE_APP = false;
+    public const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';
 
-    const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
-    const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
-    const PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE = 'PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE';
-    const PS_FACEBOOK_SYSTEM_ACCESS_TOKEN = 'PS_FACEBOOK_SYSTEM_ACCESS_TOKEN';
-    const PS_FACEBOOK_PROFILES = 'PS_FACEBOOK_PROFILES';
-    const PS_FACEBOOK_PAGES = 'PS_FACEBOOK_PAGES';
-    const PS_FACEBOOK_BUSINESS_MANAGER_ID = 'PS_FACEBOOK_BUSINESS_MANAGER_ID';
-    const PS_FACEBOOK_AD_ACCOUNT_ID = 'PS_FACEBOOK_AD_ACCOUNT_ID';
-    const PS_FACEBOOK_CATALOG_ID = 'PS_FACEBOOK_CATALOG_ID';
-    const PS_FACEBOOK_EXTERNAL_BUSINESS_ID = 'PS_FACEBOOK_EXTERNAL_BUSINESS_ID';
-    const PS_FACEBOOK_PIXEL_ENABLED = 'PS_FACEBOOK_PIXEL_ENABLED';
-    const PS_FACEBOOK_CAPI_TEST_EVENT_CODE = 'PS_FACEBOOK_CAPI_TEST_EVENT_CODE';
-    const PS_FACEBOOK_PRODUCT_SYNC_FIRST_START = 'PS_FACEBOOK_PRODUCT_SYNC_FIRST_START';
-    const PS_FACEBOOK_PRODUCT_SYNC_ON = 'PS_FACEBOOK_PRODUCT_SYNC_ON';
+    public const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
+    public const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
+    public const PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE = 'PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE';
+    public const PS_FACEBOOK_SYSTEM_ACCESS_TOKEN = 'PS_FACEBOOK_SYSTEM_ACCESS_TOKEN';
+    public const PS_FACEBOOK_PROFILES = 'PS_FACEBOOK_PROFILES';
+    public const PS_FACEBOOK_PAGES = 'PS_FACEBOOK_PAGES';
+    public const PS_FACEBOOK_BUSINESS_MANAGER_ID = 'PS_FACEBOOK_BUSINESS_MANAGER_ID';
+    public const PS_FACEBOOK_AD_ACCOUNT_ID = 'PS_FACEBOOK_AD_ACCOUNT_ID';
+    public const PS_FACEBOOK_CATALOG_ID = 'PS_FACEBOOK_CATALOG_ID';
+    public const PS_FACEBOOK_EXTERNAL_BUSINESS_ID = 'PS_FACEBOOK_EXTERNAL_BUSINESS_ID';
+    public const PS_FACEBOOK_PIXEL_ENABLED = 'PS_FACEBOOK_PIXEL_ENABLED';
+    public const PS_FACEBOOK_CAPI_TEST_EVENT_CODE = 'PS_FACEBOOK_CAPI_TEST_EVENT_CODE';
+    public const PS_FACEBOOK_PRODUCT_SYNC_FIRST_START = 'PS_FACEBOOK_PRODUCT_SYNC_FIRST_START';
+    public const PS_FACEBOOK_PRODUCT_SYNC_ON = 'PS_FACEBOOK_PRODUCT_SYNC_ON';
 
-    const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop'/*, 'ig_shopping'*/];
-    const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
-    const FBE_FEATURE_CONFIGURATION = 'PS_FACEBOOK_FBE_FEATURE_CONFIG_';
+    public const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop'/*, 'ig_shopping'*/];
+    public const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
+    public const FBE_FEATURE_CONFIGURATION = 'PS_FACEBOOK_FBE_FEATURE_CONFIG_';
 
-    const CATEGORIES_PER_PAGE = 50;
-    const MAX_CATEGORY_DEPTH = 3;
+    public const CATEGORIES_PER_PAGE = 50;
+    public const MAX_CATEGORY_DEPTH = 3;
 
-    const REPORTS_PER_PAGE = 1000;
+    public const REPORTS_PER_PAGE = 1000;
 
     // Data that can be overwritten by .env file if using the Env class
-    const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
-    const PSX_FACEBOOK_UI_URL = 'https://facebook.psessentials.net';
-    const PSX_FACEBOOK_APP_ID = '726899634800479';
-    const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
-    const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
+    public const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
+    public const PSX_FACEBOOK_UI_URL = 'https://facebook.psessentials.net';
+    public const PSX_FACEBOOK_APP_ID = '726899634800479';
+    public const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
+    public const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 
     /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
-    const OAUTH_EXCEPTION_CODE = [33, 190];
-    const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
+    public const OAUTH_EXCEPTION_CODE = [33, 190];
+    public const PS_FACEBOOK_CAPI_PARTNER_AGENT = 'prestashop';
 
-    const PS_FACEBOOK_FORCED_DISCONNECT = 'PS_FACEBOOK_FORCED_DISCONNECT';
-    const PS_FACEBOOK_SUSPENSION_REASON = 'PS_FACEBOOK_SUSPENSION_REASON';
+    public const PS_FACEBOOK_FORCED_DISCONNECT = 'PS_FACEBOOK_FORCED_DISCONNECT';
+    public const PS_FACEBOOK_SUSPENSION_REASON = 'PS_FACEBOOK_SUSPENSION_REASON';
 }

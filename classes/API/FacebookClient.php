@@ -333,7 +333,7 @@ class FacebookClient
         );
 
         try {
-            $request = $this->client->createRequest(
+            $request = new Request(
                 'GET',
                 "/{$this->sdkVersion}/{$id}",
                 [

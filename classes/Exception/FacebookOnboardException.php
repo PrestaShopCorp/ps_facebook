@@ -24,7 +24,7 @@ use Exception;
 
 class FacebookOnboardException extends Exception
 {
-    const FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION = 1;
+    public const FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION = 1;
 
-    const FACEBOOK_ONBOARD_EXCEPTION = 2;
+    public const FACEBOOK_ONBOARD_EXCEPTION = 2;
 }

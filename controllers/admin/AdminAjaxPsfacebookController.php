@@ -18,6 +18,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -162,16 +163,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = $this->clientFactory->createClient();
             try {
-                $response = $client->post(
-                    'https://facebook-api.psessentials.net/account/onboard',
-                    [
-                        'json' => [
-                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                        ],
-                    ]
+                $response = $this->clientFactory->createClient()->sendRequest(
+                    new Request(
+                        'POST',
+                        '/account/onboard',
+                        [
+                            'json' => [
+                                // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                                'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                            ],
+                        ]
+                    )
                 );
                 $response = json_decode($response->getBody()->getContents(), true);
             } catch (Exception $e) {
@@ -218,13 +221,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = $this->clientFactory->createClient();
         try {
-            $client->post(
-                '/account/' . $externalBusinessId . '/start_product_sync',
-                [
-                    'json' => ['turnOn' => $turnOn],
-                ]
+            $this->clientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/' . $externalBusinessId . '/start_product_sync',
+                    [
+                        'json' => ['turnOn' => $turnOn],
+                    ]
+                )
             );
         } catch (Exception $e) {
             $this->errorHandler->handle(
@@ -702,13 +707,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxExportWholeCatalog()
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = $this->clientFactory->createClient();
         $response = 200;
 
         try {
-            $response = $client->post(
-                '/account/' . $externalBusinessId . '/reset_product_sync'
-            )->json();
+            $response = $this->clientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/' . $externalBusinessId . '/reset_product_sync'
+                )
+            );
+            $response = json_decode($response->getBody()->getContents(), true);
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookCatalogExportException(

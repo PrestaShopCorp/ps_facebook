@@ -24,5 +24,5 @@ use Exception;
 
 class FacebookConversionAPIException extends Exception
 {
-    const SEND_EVENT_EXCEPTION = 1;
+    public const SEND_EVENT_EXCEPTION = 1;
 }

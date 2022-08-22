@@ -8,8 +8,8 @@ use Symfony\Component\Finder\Finder;
 
 class PrevalidationScanCacheProvider
 {
-    const CACHE_KEY_SUMMARY = 'summary_';
-    const CACHE_KEY_PAGE = 'page_';
+    public const CACHE_KEY_SUMMARY = 'summary_';
+    public const CACHE_KEY_PAGE = 'page_';
 
     /**
      * @var string

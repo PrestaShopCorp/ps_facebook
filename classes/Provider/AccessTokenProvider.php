@@ -23,6 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 use Controller;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
@@ -135,15 +136,20 @@ class AccessTokenProvider
         }
 
         try {
-            $response = $this->psApiClientFactory->createClient()->post(
-                '/account/' . $externalBusinessId . '/exchange_tokens',
-                [
-                    'json' => [
-                        'userAccessToken' => $accessToken,
-                        'businessManagerId' => $managerId,
+            $response = $this->psApiClientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/' . $externalBusinessId . '/exchange_tokens',
+                    [],
+                    [
+                        'json' => [
+                            'userAccessToken' => $accessToken,
+                            'businessManagerId' => $managerId,
+                        ],
                     ],
-                ]
-            )->json();
+                )
+            );
+            $response = json_decode($response->getBody()->getContents(), true);
         } catch (ClientException $e) {
             $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
             $this->errorHandler->handle(
@@ -198,9 +204,13 @@ class AccessTokenProvider
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $response = $this->psApiClientFactory->createClient()->get(
-                '/account/' . $externalBusinessId . '/app_tokens'
-            )->json();
+            $response = $this->psApiClientFactory->createClient()->sendRequest(
+                new Request(
+                    'GET',
+                    '/account/' . $externalBusinessId . '/app_tokens'
+                )
+            );
+            $response = json_decode($response->getBody()->getContents(), true);
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new AccessTokenException(

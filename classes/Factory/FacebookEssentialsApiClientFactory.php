@@ -24,7 +24,12 @@ use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
 
 class FacebookEssentialsApiClientFactory implements ApiClientFactoryInterface
 {
-    const API_URL = 'https://graph.facebook.com';
+    public const API_URL = 'https://graph.facebook.com';
+
+    /**
+     * @var ClientFactory
+     */
+    private $clientFactory;
 
     public function __construct(ClientFactory $clientFactory)
     {
