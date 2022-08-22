@@ -61,7 +61,7 @@ class ProductSyncReportProvider
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $response = $this->psApiClientFactory->createClient()->sendRequest(
+            $response = $this->psApiClient->sendRequest(
                 new Request(
                     'GET',
                     "/account/{$businessId}/reporting"

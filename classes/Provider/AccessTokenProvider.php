@@ -140,7 +140,6 @@ class AccessTokenProvider
                 new Request(
                     'POST',
                     '/account/' . $externalBusinessId . '/exchange_tokens',
-                    [],
                     [
                         'json' => [
                             'userAccessToken' => $accessToken,
