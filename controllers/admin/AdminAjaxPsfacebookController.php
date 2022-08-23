@@ -446,7 +446,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary($this->context->shop->id),
                         'reporting' => [
                             'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
-                            'catalog' => $productCount['product_count'],
+                            'catalog' => $productCount['product_count'] ?? '--',
                             'errored' => count($syncReport['errors']), // no distinction for base lang vs l10n errors
                         ],
                     ],
@@ -715,7 +715,27 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     '/account/' . $externalBusinessId . '/reset_product_sync'
                 )
             );
-            $response = json_decode($response->getBody()->getContents(), true);
+            $responseContent = json_decode($response->getBody()->getContents(), true);
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new FacebookCatalogExportException(
+                        'Failed to export the whole catalog',
+                        FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+
+                $code = $response->getStatusCode();
+                $this->ajaxDie(json_encode([
+                    'response' => 500,
+                    'message' => "Failed to export the whole catalog (HTTP {$code})",
+                ]));
+            }
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookCatalogExportException(
