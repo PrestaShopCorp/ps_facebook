@@ -226,7 +226,7 @@ class AccessTokenProvider
                     ]
                 );
 
-                return false;
+                return null;
             }
         } catch (Exception $e) {
             $this->errorHandler->handle(

@@ -47,12 +47,16 @@ class PrevalidationScanDataProvider
      * @param int $page
      * @param int $shopId
      *
-     * @return array|null
+     * @return array
      */
     public function getPageOfPrevalidationScan($shopId, $page)
     {
-        return json_decode($this->preValidationCacheProvider->get(
+        $cacheContent = json_decode($this->preValidationCacheProvider->get(
             PrevalidationScanCacheProvider::CACHE_KEY_PAGE . $shopId . '_' . $page
         ));
+        if (empty($cacheContent)) {
+            return [];
+        }
+        return $cacheContent;
     }
 }

@@ -346,8 +346,8 @@ class FacebookClient
                 $message = "Facebook client failed when creating get request. Method: {$method}.";
 
                 $exceptionCode = false;
-                if (!empty($exceptionContent['error']['code'])) {
-                    $exceptionCode = $exceptionContent['error']['code'];
+                if (!empty($responseContent['error']['code'])) {
+                    $exceptionCode = $responseContent['error']['code'];
                     $message .= " Code: {$exceptionCode}";
                 }
 
