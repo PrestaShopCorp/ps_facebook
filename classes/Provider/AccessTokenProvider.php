@@ -140,12 +140,11 @@ class AccessTokenProvider
                 new Request(
                     'POST',
                     '/account/' . $externalBusinessId . '/exchange_tokens',
-                    [
-                        'json' => [
-                            'userAccessToken' => $accessToken,
-                            'businessManagerId' => $managerId,
-                        ],
-                    ]
+                    [],
+                    json_encode([
+                        'userAccessToken' => $accessToken,
+                        'businessManagerId' => $managerId,
+                    ])
                 )
             );
             $response = json_decode($response->getBody()->getContents(), true);

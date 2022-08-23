@@ -28,7 +28,7 @@ class CacheFactory
     /**
      * @return string
      */
-    public function getCachePath()
+    public static function getCachePath()
     {
         $cacheDirectoryProvider = new CacheDirectoryProvider(
             _PS_VERSION_,

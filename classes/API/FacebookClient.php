@@ -335,10 +335,7 @@ class FacebookClient
         try {
             $request = new Request(
                 'GET',
-                "/{$this->sdkVersion}/{$id}",
-                [
-                    'query' => $query,
-                ]
+                "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
             );
 
             $response = $this->client->sendRequest($request);
@@ -424,21 +421,17 @@ class FacebookClient
      */
     private function sendRequest($id, array $headers, array $body, $method)
     {
-        $options = [
-            'headers' => $headers,
-            'body' => array_merge(
-                [
-                    'access_token' => $this->accessToken,
-                ],
-                $body
-            ),
-        ];
-
         try {
             $request = new Request(
                 $method,
                 "/{$this->sdkVersion}/{$id}",
-                $options
+                $headers,
+                json_encode(array_merge(
+                    [
+                        'access_token' => $this->accessToken,
+                    ],
+                    $body
+                ))
             );
 
             $response = $this->client->sendRequest($request);

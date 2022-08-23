@@ -168,12 +168,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     new Request(
                         'POST',
                         '/account/onboard',
-                        [
-                            'json' => [
-                                // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                                'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                            ],
-                        ]
+                        [],
+                        json_encode([
+                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                        ])
                     )
                 );
                 $response = json_decode($response->getBody()->getContents(), true);
@@ -194,10 +193,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
                 $this->errorHandler->handle(
                     new FacebookOnboardException(
-                        $response['message'],
+                        json_encode($response['message']),
                         FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
                     )
                 );
+                return;
             }
             $externalBusinessId = $response['externalBusinessId'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
@@ -226,9 +226,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 new Request(
                     'POST',
                     '/account/' . $externalBusinessId . '/start_product_sync',
-                    [
-                        'json' => ['turnOn' => $turnOn],
-                    ]
+                    [],
+                    json_encode(['turnOn' => $turnOn])
                 )
             );
         } catch (Exception $e) {
