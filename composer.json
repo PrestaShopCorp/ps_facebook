@@ -14,7 +14,6 @@
         "prestashop/circuit-breaker": "^3.0",
         "facebook/php-business-sdk": "dev-guzzle5",
         "vlucas/phpdotenv": "3.4",
-        "facebook/graph-sdk": "^5.7",
         "prestashop/prestashop-accounts-installer": "^1.0.1",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
         "prestashop/module-lib-faq": "^2.2",
