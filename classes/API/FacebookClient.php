@@ -339,37 +339,39 @@ class FacebookClient
             );
 
             $response = $this->client->sendRequest($request);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $message = "Facebook client failed when creating get request. Method: {$method}.";
+            $responseContent = json_decode($response->getBody()->getContents(), true);
 
-            $exceptionCode = false;
-            if (!empty($exceptionContent['error']['code'])) {
-                $exceptionCode = $exceptionContent['error']['code'];
-                $message .= " Code: {$exceptionCode}";
-            }
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $message = "Facebook client failed when creating get request. Method: {$method}.";
 
-            if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
-                $this->disconnectFromFacebook();
-                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
+                $exceptionCode = false;
+                if (!empty($exceptionContent['error']['code'])) {
+                    $exceptionCode = $exceptionContent['error']['code'];
+                    $message .= " Code: {$exceptionCode}";
+                }
+
+                if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
+                    $this->disconnectFromFacebook();
+                    $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
+
+                    return false;
+                }
+
+                $this->errorHandler->handle(
+                    new FacebookClientException(
+                        $message,
+                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
 
                 return false;
             }
-
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    $message,
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
-
-            return false;
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
@@ -384,7 +386,7 @@ class FacebookClient
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $responseContent;
     }
 
     /**
@@ -435,22 +437,25 @@ class FacebookClient
             );
 
             $response = $this->client->sendRequest($request);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating post request.',
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
+            $responseContent = json_decode($response->getBody()->getContents(), true);
 
-            return false;
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new FacebookClientException(
+                        'Facebook client failed when creating post request.',
+                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+    
+                return false;
+            }
+
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
@@ -465,6 +470,6 @@ class FacebookClient
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $responseContent;
     }
 }

@@ -98,22 +98,24 @@ class FacebookCategoryClient
             );
 
             $response = $this->client->sendRequest($request);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook category client failed when creating get request.',
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
+            $responseContent = json_decode($response->getBody()->getContents(), true);
 
-            return false;
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new FacebookClientException(
+                        'Facebook category client failed when creating get request.',
+                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+
+                return false;
+            }
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
@@ -128,6 +130,6 @@ class FacebookCategoryClient
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $responseContent;
     }
 }

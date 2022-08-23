@@ -67,7 +67,22 @@ class ProductSyncReportProvider
                     "/account/{$businessId}/reporting"
                 )
             );
-            $response = json_decode($response->getBody()->getContents(), true);
+            $responseContent = json_decode($response->getBody()->getContents(), true);
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new FacebookAccountException(
+                        'Failed to get product sync reporting',
+                        FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+                $responseContent = [];
+            }
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookAccountException(
@@ -79,10 +94,10 @@ class ProductSyncReportProvider
                 false
             );
 
-            $response = [];
+            $responseContent = [];
         }
 
-        return $this->fixMissingValues($response);
+        return $this->fixMissingValues($responseContent);
     }
 
     private function fixMissingValues($response)

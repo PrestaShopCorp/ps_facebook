@@ -147,23 +147,24 @@ class AccessTokenProvider
                     ])
                 )
             );
-            $response = json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to refresh access token',
-                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
+            $responseContent = json_decode($response->getBody()->getContents(), true);
 
-            return;
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new AccessTokenException(
+                        'Failed to refresh access token',
+                        AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+
+                return;
+            }
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new AccessTokenException(
@@ -178,16 +179,16 @@ class AccessTokenProvider
             return;
         }
 
-        if (isset($response['longLived']['access_token'])) {
+        if (isset($responseContent['longLived']['access_token'])) {
             $tokenExpiresIn = time() + (70 * 365 * 24 * 3600); // never expires
-            $this->userAccessToken = $response['longLived']['access_token'];
+            $this->userAccessToken = $responseContent['longLived']['access_token'];
 
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $this->userAccessToken);
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
         }
 
-        if (isset($response['system']['access_token'])) {
-            $this->systemAccessToken = $response['system']['access_token'];
+        if (isset($responseContent['system']['access_token'])) {
+            $this->systemAccessToken = $responseContent['system']['access_token'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $this->systemAccessToken);
         }
     }
@@ -209,6 +210,24 @@ class AccessTokenProvider
                 )
             );
             $response = json_decode($response->getBody()->getContents(), true);
+            $responseContent = json_decode($response->getBody()->getContents(), true);
+
+            if ($response->getStatusCode() >= 400) {
+                // TODO: Error sent to the error handler can be improved from the response content
+                $this->errorHandler->handle(
+                    new AccessTokenException(
+                        'Failed to retrieve access token',
+                        AccessTokenException::ACCESS_TOKEN_RETRIEVE_EXCEPTION
+                    ),
+                    $response->getStatusCode(),
+                    false,
+                    [
+                        'extra' => $responseContent,
+                    ]
+                );
+
+                return false;
+            }
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new AccessTokenException(
@@ -223,6 +242,6 @@ class AccessTokenProvider
             return null;
         }
 
-        return $response;
+        return $responseContent;
     }
 }
