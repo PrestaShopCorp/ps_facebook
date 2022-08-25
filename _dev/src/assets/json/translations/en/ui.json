@@ -282,5 +282,13 @@
     "Approved": "Approved",
     "Pending": "Pending",
     "Disapproved": "Disapproved"
+  },
+  "multiShopSelector": {
+    "title": "Multi-store mode activated",
+    "subtitle": "You must configure your stores one by one for this service but you will be able to use the same account.",
+    "selectStore": "Please select the first store to configure from the list below",
+    "tips": "After you are done with the first shop, you can configure the others by selecting them one by one in the shop selector, in the horizontal menu",
+    "configure": "Configure",
+    "group": "Shop group"
   }
 }
