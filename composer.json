@@ -11,16 +11,13 @@
     },
     "require": {
         "php": ">=7.2.5",
-        "prestashop/circuit-breaker": "^3.0",
-        "facebook/php-business-sdk": "dev-guzzle5",
         "vlucas/phpdotenv": "3.4",
-        "prestashop/prestashop-accounts-installer": "^1.0.1",
+        "prestashop/prestashop-accounts-installer": "^1.0",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
         "prestashop/module-lib-faq": "^2.2",
         "prestashop/module-lib-service-container": "^2.0",
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
-        "prestashop/prestashop-accounts-auth": "^2.3",
         "prestashop/module-lib-guzzle-adapter": "^0.4"
     },
     "require-dev": {
@@ -43,13 +40,6 @@
             "PrestaShop\\Module\\PrestashopFacebook\\Tests\\Integration\\": "tests/integration"
         }
     },
-    "repositories": [
-        {
-            "comment": "Facebook repository has been forked in order to use their latest changes with Guzzle 5, required by the core.",
-            "type": "vcs",
-            "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk"
-        }
-    ],
     "author": "PrestaShop",
     "license": "AFL-3.0",
     "type": "prestashop-module"
