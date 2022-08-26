@@ -19,7 +19,7 @@
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
         "prestashop/module-lib-guzzle-adapter": "^0.4",
-        "facebook/php-business-sdk": "^14.0"
+        "facebook/php-business-sdk": "dev-guzzle-adapter"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "^4.2",
@@ -41,6 +41,13 @@
             "PrestaShop\\Module\\PrestashopFacebook\\Tests\\Integration\\": "tests/integration"
         }
     },
+    "repositories": [
+        {
+            "comment": "Facebook repository has been forked to make it compliant with Guzzle 5 & 7, required by the core.",
+            "type": "vcs",
+            "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk"
+        }
+    ],
     "author": "PrestaShop",
     "license": "AFL-3.0",
     "type": "prestashop-module"
