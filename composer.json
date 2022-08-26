@@ -18,7 +18,8 @@
         "prestashop/module-lib-service-container": "^2.0",
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
-        "prestashop/module-lib-guzzle-adapter": "^0.4"
+        "prestashop/module-lib-guzzle-adapter": "^0.4",
+        "facebook/php-business-sdk": "^14.0"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "^4.2",
