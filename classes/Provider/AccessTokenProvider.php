@@ -209,7 +209,6 @@ class AccessTokenProvider
                     '/account/' . $externalBusinessId . '/app_tokens'
                 )
             );
-            $response = json_decode($response->getBody()->getContents(), true);
             $responseContent = json_decode($response->getBody()->getContents(), true);
 
             if ($response->getStatusCode() >= 400) {
