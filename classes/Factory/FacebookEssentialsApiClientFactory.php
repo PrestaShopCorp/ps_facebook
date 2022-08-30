@@ -38,6 +38,12 @@ class FacebookEssentialsApiClientFactory implements ApiClientFactoryInterface
 
     public function createClient()
     {
-        return $this->clientFactory->getClient(['base_url' => self::API_URL]);
+        return $this->clientFactory->getClient([
+            'base_url' => self::API_URL,
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ],
+        ]);
     }
 }

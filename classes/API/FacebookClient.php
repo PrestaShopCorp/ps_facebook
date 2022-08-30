@@ -429,12 +429,6 @@ class FacebookClient
             ],
             $body
         );
-        $headers = array_merge(
-            [
-                'Content-Type' => 'application/json',
-            ],
-            $headers
-        );
 
         try {
             $request = new Request(

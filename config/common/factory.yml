@@ -1,10 +1,4 @@
 services:
-  PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory:
-    class: PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory
-    public: true
-    arguments:
-     - '@Prestashop\ModuleLibGuzzleAdapter\ClientFactory'
-
   PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory:
     class: PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory
     public: true

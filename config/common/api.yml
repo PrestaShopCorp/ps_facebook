@@ -3,7 +3,7 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\API\FacebookCategoryClient
     public: true
     arguments:
-      - '@PrestaShop\Module\PrestashopFacebook\Factory\GoogleCategoryEssentialsApiClientFactory'
+      - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
 
