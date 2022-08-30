@@ -69,6 +69,6 @@ class FbeFeatureManager
             $featureName => $featureConfiguration,
         ];
 
-        return $this->facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
+        return $this->facebookClient->updateFeature($externalBusinessId, $configuration);
     }
 }

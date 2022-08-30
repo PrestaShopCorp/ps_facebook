@@ -394,6 +394,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
+        /**
+         * @var FbeFeatureManager
+         */
         $featureManager = $this->module->getService(FbeFeatureManager::class);
 
         $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);

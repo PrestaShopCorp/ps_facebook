@@ -423,17 +423,25 @@ class FacebookClient
      */
     private function sendRequest($id, array $headers, array $body, $method)
     {
+        $body = array_merge(
+            [
+                'access_token' => $this->accessToken,
+            ],
+            $body
+        );
+        $headers = array_merge(
+            [
+                'Content-Type' => 'application/json',
+            ],
+            $headers
+        );
+
         try {
             $request = new Request(
                 $method,
                 "/{$this->sdkVersion}/{$id}",
                 $headers,
-                json_encode(array_merge(
-                    [
-                        'access_token' => $this->accessToken,
-                    ],
-                    $body
-                ))
+                json_encode($body)
             );
 
             $response = $this->client->sendRequest($request);
