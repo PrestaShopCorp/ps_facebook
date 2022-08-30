@@ -18,13 +18,12 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\API;
+namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
-use Exception;
 use GuzzleHttp\Psr7\Request;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use Psr\Http\Client\ClientInterface;
 
@@ -41,18 +40,18 @@ class FacebookCategoryClient
     private $googleCategoryRepository;
 
     /**
-     * @var ErrorHandler
+     * @var ResponseListener
      */
-    private $errorHandler;
+    private $responseListener;
 
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         GoogleCategoryRepository $googleCategoryRepository,
-        ErrorHandler $errorHandler
+        ResponseListener $responseListener
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
-        $this->errorHandler = $errorHandler;
+        $this->responseListener = $responseListener;
     }
 
     /**
@@ -87,48 +86,25 @@ class FacebookCategoryClient
             $query
         );
 
-        try {
-            $request = new Request(
-                'GET',
-                "/{$id}",
-                [
-                    'query' => $query,
-                ]
-            );
+        $request = new Request(
+            'GET',
+            "/{$id}",
+            [
+                'query' => $query,
+            ]
+        );
 
-            $response = $this->client->sendRequest($request);
-            $responseContent = json_decode($response->getBody()->getContents(), true);
+        $response = $this->responseListener->handleResponse(
+            $this->client->sendRequest($request),
+            [
+                'exceptionClass' => FacebookClientException::class,
+            ]
+        );
 
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new FacebookClientException(
-                        'Facebook category client failed when creating get request.',
-                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-
-                return false;
-            }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook category client failed when creating get request.',
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return false;
         }
 
-        return $responseContent;
+        return $response->getBody();
     }
 }

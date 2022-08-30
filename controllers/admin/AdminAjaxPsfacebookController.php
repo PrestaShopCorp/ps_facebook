@@ -20,7 +20,8 @@
 
 use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookDependencyUpdateException;
@@ -48,7 +49,9 @@ use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
-    /** @var Ps_facebook */
+    /**
+     * @var Ps_facebook
+     */
     public $module;
 
     /**
@@ -66,12 +69,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $errorHandler;
 
+    /**
+     * @var ResponseListener
+     */
+    private $responseListener;
+
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->clientFactory = $this->module->getService(PsApiClientFactory::class);
         $this->errorHandler = $this->module->getService(ErrorHandler::class);
+        $this->responseListener = $this->module->getService(ResponseListener::class);
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -197,6 +206,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
                     )
                 );
+
                 return;
             }
             $externalBusinessId = $response['externalBusinessId'];
@@ -711,52 +721,27 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $response = 200;
 
-        try {
-            $response = $this->clientFactory->createClient()->sendRequest(
-                new Request(
-                    'POST',
-                    '/account/' . $externalBusinessId . '/reset_product_sync'
-                )
-            );
-            $responseContent = json_decode($response->getBody()->getContents(), true);
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new FacebookCatalogExportException(
-                        'Failed to export the whole catalog',
-                        FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
+        $request = new Request(
+            'POST',
+            '/account/' . $externalBusinessId . '/reset_product_sync'
+        );
+        $response = $this->responseListener->handleResponse(
+            $this->clientFactory->createClient()->sendRequest($request),
+            [
+                'exceptionClass' => FacebookCatalogExportException::class,
+            ]
+        );
 
-                $code = $response->getStatusCode();
-                $this->ajaxDie(json_encode([
-                    'response' => 500,
-                    'message' => "Failed to export the whole catalog (HTTP {$code})",
-                ]));
-            }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookCatalogExportException(
-                    'Failed to export the whole catalog',
-                    FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+        if (!$response->isSuccessful()) {
+            $code = $response->getResponse()->getStatusCode();
             $this->ajaxDie(json_encode([
                 'response' => 500,
-                'message' => $e->getMessage(),
+                'message' => "Failed to export the whole catalog (HTTP {$code})",
             ]));
         }
 
         $this->ajaxDie(json_encode([
-            'response' => $response,
+            'response' => $response->getBody(),
         ]));
     }
 

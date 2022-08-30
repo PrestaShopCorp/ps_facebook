@@ -20,7 +20,6 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
-use GuzzleHttp\Event\SubscriberInterface;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
@@ -38,20 +37,17 @@ class PsApiClientFactory implements ApiClientFactoryInterface
     private $psAccountsFacade;
 
     /**
-     * @var SubscriberInterface
-     */
-    private $eventSubscriber;
-
-    /**
      * @var ClientFactory
      */
     private $clientFactory;
 
-    public function __construct(Env $env, PsAccounts $psAccountsFacade, SubscriberInterface $eventSubscriber, ClientFactory $clientFactory)
-    {
+    public function __construct(
+        Env $env,
+        PsAccounts $psAccountsFacade,
+        ClientFactory $clientFactory
+    ) {
         $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
         $this->psAccountsFacade = $psAccountsFacade;
-        $this->eventSubscriber = $eventSubscriber;
         $this->clientFactory = $clientFactory;
     }
 
@@ -70,9 +66,6 @@ class PsApiClientFactory implements ApiClientFactoryInterface
                 'Authorization' => 'Bearer ' . $this->psAccountsFacade->getPsAccountsService()->getOrRefreshToken(),
             ],
         ]);
-
-        // $emitter = $client->getEmitter();
-        // $emitter->attach($this->eventSubscriber);
 
         return $client;
     }

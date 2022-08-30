@@ -20,9 +20,8 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\API\EventSubscriber;
 
-use GuzzleHttp\Event\CompleteEvent;
-use GuzzleHttp\Event\SubscriberInterface;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ParsedResponse;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class AccountSuspendedSubscriber implements SubscriberInterface
@@ -37,16 +36,9 @@ class AccountSuspendedSubscriber implements SubscriberInterface
         $this->configurationAdapter = $configurationAdapter;
     }
 
-    public function getEvents()
+    public function onParsedResponse(ParsedResponse $response, array $options): void
     {
-        return [
-            'complete' => ['onComplete'],
-        ];
-    }
-
-    public function onComplete(CompleteEvent $event, $name)
-    {
-        $suspension = $event->getResponse()->getHeader('X-Account-Suspended') ?: $event->getResponse()->getHeader('x-account-suspended');
+        $suspension = $response->getResponse()->getHeader('X-Account-Suspended') ?: $response->getResponse()->getHeader('x-account-suspended');
         if (!empty($suspension)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SUSPENSION_REASON, $suspension);
         }

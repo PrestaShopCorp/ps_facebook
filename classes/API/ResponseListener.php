@@ -18,23 +18,39 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\Factory;
+namespace PrestaShop\Module\PrestashopFacebook\API;
 
-use PrestaShop\ModuleLibCacheDirectoryProvider\Cache\CacheDirectoryProvider;
+use PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\SubscriberInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class CacheFactory
+class ResponseListener
 {
     /**
-     * @return string
+     * @var array<SubscriberInterface>
      */
-    public static function getCachePath()
-    {
-        $cacheDirectoryProvider = new CacheDirectoryProvider(
-            _PS_VERSION_,
-            _PS_ROOT_DIR_,
-            _PS_MODE_DEV_
-        );
+    private $subscribers;
 
-        return $cacheDirectoryProvider->getPath();
+    public function __construct(array $subscribers)
+    {
+        $this->subscribers = $subscribers;
+    }
+
+    /**
+     * Format api response.
+     *
+     * @return ParsedResponse
+     */
+    public function handleResponse(ResponseInterface $response, array $options = [])
+    {
+        $parsedResponse = new ParsedResponse($response);
+
+        /*
+         * @var SubscriberInterface
+         */
+        foreach ($this->subscribers as $subscriber) {
+            $subscriber->onParsedResponse($parsedResponse, $options);
+        }
+
+        return $parsedResponse;
     }
 }

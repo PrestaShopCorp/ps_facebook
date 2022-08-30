@@ -18,12 +18,12 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\API;
+namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
 use Exception;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
@@ -33,7 +33,6 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use Psr\Http\Client\ClientInterface;
 
@@ -60,35 +59,28 @@ class FacebookClient
     private $configurationAdapter;
 
     /**
-     * @var ErrorHandler
-     */
-    private $errorHandler;
-
-    /**
      * @var ConfigurationHandler
      */
     private $configurationHandler;
 
     /**
-     * @param ApiClientFactoryInterface $apiClientFactory
-     * @param AccessTokenProvider $accessTokenProvider
-     * @param ConfigurationAdapter $configurationAdapter
-     * @param ErrorHandler $errorHandler
-     * @param ConfigurationHandler $configurationHandler
+     * @var ResponseListener
      */
+    private $responseListener;
+
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler,
-        ConfigurationHandler $configurationHandler
+        ConfigurationHandler $configurationHandler,
+        ResponseListener $responseListener
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
         $this->configurationHandler = $configurationHandler;
+        $this->responseListener = $responseListener;
     }
 
     public function setAccessToken($accessToken)
@@ -332,56 +324,30 @@ class FacebookClient
             $query
         );
 
-        try {
-            $request = new Request(
-                'GET',
-                "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
-            );
+        $request = new Request(
+            'GET',
+            "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
+        );
 
-            $response = $this->client->sendRequest($request);
-            $responseContent = json_decode($response->getBody()->getContents(), true);
+        $response = $this->responseListener->handleResponse(
+            $this->client->sendRequest($request),
+            [
+                'exceptionClass' => FacebookClientException::class,
+            ]
+        );
 
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $message = "Facebook client failed when creating get request. Method: {$callerFunction}.";
+        $responseContent = $response->getBody();
 
-                $exceptionCode = false;
-                if (!empty($responseContent['error']['code'])) {
-                    $exceptionCode = $responseContent['error']['code'];
-                    $message .= " Code: {$exceptionCode}";
-                }
-
-                if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
-                    $this->disconnectFromFacebook();
-                    $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
-
-                    return false;
-                }
-
-                $this->errorHandler->handle(
-                    new FacebookClientException(
-                        $message,
-                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-
-                return false;
+        if (!$response->isSuccessful()) {
+            $exceptionCode = false;
+            if (!empty($responseContent['error']['code'])) {
+                $exceptionCode = $responseContent['error']['code'];
             }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating get request. Method: ' . $callerFunction,
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+
+            if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
+                $this->disconnectFromFacebook();
+                $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
+            }
 
             return false;
         }
@@ -430,48 +396,24 @@ class FacebookClient
             $body
         );
 
-        try {
-            $request = new Request(
-                $method,
-                "/{$this->sdkVersion}/{$id}",
-                $headers,
-                json_encode($body)
-            );
+        $request = new Request(
+            $method,
+            "/{$this->sdkVersion}/{$id}",
+            $headers,
+            json_encode($body)
+        );
 
-            $response = $this->client->sendRequest($request);
-            $responseContent = json_decode($response->getBody()->getContents(), true);
+        $response = $this->responseListener->handleResponse(
+            $this->client->sendRequest($request),
+            [
+                'exceptionClass' => FacebookClientException::class,
+            ]
+        );
 
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new FacebookClientException(
-                        'Facebook client failed when creating post request.',
-                        FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-    
-                return false;
-            }
-
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating post request.',
-                    FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return false;
         }
 
-        return $responseContent;
+        return $response->getBody();
     }
 }

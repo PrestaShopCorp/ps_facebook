@@ -18,7 +18,6 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 class PrevalidationScanDataProvider
@@ -57,6 +56,7 @@ class PrevalidationScanDataProvider
         if (empty($cacheContent)) {
             return [];
         }
+
         return $cacheContent;
     }
 }

@@ -20,14 +20,13 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use Exception;
 use GuzzleHttp\Psr7\Request;
-use Psr\Http\Client\ClientInterface;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use Psr\Http\Client\ClientInterface;
 
 class ProductSyncReportProvider
 {
@@ -42,17 +41,17 @@ class ProductSyncReportProvider
     private $psApiClient;
 
     /**
-     * @var ErrorHandler
+     * @var ResponseListener
      */
-    private $errorHandler;
+    private $responseListener;
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
         ApiClientFactoryInterface $psApiClientFactory,
-        ErrorHandler $errorHandler
+        ResponseListener $responseListener
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
+        $this->responseListener = $responseListener;
         $this->psApiClient = $psApiClientFactory->createClient();
     }
 
@@ -60,40 +59,21 @@ class ProductSyncReportProvider
     {
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        try {
-            $response = $this->psApiClient->sendRequest(
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClient->sendRequest(
                 new Request(
                     'GET',
                     "/account/{$businessId}/reporting"
                 )
-            );
-            $responseContent = json_decode($response->getBody()->getContents(), true);
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new FacebookAccountException(
-                        'Failed to get product sync reporting',
-                        FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-                $responseContent = [];
-            }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookAccountException(
-                    'Failed to get product sync reporting',
-                    FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+            ),
+            [
+                'exceptionClass' => FacebookAccountException::class,
+            ]
+        );
 
+        $responseContent = $response->getBody();
+
+        if (!$response->isSuccessful()) {
             $responseContent = [];
         }
 

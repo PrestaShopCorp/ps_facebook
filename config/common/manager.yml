@@ -4,4 +4,4 @@ services:
     public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient'

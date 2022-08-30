@@ -21,14 +21,12 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Controller;
-use Exception;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 
 class AccessTokenProvider
 {
@@ -36,11 +34,6 @@ class AccessTokenProvider
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
-
-    /**
-     * @var ErrorHandler
-     */
-    private $errorHandler;
 
     /**
      * @var Controller
@@ -51,6 +44,11 @@ class AccessTokenProvider
      * @var ApiClientFactoryInterface
      */
     private $psApiClientFactory;
+
+    /**
+     * @var ResponseListener
+     */
+    private $responseListener;
 
     /**
      * @var string
@@ -64,12 +62,12 @@ class AccessTokenProvider
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler,
+        ResponseListener $responseListener,
         $controller,
         ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
+        $this->responseListener = $responseListener;
         $this->controller = $controller;
         $this->psApiClientFactory = $psApiClientFactory;
     }
@@ -135,8 +133,8 @@ class AccessTokenProvider
             $managerId = null;
         }
 
-        try {
-            $response = $this->psApiClientFactory->createClient()->sendRequest(
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClientFactory->createClient()->sendRequest(
                 new Request(
                     'POST',
                     '/account/' . $externalBusinessId . '/exchange_tokens',
@@ -146,38 +144,17 @@ class AccessTokenProvider
                         'businessManagerId' => $managerId,
                     ])
                 )
-            );
-            $responseContent = json_decode($response->getBody()->getContents(), true);
+            ),
+            [
+                'exceptionClass' => AccessTokenException::class,
+            ]
+        );
 
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new AccessTokenException(
-                        'Failed to refresh access token',
-                        AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-
-                return;
-            }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to refresh access token',
-                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return;
         }
+
+        $responseContent = $response->getBody();
 
         if (isset($responseContent['longLived']['access_token'])) {
             $tokenExpiresIn = time() + (70 * 365 * 24 * 3600); // never expires
@@ -202,45 +179,22 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        try {
-            $response = $this->psApiClientFactory->createClient()->sendRequest(
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClientFactory->createClient()->sendRequest(
                 new Request(
-                    'GET',
-                    '/account/' . $externalBusinessId . '/app_tokens'
+                'GET',
+                '/account/' . $externalBusinessId . '/app_tokens'
                 )
-            );
-            $responseContent = json_decode($response->getBody()->getContents(), true);
+            ),
+            [
+                'exceptionClass' => AccessTokenException::class,
+            ]
+        );
 
-            if ($response->getStatusCode() >= 400) {
-                // TODO: Error sent to the error handler can be improved from the response content
-                $this->errorHandler->handle(
-                    new AccessTokenException(
-                        'Failed to retrieve access token',
-                        AccessTokenException::ACCESS_TOKEN_RETRIEVE_EXCEPTION
-                    ),
-                    $response->getStatusCode(),
-                    false,
-                    [
-                        'extra' => $responseContent,
-                    ]
-                );
-
-                return null;
-            }
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to retrieve access token',
-                    AccessTokenException::ACCESS_TOKEN_RETRIEVE_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return null;
         }
 
-        return $responseContent;
+        return $response->getBody();
     }
 }

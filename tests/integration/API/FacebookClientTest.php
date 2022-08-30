@@ -3,7 +3,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Tests\Integration\API;
 
 use PHPUnit\Framework\TestCase;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Factory\FacebookEssentialsApiClientFactory;
 use PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock\AccessTokenProviderMock;
