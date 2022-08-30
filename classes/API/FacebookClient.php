@@ -314,7 +314,7 @@ class FacebookClient
 
     /**
      * @param string $id
-     * @param string $method
+     * @param string $callerFunction
      * @param array $fields
      * @param array $query
      *
@@ -322,7 +322,7 @@ class FacebookClient
      *
      * @throws Exception
      */
-    private function get($id, $method, array $fields = [], array $query = [])
+    private function get($id, $callerFunction, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [
@@ -343,7 +343,7 @@ class FacebookClient
 
             if ($response->getStatusCode() >= 400) {
                 // TODO: Error sent to the error handler can be improved from the response content
-                $message = "Facebook client failed when creating get request. Method: {$method}.";
+                $message = "Facebook client failed when creating get request. Method: {$callerFunction}.";
 
                 $exceptionCode = false;
                 if (!empty($responseContent['error']['code'])) {
@@ -375,7 +375,7 @@ class FacebookClient
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookClientException(
-                    'Facebook client failed when creating get request. Method: ' . $method,
+                    'Facebook client failed when creating get request. Method: ' . $callerFunction,
                     FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
                     $e
                 ),

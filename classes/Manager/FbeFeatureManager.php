@@ -45,7 +45,7 @@ class FbeFeatureManager
      * @param string $featureName
      * @param bool $state
      *
-     * @return false
+     * @return array|false
      */
     public function updateFeature($featureName, $state)
     {

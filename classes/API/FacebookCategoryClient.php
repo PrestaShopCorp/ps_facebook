@@ -21,7 +21,6 @@
 namespace PrestaShop\Module\PrestashopFacebook\API;
 
 use Exception;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
