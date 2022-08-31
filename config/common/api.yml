@@ -33,7 +33,7 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\API\ResponseListener
     public: true
     arguments:
-      - [
+      [[
         '@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber',
         '@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber'
-      ]
+      ]]

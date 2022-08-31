@@ -36,7 +36,10 @@ class ParsedResponse
         $this->response = $response;
     }
 
-    public function getBody(): mixed
+    /**
+     * @return mixed
+     */
+    public function getBody()
     {
         return $this->body;
     }
