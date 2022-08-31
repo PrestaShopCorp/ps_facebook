@@ -59,7 +59,7 @@ class Config
     public const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
     public const PSX_FACEBOOK_UI_URL = 'https://facebook.psessentials.net';
     public const PSX_FACEBOOK_APP_ID = '726899634800479';
-    public const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://6c2d9b60f24843e28a29052aa4e9fa10@o558128.ingest.sentry.io/5691220';
+    public const PSX_FACEBOOK_SENTRY_CREDENTIALS = 'https://4252ed38f42f4f7285c7932337fe77a2@o298402.ingest.sentry.io/5531852';
     public const PSX_FACEBOOK_SEGMENT_API_KEY = 'vgBkyeNDK7tQwgxrxoVUGRMNGTUATiPw';
 
     /** @see https://developers.facebook.com/docs/marketing-api/error-reference */
