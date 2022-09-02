@@ -77,6 +77,7 @@ class EventDispatcher
     public function dispatch($name, array $params)
     {
         // Events are related to actions on the shop, not the back office
+        /** @var \Controller|null $controller */
         $controller = $this->context->controller;
         if (!$controller || !in_array($controller->controller_type, ['front', 'modulefront'])) {
             return;
