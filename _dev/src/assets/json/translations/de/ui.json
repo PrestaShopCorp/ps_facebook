@@ -36,18 +36,18 @@
       "reloadButton": "Neu laden",
       "shopInConflictError": "Sie sind bereits über einen anderen Shop mit Facebook verbunden. Allerdings ist die PrestaShop Facebook-Konfiguration derzeit nur bei einem Shop möglich. Sie müssen sich von Ihrem ersten Shop abmelden, um eine Verbindung herzustellen.",
       "unknownOnboardingError": "Während des Onboarding-Prozesses ist ein unbekannter Fehler aufgetreten. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
-      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeNeededWarning": "Die Version des Moduls PrestaShop Account, die auf diesem Shop läuft (v{currentVersion}), ist älter als die minimal erforderliche v{requiredVersion}.\n\nSie können PrestaShop Facebook verwenden, aber einige Funktionen (z.B. Produktsynchronisation) sind nicht verfügbar, bis Sie PrestaShop Account aktualisieren.",
       "AccountsUpgradeButton": "PrestaShop-Konto aktualisieren",
       "AccountsUpgradeDone": "PrestaShop-Konto wurde erfolgreich aktualisiert",
-      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+      "EventBusUpgradeNeededWarning": "Die Version des Moduls PrestaShop EventBus, die auf diesem Shop läuft (v{currentVersion}), ist älter als die minimal erforderliche v{requiredVersion}.\n\nSie können PrestaShop Facebook verwenden, aber einige Funktionen (z. B. Produktsynchronisierung) sind erst verfügbar, wenn Sie PrestaShop EventBus aktualisieren.",
       "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
-      "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
-      "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
-      "EventBusInstallButton": "Install PrestaShop EventBus",
-      "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
-      "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
-      "EventBusEnableButton": "Enable PrestaShop EventBus",
-      "EventBusEnableDone": "PrestaShop EventBus is enabled."
+      "EventBusUpgradeDone": "PrestaShop EventBus wurde erfolgreich aufgerüstet.",
+      "EventBusInstallNeededWarning": "PrestaShop EventBus ist in diesem Shop nicht installiert.\n\nSie können PrestaShop Facebook verwenden, aber einige Funktionen (z.B. Produktsynchronisation) werden nicht verfügbar sein, bis Sie PrestaShop EventBus installieren.",
+      "EventBusInstallButton": "PrestaShop EventBus installieren",
+      "EventBusInstallDone": "PrestaShop EventBus wurde erfolgreich installiert.",
+      "EventBusEnableNeededWarning": "PrestaShop EventBus ist in diesem Shop derzeit deaktiviert.\n\nÄnderungen an Ihrem Produktkatalog werden nicht synchronisiert, bis PrestaShop EventBus aktiviert ist.",
+      "EventBusEnableButton": "PrestaShop EventBus aktivieren",
+      "EventBusEnableDone": "PrestaShop EventBus ist aktiviert."
     },
     "facebook": {
       "title": "Ihre Facebook-Einstellungen",
@@ -75,22 +75,22 @@
         "unlinkModalText": "Sie sind dabei, die Facebook Business Extension zu entfernen. Sie haben dann keinen Zugriff mehr auf die gespeicherten Einstellungen von Facebook."
       },
       "exchangeTokens": {
-        "almostThere": "You are almost there",
-        "acknowledging": "Acknowledging your permissions with Facebook services.",
-        "takesTime": "This can take several seconds...",
-        "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
-        "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
-        "understood": "I understand"
+        "almostThere": "Sie sind fast am Ziel",
+        "acknowledging": "Bestätigen Sie Ihre Berechtigungen mit Facebook-Diensten.",
+        "takesTime": "Dies kann einige Sekunden dauern...",
+        "tryAgain": "Es scheint, dass die Facebook-Server Schwierigkeiten haben, einen Zugang zu deinem Konto zu liefern. Bitte warte noch ein wenig...",
+        "errored": "Sie können von den Facebook-Servern nicht auf Ihr Konto zugreifen. Bitte versuchen Sie, Ihr Facebook-Konto noch einmal zu aktivieren. Wenn dieser Fehler weiterhin besteht, kontaktieren Sie bitte den Support.",
+        "understood": "Ich verstehe"
       }
     },
     "app": {
       "like": "like",
-      "likes": "likes",
+      "likes": "like",
       "createdAt": "Erstellt",
       "lastActive": "Zuletzt aktiv",
       "activated": "Aktiviert",
       "disabled": "Deaktiviert",
-      "moduleDisabled": "Module is disabled",
+      "moduleDisabled": "Modul ist deaktiviert",
       "viewStats": "Statistiken anzeigen",
       "informationCannotBeDisplayedWarning": "Diese Informationen können zur Zeit nicht angezeigt werden"
     },
@@ -109,17 +109,17 @@
     "catalogExportIntro": "Bevor Käufer Artikel bei Ihnen kaufen können, müssen Sie Ihre Produktinformationen in einen Facebook-Produktkatalog hochladen.",
     "catalogExportInfo": "Bitte beachten Sie Folgendes: \n\n1. Der Export des Katalogs erfolgt einmal am Tag (während der Nacht)\n2. Die Synchronisierung Ihrer PrestaShop-Produktinformationen mit Facebook kann bis zu 24 Stunden dauern.\n3. Nur aktive Produkte werden an Facebook exportiert. \n4. Es werden nur Produkte mit Pflichtfeldern synchronisiert: eine Kurzbeschreibung, Menge, Preis, Produktbild, Hersteller oder ean/upc/isbn.\n5. Der Export von Produktlokalisierungen (für Übersetzungen) befindet sich noch im Beta-Stadium und könnte unerwartete Fehler auslösen.\n6. Nur Produkte, die Änderungen erfahren haben, werden in Ihrem Katalog aktualisiert. ",
     "resetExportLink": "Wenn Sie Ihren gesamten Katalog reexportieren möchten, klicken Sie hier",
-    "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
+    "resetExportSuccess": "Vielen Dank, alle in Frage kommenden Produkte werden bei der nächsten geplanten Synchronisierung auf Facebook übertragen.",
     "resetExportError": "Beim Versuch, den Export zurückzusetzen, ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.",
     "preApprovalScanTitle": "Scan vor der Genehmigung",
     "preApprovalScanIntro": "Prüfen Sie, welche Produkte für die Synchronisierung bereit sind und welche Probleme haben und nicht synchronisiert werden.",
     "preApprovalScanRefreshDate": "Letzter Scan heute um {0}",
-    "preApprovalScanRefreshInProgress": "Scan is in progress...",
+    "preApprovalScanRefreshInProgress": "Scan ist in Arbeit...",
     "preApprovalScanReadyToSync": "Bereit zur Synchronisierung",
     "preApprovalScanNonSyncable": "Nicht synchronisierbar",
     "preApprovalScanRescan": "Neu scannen",
-    "preApprovalScanProductsCheckedWhileInProgress": "{0} checked",
-    "preApprovalScanError": "Something went wrong while scanning products.",
+    "preApprovalScanProductsCheckedWhileInProgress": "{0} geprüft",
+    "preApprovalScanError": "Beim Scannen der Produkte ist ein Fehler aufgetreten.",
     "catalogExportWarning": "Die Produkte werden exportiert und alle 24 Stunden aktualisiert.",
     "catalogExportDisclaimer": "Durch die Freigabe Ihres Katalogs stimmen Sie zu, dass PrestaShop alle Informationen zu den Katalogprodukten an Facebook senden darf.",
     "catalogExportPaused": "Pausiert",
@@ -142,10 +142,10 @@
   "syncReport": {
     "title": "Produktstatus",
     "views": {
-      "prevalidation": "Before export{0}",
-      "reporting": "After export{0}",
-      "oneError": " (1 error)",
-      "manyErrors": " ({0} errors)"
+      "prevalidation": "Vor der Ausfuhr{0}",
+      "reporting": "Nach dem Export{0}",
+      "oneError": " (1 Fehler)",
+      "manyErrors": " ({0} Fehler)"
     },
     "id": "ID",
     "name": "Name",
@@ -158,15 +158,15 @@
     "barcode": "Barcode / Marke",
     "barcodeTooltip": "Der Markenname, eine individuelle Hersteller-Teilenummer (MPN) oder eine Global Trade Item Number (GTIN) des Artikels. Du musst nur eine dieser drei Angaben machen. Wenn du dich für GTIN entscheidest, gib die UPC, EAN, JAN oder ISBN des Artikels ein. Max. 100 Zeichen",
     "price": "PREIS",
-    "error": "Error type",
-    "errorTooltip": "This is the error given by Facebook when trying to export the product.",
-    "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
-    "reportingText": "Products with detected problems after catalog export are listed below:",
-    "lastSyncDate": "Last sync {0} at {1}",
-    "otherLanguage": "Other",
-    "prevalidationEmpty": "Well done! All your products are ready to be exported",
-    "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
-    "loadNextPage": "Load next results"
+    "error": "Fehlerart",
+    "errorTooltip": "Dies ist die Fehlermeldung von Facebook, wenn Sie versuchen, das Produkt zu exportieren.",
+    "prevalidationText": "Produkte, bei denen Probleme festgestellt wurden und die nicht synchronisiert werden konnten, sind unten aufgeführt:",
+    "reportingText": "Produkte, bei denen nach dem Katalogexport Probleme festgestellt wurden, sind unten aufgeführt:",
+    "lastSyncDate": "Letzte Synchronisierung {0} mit {1}",
+    "otherLanguage": "Andere",
+    "prevalidationEmpty": "Gut gemacht! Alle Ihre Produkte sind bereit für den Export",
+    "reportingEmpty": "Gut gemacht! Alle Ihre Produkte sind in Ihren Facebook-Katalog exportiert worden.",
+    "loadNextPage": "Nächste Ergebnisse laden"
   },
   "categoryMatching": {
     "title": "Erweitern Sie Ihren Katalog : Kategoriezuordnung",
@@ -175,11 +175,11 @@
     "edit": "Bearbeiten",
     "autocomplete": {
       "typeToFilter": "Zu filternder Typ",
-      "select": "Auswählen",
+      "select": "Wählen Sie",
       "noResult": "Kein Ergebnis für Ihre Suche",
       "tooManyResults": "Zu viele Ergebnisse, bitte geben Sie mehr Suchkriterien ein.",
       "fetchError": "Während der Suche ist ein Fehler aufgetreten.",
-      "unassign": "Unassign category"
+      "unassign": "Kategorie nicht zuordnen"
     },
     "tableMatching": {
       "firstTd": "Kategorie auf Ihrer Website",
@@ -253,9 +253,9 @@
     }
   },
   "survey": {
-    "title": "Give us your feedback!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
-    "button": "Let's begin"
+    "title": "Geben Sie uns Ihr Feedback!",
+    "text": "Nur 3 Minuten, um einige Rückmeldungen über die Konfiguration und Verwendung von PrestaShop Facebook geben!",
+    "button": "Fangen wir an"
   },
   "help": {
     "title": "Hilfe mit PrestaShop Facebook",
@@ -279,8 +279,8 @@
     "noFaq": "Keine FAQ verfügbar."
   },
   "productStatuses": {
-    "Approved": "Freigegeben",
-    "Pending": "Warten",
+    "Approved": "Genehmigt",
+    "Pending": "Anhängig",
     "Disapproved": "Abgelehnt"
   }
 }
