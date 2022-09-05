@@ -36,18 +36,18 @@
       "reloadButton": "Herladen",
       "shopInConflictError": "U bent al verbonden met Facebook vanuit een andere winkel. Echter, PrestaShop Facebook configuratie is momenteel slechts mogelijk op een winkel. U moet uitloggen uit uw eerste winkel om verbinding te maken.",
       "unknownOnboardingError": "Er is een onbekende fout opgetreden tijdens het registratieproces. Laadt u alstublieft opnieuw op en probeer het opnieuw.",
-      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeNeededWarning": "De versie van de module PrestaShop Account die op deze winkel draait (v{currentVersion}) is ouder dan de minimaal vereiste v{requiredVersion}.\n\nU kunt PrestaShop Facebook gebruiken, maar sommige functies (zoals productsynchronisatie) zullen niet beschikbaar zijn totdat u PrestaShop Account hebt geüpgraded.",
       "AccountsUpgradeButton": "PrestaShop account bijwerken",
       "AccountsUpgradeDone": "PrestaShop Account is met succes bijgewerkt",
-      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop EventBus running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop EventBus.",
+      "EventBusUpgradeNeededWarning": "De versie van de module PrestaShop EventBus die op deze winkel draait (v{currentVersion}) is ouder dan de minimaal vereiste v{requiredVersion}.\n\nU kunt PrestaShop Facebook gebruiken, maar sommige functies (zoals productsynchronisatie) zullen niet beschikbaar zijn totdat u PrestaShop EventBus hebt geüpgraded.",
       "EventBusUpgradeButton": "Upgrade PrestaShop EventBus",
-      "EventBusUpgradeDone": "PrestaShop EventBus has been successfully upgraded.",
-      "EventBusInstallNeededWarning": "PrestaShop EventBus in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop EventBus.",
-      "EventBusInstallButton": "Install PrestaShop EventBus",
-      "EventBusInstallDone": "PrestaShop EventBus has been successfully installed.",
-      "EventBusEnableNeededWarning": "PrestaShop EventBus is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop EventBus is enabled.",
-      "EventBusEnableButton": "Enable PrestaShop EventBus",
-      "EventBusEnableDone": "PrestaShop EventBus is enabled."
+      "EventBusUpgradeDone": "PrestaShop EventBus is met succes geüpgraded.",
+      "EventBusInstallNeededWarning": "PrestaShop EventBus in niet geïnstalleerd op deze winkel.\n\nU kunt PrestaShop Facebook gebruiken, maar sommige functies (bijv. productsynchronisatie) zullen niet beschikbaar zijn totdat u PrestaShop EventBus installeert.",
+      "EventBusInstallButton": "Installeer PrestaShop EventBus",
+      "EventBusInstallDone": "PrestaShop EventBus is met succes geïnstalleerd.",
+      "EventBusEnableNeededWarning": "PrestaShop EventBus is momenteel uitgeschakeld op deze winkel.\n\nWijzigingen gemaakt op uw product catalogus zal niet worden gesynchroniseerd totdat PrestaShop EventBus is ingeschakeld.",
+      "EventBusEnableButton": "PrestaShop EventBus inschakelen",
+      "EventBusEnableDone": "PrestaShop EventBus is ingeschakeld."
     },
     "facebook": {
       "title": "Uw Facebook-instellingen",
@@ -62,7 +62,7 @@
         "description": "U geeft dit Facebook account toestemming om verbinding te maken met uw winkel:",
         "editButton": "Mijn account wijzigen",
         "unlinkButton": "Ontkoppel",
-        "facebookBusinessManager": "Facebook Business Manager",
+        "facebookBusinessManager": "Facebook Bedrijfsmanager",
         "facebookBusinessManagerTooltip": "Met uw Facebook bedrijfsaccount kunt u reclameaccounts, pagina's en de mensen die eraan werken op dezelfde plaats beheren",
         "facebookPixel": "Facebook Pixel",
         "facebookPixelTooltip": "De Facebook pixel is een stukje code (Javascript) dat wij automatisch op uw website pagina's installeren. Het stelt u in staat om &amp;quot;bij te houden&amp;quot; wie uw website bezoekt, conversies van uw Facebook advertenties bij te houden en een publiek te creëren voor retargeting",
@@ -75,12 +75,12 @@
         "unlinkModalText": "U staat op het punt om Facebook Business Extension te verwijderen. U zult geen toegang meer hebben tot de opgeslagen instellingen van Facebook."
       },
       "exchangeTokens": {
-        "almostThere": "You are almost there",
-        "acknowledging": "Acknowledging your permissions with Facebook services.",
-        "takesTime": "This can take several seconds...",
-        "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
-        "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
-        "understood": "I understand"
+        "almostThere": "Je bent er bijna.",
+        "acknowledging": "Uw rechten erkennen met Facebook diensten.",
+        "takesTime": "Dit kan enkele seconden duren...",
+        "tryAgain": "Het lijkt erop dat de Facebook-servers problemen hebben om toegang te krijgen tot uw account. Gelieve nog even te wachten...",
+        "errored": "Kan geen toegang tot uw account krijgen van Facebook servers, probeer uw facebook account opnieuw aan te melden. Als deze fout zich blijft voordoen, neem dan contact op met support.",
+        "understood": "Ik begrijp het."
       }
     },
     "app": {
@@ -90,7 +90,7 @@
       "lastActive": "Laatst actief",
       "activated": "Geactiveerd",
       "disabled": "Uitgeschakeld",
-      "moduleDisabled": "Module is disabled",
+      "moduleDisabled": "Module is uitgeschakeld",
       "viewStats": "Bekijk de statistieken",
       "informationCannotBeDisplayedWarning": "Deze informatie kan momenteel niet worden weergegeven"
     },
@@ -109,17 +109,17 @@
     "catalogExportIntro": "Voordat kopers artikelen van u kunnen kopen, moet u uw productinformatie uploaden naar een Facebook productcatalogus.",
     "catalogExportInfo": "Neem a.u.b. nota van de volgende elementen: \n\n1. De export van de catalogus vindt één keer per dag plaats (tijdens de nacht)\n2. Het synchroniseren van uw PrestaShop productinformatie met Facebook kan tot 24 uur duren.\n3. Alleen \"actieve\" producten worden naar Facebook geëxporteerd. \n4. Alleen producten waarvan de verplichte velden zijn ingevuld, zullen worden gesynchroniseerd: een korte beschrijving, hoeveelheid, prijs, productafbeelding, fabrikant of ean/upc/isbn.\n5. De export van product lokalisaties (voor vertalingen) is nog in beta en kan onverwachte fouten veroorzaken.\n6. Alleen producten die wijzigingen hebben ondergaan, worden in uw catalogus bijgewerkt. ",
     "resetExportLink": "Indien u uw volledige catalogus opnieuw wenst te exporteren klik hier",
-    "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
+    "resetExportSuccess": "Dank u, alle in aanmerking komende producten zullen naar Facebook worden gepushed tijdens de volgende geplande synchronisatie.",
     "resetExportError": "Er is een onbekende fout opgetreden bij de poging om de export te resetten. Probeer het later nog eens.",
     "preApprovalScanTitle": "Scan voor voorafgaande goedkeuring",
     "preApprovalScanIntro": "Controleer welke producten klaar zijn om gesynchroniseerd te worden en welke producten problemen hebben en niet gesynchroniseerd zullen worden.",
     "preApprovalScanRefreshDate": "Laatste scan vandaag op {0}",
-    "preApprovalScanRefreshInProgress": "Scan is in progress...",
+    "preApprovalScanRefreshInProgress": "Scan is bezig...",
     "preApprovalScanReadyToSync": "Klaar om te synchroniseren",
     "preApprovalScanNonSyncable": "Niet synchroniseerbaar",
     "preApprovalScanRescan": "Re-scanner",
-    "preApprovalScanProductsCheckedWhileInProgress": "{0} checked",
-    "preApprovalScanError": "Something went wrong while scanning products.",
+    "preApprovalScanProductsCheckedWhileInProgress": "{0} gecontroleerd",
+    "preApprovalScanError": "Er ging iets mis bij het scannen van producten.",
     "catalogExportWarning": "De producten worden geëxporteerd en vervolgens elk uur geüpdatet.",
     "catalogExportDisclaimer": "Door het delen van uw catalogus gaat u ermee akkoord dat PrestaShop alle informatie met betrekking tot de catalogusproducten naar Facebook mag sturen.",
     "catalogExportPaused": "Gepauzeerd",
@@ -142,10 +142,10 @@
   "syncReport": {
     "title": "Status van het product",
     "views": {
-      "prevalidation": "Before export{0}",
-      "reporting": "After export{0}",
-      "oneError": " (1 error)",
-      "manyErrors": " ({0} errors)"
+      "prevalidation": "Vóór uitvoer{0}",
+      "reporting": "Na uitvoer{0}",
+      "oneError": " (1 fout)",
+      "manyErrors": " ({0} fouten)"
     },
     "id": "ID",
     "name": "Naam",
@@ -158,15 +158,15 @@
     "barcode": "Streepjescode / Merk",
     "barcodeTooltip": "De merknaam, het unieke fabrieksonderdeelnummer (MPN) of artikelnummer (GTIN) van het artikel. Je hoeft maar één van deze toe te voegen, niet allemaal. Voor de GTIN voer je de UPC, EAN, JAN of ISBN van het artikel in. Tekenlimiet: 100.",
     "price": "Prijs",
-    "error": "Error type",
-    "errorTooltip": "This is the error given by Facebook when trying to export the product.",
-    "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
-    "reportingText": "Products with detected problems after catalog export are listed below:",
-    "lastSyncDate": "Last sync {0} at {1}",
-    "otherLanguage": "Other",
-    "prevalidationEmpty": "Well done! All your products are ready to be exported",
-    "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
-    "loadNextPage": "Load next results"
+    "error": "Type fout",
+    "errorTooltip": "Dit is de fout die Facebook geeft bij het exporteren van het product.",
+    "prevalidationText": "Producten met gedetecteerde problemen die niet konden worden gesynchroniseerd, staan hieronder vermeld:",
+    "reportingText": "Producten met gedetecteerde problemen na catalogusexport staan hieronder vermeld:",
+    "lastSyncDate": "Laatste synchronisatie {0} op {1}",
+    "otherLanguage": "Andere",
+    "prevalidationEmpty": "Goed gedaan! Al uw producten zijn klaar om geëxporteerd te worden",
+    "reportingEmpty": "Goed gedaan! Al uw producten zijn geëxporteerd naar uw Facebook-catalogus.",
+    "loadNextPage": "Volgende resultaten laden"
   },
   "categoryMatching": {
     "title": "Verbeter uw catalogus: categorie in kaart brengen",
@@ -179,7 +179,7 @@
       "noResult": "Geen resultaat voor uw zoekopdracht",
       "tooManyResults": "Te veel resultaten, vul uw zoekopdracht aan.",
       "fetchError": "Er is een fout opgetreden tijdens het zoekproces.",
-      "unassign": "Unassign category"
+      "unassign": "Categorie verwijderen"
     },
     "tableMatching": {
       "firstTd": "Categorie op uw site",
@@ -209,7 +209,7 @@
     },
     "features": {
       "ig_shopping": {
-        "name": "Instagram shopping",
+        "name": "Instagram winkelen",
         "description": "Instagram Shopping geeft uw bedrijf een meeslepende winkeletalage voor mensen die uw beste producten willen ontdekken.",
         "addButton": "Voeg toe",
         "editButton": "Beheer"
@@ -253,9 +253,9 @@
     }
   },
   "survey": {
-    "title": "Give us your feedback!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
-    "button": "Let's begin"
+    "title": "Geef ons uw feedback!",
+    "text": "Slechts 3 minuten om wat feedback te geven over de configuratie en het gebruik van PrestaShop Facebook!",
+    "button": "Laten we beginnen."
   },
   "help": {
     "title": "Hulp voor Prestashop Metrics",
