@@ -18,8 +18,10 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookDependencyUpdateException;
@@ -47,7 +49,9 @@ use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
-    /** @var Ps_facebook */
+    /**
+     * @var Ps_facebook
+     */
     public $module;
 
     /**
@@ -65,12 +69,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $errorHandler;
 
+    /**
+     * @var ResponseListener
+     */
+    private $responseListener;
+
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->clientFactory = $this->module->getService(PsApiClientFactory::class);
         $this->errorHandler = $this->module->getService(ErrorHandler::class);
+        $this->responseListener = $this->module->getService(ResponseListener::class);
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -162,17 +172,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         if (empty($externalBusinessId)) {
-            $client = $this->clientFactory->createClient();
             try {
-                $response = $client->post(
-                    '/account/onboard',
-                    [
-                        'json' => [
+                $response = $this->clientFactory->createClient()->sendRequest(
+                    new Request(
+                        'POST',
+                        '/account/onboard',
+                        [],
+                        json_encode([
                             // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
                             'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                        ],
-                    ]
-                )->json();
+                        ])
+                    )
+                );
+                $response = json_decode($response->getBody()->getContents(), true);
             } catch (Exception $e) {
                 $this->errorHandler->handle(
                     new FacebookOnboardException(
@@ -190,10 +202,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             if (!isset($response['externalBusinessId']) && isset($response['message'])) {
                 $this->errorHandler->handle(
                     new FacebookOnboardException(
-                        $response['message'],
+                        json_encode($response['message']),
                         FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
                     )
                 );
+
+                return;
             }
             $externalBusinessId = $response['externalBusinessId'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
@@ -217,13 +231,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $turnOn = $inputs['turn_on'];
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = $this->clientFactory->createClient();
         try {
-            $client->post(
-                '/account/' . $externalBusinessId . '/start_product_sync',
-                [
-                    'json' => ['turnOn' => $turnOn],
-                ]
+            $this->clientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/' . $externalBusinessId . '/start_product_sync',
+                    [],
+                    json_encode(['turnOn' => $turnOn])
+                )
             );
         } catch (Exception $e) {
             $this->errorHandler->handle(
@@ -389,6 +404,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
+        /**
+         * @var FbeFeatureManager
+         */
         $featureManager = $this->module->getService(FbeFeatureManager::class);
 
         $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
@@ -441,7 +459,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary($this->context->shop->id),
                         'reporting' => [
                             'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
-                            'catalog' => $productCount['product_count'],
+                            'catalog' => $productCount['product_count'] ?? '--',
                             'errored' => count($syncReport['errors']), // no distinction for base lang vs l10n errors
                         ],
                     ],
@@ -701,31 +719,29 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxExportWholeCatalog()
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        $client = $this->clientFactory->createClient();
         $response = 200;
 
-        try {
-            $response = $client->post(
-                '/account/' . $externalBusinessId . '/reset_product_sync'
-            )->json();
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookCatalogExportException(
-                    'Failed to export the whole catalog',
-                    FacebookCatalogExportException::FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+        $request = new Request(
+            'POST',
+            '/account/' . $externalBusinessId . '/reset_product_sync'
+        );
+        $response = $this->responseListener->handleResponse(
+            $this->clientFactory->createClient()->sendRequest($request),
+            [
+                'exceptionClass' => FacebookCatalogExportException::class,
+            ]
+        );
+
+        if (!$response->isSuccessful()) {
+            $code = $response->getResponse()->getStatusCode();
             $this->ajaxDie(json_encode([
                 'response' => 500,
-                'message' => $e->getMessage(),
+                'message' => "Failed to export the whole catalog (HTTP {$code})",
             ]));
         }
 
         $this->ajaxDie(json_encode([
-            'response' => $response,
+            'response' => $response->getBody(),
         ]));
     }
 

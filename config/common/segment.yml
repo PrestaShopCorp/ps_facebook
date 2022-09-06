@@ -1,6 +1,7 @@
 services:
   PrestaShop\Module\Ps_facebook\Tracker\Segment:
     class: 'PrestaShop\Module\Ps_facebook\Tracker\Segment'
+    public: true
     arguments:
       - '@ps_facebook.context'
       - '@PrestaShop\Module\PrestashopFacebook\Config\Env'

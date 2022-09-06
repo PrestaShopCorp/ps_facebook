@@ -1,6 +1,7 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Database\Installer:
     class: PrestaShop\Module\PrestashopFacebook\Database\Installer
+    public: true
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
@@ -8,9 +9,10 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Database\Uninstaller:
     class: PrestaShop\Module\PrestashopFacebook\Database\Uninstaller
+    public: true
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\TabRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient'

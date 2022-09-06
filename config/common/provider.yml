@@ -1,38 +1,46 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
+      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
       - '@ps_facebook.controller'
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
 
-  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
+  PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterface:
+    alias: 'PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
+    public: true
 
   PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
 
   PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider
+    public: true
     arguments:
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FbeDataProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\FbeFeatureDataProvider
+    public: true
     arguments:
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\EventDataProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
@@ -43,31 +51,38 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
       - '@PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProvider'
 
-  PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface: '@PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider'
+  PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProviderInterface:
+    alias: 'PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider'
+    public: true
 
   PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\ProductAvailabilityProvider
+    public: true
 
   PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
 
   PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
-      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
+      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
 
   PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider
+    public: true
     arguments:
       - '@ps_facebook'
       - '@ps_facebook.cache'
 
   PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider'

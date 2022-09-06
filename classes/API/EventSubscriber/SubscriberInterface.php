@@ -18,16 +18,11 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\Factory;
+namespace PrestaShop\Module\PrestashopFacebook\API\EventSubscriber;
 
-use GuzzleHttp\Client;
+use PrestaShop\Module\PrestashopFacebook\API\ParsedResponse;
 
-class GoogleCategoryEssentialsApiClientFactory implements ApiClientFactoryInterface
+interface SubscriberInterface
 {
-    const API_URL = 'https://facebook-api.psessentials.net';
-
-    public function createClient()
-    {
-        return new Client(['base_url' => self::API_URL]);
-    }
+    public function onParsedResponse(ParsedResponse $response, array $options): void;
 }

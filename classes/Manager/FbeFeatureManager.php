@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Manager;
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class FbeFeatureManager
@@ -45,7 +45,7 @@ class FbeFeatureManager
      * @param string $featureName
      * @param bool $state
      *
-     * @return false
+     * @return array|false
      */
     public function updateFeature($featureName, $state)
     {
@@ -69,6 +69,6 @@ class FbeFeatureManager
             $featureName => $featureConfiguration,
         ];
 
-        return $this->facebookClient->updateFeature($externalBusinessId, json_encode($configuration));
+        return $this->facebookClient->updateFeature($externalBusinessId, $configuration);
     }
 }

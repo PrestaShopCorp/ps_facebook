@@ -18,34 +18,33 @@
  *-->
 <template>
   <div id="psFacebookApp">
-    <Menu :context-ps-facebook="contextPsFacebook">
-      <MenuItem
-        @click="onProduct"
-        :onboarding-required="true"
-        route="/catalog"
-      >
-        {{ $t('general.tabs.catalog') }}
-      </MenuItem>
-      <MenuItem
-        @click="onSales"
-        :onboarding-required="true"
-        route="/integrate"
-      >
-        {{ $t('general.tabs.integrate') }}
-      </MenuItem>
-      <MenuItem route="/configuration">
-        {{ $t('general.tabs.configuration') }}
-      </MenuItem>
-      <MenuItem
-        @click="onHelp"
-        route="/help"
-      >
-        {{ $t('general.tabs.help') }}
-      </MenuItem>
-    </Menu>
-
-    <div class="pt-5" />
-    <div class="pt-3" />
+    <div class="ps_gs-sticky-head">
+      <Menu :context-ps-facebook="contextPsFacebook">
+        <MenuItem
+          @click="onProduct"
+          :onboarding-required="true"
+          route="/catalog"
+        >
+          {{ $t('general.tabs.catalog') }}
+        </MenuItem>
+        <MenuItem
+          @click="onSales"
+          :onboarding-required="true"
+          route="/integrate"
+        >
+          {{ $t('general.tabs.integrate') }}
+        </MenuItem>
+        <MenuItem route="/configuration">
+          {{ $t('general.tabs.configuration') }}
+        </MenuItem>
+        <MenuItem
+          @click="onHelp"
+          route="/help"
+        >
+          {{ $t('general.tabs.help') }}
+        </MenuItem>
+      </Menu>
+    </div>
 
     <router-view :context-ps-facebook="contextPsFacebook" />
   </div>
@@ -54,6 +53,11 @@
 <script>
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
+
+let resizeEventTimer;
+const root = document.documentElement;
+const header = document.querySelector('#content .page-head');
+const headerFull = document.querySelector('#header_infos');
 
 export default {
   name: 'Home',
@@ -76,8 +80,24 @@ export default {
   created() {
     this.getFbContext();
     this.$root.identifySegment();
+
+    this.setCustomProperties();
+    window.addEventListener('resize', this.resizeEventHandler);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.resizeEventHandler);
   },
   methods: {
+    resizeEventHandler() {
+      clearTimeout(resizeEventTimer);
+      resizeEventTimer = setTimeout(() => {
+        this.setCustomProperties();
+      }, 250);
+    },
+    setCustomProperties() {
+      root.style.setProperty('--header-height', `${header.clientHeight}px`);
+      root.style.setProperty('--header-height-full', `${header.clientHeight + headerFull.clientHeight}px`);
+    },
     getFbContext() {
       fetch(this.psFacebookGetFbContextRoute)
         .then((res) => {
@@ -148,9 +168,17 @@ export default {
   #psFacebookApp .form-group.has-warning:after {
     right: 10px;
   }
+  :root {
+    // has to be a css custom propertie to be modified via JS
+    // because the height differs with PS versions
+    --header-height: 100px;
+    --header-height-full: 136px;
+  }
+
   .nobootstrap {
     background-color: unset !important;
-    padding: 100px 10px 100px;
+    padding: 100px 10px 100px; // fallback for IE11
+    padding: var(--header-height) 10px 100px;
     min-width: unset !important;
   }
   .nobootstrap .form-group>div {
@@ -209,4 +237,21 @@ export default {
     padding-left: 3.8rem !important;
     padding-right: 0.5rem !important;
   }
+
+  .ps_gs-sticky-head {
+    padding: 0;
+    position: sticky;
+    top: 136px; // fallback for IE11
+    top: var(--header-height-full);
+    margin-bottom: 20px;
+    z-index: 499;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: #fff;
+  }
+
+  .ps_gs-sticky-head .nav-link {
+    padding: rem(7) 1.25rem;
+  }
+
 </style>

@@ -18,6 +18,7 @@ imports:
 services:
   ps_facebook:
     class: 'Ps_facebook'
+    public: true
     factory: ['Module', 'getInstanceByName']
     arguments:
       - 'ps_facebook'

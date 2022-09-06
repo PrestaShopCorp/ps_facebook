@@ -22,8 +22,8 @@ namespace PrestaShop\Module\PrestashopFacebook\DTO;
 
 class EventBusProduct
 {
-    const POSITION_PRODUCT_ID = 0;
-    const POSITION_PRODUCT_ATTRIBUTE_ID = 1;
+    public const POSITION_PRODUCT_ID = 0;
+    public const POSITION_PRODUCT_ATTRIBUTE_ID = 1;
 
     /**
      * @var int

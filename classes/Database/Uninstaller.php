@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Exception;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Repository\TabRepository;
@@ -29,7 +29,7 @@ use PrestaShop\Module\Ps_facebook\Tracker\Segment;
 
 class Uninstaller
 {
-    const CLASS_NAME = 'Uninstaller';
+    public const CLASS_NAME = 'Uninstaller';
 
     /**
      * @var array

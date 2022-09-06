@@ -21,13 +21,12 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Controller;
-use Exception;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 
 class AccessTokenProvider
 {
@@ -35,11 +34,6 @@ class AccessTokenProvider
      * @var ConfigurationAdapter
      */
     private $configurationAdapter;
-
-    /**
-     * @var ErrorHandler
-     */
-    private $errorHandler;
 
     /**
      * @var Controller
@@ -50,6 +44,11 @@ class AccessTokenProvider
      * @var ApiClientFactoryInterface
      */
     private $psApiClientFactory;
+
+    /**
+     * @var ResponseListener
+     */
+    private $responseListener;
 
     /**
      * @var string
@@ -63,12 +62,12 @@ class AccessTokenProvider
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler,
+        ResponseListener $responseListener,
         $controller,
         ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
+        $this->responseListener = $responseListener;
         $this->controller = $controller;
         $this->psApiClientFactory = $psApiClientFactory;
     }
@@ -134,56 +133,39 @@ class AccessTokenProvider
             $managerId = null;
         }
 
-        try {
-            $response = $this->psApiClientFactory->createClient()->post(
-                '/account/' . $externalBusinessId . '/exchange_tokens',
-                [
-                    'json' => [
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/' . $externalBusinessId . '/exchange_tokens',
+                    [],
+                    json_encode([
                         'userAccessToken' => $accessToken,
                         'businessManagerId' => $managerId,
-                    ],
-                ]
-            )->json();
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to refresh access token',
-                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
+                    ])
+                )
+            ),
+            [
+                'exceptionClass' => AccessTokenException::class,
+            ]
+        );
 
-            return;
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to refresh access token',
-                    AccessTokenException::ACCESS_TOKEN_REFRESH_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return;
         }
 
-        if (isset($response['longLived']['access_token'])) {
+        $responseContent = $response->getBody();
+
+        if (isset($responseContent['longLived']['access_token'])) {
             $tokenExpiresIn = time() + (70 * 365 * 24 * 3600); // never expires
-            $this->userAccessToken = $response['longLived']['access_token'];
+            $this->userAccessToken = $responseContent['longLived']['access_token'];
 
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $this->userAccessToken);
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE, $tokenExpiresIn);
         }
 
-        if (isset($response['system']['access_token'])) {
-            $this->systemAccessToken = $response['system']['access_token'];
+        if (isset($responseContent['system']['access_token'])) {
+            $this->systemAccessToken = $responseContent['system']['access_token'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_SYSTEM_ACCESS_TOKEN, $this->systemAccessToken);
         }
     }
@@ -197,24 +179,22 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        try {
-            $response = $this->psApiClientFactory->createClient()->get(
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClientFactory->createClient()->sendRequest(
+                new Request(
+                'GET',
                 '/account/' . $externalBusinessId . '/app_tokens'
-            )->json();
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new AccessTokenException(
-                    'Failed to retrieve access token',
-                    AccessTokenException::ACCESS_TOKEN_RETRIEVE_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+                )
+            ),
+            [
+                'exceptionClass' => AccessTokenException::class,
+            ]
+        );
 
+        if (!$response->isSuccessful()) {
             return null;
         }
 
-        return $response;
+        return $response->getBody();
     }
 }

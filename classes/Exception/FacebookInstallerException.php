@@ -24,9 +24,9 @@ use Exception;
 
 class FacebookInstallerException extends Exception
 {
-    const FACEBOOK_INSTALL_EXCEPTION = 1;
+    public const FACEBOOK_INSTALL_EXCEPTION = 1;
 
-    const FACEBOOK_UNINSTALL_EXCEPTION = 2;
+    public const FACEBOOK_UNINSTALL_EXCEPTION = 2;
 
-    const PS_ACCOUNTS_UPGRADE_EXCEPTION = 2;
+    public const PS_ACCOUNTS_UPGRADE_EXCEPTION = 2;
 }

@@ -8,15 +8,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.0.0
 
-      - name: PHP syntax checker 5.6
-        uses: prestashop/github-action-php-lint/5.6@master
-
       - name: PHP syntax checker 7.2
         uses: prestashop/github-action-php-lint/7.2@master
 
       - name: PHP syntax checker 7.3
         uses: prestashop/github-action-php-lint/7.3@master
   
+      - name: PHP syntax checker 8.1
+        uses: prestashop/github-action-php-lint/8.1@master
   php-cs-fixer:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
@@ -24,8 +23,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.0.0
 
-      - name: Run PHP-CS-Fixer
-        uses: prestashopcorp/github-action-php-cs-fixer@master
+      - name: Cache vendor folder
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: php-${{ hashFiles('composer.lock') }}
+
+      - name: Cache composer folder
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: php-composer-cache
+
+      - run: composer install
+
+      - name: Run PHPUnit
+        run: vendor/bin/php-cs-fixer fix --config .php_cs.dist.php
   
   phpstan:
     name: PHPStan

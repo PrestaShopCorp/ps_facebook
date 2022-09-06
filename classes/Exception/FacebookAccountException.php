@@ -24,5 +24,5 @@ use Exception;
 
 class FacebookAccountException extends Exception
 {
-    const FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION = 1;
+    public const FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION = 1;
 }

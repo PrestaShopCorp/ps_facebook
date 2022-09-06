@@ -18,12 +18,12 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\API;
+namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
@@ -33,8 +33,8 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
+use Psr\Http\Client\ClientInterface;
 
 class FacebookClient
 {
@@ -49,7 +49,7 @@ class FacebookClient
     private $sdkVersion;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $client;
 
@@ -59,35 +59,28 @@ class FacebookClient
     private $configurationAdapter;
 
     /**
-     * @var ErrorHandler
-     */
-    private $errorHandler;
-
-    /**
      * @var ConfigurationHandler
      */
     private $configurationHandler;
 
     /**
-     * @param ApiClientFactoryInterface $apiClientFactory
-     * @param AccessTokenProvider $accessTokenProvider
-     * @param ConfigurationAdapter $configurationAdapter
-     * @param ErrorHandler $errorHandler
-     * @param ConfigurationHandler $configurationHandler
+     * @var ResponseListener
      */
+    private $responseListener;
+
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ErrorHandler $errorHandler,
-        ConfigurationHandler $configurationHandler
+        ConfigurationHandler $configurationHandler,
+        ResponseListener $responseListener
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
         $this->configurationHandler = $configurationHandler;
+        $this->responseListener = $responseListener;
     }
 
     public function setAccessToken($accessToken)
@@ -313,7 +306,7 @@ class FacebookClient
 
     /**
      * @param string $id
-     * @param string $method
+     * @param string $callerFunction
      * @param array $fields
      * @param array $query
      *
@@ -321,7 +314,7 @@ class FacebookClient
      *
      * @throws Exception
      */
-    private function get($id, $method, array $fields = [], array $query = [])
+    private function get($id, $callerFunction, array $fields = [], array $query = [])
     {
         $query = array_merge(
             [
@@ -331,62 +324,35 @@ class FacebookClient
             $query
         );
 
-        try {
-            $request = $this->client->createRequest(
-                'GET',
-                "/{$this->sdkVersion}/{$id}",
-                [
-                    'query' => $query,
-                ]
-            );
+        $request = new Request(
+            'GET',
+            "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
+        );
 
-            $response = $this->client->send($request);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $message = "Facebook client failed when creating get request. Method: {$method}.";
+        $response = $this->responseListener->handleResponse(
+            $this->client->sendRequest($request),
+            [
+                'exceptionClass' => FacebookClientException::class,
+            ]
+        );
 
+        $responseContent = $response->getBody();
+
+        if (!$response->isSuccessful()) {
             $exceptionCode = false;
-            if (!empty($exceptionContent['error']['code'])) {
-                $exceptionCode = $exceptionContent['error']['code'];
-                $message .= " Code: {$exceptionCode}";
+            if (!empty($responseContent['error']['code'])) {
+                $exceptionCode = $responseContent['error']['code'];
             }
 
             if ($exceptionCode && in_array($exceptionCode, Config::OAUTH_EXCEPTION_CODE)) {
                 $this->disconnectFromFacebook();
                 $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
-
-                return false;
             }
-
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    $message,
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
-
-            return false;
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating get request. Method: ' . $method,
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
 
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $responseContent;
     }
 
     /**
@@ -423,54 +389,31 @@ class FacebookClient
      */
     private function sendRequest($id, array $headers, array $body, $method)
     {
-        $options = [
-            'headers' => $headers,
-            'body' => array_merge(
-                [
-                    'access_token' => $this->accessToken,
-                ],
-                $body
-            ),
-        ];
+        $body = array_merge(
+            [
+                'access_token' => $this->accessToken,
+            ],
+            $body
+        );
 
-        try {
-            $request = $this->client->createRequest(
-                $method,
-                "/{$this->sdkVersion}/{$id}",
-                $options
-            );
+        $request = new Request(
+            $method,
+            "/{$this->sdkVersion}/{$id}",
+            $headers,
+            json_encode($body)
+        );
 
-            $response = $this->client->send($request);
-        } catch (ClientException $e) {
-            $exceptionContent = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating post request.',
-                    FacebookClientException::FACEBOOK_CLIENT_GET_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false,
-                [
-                    'extra' => $exceptionContent,
-                ]
-            );
+        $response = $this->responseListener->handleResponse(
+            $this->client->sendRequest($request),
+            [
+                'exceptionClass' => FacebookClientException::class,
+            ]
+        );
 
-            return false;
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookClientException(
-                    'Facebook client failed when creating post request.',
-                    FacebookClientException::FACEBOOK_CLIENT_POST_FUNCTION_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
-
+        if (!$response->isSuccessful()) {
             return false;
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $response->getBody();
     }
 }

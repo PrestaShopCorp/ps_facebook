@@ -2,7 +2,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Tests\Unit\Mock;
 
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 
 class FacebookClientMock extends FacebookClient
 {

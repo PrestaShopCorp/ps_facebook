@@ -24,5 +24,5 @@ use Exception;
 
 class FacebookPrevalidationScanException extends Exception
 {
-    const FACEBOOK_PRE_VALIDATION_SCAN_UPDATE_EXCEPTION = 1;
+    public const FACEBOOK_PRE_VALIDATION_SCAN_UPDATE_EXCEPTION = 1;
 }

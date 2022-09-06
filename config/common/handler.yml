@@ -1,23 +1,27 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ApiConversionHandler
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
-      - '@PrestaShop\Module\PrestashopFacebook\API\FacebookClient'
+      - '@PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient'
 
   PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\CategoryMatchHandler
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
 
   PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\MessengerHandler
+    public: true
     arguments:
       - '@ps_facebook.language'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
@@ -25,23 +29,27 @@ services:
 
   PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PixelHandler
+    public: true
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
 
   PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler
+    public: true
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
 
   PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'
 
   PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler
+    public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository'

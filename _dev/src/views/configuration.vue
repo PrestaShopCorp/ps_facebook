@@ -199,8 +199,9 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {MultiStoreSelector, PsAccounts} from 'prestashop_accounts_vue_components';
+import {PsAccounts} from 'prestashop_accounts_vue_components';
 import Showdown from 'showdown';
+import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';

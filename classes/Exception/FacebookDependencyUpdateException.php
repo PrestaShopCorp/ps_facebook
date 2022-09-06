@@ -24,5 +24,5 @@ use Exception;
 
 class FacebookDependencyUpdateException extends Exception
 {
-    const FACEBOOK_DEPENDENCY_UPGRADE_EXCEPTION = 1;
+    public const FACEBOOK_DEPENDENCY_UPGRADE_EXCEPTION = 1;
 }

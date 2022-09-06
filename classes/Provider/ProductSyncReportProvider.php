@@ -20,13 +20,13 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use Exception;
-use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
+use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
+use Psr\Http\Client\ClientInterface;
 
 class ProductSyncReportProvider
 {
@@ -36,22 +36,22 @@ class ProductSyncReportProvider
     private $configurationAdapter;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $psApiClient;
 
     /**
-     * @var ErrorHandler
+     * @var ResponseListener
      */
-    private $errorHandler;
+    private $responseListener;
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
         ApiClientFactoryInterface $psApiClientFactory,
-        ErrorHandler $errorHandler
+        ResponseListener $responseListener
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->errorHandler = $errorHandler;
+        $this->responseListener = $responseListener;
         $this->psApiClient = $psApiClientFactory->createClient();
     }
 
@@ -59,25 +59,25 @@ class ProductSyncReportProvider
     {
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        try {
-            $response = $this->psApiClient->get(
-                "/account/{$businessId}/reporting"
-            )->json();
-        } catch (Exception $e) {
-            $this->errorHandler->handle(
-                new FacebookAccountException(
-                    'Failed to get product sync reporting',
-                    FacebookAccountException::FACEBOOK_ACCOUNT_PRODUCT_SYNC_REPORTING_EXCEPTION,
-                    $e
-                ),
-                $e->getCode(),
-                false
-            );
+        $response = $this->responseListener->handleResponse(
+            $this->psApiClient->sendRequest(
+                new Request(
+                    'GET',
+                    "/account/{$businessId}/reporting"
+                )
+            ),
+            [
+                'exceptionClass' => FacebookAccountException::class,
+            ]
+        );
 
-            $response = [];
+        $responseContent = $response->getBody();
+
+        if (!$response->isSuccessful()) {
+            $responseContent = [];
         }
 
-        return $this->fixMissingValues($response);
+        return $this->fixMissingValues($responseContent);
     }
 
     private function fixMissingValues($response)

@@ -1,3 +1,4 @@
 services:
   PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer:
     class: PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer
+    public: true

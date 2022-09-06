@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\FacebookClient;
+use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class FbeFeatureDataProvider

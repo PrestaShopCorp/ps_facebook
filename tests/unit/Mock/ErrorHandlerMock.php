@@ -10,7 +10,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
  */
 class ErrorHandlerMock extends ErrorHandler
 {
-    const DEBUG = 1;
+    public const DEBUG = 1;
 
     /**
      * @var ErrorHandler

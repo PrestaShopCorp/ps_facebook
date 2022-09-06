@@ -24,5 +24,5 @@ use Exception;
 
 class FacebookCatalogExportException extends Exception
 {
-    const FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION = 1;
+    public const FACEBOOK_WHOLE_CATALOG_EXPORT_EXCEPTION = 1;
 }
