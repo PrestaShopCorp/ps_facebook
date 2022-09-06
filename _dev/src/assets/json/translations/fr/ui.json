@@ -282,5 +282,13 @@
     "Approved": "Approuvé",
     "Pending": "En attente",
     "Disapproved": "Désapprouvé"
+  },
+  "multiShopSelector": {
+    "title": "Mode multi-boutique activé",
+    "subtitle": "Vous devez configurer vos boutiques une par une pour ce service mais vous pourrez utiliser le même compte.",
+    "selectStore": "Veuillez sélectionner la première boutique à configurer dans la liste ci-dessous",
+    "tips": "Une fois que vous avez terminé avec la première boutique, vous pouvez configurer les autres en les sélectionnant une par une dans le sélecteur de boutique",
+    "configure": "Configuration",
+    "group": "Groupe de boutiques"
   }
 }
