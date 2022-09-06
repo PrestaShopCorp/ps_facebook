@@ -282,5 +282,13 @@
     "Approved": "Genehmigt",
     "Pending": "Anhängig",
     "Disapproved": "Abgelehnt"
+  },
+  "multiShopSelector": {
+    "title": "Multi-Store-Modus aktiviert",
+    "subtitle": "Sie müssen Ihre Geschäfte einzeln für diesen Dienst konfigurieren, können aber dasselbe Konto verwenden.",
+    "selectStore": "Bitte wählen Sie den ersten zu konfigurierenden Laden aus der folgenden Liste aus",
+    "tips": "Nachdem Sie mit dem ersten Shop fertig sind, können Sie die anderen Shops konfigurieren, indem Sie sie nacheinander im Shop-Selektor im horizontalen Menü auswählen",
+    "configure": "Konfigurieren",
+    "group": "Gruppe einkaufen"
   }
 }
