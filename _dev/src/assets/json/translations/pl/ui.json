@@ -282,5 +282,13 @@
     "Approved": "Zatwierdzony",
     "Pending": "W toku",
     "Disapproved": "Niezatwierdzony"
+  },
+  "multiShopSelector": {
+    "title": "Tryb Multi-store aktywny",
+    "subtitle": "Musisz skonfigurować swoje sklepy, jeden po drugim, pod kątem tej usługi, ale będziesz mógł korzystać z tego samego konta.",
+    "selectStore": "Wybierz z poniższej listy pierwszy sklep do skonfigurowania",
+    "tips": "Po zakończeniu pracy nad pierwszym sklepem, możesz skonfigurować pozostałe, wybierając je kolejno z listy sklepów w menu poziomym",
+    "configure": "Konfiguruj",
+    "group": "Grupa sklepów"
   }
 }
