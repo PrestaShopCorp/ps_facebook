@@ -282,5 +282,13 @@
     "Approved": "Aprovado",
     "Pending": "Pendente",
     "Disapproved": "Não aprovado"
+  },
+  "multiShopSelector": {
+    "title": "Modo multilojas ativado",
+    "subtitle": "Para este serviço, deve configurar as suas lojas uma a uma, mas poderá usar a mesma conta.",
+    "selectStore": "Selecione a primeira loja a configurar da lista abaixo",
+    "tips": "Depois de terminar a primeira loja, pode configurar as outras, selecionando uma a uma no seletor de lojas, no menu horizontal",
+    "configure": "Configurar",
+    "group": "Grupo de lojas"
   }
 }
