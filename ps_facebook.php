@@ -59,8 +59,6 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 class Ps_facebook extends Module
 {
     /**
@@ -166,6 +164,13 @@ class Ps_facebook extends Module
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
         $this->ps_versions_compliancy = ['min' => '1.7.0.0', 'max' => _PS_VERSION_];
 
+        // If PHP is not compliant, we will not load composer and the autoloader
+        if (!$this->isPhpVersionCompliant()) {
+            return;
+        }
+
+        require_once __DIR__ . '/vendor/autoload.php';
+
         // Needed during PrestaShop installation, where Link class in not initialized
         if ($this->context->link !== null) {
             $this->front_controller = $this->context->link->getModuleLink(
@@ -212,6 +217,14 @@ class Ps_facebook extends Module
      */
     public function install()
     {
+        if (!$this->isPhpVersionCompliant()) {
+            $this->_errors[] = $this->l('This requires PHP 7.2 to work properly. Please upgrade your server configuration.');
+
+            // We return true during the installation of PrestaShop to not stop the whole process,
+            // Otherwise we warn properly the installation failed.
+            return defined('PS_INSTALLATION_IN_PROGRESS');
+        }
+
         // We can't init the Installer in CLI, as it has been declared in the admin container and PrestaShop
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
@@ -249,6 +262,11 @@ class Ps_facebook extends Module
      */
     public function uninstall()
     {
+        // If PHP is not compliant, we try our best to uninstall the module
+        if (!$this->isPhpVersionCompliant()) {
+            return parent::uninstall();
+        }
+
         // We can't init the Uninstaller in CLI, as it has been declared in the admin container and PrestaShop
         // does not have the _PS_ADMIN_DIR_ in this environment.
         // prestashop/module-lib-service-container:1.3.1 is known as incompatible
@@ -485,5 +503,10 @@ class Ps_facebook extends Module
         $checkoutProcessClass = $reflectedObject->getValue($this->context->controller);
 
         return $checkoutProcessClass->getSteps();
+    }
+
+    private function isPhpVersionCompliant()
+    {
+        return 70200 <= PHP_VERSION_ID;
     }
 }
