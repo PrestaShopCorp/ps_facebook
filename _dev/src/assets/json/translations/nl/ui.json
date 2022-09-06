@@ -282,5 +282,13 @@
     "Approved": "Goedgekeurd",
     "Pending": "In afwachting van",
     "Disapproved": "Afgekeurd"
+  },
+  "multiShopSelector": {
+    "title": "Multi-store modus geactiveerd",
+    "subtitle": "U moet uw winkels één voor één configureren voor deze dienst, maar u kunt wel dezelfde account gebruiken.",
+    "selectStore": "Selecteer de eerste winkel die u wilt configureren uit de onderstaande lijst",
+    "tips": "Nadat U klaar bent met de eerste shop, kunt U de andere configureren door ze één voor één te selecteren in de shop selector, in het horizontale menu",
+    "configure": "Configureer",
+    "group": "Winkelgroep"
   }
 }
