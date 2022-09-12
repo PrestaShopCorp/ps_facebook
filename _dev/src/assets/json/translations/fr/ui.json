@@ -177,9 +177,9 @@
       "typeToFilter": "Tapez pour filtrer",
       "select": "Sélectionner",
       "noResult": "Aucun résultat pour votre recherche",
-      "tooManyResults": "Trop de résultats, veuillez compléter votre recherche.",
+      "tooManyResults": "Trop de résultats, veuillez affiner votre recherche.",
       "fetchError": "Une erreur s'est produite lors de la recherche.",
-      "unassign": "Catégorie de désaffectation"
+      "unassign": "Désaffecter la catégorie"
     },
     "tableMatching": {
       "firstTd": "Catégorie PrestaShop",
