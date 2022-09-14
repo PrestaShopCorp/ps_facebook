@@ -115,9 +115,9 @@ export default defineComponent({
     };
   },
   methods: {
-    saveMatchingCallback(category) {
+    async saveMatchingCallback(category) {
       if (this.overrideGetCurrentRow) {
-        return Promise.resolve(true);
+        return true;
       }
       const updateParent = Number(category.propagate);
       const currentCategory = this.findShopCategory(this.categories, category.shopCategoryId);
@@ -132,7 +132,7 @@ export default defineComponent({
         category.fbSubcategoryName = '';
       }
 
-      return fetch(this.saveParentStatement, {
+      const res = await fetch(this.saveParentStatement, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -143,13 +143,16 @@ export default defineComponent({
           google_category_parent_id: category.fbCategoryId,
           update_children: updateParent,
         }),
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        this.$parent.fetchCategoryMatchingCounters();
-        return true;
       });
+      if (!res.ok) {
+        throw new Error(res.statusText || res.status);
+      }
+      const responseContents = await res.json();
+      if (responseContents.success === false) {
+        throw new Error(responseContents.message || 'Unknown error');
+      }
+      this.$parent.fetchCategoryMatchingCounters();
+      return true;
     },
 
     applyToAllChildren(shopCategoryId, event) {
