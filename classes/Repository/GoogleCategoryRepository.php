@@ -66,9 +66,9 @@ class GoogleCategoryRepository
             [
                 'id_category' => (int) $categoryId,
                 'google_category_id' => (int) $googleCategoryId,
-                'google_category_name' => $googleCategoryName,
+                'google_category_name' => pSQL($googleCategoryName),
                 'google_category_parent_id' => (int) $googleCategoryParentId,
-                'google_category_parent_name' => $googleCategoryParentName,
+                'google_category_parent_name' => pSQL($googleCategoryParentName),
                 'is_parent_category' => $isParentCategory,
                 'id_shop' => (int) $shopId,
             ],
@@ -102,9 +102,9 @@ class GoogleCategoryRepository
             $data[] = [
                 'id_category' => (int) $category->id,
                 'google_category_id' => (int) $googleCategoryId,
-                'google_category_name' => $googleCategoryName,
+                'google_category_name' => pSQL($googleCategoryName),
                 'google_category_parent_id' => (int) $googleCategoryParentId,
-                'google_category_parent_name' => $googleCategoryParentName,
+                'google_category_parent_name' => pSQL($googleCategoryParentName),
                 'is_parent_category' => 1,
                 'id_shop' => (int) $shopId,
             ];
