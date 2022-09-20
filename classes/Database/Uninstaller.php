@@ -82,7 +82,7 @@ class Uninstaller
         $this->segment->setMessage('PS Facebook uninstalled');
         $this->segment->track();
 
-        foreach (array_keys(\Ps_facebook::CONFIGURATION_LIST) as $name) {
+        foreach (array_keys(Installer::CONFIGURATION_LIST) as $name) {
             \Configuration::deleteByName((string) $name);
         }
         $this->facebookClient->uninstallFbe();
