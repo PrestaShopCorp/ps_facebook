@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Database;
 
 use Exception;
 use Language;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookInstallerException;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\Ps_facebook\Tracker\Segment;
@@ -30,6 +31,20 @@ use Tab;
 class Installer
 {
     public const CLASS_NAME = 'Installer';
+
+    public const CONFIGURATION_LIST = [
+        Config::PS_PIXEL_ID,
+        Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
+        Config::PS_FACEBOOK_PROFILES,
+        Config::PS_FACEBOOK_PAGES,
+        Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,
+        Config::PS_FACEBOOK_AD_ACCOUNT_ID,
+        Config::PS_FACEBOOK_CATALOG_ID,
+        Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID,
+        Config::PS_FACEBOOK_PIXEL_ENABLED,
+        Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
+        Config::PS_FACEBOOK_PRODUCT_SYNC_ON,
+    ];
 
     private $module;
 
@@ -86,7 +101,7 @@ class Installer
         $result = true;
 
         foreach (\Shop::getShops(false, null, true) as $shopId) {
-            foreach (\Ps_facebook::CONFIGURATION_LIST as $name => $value) {
+            foreach (self::CONFIGURATION_LIST as $name => $value) {
                 if (false === \Configuration::hasKey((string) $name, null, null, (int) $shopId)) {
                     $result = $result && \Configuration::updateValue(
                         (string) $name,

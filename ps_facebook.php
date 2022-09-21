@@ -21,7 +21,6 @@
 use Dotenv\Dotenv;
 use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
-use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
@@ -55,9 +54,6 @@ use PrestaShop\ModuleLibServiceContainer\DependencyInjection\ServiceContainer;
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
 
 class Ps_facebook extends Module
 {
@@ -89,20 +85,6 @@ class Ps_facebook extends Module
         'displayBackOfficeHeader',
         'actionFrontControllerSetMedia',
         'actionFacebookCallPixel',
-    ];
-
-    public const CONFIGURATION_LIST = [
-        Config::PS_PIXEL_ID,
-        Config::PS_FACEBOOK_USER_ACCESS_TOKEN,
-        Config::PS_FACEBOOK_PROFILES,
-        Config::PS_FACEBOOK_PAGES,
-        Config::PS_FACEBOOK_BUSINESS_MANAGER_ID,
-        Config::PS_FACEBOOK_AD_ACCOUNT_ID,
-        Config::PS_FACEBOOK_CATALOG_ID,
-        Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID,
-        Config::PS_FACEBOOK_PIXEL_ENABLED,
-        Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START,
-        Config::PS_FACEBOOK_PRODUCT_SYNC_ON,
     ];
 
     /**
@@ -146,7 +128,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.18.0';
+        $this->version = '1.18.1';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '860395eb54512ec72d98615805274591';
