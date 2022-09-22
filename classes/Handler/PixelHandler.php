@@ -95,7 +95,7 @@ class PixelHandler
 
         $this->context->smarty->assign($smartyVariables);
 
-        $this->templateBuffer->add($this->module->display($this->module->getfilePath(), '/views/templates/hook/header.tpl'));
+        $this->templateBuffer->add($this->module->display($this->module->getfilePath(), 'views/templates/hook/header.tpl'));
     }
 
     /**
