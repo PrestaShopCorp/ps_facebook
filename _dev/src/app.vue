@@ -18,7 +18,7 @@
  *-->
 <template>
   <div id="psFacebookApp">
-    <div class="ps_gs-sticky-head">
+    <div id="head_tabs" class="ps_gs-sticky-head page-head-tabs">
       <Menu :context-ps-facebook="contextPsFacebook">
         <MenuItem
           @click="onProduct"
@@ -244,7 +244,7 @@ export default {
     top: 136px; // fallback for IE11
     top: var(--header-height-full);
     margin-bottom: 20px;
-    z-index: 499;
+    z-index: 200;
     padding-left: 0;
     padding-right: 0;
     background-color: #fff;
