@@ -50,8 +50,7 @@
       </b-td>
     </b-tr>
     <template
-      v-for=
-        "({name, cover, d, isbn, price, l, id_product, id_product_attribute}, i) in getRows()"
+      v-for="({name, cover, d, isbn, price, l, id_product, id_product_attribute}, i) in getRows()"
     >
       <b-tr
         v-if="(i === 0 || id_product !== rows[i - 1].id_product) && id_product_attribute"
@@ -94,33 +93,67 @@
           </span>
         </b-td>
         <b-td>
-          <span v-for="lang in l" :key="lang" class="badge badge-secondary">{{ lang }}</span>
+          <span
+            v-for="lang in l"
+            :key="lang"
+            class="badge badge-secondary"
+          >{{ lang }}</span>
         </b-td>
         <b-td>
-          <i v-if="cover" class="material-icons text-success">done</i>
-          <i v-else class="material-icons text-danger">close</i>
+          <i
+            v-if="cover"
+            class="material-icons text-success"
+          >done</i>
+          <i
+            v-else
+            class="material-icons text-danger"
+          >close</i>
         </b-td>
         <b-td>
-          <i v-if="d" class="material-icons text-success">done</i>
-          <i v-else class="material-icons text-danger">close</i>
+          <i
+            v-if="d"
+            class="material-icons text-success"
+          >done</i>
+          <i
+            v-else
+            class="material-icons text-danger"
+          >close</i>
         </b-td>
         <b-td>
-          <i v-if="isbn" class="material-icons text-success">done</i>
-          <i v-else class="material-icons text-danger">close</i>
+          <i
+            v-if="isbn"
+            class="material-icons text-success"
+          >done</i>
+          <i
+            v-else
+            class="material-icons text-danger"
+          >close</i>
         </b-td>
         <b-td>
-          <i v-if="price" class="material-icons text-success">done</i>
-          <i v-else class="material-icons text-danger">close</i>
+          <i
+            v-if="price"
+            class="material-icons text-success"
+          >done</i>
+          <i
+            v-else
+            class="material-icons text-danger"
+          >close</i>
         </b-td>
       </b-tr>
     </template>
     <b-tfoot v-if="loading">
-      <b-td class="loader-cell" colspan="8">
+      <b-td
+        class="loader-cell"
+        colspan="8"
+      >
         <div class="spinner" />
       </b-td>
     </b-tfoot>
     <b-tfoot v-else-if="paginationEnabled">
-      <b-td class="text-center" colspan="8">
+      <b-td
+        class="text-center"
+        colspan="8"
+      >
         <b-button
           variant="link"
           @click="loadNextPage"
@@ -203,17 +236,19 @@ export default defineComponent({
           && acc[previousIndex].id_product === id_product
           && acc[previousIndex].id_product_attribute === id_product_attribute
         ) {
-          acc[previousIndex].cover = acc[previousIndex].cover && (has_cover === '1');
-          acc[previousIndex].d = acc[previousIndex].d && (has_description_or_short_description === '1');
-          acc[previousIndex].isbn = acc[previousIndex].isbn && (has_manufacturer_or_ean_or_upc_or_isbn === '1');
-          acc[previousIndex].price = acc[previousIndex].price && (has_price_tax_excl === '1');
+          acc[previousIndex].cover = acc[previousIndex].cover && (+has_cover === 1);
+          acc[previousIndex].d = acc[previousIndex].d
+            && (+has_description_or_short_description === 1);
+          acc[previousIndex].isbn = acc[previousIndex].isbn
+            && (+has_manufacturer_or_ean_or_upc_or_isbn === 1);
+          acc[previousIndex].price = acc[previousIndex].price && (+has_price_tax_excl === 1);
           acc[previousIndex].l.push(language);
         } else {
           acc.push({
-            cover: has_cover === '1',
-            d: has_description_or_short_description === '1',
-            isbn: has_manufacturer_or_ean_or_upc_or_isbn === '1',
-            price: has_price_tax_excl === '1',
+            cover: (has_cover === 1),
+            d: (has_description_or_short_description === 1),
+            isbn: (has_manufacturer_or_ean_or_upc_or_isbn === 1),
+            price: (has_price_tax_excl === 1),
             id_product,
             id_product_attribute,
             ...vals,
