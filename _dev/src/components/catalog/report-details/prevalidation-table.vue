@@ -245,10 +245,10 @@ export default defineComponent({
           acc[previousIndex].l.push(language);
         } else {
           acc.push({
-            cover: (has_cover === 1),
-            d: (has_description_or_short_description === 1),
-            isbn: (has_manufacturer_or_ean_or_upc_or_isbn === 1),
-            price: (has_price_tax_excl === 1),
+            cover: (+has_cover === 1),
+            d: (+has_description_or_short_description === 1),
+            isbn: (+has_manufacturer_or_ean_or_upc_or_isbn === 1),
+            price: (+has_price_tax_excl === 1),
             id_product,
             id_product_attribute,
             ...vals,
