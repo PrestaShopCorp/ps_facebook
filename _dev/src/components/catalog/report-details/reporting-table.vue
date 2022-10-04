@@ -56,8 +56,8 @@
         </span>
       </b-td>
       <b-td>
-        <span v-if="!!messages.base" class="badge badge-secondary">{{ locale.split('-')[0] }}</span>
-        <span v-if="!!messages.l10n" class="badge badge-secondary">
+        <span v-if="!!messages.base" class="badge badge-primary">{{ locale.split('-')[0] }}</span>
+        <span v-if="!!messages.l10n" class="badge badge-primary">
           {{ $t('syncReport.otherLanguage') }}
         </span>
       </b-td>
@@ -148,8 +148,5 @@ export default defineComponent({
     margin-right: 0.25rem;
     border-radius: 3px;
     text-transform: uppercase;
-  }
-  .badge-secondary {
-    background-color: #6c868e!important;
   }
 </style>

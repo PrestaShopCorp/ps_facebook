@@ -96,7 +96,7 @@
           <span
             v-for="lang in l"
             :key="lang"
-            class="badge badge-secondary"
+            class="badge badge-primary"
           >{{ lang }}</span>
         </b-td>
         <b-td>
@@ -326,8 +326,5 @@ export default defineComponent({
     margin-right: 0.25rem;
     border-radius: 3px;
     text-transform: uppercase;
-  }
-  .badge-secondary {
-    background-color: #6c868e!important;
   }
 </style>
