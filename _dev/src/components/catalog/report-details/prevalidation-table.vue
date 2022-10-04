@@ -327,4 +327,7 @@ export default defineComponent({
     border-radius: 3px;
     text-transform: uppercase;
   }
+  .badge-secondary {
+    background-color: #6c868e!important;
+  }
 </style>
