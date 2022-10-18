@@ -13,7 +13,7 @@ jobs:
 
       - name: PHP syntax checker 7.3
         uses: prestashop/github-action-php-lint/7.3@master
-  
+
       - name: PHP syntax checker 8.1
         uses: prestashop/github-action-php-lint/8.1@master
   php-cs-fixer:
@@ -37,9 +37,9 @@ jobs:
 
       - run: composer install
 
-      - name: Run PHPUnit
-        run: vendor/bin/php-cs-fixer fix --config .php_cs.dist.php
-  
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run
+
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
 
       - name : Run PHPStan
         run: docker run --rm --volumes-from temp-ps -v $PWD:/web/module -e _PS_ROOT_DIR_=/var/www/html --workdir=/web/module phpstan/phpstan:0.12 analyse --configuration=/web/module/tests/phpstan/phpstan.neon --error-format github
-  
+
   phpunit:
     name: PHPUnit
     strategy:

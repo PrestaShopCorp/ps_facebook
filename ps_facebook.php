@@ -62,17 +62,17 @@ class Ps_facebook extends Module
      */
     private $serviceContainer;
 
-    public const MODULE_ADMIN_CONTROLLERS = [
+    const MODULE_ADMIN_CONTROLLERS = [
         'AdminAjaxPsfacebook',
         'AdminPsfacebookModule',
     ];
 
-    public const FRONT_CONTROLLERS = [
+    const FRONT_CONTROLLERS = [
         'FrontAjaxFacebookWebhooks',
         'FrontAjaxFacebookAjax',
     ];
 
-    public const HOOK_LIST = [
+    const HOOK_LIST = [
         'displayHeader',
         'actionCustomerAccountAdd',
         'actionCartSave',
