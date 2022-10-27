@@ -473,7 +473,7 @@ class Ps_facebook extends Module
     {
         $isPrestashop177 = version_compare(_PS_VERSION_, '1.7.7.0', '>=');
 
-        if (true === $isPrestashop177) {
+        if (method_exists($this->context->controller, 'getCheckoutProcess')) {
             return $this->context->controller->getCheckoutProcess()->getSteps();
         }
 
