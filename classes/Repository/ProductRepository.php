@@ -27,6 +27,7 @@ use PrestaShop\Module\PrestashopFacebook\DTO\EventBusProduct;
 use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
 use Product;
+use Validate;
 
 class ProductRepository
 {
@@ -297,7 +298,7 @@ class ProductRepository
 
         $sql->select('ps.id_product, pa.id_product_attribute, pl.name, ps.date_upd');
         $sql->select('
-            IF(CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, "0")) IN ( "' . implode('","', $productsWithErrors) . '"), "disapproved",
+            IF(CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, "0")) IN ( "' . implode('","', array_map('pSQL', $productsWithErrors)) . '"), "disapproved",
             IF(ps.date_upd <= "' . pSQL($syncUpdateDate) . '", "approved", "pending" )
              ) as status
         ');
@@ -307,7 +308,7 @@ class ProductRepository
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product');
 
         $sql->where('pl.id_shop = ' . (int) $shopId);
-        $sql->where('CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, 0)) IN ( "' . implode('","', $productsWithErrors) . '")');
+        $sql->where('CONCAT_WS("-", ps.id_product, IFNULL(pa.id_product_attribute, 0)) IN ( "' . implode('","', array_map('pSQL', $productsWithErrors)) . '")');
 
         // GROUP BY Id product AND ID combination of attributes
         $sql->groupBy('ps.id_product');
@@ -317,7 +318,7 @@ class ProductRepository
             $sql->limit(Config::REPORTS_PER_PAGE, Config::REPORTS_PER_PAGE * ($page - 1));
         }
 
-        if ($sortBy) {
+        if ($sortBy && Validate::isOrderBy($sortBy) && Validate::isOrderWay($sortTo)) {
             $sql->orderBy(pSQL($sortBy) . ' ' . pSQL($sortTo));
         }
         if ($searchById) {
