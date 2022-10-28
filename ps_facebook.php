@@ -128,7 +128,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.18.6';
+        $this->version = '1.18.7';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '860395eb54512ec72d98615805274591';
@@ -473,7 +473,7 @@ class Ps_facebook extends Module
     {
         $isPrestashop177 = version_compare(_PS_VERSION_, '1.7.7.0', '>=');
 
-        if (true === $isPrestashop177) {
+        if (method_exists($this->context->controller, 'getCheckoutProcess')) {
             return $this->context->controller->getCheckoutProcess()->getSteps();
         }
 

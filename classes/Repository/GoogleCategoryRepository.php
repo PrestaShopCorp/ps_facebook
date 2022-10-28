@@ -69,7 +69,7 @@ class GoogleCategoryRepository
                 'google_category_name' => pSQL($googleCategoryName),
                 'google_category_parent_id' => (int) $googleCategoryParentId,
                 'google_category_parent_name' => pSQL($googleCategoryParentName),
-                'is_parent_category' => $isParentCategory,
+                'is_parent_category' => (bool) $isParentCategory,
                 'id_shop' => (int) $shopId,
             ],
             false,
@@ -202,7 +202,7 @@ class GoogleCategoryRepository
         $sql = new DbQuery();
         $sql->select('google_category_id');
         $sql->from('fb_category_match');
-        $sql->where('`id_category` IN ("' . implode('", "', $categoryIds) . '")');
+        $sql->where('`id_category` IN ("' . implode('", "', array_map('intval', $categoryIds)) . '")');
         $sql->where('id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
@@ -224,7 +224,7 @@ class GoogleCategoryRepository
         $sql->select('google_category_parent_id');
         $sql->select('is_parent_category');
         $sql->from('fb_category_match');
-        $sql->where('`id_category` IN ("' . implode('", "', $categoryIds) . '")');
+        $sql->where('`id_category` IN ("' . implode('", "', array_map('intval', $categoryIds)) . '")');
         $sql->where('id_shop = ' . (int) $shopId);
 
         return Db::getInstance()->executeS($sql);
@@ -280,7 +280,7 @@ class GoogleCategoryRepository
         $sql->from('category', 'c');
         $sql->innerJoin('category_shop', 'cs', 'cs.id_category = c.id_category');
         $sql->leftJoin('fb_category_match', 'cm', 'cm.id_category = c.id_category AND cm.id_shop = cs.id_shop');
-        $sql->where("c.id_parent = {$this->homeCategoryId} AND cm.google_category_id IS NULL");
+        $sql->where('c.id_parent = ' . (int) $this->homeCategoryId . ' AND cm.google_category_id IS NULL');
         $sql->where('cs.id_shop = ' . (int) $shopId);
 
         return (bool) Db::getInstance()->executeS($sql);

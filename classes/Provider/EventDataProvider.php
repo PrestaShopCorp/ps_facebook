@@ -504,7 +504,11 @@ class EventDataProvider
     {
         $attributes = [];
         foreach ($attributeIds as $attributeId) {
-            $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
+            if (class_exists('\ProductAttribute')) {
+                $attributes[] = (new \ProductAttribute($attributeId, $idLang))->name;
+            } elseif (class_exists('\AttributeCore')) {
+                $attributes[] = (new \AttributeCore($attributeId, $idLang))->name;
+            }
         }
 
         try {
