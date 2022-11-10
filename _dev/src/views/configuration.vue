@@ -63,9 +63,8 @@
           show
           v-html="md2html($t('configuration.messages.shopInConflictError'))"
         />
-        <ps-accounts
+        <ps-accounts-container
           v-else
-          :context="contextPsAccounts"
           class="m-3"
         />
 
@@ -199,7 +198,6 @@
 
 <script>
 import {defineComponent} from '@vue/composition-api';
-import {PsAccounts} from 'prestashop_accounts_vue_components';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import Spinner from '../components/spinner/spinner.vue';
@@ -208,6 +206,7 @@ import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
+import PsAccountsContainer from '../components/configuration/ps-accounts-container.vue';
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
@@ -244,7 +243,7 @@ export default defineComponent({
     Introduction,
     Messages,
     MultiStoreSelector,
-    PsAccounts,
+    PsAccountsContainer,
     ModuleActionNeeded,
     NoConfig,
     FacebookNotConnected,

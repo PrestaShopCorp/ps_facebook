@@ -11,13 +11,13 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prestashopcorp/segment-vue": "^1.2.11",
+    "@segment/analytics-next": "^1.45.0",
     "@vue/composition-api": "^1.7.0",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "debounce": "^1.2.1",
     "prestakit": "1.1.0",
-    "prestashop_accounts_vue_components": "^3.0.3",
+    "prestashop_accounts_vue_components": "^4.2.2",
     "showdown": "^1.9.1",
     "uuid": "^8.3.2",
     "vue": "^2.7.10",
