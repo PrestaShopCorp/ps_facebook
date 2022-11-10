@@ -20,9 +20,12 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 
+use Exception;
 use Module;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
+use Ps_facebook;
 
 /**
  * Handle Error.
@@ -34,6 +37,9 @@ class ErrorHandler
      */
     protected $client;
 
+    /**
+     * @param Ps_facebook $module
+     */
     public function __construct(Module $module, Env $env)
     {
         $this->client = new ModuleFilteredRavenClient(
@@ -48,9 +54,20 @@ class ErrorHandler
                     'ps_facebook_is_installed' => Module::isInstalled($module->name),
                     'facebook_app_id' => Config::PSX_FACEBOOK_APP_ID,
                 ],
+                'release' => "v{$module->version}",
                 'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE & ~E_USER_NOTICE,
             ]
         );
+
+        try {
+            $psAccountsService = $module->getService(PsAccounts::class)->getPsAccountsService();
+            $this->client->user_context([
+                'id' => $psAccountsService->getShopUuidV4(),
+            ]);
+        } catch (Exception $e) {
+            // Do nothing
+        }
+
         // We use realpath to get errors even if module is behind a symbolic link
         $this->client->setAppPath(realpath(_PS_MODULE_DIR_ . $module->name . '/'));
         // - Do no not add the shop root folder, it will exclude everything even if specified in the app path.
