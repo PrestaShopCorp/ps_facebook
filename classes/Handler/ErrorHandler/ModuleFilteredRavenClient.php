@@ -98,12 +98,10 @@ class ModuleFilteredRavenClient extends Raven_Client
      */
     private function isErrorInApp(array $data)
     {
-        $atLeastOneFileIsInApp = false;
-        foreach ($data['stacktrace']['frames'] as $frame) {
-            $atLeastOneFileIsInApp = $atLeastOneFileIsInApp || ((isset($frame['in_app']) && $frame['in_app']));
-        }
+        $lastFrame = end($data['stacktrace']['frames']);
+        $lastFrameIsInApp = (isset($lastFrame['in_app']) && $lastFrame['in_app']);
 
-        return $atLeastOneFileIsInApp;
+        return $lastFrameIsInApp;
     }
 
     /**
