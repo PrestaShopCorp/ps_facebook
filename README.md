@@ -139,3 +139,10 @@ cp tests/integration/config.json.dist tests/integration/config.json
 # Edit your config.json, then
 vendor/bin/phpunit tests/integration/ -v
 ```
+
+ ### Storybook
+ 
+ Here available storybooks URLs according to existing environments :   
+ [Integration Storybook](https://facebook-storybook-integration.prestashop.com/)  
+ [Preproduction Storybook](https://facebook-storybook-preproduction.prestashop.com/)  
+ [Production Storybook](https://facebook-storybook.prestashop.com/)  
