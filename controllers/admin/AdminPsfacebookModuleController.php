@@ -322,9 +322,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'psVersion' => _PS_VERSION_,
             'moduleVersion' => $this->module->version,
             'psAccountShopId' => $psAccountsData['psAccountShopId'],
-            'psEventBusVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
+            'psCloudSyncVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
                 'ps_eventbus',
-                Config::REQUIRED_PS_EVENTBUS_VERSION
+                Config::REQUIRED_PS_CLOUDSYNC_VERSION
             ),
             'psAccountsVersionCheck' => $this->moduleUpgradePresenter->generateModuleDependencyVersionCheck(
                 'ps_accounts',
