@@ -29,6 +29,8 @@ import 'bootstrap-vue/dist/bootstrap-vue';
 import 'prestakit/dist/css/bootstrap-prestashop-ui-kit.css';
 Vue.use(BootstrapVue, BootstrapVueIcons);
 
+import {messages, locales} from '@/lib/translations';
+
 // PsAccounts default mock
 window.contextPsAccounts = {
   psIs17: true,
@@ -73,8 +75,6 @@ window.psFacebookGenerateOpenPopup = (component) => () => {
   }, 3000);
 };
 
-const messages = require('./translations.json');
-const locales = Object.keys(messages);
 
 // i18n and store
 Vue.use(VueI18n);
