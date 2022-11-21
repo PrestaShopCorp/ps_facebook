@@ -288,8 +288,8 @@
     "title": "Modalità multi-negozio attivata",
     "subtitle": "Devi configurare i tuoi negozi uno per uno per questo servizio, ma sarai in grado di utilizzare lo stesso account.",
     "selectStore": "Seleziona il primo negozio da configurare dall'elenco che segue",
-    "tips": "Una volta configurato il primo negozio, potrai continuare con gli altri, selezionandoli uno per volta tramite il selettore del menu orizzontale.",
+    "tips": "Una volta configurato il primo shop, potrai continuare con gli altri, selezionandoli uno per volta tramite il selettore del menu orizzontale",
     "configure": "Configura",
-    "group": "Gruppo di negozi"
+    "group": "Gruppo di shop"
   }
 }
