@@ -288,7 +288,7 @@
     "title": "Modo multitienda activado",
     "subtitle": "Debes configurar tus tiendas una por una para este servicio pero podrás utilizar la misma cuenta.",
     "selectStore": "Por favor, selecciona la primera tienda a configurar de la lista siguiente",
-    "tips": "Una vez configurada la primera tienda, puedes continuar con las demás seleccionándolas una a una en el selector de tiendas del menú horizontal.",
+    "tips": "Una vez configurada la primera tienda, puedes continuar con las demás seleccionándolas una a una en el selector de tiendas del menú horizontal",
     "configure": "Configuración",
     "group": "Grupo de tiendas"
   }
