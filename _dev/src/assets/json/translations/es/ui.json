@@ -259,10 +259,9 @@
     "button": "Comencemos"
   },
   "help": {
-    "title": "Ayuda para PrestaShop Metrics",
+    "title": "Ayuda para PrestaShop Facebook",
     "allowsYouTo": {
       "title": "Este módulo te permite:",
-      "business": "Gestiona tu negoc&amp;amp;lt;span style=&amp;amp;quot;background-color: rgb(0, 139, 139);&amp;amp;quot;&amp;amp;gt;io&amp;amp;lt;/span&amp;amp;gt;",
       "account": "Administra tu cuenta publicitaria",
       "traffic": "Comprende tu tráfico",
       "inventory": "Crea y gestiona el inventario",
