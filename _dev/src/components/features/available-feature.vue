@@ -64,11 +64,35 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    updateFeatureRoute: {
+      type: String,
+      required: false,
+      default: global.psFacebookUpdateFeatureRoute,
+    },
   },
   methods: {
     onSales(name) {
       this.$segment.track(`Add CTA - ${name}`, {
         module: 'ps_facebook',
+      });
+
+      fetch(this.updateFeatureRoute, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({featureName: this.name, enabled: true}),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText || res.status);
+        }
+        return res.json();
+      }).then((res) => {
+        if (res.success === false) {
+          throw new Error('failed to update feature');
+        } else {
+          this.$emit('onToggleSwitch', this.name, true);
+        }
+      }).catch((error) => {
+        console.error(error);
       });
     },
   },

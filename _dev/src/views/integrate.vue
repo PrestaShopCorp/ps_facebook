@@ -70,6 +70,7 @@
             :name="featureName"
             :key="featureName"
             :manage-route="manageRoute"
+            @onToggleSwitch="onToggleSwitch"
           />
         </feature-list>
       </div>

@@ -60,6 +60,12 @@ class FbeFeatureManager
 
         if ($featureName == 'messenger_chat') {
             unset($featureConfiguration->default_locale);
+
+            // Todo: Add domain
+            // @see https://developers.facebook.com/docs/facebook-business-extension/fbe/reference#FBEMessengerChatConfigData
+            $featureConfiguration->domains = [
+                \Tools::getShopDomainSsl(true),
+            ];
         }
 
         $featureConfiguration->enabled = (bool) $state;
