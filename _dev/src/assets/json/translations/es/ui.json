@@ -16,7 +16,7 @@
       "proPoint1Title": "Gestiona tu negocio",
       "proPoint1Description": "Controla la configuración de tus anuncios y las herramientas de negocio\ndesde un solo lugar.",
       "proPoint2Title": "Analiza tu tráfico",
-      "proPoint2Description": "Utiliza los datos de Facebook Pixel para saber qué acciones realiza la gente en tu sitio web.",
+      "proPoint2Description": "Utiliza los datos del Píxel de Meta para saber qué acciones realiza la gente en tu sitio web.",
       "proPoint3Title": "Impulsa tus ventas",
       "proPoint3Description": "Gestiona tu catálogo de productos y\nlibera el poder de los anuncios.",
       "proPoint4Title": "Crea y optimiza una mejor experiencia de compra",
@@ -56,17 +56,17 @@
         "title": "Conecta tu tienda a Facebook",
         "intro": "Integra tu tienda con Facebook.",
         "connectButton": "Conectar con Facebook",
-        "description": "Con PS Facebook disfrutarás de una experiencia de incorporación y gestión sin fricciones y sin código para los productos empresariales de Facebook.",
-        "details": "- Crear/Seleccionar empresa\n- Crear/Seleccionar página\n- Crear/Seleccionar cuenta publicitaria\n- Crear/Seleccionar instalar píxel\n- Crear/Seleccionar sincronizar catálogo de productos\n- Crear tienda de Facebook Shop e Instagram Shopping\n- Añadir el complemento de Messenger en tu tienda"
+        "description": "Con PrestaShop Facebook disfrutarás de una experiencia de incorporación y gestión sin fricciones y sin código para los productos empresariales de Facebook.",
+        "details": "- Crear/Seleccionar empresa\n- Crear/Seleccionar página\n- Crear/Seleccionar cuenta publicitaria\n- Crear/Seleccionar instalar píxel\n- Crear/Seleccionar sincronizar catálogo de productos\n- Crear tienda Facebook e Instagram Shopping\n- Añadir el complemento de Messenger en tu tienda"
       },
       "connected": {
         "description": "Autorizas a esta cuenta de Facebook a conectarse a tu tienda:",
         "editButton": "Modificar la configuración de mi cuenta",
         "unlinkButton": "Salir",
-        "facebookBusinessManager": "Administrador de empresas de Facebook",
+        "facebookBusinessManager": "Administrador de anuncios de Facebook",
         "facebookBusinessManagerTooltip": "La cuenta de empresa de Facebook te permite gestionar cuentas publicitarias, páginas y la gente que trabaja en ellas en el mismo lugar",
-        "facebookPixel": "El píxel de Facebook",
-        "facebookPixelTooltip": "El píxel de Facebook es un fragmento de código (Javascript) que instalamos automáticamente en las páginas de tu sitio web. Te permite «rastrear» quién visita tu sitio web, controlar las conversiones de tus anuncios de Facebook y crear audiencias «retargeting»",
+        "facebookPixel": "Píxel de Meta",
+        "facebookPixelTooltip": "El Píxel de Meta es un fragmento de código (Javascript) que instalamos automáticamente en las páginas de tu sitio web. Te permite «rastrear» quién visita tu sitio web, controlar las conversiones de tus anuncios de Facebook y crear audiencias «retargeting»",
         "facebookPage": "Página de Facebook",
         "facebookPageTooltip": "Tu página de Facebook representará a tu empresa en tus anuncios",
         "facebookAds": "Facebook Ads",
@@ -80,7 +80,7 @@
         "acknowledging": "Reconocer tus permisos con los servicios de Facebook.",
         "takesTime": "Esto puede tardar unos segundos...",
         "tryAgain": "Parece que los servidores de Facebook tienen dificultades para acceder a tu cuenta. Espera un poco más...",
-        "errored": "No se puede acceder a tu cuenta desde los servidores de Facebook. Intenta acceder a tu cuenta de Facebook una vez más. Si este error persiste, ponte en contacto con el servicio de asistencia.",
+        "errored": "No se puede acceder a tu cuenta desde los servidores de Facebook. Intenta acceder a tu cuenta de Facebook una vez más. Si este error persiste, ponte en contacto con el servicio de ayuda.",
         "understood": "Entendido"
       }
     },
@@ -102,7 +102,7 @@
   },
   "catalogSummary": {
     "categoryMatching": "Mejora tu catálogo",
-    "categoryMatchingIntro": "Para mejorar tu catálogo y ayudar a los clientes a descubrir tus artículos en línea, introduce una categoría de productos de Google (GPC) para tus artículos.",
+    "categoryMatchingIntro": "Para mejorar tu catálogo y ayudar a los clientes a descubrir tus artículos online, introduce una categoría de productos de Google (GPC) para tus artículos.",
     "categoryMatchingNotice": "**Debes** elegir al menos uno de estos tipos de categoría: 1) para usar el pago en el sitio de Facebook y 2) para mejorar tu catálogo con atributos específicos de la categoría. Ambos tipos de categoría son opcionales, pero requeridos condicionalmente.",
     "matchCategoriesButton": "Mapea categorías",
     "productCatalogExport": "Tu catálogo en Facebook Business",
@@ -114,11 +114,11 @@
     "resetExportError": "Se ha producido un error desconocido al intentar restablecer la exportación. Inténtalo más tarde.",
     "preApprovalScanTitle": "Escaneo de productos antes de sincronizar con Facebook",
     "preApprovalScanIntro": "Comprueba qué productos están listos para ser sincronizados y cuáles tienen problemas y no se sincronizarán.",
-    "preApprovalScanRefreshDate": "Última revisión de hoy a las {0}",
+    "preApprovalScanRefreshDate": "Último escaneo de hoy a las {0}",
     "preApprovalScanRefreshInProgress": "El escaneo está en curso...",
     "preApprovalScanReadyToSync": "Listo para sincronizar",
     "preApprovalScanNonSyncable": "No sincronizable",
-    "preApprovalScanRescan": "Reescanear",
+    "preApprovalScanRescan": "Reescáner",
     "preApprovalScanProductsCheckedWhileInProgress": "{0} comprobado",
     "preApprovalScanError": "Algo salió mal al escanear los productos.",
     "catalogExportWarning": "Los productos se exportarán y, luego, se actualizarán cada 24 horas.",
@@ -135,10 +135,10 @@
     "showLess": "Mostrar menos",
     "exportCatalogButtonErrored": "¡Ha fallado! Inténtalo de nuevo",
     "modalDeactivationTitle": "¿Confirmas la desactivación?",
-    "modalDeactivationText": "Estás a punto de desactivar la sincronización de tu catálogo con Facebook para empresas. Los productos no se sincronizarán hasta que se reactive la exportación de catálogos.",
+    "modalDeactivationText": "Estás a punto de desactivar la sincronización de tu catálogo con Facebook Business. Los productos no se sincronizarán hasta que se reactive la exportación del catálogo.",
     "reportingLastSync": "Última sincronización",
     "reportingCatalogCount": "Productos en el catálogo de Facebook",
-    "reportingErrorsCount": "Errores debidos a la exportación de catálogos"
+    "reportingErrorsCount": "Errores debidos a la exportación del catálogo"
   },
   "syncReport": {
     "title": "Estado del producto",
@@ -171,7 +171,7 @@
   },
   "categoryMatching": {
     "title": "Mejora tu catálogo: mapeo de categorías",
-    "intro": "Es importante:\n- Los campos Google Category y Google Subcategory son obligatorios para cada una de sus categorías de PrestaShop\n- La copia de seguridad de tu mapeo de categorías es automática una vez que hayas vinculado tu categoría PrestaShop a una categoría y subcategoría de Google\n- Una vez que hayas asignado tus categorías y subcategorías, puedes hacer clic en «Volver»\n- Ahorra tiempo aplicando el mapeo de tu categoría principal a tus subcategorías, marcando la casilla «Aplicar a las subcategorías»",
+    "intro": "Es importante:\n- Los campos Categoría de Google y Subcategoría de Google son obligatorios para cada una de sus categorías de PrestaShop\n- La copia de seguridad de tu mapeo de categorías es automática una vez que hayas vinculado tu categoría PrestaShop a una categoría y subcategoría de Google\n- Una vez que hayas asignado tus categorías y subcategorías, puedes hacer clic en «Volver»\n- Ahorra tiempo aplicando el mapeo de tu categoría principal a tus subcategorías, marcando la casilla «Aplicar a las subcategorías»",
     "counterSubTitle": "categorías especificadas",
     "edit": "Editar",
     "autocomplete": {
