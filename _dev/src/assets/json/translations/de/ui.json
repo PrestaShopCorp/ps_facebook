@@ -262,11 +262,11 @@
     "title": "Hilfe mit PrestaShop Facebook",
     "allowsYouTo": {
       "title": "Dieses Modul ermöglicht es Ihnen:",
-      "business": "Verwalten Sie Ihr Unternehmen",
       "account": "Verwalten Sie Ihr Werbekonto",
       "traffic": "Verstehen Sie Ihren Verkehr",
       "inventory": "Inventar aufbauen und verwalten",
-      "people": "Mehr Menschen erreichen"
+      "people": "Mehr Menschen erreichen",
+      "business": "Verwalten Sie Ihr Unternehmen"
     },
     "help": {
       "needHelp": "Brauchen Sie Hilfe? Hier finden Sie die Dokumentation zu diesem Modul.",

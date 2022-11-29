@@ -262,11 +262,11 @@
     "title": "Hulp voor Prestashop Metrics",
     "allowsYouTo": {
       "title": "Met deze module kunt u:",
-      "business": "Beheer uw bedrijf",
       "account": "Beheer uw advertentie account",
       "traffic": "Begrijp uw traffic",
       "inventory": "Inventarisatie opbouwen en beheren",
-      "people": "Bereik meer mensen"
+      "people": "Bereik meer mensen",
+      "business": "Manage your business"
     },
     "help": {
       "needHelp": "Hulp nodig? Hier vindt u de documentatie van deze module.",

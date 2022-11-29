@@ -262,11 +262,11 @@
     "title": "Pomoc dla PrestaShop Facebook",
     "allowsYouTo": {
       "title": "Ten moduł pozwala na:",
-      "business": "Zarządzaj swoją firmą",
       "account": "Zarządzaj swoim kontem reklamowym",
       "traffic": "Zrozumieć swój ruch",
       "inventory": "Tworzenie i zarządzanie inwentaryzacją",
-      "people": "Dotrzeć do większej liczby osób"
+      "people": "Dotrzeć do większej liczby osób",
+      "business": "Zarządzaj swoją firmą"
     },
     "help": {
       "needHelp": "Potrzebujesz pomocy? Znajdź tutaj dokumentację dotyczącą tego modułu.",
@@ -280,13 +280,13 @@
     "noFaq": "Brak dostępnych FAQ."
   },
   "productStatuses": {
-    "Approved": "Zatwierdzony",
+    "Approved": "Zatwierdzono",
     "Pending": "W toku",
     "Disapproved": "Niezatwierdzony"
   },
   "multiShopSelector": {
     "title": "Tryb Multi-store aktywny",
-    "subtitle": "Musisz skonfigurować swoje sklepy, jeden po drugim, pod kątem tej usługi, ale będziesz mógł korzystać z tego samego konta.",
+    "subtitle": "Musisz skonfigurować swoje sklepy, jeden po drugim, pod kątem tej usługi, ale będziesz mieć możliwość korzystania z tego samego konta. ",
     "selectStore": "Wybierz z poniższej listy pierwszy sklep do skonfigurowania",
     "tips": "Po zakończeniu pracy nad pierwszym sklepem, możesz skonfigurować pozostałe, wybierając je kolejno z listy sklepów w menu poziomym",
     "configure": "Konfiguruj",
