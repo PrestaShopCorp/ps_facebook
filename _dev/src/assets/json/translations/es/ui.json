@@ -47,7 +47,7 @@
       "EventBusInstallDone": "PrestaShop EventBus se ha instalado con éxito.",
       "EventBusEnableNeededWarning": "PrestaShop EventBus está actualmente desactivado en esta tienda.\n\nLos cambios realizados en tu catálogo de productos no se sincronizarán hasta que se habilite PrestaShop EventBus.",
       "EventBusEnableButton": "Habilitar PrestaShop EventBus",
-      "EventBusEnableDone": "El EventBus de PrestaShop está activado.",
+      "EventBusEnableDone": "PrestaShop EventBus está habilitado.",
       "accountSuspended": "Parece que no disponemos de permisos en tu cuenta de Facebook para poder sincronizar tus productos. Para resolver este problema, repite el proceso de incorporación para darnos los permisos correctamente."
     },
     "facebook": {
