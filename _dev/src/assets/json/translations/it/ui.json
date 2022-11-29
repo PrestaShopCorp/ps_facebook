@@ -28,13 +28,13 @@
       "success": "PrestaShop Facebook è ora attivo!",
       "stepperTitle": "Guida passo passo",
       "stepPsAccount": "Collega il tuo account PrestaShop",
-      "stepPsFacebook": "Collega il tuo negozio a Facebook",
+      "stepPsFacebook": "Collega il tuo shop a Facebook",
       "stepCategoryMatching": "Categorie della mappa",
       "stepCategoryMatchingOptional": "(facoltativo, ma fortemente raccomandato)",
       "stepProductSync": "Esporta il tuo catalogo prodotti",
       "stepAdCampaign": "Genera traffico e/o annunci dinamici",
       "reloadButton": "Ricarica",
-      "shopInConflictError": "Hai già effettuato l'accesso a Facebook con un altro negozio. Al momento, PrestaShop Facebook può essere configurato solo su un solo negozio. Esci dal primo per effettuare la connessione a questo.",
+      "shopInConflictError": "Hai già effettuato l'accesso a Facebook con un altro shop. Al momento, PrestaShop Facebook può essere configurato solo su uno shop. Esci dal primo per connetterti a questo.",
       "unknownOnboardingError": "Si è verificato un errore sconosciuto durante il processo di integrazione. Ricarica e riprova.",
       "AccountsUpgradeNeededWarning": "La versione del modulo PrestaShop Account in esecuzione su questo negozio (v{currentVersion}) è più vecchia di quella minima richiesta (v{requiredVersion}).\n\nPuoi usare PrestaShop Facebook, ma alcune funzionalità (ad esempio la sincronizzazione dei prodotti) non saranno disponibili finché non aggiornerai PrestaShop Account.",
       "AccountsUpgradeButton": "Aggiorna PrestaShop Account",
@@ -53,14 +53,14 @@
     "facebook": {
       "title": "Le tue impostazioni di Facebook",
       "notConnected": {
-        "title": "Collega il tuo negozio a Facebook",
-        "intro": "Integra il tuo negozio con Facebook.",
+        "title": "Collega il tuo shop a Facebook",
+        "intro": "Integra il tuo shop con Facebook.",
         "connectButton": "Collegati a Facebook",
         "description": "Con PrestaShop Facebook, potrai approfittare di un'esperienza di integrazione e di gestione dei prodotti business di Facebook semplice e senza codici.",
-        "details": "- Crea/Seleziona Attività \n- Crea/Seleziona Pagina \n- Crea/Seleziona Account di annunci \n- Crea/Seleziona Installa pixel \n- Crea/Seleziona Sincronizza catalogo prodotti \n- Crea Facebook Shop e Instagram Shopping \n- Aggiungi il plug-in di Messenger nel tuo negozio"
+        "details": "- Crea/Seleziona Attività \n- Crea/Seleziona Pagina \n- Crea/Seleziona Account di annunci \n- Crea/Seleziona Installa pixel \n- Crea/Seleziona Sincronizza catalogo prodotti \n- Crea Facebook Shop e Instagram Shopping \n- Aggiungi il plug-in di Messenger nel tuo shop"
       },
       "connected": {
-        "description": "Stai autorizzando questo account Facebook a collegarsi al tuo negozio:",
+        "description": "Stai autorizzando questo account Facebook a collegarsi al tuo shop:",
         "editButton": "Modifica le impostazioni dell'account",
         "unlinkButton": "Esci",
         "facebookBusinessManager": "Facebook Business Manager",
@@ -70,7 +70,7 @@
         "facebookPage": "Pagina di Facebook",
         "facebookPageTooltip": "La pagina di Facebook rappresenterà la tua attività nelle inserzioni pubblicitarie",
         "facebookAds": "Facebook Ads",
-        "facebookAdsTooltip": "L'account Facebook Ads permette ai commercianti di accedere al loro strumento di gestione degli annunci e di creare, modificare e analizzare le campagne promozionali a pagamento su Facebook",
+        "facebookAdsTooltip": "L'account Facebook Ads permette ai merchant di accedere al loro strumento di gestione degli annunci e di creare, modificare e analizzare le campagne promozionali a pagamento su Facebook",
         "manageFbeButton": "Vai a Facebook Business",
         "unlinkModalHeader": "Confermi di voler procedere alla disinstallazione?",
         "unlinkModalText": "Stai per rimuovere l'estensione di Facebook Business. Sappi che non potrai più accedere alle impostazioni memorizzate di Facebook."
@@ -96,7 +96,7 @@
       "informationCannotBeDisplayedWarning": "Al momento non è possibile visualizzare queste informazioni"
     },
     "glass": {
-      "text": "Non riesci a visualizzare il browser sicuro di Facebook? Permettici di aiutarti a ricaricare la finestra per completare la configurazione. Potrebbe essere necessario attivare le finestre popup del browser per continuare.",
+      "text": "Non riesci a visualizzare il browser sicuro di Facebook? Permettici di aiutarti a ricaricare la finestra per completare la configurazione. Potrebbe essere necessario attivare le finestre pop-up del browser per continuare.",
       "link": "Continua"
     }
   },
@@ -118,7 +118,7 @@
     "preApprovalScanRefreshInProgress": "La scansione è in corso...",
     "preApprovalScanReadyToSync": "Pronto per la sincronizzazione",
     "preApprovalScanNonSyncable": "Non sincronizzabile",
-    "preApprovalScanRescan": "Riesegui la scansione",
+    "preApprovalScanRescan": "Esegui nuovamente la scansione",
     "preApprovalScanProductsCheckedWhileInProgress": "{0} controllato",
     "preApprovalScanError": "Qualcosa è andato storto durante la scansione dei prodotti.",
     "catalogExportWarning": "I prodotti saranno esportati e poi aggiornati ogni 24 ore.",
@@ -151,7 +151,7 @@
     "id": "ID",
     "name": "Nome",
     "language": "Lingua",
-    "languageTooltip": "Si riferisce alla lingua in cui si verifica l'errore.",
+    "languageTooltip": "Si riferisce alla lingua nella quale si verifica l'errore.",
     "image": "Immagine",
     "imageTooltip": "Immagine principale dell'articolo. Le immagini devono essere nei formati JPG, GIF o PNG, avere almeno una risoluzione di 500x500 pixel e una dimensione massima di 8 MB. Guarda le specifiche dell'immagine del prodotto.",
     "description": "Descrizione",
@@ -185,15 +185,15 @@
     "tableMatching": {
       "firstTd": "Categoria sul tuo sito",
       "secondTd": "Categoria di Google",
-      "thirdTd": "Desideri applicare questa modifica alle sottocategorie?",
-      "fourthTd": "Sottocategoria di Google"
+      "thirdTd": "Desideri applicare questa modifica alle sotto categorie?",
+      "fourthTd": "Sotto categoria di Google"
     },
     "editTable": {
       "required": "Obbligatorio",
       "checkboxTxt": "Mostra le categorie non mappate",
       "psCategoryName": "Categoria sul tuo sito",
       "fbCategoryName": "Categoria di Google",
-      "fbSubcategoryName": "Sottocategoria di Google"
+      "fbSubcategoryName": "Sotto categoria di Google"
     },
     "errors": "Si è verificato un errore, aggiorna il modulo."
   },
@@ -236,12 +236,12 @@
       }
     },
     "headings": {
-      "availableFeatures": "Per aumentare le vendite, aggiungi al tuo negozio...",
+      "availableFeatures": "Per aumentare le vendite, aggiungi al tuo shop...",
       "unavailableFeatures": "Funzionalità attualmente non disponibili"
     },
     "success": {
       "featureEnabled": "Hai aggiunto {0}!",
-      "shopLink": "Visualizza il tuo negozio"
+      "shopLink": "Visualizza il tuo shop"
     },
     "warning": {
       "productsNotSynced": "Prima di tutto, devi importare il catalogo prodotti in modo da poter impostare Facebook Shops e Shopping su Instagram e creare campagne promozionali.",
