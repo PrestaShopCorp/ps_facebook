@@ -199,7 +199,7 @@
   },
   "categoryMatched": {
     "title": "Mejora tu catálogo: mapea tus categorías",
-    "description": "Para mejorar tu catálogo y ayudar a los clientes a descubrir tus artículos en línea, introduce una categoría de productos de Google (GPC) para tus artículos.",
+    "description": "Para mejorar tu catálogo y ayudar a los clientes a descubrir tus artículos online, introduce una categoría de productos de Google (GPC) para tus artículos.",
     "btn": "Ver tu mapeo",
     "progressBarTotal": "categorías mapeadas"
   },
@@ -224,7 +224,7 @@
       },
       "page_shop": {
         "name": "Añade una pestaña de tienda en tu página de Facebook",
-        "description": "La tienda de Facebook Page te permite listar los productos que vendes y conectar con más clientes en Facebook.",
+        "description": "La tienda en Facebook te permite listar los productos que vendes y conectar con más clientes en Facebook.",
         "addButton": "Añadir",
         "editButton": "Gestionar"
       },
@@ -244,7 +244,7 @@
       "shopLink": "Ver tu tienda"
     },
     "warning": {
-      "productsNotSynced": "Primero, tienes que importar tu catálogo de productos para poder crear configurar Facebook Shop e Instagram Shopping y también crear campañas publicitarias.",
+      "productsNotSynced": "Primero, tienes que importar tu catálogo de productos para poder configurar la tienda de Facebook e Instagram Shopping y también crear campañas publicitarias.",
       "disableFeatureModalHeader": "¿Confirmas la desactivación?",
       "disableFeatureModalText": "Estás a punto de desactivar esta funcionalidad. Esto puede limitar alguna funcionalidad.",
       "noFeatures": "No se han podido recuperar las funcionalidades de Facebook. Esto puede deberse a la caducidad del token y puede solucionarse reiniciando la incorporación."
