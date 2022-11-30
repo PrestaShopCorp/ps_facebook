@@ -77,6 +77,10 @@ class ConfigurationHandler
             Config::PS_FACEBOOK_SUSPENSION_REASON,
         ];
 
+        foreach (Config::AVAILABLE_FBE_FEATURES as $featureName) {
+            $dataConfigurationKeys[] = Config::FBE_FEATURE_CONFIGURATION . $featureName;
+        }
+
         foreach ($dataConfigurationKeys as $key) {
             $this->configurationAdapter->deleteByName($key);
         }

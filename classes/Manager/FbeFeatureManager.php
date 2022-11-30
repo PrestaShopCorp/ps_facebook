@@ -52,7 +52,7 @@ class FbeFeatureManager
         $featureConfiguration = $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName);
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        if (!$featureConfiguration) {
+        if (!$featureConfiguration && !in_array($featureName, Config::CONFIGURABLE_FBE_FEATURES)) {
             return false;
         }
 
@@ -60,6 +60,11 @@ class FbeFeatureManager
 
         if ($featureName == 'messenger_chat') {
             unset($featureConfiguration->default_locale);
+
+            /* @see https://developers.facebook.com/docs/facebook-business-extension/fbe/reference#FBEMessengerChatConfigData */
+            $featureConfiguration->domains = [
+                \Tools::getShopDomainSsl(true),
+            ];
         }
 
         $featureConfiguration->enabled = (bool) $state;

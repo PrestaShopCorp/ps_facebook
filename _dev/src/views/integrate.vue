@@ -70,6 +70,7 @@
             :name="featureName"
             :key="featureName"
             :manage-route="manageRoute"
+            @onToggleSwitch="onToggleSwitch"
           />
         </feature-list>
       </div>
@@ -163,6 +164,7 @@ export default defineComponent({
       required: false,
       default: () => ({
         default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
+        messenger_chat: `https://business.facebook.com/latest/inbox/settings/chat_plugin?asset_id=${global.contextPsFacebook?.page?.id}`,
         page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
         view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${global.contextPsFacebook?.page?.id}`,
       }),
