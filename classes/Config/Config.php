@@ -26,7 +26,7 @@ class Config
 
     public const COMPLIANT_PS_ACCOUNTS_VERSION = '3.0.0';
     public const REQUIRED_PS_ACCOUNTS_VERSION = '4.0.0';
-    public const REQUIRED_PS_EVENTBUS_VERSION = '1.3.3';
+    public const REQUIRED_PS_CLOUDSYNC_VERSION = '1.9.4';
 
     public const USE_LOCAL_VUE_APP = false;
     public const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';

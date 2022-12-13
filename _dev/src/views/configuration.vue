@@ -54,7 +54,7 @@
         />
         <ModuleActionNeeded
           module-name="EventBus"
-          :module-version-check="psEventBusVersionCheck"
+          :module-version-check="psCloudSyncVersionCheck"
         />
         <b-alert
           v-if="psAccountShopInConflict"
@@ -337,10 +337,10 @@ export default defineComponent({
       required: false,
       default: () => global.psAccountsVersionCheck,
     },
-    psEventBusVersionCheck: {
+    psCloudSyncVersionCheck: {
       type: Object,
       required: false,
-      default: () => global.psEventBusVersionCheck,
+      default: () => global.psCloudSyncVersionCheck || global.psEventBusVersionCheck,
     },
     retrieveTokensRoute: {
       type: String,
