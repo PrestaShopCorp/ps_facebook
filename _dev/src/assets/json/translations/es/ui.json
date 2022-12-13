@@ -63,7 +63,7 @@
         "description": "Autorizas a esta cuenta de Facebook a conectarse a tu tienda:",
         "editButton": "Modificar la configuración de mi cuenta",
         "unlinkButton": "Salir",
-        "facebookBusinessManager": "Administrador de anuncios de Facebook",
+        "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "La cuenta de empresa de Facebook te permite gestionar cuentas publicitarias, páginas y la gente que trabaja en ellas en el mismo lugar",
         "facebookPixel": "Píxel de Meta",
         "facebookPixelTooltip": "El Píxel de Meta es un fragmento de código (Javascript) que instalamos automáticamente en las páginas de tu sitio web. Te permite «rastrear» quién visita tu sitio web, controlar las conversiones de tus anuncios de Facebook y crear audiencias «retargeting»",
