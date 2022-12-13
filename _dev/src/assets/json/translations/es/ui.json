@@ -39,15 +39,15 @@
       "AccountsUpgradeNeededWarning": "La versión del módulo PrestaShop Account que se ejecuta en esta tienda (v{currentVersion}) es anterior a la mínima requerida v{requiredVersion}.\n\nPuedes utilizar PrestaShop Facebook, pero algunas funciones (como la sincronización de productos) no estarán disponibles hasta que actualices PrestaShop Account.",
       "AccountsUpgradeButton": "Actualizar PrestaShop Account",
       "AccountsUpgradeDone": "PrestaShop Account se ha actualizado correctamente.",
-      "EventBusUpgradeNeededWarning": "La versión del módulo PrestaShop EventBus que se ejecuta en esta tienda (v{currentVersion}) es anterior a la mínima requerida v{requiredVersion}.\n\nPuedes utilizar PrestaShop Facebook, pero algunas funciones (como la sincronización de productos) no estarán disponibles hasta que actualices PrestaShop EventBus.",
-      "EventBusUpgradeButton": "Actualizar PrestaShop EventBus",
-      "EventBusUpgradeDone": "PrestaShop EventBus se ha actualizado correctamente.",
-      "EventBusInstallNeededWarning": "PrestaShop EventBus no está instalado en esta tienda.\n\nPuedes utilizar PrestaShop Facebook, pero algunas funciones (como la sincronización de productos) no estarán disponibles hasta que instales PrestaShop EventBus.",
-      "EventBusInstallButton": "Instalar PrestaShop EventBus",
-      "EventBusInstallDone": "PrestaShop EventBus se ha instalado con éxito.",
-      "EventBusEnableNeededWarning": "PrestaShop EventBus está actualmente desactivado en esta tienda.\n\nLos cambios realizados en tu catálogo de productos no se sincronizarán hasta que se habilite PrestaShop EventBus.",
-      "EventBusEnableButton": "Habilitar PrestaShop EventBus",
-      "EventBusEnableDone": "PrestaShop EventBus está habilitado.",
+      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop CloudSync running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop CloudSync.",
+      "EventBusUpgradeButton": "Upgrade PrestaShop CloudSync",
+      "EventBusUpgradeDone": "PrestaShop CloudSync has been successfully upgraded.",
+      "EventBusInstallNeededWarning": "PrestaShop CloudSync in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop CloudSync.",
+      "EventBusInstallButton": "Install PrestaShop CloudSync",
+      "EventBusInstallDone": "PrestaShop CloudSync has been successfully installed.",
+      "EventBusEnableNeededWarning": "PrestaShop CloudSync is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop CloudSync is enabled.",
+      "EventBusEnableButton": "Enable PrestaShop CloudSync",
+      "EventBusEnableDone": "PrestaShop CloudSync is enabled.",
       "accountSuspended": "Parece que no disponemos de permisos en tu cuenta de Facebook para poder sincronizar tus productos. Para resolver este problema, repite el proceso de incorporación para darnos los permisos correctamente."
     },
     "facebook": {
@@ -262,11 +262,11 @@
     "title": "Ayuda para PrestaShop Facebook",
     "allowsYouTo": {
       "title": "Este módulo te permite:",
+      "business": "Gestiona tu negocio",
       "account": "Gestiona tu cuenta publicitaria",
       "traffic": "Analiza tu tráfico",
       "inventory": "Crea y gestiona el inventario",
-      "people": "Llega a más gente",
-      "business": "Gestiona tu negocio"
+      "people": "Llega a más gente"
     },
     "help": {
       "needHelp": "¿Necesitas ayuda? Encuentra aquí la documentación de este módulo.",
