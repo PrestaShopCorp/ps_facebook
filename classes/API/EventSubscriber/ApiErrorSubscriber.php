@@ -61,11 +61,11 @@ class ApiErrorSubscriber implements SubscriberInterface
     {
         $body = $response->getBody();
         // If there is a error object returned by the Facebook API, use their codes
-        if (!empty($body['code']) && !empty($body['error_subcode']) && !empty($body['type'])) {
-            return 'Facebook API errored with ' . $body['type'] . ' (' . $body['code'] . ' / ' . $body['error_subcode'] . ')';
+        if (!empty($body['error']['code']) && !empty($body['error']['error_subcode']) && !empty($body['error']['type'])) {
+            return 'Facebook API errored with ' . $body['error']['type'] . ' (' . $body['error']['code'] . ' / ' . $body['error']['error_subcode'] . ')';
         }
-        if (!empty($body['code']) && !empty($body['type'])) {
-            return 'Facebook API errored with ' . $body['type'] . ' (' . $body['code'] . ')';
+        if (!empty($body['error']['code']) && !empty($body['error']['type'])) {
+            return 'Facebook API errored with ' . $body['error']['type'] . ' (' . $body['error']['code'] . ')';
         }
 
         return 'API errored with HTTP ' . $response->getResponse()->getStatusCode();
