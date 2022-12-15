@@ -38,6 +38,12 @@ new Vue({
       this.contextPsFacebook = context;
       // @ts-ignore
       global.contextPsFacebook = context;
+
+      // @ts-ignore
+      this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
+        psx_ps_facebook_account_connected: (context !== null),
+        psx_ps_pixel_disabled: !(context?.pixel?.isActive),
+      });
     },
     refreshExternalBusinessId(externalBusinessId) {
       this.psFacebookExternalBusinessId = externalBusinessId;

@@ -126,6 +126,11 @@ export default defineComponent({
         this.matchingProgress = res.matchingProgress;
         this.validation = res.validation;
         this.loading = false;
+
+        // @ts-ignore
+        this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
+          psx_ps_product_catalog_exported_click: res.exportOn,
+        });
       }).catch((error) => {
         console.error(error);
         this.loading = false;

@@ -18,7 +18,10 @@
  *-->
 <template>
   <div id="psFacebookApp">
-    <div id="head_tabs" class="ps_gs-sticky-head page-head-tabs">
+    <div
+      id="head_tabs"
+      class="ps_gs-sticky-head page-head-tabs"
+    >
       <Menu :context-ps-facebook="contextPsFacebook">
         <MenuItem
           @click="onProduct"

@@ -239,6 +239,7 @@ export default defineComponent({
           this.dynamicAvailableFeatures = json.fbeFeatures.disabledFeatures;
           this.dynamicUnavailableFeatures = json.fbeFeatures.unavailableFeatures;
           this.loading = false;
+          this.identifyFeatures(json.fbeFeatures.enabledFeatures);
         }).catch((error) => {
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
@@ -310,6 +311,12 @@ export default defineComponent({
         return;
       }
       document.addEventListener(this.visibilityChangeEvent, this.onWindowVisibilityChange, false);
+    },
+    identifyFeatures(enabledFeatures) {
+      // @ts-ignore
+      this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
+        psx_ps_messenger_disabled: !(enabledFeatures?.messenger_chat?.enabled),
+      });
     },
   },
 });
