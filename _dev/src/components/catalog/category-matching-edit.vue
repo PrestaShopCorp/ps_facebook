@@ -157,6 +157,11 @@ export default defineComponent({
         this.loading = false;
       });
     }
+
+    // @ts-ignore
+    this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
+      psx_ps_category_mapping_tool_clicked: true,
+    });
   },
   methods: {
     fetchCategoryMatchingCounters() {
