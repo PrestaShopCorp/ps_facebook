@@ -32,7 +32,10 @@
         </b-th>
       </b-tr>
     </b-thead>
-    <b-tr v-if="rows.length === 0" class="empty-cell">
+    <b-tr
+      v-if="rows.length === 0"
+      class="empty-cell"
+    >
       <b-td colspan="5">
         {{ $t('syncReport.reportingEmpty') }}
       </b-td>
@@ -40,7 +43,8 @@
     <b-tr
       v-for="({
         id_product, id_product_attribute, name, messages
-      }, index) in rows" :key="index"
+      }, index) in rows"
+      :key="index"
     >
       <b-td>{{ id_product }}</b-td>
       <b-td>
@@ -56,22 +60,34 @@
         </span>
       </b-td>
       <b-td>
-        <span v-if="!!messages.base" class="badge badge-primary">{{ locale.split('-')[0] }}</span>
-        <span v-if="!!messages.l10n" class="badge badge-primary">
+        <span
+          v-if="!!messages.base"
+          class="badge badge-primary"
+        >{{ locale.split('-')[0] }}</span>
+        <span
+          v-if="!!messages.l10n"
+          class="badge badge-primary"
+        >
           {{ $t('syncReport.otherLanguage') }}
         </span>
       </b-td>
       <b-td>
         <span v-if="Object.keys(messages).length === 1">{{ Object.values(messages)[0] }}</span>
         <ul v-else>
-          <li v-for="(m, i) in Object.values(messages)" :key="i">
+          <li
+            v-for="(m, i) in Object.values(messages)"
+            :key="i"
+          >
             {{ m }}
           </li>
         </ul>
       </b-td>
     </b-tr>
     <b-tfoot v-if="loading">
-      <b-td class="loader-cell" colspan="8">
+      <b-td
+        class="loader-cell"
+        colspan="8"
+      >
         <div class="spinner" />
       </b-td>
     </b-tfoot>

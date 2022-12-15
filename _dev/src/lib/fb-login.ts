@@ -1,6 +1,6 @@
 import {v4} from 'uuid';
 
-const openPopupGenerator = function (
+const openPopupGenerator = (
   window: any,
   returnTo: string, // example, use window.location.href
   popupDomain: string, // example 'https://lui.ngrok.io'
@@ -16,7 +16,7 @@ const openPopupGenerator = function (
   closeCallback: Function,
   responseCallback: Function,
   errorCallback?: Function,
-) {
+) => {
   let popup: any = null;
   let closingLooper: number | null = null;
 

@@ -68,7 +68,7 @@
       />
 
       <i v-if="tooManyProposals">{{ $t('categoryMatching.autocomplete.tooManyResults') }}</i>
-      <i v-if="fetchError"></i>
+      <i v-if="fetchError" />
     </li>
     <b-dropdown-item
       variant="inverse"

@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <prestashop-accounts/>
+  <prestashop-accounts />
 </template>
 
 <script lang="ts">

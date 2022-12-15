@@ -159,9 +159,9 @@
           <b-col class="counter m-1 p-3">
             <i class="material-icons">sync</i>
             {{ $t( scanProcess.inProgress
-                ? 'catalogSummary.preApprovalScanRefreshInProgress'
-                : 'catalogSummary.preApprovalScanRefreshDate',
-              [''])
+                     ? 'catalogSummary.preApprovalScanRefreshInProgress'
+                     : 'catalogSummary.preApprovalScanRefreshDate',
+                   [''])
             }}
             <br>
             <span
@@ -190,7 +190,7 @@
               v-if="scanProcess.inProgress"
             >
               {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
-                [scanProcess.numberOfProductChecked])
+                    [scanProcess.numberOfProductChecked])
               }}
             </span>
             <span
@@ -233,7 +233,6 @@
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
             </span>
           </b-col>
-
         </b-row>
       </b-container>
     </template>
