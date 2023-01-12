@@ -59,11 +59,17 @@ class PixelHandler
         $this->templateBuffer->init($this->findIdentifierFromContext($this->context));
     }
 
-    public function handleEvent($params)
+    /**
+     * @param array|bool $params
+     * @param string $hookName
+     *
+     * @return string
+     */
+    public function handleEvent($params, $hookName)
     {
         $pixel_id = $this->configurationAdapter->get(Config::PS_PIXEL_ID);
         if (empty($pixel_id)) {
-            return;
+            return '';
         }
         $track = 'track';
 
@@ -96,9 +102,23 @@ class PixelHandler
             $smartyVariables['userInfos'] = $this->getCustomerInformation($userData);
         }
 
-        $this->context->smarty->assign($smartyVariables);
+        $content = '';
 
-        $this->templateBuffer->add($this->module->display($this->module->getfilePath(), 'views/templates/hook/header.tpl'));
+        if ($hookName === 'hookDisplayHeader') {
+            $this->context->smarty->assign($smartyVariables);
+
+            $content .= $this->module->display($this->module->getfilePath(), 'views/templates/hook/header.tpl');
+        }
+
+        $this->context->smarty->assign($smartyVariables);
+        $this->templateBuffer->add($this->module->display($this->module->getfilePath(), 'views/templates/hook/fbTrack.tpl'));
+
+        // Return the existing content in case we have a display hook
+        if (strpos($hookName, 'Display') === 4 && !$this->isCurrentRequestAnAjax()) {
+            $content .= $this->templateBuffer->flush();
+        }
+
+        return $content;
     }
 
     /**
@@ -134,6 +154,30 @@ class PixelHandler
             'bd' => Util::hash(Normalizer::normalize('bd', $customerInformation['birthday'])),
             'st' => Util::hash(Normalizer::normalize('st', $customerInformation['stateIso'])),
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    private function isCurrentRequestAnAjax()
+    {
+        /*
+         * An ajax property is available in controllers
+         * preventing the whole page template to be generated.
+         */
+        if ($this->context->controller->ajax) {
+            return true;
+        }
+
+        /*
+         * In case the ajax property is not properly set, there is
+         * another check available.
+         */
+        if ($this->context->controller->isXmlHttpRequest()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

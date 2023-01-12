@@ -153,16 +153,6 @@ class Ps_facebook extends Module
 
         require_once __DIR__ . '/vendor/autoload.php';
 
-        // Needed during PrestaShop installation, where Link class in not initialized
-        if ($this->context->link !== null) {
-            $this->front_controller = $this->context->link->getModuleLink(
-                $this->name,
-                'FrontAjaxPixel',
-                [],
-                true
-            );
-        }
-
         if ($this->serviceContainer === null) {
             $this->serviceContainer = new ServiceContainer($this->name, $this->getLocalPath());
             $this->templateBuffer = $this->getService(TemplateBuffer::class);
@@ -340,11 +330,15 @@ class Ps_facebook extends Module
 
     public function hookActionCustomerAccountAdd(array $params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayHeader(array $params)
     {
+        $content = '';
         // Call this class in this so the error handler is instanciated early after call to the constructor
         $this->getService(ErrorHandler::class);
 
@@ -353,17 +347,20 @@ class Ps_facebook extends Module
 
         if ($this->context->controller instanceof OrderController) {
             if ($this->isFirstCheckoutStep()) {
-                $eventDispatcher->dispatch('InitiateCheckout', $params);
+                $content .= $eventDispatcher->dispatch('InitiateCheckout', $params);
             }
         }
 
-        return $this->handleHook(__FUNCTION__, $params);
+        return $content . $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     // Handle QuickView (ViewContent)
     public function hookActionAjaxDieProductControllerDisplayAjaxQuickviewAfter($params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionSearch(array $params)
@@ -372,12 +369,18 @@ class Ps_facebook extends Module
             return;
         }
 
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionCartSave(array $params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionObjectCustomerMessageAddAfter(array $params)
@@ -388,17 +391,26 @@ class Ps_facebook extends Module
             return;
         }
 
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayOrderConfirmation(array $params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookActionNewsletterRegistrationAfter(array $params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     public function hookDisplayFooter()
@@ -410,12 +422,17 @@ class Ps_facebook extends Module
             $content .= $this->context->smarty->fetch('module:ps_facebook/views/templates/hook/messenger.tpl');
         }
 
-        return $content . $this->handleHook(__FUNCTION__, []);
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $content . $eventDispatcher->dispatch(__FUNCTION__, []);
     }
 
     public function hookActionFacebookCallPixel($params)
     {
-        return $this->handleHook(__FUNCTION__, $params);
+        /** @var EventDispatcher $eventDispatcher */
+        $eventDispatcher = $this->getService(EventDispatcher::class);
+
+        return $eventDispatcher->dispatch(__FUNCTION__, $params);
     }
 
     /**
@@ -470,48 +487,5 @@ class Ps_facebook extends Module
     private function isPhpVersionCompliant()
     {
         return 70200 <= PHP_VERSION_ID;
-    }
-
-    /**
-     * @param string $hookName
-     *
-     * @return string
-     */
-    private function handleHook($hookName, array $hookParams)
-    {
-        /** @var EventDispatcher $eventDispatcher */
-        $eventDispatcher = $this->getService(EventDispatcher::class);
-        $eventDispatcher->dispatch($hookName, $hookParams);
-
-        // Return the existing content in case we have a display hook
-        if (strpos($hookName, 'Display') === 4 && !$this->isCurrentRequestAnAjax()) {
-            return $this->templateBuffer->flush();
-        }
-
-        return '';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isCurrentRequestAnAjax()
-    {
-        /*
-         * An ajax property is available in controllers
-         * preventing the whole page template to be generated.
-         */
-        if ($this->context->controller->ajax) {
-            return true;
-        }
-
-        /*
-         * In case the ajax property is not properly set, there is
-         * another check available.
-         */
-        if ($this->context->controller->isXmlHttpRequest()) {
-            return true;
-        }
-
-        return false;
     }
 }
