@@ -20,6 +20,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler;
 
+use Context;
 use FacebookAds\Object\ServerSide\Normalizer;
 use FacebookAds\Object\ServerSide\Util;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
@@ -29,7 +30,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 class PixelHandler
 {
     /**
-     * @var \Context
+     * @var Context
      */
     private $context;
 
@@ -50,10 +51,12 @@ class PixelHandler
 
     public function __construct($module, ConfigurationAdapter $configurationAdapter)
     {
-        $this->context = \Context::getContext();
+        $this->context = Context::getContext();
         $this->module = $module;
         $this->templateBuffer = $module->templateBuffer;
         $this->configurationAdapter = $configurationAdapter;
+
+        $this->templateBuffer->init($this->findIdentifierFromContext($this->context));
     }
 
     public function handleEvent($params)
@@ -131,5 +134,20 @@ class PixelHandler
             'bd' => Util::hash(Normalizer::normalize('bd', $customerInformation['birthday'])),
             'st' => Util::hash(Normalizer::normalize('st', $customerInformation['stateIso'])),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    private function findIdentifierFromContext(Context $context)
+    {
+        if (!empty($context->customer->id_guest)) {
+            return 'guest_' . $context->customer->id_guest;
+        }
+        if (!empty($context->cart->id)) {
+            return 'cart_' . $context->cart->id;
+        }
+
+        return '';
     }
 }
