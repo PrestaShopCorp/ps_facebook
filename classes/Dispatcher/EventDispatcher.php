@@ -72,7 +72,7 @@ class EventDispatcher
      * @param string $name
      * @param array $params
      *
-     * @return void
+     * @return string
      */
     public function dispatch($name, array $params)
     {
@@ -80,11 +80,11 @@ class EventDispatcher
         /** @var \Controller|null $controller */
         $controller = $this->context->controller;
         if (!$controller || !in_array($controller->controller_type, ['front', 'modulefront'])) {
-            return;
+            return '';
         }
 
         if (false === (bool) $this->configurationAdapter->get(Config::PS_FACEBOOK_PIXEL_ENABLED)) {
-            return;
+            return '';
         }
 
         $eventData = $this->eventDataProvider->generateEventData($name, $params);
@@ -92,6 +92,7 @@ class EventDispatcher
         if ($eventData) {
             $this->conversionHandler->handleEvent($eventData);
         }
-        $this->pixelHandler->handleEvent($eventData);
+
+        return $this->pixelHandler->handleEvent($eventData, $name);
     }
 }

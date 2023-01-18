@@ -18,14 +18,35 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+declare(strict_types=1);
+
 namespace PrestaShop\Module\PrestashopFacebook\Buffer;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
 class TemplateBuffer
 {
     /**
-     * @var string
+     * @var Session
      */
-    private $data;
+    private $session;
+
+    /**
+     * @param string $userId
+     */
+    public function init($userId)
+    {
+        $this->session = new Session(
+            new MockFileSessionStorage(
+                \_PS_CACHE_DIR_ . '/ps_facebook_sessions',
+                'pixel'
+            )
+        );
+        $this->session->setId($userId);
+        $this->session->start();
+        register_shutdown_function([$this, 'save']);
+    }
 
     /**
      * add data to the buffer
@@ -36,7 +57,7 @@ class TemplateBuffer
      */
     public function add($data)
     {
-        $this->data .= $data;
+        $this->session->getFlashBag()->add('pixel_events', $data);
     }
 
     /**
@@ -46,7 +67,7 @@ class TemplateBuffer
      */
     public function clean()
     {
-        $this->data = '';
+        $this->session->getFlashBag()->get('pixel_events', []);
     }
 
     /**
@@ -56,9 +77,16 @@ class TemplateBuffer
      */
     public function flush()
     {
-        $returnedData = $this->data;
-        $this->clean();
+        $data = '';
+        foreach ($this->session->getFlashBag()->get('pixel_events', []) as $message) {
+            $data .= $message;
+        }
 
-        return !empty($returnedData) ? $returnedData : '';
+        return $data;
+    }
+
+    public function save(): void
+    {
+        $this->session->save();
     }
 }
