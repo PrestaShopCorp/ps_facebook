@@ -64,7 +64,8 @@
               <b-button
                 variant="link"
                 @click="contactUs()"
-                :href="`mailto:` + contactUsLink"
+                target="_blank"
+                :href="contactUsLink"
               >
                 {{ $t("help.help.contactUs") }}
                 <i class="material-icons">arrow_right_alt</i>
