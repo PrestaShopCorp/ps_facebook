@@ -12,7 +12,7 @@
     },
     "require": {
         "php": ">=7.2.5",
-        "vlucas/phpdotenv": "3.4",
+        "vlucas/phpdotenv": "^3.4",
         "prestashop/prestashop-accounts-installer": "^1.0",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
         "prestashop/module-lib-faq": "^2.2",
