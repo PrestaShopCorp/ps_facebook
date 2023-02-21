@@ -1,9 +1,9 @@
 {
   "general": {
     "tabs": {
-      "configuration": "Configure",
-      "catalog": "Product catalog",
-      "help": "Help",
+      "configuration": "Configurare",
+      "catalog": "Catalog produse",
+      "help": "Ajutor",
       "integrate": "Sales channels"
     }
   },
