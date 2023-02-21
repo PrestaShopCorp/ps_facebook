@@ -285,11 +285,11 @@
     "Disapproved": "Disapproved"
   },
   "multiShopSelector": {
-    "title": "Multi-store mode activated",
-    "subtitle": "You must configure your stores one by one for this service but you will be able to use the same account.",
-    "selectStore": "Please select the first store to configure from the list below",
-    "tips": "After you are done with the first shop, you can configure the others by selecting them one by one in the shop selector, in the horizontal menu",
-    "configure": "Configure",
+    "title": "Modul multimagazin activat",
+    "subtitle": "Trebuie să configurezi magazinele unul câte unul pentru acest serviciu, dar vei putea utiliza același cont.",
+    "selectStore": "Te rugăm să selectezi primul magazin de configurat din lista de mai jos",
+    "tips": "După ce ai terminat cu primul magazin, le poți configura pe celelalte, selectându-le unul câte unul din selectorul magazinului, în meniul orizontal",
+    "configure": "Configurare",
     "group": "Shop group"
   }
 }
