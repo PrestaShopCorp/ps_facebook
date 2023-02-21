@@ -60,6 +60,9 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
+        if (!$this->module->isPhpVersionCompliant()) {
+            return;
+        }
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
         $this->moduleUpgradePresenter = $this->module->getService(ModuleUpgradePresenter::class);
@@ -71,6 +74,13 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
     public function initContent()
     {
+        if (!$this->module->isPhpVersionCompliant()) {
+            $this->content = $this->context->smarty->fetch($this->module->getLocalPath() . '/views/templates/admin/guard.tpl');
+            parent::initContent();
+
+            return;
+        }
+
         (new PrestaShop\PsAccountsInstaller\Installer\Installer(Config::REQUIRED_PS_ACCOUNTS_VERSION))->install();
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);

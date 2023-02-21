@@ -18,9 +18,15 @@
  *}
 {include file='./head.tpl'}
 
-<link href="{$pathApp|escape:'htmlall':'UTF-8'}" rel=preload as=script>
-
-<div id="psFacebookApp"></div>
-
-<script src="{$chunkVendor|escape:'htmlall':'UTF-8'}"></script>
-<script src="{$pathApp|escape:'htmlall':'UTF-8'}"></script>
+<div class="bootstrap">
+  <div
+    class="alert alert-danger"
+    role="alert"
+  >
+    <p class="alert-text">
+      {l s='The execution of PrestaShop Social Media has been stopped to prevent your shop to crash.' mod='ps_facebook'}
+      <br>
+      {l s='This module requires PHP 7.2 to work properly. Please upgrade your server configuration.' mod='ps_facebook'}
+    </p>
+  </div>
+</div>
