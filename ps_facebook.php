@@ -190,7 +190,7 @@ class Ps_facebook extends Module
     public function install()
     {
         if (!$this->isPhpVersionCompliant()) {
-            $this->_errors[] = $this->l('This requires PHP 7.2 to work properly. Please upgrade your server configuration.');
+            $this->_errors[] = $this->l('This module requires PHP 7.2 to work properly. Please upgrade your server configuration.');
 
             // We return true during the installation of PrestaShop to not stop the whole process,
             // Otherwise we warn properly the installation failed.
@@ -484,7 +484,7 @@ class Ps_facebook extends Module
         return $checkoutProcessClass->getSteps();
     }
 
-    private function isPhpVersionCompliant()
+    public function isPhpVersionCompliant()
     {
         return 70200 <= PHP_VERSION_ID;
     }
