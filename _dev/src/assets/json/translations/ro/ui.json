@@ -2,7 +2,7 @@
   "general": {
     "tabs": {
       "configuration": "Configurare",
-      "catalog": "Catalog produse",
+      "catalog": "Catalog de produse",
       "help": "Ajutor",
       "integrate": "Sales channels"
     }
@@ -90,14 +90,14 @@
       "createdAt": "Created",
       "lastActive": "Last active",
       "activated": "Activated",
-      "disabled": "Disabled",
+      "disabled": "Dezactivat",
       "moduleDisabled": "Module is disabled",
       "viewStats": "View stats",
       "informationCannotBeDisplayedWarning": "This information cannot be displayed at the moment"
     },
     "glass": {
       "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
-      "link": "Continue"
+      "link": "Continuare"
     }
   },
   "catalogSummary": {
@@ -123,13 +123,13 @@
     "preApprovalScanError": "Something went wrong while scanning products.",
     "catalogExportWarning": "Products will be exported then updated every 24h.",
     "catalogExportDisclaimer": "By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.",
-    "catalogExportPaused": "Paused",
+    "catalogExportPaused": "În pauză",
     "catalogExportActivated": "Activated",
     "catalogExportNotice": "It can take up to 24h for your PrestaShop product information to sync to Facebook.",
     "catalogExportOperationPaused": "The operation is paused.",
     "viewButton": "View",
     "viewCatalogButton": "View catalog",
-    "backButton": "Back",
+    "backButton": "Înapoi",
     "detailsButton": "See details",
     "showMore": "Show more",
     "showLess": "Show less",
@@ -150,11 +150,11 @@
     },
     "id": "ID",
     "name": "Name",
-    "language": "Language",
+    "language": "Limbă",
     "languageTooltip": "This is the language in which the error is found.",
     "image": "Image",
     "imageTooltip": "The main image of your item. Images must be in JPG, GIF or PNG format, at least 500 x 500 pixels and up to 8 MB. See product image specifications.",
-    "description": "Description",
+    "description": "Descriere",
     "descriptionTooltip": "A short, relevant description of the item. Include specific and unique product features like material or color. Use plain text (not HTML) and don't enter text in all capital letters or include any links. See product description specifications. Character limit: 5,000.",
     "barcode": "Barcode/Brand",
     "barcodeTooltip": "The brand name, unique manufacturer part number (MPN) or Global Trade Item Number (GTIN) of the item. You only need to enter one of these, not all of them. For GTIN, enter the item's UPC, EAN, JAN or ISBN. Character limit: 100.",
@@ -176,7 +176,7 @@
     "edit": "Edit",
     "autocomplete": {
       "typeToFilter": "Type to filter",
-      "select": "Select",
+      "select": "Selectează",
       "noResult": "No result for your search",
       "tooManyResults": "Too many results, please complete your search.",
       "fetchError": "An error occurred during search process.",
@@ -261,7 +261,7 @@
   "help": {
     "title": "Help for PrestaShop Facebook",
     "allowsYouTo": {
-      "title": "This module allows you to:",
+      "title": "Acest modul îți permite să:",
       "business": "Manage your business",
       "account": "Manage your ad account",
       "traffic": "Understand your traffic",
@@ -269,26 +269,26 @@
       "people": "Reach more people"
     },
     "help": {
-      "needHelp": "Need help? Find here the documentation of this module.",
-      "downloadPdf": "Download PDF",
+      "needHelp": "Ai nevoie de ajutor? Găsești aici documentația acestui modul.",
+      "downloadPdf": "Descarcă PDF",
       "couldntFindAnyAnswer": "Couldn't find any answer to your question?",
-      "contactUs": "Contact us"
+      "contactUs": "Contactează-ne"
     }
   },
   "faq": {
-    "title": "FAQ",
-    "noFaq": "No FAQ available."
+    "title": "ÎNTREBĂRI FRECVENTE",
+    "noFaq": "Nu există întrebări frecvente disponibile."
   },
   "productStatuses": {
-    "Approved": "Approved",
-    "Pending": "Pending",
-    "Disapproved": "Disapproved"
+    "Approved": "Aprobat",
+    "Pending": "În așteptare",
+    "Disapproved": "Respins"
   },
   "multiShopSelector": {
-    "title": "Modul multimagazin activat",
-    "subtitle": "Trebuie să configurezi magazinele unul câte unul pentru acest serviciu, dar vei putea utiliza același cont.",
-    "selectStore": "Te rugăm să selectezi primul magazin de configurat din lista de mai jos",
-    "tips": "După ce ai terminat cu primul magazin, le poți configura pe celelalte, selectându-le unul câte unul din selectorul magazinului, în meniul orizontal",
+    "title": "Mod multi-magazin activat",
+    "subtitle": "Trebuie să-ți configurezi magazinele unul câte unul pentru acest serviciu, dar vei putea utiliza același cont.",
+    "selectStore": "Selectează primul magazin de configurat din lista de mai jos",
+    "tips": "După ce ai terminat cu primul magazin, le poți configura pe celelalte selectându-le unul câte unul în selectorul magazinelor, în meniul orizontal",
     "configure": "Configurare",
     "group": "Grup de magazine"
   }
