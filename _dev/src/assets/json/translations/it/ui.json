@@ -1,8 +1,8 @@
 {
   "general": {
     "tabs": {
-      "configuration": "Configura",
-      "catalog": "Catalogo dei prodotti",
+      "configuration": "Configurazione",
+      "catalog": "Catalogo prodotti",
       "help": "Assistenza",
       "integrate": "Canali di vendita"
     }
