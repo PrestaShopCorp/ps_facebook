@@ -20,6 +20,7 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler;
 
+use Context;
 use Exception;
 use Module;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
@@ -40,7 +41,7 @@ class ErrorHandler
     /**
      * @param Ps_facebook $module
      */
-    public function __construct(Module $module, Env $env)
+    public function __construct(Module $module, Env $env, Context $context = null)
     {
         $this->client = new ModuleFilteredRavenClient(
             $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
@@ -56,6 +57,7 @@ class ErrorHandler
                 ],
                 'release' => "v{$module->version}",
                 'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE & ~E_USER_NOTICE,
+                'sample_rate' => $this->isContextInFrontOffice($context) ? 0.2 : 1,
             ]
         );
 
@@ -117,5 +119,27 @@ class ErrorHandler
      */
     private function __clone()
     {
+    }
+
+    /**
+     * @return bool
+     */
+    private function isContextInFrontOffice(Context $context = null)
+    {
+        /*
+        Some shops have trouble to refresh the cache of the service container.
+        To avoid issues on production after an upgrade, context has been made optional.
+        ToDo: Remove the nullable later.
+        */
+        if (!$context) {
+            return false;
+        }
+        /** @var \Controller|null $controller */
+        $controller = $context->controller;
+        if (!$controller) {
+            return false;
+        }
+
+        return in_array($controller->controller_type, ['front', 'modulefront']);
     }
 }

@@ -40,6 +40,7 @@ services:
     arguments:
       - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Config\Env'
+      - '@ps_facebook.context'
 
   PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler:
     class: PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler
