@@ -224,6 +224,7 @@ const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, pop
     popupUrl,
     '/index.html',
     component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
+    component.contextPsAccounts.currentShop.frontUrl,
     component.dynamicExternalBusinessId,
     component.psAccountsToken,
     component.currency,
