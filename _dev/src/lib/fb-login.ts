@@ -6,6 +6,7 @@ const openPopupGenerator = (
   popupDomain: string, // example 'https://lui.ngrok.io'
   popupPath: string, // example '/index.html'
   shopName: string,
+  shopDomain: string,
   ebid: string,
   jwt: string,
   currency: string, // example 'EUR'
@@ -57,7 +58,8 @@ const openPopupGenerator = (
   return () => {
     const query = `?ebid=${ebid}&jwt=${jwt}&cur=${currency}&tz=${encodeURIComponent(timezone)
     }&locale=${encodeURIComponent(locale)}&corr=${encodeURIComponent(correlationId || v4())
-    }&name=${encodeURIComponent(shopName)}&return_to=${encodeURIComponent(returnTo)}`;
+    }&name=${encodeURIComponent(shopName)}&return_to=${encodeURIComponent(returnTo)}
+    &shop_domain=${encodeURIComponent(shopDomain)}`;
     const p = 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=564,height=671';
     popup = window.open(popupDomain + popupPath + query, 'ps_facebook_fbe_onboarding', p);
     popup.focus();
