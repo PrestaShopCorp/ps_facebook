@@ -36,7 +36,7 @@ class AccessTokenProvider
     private $configurationAdapter;
 
     /**
-     * @var Controller
+     * @var Controller|null
      */
     private $controller;
 

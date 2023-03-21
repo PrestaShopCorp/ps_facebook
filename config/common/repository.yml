@@ -8,8 +8,6 @@ services:
   PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ProductRepository
     public: true
-    arguments:
-      - '@ps_facebook.language'
 
   PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository:
     class: PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository

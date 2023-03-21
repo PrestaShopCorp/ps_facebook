@@ -357,6 +357,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         if (!empty($access_token)) {
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $access_token);
         }
+
+        return false;
     }
 
     private function getPsAccountsData()

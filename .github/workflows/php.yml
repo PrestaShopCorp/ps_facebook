@@ -48,7 +48,7 @@ jobs:
         prestashop_version: [
           "8.0.0",
           "1.7.7.0",
-          "1.7.0.3",
+          "1.7.3.0",
         ]
     steps:
       - name: Download PrestaShop code source

@@ -32,16 +32,6 @@ use Validate;
 class ProductRepository
 {
     /**
-     * @var \Language
-     */
-    private $language;
-
-    public function __construct(\Language $language)
-    {
-        $this->language = $language;
-    }
-
-    /**
      * Copy of prestashop Product::getIdProductAttributeByIdAttributes function
      * because old PS versions are missing this function
      *
