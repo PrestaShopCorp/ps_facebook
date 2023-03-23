@@ -11,7 +11,6 @@ services:
     class: PrestaShop\Module\PrestashopFacebook\Database\Uninstaller
     public: true
     arguments:
-      - '@ps_facebook'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\TabRepository'
       - '@PrestaShop\Module\Ps_facebook\Tracker\Segment'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
