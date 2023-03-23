@@ -46,6 +46,11 @@ class FacebookClient
     /**
      * @var string
      */
+    private $systemToken;
+
+    /**
+     * @var string
+     */
     private $sdkVersion;
 
     /**
@@ -76,6 +81,7 @@ class FacebookClient
         ResponseListener $responseListener
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
+        $this->systemToken = $accessTokenProvider->getSystemAccessToken();
         $this->sdkVersion = Config::API_VERSION;
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
@@ -391,7 +397,7 @@ class FacebookClient
     {
         $body = array_merge(
             [
-                'access_token' => $this->accessToken,
+                'access_token' => $this->systemToken,
             ],
             $body
         );
