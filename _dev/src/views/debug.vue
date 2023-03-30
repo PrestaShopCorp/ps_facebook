@@ -56,6 +56,12 @@
           </p>
           <pre>{{ contextPsFacebook }}</pre>
         </div>
+        <div class="col-6">
+          <p class="h3">
+            Shop ID
+          </p>
+          <pre>{{ shopId }}</pre>
+        </div>
       </b-card-body>
     </b-card>
 
@@ -176,6 +182,9 @@ export default defineComponent({
     },
     contextPsFacebook() {
       return JSON.stringify(this.$root.contextPsFacebook, null, 2) || 'Loading...';
+    },
+    shopId() {
+      return window.psAccountShopId;
     },
   },
   methods: {
