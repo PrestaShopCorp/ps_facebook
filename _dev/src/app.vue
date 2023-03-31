@@ -50,6 +50,12 @@
     </div>
 
     <router-view :context-ps-facebook="contextPsFacebook" />
+    <div
+      v-if="shopId"
+      id="helper-shopid"
+    >
+      {{ shopId }}
+    </div>
   </div>
 </template>
 
@@ -89,6 +95,11 @@ export default {
   },
   destroyed() {
     window.removeEventListener('resize', this.resizeEventHandler);
+  },
+  computed: {
+    shopId() {
+      return window.psAccountShopId;
+    },
   },
   methods: {
     resizeEventHandler() {
@@ -256,5 +267,17 @@ export default {
   .ps_gs-sticky-head .nav-link {
     padding: rem(7) 1.25rem;
   }
+  #helper-shopid {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1500;
+    color: white;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    transition: all .3s;
+  }
 
+  #helper-shopid:hover {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1);
+  }
 </style>
