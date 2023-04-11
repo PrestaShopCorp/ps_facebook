@@ -31,6 +31,15 @@ Vue.use(BootstrapVue, BootstrapVueIcons);
 
 import {messages, locales} from '@/lib/translations';
 
+// import css style
+// theme.css v1.7.5 from the Back-Office
+// all font import are commented to avoid 404
+import '!style-loader!css-loader?url=false!./assets/theme.css';
+// shame.css is a set of rules to better mimic the BO behavior in a shameful way
+import '!style-loader!css-loader?url=false!./assets/shame.css';
+// app.scss all the styles for the module
+import '!style-loader!css-loader!sass-loader!../src/assets/scss/app.scss';
+
 // PsAccounts default mock
 window.contextPsAccounts = {
   psIs17: true,
@@ -79,8 +88,26 @@ window.psFacebookGenerateOpenPopup = (component) => () => {
 // i18n and store
 Vue.use(VueI18n);
 addDecorator(() => ({
-  template: '<story/>',
-  i18n: new VueI18n({
+  template: `
+    <div
+      class='nobootstrap'
+      style='
+        background: none;
+        padding: 0;
+        min-width: 0;
+    '>
+      <div id='psFacebookApp'>
+        <div class='ps_gs-sticky-head'>
+          <b-toaster
+            name='b-toaster-top-right'
+            class='ps_gs-toaster-top-right'
+          />
+        </div>
+        <story />
+      </div>
+    </div>
+    `,
+    i18n: new VueI18n({
     locale: 'en',
     locales: locales,
     messages: messages,
