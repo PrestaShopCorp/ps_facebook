@@ -40,15 +40,6 @@ FacebookOnboardingDone.args = {
   adCampaignStarted: false,
 };
 
-export const CategoryMatchingDone:any = Template.bind({});
-CategoryMatchingDone.args = {
-  psAccountsOnboarded: true,
-  psFacebookOnboarded: true,
-  categoryMatchingStarted: true,
-  productSyncStarted: false,
-  adCampaignStarted: false,
-};
-
 export const AllDone:any = Template.bind({});
 AllDone.args = {
   psAccountsOnboarded: true,

@@ -790,14 +790,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-  .ps-facebook-configuration-tab {
-    div.card:not(.survey) {
-      border: none !important;
-      border-radius: 3px;
-    }
-  }
-</style>
 <style lang="scss" scoped>
   .glass {
     position: fixed;

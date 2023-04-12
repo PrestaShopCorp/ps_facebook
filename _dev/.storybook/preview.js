@@ -16,13 +16,14 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-import { configure, addDecorator } from '@storybook/vue';
+import { addDecorator } from '@storybook/vue';
 import Vue from 'vue';
 import { select } from '@storybook/addon-knobs'
 
 // import vue plugins
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
+import VueSegment from '@/lib/segment';
 
 // import css style
 import 'bootstrap-vue/dist/bootstrap-vue';
@@ -30,6 +31,7 @@ import 'prestakit/dist/css/bootstrap-prestashop-ui-kit.css';
 Vue.use(BootstrapVue, BootstrapVueIcons);
 
 import {messages, locales} from '@/lib/translations';
+import store from '@/store';
 
 // import css style
 // theme.css v1.7.5 from the Back-Office
@@ -39,39 +41,6 @@ import '!style-loader!css-loader?url=false!./assets/theme.css';
 import '!style-loader!css-loader?url=false!./assets/shame.css';
 // app.scss all the styles for the module
 import '!style-loader!css-loader!sass-loader!../src/assets/scss/app.scss';
-
-// PsAccounts default mock
-window.contextPsAccounts = {
-  psIs17: true,
-  currentShop: {
-    id: 1,
-    name: 'PrestaShop',
-    url: 'http://my-domain.com/admin-dev/blabla',
-    domain: 'my-domain.com',
-    domainSsl: 'my-secure-domain.com',
-  },
-  shops: [
-    {
-      id: 1,
-      name: 'Default',
-      shops: [
-        {
-          id: 1,
-          name: 'PrestaShop',
-          url: 'http://my-domain.com/admin-dev/blabla',
-          domain: 'my-domain.com',
-          domainSsl: 'my-secure-domain.com',
-        }
-      ],
-    }
-  ],
-  user: { email: 'him@prestashop.com', emailIsValidated: true, isSuperAdmin: true },
-  onboardingLink: 'https://perdu.com',
-  superAdminEmail: 'nobody@prestashop.com',
-  ssoResendVerificationEmail: null,
-  manageAccountLink: 'https://perdu.com',
-  isShopContext: true,
-};
 
 // Mock to simulate a FB onboarding popup
 window.psFacebookGenerateOpenPopup = (component) => () => {
@@ -87,6 +56,11 @@ window.psFacebookGenerateOpenPopup = (component) => () => {
 
 // i18n and store
 Vue.use(VueI18n);
+Vue.use(VueSegment, {
+  id: 'dummyID',
+  debug: true,
+  pageCategory: '[GGL]',
+});
 addDecorator(() => ({
   template: `
     <div
@@ -127,10 +101,8 @@ addDecorator(() => ({
       immediate: true,
     },
   },
-  store: require('../src/store'),
+  store,
 }));
-
-configure(require.context('../src', true, /\.stories\.(ts|js|md)x?$/), module);
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -6,9 +6,6 @@ import context from './modules/context';
 Vue.use(Vuex);
 
 export default new Vuex.Store<StoreState>({
-  state: {},
-  mutations: {},
-  actions: {},
   modules: {
     context,
   },

@@ -28,7 +28,7 @@
 
     <b-alert
       variant="danger"
-      :show="!!alertSettings.error"
+      v-if="!!(alertSettings && alertSettings.error)"
     >
       <p class="clearfix">
         {{ $t(alertSettings.error) }}
@@ -98,7 +98,7 @@ export default defineComponent({
     alertSettings: {
       type: Object,
       required: false,
-      default: null,
+      default: () => ({}),
     },
   },
   methods: {
