@@ -1,23 +1,6 @@
 import { cloneDeep } from "lodash";
 
-interface PrestaShopAccountsContext {
-  user: {
-    email: string|null,
-    emailIsValidated: boolean,
-    isSuperAdmin: boolean,
-  },
-  currentShop: {
-      id: string;
-      name: string;
-      domain: string;
-      domainSsl: string;
-      url: string;
-  },
-  isShopContext: boolean,
-  shops: object[],
-}
-
-export const contextPsAccountsNotConnected: PrestaShopAccountsContext = {
+export const contextPsAccountsNotConnected: Context = {
   currentContext: {
     type: 1,
     id: 1,
@@ -49,6 +32,8 @@ export const contextPsAccountsNotConnected: PrestaShopAccountsContext = {
     domain: "placeholder.ngrok.io",
     domainSsl: "placeholder.ngrok.io",
     physicalUri: "/",
+    publicKey:
+      "-----BEGIN RSA PUBLIC KEY-----\r\nMIGJAoGBAL...1W2J5LLDnF/vdnLkqdMMfSmR+34OmDAgMBAAE=\r\n-----END RSA PUBLIC KEY-----",
     employeeId: 1,
     user: {
       email: null,
@@ -74,7 +59,7 @@ export const contextPsAccountsNotConnected: PrestaShopAccountsContext = {
           domainSsl: "placeholder.ngrok.io",
           physicalUri: "/",
           publicKey:
-            "-----BEGIN RSA PUBLIC KEY-----\r\nMIGJAoGBALbXq5oLm/GzCcPb6LSUjgoOue/NHf+XJckP3vlplocTnSW15yKWEAQ0\r\nJPOFHWOhEW9dHxrdv2XUw1vyHhIK3KwJMQnbdzOV0Y0oDPnjIsm3TNhkvHIhq2F2\r\nlPgCW1T1LvLUc+JD2PEMw21W2J5LLDnF/vdnLkqdMMfSmR+34OmDAgMBAAE=\r\n-----END RSA PUBLIC KEY-----",
+            "-----BEGIN RSA PUBLIC KEY-----\r\nMIGJAoGBAL...1W2J5LLDnF/vdnLkqdMMfSmR+34OmDAgMBAAE=\r\n-----END RSA PUBLIC KEY-----",
           url: "https://placeholder.ngrok.io/admin-dev/index.php?controller=AdminModules&configure=psxmarketingwithgoogle&setShopContext=s-1&token=ba2e131a1d891745a4e5389b890fc105",
           isLinkedV4: false,
           user: {
@@ -111,12 +96,107 @@ contextPsAccountsConnected.user = {
   emailIsValidated: false,
   isSuperAdmin: true,
 };
+// @ts-ignore
 contextPsAccountsConnected.currentShop.uuid = 'fbbfgbkmmobgnjmeoLkSpQIdtULl1';
+// @ts-ignore
 contextPsAccountsConnected.currentShop.user = contextPsAccountsConnected.user;
+// @ts-ignore
 contextPsAccountsConnected.shops[0].shops[0] = contextPsAccountsConnected.currentShop;
 
 export const contextPsAccountsConnectedAndValidated = cloneDeep(contextPsAccountsConnected);
+// @ts-ignore
 contextPsAccountsConnectedAndValidated.currentShop.user.emailIsValidated = true;
 
 
 export default contextPsAccountsConnectedAndValidated;
+
+/**
+ * The folowing interfaces have been extracted from https://github.com/PrestaShopCorp/prestashop_accounts_vue_components/blob/796bb1bab2e1ea059b54bedd3f442e674467d098/src/types/context.ts
+ */
+
+export enum ShopContext {
+  Shop = 1,
+  Group = 2,
+  All = 4,
+}
+
+export interface BackendUser {
+  email?: string | null;
+  employeeId?: number;
+  isSuperAdmin: boolean;
+}
+
+export type Context = {
+  accountsUiUrl?: string | null;
+  adminAjaxLink?: string | null;
+  backendUser?: Partial<BackendUser>;
+  currentContext?: Partial<CurrentContext>;
+  currentShop?: Shop | null;
+  dependencies?: Record<
+    string,
+    {
+      isInstalled?: boolean;
+      isEnabled?: boolean;
+      installLink?: string;
+      enableLink?: string;
+    }
+  >;
+  isOnboardedV4?: boolean;
+  isShopContext?: boolean;
+  manageAccountLink?: string | null;
+  onboardingLink?: string | null;
+  psAccountsEnableLink?: string | null;
+  psAccountsInstallLink?: string | null;
+  psAccountsIsEnabled?: boolean;
+  psAccountsIsInstalled?: boolean;
+  psAccountsIsUptodate?: boolean;
+  psAccountsUpdateLink?: string | null;
+  psAccountsVersion?: string;
+  psIs17: boolean;
+  psxName?: string;
+  shops: ShopGroup[];
+  ssoResendVerificationEmail?: string | null;
+  superAdminEmail?: string | null;
+  user?: Partial<User> | null;
+  errors?: string[];
+};
+
+export interface CurrentContext {
+  id?: number | null;
+  type: ShopContext;
+}
+
+export interface Shop {
+  domain: string | null;
+  domainSsl: string | null;
+  employeeId?: number | null; // string ?
+  frontUrl?: string | null;
+  id: string;
+  isLinkedV4?: boolean; // ?
+  moduleName?: string;
+  multishop?: boolean;
+  name: string;
+  physicalUri?: string | boolean | null;
+  psVersion?: string;
+  publicKey: string;
+  url: string;
+  user?: Partial<User>;
+  uuid?: string | null;
+  virtualUri?: string | boolean | null;
+}
+
+export interface ShopGroup {
+  id: string;
+  moduleName?: string;
+  multishop?: boolean;
+  name: string;
+  psVersion?: string;
+  shops: Shop[];
+}
+
+export interface User {
+  email?: string | null;
+  emailIsValidated?: boolean;
+  isSuperAdmin: boolean;
+  uuid?: string | null;
+}
