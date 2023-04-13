@@ -283,22 +283,8 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
   .spinner {
-    color: #fff;
-    background-color: #fff;
     width: 1.4rem!important;
     height: 1.4rem!important;
-    border-radius: 2.5rem;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
   }
 
   .saved {

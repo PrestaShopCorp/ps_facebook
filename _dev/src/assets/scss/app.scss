@@ -10,13 +10,20 @@
   @import "~prestakit/scss/variables";
   @import "abstracts/variables";
 
+  // Bootstrap
   @import "./vendors/bootstrap";
   @import "./vendors/bootstrap-vue";
+
+  // Mixins
+  @import "~prestakit/scss/mixins/fonts";
+  @import "~prestakit/scss/mixins/forms";
 
   // Base
   @import './base/typography';
 
   // Components
+  @import "~prestakit/scss/spinners";
+  @import "~prestakit/scss/forms";
   @import './components/categorymatchingdropdown';
 
   // Pages

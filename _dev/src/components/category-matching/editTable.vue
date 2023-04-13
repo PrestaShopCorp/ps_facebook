@@ -62,7 +62,7 @@
     </b-table-simple>
     <b-tfoot v-if="loading">
       <div
-        id="spinner"
+        class="spinner"
       />
     </b-tfoot>
   </div>
@@ -355,23 +355,9 @@ export default defineComponent({
     }
   }
 
-  #spinner {
-    color: #fff;
-    background-color: #fff;
+  .spinner {
     width: 1.3rem !important;
     height: 1.3rem !important;
-    border-radius: 2.5rem;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
     position: absolute;
     left: calc(50% - 0.6rem);
   }
