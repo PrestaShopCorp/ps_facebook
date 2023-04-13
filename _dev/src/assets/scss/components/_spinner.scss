@@ -1,0 +1,18 @@
+.spinner {
+  color: #fff;
+  background-color: #fff!important;
+  width: 1.4rem!important;
+  height: 1.4rem!important;
+  border-radius: 2.5rem!important;
+  border-right-color: $primary!important;
+  border-bottom-color: $primary;
+  border-width: .1875rem!important;
+  border-style: solid!important;
+  font-size: 0!important;
+  outline: none!important;
+  display: inline-block!important;
+  border-left-color: #bbcdd2!important;
+  border-top-color: #bbcdd2!important;
+  -webkit-animation: rotating 2s linear infinite!important;
+  animation: rotating 2s linear infinite!important;
+}
