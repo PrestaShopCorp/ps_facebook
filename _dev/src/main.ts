@@ -6,6 +6,7 @@ import router from './router';
 import store from './store';
 import App from './app.vue';
 import i18n from './lib/i18n';
+import './assets/scss/app.scss';
 
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = ['prestashop-accounts'];

@@ -13,6 +13,7 @@ const Template = (args: any, { argTypes }: any) => ({
   components: { Messages },
   template: `<messages ${props} ${events} />`,
 });
+
 export const AllShown:any = Template.bind({});
 AllShown.args = {
   showOnboardSucceeded: true,
@@ -20,6 +21,8 @@ AllShown.args = {
   categoryMatchingStarted: true,
   productSyncStarted: false,
   adCampaignStarted: false,
+  alertSettings: {},
 };
+
 export const NothingShown:any = Template.bind({});
 NothingShown.args = {};

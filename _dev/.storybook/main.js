@@ -28,16 +28,8 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-knobs",
   ],
-  webpackFinal: async (config) => {
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../'),
-    });
-    config.resolve.alias = {
-      ...config.resolve.alias, 
-      '@': path.resolve(__dirname, '../src/'),
-    };
-    return config;
-  },
+  "presets": [
+    "@storybook/preset-scss"
+  ],
+  staticDirs: ['./assets'],
 }
