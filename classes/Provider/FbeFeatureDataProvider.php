@@ -26,6 +26,7 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 
 class FbeFeatureDataProvider
 {
+    const RETURN_STATUS_FROM_DATABASE_INSTEAD_OF_API = true;
     /**
      * @var FacebookClient
      */
@@ -49,6 +50,8 @@ class FbeFeatureDataProvider
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $features = $this->facebookClient->getFbeFeatures($externalBusinessId);
         $unavailableFeatures = [];
+        $disabledFeatures = [];
+        $enabledFeatures = [];
 
         $productsSynced = $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_ON);
 
@@ -57,18 +60,21 @@ class FbeFeatureDataProvider
         }, ARRAY_FILTER_USE_KEY);
 
         foreach ($features as $featureName => $feature) {
-            if ($feature['enabled'] || $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) !== false) {
+            if ($feature['enabled']) {
                 $this->configurationAdapter->updateValue(Config::FBE_FEATURE_CONFIGURATION . $featureName, json_encode($feature));
             }
+
+            $featureDetailsInDatabase = $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName);
+
+            if ($featureDetailsInDatabase !== false) {
+                // @phpstan-ignore-next-line
+                $enabledFeatures[$featureName] = self::RETURN_STATUS_FROM_DATABASE_INSTEAD_OF_API
+                    ? json_decode($featureDetailsInDatabase, true)
+                    : $feature;
+            } else {
+                $disabledFeatures[$featureName] = $feature;
+            }
         }
-
-        $enabledFeatures = array_filter($features, function ($featureName) {
-            return $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) !== false;
-        }, ARRAY_FILTER_USE_KEY);
-
-        $disabledFeatures = array_filter($features, function ($featureName) {
-            return $this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . $featureName) === false;
-        }, ARRAY_FILTER_USE_KEY);
 
         if (!$productsSynced) {
             $unavailableFeatures = array_filter($features, function ($key) use ($enabledFeatures) {
