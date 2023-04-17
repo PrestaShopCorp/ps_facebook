@@ -31,9 +31,9 @@
       <div>
         <img
           class="mb-3"
-          src="@/assets/logo-wordmark.png"
-          height="56"
-          alt="PS Facebook logo"
+          src="@/assets/logo-wordmark.svg"
+          width="420"
+          alt="PrestaShop Social logo"
         >
       </div>
       <h2>{{ $t('configuration.introduction.subTitle') }}</h2>

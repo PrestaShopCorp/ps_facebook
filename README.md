@@ -1,4 +1,4 @@
-![PrestaShop Facebook logo](views/img/logo-wordmark.png)
+![PrestaShop Facebook logo](views/img/logo-wordmark.svg)
 
 # PrestaShop Facebook (ps_facebook)
 

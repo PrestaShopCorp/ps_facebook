@@ -98,7 +98,7 @@
               src="@/assets/facebook_white_logo.svg"
               width="56"
               height="56"
-              alt="PS Facebook logo"
+              alt="PrestaShop Social logo"
             >
             <p>{{ $t('configuration.glass.text') }}</p>
             <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
