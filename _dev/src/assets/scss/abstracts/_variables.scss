@@ -8,8 +8,17 @@ $grey_median: #B6B7B4;
 $grey-disabled: #dadada;
 $red-light: #F77B72;
 
-$blue: #174EEF;
+$blue-050: #E8EDFD;
+$blue-100: #D1DCFC;
+$blue-300: #A2B8F9;
+$blue-500: #174EEF;
+$blue-700: #2942CC;
+
+$blue: $blue-500;
 $black: #000000;
+$green: #207F4B;
+$red: #BA151A;
+$yellow: #FFA000;
 
 $purple-050: #E9E6F8;
 $purple-100: #C7C0EE;
@@ -29,10 +38,11 @@ $light-blue-900: #A7BED1;
 $off-white: #FBFEFF;
 
 $purple: $purple-500;
-$green: #21834D;
 $primary: $black;
 $info: $purple;
 $success: $green;
+$danger: $red;
+$warning: $yellow;
 $primary-lighten: $light-blue-050;
 
 
@@ -48,6 +58,12 @@ $theme-colors-hover: (
 $theme-colors-active: (
   "primary": $primary-active,
 );
+$alerts-second-colors: (
+  "success": $green,
+  "info": $blue-700,
+  "warning": $yellow,
+  "danger": $red,
+);
 
 // Colors background
 $bg-grey_disabled: #F6F6F6;
@@ -61,5 +77,6 @@ $overlay-popin: rgba($black, 0.65);
 // Inputs
 $custom-control-indicator-focus-border-color: $purple-200;
 
-// Border
-$border-width:                1px !default;
+// Fonts
+$font-family-sans-serif: "IBM Plex Sans","Open Sans",Helvetica,Arial,sans-serif;
+$headings-font-family: $font-family-sans-serif;
