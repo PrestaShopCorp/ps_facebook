@@ -777,21 +777,7 @@ export default defineComponent({
     font-weight: 700;
   }
   .spinner {
-    color: #fff;
-    background-color: inherit !important;
     width: 2rem !important;
     height: 2rem !important;
-    border-radius: 4rem !important;
-    border-right-color: #25b9d7;
-    border-bottom-color: #25b9d7;
-    border-width: .1875rem;
-    border-style: solid;
-    font-size: 0;
-    outline: none;
-    display: inline-block;
-    border-left-color: #bbcdd2;
-    border-top-color: #bbcdd2;
-    -webkit-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
   }
 </style>

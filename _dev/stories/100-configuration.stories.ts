@@ -2,7 +2,7 @@ import Configuration from "../src/views/configuration.vue";
 import {contextPsAccountsNotConnected, contextPsAccountsConnected, contextPsAccountsConnectedAndValidated} from "../.storybook/mock/ps-accounts";
 
 export default {
-  title: "Configuration/Whole tab",
+  title: "Configuration/Configuration page",
   component: Configuration,
 };
 
@@ -67,8 +67,8 @@ NoPsAccountOnboarded.args = {
   psCloudSyncVersionCheck,
 };
 
-export const HalfConnected: any = Template.bind({});
-HalfConnected.args = {
+export const NotConnected: any = Template.bind({});
+NotConnected.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
   },

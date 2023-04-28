@@ -1,18 +1,18 @@
 # Build package
-FROM node:12-alpine as package
+FROM node:14-alpine as package
 
 WORKDIR /app
 
 ADD package.json package.json
 
-RUN yarn --only=prod
+RUN npm install
 
 ## Build vuejs
 FROM package as builder
 
 WORKDIR /app
 ADD . .
-RUN yarn run build-storybook
+RUN npm run build-storybook
 
 
 ### Build clean docker image with only needed files

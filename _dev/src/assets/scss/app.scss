@@ -1,24 +1,77 @@
-#psFacebookApp {
-  @import '~bootstrap-vue/dist/bootstrap-vue';
-  @import '~prestakit/dist/css/bootstrap-prestashop-ui-kit';
+@import "base/nobootstrap";
 
+#psFacebookApp {
+
+  @import "~bootstrap/scss/functions";
+  @import "~prestakit/scss/functions";
+  
+  // Custom PS
+  @import "abstracts/variables";
+  @import "~prestakit/scss/variables";
+  @import "abstracts/variables";
+
+  // Bootstrap
+  @import "./vendors/bootstrap";
+  @import "./vendors/bootstrap-vue";
+
+  // Mixins
+  @import "~prestakit/scss/mixins/fonts";
+  @import "~prestakit/scss/imports"; // need fonts first
+  @import "~prestakit/scss/mixins/close-button";
+  @import "~prestakit/scss/mixins/shadows";
+  @import "~prestakit/scss/mixins/buttons";
+  @import "~prestakit/scss/mixins/forms";
+
+  // Components
+  @import "~prestakit/scss/type";
+  @import "~prestakit/scss/alerts";
+  // @import "~prestakit/scss/help-box";
+  // @import "~prestakit/scss/popover";
+  @import "~prestakit/scss/badges";
+  @import "~prestakit/scss/buttons";
+  @import "~prestakit/scss/button-group";
+  // @import "~prestakit/scss/breadcrumb";
+  @import "~prestakit/scss/toolbar";
+  @import "~prestakit/scss/cards";
+  @import "~prestakit/scss/custom-forms";
+  @import "~prestakit/scss/dropdown";
+  @import "~prestakit/scss/forms";
+  @import "~prestakit/scss/input-group";
+  @import "~prestakit/scss/list-group";
+  @import "~prestakit/scss/modal";
+  @import "~prestakit/scss/navs";
+  @import "~prestakit/scss/pagination";
+  @import "~prestakit/scss/ps-tagger";
+  @import "~prestakit/scss/ps-tags";
+  @import "~prestakit/scss/ps-switch";
+  @import "~prestakit/scss/ps-sortable-columns";
+  @import "~prestakit/scss/ps-dropdown";
+  @import "~prestakit/scss/ps-number";
+  @import "~prestakit/scss/tables";
+  @import "~prestakit/scss/spinners";
+
+  // Base
+  @import './base/typography';
+
+  // Components
+  @import './components/button';
+  @import './components/categorymatchingdropdown';
+  @import './components/nav';
+
+  // Pages
   @import './pages/configuration';
 }
+
 #psFacebookApp {
   margin: 0px;
-  font-family: Open Sans,Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  font-size: .875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #363a41;
-  text-align: left;
+
+  .card-header, .card-header .card-header-title {
+    font-weight: 600;
+    line-height: 24px;
+    line-height: 1.5rem;
+  }
 }
-#psFacebookApp .card-header, .card-header .card-header-title {
-  font-weight: 600;
-  line-height: 24px;
-  line-height: 1.5rem;
-}
+
 #psFacebookApp .card-header .main-header #header-search-container .input-group:before,
 .card-header .material-icons, .card-header .ps-tree-items .tree-name button:before,
 .main-header #header-search-container .card-header .input-group:before,
@@ -30,65 +83,7 @@
 #psFacebookApp .form-group.has-warning:after {
   right: 10px;
 }
-:root {
-  // has to be a css custom propertie to be modified via JS
-  // because the height differs with PS versions
-  --header-height: 100px;
-  --header-height-full: 136px;
-}
 
-.nobootstrap {
-  background-color: unset !important;
-  padding: 100px 10px 100px; // fallback for IE11
-  padding: var(--header-height) 10px 100px;
-  min-width: unset !important;
-}
-.nobootstrap .form-group>div {
-  float: unset;
-}
-.nobootstrap fieldset {
-  background-color: unset;
-  border: unset;
-  color: unset;
-  margin: unset;
-  padding: unset;
-}
-.nobootstrap label {
-  color: unset;
-  float: unset;
-  font-weight: unset;
-  padding: unset;
-  text-align: unset;
-  text-shadow: unset;
-  width: unset;
-}
-.nobootstrap .table tr th {
-  background-color: unset;
-  color: unset;
-  font-size: unset;
-}
-.nobootstrap .table.table-hover tbody tr:hover {
-    color: #fff;
-}
-.nobootstrap .table.table-hover tbody tr:hover a {
-    color: #fff !important;
-}
-.nobootstrap .table tr td {
-    border-bottom: unset;
-    color: unset;
-}
-.nobootstrap .table {
-  background-color: unset;
-  border: unset;
-  border-radius: unset;
-  padding: unset;
-}
-.page-sidebar.mobile #content.nobootstrap {
-  margin-left: unset;
-}
-.page-sidebar-closed:not(.mobile) #content.nobootstrap {
-  padding-left: 50px;
-}
 .material-icons.js-mobile-menu {
   display: none !important
 }
