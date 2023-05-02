@@ -128,7 +128,9 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big font-weight-700 text-danger mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
+            <span class="big font-weight-700 text-danger mt-2 ml-md-4">
+              {{ reporting.errored || '--' }}
+            </span>
           </b-col>
         </b-row>
       </b-container>

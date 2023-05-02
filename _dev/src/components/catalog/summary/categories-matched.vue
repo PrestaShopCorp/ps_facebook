@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div>
+  <div class="category-matched">
     <div class="illustration float-left mr-3 d-none d-md-block">
       <img
         :src="illustration"
@@ -68,14 +68,11 @@ export default defineComponent({
   components: {
     BLink,
   },
-  mixins: [],
   props: {
     matchingProgress: {
       type: Object,
       required: true,
     },
-  },
-  computed: {
   },
   data() {
     return {
@@ -83,41 +80,5 @@ export default defineComponent({
       progressBarData: this.matchingProgress,
     };
   },
-  methods: {
-  },
-  watch: {
-  },
 });
 </script>
-
-<style lang="scss" scoped>
-  .title {
-    font-weight: 600;
-  }
-  .view-button {
-    font-weight: 700;
-    position: absolute;
-    bottom: 0.8rem;
-    right: 1rem;
-  }
-  .text-category-mapping {
-    width: 35%;
-  }
-
-  .text-progress-bar-status {
-    color: #70b580;
-    font-weight: 600;
-    width: 400px;
-    text-align: center;
-    font-size: 16px;
-  }
-
-  .psfb-progress-bar {
-    margin-bottom: 5px;
-    height: 20px;
-    margin-top: 5px;
-    background-color: #D4E9D9!important;
-    border-radius: 20px;
-    width: 400px;
-  }
-</style>
