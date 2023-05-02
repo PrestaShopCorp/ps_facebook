@@ -14,6 +14,7 @@ export default defineComponent({
   .spinner {
     width: 8rem !important;
     height: 8rem !important;
+    border-radius: 4rem !important;
     position: relative;
     left: calc(50% - 4rem);
     top: 6rem;
