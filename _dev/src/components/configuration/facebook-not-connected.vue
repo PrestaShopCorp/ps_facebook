@@ -28,10 +28,12 @@
           {{ $t('configuration.facebook.notConnected.title') }}
         </h3>
       </template>
-      <b-card-body>
+      <b-card-body
+        class="pl-3 pt-3 pr-3"
+      >
         {{ $t('configuration.facebook.notConnected.intro') }}
       </b-card-body>
-      <b-card-body class="pt-0">
+      <b-card-body class="pt-0 pl-3 pb-3 pr-3">
         <b-button
           :variant="canConnect ? 'primary' : 'outline-primary disabled'"
           class="float-right ml-4 btn-with-spinner"

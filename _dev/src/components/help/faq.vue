@@ -22,7 +22,9 @@
       <i class="material-icons">help</i>{{ $t("help.title") }}
     </template>
 
-    <b-card-body>
+    <b-card-body
+      class="p-3"
+    >
       <div class="row">
         <div class="left-block col-md-6">
           <div class="module-desc d-flex mb-4">

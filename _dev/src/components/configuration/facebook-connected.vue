@@ -55,7 +55,7 @@
     <!-- Large screen -->
     <b-card-body
       v-if="!folded"
-      class="description d-none d-sm-flex"
+      class="description d-none d-sm-flex pl-3 pt-3 pr-3"
     >
       <img
         class="mr-3"
@@ -100,7 +100,7 @@
     <!-- Small screen -->
     <b-card-body
       v-if="!folded"
-      class="description d-block d-sm-none"
+      class="description d-block d-sm-none pl-3 pt-3 pr-3"
     >
       <img
         class="mr-3 mb-3"

@@ -38,7 +38,9 @@
         Module status
       </template>
 
-      <b-card-body class="row">
+      <b-card-body
+        class="row p-3"
+      >
         <div class="col-6">
           <p class="h3">
             External Business ID
@@ -73,7 +75,9 @@
         Conversion API data management
       </template>
 
-      <b-card-body>
+      <b-card-body
+        class="p-3"
+      >
         <!-- System Access Token -->
         <b-form @submit.stop.prevent>
           <b-form-group>

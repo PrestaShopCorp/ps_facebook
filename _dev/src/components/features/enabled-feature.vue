@@ -1,7 +1,9 @@
 <template>
   <li :class="switchActivated ? null : 'disabled'">
     <b-card no-body>
-      <b-card-body>
+      <b-card-body
+        class="p-3"
+      >
         <div class="feature-header d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <span class="h1">
