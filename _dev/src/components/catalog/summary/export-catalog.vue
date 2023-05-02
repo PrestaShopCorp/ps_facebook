@@ -88,7 +88,7 @@
       >
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">sync</i>
+            <i class="material-icons text-info">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
             <span
               v-if="reporting.hasSynced"
@@ -119,7 +119,7 @@
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">error_outline</i>
+            <i class="material-icons text-danger">error_outline</i>
             {{ $t('catalogSummary.reportingErrorsCount') }}
             <br>
             <b-link
@@ -128,7 +128,7 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big red-number mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
+            <span class="big font-weight-700 text-danger mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
           </b-col>
         </b-row>
       </b-container>
@@ -154,7 +154,7 @@
       <b-container fluid>
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">sync</i>
+            <i class="material-icons text-info">sync</i>
             {{ $t( scanProcess.inProgress
                      ? 'catalogSummary.preApprovalScanRefreshInProgress'
                      : 'catalogSummary.preApprovalScanRefreshDate',
@@ -206,7 +206,7 @@
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
             <span class="big mt-2 ml-md-4">
-              <span class="green-number">
+              <span class="font-weight-700 text-success">
                 {{ prevalidation.syncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
@@ -214,7 +214,7 @@
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">error_outline</i>
+            <i class="material-icons text-danger">error_outline</i>
             {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
             <br>
             <b-link
@@ -224,7 +224,7 @@
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
             <span class="big mt-2 ml-md-4">
-              <span class="red-number">
+              <span class="font-weight-700 text-danger">
                 {{ prevalidation.notSyncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
@@ -711,12 +711,6 @@ export default defineComponent({
       font-size: 1.85rem;
       color: #6C868E;
     }
-    &:first-of-type > i {
-      color: #24B9D7;
-    }
-    &:last-of-type > i {
-      color: #C05C67;
-    }
 
     & > span.big {
       display: block;
@@ -733,14 +727,7 @@ export default defineComponent({
       margin-top: 0.9rem;
     }
   }
-  .green-number {
-    font-weight: 700;
-    color: #70B580;
-  }
-  .red-number {
-    font-weight: 700;
-    color: #C05C67;
-  }
+
   .see-details {
     font-size: small;
     font-style: italic;
