@@ -55,7 +55,7 @@
     <!-- Large screen -->
     <b-card-body
       v-if="!folded"
-      class="description d-none d-sm-flex"
+      class="description d-none d-sm-flex pl-3 pt-3 pr-3"
     >
       <img
         class="mr-3"
@@ -84,13 +84,13 @@
         <template #button-content>
           {{ $t('configuration.facebook.connected.editButton') }}
         </template>
-        <b-dropdown-item @click="openManageFbe">
+        <b-dropdown-item
+          @click="openManageFbe"
+        >
           {{ $t('configuration.facebook.connected.manageFbeButton') }}
-          <i class="material-icons">open_in_new</i>
         </b-dropdown-item>
         <b-dropdown-item
-          data-toggle="modal"
-          data-target="#ps_facebook_modal_unlink"
+          @click="$emit('onFbeUnlinkRequest')"
         >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
@@ -100,7 +100,7 @@
     <!-- Small screen -->
     <b-card-body
       v-if="!folded"
-      class="description d-block d-sm-none"
+      class="description d-block d-sm-none pl-3 pt-3 pr-3"
     >
       <img
         class="mr-3 mb-3"
@@ -120,8 +120,7 @@
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
         <b-dropdown-item
-          data-toggle="modal"
-          data-target="#ps_facebook_modal_unlink"
+          @click="$emit('onFbeUnlinkRequest')"
         >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>

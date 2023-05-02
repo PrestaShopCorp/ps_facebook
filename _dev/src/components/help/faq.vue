@@ -22,7 +22,9 @@
       <i class="material-icons">help</i>{{ $t("help.title") }}
     </template>
 
-    <b-card-body>
+    <b-card-body
+      class="p-3"
+    >
       <div class="row">
         <div class="left-block col-md-6">
           <div class="module-desc d-flex mb-4">
@@ -61,15 +63,14 @@
           <div class="contact mt-4">
             <div>{{ $t("help.help.couldntFindAnyAnswer") }}</div>
             <div class="mt-2">
-              <b-button
+              <b-link
                 variant="link"
-                @click="contactUs()"
                 target="_blank"
                 :href="contactUsLink"
+                @click="contactUs()"
               >
                 {{ $t("help.help.contactUs") }}
-                <i class="material-icons">arrow_right_alt</i>
-              </b-button>
+              </b-link>
             </div>
           </div>
         </div>
@@ -88,7 +89,7 @@
           </div>
           <template v-else-if="faq && faq.categories">
             <div
-              class="my-3"
+              class="my-3 faq"
               v-for="(categorie, index) in faq.categories"
               :key="index"
               :only-one-active="true"
@@ -103,14 +104,14 @@
                 class="my-3 question"
               >
                 <details
-                  class="details"
+                  class="faq__details"
                   @click="onQuestionClick(index + '_' + i)"
                 >
-                  <summary>
+                  <summary class="faq__summary">
                     <i class="material-icons">keyboard_arrow_right</i>
                     {{ item.question }}
                   </summary>
-                  <p class="answer">
+                  <p class="faq__answer">
                     {{ item.answer }}
                   </p>
                 </details>
@@ -175,28 +176,5 @@ export default defineComponent({
 .doc {
   padding: 20px;
   background-color: #f7f7f7;
-}
-.answer {
-  margin: 0px 15px 10px 15px;
-  padding: 15px;
-  background-color: #f7f7f7;
-}
-.details > summary {
-  list-style: none;
-}
-.details > summary::-webkit-details-marker {
-  display: none;
-}
-.details .material-icons {
-  transition: transform .15s;
-}
-.details[open] .material-icons {
-  transform: rotate(90deg)
-}
-.details summary:focus {
-  box-shadow: 0 0 0 1px #25b9d7;
-  border-radius: 4px;
-  outline: none;
-  position: relative;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <li :class="switchActivated ? null : 'disabled'">
     <b-card no-body>
-      <b-card-body>
+      <b-card-body
+        class="p-3"
+      >
         <div class="feature-header d-flex">
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <span class="h1">
@@ -28,8 +30,6 @@
                 isLoading || frozenSwitch ? 'disabled' : null
               ]"
               @click="switchClick()"
-              data-toggle="modal"
-              :data-target="switchActivated && !frozenSwitch ? `#modal_${name}` : null"
             >
               <input
                 class="switch-input-lg"
@@ -54,66 +54,32 @@
             >
               {{ $t(`integrate.features.${name}.checkMessages`) }}
             </b-button>
-            <a
-              class="align-self-center"
+            <b-button
+              variant="outline-secondary"
+              class="ml-4 align-self-center"
               @click="onManageClick(name)"
               :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
-              <b-button
-                variant="outline-secondary"
-                class="ml-4 align-self-center"
-              >
-                {{ $t(`integrate.features.${name}.editButton`) }}
-              </b-button>
-            </a>
+              {{ $t(`integrate.features.${name}.editButton`) }}
+            </b-button>
           </div>
         </div>
       </b-card-body>
     </b-card>
-    <div
+    <ps-modal
       :id="`modal_${name}`"
-      class="modal"
+      :ref="`modal_${name}`"
+      :title="$t('integrate.warning.disableFeatureModalHeader')"
+      @ok="updateFeatureState"
+      @cancel="isLoading = false"
+      ok-only
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content tw-rounded-none">
-          <div class="modal-header">
-            <slot name="header">
-              <div class="tw-flex tw-items-center">
-                <h5 class="modal-title tw-pl-3">
-                  {{ $t('integrate.warning.disableFeatureModalHeader') }}
-                </h5>
-              </div>
-            </slot>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              @click="isLoading = false"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ $t('integrate.warning.disableFeatureModalText') }}
-          </div>
-          <div class="modal-footer">
-            <b-button
-              variant="primary"
-              target="_blank"
-              data-dismiss="modal"
-              @click="updateFeatureState"
-            >
-              {{ $t('integrate.buttons.modalConfirm') }}
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </div>
+      {{ $t('integrate.warning.disableFeatureModalText') }}
+      <template slot="modal-ok">
+        {{ $t('integrate.buttons.modalConfirm') }}
+      </template>
+    </ps-modal>
   </li>
 </template>
 
@@ -125,6 +91,7 @@ import {
   BButton,
   BTooltip,
 } from 'bootstrap-vue';
+import PsModal from '@/components/commons/ps-modal';
 import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
@@ -134,6 +101,7 @@ export default defineComponent({
     BCardBody,
     BButton,
     BTooltip,
+    PsModal,
     Tooltip,
   },
   mixins: [],
@@ -199,6 +167,9 @@ export default defineComponent({
         if (!this.switchActivated) {
           this.updateFeatureState();
         } else {
+          this.$bvModal.show(
+            this.$refs[`modal_${this.name}`].$refs.modal.id,
+          );
           this.$segment.track('Sales Channels - Disable modal displayed', {
             module: 'ps_facebook',
           });

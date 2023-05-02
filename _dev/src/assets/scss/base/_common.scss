@@ -1,0 +1,102 @@
+a[target="_blank"]:not(.external_link-no_icon) {
+
+  &:not(.btn) {
+    text-decoration: underline;
+
+    &::after {
+      content: "\e895"; // "launch" icon
+      font-family: 'Material Icons';
+      -webkit-font-feature-settings: 'liga';
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.18em;
+      text-decoration: none;
+    }
+  }
+}
+
+a.without-hover {
+  &:hover, &:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.badge {
+  font-size: rem(12);
+}
+
+.badge-prescan {
+  width: calc(2.5ch + 1rem);
+}
+
+.badge-muted {
+  background-color: $grey_light;
+  color: $grey_muted;
+}
+
+.vs__dropdown-toggle {
+  cursor: pointer!important;
+}
+
+.table-borderless {
+  border: none;
+}
+
+.ps_gs-required::before {
+  content: '*';
+  margin-right: 0.5ch;
+  color: $danger;
+}
+
+.ps_gs-cursor-disabled {
+  cursor: not-allowed;
+}
+
+.ps_gs-fz-14[class^="material-icons"] {
+  width: rem(14);
+}
+
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
+}
+
+.ps_gs-mw-200 {
+  max-width: 200px;
+}
+.ps_gs-mw-90 {
+  max-width: 90px;
+}
+
+.ps_gs-mw-760 {
+  max-width: 760px;
+}
+
+.min-input-custom {
+  max-width: 50px;
+}
+
+.w-90 {
+  width: 90%!important;
+}
+
+.circle {
+  border-radius: 50%;
+  min-width: 30px;
+  min-width: 30px;
+  line-height: 30px;
+  font-size: 17px;
+  text-align: center;
+  box-sizing: inherit!important;
+}
+
+.two-panel-max-width {
+  max-width: 1240px;
+}
+
+.step-done-icons {
+  font-size: 30px!important;
+  font-weight: 900!important;
+}
+

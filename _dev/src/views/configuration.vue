@@ -83,6 +83,7 @@
           :is-module-enabled="isModuleEnabled"
           @onEditClick="onEditClick"
           @onPixelActivation="onPixelActivation"
+          @onFbeUnlinkRequest="onFbeUnlinkRequest"
           @onUninstallClick="onUninstallClick"
           class="m-3"
         />
@@ -101,7 +102,14 @@
               alt="PrestaShop Social logo"
             >
             <p>{{ $t('configuration.glass.text') }}</p>
-            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+            <b-button
+              class="ps_gs-glass__button mt-3"
+              variant="outline-secondary"
+              size="sm"
+              @click="forceFocus"
+            >
+              {{ $t('configuration.glass.link') }}
+            </b-button>
           </div>
           <div
             class="closeCross p-1 m-4"
@@ -151,48 +159,18 @@
     </div>
 
     <!-- Confirmation modal for FBE uninstallation -->
-    <div
+    <ps-modal
       id="ps_facebook_modal_unlink"
-      class="modal"
+      ref="ps_facebook_modal_unlink"
+      :title="$t('configuration.facebook.connected.unlinkModalHeader')"
+      @ok="onUninstallClick"
+      ok-only
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content tw-rounded-none">
-          <div class="modal-header">
-            <slot name="header">
-              <div class="tw-flex tw-items-center">
-                <h5 class="modal-title tw-pl-3">
-                  {{ $t('configuration.facebook.connected.unlinkModalHeader') }}
-                </h5>
-              </div>
-            </slot>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ $t('configuration.facebook.connected.unlinkModalText') }}
-          </div>
-          <div class="modal-footer">
-            <b-button
-              variant="primary"
-              target="_blank"
-              data-dismiss="modal"
-              @click="onUninstallClick"
-            >
-              {{ $t('integrate.buttons.modalConfirm') }}
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </div>
+      {{ $t('configuration.facebook.connected.unlinkModalText') }}
+      <template slot="modal-ok">
+        {{ $t('integrate.buttons.modalConfirm') }}
+      </template>
+    </ps-modal>
   </div>
 </template>
 
@@ -200,6 +178,7 @@
 import {defineComponent} from '@vue/composition-api';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
+import PsModal from '@/components/commons/ps-modal';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
@@ -241,6 +220,7 @@ export default defineComponent({
   name: 'Configuration',
   components: {
     Spinner,
+    PsModal,
     Introduction,
     Messages,
     MultiStoreSelector,
@@ -684,6 +664,11 @@ export default defineComponent({
     },
     onShopSelected(shopSelected) {
       window.location.href = shopSelected.url;
+    },
+    onFbeUnlinkRequest() {
+      this.$bvModal.show(
+        this.$refs.ps_facebook_modal_unlink.$refs.modal.id,
+      );
     },
     createExternalBusinessId() {
       if (!this.psFacebookRetrieveExternalBusinessId) {

@@ -44,8 +44,6 @@
           class="switch-input switch-input-lg ml-1"
           :class="exportOn ? '-checked' : null"
           @click="exportClicked(!exportOn)"
-          data-toggle="modal"
-          :data-target="exportOn ? '#ps_facebook_modal_unsync' : null"
         >
           <input
             class="switch-input-lg"
@@ -90,7 +88,7 @@
       >
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">sync</i>
+            <i class="material-icons text-info">sync</i>
             {{ $t('catalogSummary.reportingLastSync') }}
             <span
               v-if="reporting.hasSynced"
@@ -121,7 +119,7 @@
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">error_outline</i>
+            <i class="material-icons text-danger">error_outline</i>
             {{ $t('catalogSummary.reportingErrorsCount') }}
             <br>
             <b-link
@@ -130,7 +128,9 @@
             >
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
-            <span class="big red-number mt-2 ml-md-4">{{ reporting.errored || '--' }}</span>
+            <span class="big font-weight-700 text-danger mt-2 ml-md-4">
+              {{ reporting.errored || '--' }}
+            </span>
           </b-col>
         </b-row>
       </b-container>
@@ -142,7 +142,6 @@
         target="_blank"
         :href="viewCatalogUrl"
       >
-        <i class="material-icons">launch</i>
         {{ $t('catalogSummary.viewCatalogButton') }}
       </b-link>
       <br clear="both">
@@ -157,7 +156,7 @@
       <b-container fluid>
         <b-row align-v="stretch">
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">sync</i>
+            <i class="material-icons text-info">sync</i>
             {{ $t( scanProcess.inProgress
                      ? 'catalogSummary.preApprovalScanRefreshInProgress'
                      : 'catalogSummary.preApprovalScanRefreshDate',
@@ -209,7 +208,7 @@
             <i class="material-icons">store</i>
             {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
             <span class="big mt-2 ml-md-4">
-              <span class="green-number">
+              <span class="font-weight-700 text-success">
                 {{ prevalidation.syncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
@@ -217,7 +216,7 @@
           </b-col>
           <div class="w-100 d-block d-md-none" />
           <b-col class="counter m-1 p-3">
-            <i class="material-icons">error_outline</i>
+            <i class="material-icons text-danger">error_outline</i>
             {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
             <br>
             <b-link
@@ -227,7 +226,7 @@
               {{ $t('catalogSummary.detailsButton') }}
             </b-link>
             <span class="big mt-2 ml-md-4">
-              <span class="red-number">
+              <span class="font-weight-700 text-danger">
                 {{ prevalidation.notSyncable }}
               </span>
               /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
@@ -305,48 +304,18 @@
     </template>
 
     <!-- Confirmation modal for Disabling synchronization -->
-    <div
+    <ps-modal
       id="ps_facebook_modal_unsync"
-      class="modal"
+      ref="ps_facebook_modal_unsync"
+      :title="$t('catalogSummary.modalDeactivationTitle')"
+      @ok="exportClicked(false, true)"
+      ok-only
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content tw-rounded-none">
-          <div class="modal-header">
-            <slot name="header">
-              <div class="tw-flex tw-items-center">
-                <h5 class="modal-title tw-pl-3">
-                  {{ $t('catalogSummary.modalDeactivationTitle') }}
-                </h5>
-              </div>
-            </slot>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ $t('catalogSummary.modalDeactivationText') }}
-          </div>
-          <div class="modal-footer">
-            <b-button
-              variant="primary"
-              target="_blank"
-              data-dismiss="modal"
-              @click="exportClicked(false, true)"
-            >
-              {{ $t('integrate.buttons.modalConfirm') }}
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </div>
+      {{ $t('catalogSummary.modalDeactivationText') }}
+      <template slot="modal-ok">
+        {{ $t('integrate.buttons.modalConfirm') }}
+      </template>
+    </ps-modal>
   </div>
 </template>
 
@@ -354,7 +323,8 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
-import Spinner from '../../spinner/spinner.vue';
+import Spinner from '@/components/spinner/spinner.vue';
+import PsModal from '@/components/commons/ps-modal';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -363,6 +333,7 @@ export default defineComponent({
     BAlert,
     BLink,
     Spinner,
+    PsModal,
   },
   props: {
     validation: {
@@ -470,6 +441,9 @@ export default defineComponent({
   methods: {
     exportClicked(activate, confirm = false) {
       if (!activate && !confirm) {
+        this.$bvModal.show(
+          this.$refs.ps_facebook_modal_unsync.$refs.modal.id,
+        );
         return; // blocking modal, to confirm deactivation
       }
 
@@ -739,12 +713,6 @@ export default defineComponent({
       font-size: 1.85rem;
       color: #6C868E;
     }
-    &:first-of-type > i {
-      color: #24B9D7;
-    }
-    &:last-of-type > i {
-      color: #C05C67;
-    }
 
     & > span.big {
       display: block;
@@ -761,14 +729,7 @@ export default defineComponent({
       margin-top: 0.9rem;
     }
   }
-  .green-number {
-    font-weight: 700;
-    color: #70B580;
-  }
-  .red-number {
-    font-weight: 700;
-    color: #C05C67;
-  }
+
   .see-details {
     font-size: small;
     font-style: italic;

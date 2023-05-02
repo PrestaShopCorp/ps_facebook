@@ -22,7 +22,7 @@
     v-else
     id="catalogSummary"
   >
-    <b-card class="card m-3">
+    <b-card class="card m-3 p-3">
       <export-catalog
         :validation="validation"
         :export-done-once="exportDone"
@@ -32,7 +32,7 @@
     </b-card>
 
     <b-card
-      class="card m-3"
+      class="card m-3 p-3"
     >
       <categories-matched
         v-if="matchingDone"

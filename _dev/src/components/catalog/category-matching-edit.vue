@@ -209,34 +209,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .card {
-    border: none;
-    border-radius: 3px;
-    overflow: hidden;
-    & > .card-body {
-      padding: 1rem;
-    }
-    & h1 {
-      margin-top: 0.2rem;
-    }
-  }
-  .counter {
-    &.float-right {
-      text-align: right;
-    }
-    .matching-finished {
-      color: #70B580!important;
-    }
-    & > h3 {
-      color: #CD9321 !important;
-      line-height: 1;
-      & > span {
-        font-size: x-small;
-        font-weight: normal;
-        color: #363A41 !important;
-      }
-    }
-  }
-</style>

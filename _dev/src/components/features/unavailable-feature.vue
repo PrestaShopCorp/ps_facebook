@@ -1,7 +1,9 @@
 <template>
   <li>
     <b-card no-body>
-      <b-card-body>
+      <b-card-body
+        class="p-3"
+      >
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo d-none d-md-block"
