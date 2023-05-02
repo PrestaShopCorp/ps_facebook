@@ -84,12 +84,13 @@
         <template #button-content>
           {{ $t('configuration.facebook.connected.editButton') }}
         </template>
-        <b-dropdown-item @click="openManageFbe">
+        <b-dropdown-item
+          @click="openManageFbe"
+        >
           {{ $t('configuration.facebook.connected.manageFbeButton') }}
         </b-dropdown-item>
         <b-dropdown-item
-          data-toggle="modal"
-          data-target="#ps_facebook_modal_unlink"
+          @click="$emit('onFbeUnlinkRequest')"
         >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>
@@ -119,8 +120,7 @@
           {{ $t('configuration.facebook.connected.editButton') }}
         </b-dropdown-item>
         <b-dropdown-item
-          data-toggle="modal"
-          data-target="#ps_facebook_modal_unlink"
+          @click="$emit('onFbeUnlinkRequest')"
         >
           {{ $t('configuration.facebook.connected.unlinkButton') }}
         </b-dropdown-item>

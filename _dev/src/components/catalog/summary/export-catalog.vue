@@ -44,8 +44,6 @@
           class="switch-input switch-input-lg ml-1"
           :class="exportOn ? '-checked' : null"
           @click="exportClicked(!exportOn)"
-          data-toggle="modal"
-          :data-target="exportOn ? '#ps_facebook_modal_unsync' : null"
         >
           <input
             class="switch-input-lg"
@@ -142,7 +140,6 @@
         target="_blank"
         :href="viewCatalogUrl"
       >
-        <i class="material-icons">launch</i>
         {{ $t('catalogSummary.viewCatalogButton') }}
       </b-link>
       <br clear="both">
@@ -305,48 +302,18 @@
     </template>
 
     <!-- Confirmation modal for Disabling synchronization -->
-    <div
+    <ps-modal
       id="ps_facebook_modal_unsync"
-      class="modal"
+      ref="ps_facebook_modal_unsync"
+      :title="$t('catalogSummary.modalDeactivationTitle')"
+      @ok="exportClicked(false, true)"
+      ok-only
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
-        <div class="modal-content tw-rounded-none">
-          <div class="modal-header">
-            <slot name="header">
-              <div class="tw-flex tw-items-center">
-                <h5 class="modal-title tw-pl-3">
-                  {{ $t('catalogSummary.modalDeactivationTitle') }}
-                </h5>
-              </div>
-            </slot>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ $t('catalogSummary.modalDeactivationText') }}
-          </div>
-          <div class="modal-footer">
-            <b-button
-              variant="primary"
-              target="_blank"
-              data-dismiss="modal"
-              @click="exportClicked(false, true)"
-            >
-              {{ $t('integrate.buttons.modalConfirm') }}
-            </b-button>
-          </div>
-        </div>
-      </div>
-    </div>
+      {{ $t('catalogSummary.modalDeactivationText') }}
+      <template slot="modal-ok">
+        {{ $t('integrate.buttons.modalConfirm') }}
+      </template>
+    </ps-modal>
   </div>
 </template>
 
@@ -354,7 +321,8 @@
 import {defineComponent} from '@vue/composition-api';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
-import Spinner from '../../spinner/spinner.vue';
+import Spinner from '@/components/spinner/spinner.vue';
+import PsModal from '@/components/commons/ps-modal';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -363,6 +331,7 @@ export default defineComponent({
     BAlert,
     BLink,
     Spinner,
+    PsModal,
   },
   props: {
     validation: {
@@ -470,6 +439,9 @@ export default defineComponent({
   methods: {
     exportClicked(activate, confirm = false) {
       if (!activate && !confirm) {
+        this.$bvModal.show(
+          this.$refs.ps_facebook_modal_unsync.$refs.modal.id,
+        );
         return; // blocking modal, to confirm deactivation
       }
 
