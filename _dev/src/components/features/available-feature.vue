@@ -17,19 +17,16 @@
               {{ $t(`integrate.features.${name}.description`) }}
             </p>
           </div>
-          <a
-            class="align-self-center"
+
+          <b-button
+            variant="outline-primary"
+            class="ml-4 align-self-center"
             @click="onSales(name)"
             :href="manageRoute[name] || manageRoute.default"
             target="_blank"
           >
-            <b-button
-              variant="outline-primary"
-              class="ml-4 align-self-center"
-            >
-              {{ $t(`integrate.features.${name}.addButton`) }}
-            </b-button>
-          </a>
+            {{ $t(`integrate.features.${name}.addButton`) }}
+          </b-button>
         </div>
       </b-card-body>
     </b-card>

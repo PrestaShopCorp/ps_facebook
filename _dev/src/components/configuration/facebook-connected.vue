@@ -86,7 +86,6 @@
         </template>
         <b-dropdown-item @click="openManageFbe">
           {{ $t('configuration.facebook.connected.manageFbeButton') }}
-          <i class="material-icons">open_in_new</i>
         </b-dropdown-item>
         <b-dropdown-item
           data-toggle="modal"

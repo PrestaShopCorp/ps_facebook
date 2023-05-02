@@ -54,19 +54,15 @@
             >
               {{ $t(`integrate.features.${name}.checkMessages`) }}
             </b-button>
-            <a
-              class="align-self-center"
+            <b-button
+              variant="outline-secondary"
+              class="ml-4 align-self-center"
               @click="onManageClick(name)"
               :href="manageRoute[name] || manageRoute.default"
               target="_blank"
             >
-              <b-button
-                variant="outline-secondary"
-                class="ml-4 align-self-center"
-              >
-                {{ $t(`integrate.features.${name}.editButton`) }}
-              </b-button>
-            </a>
+              {{ $t(`integrate.features.${name}.editButton`) }}
+            </b-button>
           </div>
         </div>
       </b-card-body>

@@ -61,15 +61,14 @@
           <div class="contact mt-4">
             <div>{{ $t("help.help.couldntFindAnyAnswer") }}</div>
             <div class="mt-2">
-              <b-button
+              <b-link
                 variant="link"
-                @click="contactUs()"
                 target="_blank"
                 :href="contactUsLink"
+                @click="contactUs()"
               >
                 {{ $t("help.help.contactUs") }}
-                <i class="material-icons">arrow_right_alt</i>
-              </b-button>
+              </b-link>
             </div>
           </div>
         </div>
