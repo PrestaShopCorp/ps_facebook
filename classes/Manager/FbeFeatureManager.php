@@ -23,6 +23,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Manager;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use stdClass;
 
 class FbeFeatureManager
 {
@@ -57,6 +58,9 @@ class FbeFeatureManager
         }
 
         $featureConfiguration = json_decode($featureConfiguration);
+        if ($featureConfiguration === null) {
+            $featureConfiguration = new stdClass;
+        }
 
         if ($featureName == 'messenger_chat') {
             unset($featureConfiguration->default_locale);
