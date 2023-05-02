@@ -59,7 +59,7 @@ class FbeFeatureManager
 
         $featureConfiguration = json_decode($featureConfiguration);
         if ($featureConfiguration === null) {
-            $featureConfiguration = new stdClass;
+            $featureConfiguration = new stdClass();
         }
 
         if ($featureName == 'messenger_chat') {
