@@ -102,7 +102,14 @@
               alt="PrestaShop Social logo"
             >
             <p>{{ $t('configuration.glass.text') }}</p>
-            <a href="javascript:void(0)">{{ $t('configuration.glass.link') }}</a>
+            <b-button
+              class="ps_gs-glass__button mt-3"
+              variant="outline-secondary"
+              size="sm"
+              @click="forceFocus"
+            >
+              {{ $t('configuration.glass.link') }}
+            </b-button>
           </div>
           <div
             class="closeCross p-1 m-4"
