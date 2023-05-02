@@ -21,7 +21,7 @@
     <b-icon-info-circle
       :id="`tooltip-circle-${this._uid}`"
       class="iconInfo ml-2"
-      variant="primary"
+      variant="secondary"
     />
     <b-tooltip
       :target="`tooltip-circle-${this._uid}`"
