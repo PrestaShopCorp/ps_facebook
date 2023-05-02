@@ -1,7 +1,6 @@
 @import "base/nobootstrap";
 
 #psFacebookApp {
-
   @import "~bootstrap/scss/functions";
   @import "~prestakit/scss/functions";
   
@@ -50,8 +49,15 @@
   @import "~prestakit/scss/tables";
   @import "~prestakit/scss/spinners";
 
+  // abstracts
+  @import "abstracts/functions";
+
   // Base
   @import './base/typography';
+
+  // page
+  @import "layouts/form";
+  @import "layouts/sticky-head";
 
   // Components
   @import './components/button';
@@ -97,21 +103,6 @@
   padding-right: 0.5rem !important;
 }
 
-.ps_gs-sticky-head {
-  padding: 0;
-  position: sticky;
-  top: 136px; // fallback for IE11
-  top: var(--header-height-full);
-  margin-bottom: 20px;
-  z-index: 200;
-  padding-left: 0;
-  padding-right: 0;
-  background-color: #fff;
-}
-
-.ps_gs-sticky-head .nav-link {
-  padding: rem(7) 1.25rem;
-}
 #helper-shopid {
   position: fixed;
   bottom: 0;
