@@ -1,4 +1,4 @@
-![PrestaShop Social with Facebook & Instagram logo](views/img/logo-wordmark.svg)
+![PrestaShop Social with Facebook & Instagram logo](_dev/src/assets/logo-wordmark.svg)
 
 # PrestaShop Social with Facebook & Instagram (ps_facebook)
 
