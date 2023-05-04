@@ -144,7 +144,7 @@ export default defineComponent({
     onHide() {
       this.$emit('onHide');
       if (this.$segment) {
-        this.$segment.track('PS Facebook installed', {
+        this.$segment.track('PS Social with Facebook & Instagram installed', {
           module: 'ps_facebook',
         });
       }

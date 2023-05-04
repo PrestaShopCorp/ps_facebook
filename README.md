@@ -1,6 +1,6 @@
-![PrestaShop Facebook logo](views/img/logo-wordmark.svg)
+![PrestaShop Social with Facebook & Instagram logo](views/img/logo-wordmark.svg)
 
-# PrestaShop Facebook (ps_facebook)
+# PrestaShop Social with Facebook & Instagram (ps_facebook)
 
 ![PHP tests](https://github.com/PrestaShopCorp/ps_facebook/workflows/PHP%20tests/badge.svg)
 ![JS tests](https://github.com/PrestaShopCorp/ps_facebook/workflows/JS%20tests/badge.svg)

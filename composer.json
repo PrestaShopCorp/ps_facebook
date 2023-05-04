@@ -1,6 +1,6 @@
 {
     "name": "prestashopcorp/ps_facebook",
-    "description": "PrestaShop Facebook allows you to easily feature your products on Facebook and Instagram so people can discover and buy them.",
+    "description": "PrestaShop Social with Facebook & Instagram allows you to easily feature your products on Facebook and Instagram so people can discover and buy them.",
     "config": {
         "preferred-install": "dist",
         "optimize-autoloader": true,
