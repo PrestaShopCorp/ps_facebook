@@ -12,7 +12,7 @@
       "getStarted": "Get started",
       "subTitle": "Easily and quickly build your business presence into Facebook community!",
       "proPoints": "- No credit card required \n- Easy setup \n- Cancel anytime",
-      "resume": "Make your first steps with PrestaShop Facebook!",
+      "resume": "Make your first steps with PrestaShop Social with Facebook & Instagram!",
       "proPoint1Title": "Manage your business",
       "proPoint1Description": "Control your ad settings and business tools \nfrom one place.",
       "proPoint2Title": "Understand your traffic",
@@ -25,7 +25,7 @@
       "seeDetailedPlans": "See detailed plans"
     },
     "messages": {
-      "success": "PrestaShop Facebook is now activated!",
+      "success": "PrestaShop Social with Facebook & Instagram is now activated!",
       "stepperTitle": "Step-by-step guide",
       "stepPsAccount": "Connect your PrestaShop account",
       "stepPsFacebook": "Connect your store to Facebook",
@@ -34,15 +34,15 @@
       "stepProductSync": "Export your product catalog",
       "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
       "reloadButton": "Reload",
-      "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Facebook can only be configured on one shop. You must log out of your first shop to connect this one.",
+      "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Social with Facebook & Instagram can only be configured on one shop. You must log out of your first shop to connect this one.",
       "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
       "AccountsUpgradeButton": "Upgrade PrestaShop Accounts",
       "AccountsUpgradeDone": "PrestaShop Account has been successfully upgraded.",
-      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop CloudSync running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you upgrade PrestaShop CloudSync.",
+      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop CloudSync running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop CloudSync.",
       "EventBusUpgradeButton": "Upgrade PrestaShop CloudSync",
       "EventBusUpgradeDone": "PrestaShop CloudSync has been successfully upgraded.",
-      "EventBusInstallNeededWarning": "PrestaShop CloudSync in not installed on this shop.\n\nYou may use PrestaShop Facebook but some features (i.e product synchronization) won't be available until you install PrestaShop CloudSync.",
+      "EventBusInstallNeededWarning": "PrestaShop CloudSync in not installed on this shop.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you install PrestaShop CloudSync.",
       "EventBusInstallButton": "Install PrestaShop CloudSync",
       "EventBusInstallDone": "PrestaShop CloudSync has been successfully installed.",
       "EventBusEnableNeededWarning": "PrestaShop CloudSync is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop CloudSync is enabled.",
@@ -56,7 +56,7 @@
         "title": "Connect your store to Facebook",
         "intro": "Integrate your shop with Facebook.",
         "connectButton": "Connect to Facebook",
-        "description": "With PS Facebook enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
+        "description": "With PS Social with Facebook & Instagram enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
         "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
       },
       "connected": {
@@ -255,11 +255,11 @@
   },
   "survey": {
     "title": "Give us your feedback!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Facebook!",
+    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Social with Facebook & Instagram!",
     "button": "Let's begin"
   },
   "help": {
-    "title": "Help for PrestaShop Facebook",
+    "title": "Help for PrestaShop Social with Facebook & Instagram",
     "allowsYouTo": {
       "title": "Acest modul îți permite să:",
       "business": "Manage your business",
