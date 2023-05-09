@@ -56,7 +56,7 @@
         "title": "Подключите свой магазин к Facebook",
         "intro": "Интегрируйте свой магазин с Facebook.",
         "connectButton": "Подключиться к Facebook",
-        "description": "With PS Social with Facebook & Instagram enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
+        "description": "С PS Social with Facebook & Instagram вы получите возможность беспрепятственного, без кодов, входа в систему и управления бизнес-продуктами Facebook.",
         "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
       },
       "connected": {
@@ -255,11 +255,11 @@
   },
   "survey": {
     "title": "Дайте нам свой отзыв!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Social with Facebook & Instagram!",
+    "text": "Всего 3 минуты, чтобы оставить отзыв о настройке и использовании PrestaShop Social with Facebook & Instagram!",
     "button": "Давайте начнем"
   },
   "help": {
-    "title": "Help for PrestaShop Social with Facebook & Instagram",
+    "title": "Помощь для PrestaShop Social with Facebook & Instagram",
     "allowsYouTo": {
       "title": "Этот модуль позволяет:",
       "business": "Управляйте своим бизнесом",
