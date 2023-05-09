@@ -12,7 +12,7 @@
       "getStarted": "Erste Schritte",
       "subTitle": "Integrieren Sie Ihre Unternehmenspräsenz einfach und schnell in die Facebook-Community!",
       "proPoints": "- Keine Kreditkarte erforderlich \n- Einfache Einrichtung \n- Jederzeit kündbar",
-      "resume": "Make your first steps with PrestaShop Social with Facebook & Instagram!",
+      "resume": "Machen Sie Ihre ersten Schritte mit PrestaShop Social with Facebook & Instagram!",
       "proPoint1Title": "Verwalten Sie Ihr Unternehmen",
       "proPoint1Description": "Steuern Sie Ihre Werbeeinstellungen und Geschäftswerkzeuge von einem Ort aus.",
       "proPoint2Title": "Verstehen Sie Ihren Verkehr",
@@ -25,7 +25,7 @@
       "seeDetailedPlans": "Siehe detaillierte Pläne"
     },
     "messages": {
-      "success": "PrestaShop Social with Facebook & Instagram is now activated!",
+      "success": "PrestaShop Social with Facebook & Instagram ist jetzt aktiviert!",
       "stepperTitle": "Schritt-für-Schritt-Anleitung",
       "stepPsAccount": "Verbinden Sie Ihr PrestaShop-Konto",
       "stepPsFacebook": "Verbinden Sie Ihr Geschäft mit Facebook",
@@ -36,12 +36,12 @@
       "reloadButton": "Neu laden",
       "shopInConflictError": "Sie sind bereits über einen anderen Shop mit Facebook verbunden. Allerdings ist die PrestaShop Social with Facebook & Instagram-Konfiguration derzeit nur bei einem Shop möglich. Sie müssen sich von Ihrem ersten Shop abmelden, um eine Verbindung herzustellen.",
       "unknownOnboardingError": "Während des Onboarding-Prozesses ist ein unbekannter Fehler aufgetreten. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
-      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
+      "AccountsUpgradeNeededWarning": "Die Version des Moduls PrestaShop Account, die auf diesem Shop läuft (v{currentVersion}), ist älter als die minimal erforderliche v{requiredVersion}.\n\nSie können PrestaShop Social with Facebook & Instagram verwenden, aber einige Funktionen (z.B. Produktsynchronisation) sind nicht verfügbar, bis Sie PrestaShop Account aktualisieren.",
       "AccountsUpgradeButton": "PrestaShop-Konto aktualisieren",
       "AccountsUpgradeDone": "PrestaShop-Konto wurde erfolgreich aktualisiert",
       "EventBusUpgradeNeededWarning": "The version of the module PrestaShop CloudSync running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop CloudSync.",
-      "EventBusUpgradeButton": "Upgrade PrestaShop CloudSync",
-      "EventBusUpgradeDone": "PrestaShop CloudSync has been successfully upgraded.",
+      "EventBusUpgradeButton": "PrestaShop CloudSync aktualisieren",
+      "EventBusUpgradeDone": "PrestaShop CloudSync wurde erfolgreich aktualisiert.",
       "EventBusInstallNeededWarning": "PrestaShop CloudSync in not installed on this shop.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you install PrestaShop CloudSync.",
       "EventBusInstallButton": "PrestaShop CloudSync installieren",
       "EventBusInstallDone": "PrestaShop CloudSync wurde erfolgreich installiert.",
@@ -255,7 +255,7 @@
   },
   "survey": {
     "title": "Geben Sie uns Ihr Feedback!",
-    "text": "Nur 3 Minuten, um ein Feedback über die Konfiguration und die Verwendung von PrestaShop Social with Facebook & Instagram!",
+    "text": "Nur 3 Minuten, um einige Rückmeldungen über die Konfiguration und Verwendung von PrestaShop Social with Facebook & Instagram geben!",
     "button": "Fangen wir an"
   },
   "help": {
