@@ -46,8 +46,8 @@
       "EventBusInstallButton": "Installa PrestaShop CloudSync",
       "EventBusInstallDone": "PrestaShop CloudSync has been successfully installed.",
       "EventBusEnableNeededWarning": "PrestaShop CloudSync is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop CloudSync is enabled.",
-      "EventBusEnableButton": "Enable PrestaShop CloudSync",
-      "EventBusEnableDone": "PrestaShop CloudSync is enabled.",
+      "EventBusEnableButton": "Abilita PrestaShop CloudSync",
+      "EventBusEnableDone": "PrestaShop CloudSync è attivato.",
       "accountSuspended": "Sembra che non ci siano i permessi sul tuo account Facebook per poter sincronizzare i prodotti. Per risolvere questo problema, è necessario eseguire nuovamente la sincronizzazione per ripristinare i permessi nello stato corretto."
     },
     "facebook": {
@@ -56,7 +56,7 @@
         "title": "Collega il tuo shop a Facebook",
         "intro": "Integra il tuo shop con Facebook.",
         "connectButton": "Collegati a Facebook",
-        "description": "With PS Social with Facebook & Instagram enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
+        "description": "Con PrestaShop Social with Facebook & Instagram, potrai approfittare di un'esperienza di integrazione e di gestione dei prodotti business di Facebook semplice e senza codici.",
         "details": "- Crea/Seleziona Attività \n- Crea/Seleziona Pagina \n- Crea/Seleziona Account di annunci \n- Crea/Seleziona Installa pixel \n- Crea/Seleziona Sincronizza catalogo prodotti \n- Crea Facebook Shop e Instagram Shopping \n- Aggiungi il plug-in di Messenger nel tuo shop"
       },
       "connected": {
@@ -255,11 +255,11 @@
   },
   "survey": {
     "title": "Inviaci il tuo feedback!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Social with Facebook & Instagram!",
+    "text": "Bastano solo 3 minuti per fornire un feedback sulla configurazione e sull'uso di PrestaShop Social with Facebook & Instagram!",
     "button": "Cominciamo"
   },
   "help": {
-    "title": "Help for PrestaShop Social with Facebook & Instagram",
+    "title": "Assistenza per PrestaShop Social with Facebook & Instagram",
     "allowsYouTo": {
       "title": "Questo modulo ti permette di:",
       "business": "Gestisci la tua attività",
