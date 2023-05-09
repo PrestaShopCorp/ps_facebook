@@ -75,7 +75,7 @@ class Installer
      */
     public function install()
     {
-        $this->segment->setMessage('PS Facebook installed');
+        $this->segment->setMessage('PS Social with Facebook & Instagram installed');
         $this->segment->track();
 
         return $this->installConfiguration() &&
@@ -219,7 +219,7 @@ class Installer
             [
                 'className' => 'AdminPsfacebookModule',
                 'parent' => 'Marketing',
-                'name' => 'Facebook',
+                'name' => 'Facebook & Instagram',
                 'module' => $this->module->name,
                 'active' => true,
                 'icon' => '',

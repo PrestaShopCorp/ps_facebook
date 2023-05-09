@@ -29,4 +29,6 @@ class FacebookInstallerException extends Exception
     public const FACEBOOK_UNINSTALL_EXCEPTION = 2;
 
     public const PS_ACCOUNTS_UPGRADE_EXCEPTION = 2;
+
+    public const FACEBOOK_UPGRADE_EXCEPTION = 4;
 }

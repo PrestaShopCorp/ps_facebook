@@ -70,7 +70,7 @@ class Uninstaller
      */
     public function uninstall()
     {
-        $this->segment->setMessage('PS Facebook uninstalled');
+        $this->segment->setMessage('PS Social with Facebook & Instagram uninstalled');
         $this->segment->track();
 
         foreach (array_keys(Installer::CONFIGURATION_LIST) as $name) {

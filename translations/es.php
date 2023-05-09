@@ -20,8 +20,8 @@
 global $_MODULE;
 $_MODULE = [];
 
-$_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Facebook te da todas las herramientas que necesitas para vender y comercializar con éxito en Facebook e Instagram. Descubre nuevas posibilidades para ayudarte a hacer crecer tu negocio y a administrar todas tus cuentas y productos de Facebook desde un solo lugar.';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_2aefc990461a90efe73747e401fac1c9'] = 'PS Social with Facebook & Instagram te da todas las herramientas que necesitas para vender y comercializar con éxito en Facebook e Instagram. Descubre nuevas posibilidades para ayudarte a hacer crecer tu negocio y a administrar todas tus cuentas y productos de Facebook desde un solo lugar.';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_46e2d06b80d816b2916f1f27492fbabd'] = 'No se puede instalar el módulo';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_a6111d843740c2352137f7f8cf571103'] = 'No se puede instalar PrestaShop Account';
 $_MODULE['<{ps_facebook}prestashop>ps_facebook_bb8956c67b82c7444a80c6b2433dd8b4'] = '¿Seguro que quieres desinstalar este módulo?';
-$_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Facebook';
+$_MODULE['<{ps_facebook}prestashop>ps_facebook_cff4ea2d3ff5e24fe46acba1a1e5ee86'] = 'PS Social with Facebook & Instagram';
