@@ -20,7 +20,7 @@ jobs:
         run: echo ::set-output name=TAG::$(echo $GITHUB_REF | cut -d / -f 3)
 
       - name: Trigger storage
-        uses: aurelien-baudet/workflow-dispatch@v2
+        uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: ${{ env.WORKFLOW }}
           repo: PrestaShopCorp/services-deployment
