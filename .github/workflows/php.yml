@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v3
 
       - name: PHP syntax checker 7.2
         uses: prestashop/github-action-php-lint/7.2@master
@@ -21,16 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v3
 
       - name: Cache vendor folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: vendor
           key: php-${{ hashFiles('composer.lock') }}
 
       - name: Cache composer folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: php-composer-cache
@@ -62,16 +62,16 @@ jobs:
           php-version: 7.4
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cache vendor folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Cache composer folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: php-composer-cache
@@ -96,16 +96,16 @@ jobs:
           php-version: ${{ matrix.version }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cache vendor folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: vendor
           key: php-${{ hashFiles('composer.lock') }}
 
       - name: Cache composer folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: php-composer-cache
@@ -120,16 +120,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cache vendor folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: vendor
           key: php-${{ hashFiles('composer.lock') }}
 
       - name: Cache composer folder
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: php-composer-cache
