@@ -90,7 +90,7 @@
       "createdAt": "Stworzony",
       "lastActive": "Ostatni aktywny",
       "activated": "Aktywowany",
-      "disabled": "Wyłączone",
+      "disabled": "Wyłączono",
       "moduleDisabled": "Moduł jest wyłączony",
       "viewStats": "Statystyki widoku",
       "informationCannotBeDisplayedWarning": "Ta informacja nie może być wyświetlana w tym momencie"
@@ -277,11 +277,11 @@
   },
   "faq": {
     "title": "FAQ",
-    "noFaq": "Brak dostępnych FAQ."
+    "noFaq": "FAQ nie jest dostępne."
   },
   "productStatuses": {
     "Approved": "Zatwierdzone",
-    "Pending": "W toku",
+    "Pending": "Oczekujące",
     "Disapproved": "Niezatwierdzono"
   },
   "multiShopSelector": {
