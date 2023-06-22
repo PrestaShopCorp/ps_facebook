@@ -282,7 +282,7 @@
   "productStatuses": {
     "Approved": "Zatwierdzone",
     "Pending": "Oczekujące",
-    "Disapproved": "Niezatwierdzone"
+    "Disapproved": "Odrzucone"
   },
   "multiShopSelector": {
     "title": "Włączony tryb multi-shop",
