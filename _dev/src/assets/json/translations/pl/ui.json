@@ -282,10 +282,10 @@
   "productStatuses": {
     "Approved": "Zatwierdzone",
     "Pending": "Oczekujące",
-    "Disapproved": "Niezatwierdzono"
+    "Disapproved": "Niezatwierdzone"
   },
   "multiShopSelector": {
-    "title": "Tryb Multi-store aktywny",
+    "title": "Włączony tryb multi-shop",
     "subtitle": "Musisz skonfigurować swoje sklepy, jeden po drugim, pod kątem tej usługi, ale będziesz mieć możliwość korzystania z tego samego konta. ",
     "selectStore": "Wybierz z poniższej listy pierwszy sklep do skonfigurowania",
     "tips": "Po zakończeniu pracy nad pierwszym sklepem, możesz skonfigurować pozostałe, wybierając je kolejno z listy sklepów w menu poziomym",
