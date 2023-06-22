@@ -123,7 +123,7 @@
     "preApprovalScanError": "Coś poszło nie tak podczas skanowania produktów.",
     "catalogExportWarning": "Produkty będą eksportowane i aktualizowane co godziny.",
     "catalogExportDisclaimer": "Dzieląc się swoim katalogiem, zgadzasz się, że PrestaShop może wysyłać wszystkie informacje związane z produktami katalogowymi na Facebook.",
-    "catalogExportPaused": "Wstrzymany",
+    "catalogExportPaused": "Wstrzymano",
     "catalogExportActivated": "Aktywowany",
     "catalogExportNotice": "Synchronizacja informacji o produktach PrestaShop z Facebookiem może trwać do godzin. Gdy produkty zostaną opublikowane, możesz zacząć oznaczać je na Instagram lub tworzyć reklamy na Facebooku.",
     "catalogExportOperationPaused": "Operacja jest wstrzymana.",
