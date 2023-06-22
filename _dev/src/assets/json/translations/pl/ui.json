@@ -282,7 +282,7 @@
   "productStatuses": {
     "Approved": "Zatwierdzone",
     "Pending": "W toku",
-    "Disapproved": "Niezatwierdzony"
+    "Disapproved": "Niezatwierdzono"
   },
   "multiShopSelector": {
     "title": "Tryb Multi-store aktywny",
