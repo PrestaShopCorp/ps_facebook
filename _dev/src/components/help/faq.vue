@@ -66,7 +66,7 @@
               <b-link
                 variant="link"
                 target="_blank"
-                :href="contactUsLink"
+                :href="contactUsLink + supportUrl"
                 @click="contactUs()"
               >
                 {{ $t("help.help.contactUs") }}
@@ -137,6 +137,11 @@ import {defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
   props: ['faq', 'contactUsLink', 'docLink', 'loading'],
+  computed: {
+    supportUrl(): string {
+      return `?psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
+    },
+  },
   methods: {
     contactUs() {
       this.$segment.track('Click on Contact us', {
