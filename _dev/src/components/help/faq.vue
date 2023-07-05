@@ -139,7 +139,7 @@ export default defineComponent({
   props: ['faq', 'contactUsLink', 'docLink', 'loading'],
   computed: {
     supportUrl(): string {
-      return `?psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
+      return `?utm_source=back-office&utm_medium=psx&psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
     },
   },
   methods: {
