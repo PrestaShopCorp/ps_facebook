@@ -280,9 +280,9 @@
     "noFaq": "Pas de FAQ disponible."
   },
   "productStatuses": {
-    "Approved": "Approuvé",
+    "Approved": "Actifs",
     "Pending": "En attente",
-    "Disapproved": "Désapprouvé"
+    "Disapproved": "Refusé"
   },
   "multiShopSelector": {
     "title": "Mode multi-boutique activé",
