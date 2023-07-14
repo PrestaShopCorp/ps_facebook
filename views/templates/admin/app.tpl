@@ -19,8 +19,10 @@
 {include file='./head.tpl'}
 
 <link href="{$pathApp|escape:'htmlall':'UTF-8'}" rel=preload as=script>
+<link href="https://assets.prestashop3.com/ext/cloudsync-merchant-sync-consent/latest/cloudsync-cdc.js" rel=preload as=script>
 
 <div id="psFacebookApp"></div>
 
 <script src="{$chunkVendor|escape:'htmlall':'UTF-8'}"></script>
 <script src="{$pathApp|escape:'htmlall':'UTF-8'}"></script>
+<script src="https://assets.prestashop3.com/ext/cloudsync-merchant-sync-consent/latest/cloudsync-cdc.js"></script>

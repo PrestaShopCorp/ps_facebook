@@ -25,6 +25,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter;
 use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
+use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
@@ -103,6 +104,20 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         }
 
         $psAccountsData = $this->getPsAccountsData();
+
+        $moduleManager = ModuleManagerBuilder::getInstance()->build();
+
+        if ($moduleManager->isInstalled('ps_eventbus')) {
+            $eventbusModule = \Module::getInstanceByName('ps_eventbus');
+            if ($eventbusModule && version_compare($eventbusModule->version, '1.9.0', '>=')) {
+                /* @phpstan-ignore-next-line */
+                $eventbusPresenterService = $eventbusModule->getService('PrestaShop\Module\PsEventbus\Service\PresenterService');
+
+                Media::addJsDef([
+                    'contextPsEventbus' => $eventbusPresenterService->expose($this->module, ['info', 'products', 'currencies', 'categories']),
+                ]);
+            }
+        }
 
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
