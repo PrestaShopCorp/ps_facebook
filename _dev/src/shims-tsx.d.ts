@@ -10,6 +10,31 @@ declare global {
     interface Window {
       contextPsAccounts: any;
       i18nSettings: any;
+
+      psFacebookRouteToShopApi?: string;
+
+      psFacebookRetrieveExternalBusinessId: string;
+      psFacebookPixelActivationRoute: string;
+      psFacebookFbeOnboardingSaveRoute: string;
+      psFacebookEnsureTokensExchanged: string;
+      psFacebookFbeOnboardingUninstallRoute: string;
+      psFacebookGetFbContextRoute: string;
+      psFacebookUpdateCategoryMatch: string;
+      psFacebookGetCategory: string;
+      psFacebookGetCategories: string;
+      psFacebookGetFeaturesRoute: string;
+      psFacebookUpdateFeatureRoute: string;
+      psFacebookStartProductSyncRoute: string;
+      psFacebookGetCatalogSummaryRoute: string;
+      psFacebookRunPrevalidationScanRoute: string;
+      psFacebookGetCategoryMappingStatus: string;
+      psFacebookRetrieveFaq: string;
+      psFacebookUpdateConversionApiData: string;
+      psFacebookGetProductsWithErrors: string;
+      psFacebookGetProductSyncReporting: string;
+      psFacebookGetProductStatuses: string;
+      psFacebookExportWholeCatalog: string;
+      psFacebookRetrieveTokensRoute: string;
     }
   //   interface IntrinsicElements {
   //     [elem: string]: any;

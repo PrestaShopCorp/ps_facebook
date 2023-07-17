@@ -134,6 +134,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 $this->module->name,
                 'apiHealthCheck'
             ),
+            'psFacebookRouteToShopApi' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

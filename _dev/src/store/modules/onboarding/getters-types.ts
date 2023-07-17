@@ -1,0 +1,6 @@
+enum GettersTypes {
+  GET_EXTERNAL_BUSINESS_ID = 'GET_EXTERNAL_BUSINESS_ID',
+  GET_ONBOARDING_STATE = 'GET_ONBOARDING_STATE',
+}
+
+export {GettersTypes as default};

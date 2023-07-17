@@ -59,7 +59,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue';
+import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
 
@@ -68,7 +70,19 @@ const root = document.documentElement;
 const header = document.querySelector('#content .page-head');
 const headerFull = document.querySelector('#header_infos');
 
-export default {
+const getGenericRouteFromSpecificOne = (route: string): string => {
+  const url = new URL(route);
+  const genericSearchParams = new URLSearchParams();
+  url.searchParams.forEach((value, param) => {
+    if (['token', 'controller'].includes(param)) {
+      genericSearchParams.set(param, value);
+    }
+  });
+  url.search = `?${genericSearchParams.toString()}`;
+  return url.toString();
+};
+
+export default defineComponent({
   name: 'Home',
   components: {
     Menu,
@@ -87,6 +101,11 @@ export default {
     },
   },
   created() {
+    initShopClient({
+      shopUrl: window.psFacebookRouteToShopApi || getGenericRouteFromSpecificOne(
+        window.psFacebookEnsureTokensExchanged,
+      ),
+    });
     this.getFbContext();
     this.$root.identifySegment();
 
@@ -148,5 +167,5 @@ export default {
       this.$root.identifySegment();
     },
   },
-};
+});
 </script>
