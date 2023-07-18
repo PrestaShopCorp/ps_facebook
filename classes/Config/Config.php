@@ -22,7 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Config;
 
 class Config
 {
-    public const API_VERSION = 'v15.0';
+    public const API_VERSION = 'v17.0';
 
     public const COMPLIANT_PS_ACCOUNTS_VERSION = '3.0.0';
     public const REQUIRED_PS_ACCOUNTS_VERSION = '4.0.0';
