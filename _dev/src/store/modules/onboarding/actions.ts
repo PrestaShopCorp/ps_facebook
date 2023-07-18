@@ -5,22 +5,25 @@ import {OnboardingContext, State} from './state';
 
 export default {
   async [ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID]({commit}): Promise<string> {
-    const json: {externalBusinessId: string} = await (await fetchShop(
+    const json: {externalBusinessId: string} = await fetchShop(
       'RetrieveExternalBusinessId',
-    )).json();
+    );
     commit(MutationsTypes.SET_EXTERNAL_BUSINESS_ID, json.externalBusinessId);
     return json.externalBusinessId;
   },
 
-  async [ActionsTypes.REQUEST_ONBOARDING_STATE]({commit, state}: {state: State}) {
-    const json: {psFacebookExternalBusinessId: string, contextPsFacebook: OnboardingContext} = await (await fetchShop(
-      'GetFbContext',
-    )).json();
+  async [ActionsTypes.REQUEST_ONBOARDING_STATE]({commit, state}) {
+    const json: {
+      psFacebookExternalBusinessId: string,
+      contextPsFacebook: OnboardingContext
+    } = await fetchShop('GetFbContext');
 
-    if (state.externalBusinessID && state.externalBusinessID !== json.psFacebookExternalBusinessId) {
-      throw new Error('External business ID does not match the one used during the last onboarding. Please redo the process to fix this issue.')
+    if (state.externalBusinessID
+      && state.externalBusinessID !== json.psFacebookExternalBusinessId
+    ) {
+      throw new Error('External business ID does not match the one used during the last onboarding. Please redo the process to fix this issue.');
     }
-    
+
     commit(MutationsTypes.SET_ONBOARDED_APP, {
       app: 'user',
       newState: json.contextPsFacebook.user,

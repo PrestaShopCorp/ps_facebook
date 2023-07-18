@@ -58,5 +58,5 @@ export const state: State = {
     page: null,
     ads: null,
     catalog: null,
-  }
+  },
 };

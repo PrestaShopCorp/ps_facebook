@@ -1,7 +1,7 @@
 import {v4} from 'uuid';
 
 const openPopupGenerator = (
-  window: any,
+  window: Window,
   returnTo: string, // example, use window.location.href
   popupDomain: string, // example 'https://lui.ngrok.io'
   popupPath: string, // example '/index.html'
@@ -12,20 +12,16 @@ const openPopupGenerator = (
   currency: string, // example 'EUR'
   timezone: string, // example 'Europe/Paris'
   locale: string, // example 'en-US'
-  correlationId: string,
+  correlationId: string|null,
   openCallback: Function,
   closeCallback: Function,
   responseCallback: Function,
   errorCallback?: Function,
-) => {
-  let popup: any = null;
+): () => Window|null => {
+  let popup: Window|null = null;
   let closingLooper: number | null = null;
 
-  if (window.psFacebookOnbooardMessageListener) {
-    window.removeEventListener('message', window.psFacebookOnbooardMessageListener);
-  }
-  // eslint-disable-next-line no-param-reassign
-  window.psFacebookOnbooardMessageListener = window.addEventListener('message', (event: MessageEvent): boolean => {
+  const listener = (event: MessageEvent): boolean => {
     const strippedPopupDomain = popupDomain.replace(/^(https?:\/\/[^/]+)(.*)/, '$1');
     if (event.origin !== strippedPopupDomain) {
       console.log('Bad origin message. Ignored.', event, strippedPopupDomain);
@@ -52,7 +48,10 @@ const openPopupGenerator = (
         responseCallback(event.data);
     }
     return true;
-  });
+  };
+
+  window.removeEventListener('message', listener);
+  window.addEventListener('message', listener);
 
   console.log('openPopup() generated');
   return () => {
@@ -62,7 +61,9 @@ const openPopupGenerator = (
     }&shop_domain=${encodeURIComponent(shopDomain)}`;
     const p = 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=564,height=671';
     popup = window.open(popupDomain + popupPath + query, 'ps_facebook_fbe_onboarding', p);
-    popup.focus();
+    if (popup) {
+      popup.focus();
+    }
     return popup;
   };
 };

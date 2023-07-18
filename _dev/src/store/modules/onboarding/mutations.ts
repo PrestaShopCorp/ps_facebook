@@ -8,10 +8,13 @@ export default {
     state.externalBusinessID = response;
   },
 
-  [MutationsTypes.SET_ONBOARDED_APP]<T extends keyof OnboardingContext>(state: LocalState, payload: {
-    app: T,
-    newState: OnboardingContext[T],
-  }) {
+  [MutationsTypes.SET_ONBOARDED_APP]<T extends keyof OnboardingContext>(
+    state: LocalState,
+    payload: {
+      app: T,
+      newState: OnboardingContext[T],
+    },
+  ) {
     state.onboarded[payload.app] = payload.newState;
   },
 };

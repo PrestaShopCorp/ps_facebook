@@ -19,10 +19,11 @@ export const fetchShop = async (action: string, params?: { [key: string]: unknow
     throw new Error(`Cannot call action ${action}, API is not initialized (missing shop URL)`);
   }
 
-  const response = await fetch(options.shopUrl, {
+  const response = await fetch(`${options.shopUrl}&action=${action}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json', Accept: 'application/json'},
     body: JSON.stringify({
+      ajax: 1,
       action,
       ...params,
     }),
@@ -36,6 +37,10 @@ export const fetchShop = async (action: string, params?: { [key: string]: unknow
   }
 
   if (!response.ok) {
+    // TODO: Handle error messages returned by Facebook API
+    // We would like to get the body, check if a reason is returned by FB
+    // then return it properly.
+
     throw new HttpClientError(response.statusText, response.status);
   }
 
