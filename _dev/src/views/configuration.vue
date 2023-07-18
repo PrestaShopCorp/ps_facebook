@@ -63,8 +63,10 @@
           show
           v-html="md2html($t('configuration.messages.shopInConflictError'))"
         />
-        <ps-accounts-container
+        <onboarding-deps-container
           v-else
+          :ps-accounts-onboarded="psAccountsOnboarded"
+          @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
           class="m-3"
         />
 
@@ -73,7 +75,7 @@
           @onFbeOnboardClick="onFbeOnboardClick"
           class="m-3"
           :active="psAccountsOnboarded"
-          :can-connect="!!dynamicExternalBusinessId"
+          :can-connect="cloudSyncSharingConsentGiven && !!dynamicExternalBusinessId"
         />
         <facebook-connected
           v-else
@@ -185,7 +187,7 @@ import Messages from '../components/configuration/messages.vue';
 import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
-import PsAccountsContainer from '../components/configuration/ps-accounts-container.vue';
+import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-container.vue';
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
@@ -224,9 +226,9 @@ export default defineComponent({
     Introduction,
     Messages,
     MultiStoreSelector,
-    PsAccountsContainer,
     ModuleActionNeeded,
     NoConfig,
+    OnboardingDepsContainer,
     FacebookNotConnected,
     FacebookConnected,
     Survey,
@@ -377,6 +379,7 @@ export default defineComponent({
       shops: this.contextPsAccounts.shops || [],
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
+      cloudSyncSharingConsentGiven: false,
     };
   },
   created() {
