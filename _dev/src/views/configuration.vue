@@ -192,31 +192,37 @@ import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 
-const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, popupUrl) => {
-  const canGeneratePopup = (
-    component.contextPsAccounts.currentShop
-    && component.contextPsAccounts.currentShop.url
-    && component.dynamicExternalBusinessId
-    && component.psAccountsToken
-  );
-  return canGeneratePopup ? openPopupGenerator(
-    window,
-    component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
-    popupUrl,
-    '/index.html',
-    component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
-    component.contextPsAccounts.currentShop.frontUrl,
-    component.dynamicExternalBusinessId,
-    component.psAccountsToken,
-    component.currency,
-    component.timezone,
-    component.locale,
-    null,
-    component.onFbeOnboardOpened,
-    component.onFbeOnboardClosed,
-    component.onFbeOnboardResponded,
-  ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
-});
+const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
+  (component, popupUrl: string) => {
+    const canGeneratePopup = (
+      component.contextPsAccounts.currentShop
+      && component.contextPsAccounts.currentShop.url
+      && component.dynamicExternalBusinessId
+      && component.psAccountsToken
+    );
+
+    if (!canGeneratePopup) {
+      return () => null;
+    }
+
+    return openPopupGenerator(
+      window,
+      component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
+      popupUrl,
+      '/index.html',
+      component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
+      component.contextPsAccounts.currentShop.frontUrl,
+      component.dynamicExternalBusinessId,
+      component.psAccountsToken,
+      component.currency,
+      component.timezone,
+      component.locale,
+      null,
+      component.onFbeOnboardOpened,
+      component.onFbeOnboardClosed,
+      component.onFbeOnboardResponded,
+    );
+  });
 
 export default defineComponent({
   name: 'Configuration',
@@ -362,9 +368,9 @@ export default defineComponent({
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
     },
-    openPopup(): Window|null {
+    openPopup(): () => Window|null {
       if (!this.dynamicExternalBusinessId) {
-        return null;
+        return () => null;
       }
       return generateOpenPopup(this, this.psFacebookUiUrl);
     },
@@ -382,7 +388,7 @@ export default defineComponent({
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
-      openedPopup: null,
+      openedPopup: null as Window|null,
       shops: this.contextPsAccounts.shops || [],
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
@@ -669,20 +675,6 @@ export default defineComponent({
       this.$bvModal.show(
         this.$refs.ps_facebook_modal_unlink.$refs.modal.id,
       );
-    },
-    createExternalBusinessIdAndOpenPopup() {
-      if (this.psFacebookRetrieveExternalBusinessId) {
-        this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID').then(() => {
-          this.openedPopup = this.openPopup();
-        }).catch((error) => {
-          console.error(error);
-          this.setErrorsFromFbCall(error);
-          this.showPopupGlass = false;
-          this.openedPopup = null;
-          this.popupReceptionDuplicate = false;
-          this.$forceUpdate();
-        });
-      }
     },
     glassClicked() {
       if (this.openedPopup) {
