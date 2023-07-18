@@ -6,11 +6,11 @@ export default {
     return state.externalBusinessID;
   },
 
-  [GettersTypes.GET_ONBOARDING_STATE](state: LocalState): OnboardingContext {
+  [GettersTypes.GET_ONBOARDING_STATE](state: LocalState): OnboardingContext|null {
     return state.onboarded;
   },
 
   [GettersTypes.IS_USER_ONBOARDED](state: LocalState): boolean {
-    return !!state.onboarded.user?.email;
+    return !!state.onboarded?.user?.email;
   },
 };

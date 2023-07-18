@@ -373,7 +373,7 @@ export default defineComponent({
     dynamicExternalBusinessId(): string|null {
       return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
     },
-    dynamicContextPsFacebook(): OnboardingContext {
+    dynamicContextPsFacebook(): OnboardingContext|null {
       return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
     },
   },

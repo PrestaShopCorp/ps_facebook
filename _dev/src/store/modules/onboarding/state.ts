@@ -1,16 +1,16 @@
 export type State = {
   warmedUp: boolean;
   externalBusinessID: string|null;
-  onboarded: OnboardingContext;
+  onboarded: OnboardingContext|null;
 }
 
 export type OnboardingContext = {
-  user: OnboardedUser|null;
-  pixel: OnboardedPixel|null;
-  facebookBusinessManager: OnboardedBusinessManager|null;
-  page: OnboardedPage|null;
-  ads: OnboardedAds|null;
-  catalog: OnboardedCatalog|null;
+  user: OnboardedUser;
+  pixel: OnboardedPixel;
+  facebookBusinessManager: OnboardedBusinessManager;
+  page: OnboardedPage;
+  ads: OnboardedAds;
+  catalog: OnboardedCatalog;
 }
 
 export type OnboardedUser = {
@@ -53,12 +53,5 @@ export type OnboardedCatalog = {
 export const state: State = {
   warmedUp: false,
   externalBusinessID: null,
-  onboarded: {
-    user: null,
-    pixel: null,
-    facebookBusinessManager: null,
-    page: null,
-    ads: null,
-    catalog: null,
-  },
+  onboarded: null,
 };

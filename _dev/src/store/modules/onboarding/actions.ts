@@ -43,29 +43,6 @@ export default {
       throw new Error('External business ID does not match the one used during the last onboarding. Please redo the process to fix this issue.');
     }
 
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'user',
-      newState: json.contextPsFacebook.user,
-    });
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'pixel',
-      newState: json.contextPsFacebook.pixel,
-    });
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'facebookBusinessManager',
-      newState: json.contextPsFacebook.facebookBusinessManager,
-    });
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'page',
-      newState: json.contextPsFacebook.page,
-    });
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'ads',
-      newState: json.contextPsFacebook.ads,
-    });
-    commit(MutationsTypes.SET_ONBOARDED_APP, {
-      app: 'catalog',
-      newState: json.contextPsFacebook.catalog,
-    });
+    commit(MutationsTypes.SET_ONBOARDED_CONTEXT, json.contextPsFacebook);
   },
 };
