@@ -177,7 +177,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent, PropType} from 'vue';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import PsModal from '@/components/commons/ps-modal';
@@ -191,6 +191,7 @@ import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
+import {OnboardingContext} from '@/store/modules/onboarding/state';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -247,7 +248,7 @@ export default defineComponent({
       default: () => global.contextPsAccounts,
     },
     contextPsFacebook: {
-      type: Object,
+      type: Object as PropType<OnboardingContext>,
       required: false,
       default: () => global.contextPsFacebook || {}, // fallback to {} is important!
     },
@@ -375,12 +376,14 @@ export default defineComponent({
       return generateOpenPopup(this, this.psFacebookUiUrl);
     },
     dynamicExternalBusinessId(): string|null {
-      return this.$store.getters['oboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
+      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
+    },
+    dynamicContextPsFacebook(): OnboardingContext {
+      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
     },
   },
   data() {
     return {
-      dynamicContextPsFacebook: this.contextPsFacebook,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showPopupGlass: false,
@@ -709,14 +712,6 @@ export default defineComponent({
   },
   watch: {
     contextPsAccounts() {
-      this.$forceUpdate();
-    },
-    contextPsFacebook(newValue) {
-      const oldValue = this.dynamicContextPsFacebook;
-      if (oldValue && !oldValue.email && newValue && newValue.email) {
-        this.psFacebookJustOnboarded = true;
-      }
-      this.dynamicContextPsFacebook = newValue;
       this.$forceUpdate();
     },
     dynamicExternalBusinessId(newValue) {
