@@ -9,4 +9,8 @@ export default {
   [GettersTypes.GET_ONBOARDING_STATE](state: LocalState): OnboardingContext {
     return state.onboarded;
   },
+
+  [GettersTypes.IS_USER_ONBOARDED](state: LocalState): boolean {
+    return !!state.onboarded.user?.email;
+  },
 };

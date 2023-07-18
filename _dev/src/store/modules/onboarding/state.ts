@@ -1,4 +1,5 @@
 export type State = {
+  warmedUp: boolean;
   externalBusinessID: string|null;
   onboarded: OnboardingContext;
 }
@@ -50,6 +51,7 @@ export type OnboardedCatalog = {
 }
 
 export const state: State = {
+  warmedUp: false,
   externalBusinessID: null,
   onboarded: {
     user: null,

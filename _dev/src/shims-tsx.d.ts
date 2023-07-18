@@ -13,12 +13,10 @@ declare global {
 
       psFacebookRouteToShopApi?: string;
 
-      psFacebookRetrieveExternalBusinessId: string;
       psFacebookPixelActivationRoute: string;
       psFacebookFbeOnboardingSaveRoute: string;
       psFacebookEnsureTokensExchanged: string;
       psFacebookFbeOnboardingUninstallRoute: string;
-      psFacebookGetFbContextRoute: string;
       psFacebookUpdateCategoryMatch: string;
       psFacebookGetCategory: string;
       psFacebookGetCategories: string;

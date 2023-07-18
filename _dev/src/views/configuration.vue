@@ -317,11 +317,6 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
-    psFacebookRetrieveExternalBusinessId: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookRetrieveExternalBusinessId || null,
-    },
     psAccountsVersionCheck: {
       type: Object,
       required: false,
@@ -399,8 +394,7 @@ export default defineComponent({
     };
   },
   created() {
-    if ((!this.contextPsFacebook || !this.externalBusinessId)
-      && global.psFacebookGetFbContextRoute) {
+    if (!this.contextPsFacebook || !this.externalBusinessId) {
       this.fetchData();
     } else {
       this.loading = false;
@@ -410,8 +404,7 @@ export default defineComponent({
     async fetchData() {
       this.loading = true;
       try {
-        await this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
-        await this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE');
+        await this.$store.dispatch('onboarding/WARMUP_STORE');
 
         // CHECK ME: To be kept in the future?
         this.$root.refreshContextPsFacebook(
