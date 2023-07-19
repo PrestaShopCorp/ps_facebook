@@ -171,44 +171,46 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     public function displayAjaxRetrieveExternalBusinessId()
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
-        if (empty($externalBusinessId)) {
-            try {
-                $response = $this->clientFactory->createClient()->sendRequest(
-                    new Request(
-                        'POST',
-                        '/account/onboard',
-                        [],
-                        json_encode([
-                            // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                            'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                        ])
-                    )
-                );
-                $response = json_decode($response->getBody()->getContents(), true);
-            } catch (Exception $e) {
-                $this->errorHandler->handle(
-                    new FacebookOnboardException(
-                        'Failed to onboard on facebook',
-                        FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
-                        $e
-                    ),
-                    $e->getCode(),
-                    true
-                );
 
-                return;
-            }
+        try {
+            $response = $this->clientFactory->createClient()->sendRequest(
+                new Request(
+                    'POST',
+                    '/account/onboard',
+                    [],
+                    json_encode([
+                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                    ])
+                )
+            );
+            $response = json_decode($response->getBody()->getContents(), true);
+        } catch (Exception $e) {
+            $this->errorHandler->handle(
+                new FacebookOnboardException(
+                    'Failed to onboard on facebook',
+                    FacebookOnboardException::FACEBOOK_ONBOARD_EXCEPTION,
+                    $e
+                ),
+                $e->getCode(),
+                true
+            );
 
-            if (!isset($response['externalBusinessId']) && isset($response['message'])) {
-                $this->errorHandler->handle(
-                    new FacebookOnboardException(
-                        json_encode($response['message']),
-                        FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
-                    )
-                );
+            return;
+        }
 
-                return;
-            }
+        if (!isset($response['externalBusinessId']) && isset($response['message'])) {
+            $this->errorHandler->handle(
+                new FacebookOnboardException(
+                    json_encode($response['message']),
+                    FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                )
+            );
+
+            return;
+        }
+
+        if ($response['externalBusinessId'] !== $externalBusinessId) {
             $externalBusinessId = $response['externalBusinessId'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }

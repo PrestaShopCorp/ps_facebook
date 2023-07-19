@@ -34,7 +34,6 @@ const params =
   ':currency="currency" :timezone="timezone" :locale="locale" ' +
   ':pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" ' +
   ':psFacebookUiUrl="psFacebookUiUrl" ' +
-  ':psFacebookRetrieveExternalBusinessId="psFacebookRetrieveExternalBusinessId" ' +
   ':psFacebookAppId="psFacebookAppId"' +
   ':psAccountsVersionCheck="psAccountsVersionCheck"' +
   ':psCloudSyncVersionCheck="psCloudSyncVersionCheck"';
@@ -62,7 +61,6 @@ NoPsAccountOnboarded.args = {
   pixelActivationRoute: "http://perdu.com",
   fbeOnboardingSaveRoute: "http://perdu.com",
   psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
-  psFacebookRetrieveExternalBusinessId: "http://perdu.com",
   psAccountsVersionCheck,
   psCloudSyncVersionCheck,
 };
@@ -83,7 +81,6 @@ NotConnected.args = {
   pixelActivationRoute: "http://perdu.com",
   fbeOnboardingSaveRoute: "http://perdu.com",
   psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
-  psFacebookRetrieveExternalBusinessId: "http://perdu.com",
   psAccountsVersionCheck,
   psCloudSyncVersionCheck,
 };
@@ -134,7 +131,6 @@ FullConnected.args = {
   pixelActivationRoute: "http://perdu.com",
   fbeOnboardingSaveRoute: "http://perdu.com",
   psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
-  psFacebookRetrieveExternalBusinessId: "http://perdu.com",
   psAccountsVersionCheck,
   psCloudSyncVersionCheck,
 };

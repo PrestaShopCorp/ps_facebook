@@ -176,8 +176,8 @@
   </div>
 </template>
 
-<script>
-import {defineComponent} from '@vue/composition-api';
+<script lang="ts">
+import {defineComponent, PropType} from 'vue';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import PsModal from '@/components/commons/ps-modal';
@@ -191,32 +191,39 @@ import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-
 import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
+import {OnboardingContext} from '@/store/modules/onboarding/state';
 
-const generateOpenPopup = window.psFacebookGenerateOpenPopup || ((component, popupUrl) => {
-  const canGeneratePopup = (
-    component.contextPsAccounts.currentShop
-    && component.contextPsAccounts.currentShop.url
-    && component.dynamicExternalBusinessId
-    && component.psAccountsToken
-  );
-  return canGeneratePopup ? openPopupGenerator(
-    window,
-    component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
-    popupUrl,
-    '/index.html',
-    component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
-    component.contextPsAccounts.currentShop.frontUrl,
-    component.dynamicExternalBusinessId,
-    component.psAccountsToken,
-    component.currency,
-    component.timezone,
-    component.locale,
-    null,
-    component.onFbeOnboardOpened,
-    component.onFbeOnboardClosed,
-    component.onFbeOnboardResponded,
-  ) : () => { component.createExternalBusinessIdAndOpenPopup(); };
-});
+const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
+  (component, popupUrl: string) => {
+    const canGeneratePopup = (
+      component.contextPsAccounts.currentShop
+      && component.contextPsAccounts.currentShop.url
+      && component.dynamicExternalBusinessId
+      && component.psAccountsToken
+    );
+
+    if (!canGeneratePopup) {
+      return () => null;
+    }
+
+    return openPopupGenerator(
+      window,
+      component.contextPsAccounts.currentShop.url.replace(/^(https?:\/\/[^/]+)(.*)/, '$1'),
+      popupUrl,
+      '/index.html',
+      component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
+      component.contextPsAccounts.currentShop.frontUrl,
+      component.dynamicExternalBusinessId,
+      component.psAccountsToken,
+      component.currency,
+      component.timezone,
+      component.locale,
+      null,
+      component.onFbeOnboardOpened,
+      component.onFbeOnboardClosed,
+      component.onFbeOnboardResponded,
+    );
+  });
 
 export default defineComponent({
   name: 'Configuration',
@@ -241,7 +248,7 @@ export default defineComponent({
       default: () => global.contextPsAccounts,
     },
     contextPsFacebook: {
-      type: Object,
+      type: Object as PropType<OnboardingContext>,
       required: false,
       default: () => global.contextPsFacebook || {}, // fallback to {} is important!
     },
@@ -310,11 +317,6 @@ export default defineComponent({
       required: false,
       default: () => global.psFacebookFbeUiUrl || null,
     },
-    psFacebookRetrieveExternalBusinessId: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookRetrieveExternalBusinessId || null,
-    },
     psAccountsVersionCheck: {
       type: Object,
       required: false,
@@ -362,20 +364,29 @@ export default defineComponent({
         || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
       );
     },
+    openPopup(): () => Window|null {
+      if (!this.dynamicExternalBusinessId) {
+        return () => null;
+      }
+      return generateOpenPopup(this, this.psFacebookUiUrl);
+    },
+    dynamicExternalBusinessId(): string|null {
+      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
+    },
+    dynamicContextPsFacebook(): OnboardingContext|null {
+      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
+    },
   },
   data() {
     return {
-      dynamicContextPsFacebook: this.contextPsFacebook,
-      dynamicExternalBusinessId: this.externalBusinessId,
       showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
-      openPopup: generateOpenPopup(this, this.psFacebookUiUrl),
       showPopupGlass: false,
       showTokensGlass: false,
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
-      openedPopup: null,
+      openedPopup: null as Window|null,
       shops: this.contextPsAccounts.shops || [],
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
@@ -383,39 +394,29 @@ export default defineComponent({
     };
   },
   created() {
-    if ((!this.contextPsFacebook || !this.externalBusinessId)
-      && global.psFacebookGetFbContextRoute) {
+    if (!this.contextPsFacebook || !this.externalBusinessId) {
       this.fetchData();
     } else {
       this.loading = false;
     }
   },
   methods: {
-    fetchData() {
+    async fetchData() {
       this.loading = true;
-      fetch(global.psFacebookGetFbContextRoute)
-        .then((res) => {
-          if (!res.ok) {
-            return res.json().then((errors) => { throw errors; })
-              .catch(() => {
-                throw new Error(res.statusText || res.status);
-              });
-          }
-          return res.json();
-        })
-        .then((json) => {
-          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
-          this.createExternalBusinessId();
+      try {
+        await this.$store.dispatch('onboarding/WARMUP_STORE');
 
-          return this.fetchTokens()
-            .then(() => {
-              this.loading = false;
-            });
-        }).catch((error) => {
-          this.loading = false;
-          this.setErrorsFromFbCall(error);
-        });
+        // CHECK ME: To be kept in the future?
+        this.$root.refreshContextPsFacebook(
+          this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
+        );
+
+        await this.fetchTokens();
+      } catch (error) {
+        this.setErrorsFromFbCall(error);
+      } finally {
+        this.loading = false;
+      }
     },
     fetchTokens() {
       if (!this.facebookConnected) {
@@ -484,8 +485,7 @@ export default defineComponent({
         })
         .then((json) => {
           this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-          this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
-          this.createExternalBusinessId();
+          this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
           this.psFacebookJustOnboarded = false;
         }).catch((error) => {
           console.error(error);
@@ -649,8 +649,7 @@ export default defineComponent({
             })
             .then((json) => {
               this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-              this.dynamicExternalBusinessId = json.psFacebookExternalBusinessId;
-              this.createExternalBusinessId();
+              this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
               this.facebookConnected = false;
               this.psFacebookJustOnboarded = false;
             }).catch((err) => {
@@ -672,64 +671,6 @@ export default defineComponent({
       this.$bvModal.show(
         this.$refs.ps_facebook_modal_unlink.$refs.modal.id,
       );
-    },
-    createExternalBusinessId() {
-      if (!this.psFacebookRetrieveExternalBusinessId) {
-        return Promise.reject(new Error('No route to fetch external Business Id'));
-      }
-      if (this.contextPsAccounts.currentShop
-        && this.contextPsAccounts.currentShop.url
-        && this.psAccountsToken) {
-        if (this.dynamicExternalBusinessId) {
-          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
-          console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
-          if (this.$store.state) {
-            console.log('ShopId:', this.$store.state.context.appContext.shopId);
-          }
-          return Promise.resolve();
-        }
-        return fetch(this.psFacebookRetrieveExternalBusinessId, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        }).then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        }).then((res) => {
-          if (!res.externalBusinessId) {
-            throw new Error('Cannot retrieve ExternalBusinessId.');
-          }
-          this.dynamicExternalBusinessId = res.externalBusinessId;
-          console.log('ExternalBusinessId:', this.dynamicExternalBusinessId);
-          if (this.$store.state) {
-            console.log('ShopId:', this.$store.state.context.appContext.shopId);
-          }
-          this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
-
-          this.$root.refreshExternalBusinessId(res.externalBusinessId);
-          this.$root.identifySegment();
-        }).catch((error) => {
-          this.setErrorsFromFbCall(error);
-        });
-      }
-
-      this.openPopup = generateOpenPopup(this, this.psFacebookUiUrl);
-      return Promise.resolve();
-    },
-    createExternalBusinessIdAndOpenPopup() {
-      if (this.psFacebookRetrieveExternalBusinessId) {
-        this.createExternalBusinessId().then(() => {
-          this.openedPopup = this.openPopup();
-        }).catch((error) => {
-          console.error(error);
-          this.setErrorsFromFbCall(error);
-          this.showPopupGlass = false;
-          this.openedPopup = null;
-          this.popupReceptionDuplicate = false;
-          this.$forceUpdate();
-        });
-      }
     },
     glassClicked() {
       if (this.openedPopup) {
@@ -766,13 +707,9 @@ export default defineComponent({
     contextPsAccounts() {
       this.$forceUpdate();
     },
-    contextPsFacebook(newValue) {
-      const oldValue = this.dynamicContextPsFacebook;
-      if (oldValue && !oldValue.email && newValue && newValue.email) {
-        this.psFacebookJustOnboarded = true;
-      }
-      this.dynamicContextPsFacebook = newValue;
-      this.$forceUpdate();
+    dynamicExternalBusinessId(newValue) {
+      this.$root.refreshExternalBusinessId(newValue);
+      this.$root.identifySegment();
     },
   },
 });

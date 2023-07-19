@@ -134,15 +134,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 $this->module->name,
                 'apiHealthCheck'
             ),
-            'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'RetrieveExternalBusinessId',
-                    'ajax' => 1,
-                ]
-            ),
+            'psFacebookRouteToShopApi' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'psFacebookPixelActivationRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -176,15 +168,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'DisconnectFromFacebook',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookGetFbContextRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'GetFbContext',
                     'ajax' => 1,
                 ]
             ),

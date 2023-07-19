@@ -59,7 +59,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue';
+import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
 
@@ -68,7 +70,19 @@ const root = document.documentElement;
 const header = document.querySelector('#content .page-head');
 const headerFull = document.querySelector('#header_infos');
 
-export default {
+const getGenericRouteFromSpecificOne = (route: string): string => {
+  const url = new URL(route);
+  const genericSearchParams = new URLSearchParams();
+  url.searchParams.forEach((value, param) => {
+    if (['token', 'controller'].includes(param)) {
+      genericSearchParams.set(param, value);
+    }
+  });
+  url.search = `?${genericSearchParams.toString()}`;
+  return url.toString();
+};
+
+export default defineComponent({
   name: 'Home',
   components: {
     Menu,
@@ -80,18 +94,20 @@ export default {
       required: false,
       default: () => global.contextPsFacebook || null, // avoid undefined
     },
-    psFacebookGetFbContextRoute: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookGetFbContextRoute,
-    },
   },
   created() {
-    this.getFbContext();
-    this.$root.identifySegment();
+    initShopClient({
+      shopUrl: window.psFacebookRouteToShopApi || getGenericRouteFromSpecificOne(
+        window.psFacebookEnsureTokensExchanged,
+      ),
+    });
 
     this.setCustomProperties();
     window.addEventListener('resize', this.resizeEventHandler);
+  },
+  mounted() {
+    this.getFbContext();
+    this.$root.identifySegment();
   },
   destroyed() {
     window.removeEventListener('resize', this.resizeEventHandler);
@@ -112,20 +128,13 @@ export default {
       root.style.setProperty('--header-height', `${header.clientHeight}px`);
       root.style.setProperty('--header-height-full', `${header.clientHeight + headerFull.clientHeight}px`);
     },
-    getFbContext() {
-      fetch(this.psFacebookGetFbContextRoute)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        })
-        .then((json) => {
-          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    async getFbContext() {
+      await this.$store.dispatch('onboarding/WARMUP_STORE');
+
+      // CHECK ME: To be kept in the future?
+      this.$root.refreshContextPsFacebook(
+        this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
+      );
     },
     onHelp() {
       this.$segment.track('Click on Help tab', {
@@ -148,5 +157,5 @@ export default {
       this.$root.identifySegment();
     },
   },
-};
+});
 </script>
