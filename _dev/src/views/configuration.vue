@@ -74,8 +74,8 @@
           v-if="!facebookConnected"
           @onFbeOnboardClick="onFbeOnboardClick"
           class="m-3"
-          :active="psAccountsOnboarded"
-          :can-connect="cloudSyncSharingConsentGiven && !!dynamicExternalBusinessId"
+          :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
+          :can-connect="!!dynamicExternalBusinessId"
         />
         <facebook-connected
           v-else
