@@ -17,53 +17,52 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-overlay
-    :show="!active"
-    opacity="0.7"
-    no-fade
-  >
-    <b-card no-body>
-      <template v-slot:header>
-        <h3 class="d-inline">
-          {{ $t('configuration.facebook.notConnected.title') }}
-        </h3>
-      </template>
-      <b-card-body
-        class="pl-3 pt-3 pr-3"
+  <b-card no-body>
+    <template v-slot:header>
+      <h3 class="d-inline">
+        {{ $t('configuration.facebook.notConnected.title') }}
+      </h3>
+    </template>
+    <b-card-body
+      class="pl-3 pt-3 pr-3"
+    >
+      {{ $t('configuration.facebook.notConnected.intro') }}
+    </b-card-body>
+    <b-card-body class="pt-0 pl-3 pb-3 pr-3">
+      <b-button
+        :variant="active && canConnect ? 'primary' : 'outline-primary disabled'"
+        class="float-right ml-4 btn-with-spinner"
+        @click="onFbeOnboardClick"
+        :disabled="!active || !canConnect"
       >
-        {{ $t('configuration.facebook.notConnected.intro') }}
-      </b-card-body>
-      <b-card-body class="pt-0 pl-3 pb-3 pr-3">
-        <b-button
-          :variant="canConnect ? 'primary' : 'outline-primary disabled'"
-          class="float-right ml-4 btn-with-spinner"
-          @click="onFbeOnboardClick"
-          v-if="active"
-          :disabled="!canConnect"
-        >
+        <span :class="active && !canConnect ? 'hidden' : ''">
           {{ $t('configuration.facebook.notConnected.connectButton') }}
-        </b-button>
+        </span>
+        <div
+          v-if="active && !canConnect"
+          class="spinner"
+        />
+      </b-button>
 
-        <div class="logo mr-3">
-          <img
-            src="@/assets/facebook_logo.svg"
-            alt="colors"
-          >
-        </div>
+      <div class="logo mr-3">
+        <img
+          src="@/assets/facebook_logo.svg"
+          alt="colors"
+        >
+      </div>
 
-        <div class="description pr-2">
-          <div>
-            {{ $t('configuration.facebook.notConnected.description') }}
-            <br>
-            <p
-              class="facebook-not-connected-details small-text text-muted"
-              v-html="md2html($t('configuration.facebook.notConnected.details'))"
-            />
-          </div>
+      <div class="description pr-2">
+        <div>
+          {{ $t('configuration.facebook.notConnected.description') }}
+          <br>
+          <p
+            class="facebook-not-connected-details small-text text-muted"
+            v-html="md2html($t('configuration.facebook.notConnected.details'))"
+          />
         </div>
-      </b-card-body>
-    </b-card>
-  </b-overlay>
+      </div>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script lang="ts">
@@ -120,6 +119,7 @@ export default defineComponent({
       height: 1.3rem !important;
       position: absolute;
       left: calc(50% - 0.6rem);
+      top: calc(50% - 0.6rem);
     }
   }
 
