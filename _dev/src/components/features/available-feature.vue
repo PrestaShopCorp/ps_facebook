@@ -89,6 +89,7 @@ export default defineComponent({
           throw new Error('failed to update feature');
         } else {
           this.$emit('onToggleSwitch', this.name, true);
+          this.$store.dispatch('app/FIX_UNREGISTERED_HOOKS');
         }
       }).catch((error) => {
         console.error(error);

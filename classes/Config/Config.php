@@ -31,6 +31,21 @@ class Config
     public const USE_LOCAL_VUE_APP = false;
     public const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';
 
+    public const HOOK_LIST = [
+        'displayHeader',
+        'actionCustomerAccountAdd',
+        'actionCartSave',
+        'actionSearch',
+        'displayOrderConfirmation',
+        'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
+        'actionObjectCustomerMessageAddAfter',
+        'displayFooter',
+        'actionNewsletterRegistrationAfter',
+        'displayBackOfficeHeader',
+        'actionFrontControllerSetMedia',
+        'actionFacebookCallPixel',
+    ];
+
     public const PS_PIXEL_ID = 'PS_FACEBOOK_PIXEL_ID';
     public const PS_FACEBOOK_USER_ACCESS_TOKEN = 'PS_FACEBOOK_ACCESS_TOKEN';
     public const PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE = 'PS_FACEBOOK_USER_ACCESS_TOKEN_EXPIRATION_DATE';

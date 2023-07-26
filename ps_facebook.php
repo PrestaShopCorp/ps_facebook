@@ -21,6 +21,7 @@
 use Dotenv\Dotenv;
 use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
 use PrestaShop\Module\PrestashopFacebook\Buffer\TemplateBuffer;
+use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Database\Installer;
 use PrestaShop\Module\PrestashopFacebook\Database\Uninstaller;
 use PrestaShop\Module\PrestashopFacebook\Dispatcher\EventDispatcher;
@@ -70,21 +71,6 @@ class Ps_facebook extends Module
     const FRONT_CONTROLLERS = [
         'FrontAjaxFacebookWebhooks',
         'FrontAjaxFacebookAjax',
-    ];
-
-    const HOOK_LIST = [
-        'displayHeader',
-        'actionCustomerAccountAdd',
-        'actionCartSave',
-        'actionSearch',
-        'displayOrderConfirmation',
-        'actionAjaxDieProductControllerDisplayAjaxQuickviewAfter',
-        'actionObjectCustomerMessageAddAfter',
-        'displayFooter',
-        'actionNewsletterRegistrationAfter',
-        'displayBackOfficeHeader',
-        'actionFrontControllerSetMedia',
-        'actionFacebookCallPixel',
     ];
 
     /**
@@ -219,7 +205,7 @@ class Ps_facebook extends Module
             return false;
         }
 
-        $this->registerHook(static::HOOK_LIST);
+        $this->registerHook(Config::HOOK_LIST);
 
         return true;
     }
