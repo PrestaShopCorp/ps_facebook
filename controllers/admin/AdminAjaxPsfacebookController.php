@@ -44,6 +44,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\GoogleCategoryProviderInterfac
 use PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
+use PrestaShop\Module\PrestashopFacebook\Repository\ModuleRepository;
 use PrestaShop\ModuleLibFaq\Faq;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
@@ -756,6 +757,44 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             'tokens' => $tokens,
             'suspensionReason' => $this->configurationAdapter->get(Config::PS_FACEBOOK_SUSPENSION_REASON),
         ]));
+    }
+
+    public function displayAjaxGetModuleStatus()
+    {
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
+
+        if (!isset($inputs['moduleName'])) {
+            http_response_code(400);
+            $this->ajaxDie(json_encode([
+                'success' => false,
+                'message' => 'Missing moduleName key',
+            ]));
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                (new ModuleRepository($inputs['moduleName']))->getInformationsAboutModule()
+            )
+        );
+    }
+
+    public function displayAjaxRegisterHook()
+    {
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
+
+        if (!isset($inputs['hookName'])) {
+            http_response_code(400);
+            $this->ajaxDie(json_encode([
+                'success' => false,
+                'message' => 'Missing hookName key',
+            ]));
+        }
+
+        $this->ajaxDie(
+            json_encode([
+                'success' => $this->module->registerHook($inputs['hookName']),
+            ])
+        );
     }
 
     /**

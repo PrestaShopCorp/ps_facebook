@@ -35,17 +35,41 @@
       class="m-3"
     >
       <template v-slot:header>
-        Module status
+        Application info
       </template>
 
       <b-card-body
         class="row p-3"
       >
         <div class="col-6">
-          <p class="h3">
-            External Business ID
-          </p>
-          <pre>{{ $root.psFacebookExternalBusinessId }}</pre>
+          <ul>
+            <li>
+              <strong>Shop ID</strong>: {{ shopId }}
+            </li>
+            <li>
+              <strong>External Business ID</strong>: {{ GET_EXTERNAL_BUSINESS_ID }}
+            </li>
+            <li>
+              <strong>Hook list</strong>:
+              <ul>
+                <li
+                  v-for="(registered, hookName) in GET_HOOKS_STATUS"
+                  :key="hookName"
+                >
+                  {{ hookName }} - {{ registered ? '✅':'❌' }}
+                  <b-button
+                    v-if="!registered"
+                    class="ml-3"
+                    variant="primary"
+                    size="sm"
+                    @click="registerHook(hookName)"
+                  >
+                    🩹 Register hook
+                  </b-button>
+                </li>
+              </ul>
+            </li>
+          </ul>
 
           <p class="h3">
             Health Check
@@ -57,12 +81,6 @@
             Facebook Business Extension data
           </p>
           <pre>{{ contextPsFacebook }}</pre>
-        </div>
-        <div class="col-6">
-          <p class="h3">
-            Shop ID
-          </p>
-          <pre>{{ shopId }}</pre>
         </div>
       </b-card-body>
     </b-card>
@@ -160,35 +178,42 @@
   </div>
 </template>
 
-<script>
-import {defineComponent} from '@vue/composition-api';
+<script lang="ts">
+import {defineComponent} from 'vue';
+import {mapGetters} from 'vuex';
+import GettersTypesApp from '@/store/modules/app/getters-types';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 
 export default defineComponent({
-  name: 'Debug',
-  components: {
-  },
-  props: {
-  },
+  name: 'DebugPage',
   data() {
     return {
       systemAccessToken: null,
       testEventCode: null,
-      isLoading: false,
+      isLoading: false as boolean,
       healthCheckContent: {},
     };
   },
   computed: {
+    ...mapGetters('app', [
+      GettersTypesApp.GET_HOOKS_STATUS,
+    ]),
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.GET_EXTERNAL_BUSINESS_ID,
+    ]),
     pixelID() {
       if (this.$root.contextPsFacebook) {
         return this.$root.contextPsFacebook.pixel.id;
       }
       return null;
     },
-    contextPsFacebook() {
-      return JSON.stringify(this.$root.contextPsFacebook, null, 2) || 'Loading...';
-    },
     shopId() {
       return window.psAccountShopId;
+    },
+    contextPsFacebook(): string {
+      return JSON.stringify(
+        this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
+        null, 2) || 'Loading...';
     },
   },
   methods: {
@@ -241,9 +266,17 @@ export default defineComponent({
           console.error(error);
         });
     },
+    async getHooks(): Promise<void> {
+      await this.$store.dispatch('app/GET_MODULES_VERSIONS', 'ps_facebook');
+    },
+    async registerHook(hookName: string): Promise<void> {
+      await this.$store.dispatch('app/TRIGGER_REGISTER_HOOK', hookName);
+      await this.getHooks();
+    },
   },
   created() {
     this.callHeathCheck();
+    this.getHooks();
   },
 });
 </script>
