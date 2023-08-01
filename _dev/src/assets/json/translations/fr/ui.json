@@ -66,7 +66,7 @@
         "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "Facebook Business Manager est l'outil de Facebook pour une gestion multi-pages et multi-comptes.",
         "facebookPixel": "Pixel Facebook",
-        "facebookPixelTooltip": "Le pixel Facebook est un morceau de code (Javascript) que nous installons automatiquement sur les pages de votre site web. Il vous permet de &amp;quot;suivre&amp;quot; les personnes qui visitent votre site web, de suivre les conversions de vos publicités Facebook et de créer des publics de reciblage",
+        "facebookPixelTooltip": "Le pixel Facebook est un morceau de code (Javascript) que nous installons automatiquement sur les pages de votre site web. Il vous permet de \"suivre\" les personnes qui visitent votre site web, de suivre les conversions de vos publicités Facebook et de créer des reciblages d'audiences",
         "facebookPage": "Page Facebook",
         "facebookPageTooltip": "Votre page Facebook constituera la vitrine de votre entreprise dans vos publicités",
         "facebookAds": "Annonces Facebook",
