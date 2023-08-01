@@ -200,6 +200,10 @@ export default defineComponent({
           this.switchActivated = !this.switchActivated;
           this.$emit('onToggleSwitch', this.name, this.switchActivated);
         }
+
+        if (this.switchActivated) {
+          this.$store.dispatch('app/FIX_UNREGISTERED_HOOKS');
+        }
       }).catch((error) => {
         console.error(error);
         this.error = 'integrate.error.failedToUpdateFeature';
