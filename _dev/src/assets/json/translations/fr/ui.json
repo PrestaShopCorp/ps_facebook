@@ -135,7 +135,7 @@
     "showLess": "Voir moins",
     "exportCatalogButtonErrored": "Echec ! Veuillez réessayer",
     "modalDeactivationTitle": "Confirmer la désactivation ?",
-    "modalDeactivationText": "Vous êtes sur le point de désactiver la synchronisation de votre catalogue avec Facebook Business. Les produits ne se synchroniseront pas tant que l'export du catalogue ne sera pas réactivée.",
+    "modalDeactivationText": "Vous êtes sur le point de désactiver la synchronisation de votre catalogue avec Facebook Business. Les produits ne se synchroniseront pas tant que l'export du catalogue ne sera pas réactivé.",
     "reportingLastSync": "Dernière synchronisation",
     "reportingCatalogCount": "Produits dans le catalogue Facebook",
     "reportingErrorsCount": "Erreurs Facebook lors de l'export"
