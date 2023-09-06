@@ -68,8 +68,8 @@ class CustomerInformationUtility
         }
 
         $arrayReturned['firstname'] = $customer->firstname ? Tools::strtolower($customer->firstname) : null;
-        $arrayReturned['lastname'] = $customer->firstname ? Tools::strtolower($customer->lastname) : null;
-        $arrayReturned['email'] = $customer->firstname ? Tools::strtolower($customer->email) : null;
+        $arrayReturned['lastname'] = $customer->lastname ? Tools::strtolower($customer->lastname) : null;
+        $arrayReturned['email'] = $customer->email ? Tools::strtolower($customer->email) : null;
 
         return $arrayReturned;
     }
