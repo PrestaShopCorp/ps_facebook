@@ -347,4 +347,15 @@ class ProductRepository
     {
         return Product::getPriceStatic($productId, false, $attributeId, 6);
     }
+
+    /**
+     * @param int $productId
+     * @param int $attributeId
+     *
+     * @return float
+     */
+    public function getSalePrice($productId, $attributeId)
+    {
+        return Product::getPriceStatic($productId, true, $attributeId, 6, null, false, true);
+    }
 }
