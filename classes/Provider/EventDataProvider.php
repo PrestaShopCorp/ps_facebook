@@ -291,7 +291,6 @@ class EventDataProvider
         } elseif ($isDelete) {
             //todo: when removing product from cart this hook gets called twice
             $type = 'RemoveProductFromCart';
-            $quantity = null;
         }
 
         $productName = Product::getProductName($idProduct, $idProductAttribute);
@@ -305,7 +304,8 @@ class EventDataProvider
                     $idProductAttribute
                 ),
             ],
-            'num_items' => pSQL($quantity),
+            'currency' => $this->getCurrency(),
+            'value' => $this->productRepository->getSalePrice($idProduct, $idProductAttribute),
         ];
 
         return [
