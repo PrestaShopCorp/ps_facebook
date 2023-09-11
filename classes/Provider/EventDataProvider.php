@@ -406,11 +406,14 @@ class EventDataProvider
         $cart = $this->context->cart;
         $contents = $this->getProductContent($cart);
 
+        $numberOfItems = array_sum(array_column($contents, 'quantity'));
+
         $customData = [
             'contents' => $contents,
             'content_type' => 'product',
             'currency' => $this->getCurrency(),
             'value' => $cart->getOrderTotal(false),
+            'num_items' => $numberOfItems,
         ];
 
         return [
