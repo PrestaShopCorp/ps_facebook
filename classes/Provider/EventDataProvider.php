@@ -22,6 +22,7 @@ namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Cart;
 use Context;
+use Currency;
 use Order;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter;
@@ -553,8 +554,15 @@ class EventDataProvider
         ];
     }
 
-    private function getCurrency()
+    private function getCurrency(): string
     {
-        return \Tools::strtolower($this->context->currency->iso_code);
+        if (!empty($this->context->currency->iso_code)) {
+            return \Tools::strtolower($this->context->currency->iso_code);
+        }
+        if (!empty($this->context->cookie->id_currency)) {
+            return \Tools::strtolower((new Currency($this->context->cookie->id_currency))->iso_code);
+        }
+
+        return \Tools::strtolower(Currency::getDefaultCurrency()->iso_code);
     }
 }
