@@ -27,6 +27,7 @@ use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
+use PrestaShopCorp\Billing\Presenter\BillingPresenter;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -105,6 +106,10 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         $psAccountsData = $this->getPsAccountsData();
 
+        /************************
+         * PrestaShop CloudSync *
+         ************************/
+
         $moduleManager = ModuleManagerBuilder::getInstance()->build();
 
         if ($moduleManager->isInstalled('ps_eventbus')) {
@@ -118,6 +123,27 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ]);
             }
         }
+
+        /**********************
+         * PrestaShop Billing *
+         **********************/
+
+        // Load the context for PrestaShop Billing
+        $billingFacade = $this->getService(BillingPresenter::class);
+        $partnerLogo = $this->module->getLocalPath() . 'logo.png';
+
+        // PrestaShop Billing
+        Media::addJsDef($billingFacade->present([
+          'logo' => $partnerLogo,
+          'tosLink' => 'https://yoururl/',
+          'privacyLink' => 'https://yoururl/',
+          // This field is deprecated, but must be provided to ensure backward compatibility
+          'emailSupport' => ''
+        ]));
+
+        /*********************
+         * PrestaShop Social *
+         *********************/
 
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty

@@ -1,6 +1,8 @@
 <template>
   <div>
     <prestashop-accounts />
+    <div id="ps-billing"></div>
+    <div id="ps-modal"></div>
     <div
       id="prestashop-cloudsync"
       class="p-0"
@@ -52,19 +54,33 @@ export default defineComponent({
       }
       window.psaccountsVue.init();
     },
+    initBillingComponent() {
+      if (!window.psBilling) {
+        return;
+      }
+      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
+    },
   },
   mounted() {
     this.initAccountsComponent();
+    this.initBillingComponent();
     this.initCloudSyncConsent();
   },
   watch: {
     psAccountsOnboarded: {
       handler(newValue) {
         if (newValue === true) {
-          this.initCloudSyncConsent();
+          this.initBillingComponent();
         }
       },
     },
+    /*psAccountsOnboarded: {
+      handler(newValue) {
+        if (newValue === true) {
+          this.initCloudSyncConsent();
+        }
+      },
+    },*/
   },
 });
 </script>
