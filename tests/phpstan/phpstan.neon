@@ -30,5 +30,6 @@ parameters:
     - '#Access to an undefined property PrestaShop\\Module\\PrestashopFacebook\\Handler\\ConfigurationHandler::\$context.#'
     - '#Parameter \#1 \$idCategory of class Category constructor expects null, int given.#'
     - '#Parameter \#1 \$hook_name of method ModuleCore::registerHook\(\) expects string, array<int, string> given.#'
+    - '#Parameter \#1 \$id of class Currency constructor expects null, mixed given.#'
 
   level: 5
