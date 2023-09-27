@@ -26,13 +26,6 @@
     },
     "messages": {
       "success": "PrestaShop Social with Facebook & Instagram is now activated!",
-      "stepperTitle": "Step-by-step guide",
-      "stepPsAccount": "Connect your PrestaShop account",
-      "stepPsFacebook": "Connect your store to Facebook",
-      "stepCategoryMatching": "Map categories",
-      "stepCategoryMatchingOptional": "(optional but strongly recommended)",
-      "stepProductSync": "Export your product catalog",
-      "stepAdCampaign": "Create Traffic and/or Dynamic Ads",
       "reloadButton": "Reload",
       "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Social with Facebook & Instagram can only be configured on one shop. You must log out of your first shop to connect this one.",
       "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",

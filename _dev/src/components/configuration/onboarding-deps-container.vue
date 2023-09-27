@@ -58,7 +58,7 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
+      //window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
     },
   },
   mounted() {

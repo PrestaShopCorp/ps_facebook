@@ -38,14 +38,7 @@
       <template v-else>
         <messages
           :show-onboard-succeeded="psFacebookJustOnboarded"
-          :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
-          :category-matching-started="categoryMatchingStarted"
-          :product-sync-started="productSyncStarted"
-          :ad-campaign-started="adCampaignStarted"
           :alert-settings="alertSettings"
-          @onSyncCatalogClick="onSyncCatalogClick"
-          @onCategoryMatchingClick="onCategoryMatchingClick"
-          @onAdCampaignClick="onAdCampaignClick"
           class="m-3"
         />
         <ModuleActionNeeded
