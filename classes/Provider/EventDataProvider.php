@@ -296,6 +296,8 @@ class EventDataProvider
 
         $productName = Product::getProductName($idProduct, $idProductAttribute);
 
+        $cartId = $this->context->cookie->id_cart ?? null;
+
         $customData = [
             'content_name' => pSQL($productName),
             'content_type' => self::PRODUCT_TYPE,
@@ -306,7 +308,7 @@ class EventDataProvider
                 ),
             ],
             'currency' => $this->getCurrency(),
-            'value' => $this->productRepository->getSalePrice($idProduct, $idProductAttribute),
+            'value' => $this->productRepository->getSalePrice($idProduct, $idProductAttribute, $cartId),
         ];
 
         return [
