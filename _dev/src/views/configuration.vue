@@ -64,25 +64,32 @@
           class="m-3"
         />
 
-        <facebook-not-connected
-          v-if="!facebookConnected"
-          @onFbeOnboardClick="onFbeOnboardClick"
+        <div
           class="m-3"
-          :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
-          :can-connect="!!dynamicExternalBusinessId"
-        />
-        <facebook-connected
-          v-else
-          :ps-facebook-app-id="psFacebookAppId"
-          :external-business-id="dynamicExternalBusinessId"
-          :context-ps-facebook="dynamicContextPsFacebook"
-          :is-module-enabled="isModuleEnabled"
-          @onEditClick="onEditClick"
-          @onPixelActivation="onPixelActivation"
-          @onFbeUnlinkRequest="onFbeUnlinkRequest"
-          @onUninstallClick="onUninstallClick"
-          class="m-3"
-        />
+        >
+          <two-panel-cols
+            :title="$t('configuration.sectionTitle.pssocial')"
+          >
+            <facebook-not-connected
+              v-if="!facebookConnected"
+              @onFbeOnboardClick="onFbeOnboardClick"
+              :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
+              :can-connect="!!dynamicExternalBusinessId"
+            />
+            <facebook-connected
+              v-else
+              :ps-facebook-app-id="psFacebookAppId"
+              :external-business-id="dynamicExternalBusinessId"
+              :context-ps-facebook="dynamicContextPsFacebook"
+              :is-module-enabled="isModuleEnabled"
+              @onEditClick="onEditClick"
+              @onPixelActivation="onPixelActivation"
+              @onFbeUnlinkRequest="onFbeUnlinkRequest"
+              @onUninstallClick="onUninstallClick"
+            />
+          </two-panel-cols>
+        </div>
+
         <survey v-if="facebookConnected" />
         <div
           v-if="showPopupGlass"
@@ -186,6 +193,7 @@ import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
+import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -233,6 +241,7 @@ export default defineComponent({
     FacebookNotConnected,
     FacebookConnected,
     Survey,
+    TwoPanelCols,
   },
   mixins: [],
   props: {

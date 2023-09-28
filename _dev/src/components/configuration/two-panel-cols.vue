@@ -5,6 +5,10 @@
         class="is-sticky pb-3"
       >
         <h2>{{ title }}</h2>
+
+        <p v-if="description">
+          {{ description }}
+        </p>
       </div>
     </div>
       <div class="col-12 col-md-7">
@@ -14,15 +18,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { PropType, defineComponent } from 'vue';
+import { TranslateResult } from 'vue-i18n';
 
 export default defineComponent({
   name: 'TwoPanelCols',
   props: {
     title: {
       required: true,
-      type: String,
+      type: String as PropType<TranslateResult|string>,
     },
+    description: {
+      type: String as PropType<string|null>,
+      required: false,
+      default: null,
+    }
   },
 });
 </script>

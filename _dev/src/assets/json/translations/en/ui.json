@@ -24,6 +24,12 @@
       "needMoreFeatures": "Need more features?",
       "seeDetailedPlans": "See detailed plans"
     },
+    "sectionTitle": {
+      "psaccounts": "Link your store to a PrestaShop account",
+      "psbilling": "Subscribe to start using PrestaShop Social",
+      "pscloudsync": "Allow data sharing",
+      "pssocial": "Set up Facebook"
+    },
     "messages": {
       "success": "PrestaShop Social with Facebook & Instagram is now activated!",
       "reloadButton": "Reload",
