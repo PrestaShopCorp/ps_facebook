@@ -1,3 +1,8 @@
+.logo {
+  max-width: 2.75rem;
+  max-height: 2.75rem;
+}
+
 .app {
   &:not(:last-child) {
     &::after {
@@ -7,9 +12,4 @@
       margin-top: 0.5rem;
     }
   }
-  .logo {
-    max-width: 2.75rem;
-    max-height: 2.75rem;
-  }
-
 }

@@ -185,7 +185,6 @@ import PsModal from '@/components/commons/ps-modal.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
-import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-container.vue';
@@ -236,7 +235,6 @@ export default defineComponent({
     Messages,
     MultiStoreSelector,
     ModuleActionNeeded,
-    NoConfig,
     OnboardingDepsContainer,
     FacebookNotConnected,
     FacebookConnected,

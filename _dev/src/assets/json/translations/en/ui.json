@@ -52,11 +52,10 @@
     "facebook": {
       "title": "Set up Facebook",
       "notConnected": {
-        "title": "Connect your store to Facebook",
+        "title": "Set up Facebook",
         "intro": "Integrate your shop with Facebook.",
-        "connectButton": "Connect to Facebook",
-        "description": "With PS Social with Facebook & Instagram enjoy a frictionless, codeless onboarding and management experience for Facebook business products.",
-        "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
+        "connectButton": "Set up Facebook",
+        "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store."
       },
       "connected": {
         "description": "Here are the Facebook assets you’ve connected to your store.",
@@ -85,8 +84,7 @@
       }
     },
     "app": {
-      "like": "like",
-      "likes": "likes",
+      "nbLikes": "{0} like|{0} likes",
       "createdAt": "Created",
       "lastActive": "Last active",
       "activated": "Activated",

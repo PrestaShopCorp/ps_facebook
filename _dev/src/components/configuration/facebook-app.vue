@@ -71,8 +71,7 @@
             v-if="null !== likes"
             class="small"
           >
-            {{ likes }}
-            {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
+            {{ $tc('configuration.app.nbLikes', likes, [likes]) }}
           </div>
           <div
             v-if="!!createdAt"

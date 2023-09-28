@@ -23,15 +23,20 @@
         {{ $t('configuration.facebook.notConnected.title') }}
       </h3>
     </template>
-    <b-card-body
-      class="pl-3 pt-3 pr-3"
-    >
-      {{ $t('configuration.facebook.notConnected.intro') }}
-    </b-card-body>
-    <b-card-body class="pt-0 pl-3 pb-3 pr-3">
+    <b-card-body class="pt-2 pl-3 pb-4 pr-3 d-flex align-items-center">
+      <img
+        src="@/assets/logo_highres.png"
+        alt="colors"
+        class="logo mr-3"
+      />
+
+      <div class="description pr-2">
+        {{ $t('configuration.facebook.notConnected.description') }}
+      </div>
+
       <b-button
         :variant="active && canConnect ? 'primary' : 'outline-primary disabled'"
-        class="float-right ml-4 btn-with-spinner"
+        class="ml-4 btn-with-spinner text-nowrap"
         @click="onFbeOnboardClick"
         :disabled="!active || !canConnect"
       >
@@ -43,24 +48,6 @@
           class="spinner"
         />
       </b-button>
-
-      <div class="logo mr-3">
-        <img
-          src="@/assets/facebook_logo.svg"
-          alt="colors"
-        >
-      </div>
-
-      <div class="description pr-2">
-        <div>
-          {{ $t('configuration.facebook.notConnected.description') }}
-          <br>
-          <p
-            class="facebook-not-connected-details small-text text-muted"
-            v-html="md2html($t('configuration.facebook.notConnected.details'))"
-          />
-        </div>
-      </div>
     </b-card-body>
   </b-card>
 </template>
