@@ -18,11 +18,12 @@
  *-->
 <template>
   <div class="app pt-1 pb-3 px-2">
-    <div class="text-uppercase text-muted">
+    <div class="font-weight-500 d-flex ps_gs-fz-16 mb-2">
       {{ appType }}
-      <span v-if="!!tooltip">
-        <tooltip :text="tooltip" />
-      </span>
+      <tooltip 
+        v-if="!!tooltip"
+        :text="tooltip"
+      />
     </div>
     <img
       v-if="!!logo"
@@ -30,37 +31,28 @@
       alt="app logo"
       class="logo float-left mr-2 my-1"
     >
-    <div class="font-weight-bold text-truncate">
+    <div class="font-weight-500 ps_gs-fz-14 text-truncate">
       {{ appName }}
+
+      <span
+        v-if="!!url"
+        class="url"
+      >
+        &nbsp;/&nbsp;
+        <b-link
+          :href="url"
+          target="_blank"
+          @click="onStats"
+        >
+          {{ $t('configuration.app.viewStats') }}
+        </b-link>
+      </span>
     </div>
 
     <div v-if="displayWarning">
       <warning :warning-text="$t('configuration.app.informationCannotBeDisplayedWarning')" />
     </div>
     <div v-else>
-      <div
-        v-if="activationSwitch != null"
-        class="switchy float-right mb-1 ml-2"
-      >
-        <span class="d-none d-sm-inline">
-          {{ statusText }}
-        </span>
-        <div
-          class="switch-input switch-input-lg ml-1"
-          :class="[
-            switchActivated && !frozenSwitch ? '-checked' : null,
-            frozenSwitch ? 'disabled' : null,
-          ]"
-          @click="switchClick"
-        >
-          <input
-            class="switch-input-lg"
-            type="checkbox"
-            :checked="switchActivated && !frozenSwitch"
-          >
-        </div>
-      </div>
-
       <div
         v-if="!!email"
         class="small text-truncate"
@@ -95,20 +87,25 @@
         {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
         {{ new Date(lastActive).toLocaleTimeString(undefined) }}
       </div>
-    </div>
-
-    <div
-      v-if="!!url"
-      class="url"
-    >
-      <b-link
-        :href="url"
-        target="_blank"
-        @click="onStats"
+      <div
+        v-if="activationSwitch"
+        class="small"
       >
-        <i class="material-icons">analytics</i>
-        {{ $t('configuration.app.viewStats') }}
-      </b-link>
+        {{ $t('configuration.app.status') }}
+        <b-form-checkbox
+          switch
+          size="lg"
+          class="ml-1 ps_gs-switch"
+          value="switchActivated"
+          :disabled="frozenSwitch"
+          @change="switchClick"
+          inline
+        >
+          <span class="small">
+            {{ statusText }}
+          </span>
+        </b-form-checkbox>
+      </div>
     </div>
   </div>
 </template>
@@ -235,40 +232,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .app {
-    background-color: #fafbfc;
-    border-radius: 3px;
-    height: 100%;
-
-    .logo {
-      width: 32px;
-      height: 32px;
-    }
-
-    .url {
-      margin-top: 0.5rem;
-      margin-bottom: -0.3rem;
-    }
-
-    .switchy {
-      margin-top: 2.5rem;
-
-      .switch-input {
-        &:not(.-checked) {
-          background: #c05c67 !important;
-          &::after {
-            color: #c05c67 !important;
-          }
-        }
-        &.disabled {
-          background: #eee !important;
-          &::after {
-            color: #6c868e !important;
-          }
-        }
-      }
-    }
-  }
-</style>

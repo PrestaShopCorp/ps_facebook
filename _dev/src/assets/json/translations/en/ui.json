@@ -93,6 +93,7 @@
       "disabled": "Disabled",
       "moduleDisabled": "Module is disabled",
       "viewStats": "View stats",
+      "status": "Status:",
       "informationCannotBeDisplayedWarning": "This information cannot be displayed at the moment"
     },
     "glass": {
