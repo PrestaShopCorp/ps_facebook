@@ -1,20 +1,36 @@
 <template>
   <div>
-    <prestashop-accounts />
-    <div id="ps-billing"></div>
-    <div id="ps-modal"></div>
-    <div
-      id="prestashop-cloudsync"
-      class="p-0"
-    />
+    <two-panel-cols
+      :title="$t('configuration.sectionTitle.psaccounts')"
+    >
+      <prestashop-accounts />
+    </two-panel-cols>
+    <two-panel-cols
+      :title="$t('configuration.sectionTitle.psbilling')"
+    >
+      <div id="ps-billing"></div>
+      <div id="ps-modal"></div>
+    </two-panel-cols>
+    <two-panel-cols
+      :title="$t('configuration.sectionTitle.pscloudsync')"
+    >
+      <div
+        id="prestashop-cloudsync"
+        class="p-0"
+      />
+    </two-panel-cols>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
+import TwoPanelCols from './two-panel-cols.vue';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
+  components: {
+    TwoPanelCols,
+  },
   props: {
     psAccountsOnboarded: {
       type: Boolean,
@@ -58,7 +74,7 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      //window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
+      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
     },
   },
   mounted() {

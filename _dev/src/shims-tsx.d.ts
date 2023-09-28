@@ -9,6 +9,8 @@ declare global {
 
     interface Window {
       contextPsAccounts: any;
+      contextPsEventbus: any;
+      psBillingContext: any;
       i18nSettings: any;
 
       psFacebookRouteToShopApi?: string;

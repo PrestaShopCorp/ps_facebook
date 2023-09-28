@@ -60,6 +60,7 @@
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
+          @onRunningBilling="billingRunning = $event"
           class="m-3"
         />
 
@@ -173,7 +174,7 @@
 import {defineComponent, PropType} from 'vue';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
-import PsModal from '@/components/commons/ps-modal';
+import PsModal from '@/components/commons/ps-modal.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
@@ -384,6 +385,7 @@ export default defineComponent({
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
       cloudSyncSharingConsentGiven: false,
+      billingRunning: false as boolean,
     };
   },
   created() {

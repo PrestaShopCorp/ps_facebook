@@ -1,5 +1,8 @@
+import cloneDeep from 'lodash.clonedeep';
 import Configuration from "../src/views/configuration.vue";
-import {contextPsAccountsNotConnected, contextPsAccountsConnected, contextPsAccountsConnectedAndValidated} from "../.storybook/mock/ps-accounts";
+import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "../.storybook/mock/ps-accounts";
+import {contextPsEventBus} from "../.storybook/mock/ps-event-bus";
+import {contextPsBilling} from "../.storybook/mock/ps-billing";
 
 export default {
   title: "Configuration/Configuration page",
@@ -69,6 +72,7 @@ export const NotConnected: any = Template.bind({});
 NotConnected.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
+    window.psBillingContext = cloneDeep(contextPsBilling);
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
   contextPsFacebook: {},
@@ -89,6 +93,8 @@ export const FullConnected: any = Template.bind({});
 FullConnected.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
+    window.psBillingContext = cloneDeep(contextPsBilling);
+    window.contextPsEventbus = cloneDeep(contextPsEventBus);
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
   contextPsFacebook: {
