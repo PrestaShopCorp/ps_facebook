@@ -17,104 +17,107 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <div class="app pt-1 pb-3 px-2">
-    <div class="font-weight-500 d-flex ps_gs-fz-16 mb-2">
-      {{ appType }}
-      <tooltip 
-        v-if="!!tooltip"
-        :text="tooltip"
-      />
-    </div>
-    <img
-      v-if="!!logo"
-      :src="logo"
-      alt="app logo"
-      class="logo float-left mr-2 my-1"
-    >
-    <div class="font-weight-500 ps_gs-fz-14 text-truncate">
-      {{ appName }}
+  <div class="app pb-2 px-2">
+    <div class="d-flex">
+      <img
+        v-if="!!logo"
+        :src="logo"
+        alt="app logo"
+        class="logo mr-3 my-1"
+      >
+      <div>
+        <div class="font-weight-500 d-flex ps_gs-fz-16 mb-2">
+          {{ appType }}
+          <tooltip 
+            v-if="!!tooltip"
+            :text="tooltip"
+          />
+        </div>
+        <div class="font-weight-500 ps_gs-fz-14 text-truncate">
+          {{ appName }}
 
-      <span
-        v-if="!!url"
-        class="url"
-      >
-        &nbsp;/&nbsp;
-        <b-link
-          :href="url"
-          target="_blank"
-          @click="onStats"
-        >
-          {{ $t('configuration.app.viewStats') }}
-        </b-link>
-      </span>
-    </div>
-
-    <div v-if="displayWarning">
-      <warning :warning-text="$t('configuration.app.informationCannotBeDisplayedWarning')" />
-    </div>
-    <div v-else>
-      <div
-        v-if="!!email"
-        class="small text-truncate"
-      >
-        {{ email }}
-      </div>
-      <div
-        v-if="!!appId"
-        class="small text-truncate"
-      >
-        {{ appId }}
-      </div>
-      <div
-        v-if="null !== likes"
-        class="small"
-      >
-        {{ likes }}
-        {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
-      </div>
-      <div
-        v-if="!!createdAt"
-        class="small"
-      >
-        {{ $t('configuration.app.createdAt') }}
-        {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
-      </div>
-      <div
-        v-if="!!lastActive"
-        class="small"
-      >
-        {{ $t('configuration.app.lastActive') }}
-        {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
-        {{ new Date(lastActive).toLocaleTimeString(undefined) }}
-      </div>
-      <div
-        v-if="activationSwitch"
-        class="small"
-      >
-        {{ $t('configuration.app.status') }}
-        <b-form-checkbox
-          switch
-          size="lg"
-          class="ml-1 ps_gs-switch"
-          value="switchActivated"
-          :disabled="frozenSwitch"
-          @change="switchClick"
-          inline
-        >
-          <span class="small">
-            {{ statusText }}
+          <span
+            v-if="!!url"
+            class="url"
+          >
+            &nbsp;/&nbsp;
+            <b-link
+              :href="url"
+              target="_blank"
+              @click="onStats"
+            >
+              {{ $t('configuration.app.viewStats') }}
+            </b-link>
           </span>
-        </b-form-checkbox>
+        </div>
+
+        <div v-if="displayWarning">
+          <warning :warning-text="$t('configuration.app.informationCannotBeDisplayedWarning')" />
+        </div>
+        <div v-else>
+          <div
+            v-if="!!email"
+            class="small text-truncate"
+          >
+            {{ email }}
+          </div>
+          <div
+            v-if="!!appId"
+            class="small text-truncate"
+          >
+            {{ appId }}
+          </div>
+          <div
+            v-if="null !== likes"
+            class="small"
+          >
+            {{ likes }}
+            {{ likes >= 2 ? $t('configuration.app.likes') : $t('configuration.app.like') }}
+          </div>
+          <div
+            v-if="!!createdAt"
+            class="small"
+          >
+            {{ $t('configuration.app.createdAt') }}
+            {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+          </div>
+          <div
+            v-if="!!lastActive"
+            class="small"
+          >
+            {{ $t('configuration.app.lastActive') }}
+            {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
+            {{ new Date(lastActive).toLocaleTimeString(undefined) }}
+          </div>
+          <div
+            v-if="activationSwitch"
+            class="small"
+          >
+            {{ $t('configuration.app.status') }}
+            <b-form-checkbox
+              switch
+              size="lg"
+              class="ml-1 ps_gs-switch"
+              v-model="switchActivated"
+              :disabled="frozenSwitch"
+              inline
+            >
+              <span class="small">
+                {{ statusText }}
+              </span>
+            </b-form-checkbox>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
+import { defineComponent } from 'vue';
 import {BFormCheckbox, BLink} from 'bootstrap-vue';
-import Tooltip from '../help/tooltip.vue';
-import Warning from '../warning/warning.vue';
+import Tooltip from '@/components/help/tooltip.vue';
+import Warning from '@/components/warning/warning.vue';
 
 export default defineComponent({
   name: 'FacebookApp',
@@ -191,7 +194,7 @@ export default defineComponent({
   },
   data() {
     return {
-      switchActivated: this.activationSwitch,
+      switchActivated: this.activationSwitch as boolean,
     };
   },
   computed: {
@@ -211,13 +214,7 @@ export default defineComponent({
         return;
       }
       this.switchActivated = !this.switchActivated;
-      this.$emit('onActivation', this.switchActivated);
-      this.$segment.track('Click on pixel switch CTA', {
-        module: 'ps_facebook',
-      });
-      this.$segment.track(`Feature Pixel ${this.switchActivated ? 'enabled' : 'disabled'}`, {
-        module: 'ps_facebook',
-      });
+
     },
     onStats() {
       this.$segment.track('Click on view stat CTA', {
@@ -226,8 +223,17 @@ export default defineComponent({
     },
   },
   watch: {
-    activationSwitch(newValue) {
+    activationSwitch(newValue: boolean) {
       this.switchActivated = newValue;
+    },
+    switchActivated(newValue: boolean) {
+      this.$emit('onActivation', newValue);
+      this.$segment.track('Click on pixel switch CTA', {
+        module: 'ps_facebook',
+      });
+      this.$segment.track(`Feature Pixel ${newValue ? 'enabled' : 'disabled'}`, {
+        module: 'ps_facebook',
+      });
     },
   },
 });

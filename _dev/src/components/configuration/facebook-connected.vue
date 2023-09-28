@@ -85,6 +85,7 @@
         :email="fbm.email || ''"
         :created-at="fbm.createdAt"
         :display-warning="!fbm.email"
+        :logo="require('@/assets/logo_highres.png')"
       />
       <facebook-app
         :app-type="$t('configuration.facebook.connected.facebookPage')"
@@ -106,6 +107,7 @@
         :activation-switch="contextPsFacebook.pixel.isActive"
         :frozen-switch="!isModuleEnabled"
         @onActivation="pixelActivation"
+        :logo="require('@/assets/logo_highres.png')"
       />
       <facebook-app
         :app-type="$t('configuration.facebook.connected.facebookAds')"
@@ -116,6 +118,7 @@
           !contextPsFacebook.ads.name ||
             !contextPsFacebook.ads.createdAt
         "
+        :logo="require('@/assets/logo_highres.png')"
       />
     </b-card-body>
   </b-card>
