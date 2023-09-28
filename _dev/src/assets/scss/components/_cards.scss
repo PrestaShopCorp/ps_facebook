@@ -1,0 +1,15 @@
+.card {
+    border-radius: 0;
+    border-width: 1px;
+    border-color: $primary-400;
+
+    .card-header {
+      padding: unset;
+      background-color: unset;
+      border-bottom: unset;
+      
+      margin: 1rem;
+      font-weight: 600;
+      font-size: 18px;
+    }
+}

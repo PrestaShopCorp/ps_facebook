@@ -50,7 +50,7 @@
       "accountSuspended": "We seem to lack permissions on your Facebook account to be able to sync your products. To resolve this issue, please reonboard to put the permissions back to the correct state."
     },
     "facebook": {
-      "title": "Your Facebook settings",
+      "title": "Set up Facebook",
       "notConnected": {
         "title": "Connect your store to Facebook",
         "intro": "Integrate your shop with Facebook.",
@@ -59,8 +59,9 @@
         "details": "- Create/Select business \n- Create/Select page \n- Create/Select ad account \n- Create/Select install pixel \n - Create/Select sync product catalog \n - Create Facebook Shop & Instagram Shopping \n- Add Messenger plug-in in your shop"
       },
       "connected": {
-        "description": "You authorize this Facebook account to connect to your store:",
-        "editButton": "Modify the account settings",
+        "description": "Here are the Facebook assets you’ve connected to your store.",
+        "dropdownButton": "Update settings",
+        "editButton": "Update account settings",
         "unlinkButton": "Logout",
         "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place",
@@ -70,7 +71,7 @@
         "facebookPageTooltip": "Your Facebook page will represent your business in your ads",
         "facebookAds": "Facebook Ads",
         "facebookAdsTooltip": "Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns",
-        "manageFbeButton": "Go to Facebook Business",
+        "manageFbeButton": "Go to Meta Business Manager",
         "unlinkModalHeader": "Confirm uninstallation?",
         "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
       },

@@ -17,21 +17,10 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-card no-body>
-    <b-card-header @click="fold">
-      <a
-        href="javascript:void(0);"
-        class="float-right tooltip-link"
-      >
-        <i
-          v-if="folded"
-          class="material-icons fixed-size-small float-right"
-        >expand_more</i>
-        <i
-          v-else
-          class="material-icons fixed-size-small float-right"
-        >expand_less</i>
-      </a>
+  <b-card
+    no-body
+  >
+    <b-card-header>
       <b-iconstack
         font-scale="1.5"
         class="mr-2 align-bottom fixed-size"
@@ -52,38 +41,27 @@
       </h3>
     </b-card-header>
 
-    <!-- Large screen -->
     <b-card-body
-      v-if="!folded"
-      class="description d-none d-sm-flex pl-3 pt-3 pr-3"
+      class="d-flex align-items-start justify-content-between pl-3 pr-3"
     >
-      <img
-        class="mr-3"
-        src="@/assets/facebook_logo.svg"
-        alt="colors"
-      >
-
-      <div v-if="!!contextPsFacebook">
+      <span v-if="!!contextPsFacebook">
         {{ $t('configuration.facebook.connected.description') }}
-        <br>
-        <span
-          class="font-weight-bold"
-          v-if="!!contextPsFacebook.user.email"
-        >
-          {{ contextPsFacebook.user.email }}
-        </span>
-      </div>
+      </span>
 
       <b-dropdown
-        variant="primary"
-        split
+        variant="outline-primary"
         right
-        @click="edit"
-        class="ml-4 float-right"
+        class="ml-2"
+        toggle-class="btn-max-width"
       >
         <template #button-content>
-          {{ $t('configuration.facebook.connected.editButton') }}
+          {{ $t('configuration.facebook.connected.dropdownButton') }}
         </template>
+        <b-dropdown-item
+          @click="edit"
+        >
+          {{ $t('configuration.facebook.connected.editButton') }}
+        </b-dropdown-item>
         <b-dropdown-item
           @click="openManageFbe"
         >
@@ -97,127 +75,48 @@
       </b-dropdown>
     </b-card-body>
 
-    <!-- Small screen -->
     <b-card-body
-      v-if="!folded"
-      class="description d-block d-sm-none pl-3 pt-3 pr-3"
-    >
-      <img
-        class="mr-3 mb-3"
-        src="@/assets/facebook_logo.svg"
-        alt="colors"
-      >
-
-      <b-dropdown
-        variant="primary"
-        split
-        right
-        :text="$t('configuration.facebook.connected.manageFbeButton')"
-        @click="openManageFbe"
-        class="ml-4 float-right"
-      >
-        <b-dropdown-item @click="edit">
-          {{ $t('configuration.facebook.connected.editButton') }}
-        </b-dropdown-item>
-        <b-dropdown-item
-          @click="$emit('onFbeUnlinkRequest')"
-        >
-          {{ $t('configuration.facebook.connected.unlinkButton') }}
-        </b-dropdown-item>
-      </b-dropdown>
-
-      <div v-if="!!contextPsFacebook">
-        {{ $t('configuration.facebook.connected.description') }}
-        <br>
-        <span
-          class="font-weight-bold"
-          v-if="!!contextPsFacebook.user.email"
-        >
-          {{ contextPsFacebook.user.email }}
-        </span>
-      </div>
-    </b-card-body>
-
-    <b-card-body
-      v-if="!folded"
       class="py-0 px-1"
     >
-      <b-container fluid>
-        <b-row align-v="stretch">
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="app pb-3 px-2"
-          >
-            <facebook-app
-              :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
-              :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
-              :app-name="fbm.name"
-              :email="fbm.email || ''"
-              :created-at="fbm.createdAt"
-              :display-warning="!fbm.email"
-            />
-          </b-col>
-          <div class="w-100 d-block d-sm-none" />
-          <div class="w-100 d-none d-sm-block d-md-none" />
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="app pb-3 px-2"
-          >
-            <facebook-app
-              :app-type="$t('configuration.facebook.connected.facebookPixel')"
-              :tooltip="$t('configuration.facebook.connected.facebookPixelTooltip')"
-              :app-name="contextPsFacebook.pixel.name"
-              :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
-              :last-active="contextPsFacebook.pixel.lastActive"
-              :url="pixelUrl"
-              :activation-switch="contextPsFacebook.pixel.isActive"
-              :frozen-switch="!isModuleEnabled"
-              @onActivation="pixelActivation"
-            />
-          </b-col>
-          <div class="w-100" />
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="app pb-3 px-2"
-          >
-            <facebook-app
-              :app-type="$t('configuration.facebook.connected.facebookPage')"
-              :tooltip="$t('configuration.facebook.connected.facebookPageTooltip')"
-              :app-name="contextPsFacebook.page.page"
-              :likes="contextPsFacebook.page.likes"
-              :logo="contextPsFacebook.page.logo"
-              :display-warning="
-                !contextPsFacebook.page.page
-              "
-            />
-          </b-col>
-          <div class="w-100 d-block d-sm-none" />
-          <div class="w-100 d-none d-sm-block d-md-none" />
-          <b-col
-            lg="6"
-            md="6"
-            sm="12"
-            class="app pb-3 px-2"
-          >
-            <facebook-app
-              :app-type="$t('configuration.facebook.connected.facebookAds')"
-              :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"
-              :app-name="contextPsFacebook.ads.name"
-              :created-at="contextPsFacebook.ads.createdAt"
-              :display-warning="
-                !contextPsFacebook.ads.name ||
-                  !contextPsFacebook.ads.createdAt
-              "
-            />
-          </b-col>
-        </b-row>
-      </b-container>
+      <facebook-app
+        :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"
+        :tooltip="$t('configuration.facebook.connected.facebookBusinessManagerTooltip')"
+        :app-name="fbm.name"
+        :email="fbm.email || ''"
+        :created-at="fbm.createdAt"
+        :display-warning="!fbm.email"
+      />
+      <facebook-app
+        :app-type="$t('configuration.facebook.connected.facebookPage')"
+        :tooltip="$t('configuration.facebook.connected.facebookPageTooltip')"
+        :app-name="contextPsFacebook.page.page"
+        :likes="contextPsFacebook.page.likes"
+        :logo="contextPsFacebook.page.logo"
+        :display-warning="
+          !contextPsFacebook.page.page
+        "
+      />
+      <facebook-app
+        :app-type="$t('configuration.facebook.connected.facebookPixel')"
+        :tooltip="$t('configuration.facebook.connected.facebookPixelTooltip')"
+        :app-name="contextPsFacebook.pixel.name"
+        :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
+        :last-active="contextPsFacebook.pixel.lastActive"
+        :url="pixelUrl"
+        :activation-switch="contextPsFacebook.pixel.isActive"
+        :frozen-switch="!isModuleEnabled"
+        @onActivation="pixelActivation"
+      />
+      <facebook-app
+        :app-type="$t('configuration.facebook.connected.facebookAds')"
+        :tooltip="$t('configuration.facebook.connected.facebookAdsTooltip')"
+        :app-name="contextPsFacebook.ads.name"
+        :created-at="contextPsFacebook.ads.createdAt"
+        :display-warning="
+          !contextPsFacebook.ads.name ||
+            !contextPsFacebook.ads.createdAt
+        "
+      />
     </b-card-body>
   </b-card>
 </template>
@@ -271,21 +170,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
-    startExpanded: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
     isModuleEnabled: {
       type: Boolean,
       required: false,
       default: true,
     },
-  },
-  data() {
-    return {
-      folded: !this.startExpanded,
-    };
   },
   computed: {
     fbm() {
@@ -308,9 +197,6 @@ export default defineComponent({
     },
   },
   methods: {
-    fold() {
-      this.folded = !this.folded;
-    },
     edit() {
       this.$emit('onEditClick');
       this.$segment.track('Click on Restart onboarding', {
@@ -329,20 +215,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .description {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-
-    > div:first-of-type {
-      flex-grow: 1;
-      flex-shrink: 1;
-
-      > span {
-        word-break: break-word;
-      }
-    }
-  }
-</style>
