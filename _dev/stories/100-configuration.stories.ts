@@ -73,6 +73,7 @@ NotConnected.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
+    window.contextPsEventbus = cloneDeep(contextPsEventBus);
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
   contextPsFacebook: {},
