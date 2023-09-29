@@ -75,6 +75,7 @@
               @onFbeOnboardClick="onFbeOnboardClick"
               :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
               :can-connect="!!dynamicExternalBusinessId"
+              :encourage-to-retry="encourageToRetry"
             />
             <facebook-connected
               v-else
@@ -393,6 +394,7 @@ export default defineComponent({
       exchangeTokensErrored: false,
       cloudSyncSharingConsentGiven: false,
       billingRunning: false as boolean,
+      encourageToRetry: false as boolean,
     };
   },
   created() {
@@ -530,11 +532,15 @@ export default defineComponent({
       });
     },
     onFbeOnboardOpened() {
+      this.encourageToRetry = false;
       this.showPopupGlass = true;
     },
     onFbeOnboardClosed() {
       this.showPopupGlass = false;
       this.openedPopup = null;
+      if (!this.popupReceptionDuplicate) {
+        this.encourageToRetry = true;
+      }
     },
     onFbeOnboardResponded(response, save = this.saveFbeOnboarding.bind(this)) {
       if (this.popupReceptionDuplicate) {

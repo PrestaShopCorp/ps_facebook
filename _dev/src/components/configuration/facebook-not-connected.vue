@@ -23,7 +23,41 @@
         {{ $t('configuration.facebook.notConnected.title') }}
       </h3>
     </template>
-    <b-card-body class="pt-2 pl-3 pb-4 pr-3 d-flex align-items-center">
+    <b-card-body
+      v-if="encourageToRetry"
+      class="pt-0"
+    >
+      <b-alert
+        show
+        variant="warning"
+        class="mb-0 mt-3"
+      >
+        <div
+          class="d-flex justify-content-between"
+        >
+          <p class="mb-0">
+            <strong>{{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}</strong><br>
+            <span class="ps_gs-fz-12">
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.explanation') }}
+            </span>
+          </p>
+          <div class="d-md-flex text-center align-items-center mt-2">
+            <b-button
+              size="sm"
+              class="mx-1 mt-3 mt-md-0 ml-md-0 mr-md-1"
+              variant="outline-primary"
+              @click="onFbeOnboardClick"
+            >
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.cta') }}
+            </b-button>
+          </div>
+        </div>
+      </b-alert>
+    </b-card-body>
+    <b-card-body
+      v-else
+      class="pt-2 pl-3 pb-4 pr-3 d-flex align-items-center"
+    >
       <img
         src="@/assets/logo_highres.png"
         alt="colors"
@@ -36,7 +70,7 @@
 
       <b-button
         :variant="active && canConnect ? 'primary' : 'outline-primary disabled'"
-        class="ml-4 btn-with-spinner text-nowrap"
+        class="ml-4 btn-with-spinner text-nowrap ml-auto"
         @click="onFbeOnboardClick"
         :disabled="!active || !canConnect"
       >
@@ -69,6 +103,10 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    encourageToRetry: {
+      type: Boolean,
+      required: true,
+    }
   },
   methods: {
     onFbeOnboardClick() {
@@ -79,7 +117,7 @@ export default defineComponent({
         });
       }
     },
-    md2html: (md) => (new showdown.Converter()).makeHtml(md),
+    md2html: (md: string) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>

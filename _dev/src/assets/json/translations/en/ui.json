@@ -55,7 +55,12 @@
         "title": "Set up Facebook",
         "intro": "Integrate your shop with Facebook.",
         "connectButton": "Set up Facebook",
-        "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store."
+        "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
+        "incompleteOnboarding": {
+          "title": "You haven’t finished setting up Facebook yet.",
+          "explanation": "You can pick up where you left off. If you need help, feel free to contact us.",
+          "cta": "Finish setup"
+        }
       },
       "connected": {
         "description": "Here are the Facebook assets you’ve connected to your store.",

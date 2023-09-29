@@ -14,16 +14,27 @@ export const Inactive:any = Template.bind({});
 Inactive.args = {
   active: false,
   canConnect: false,
+  encourageToRetry: false,
 };
 
 export const WaitingForBusinessId:any = Template.bind({});
 WaitingForBusinessId.args = {
   active: true,
   canConnect: false,
+  encourageToRetry: false,
 };
 
 export const Ready:any = Template.bind({});
 Ready.args = {
   active: true,
   canConnect: true,
+  encourageToRetry: false,
+};
+
+
+export const DidNotCompleteOnboarding:any = Template.bind({});
+DidNotCompleteOnboarding.args = {
+  active: true,
+  canConnect: true,
+  encourageToRetry: true,
 };
