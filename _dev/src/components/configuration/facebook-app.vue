@@ -28,7 +28,7 @@
       <div>
         <div class="font-weight-500 d-flex ps_gs-fz-16 mb-2">
           {{ appType }}
-          <tooltip 
+          <tooltip
             v-if="!!tooltip"
             :text="tooltip"
           />
@@ -113,7 +113,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import {BFormCheckbox, BLink} from 'bootstrap-vue';
 import Tooltip from '@/components/help/tooltip.vue';
 import Warning from '@/components/warning/warning.vue';
@@ -213,7 +213,6 @@ export default defineComponent({
         return;
       }
       this.switchActivated = !this.switchActivated;
-
     },
     onStats() {
       this.$segment.track('Click on view stat CTA', {

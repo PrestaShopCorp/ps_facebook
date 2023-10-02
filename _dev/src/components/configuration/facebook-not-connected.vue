@@ -36,7 +36,10 @@
           class="d-flex justify-content-between"
         >
           <p class="mb-0">
-            <strong>{{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}</strong><br>
+            <strong>
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}
+            </strong>
+            <br>
             <span class="ps_gs-fz-12">
               {{ $t('configuration.facebook.notConnected.incompleteOnboarding.explanation') }}
             </span>
@@ -62,7 +65,7 @@
         src="@/assets/logo_highres.png"
         alt="colors"
         class="logo mr-3"
-      />
+      >
 
       <div class="description pr-2">
         {{ $t('configuration.facebook.notConnected.description') }}
@@ -106,7 +109,7 @@ export default defineComponent({
     encourageToRetry: {
       type: Boolean,
       required: true,
-    }
+    },
   },
   methods: {
     onFbeOnboardClick() {

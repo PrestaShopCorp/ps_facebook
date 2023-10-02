@@ -8,8 +8,8 @@
     <two-panel-cols
       :title="$t('configuration.sectionTitle.psbilling')"
     >
-      <div id="ps-billing"></div>
-      <div id="ps-modal"></div>
+      <div id="ps-billing" />
+      <div id="ps-modal" />
     </two-panel-cols>
     <two-panel-cols
       :title="$t('configuration.sectionTitle.pscloudsync')"
@@ -79,7 +79,7 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type, data) => {});
+      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (/* type, data */) => {});
     },
   },
   mounted() {

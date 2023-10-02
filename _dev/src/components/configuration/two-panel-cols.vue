@@ -11,15 +11,15 @@
         </p>
       </div>
     </div>
-      <div class="col-12 col-md-7">
-      <slot></slot>
+    <div class="col-12 col-md-7">
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue';
-import { TranslateResult } from 'vue-i18n';
+import {PropType, defineComponent} from 'vue';
+import {TranslateResult} from 'vue-i18n';
 
 export default defineComponent({
   name: 'TwoPanelCols',
@@ -32,7 +32,7 @@ export default defineComponent({
       type: String as PropType<string|null>,
       required: false,
       default: null,
-    }
+    },
   },
 });
 </script>

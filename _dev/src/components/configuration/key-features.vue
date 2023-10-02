@@ -19,7 +19,7 @@
         <p class="ps_sc_featurescard__title">
           {{ $t('configuration.keyFeatures.catchPhrase') }}
         </p>
-        
+
         <div
           class="ps_sc_featurescard__list font-weight-600 ps_gs-fz-18"
           v-html="md2html($t('configuration.keyFeatures.features'))"
@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import Showdown from 'showdown';
-import { defineComponent } from 'vue';
-import { TranslateResult } from 'vue-i18n';
+import {defineComponent} from 'vue';
+import {TranslateResult} from 'vue-i18n';
 
 export default defineComponent({
   name: 'KeyFeatures',
