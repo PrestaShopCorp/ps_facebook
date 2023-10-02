@@ -271,6 +271,8 @@ class EventDataProvider
         $isDelete = $this->toolsAdapter->getValue('delete');
         $idProductAttribute = $this->toolsAdapter->getValue('id_product_attribute');
         $attributeGroups = $this->toolsAdapter->getValue('group');
+        $changesDiscount = $this->toolsAdapter->getValue('addDiscount')
+            || $this->toolsAdapter->getValue('deleteDiscount');
 
         if ($attributeGroups) {
             try {
@@ -283,7 +285,7 @@ class EventDataProvider
             }
         }
 
-        if ($action !== 'update') {
+        if ($action !== 'update' || $changesDiscount) {
             return false;
         }
         $type = 'AddToCart';
