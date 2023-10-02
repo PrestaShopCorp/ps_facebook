@@ -59,6 +59,7 @@
         <onboarding-deps-container
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
+          :billing-running="billingRunning"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
           @onRunningBilling="billingRunning = $event"
           class="m-3"
@@ -66,6 +67,7 @@
 
         <div
           class="m-3"
+          v-if="billingRunning"
         >
           <two-panel-cols
             :title="$t('configuration.sectionTitle.pssocial')"
@@ -90,6 +92,9 @@
             />
           </two-panel-cols>
         </div>
+        <key-features
+          v-else
+        />
 
         <survey v-if="facebookConnected" />
         <div
@@ -194,6 +199,7 @@ import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
 import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
+import KeyFeatures from '@/components/configuration/key-features.vue';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -233,6 +239,7 @@ export default defineComponent({
     Spinner,
     PsModal,
     Introduction,
+    KeyFeatures,
     Messages,
     MultiStoreSelector,
     ModuleActionNeeded,

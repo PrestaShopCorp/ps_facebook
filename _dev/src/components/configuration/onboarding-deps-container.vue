@@ -13,6 +13,7 @@
     </two-panel-cols>
     <two-panel-cols
       :title="$t('configuration.sectionTitle.pscloudsync')"
+      v-show="billingRunning"
     >
       <div
         id="prestashop-cloudsync"
@@ -33,6 +34,10 @@ export default defineComponent({
   },
   props: {
     psAccountsOnboarded: {
+      type: Boolean,
+      required: true,
+    },
+    billingRunning: {
       type: Boolean,
       required: true,
     },
@@ -84,19 +89,19 @@ export default defineComponent({
   },
   watch: {
     psAccountsOnboarded: {
-      handler(newValue) {
+      handler(newValue: boolean) {
         if (newValue === true) {
           this.initBillingComponent();
         }
       },
     },
-    /*psAccountsOnboarded: {
-      handler(newValue) {
+    billingRunning: {
+      handler(newValue: boolean) {
         if (newValue === true) {
           this.initCloudSyncConsent();
         }
       },
-    },*/
+    },
   },
 });
 </script>
