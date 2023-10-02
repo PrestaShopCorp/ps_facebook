@@ -23,11 +23,18 @@ $yellow-300: #FFD999;
 $yellow-100: #FFECCC;
 $yellow-50: #FFF5E5;
 
+$amber-500: #F8E08E;
+$amber-100: #FDF6DD;
+
 $blue-700: #2942CC;
 $blue-500: #174EEF;
 $blue-300: #A2B8F9;
 $blue-100: #D1DCFC;
 $blue-50: #E8EDFD;
+
+$oceanblue-700: #5C92AA;
+$oceanblue-500: #A4DBE8;
+$oceanblue-50: #e4f4f8;
 
 $grey_dark: $primary-700;
 $grey_muted: $primary-700;
@@ -77,6 +84,9 @@ $btn-primary-bg: $primary-hover;
 $primary-disabled: $grey-disabled;
 $theme-colors: (
   "secondary": $secondary,
+  "success": $green-500,
+  "info": $oceanblue-500,
+  "warning": $amber-500,
 );
 $theme-colors-hover: (
   "primary": $primary-hover,

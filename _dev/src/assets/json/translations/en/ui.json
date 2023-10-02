@@ -49,6 +49,10 @@
       "EventBusEnableDone": "PrestaShop CloudSync is enabled.",
       "accountSuspended": "We seem to lack permissions on your Facebook account to be able to sync your products. To resolve this issue, please reonboard to put the permissions back to the correct state."
     },
+    "keyFeatures": {
+      "catchPhrase": "Turn likes into sales with PrestaShop Social",
+      "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
+    },
     "facebook": {
       "title": "Set up Facebook",
       "notConnected": {

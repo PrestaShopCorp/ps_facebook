@@ -13,3 +13,36 @@
     }
   }
 }
+
+.ps_sc_featurescard {
+  border-width: 0;
+  &__title {
+    font-size: rem(32);
+    font-weight: 800;
+  }
+
+  &__list {
+    ul {
+      padding-inline-start: 0;
+      list-style-type: none;
+
+      li {
+        padding-left: 1em;
+        padding-right: 1em;
+
+        &:before {
+          font-family: 'Material Icons';
+          content: "check_circle_outline";
+          -webkit-font-feature-settings: 'liga';
+    
+          display: inline-block;
+          vertical-align: middle;
+          text-decoration: none;
+          position: relative;
+          left: -0.9rem;
+          font-size: rem(24);
+        }
+      }
+    }
+  }
+}
