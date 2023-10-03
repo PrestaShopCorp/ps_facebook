@@ -106,6 +106,13 @@
     "glass": {
       "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
       "link": "Continue"
+    },
+    "modal": {
+      "configCompleted": {
+        "title": "You’ve set up Facebook on your store.",
+        "nextStep": "One last step: synchronize your product catalog with Facebook",
+        "remainingSteps": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook."
+      }
     }
   },
   "catalogSummary": {
@@ -299,5 +306,9 @@
     "tips": "After you are done with the first shop, you can configure the others by selecting them one by one in the shop selector, in the horizontal menu",
     "configure": "Configure",
     "group": "Shop group"
+  },
+  "cta": {
+    "synchronizeCatalog": "Synchronize catalog",
+    "cancel": "Cancel"
   }
 }

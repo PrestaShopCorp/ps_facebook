@@ -180,6 +180,10 @@
         {{ $t('integrate.buttons.modalConfirm') }}
       </template>
     </ps-modal>
+
+    <modal-configuration-completed
+      v-if="psFacebookJustOnboarded"
+    />
   </div>
 </template>
 
@@ -200,6 +204,7 @@ import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
 import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
 import KeyFeatures from '@/components/configuration/key-features.vue';
+import ModalConfigurationCompleted from '../components/configuration/modal-configuration-completed.vue';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -248,6 +253,7 @@ export default defineComponent({
     FacebookConnected,
     Survey,
     TwoPanelCols,
+    ModalConfigurationCompleted,
   },
   mixins: [],
   props: {
