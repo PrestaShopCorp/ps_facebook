@@ -28,3 +28,38 @@ export const contextPsBilling = {
     },
   },
 };
+
+export const runningSubscription = {
+  id: "some-id",
+  plan_id: "ps_facebook-standard-EUR-Monthly",
+  customer_id: "shop-id",
+  status: "in_trial",
+  currency_code: "EUR",
+  has_scheduled_changes: false,
+  billing_period: 1,
+  billing_period_unit: "month",
+  due_invoices_count: 0,
+  meta_data: {
+    module: "ps_facebook",
+  },
+  plan_amount: 795,
+  plan_quantity: 1,
+  plan_unit_price: 795,
+  pricing_model: "flat_fee",
+  subscription_items: [
+    {
+      item_price_id: "ps_facebook-standard-EUR-Monthly",
+      group_id: "ps_facebook-standard",
+      amount: 795,
+      item_type: "plan",
+      quantity: 1,
+      unit_price: 795,
+    },
+  ],
+  created_at: 1696409796,
+  next_billing_at: 1697619396,
+  started_at: 1696409796,
+  updated_at: 1696409922,
+  trial_end: 1697619396,
+  is_free_trial_used: true,
+};

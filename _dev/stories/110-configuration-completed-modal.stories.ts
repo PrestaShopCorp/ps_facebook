@@ -1,7 +1,7 @@
-import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
+import ModalConfigurationCompleted from "@/components/configuration/modal-configuration-completed.vue";
 
 export default {
-  title: 'Configuration/Modals',
+  title: "Configuration/Modals",
   component: ModalConfigurationCompleted,
 };
 
@@ -15,4 +15,4 @@ const Template = (args: any, { argTypes }: any) => ({
   `,
 });
 export const ConfigurationCompleted: any = Template.bind({});
-ConfigurationCompleted.args = { };
+ConfigurationCompleted.args = {};

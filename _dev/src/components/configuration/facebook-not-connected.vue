@@ -19,9 +19,7 @@
 <template>
   <b-card no-body>
     <template v-slot:header>
-      <h3 class="d-inline">
-        {{ $t('configuration.facebook.notConnected.title') }}
-      </h3>
+      {{ $t('configuration.facebook.notConnected.title') }}
     </template>
     <b-card-body
       v-if="encourageToRetry"

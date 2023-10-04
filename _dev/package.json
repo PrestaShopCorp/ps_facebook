@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/preset-env": "^7.21.4",
+    "@prestashopcorp/billing-cdc": "0.0.48",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.5.10",

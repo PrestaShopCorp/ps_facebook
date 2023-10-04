@@ -54,6 +54,10 @@
       "catchPhrase": "Turn likes into sales with PrestaShop Social",
       "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
     },
+    "billingFacade": {
+      "title": "Subscription settings",
+      "nextPayment": "Your subscription is active, next billing {date}"
+    },
     "facebook": {
       "title": "Set up Facebook",
       "notConnected": {
@@ -63,7 +67,7 @@
         "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
         "incompleteOnboarding": {
           "title": "You haven’t finished setting up Facebook yet.",
-          "explanation": "You can pick up where you left off. If you need help, feel free to contact us.",
+          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to contact us. ",
           "cta": "Finish setup"
         }
       },
