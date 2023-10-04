@@ -123,7 +123,7 @@ export default defineComponent({
       return window.psAccountShopId;
     },
     isBillingSubscriptionRunning(): boolean {
-      return !!window.psBillingSubscription;
+      return !!this.$store.state.app.billing.subscription;
     },
   },
   methods: {

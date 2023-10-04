@@ -2,7 +2,7 @@ import cloneDeep from 'lodash.clonedeep';
 import Configuration from "../src/views/configuration.vue";
 import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "../.storybook/mock/ps-accounts";
 import {contextPsEventBus} from "../.storybook/mock/ps-event-bus";
-import {contextPsBilling} from "../.storybook/mock/ps-billing";
+import {contextPsBilling, runningSubscription} from "@/../.storybook/mock/ps-billing";
 
 export default {
   title: "Configuration/Configuration page",
@@ -74,6 +74,7 @@ NoActiveSubscription.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = undefined;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
@@ -96,6 +97,7 @@ NotConnectedOnFb.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
   },
   mounted: function (this: any) {
@@ -121,6 +123,7 @@ FullyConnected.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
   },
   mounted: function (this: any) {

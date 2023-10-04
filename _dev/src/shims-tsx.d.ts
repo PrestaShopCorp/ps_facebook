@@ -1,4 +1,5 @@
 import Vue, {VNode} from 'vue';
+import {IContextAuthentication, IContextBase, ISubscription} from "@prestashopcorp/billing-cdc";
 
 declare global {
   // namespace JSX {
@@ -10,8 +11,9 @@ declare global {
     interface Window {
       contextPsAccounts: any;
       contextPsEventbus: any;
-      psBillingContext: any;
-      psBillingSubscription?: any;
+      psBillingContext: IContextBase<IContextAuthentication>;
+      psBillingSubscription?: ISubscription;
+      psBilling: unknown;
       i18nSettings: any;
 
       psFacebookRouteToShopApi?: string;

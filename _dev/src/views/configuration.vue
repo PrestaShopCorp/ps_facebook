@@ -59,15 +59,14 @@
         <onboarding-deps-container
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
-          :billing-running="billingRunning"
+          :billing-running="isBillingSubscriptionRunning"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
-          @onRunningBilling="billingRunning = $event"
           class="m-3"
         />
 
         <div
           class="m-3"
-          v-if="billingRunning"
+          v-if="isBillingSubscriptionRunning"
         >
           <two-panel-cols
             :title="$t('configuration.sectionTitle.pssocial')"
@@ -354,6 +353,9 @@ export default defineComponent({
         && this.contextPsAccounts.user.email !== null
         && this.contextPsAccounts.user.emailIsValidated;
     },
+    isBillingSubscriptionRunning(): boolean {
+      return !!this.$store.state.app.billing.subscription;
+    },
     facebookConnected() {
       return (this.contextPsFacebook
         && this.contextPsFacebook.facebookBusinessManager
@@ -406,7 +408,6 @@ export default defineComponent({
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
       cloudSyncSharingConsentGiven: false,
-      billingRunning: !!window.psBillingSubscription as boolean,
       encourageToRetry: false as boolean,
     };
   },

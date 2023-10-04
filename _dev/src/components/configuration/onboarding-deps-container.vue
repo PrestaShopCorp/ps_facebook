@@ -8,8 +8,15 @@
     <two-panel-cols
       :title="$t('configuration.sectionTitle.psbilling')"
     >
-      <div id="ps-billing" />
-      <div id="ps-modal" />
+      <div
+        v-show="!billingRunning"
+        id="ps-billing-in-catalog-tab"
+      />
+      <div id="ps-modal-in-catalog-tab" />
+      <card-billing-connected
+        v-if="billingRunning"
+        :subscription="billingSubscription"
+      />
     </two-panel-cols>
     <two-panel-cols
       :title="$t('configuration.sectionTitle.pscloudsync')"
@@ -25,13 +32,16 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
+import {EVENT_HOOK_TYPE} from "@prestashopcorp/billing-cdc";
 import TwoPanelCols from './two-panel-cols.vue';
+import CardBillingConnected from './card-billing-connected.vue';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
   components: {
     TwoPanelCols,
-  },
+    CardBillingConnected
+},
   props: {
     psAccountsOnboarded: {
       type: Boolean,
@@ -40,6 +50,11 @@ export default defineComponent({
     billingRunning: {
       type: Boolean,
       required: true,
+    },
+  },
+  computed: {
+    billingSubscription(): boolean {
+      return this.$store.state.app.billing.subscription;
     },
   },
   methods: {
@@ -79,11 +94,12 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type) => {
+      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing-in-catalog-tab', '#ps-modal-in-catalog-tab', (type: EVENT_HOOK_TYPE, data: any) => {
         switch (type) {
           // Hook triggered when the subscription is created
           case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
-            this.$emit('onRunningBilling', true);
+            // CHECKME: Do we actually receive data about the subscription?  
+            this.$store.state.app.billing.subscription = data;
             break;
           default:
             break;
