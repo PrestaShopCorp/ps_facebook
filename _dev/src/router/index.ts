@@ -4,6 +4,7 @@ import Configuration from '../views/configuration.vue';
 import Catalog from '../views/catalog.vue';
 import Debug from '../views/debug-page.vue';
 import Integrate from '../views/integrate.vue';
+import BillingTab from '../views/billing-tab.vue';
 import Help from '../views/help.vue';
 
 Vue.use(VueRouter);
@@ -32,6 +33,11 @@ const routes: Array<RouteConfig> = [
     path: '/integrate',
     name: 'Integrate',
     component: Integrate,
+  },
+  {
+    path: '/billing',
+    name: 'Billing',
+    component: BillingTab,
   },
   {
     path: '/debug',

@@ -4,7 +4,8 @@
       "configuration": "Configure",
       "catalog": "Product catalog",
       "help": "Help",
-      "integrate": "Sales channels"
+      "integrate": "Sales channels",
+      "billing": "Billing"
     }
   },
   "configuration": {
@@ -293,6 +294,10 @@
   "faq": {
     "title": "FAQ",
     "noFaq": "No FAQ available."
+  },
+  "billing": {
+    "planTitle": "Plan & billing information",
+    "invoicesTitle": "Invoices"
   },
   "productStatuses": {
     "Approved": "Approved",

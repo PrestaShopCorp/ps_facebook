@@ -41,6 +41,12 @@
           {{ $t('general.tabs.configuration') }}
         </MenuItem>
         <MenuItem
+          route="/billing"
+          v-if="isBillingSubscriptionRunning"
+        >
+          {{ $t('general.tabs.billing') }}
+        </MenuItem>
+        <MenuItem
           @click="onHelp"
           route="/help"
         >
@@ -115,6 +121,9 @@ export default defineComponent({
   computed: {
     shopId() {
       return window.psAccountShopId;
+    },
+    isBillingSubscriptionRunning(): boolean {
+      return !!window.psBillingSubscription;
     },
   },
   methods: {

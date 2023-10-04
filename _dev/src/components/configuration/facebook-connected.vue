@@ -36,9 +36,7 @@
           variant="white"
         />
       </b-iconstack>
-      <h3 class="d-inline">
-        {{ $t('configuration.facebook.title') }}
-      </h3>
+      {{ $t('configuration.facebook.title') }}
     </b-card-header>
 
     <b-card-body
