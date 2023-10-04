@@ -56,7 +56,8 @@
     },
     "billingFacade": {
       "title": "Subscription settings",
-      "nextPayment": "Your subscription is active, next billing {date}"
+      "nextPayment": "Your subscription is active, next billing {date}",
+      "managePayment": "Manage payments"
     },
     "facebook": {
       "title": "Set up Facebook",

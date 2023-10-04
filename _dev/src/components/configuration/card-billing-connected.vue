@@ -19,7 +19,7 @@
       {{ $t('configuration.billingFacade.title') }}
     </b-card-header>
     <b-card-body
-      class="pb-3"
+      class="d-flex align-items-center"
     >
       <i
         class="material-icons ps_gs-fz-48 mr-3"
@@ -27,6 +27,15 @@
       {{ $t('configuration.billingFacade.nextPayment', {
         date: nextBillingDate
       }) }}
+      <div class="d-md-flex ml-auto text-center">
+        <b-button
+          class="mx-1 ml-md-0 mr-md-1"
+          variant="outline-primary"
+          @click="goToBilling"
+        >
+          {{ $t('configuration.billingFacade.managePayment') }}
+        </b-button>
+      </div>
     </b-card-body>
   </b-card>
 </template>
@@ -59,6 +68,13 @@ export default defineComponent({
         undefined,
         {year: 'numeric', month: 'numeric', day: 'numeric'},
       );
+    },
+  },
+  methods: {
+    goToBilling() {
+      this.$router.push({
+        name: 'Billing',
+      });
     },
   },
 });
