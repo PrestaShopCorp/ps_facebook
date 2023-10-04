@@ -129,7 +129,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
          **********************/
 
         // Load the context for PrestaShop Billing
-        $billingFacade = $this->getService(BillingPresenter::class);
+        $billingFacade = $this->module->getService(BillingPresenter::class);
         $partnerLogo = $this->module->getLocalPath() . 'logo.png';
 
         // PrestaShop Billing
