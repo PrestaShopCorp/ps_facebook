@@ -28,6 +28,7 @@ use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 use PrestaShopCorp\Billing\Presenter\BillingPresenter;
+use PrestaShopCorp\Billing\Services\BillingService;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -130,16 +131,21 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         // Load the context for PrestaShop Billing
         $billingFacade = $this->module->getService(BillingPresenter::class);
+        $billingService = $this->module->getService(BillingService::class);
         $partnerLogo = $this->module->getLocalPath() . 'logo.png';
+        $currentSubscription = $billingService->getCurrentSubscription();
 
         // PrestaShop Billing
         Media::addJsDef($billingFacade->present([
-          'logo' => $partnerLogo,
-          'tosLink' => 'https://yoururl/',
-          'privacyLink' => 'https://yoururl/',
-          // This field is deprecated, but must be provided to ensure backward compatibility
-          'emailSupport' => ''
+            'logo' => $partnerLogo,
+            'tosLink' => 'https://yoururl/',
+            'privacyLink' => 'https://yoururl/',
+            // This field is deprecated, but must be provided to ensure backward compatibility
+            'emailSupport' => ''
         ]));
+        Media::addJsDef([
+            'psBillingSubscription' => (!empty($currentSubscription['success']) ? $currentSubscription['body'] : null),
+        ]);
 
         /*********************
          * PrestaShop Social *

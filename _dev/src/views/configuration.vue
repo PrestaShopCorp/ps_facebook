@@ -406,7 +406,7 @@ export default defineComponent({
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
       cloudSyncSharingConsentGiven: false,
-      billingRunning: false as boolean,
+      billingRunning: !!window.psBillingSubscription as boolean,
       encourageToRetry: false as boolean,
     };
   },

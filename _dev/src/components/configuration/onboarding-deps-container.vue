@@ -79,7 +79,16 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (/* type, data */) => {});
+      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing', '#ps-modal', (type) => {
+        switch (type) {
+          // Hook triggered when the subscription is created
+          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
+            this.$emit('onRunningBilling', true);
+            break;
+          default:
+            break;
+        }
+      });
     },
   },
   mounted() {

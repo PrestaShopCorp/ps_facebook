@@ -11,6 +11,7 @@ declare global {
       contextPsAccounts: any;
       contextPsEventbus: any;
       psBillingContext: any;
+      psBillingSubscription?: any;
       i18nSettings: any;
 
       psFacebookRouteToShopApi?: string;
