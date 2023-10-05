@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {EVENT_HOOK_TYPE} from "@prestashopcorp/billing-cdc";
+import {EVENT_HOOK_TYPE} from '@prestashopcorp/billing-cdc';
 import TwoPanelCols from './two-panel-cols.vue';
 import CardBillingConnected from './card-billing-connected.vue';
 
@@ -40,8 +40,8 @@ export default defineComponent({
   name: 'OnboardingDepsContainer',
   components: {
     TwoPanelCols,
-    CardBillingConnected
-},
+    CardBillingConnected,
+  },
   props: {
     psAccountsOnboarded: {
       type: Boolean,
@@ -98,7 +98,7 @@ export default defineComponent({
         switch (type) {
           // Hook triggered when the subscription is created
           case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
-            // CHECKME: Do we actually receive data about the subscription?  
+            // CHECKME: Do we actually receive data about the subscription?
             this.$store.state.app.billing.subscription = data;
             break;
           default:

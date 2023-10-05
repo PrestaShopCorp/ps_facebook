@@ -172,11 +172,14 @@
       ref="ps_facebook_modal_unlink"
       :title="$t('configuration.facebook.connected.unlinkModalHeader')"
       @ok="onUninstallClick"
-      ok-only
+      ok-variant="danger"
     >
       {{ $t('configuration.facebook.connected.unlinkModalText') }}
+      <template slot="modal-cancel">
+        {{ $t('cta.cancel') }}
+      </template>
       <template slot="modal-ok">
-        {{ $t('integrate.buttons.modalConfirm') }}
+        {{ $t('cta.unlink') }}
       </template>
     </ps-modal>
 

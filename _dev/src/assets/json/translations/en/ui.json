@@ -86,8 +86,8 @@
         "facebookAds": "Facebook Ads",
         "facebookAdsTooltip": "Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns",
         "manageFbeButton": "Go to Meta Business Manager",
-        "unlinkModalHeader": "Confirm uninstallation?",
-        "unlinkModalText": "You are about to remove Facebook Business Extension. You will no longer have access to the stored settings of Facebook."
+        "unlinkModalHeader": "Sign out of Facebook?",
+        "unlinkModalText": "Your Facebook assets will be disconnected from your store."
       },
       "exchangeTokens": {
         "almostThere": "You are almost there",
@@ -319,6 +319,7 @@
   },
   "cta": {
     "synchronizeCatalog": "Synchronize catalog",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "unlink": "Sign out of Facebook"
   }
 }

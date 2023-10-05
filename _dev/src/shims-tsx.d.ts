@@ -1,5 +1,5 @@
 import Vue, {VNode} from 'vue';
-import {IContextAuthentication, IContextBase, ISubscription} from "@prestashopcorp/billing-cdc";
+import {IContextAuthentication, IContextBase, ISubscription} from '@prestashopcorp/billing-cdc';
 
 declare global {
   // namespace JSX {

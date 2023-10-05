@@ -1,4 +1,4 @@
-import { IContextAuthentication, IContextBase, ISubscription } from "@prestashopcorp/billing-cdc";
+import {IContextAuthentication, IContextBase, ISubscription} from '@prestashopcorp/billing-cdc';
 
 export type State = {
   hooks: HooksStatuses;

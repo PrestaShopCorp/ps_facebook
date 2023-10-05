@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue';
+import {PropType, defineComponent} from 'vue';
 import {
   BIconstack,
   BIconCheck,
@@ -64,7 +64,7 @@ export default defineComponent({
   },
   computed: {
     nextBillingDate(): string {
-      return  new Date(this.subscription.next_billing_at*1000).toLocaleDateString(
+      return new Date(this.subscription.next_billing_at * 1000).toLocaleDateString(
         undefined,
         {year: 'numeric', month: 'numeric', day: 'numeric'},
       );
