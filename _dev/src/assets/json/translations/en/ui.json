@@ -119,6 +119,10 @@
         "nextStep": "One last step: synchronize your product catalog with Facebook",
         "remainingSteps": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook."
       }
+    },
+    "catalogBanner": {
+      "title": "One last step: Synchronize your catalog",
+      "subTitle": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook."
     }
   },
   "catalogSummary": {
