@@ -397,11 +397,7 @@ export default defineComponent({
       };
     },
     reporting() {
-      const data = this.validation ? this.validation.reporting : {
-        lastSyncDate: null,
-        catalog: 'N/A',
-        errored: 'N/A',
-      };
+      const data = this.validation.reporting || {};
 
       const syncDate = data.lastSyncDate ? new Date(data.lastSyncDate) : null;
 

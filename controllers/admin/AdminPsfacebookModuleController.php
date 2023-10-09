@@ -257,15 +257,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetCatalogSummaryRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'CatalogSummary',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookRunPrevalidationScanRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,

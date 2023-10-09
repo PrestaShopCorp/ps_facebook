@@ -28,7 +28,6 @@ declare global {
       psFacebookGetFeaturesRoute: string;
       psFacebookUpdateFeatureRoute: string;
       psFacebookStartProductSyncRoute: string;
-      psFacebookGetCatalogSummaryRoute: string;
       psFacebookRunPrevalidationScanRoute: string;
       psFacebookGetCategoryMappingStatus: string;
       psFacebookRetrieveFaq: string;

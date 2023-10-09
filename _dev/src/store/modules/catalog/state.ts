@@ -1,8 +1,9 @@
 export type State = {
+  warmedUp: boolean,
   enabledFeature: boolean,
   exportOn?: boolean,
   categoryMatching?: CategoryMatchingStatus,
-  report?: ProductFeedReport,
+  report: ProductFeedReport,
 }
 
 export type CategoryMatchingStatus = {
@@ -17,15 +18,20 @@ export type ProductFeedReport = {
   prevalidation: {
     syncable: number,
     notSyncable: number,
-    lastScanDate: string,
-  },
+    lastScanDate: Date,
+  }|null,
   reporting: {
     catalog: number,
     errored: number,
-    lastSyncDate: string,
-  },
+    lastSyncDate: Date,
+  }|null,
 }
 
 export const state: State = {
+  warmedUp: false,
   enabledFeature: false,
+  report: {
+    prevalidation: null,
+    reporting: null,
+  },
 };

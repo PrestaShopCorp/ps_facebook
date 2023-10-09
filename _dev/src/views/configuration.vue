@@ -632,6 +632,7 @@ export default defineComponent({
           });
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+        this.$store.dispatch('catalog/WARMUP_STORE');
       });
     },
     ensureTokensExchanged(tryAgainOnError = false) {

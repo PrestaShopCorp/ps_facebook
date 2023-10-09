@@ -5,7 +5,7 @@ export default {
   component: Messages,
 };
 
-const props = ':showOnboardSucceeded="showOnboardSucceeded" :showSyncCatalogAdvice="showSyncCatalogAdvice" :categoryMatchingStarted="categoryMatchingStarted" :productSyncStarted="productSyncStarted" :adCampaignStarted="adCampaignStarted"';
+const props = ':showOnboardSucceeded="showOnboardSucceeded"';
 const events = '@onCategoryMatchingClick="onCategoryMatchingClick" @onSyncCatalogClick="onSyncCatalogClick" @onAdCampaignClick="onAdCampaignClick"';
 
 const Template = (args: any, { argTypes }: any) => ({
@@ -17,10 +17,6 @@ const Template = (args: any, { argTypes }: any) => ({
 export const AllShown:any = Template.bind({});
 AllShown.args = {
   showOnboardSucceeded: true,
-  showSyncCatalogAdvice: true,
-  categoryMatchingStarted: true,
-  productSyncStarted: false,
-  adCampaignStarted: false,
   alertSettings: {},
 };
 

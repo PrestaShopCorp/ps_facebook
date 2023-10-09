@@ -35,7 +35,7 @@
 import {defineComponent} from '@vue/composition-api';
 
 import PAGES from '../components/catalog/pages';
-import CatalogSummary from '../components/catalog/summary.vue';
+import CatalogSummary from '../components/catalog/catalog-summary.vue';
 import CatalogCategoryMatchingEdit from '../components/catalog/category-matching-edit.vue';
 import CatalogCategoryMatchingView from '../components/catalog/category-matching-view.vue';
 import CatalogReportDetails from '../components/catalog/report-details.vue';

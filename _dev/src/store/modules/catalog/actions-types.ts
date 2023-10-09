@@ -1,5 +1,7 @@
 enum ActionsTypes {
   WARMUP_STORE = 'WARMUP_STORE',
+
+  REQUEST_SYNCHRONIZATION_STATS = 'REQUEST_SYNCHRONIZATION_STATS',
 }
 
 export {ActionsTypes as default};
