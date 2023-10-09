@@ -49,6 +49,10 @@
           module-name="EventBus"
           :module-version-check="psCloudSyncVersionCheck"
         />
+        <banner-catalog-sharing
+          v-if="facebookConnected && !GET_CATALOG_PAGE_ENABLED"
+          class="m-3"
+        />
         <b-alert
           v-if="psAccountShopInConflict"
           variant="danger"
@@ -191,6 +195,7 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue';
+import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import PsModal from '@/components/commons/ps-modal.vue';
@@ -206,7 +211,9 @@ import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
 import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
 import KeyFeatures from '@/components/configuration/key-features.vue';
-import ModalConfigurationCompleted from '../components/configuration/modal-configuration-completed.vue';
+import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
+import BannerCatalogSharing from '@/components/configuration/banner-catalog-sharing.vue';
+import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -243,19 +250,20 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
 export default defineComponent({
   name: 'Configuration',
   components: {
-    Spinner,
-    PsModal,
+    BannerCatalogSharing,
+    FacebookNotConnected,
+    FacebookConnected,
     Introduction,
     KeyFeatures,
     Messages,
-    MultiStoreSelector,
+    ModalConfigurationCompleted,
     ModuleActionNeeded,
+    MultiStoreSelector,
     OnboardingDepsContainer,
-    FacebookNotConnected,
-    FacebookConnected,
+    PsModal,
+    Spinner,
     Survey,
     TwoPanelCols,
-    ModalConfigurationCompleted,
   },
   mixins: [],
   props: {
@@ -351,6 +359,9 @@ export default defineComponent({
     },
   },
   computed: {
+    ...mapGetters('catalog', [
+      GettersTypesCatalog.GET_CATALOG_PAGE_ENABLED,
+    ]),
     psAccountsOnboarded() {
       return this.contextPsAccounts.user
         && this.contextPsAccounts.user.email !== null

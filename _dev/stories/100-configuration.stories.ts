@@ -1,8 +1,10 @@
 import cloneDeep from 'lodash.clonedeep';
-import Configuration from "../src/views/configuration.vue";
-import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "../.storybook/mock/ps-accounts";
-import {contextPsEventBus} from "../.storybook/mock/ps-event-bus";
+import Configuration from "@/views/configuration.vue";
+import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "@/../.storybook/mock/ps-accounts";
+import {contextPsEventBus} from "@/../.storybook/mock/ps-event-bus";
 import {contextPsBilling, runningSubscription} from "@/../.storybook/mock/ps-billing";
+import {contextFacebookOnboarded} from "@/../.storybook/mock/onboarding";
+import {State as CatalogState} from '../src/store/modules/catalog/state';
 
 export default {
   title: "Configuration/Configuration page",
@@ -125,42 +127,41 @@ FullyConnected.args = {
     window.psBillingContext = cloneDeep(contextPsBilling);
     this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.catalog as CatalogState).enabledFeature = false;
+  },
+  mounted: function (this: any) {
+    this.$refs.page.$data.billingRunning = true;
+    this.$refs.page.$data.psFacebookJustOnboarded = true;
+  },
+  contextPsAccounts: contextPsAccountsConnectedAndValidated,
+  contextPsFacebook: contextFacebookOnboarded,
+  psFacebookAppId: "1234567890",
+  externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
+  psAccountsToken: "a-valid-token",
+  currency: "EUR",
+  timezone: "Europe/Paris",
+  locale: "fr-FR",
+  pixelActivationRoute: "http://perdu.com",
+  fbeOnboardingSaveRoute: "http://perdu.com",
+  psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
+  psAccountsVersionCheck,
+  psCloudSyncVersionCheck,
+};
+
+export const FullyConnectedAndSyncing: any = Template.bind({});
+FullyConnectedAndSyncing.args = {
+  beforeMount: function(this: any) {
+    window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
+    window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = runningSubscription;
+    window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.catalog as CatalogState).enabledFeature = true;
   },
   mounted: function (this: any) {
     this.$refs.page.$data.billingRunning = true;
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
-  contextPsFacebook: {
-    user: {
-      email: "him@prestashop.com",
-    },
-    facebookBusinessManager: {
-      name: "La Fanchonette",
-      email: "fanchonette@ps.com",
-      createdAt: Date.now(),
-      id: "12345689",
-    },
-    pixel: {
-      name: "La Fanchonette Test Pixel",
-      id: "1234567890",
-      lastActive: Date.now(),
-      isActive: true,
-    },
-    page: {
-      page: "La Fanchonette",
-      likes: 42,
-      logo: null,
-    },
-    ads: {
-      name: "La Fanchonette",
-      email: "fanchonette@ps.com",
-      createdAt: Date.now(),
-    },
-    catalog: {
-      categoryMatchingStarted: false,
-      productSyncStarted: false,
-    },
-  },
+  contextPsFacebook: contextFacebookOnboarded,
   psFacebookAppId: "1234567890",
   externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
   psAccountsToken: "a-valid-token",

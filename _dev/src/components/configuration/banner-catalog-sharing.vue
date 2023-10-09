@@ -3,10 +3,11 @@
     variant="info"
   >
     <div
-      class="d-flex align-items-center">
+      class="d-flex align-items-center"
+    >
       <div>
         <div
-        class="ps_gs-fz-24 font-weight-700 mb-2"
+          class="ps_gs-fz-24 font-weight-700 mb-2"
         >
           <i
             class="material-icons mr-1 pb-1"
@@ -15,13 +16,13 @@
         </div>
         {{ $t('configuration.catalogBanner.subTitle') }}
       </div>
-      
+
       <div class="d-md-flex ml-auto text-center">
         <b-button
           class="mx-1 ml-md-0 mr-md-1"
           variant="primary"
           @click="goToProductCatalog"
-          >
+        >
           {{ $t('cta.synchronizeCatalog') }}
         </b-button>
       </div>
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import PsBanner from '@/components/commons/ps-banner.vue';
 
 export default defineComponent({
