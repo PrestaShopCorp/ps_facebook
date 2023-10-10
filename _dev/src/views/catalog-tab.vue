@@ -21,81 +21,37 @@
     id="catalog"
     class="ps-facebook-catalog-tab"
   >
-    <catalog-summary v-if="currentPage === PAGES.summary" />
-    <catalog-category-matching-edit v-if="currentPage === PAGES.categoryMatchingEdit" />
-    <catalog-category-matching-view v-if="currentPage === PAGES.categoryMatchingView" />
+    <catalog-summary v-if="$route.name === CatalogTabPages.summary" />
+    <catalog-category-matching-edit v-if="$route.name === CatalogTabPages.categoryMatchingEdit" />
+    <catalog-category-matching-view v-if="$route.name === CatalogTabPages.categoryMatchingView" />
     <catalog-report-details
-      v-if="(currentPage === PAGES.prevalidationDetails) || (currentPage === PAGES.reportDetails)"
-      :force-view="currentPage === PAGES.prevalidationDetails ? 'PREVALIDATION' : 'REPORTING'"
+      v-if="($route.name === CatalogTabPages.prevalidationDetails) || ($route.name === CatalogTabPages.reportDetails)"
+      :force-view="$route.name === CatalogTabPages.prevalidationDetails ? 'PREVALIDATION' : 'REPORTING'"
     />
   </div>
 </template>
 
-<script>
-import {defineComponent} from '@vue/composition-api';
+<script lang="ts">
+import {defineComponent} from 'vue';
 
-import PAGES from '../components/catalog/pages';
-import CatalogSummary from '../components/catalog/catalog-summary.vue';
-import CatalogCategoryMatchingEdit from '../components/catalog/category-matching-edit.vue';
-import CatalogCategoryMatchingView from '../components/catalog/category-matching-view.vue';
-import CatalogReportDetails from '../components/catalog/report-details.vue';
+import CatalogTabPages from '@/components/catalog/pages';
+import CatalogSummary from '@/components/catalog/catalog-summary.vue';
+import CatalogCategoryMatchingEdit from '@/components/catalog/category-matching-edit.vue';
+import CatalogCategoryMatchingView from '@/components/catalog/category-matching-view.vue';
+import CatalogReportDetails from '@/components/catalog/report-details.vue';
 
 export default defineComponent({
-  name: 'Catalog',
+  name: 'CatalogTab',
   components: {
     CatalogSummary,
     CatalogCategoryMatchingEdit,
     CatalogCategoryMatchingView,
     CatalogReportDetails,
   },
-  props: {
-    forcePage: {
-      type: String,
-      required: false,
-      default: null,
-    },
-  },
   data() {
-    const forcePage = (this.$route.query && this.$route.query.page) || this.forcePage;
-    if (forcePage) { // consumes query if any, to let history clean
-      const replacement = new URL(window.location);
-      replacement.hash = '/catalog';
-      window.location.replace(replacement.toString());
-    }
     return {
-      PAGES,
-      currentPage: forcePage || PAGES.summary,
-      historyStack: (forcePage && forcePage !== PAGES.summary)
-        ? [this.forcePage]
-        : [PAGES.summary],
+      CatalogTabPages,
     };
-  },
-  methods: {
-    goto(page, replace = false) {
-      if (replace) {
-        this.historyStack[this.historyStack.length - 1] = page;
-      } else {
-        this.historyStack.push(page);
-      }
-      this.currentPage = page;
-    },
-    back() {
-      if (this.historyStack.length > 1) {
-        this.historyStack.pop();
-        this.currentPage = this.historyStack[this.historyStack.length - 1];
-      } else {
-        window.history.back();
-      }
-    },
   },
 });
 </script>
-
-<style lang="scss">
-  .ps-facebook-catalog-tab {
-    div.card:not(.survey) {
-      border: none !important;
-      border-radius: 3px;
-    }
-  }
-</style>

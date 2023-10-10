@@ -33,7 +33,7 @@
     <b-button
       class="float-right ml-3"
       :variant="isPrimaryAction ? 'primary' : 'outline-secondary'"
-      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+      @click="$parent.goto($parent.CatalogTabPages.categoryMatchingView)"
     >
       {{ $t('catalogSummary.matchCategoriesButton') }}
     </b-button>

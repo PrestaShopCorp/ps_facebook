@@ -1,4 +1,4 @@
-const PAGES = {
+const CatalogTabPages = {
   summary: 'summary',
   categoryMatchingView: 'categoryMatchingView',
   categoryMatchingEdit: 'categoryMatchingEdit',
@@ -6,4 +6,4 @@ const PAGES = {
   reportDetails: 'reportDetails',
 };
 
-export default PAGES;
+export default CatalogTabPages;

@@ -72,7 +72,7 @@
     <b-button
       class="float-right ml-3"
       variant="primary"
-      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+      @click="$parent.goto($parent.CatalogTabPages.categoryMatchingView)"
     >
       {{ $t('categoryMatching.edit') }}
     </b-button>

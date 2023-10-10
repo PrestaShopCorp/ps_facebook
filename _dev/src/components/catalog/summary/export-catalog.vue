@@ -485,14 +485,14 @@ export default defineComponent({
         module: 'ps_facebook',
       });
 
-      this.$parent.goto(this.$parent.PAGES.prevalidationDetails);
+      this.$parent.goto(this.$parent.CatalogTabPages.prevalidationDetails);
     },
     onReportingDetails() {
       this.$segment.track('See reporting details', {
         module: 'ps_facebook',
       });
 
-      this.$parent.goto(this.$parent.PAGES.reportDetails);
+      this.$parent.goto(this.$parent.CatalogTabPages.reportDetails);
     },
     onViewCatalog() {
       this.$segment.track('View catalog', {

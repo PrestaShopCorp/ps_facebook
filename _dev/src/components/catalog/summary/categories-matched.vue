@@ -33,7 +33,7 @@
 
     <b-link
       class="view-button float-right ml-3"
-      @click="$parent.goto($parent.PAGES.categoryMatchingEdit)"
+      @click="$parent.goto($parent.CatalogTabPages.categoryMatchingEdit)"
     >
       {{ $t('categoryMatched.btn') }}
     </b-link>

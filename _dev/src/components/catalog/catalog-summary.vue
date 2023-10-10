@@ -36,7 +36,7 @@ import {BCard} from 'bootstrap-vue';
 import {mapGetters} from 'vuex';
 import Spinner from '@/components/spinner/spinner.vue';
 
-import PAGES from '@/components/catalog/pages';
+import CatalogTabPages from '@/components/catalog/pages';
 import ExportCatalog from '@/components/catalog/summary/export-catalog.vue';
 import MatchCategories from '@/components/catalog/summary/match-categories.vue';
 import CategoriesMatched from '@/components/catalog/summary/categories-matched.vue';
@@ -56,7 +56,7 @@ export default defineComponent({
   },
   data() {
     return {
-      PAGES,
+      CatalogTabPages,
       loading: false,
     };
   },
