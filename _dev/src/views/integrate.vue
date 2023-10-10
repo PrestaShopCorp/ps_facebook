@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BAlert, BButton} from 'bootstrap-vue';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';

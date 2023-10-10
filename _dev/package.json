@@ -13,7 +13,6 @@
   "dependencies": {
     "@prestashopcorp/billing-cdc": "0.0.48",
     "@segment/analytics-next": "^1.45.0",
-    "@vue/composition-api": "^1.7.0",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "debounce": "^1.2.1",

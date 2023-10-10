@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import Showdown from 'showdown';
 import {
   BAlert,

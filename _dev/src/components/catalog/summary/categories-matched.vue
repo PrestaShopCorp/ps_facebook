@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BLink} from 'bootstrap-vue';
 import illustration from '../../../assets/category_matching_illustration.png';
 

@@ -320,7 +320,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
 import Spinner from '@/components/spinner/spinner.vue';

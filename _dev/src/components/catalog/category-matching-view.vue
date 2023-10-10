@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import Showdown from 'showdown';
 import {BButton} from 'bootstrap-vue';
 import TableMatching from '../category-matching/tableMatching.vue';
