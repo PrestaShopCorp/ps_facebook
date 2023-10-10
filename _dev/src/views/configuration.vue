@@ -632,7 +632,6 @@ export default defineComponent({
           });
         }
         this.$root.refreshContextPsFacebook(res.contextPsFacebook);
-        this.$store.dispatch('catalog/WARMUP_STORE');
       });
     },
     ensureTokensExchanged(tryAgainOnError = false) {
@@ -747,6 +746,11 @@ export default defineComponent({
     dynamicExternalBusinessId(newValue) {
       this.$root.refreshExternalBusinessId(newValue);
       this.$root.identifySegment();
+    },
+    dynamicContextPsFacebook(newValue: OnboardingContext|null) {
+      if (newValue) {
+        this.$store.dispatch('catalog/WARMUP_STORE');
+      }
     },
   },
 });
