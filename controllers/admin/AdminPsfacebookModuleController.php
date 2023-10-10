@@ -141,7 +141,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'tosLink' => 'https://yoururl/',
             'privacyLink' => 'https://yoururl/',
             // This field is deprecated, but must be provided to ensure backward compatibility
-            'emailSupport' => ''
+            'emailSupport' => '',
         ]));
         Media::addJsDef([
             'psBillingSubscription' => (!empty($currentSubscription['success']) ? $currentSubscription['body'] : null),

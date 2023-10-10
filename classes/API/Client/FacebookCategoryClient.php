@@ -25,12 +25,12 @@ use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
-use Psr\Http\Client\ClientInterface;
+use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 class FacebookCategoryClient
 {
     /**
-     * @var ClientInterface
+     * @var HttpClientInterface
      */
     private $client;
 

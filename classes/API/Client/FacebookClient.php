@@ -34,7 +34,7 @@ use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
-use Psr\Http\Client\ClientInterface;
+use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 class FacebookClient
 {
@@ -54,7 +54,7 @@ class FacebookClient
     private $sdkVersion;
 
     /**
-     * @var ClientInterface
+     * @var HttpClientInterface
      */
     private $client;
 
