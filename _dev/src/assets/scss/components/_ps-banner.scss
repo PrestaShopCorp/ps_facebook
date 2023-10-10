@@ -1,11 +1,14 @@
 .ps-banner {
-  @each $color, $value in $theme-colors {
+  @each $color, $value in $banner-theme-colors {
     &-#{$color} {
+      @include alert-variant(theme-color-level($color), $primary, $primary);
+
+      background-color: $value;
       @if ($color == 'primary') {
-        @include alert-variant(theme-color-level($color), $primary, $white);
+        color: $white;
       }
       @else {
-        @include alert-variant(theme-color-level($color), $primary, $primary);
+        color: $primary;
       } 
     }
   }

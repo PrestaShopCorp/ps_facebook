@@ -84,11 +84,15 @@ $btn-primary-bg: $primary-hover;
 $primary-disabled: $grey-disabled;
 $theme-colors: (
   "secondary": $secondary,
-  "success": $green-500,
+);
+$banner-theme-colors: (
+  "primary": $primary,
+  "secondary": $light-blue-050,
+  "success": $green-100,
   "info": $oceanblue-500,
   "warning": $amber-500,
   "danger": $red-100,
-);
+) !default;
 $theme-colors-hover: (
   "primary": $primary-hover,
 );

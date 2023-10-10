@@ -25,8 +25,11 @@
     <catalog-category-matching-edit v-if="$route.name === CatalogTabPages.categoryMatchingEdit" />
     <catalog-category-matching-view v-if="$route.name === CatalogTabPages.categoryMatchingView" />
     <catalog-report-details
-      v-if="($route.name === CatalogTabPages.prevalidationDetails) || ($route.name === CatalogTabPages.reportDetails)"
-      :force-view="$route.name === CatalogTabPages.prevalidationDetails ? 'PREVALIDATION' : 'REPORTING'"
+      v-if="
+        $route.name === CatalogTabPages.prevalidationDetails ||
+          $route.name === CatalogTabPages.reportDetails"
+      :force-view="$route.name === CatalogTabPages.prevalidationDetails
+        ? 'PREVALIDATION' : 'REPORTING'"
     />
   </div>
 </template>

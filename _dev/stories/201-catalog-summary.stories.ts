@@ -16,8 +16,8 @@ const Template = (args: any, {argTypes}: any) => ({
   beforeMount: args.beforeMount,
 });
 
-export const FreshInstall: any = Template.bind({});
-FreshInstall.args = {
+export const CatalogNotShared: any = Template.bind({});
+CatalogNotShared.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
@@ -44,8 +44,8 @@ FreshInstall.args = {
   },
 };
 
-export const JustActivated: any = Template.bind({});
-JustActivated.args = {
+export const CatalogRecentlyShared: any = Template.bind({});
+CatalogRecentlyShared.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
@@ -124,8 +124,8 @@ SyncPaused.args = {
   },
 };
 
-export const BothDone: any = Template.bind({});
-BothDone.args = {
+export const FullConfiguration: any = Template.bind({});
+FullConfiguration.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
