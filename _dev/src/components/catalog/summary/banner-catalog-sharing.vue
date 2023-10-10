@@ -14,14 +14,16 @@
           >local_fire_department</i>
           {{ $t('configuration.catalogBanner.title') }}
         </div>
-        {{ $t('configuration.catalogBanner.subTitle') }}
+        {{ onCatalogPage
+          ? $t('configuration.catalogBanner.subTitleOnCatalogPage')
+          : $t('configuration.catalogBanner.subTitle') }}
       </div>
 
       <div class="d-md-flex ml-auto text-center">
         <b-button
           class="mx-1 ml-md-0 mr-md-1"
           variant="primary"
-          @click="goToProductCatalog"
+          @click="onClickOnSyncCatalog"
         >
           {{ $t('cta.synchronizeCatalog') }}
         </b-button>
@@ -39,8 +41,18 @@ export default defineComponent({
   components: {
     PsBanner,
   },
+  props: {
+    onCatalogPage: {
+      type: Boolean,
+      required: true,
+    },
+  },
   methods: {
-    goToProductCatalog() {
+    onClickOnSyncCatalog(): void {
+      if (this.onCatalogPage) {
+        this.$emit('enableSyncAndCatalogPage');
+        return;
+      }
       this.$router.push({
         name: 'Catalog',
       });
