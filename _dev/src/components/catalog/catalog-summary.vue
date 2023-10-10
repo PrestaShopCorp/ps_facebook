@@ -7,7 +7,7 @@
     <b-card class="card m-3 p-3">
       <export-catalog
         :validation="GET_SYNCHRONIZATION_SUMMARY"
-        :export-done-once="GET_SYNCHRONIZATION_ACTIVE"
+        :export-done-once="GET_CATALOG_PAGE_ENABLED"
         :export-on="GET_SYNCHRONIZATION_ACTIVE"
         :catalog-id="GET_CATALOG_ID"
       />
