@@ -11,7 +11,7 @@
       <div>
         <div class="d-flex">
           <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
-            {{ $t('catalog.summaryPage.productsSentToFacebook.stepTitle') }}
+            {{ $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepTitle') }}
           </h2>
           <b-button
             id="tooltip-submitted-product"
@@ -30,7 +30,7 @@
           >
             <span
               v-html="md2html(
-                $t('catalog.summaryPage.productsSentToFacebook.stepDetails')
+                $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepDetails')
               )"
             />
           </b-tooltip>
@@ -88,18 +88,18 @@ export default defineComponent({
   computed: {
     lastSyncText(): string {
       if (!this.pageIsActive) {
-        return this.$t('catalog.summaryPage.productsSentToFacebook.syncStatus.notSubscribed');
+        return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.notSubscribed');
       }
 
       if (!this.syncIsActive) {
-        return this.$t('catalog.summaryPage.productsSentToFacebook.syncStatus.paused');
+        return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.paused');
       }
 
       if (!this.validationSummary.lastSyncDate) {
-        return this.$t('catalog.summaryPage.productsSentToFacebook.syncStatus.firstSyncSoon');
+        return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.firstSyncSoon');
       }
 
-      return this.$t('catalog.summaryPage.productsSentToFacebook.syncStatus.lastSyncDate', {
+      return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.lastSyncDate', {
         date: this.validationSummary.lastSyncDate.toLocaleDateString(
           undefined,
           {year: 'numeric', month: 'numeric', day: 'numeric'},
@@ -115,8 +115,8 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
-        title: this.$t('catalog.summaryPage.productsSentToFacebook.reportCards.approved'),
-        description: this.$t('catalog.summaryPage.productsSentToFacebook.reportCards.approvedDescription'),
+        title: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.approved'),
+        description: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.approvedDescription'),
         value: this.validationSummary.catalog,
         variant: 'success',
         icon: 'check',
@@ -127,8 +127,8 @@ export default defineComponent({
         },
       },
       {
-        title: this.$t('catalog.summaryPage.productsSentToFacebook.reportCards.disapproved'),
-        description: this.$t('catalog.summaryPage.productsSentToFacebook.reportCards.disapprovedDescription'),
+        title: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.disapproved'),
+        description: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.disapprovedDescription'),
         value: this.validationSummary.errored,
         variant: 'danger',
         icon: 'cancel',

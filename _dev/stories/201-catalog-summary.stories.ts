@@ -82,7 +82,7 @@ SyncOn.args = {
       exportOn: true,
       categoryMatching: {
         matchingDone: false,
-        matchingProgress: {total: 42, matched: 23},
+        matchingProgress: {total: 42, matched: 0},
       },
       report: {
         prevalidation: {

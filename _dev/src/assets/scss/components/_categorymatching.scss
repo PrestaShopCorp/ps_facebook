@@ -1,8 +1,4 @@
 .category-matched {
-  .title {
-    font-weight: 600;
-  }
-
   .view-button {
     font-weight: 700;
     position: absolute;
@@ -10,15 +6,9 @@
     right: 1rem;
   }
 
-  .text-category-mapping {
-    width: 35%;
-  }
-
   .text-progress-bar-status {
     color: $success;
     font-weight: 600;
-    width: 400px;
-    text-align: center;
     font-size: 16px;
   }
 

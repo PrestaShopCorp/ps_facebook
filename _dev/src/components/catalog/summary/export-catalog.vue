@@ -3,7 +3,7 @@
     no-body
   >
     <b-card-header>
-      {{ $t('catalog.summaryPage.productCatalogExportTitle') }}
+      {{ $t('catalog.summaryPage.productCatalog.title') }}
 
       <b-form-checkbox
         v-if="exportDoneOnce"
@@ -15,15 +15,15 @@
       >
         <span class="small">
           {{ syncIsActive
-            ? $t('catalog.summaryPage.catalogExportActivated')
-            : $t('catalog.summaryPage.catalogExportPaused') }}
+            ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
+            : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
         </span>
       </b-form-checkbox>
     </b-card-header>
 
     <b-card-body>
       <verified-products
-        :loading="false"
+        :active="exportDoneOnce"
         :verifications-stats="validation.prevalidation"
       />
       <submitted-products
@@ -130,35 +130,6 @@ export default defineComponent({
       default: null,
     },
   },
-  computed: {
-    exportButtonLabel() {
-      return this.error
-        ? this.$t('catalogSummary.exportCatalogButtonErrored')
-        : this.$t('catalogSummary.exportCatalogButton');
-    },
-    reporting() {
-      const data = this.validation.reporting || {};
-
-      const syncDate = data.lastSyncDate ? new Date(data.lastSyncDate) : null;
-
-      return {
-        hasSynced: !!data.lastSyncDate && syncDate.getFullYear() > 1999,
-        syncDate: syncDate?.toLocaleDateString(
-          undefined,
-          {year: 'numeric', month: 'numeric', day: 'numeric'},
-        ),
-        syncTime: syncDate?.toLocaleTimeString(
-          undefined,
-          {hour: '2-digit', minute: '2-digit'},
-        ),
-        catalog: data.catalog,
-        errored: data.errored,
-      };
-    },
-    viewCatalogUrl() {
-      return `https://www.facebook.com/products/catalogs/${this.catalogId}/products`;
-    },
-  },
   data() {
     return {
       syncIsActive: this.exportOn as boolean,
@@ -217,25 +188,6 @@ export default defineComponent({
         this.error = setTimeout(() => {
           this.error = null;
         }, 5000);
-      });
-    },
-    onPrevalidationDetails() {
-      this.$segment.track('See prevalidation scan details', {
-        module: 'ps_facebook',
-      });
-
-      this.$parent.goto(this.$parent.CatalogTabPages.prevalidationDetails);
-    },
-    onReportingDetails() {
-      this.$segment.track('See reporting details', {
-        module: 'ps_facebook',
-      });
-
-      this.$parent.goto(this.$parent.CatalogTabPages.reportDetails);
-    },
-    onViewCatalog() {
-      this.$segment.track('View catalog', {
-        module: 'ps_facebook',
       });
     },
     rescan() {

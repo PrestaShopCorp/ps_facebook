@@ -11,7 +11,7 @@
       <div>
         <div class="d-flex">
           <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
-            {{ $t('catalog.summaryPage.productVerification.stepTitle') }}
+            {{ $t('catalog.summaryPage.productCatalog.productVerification.stepTitle') }}
           </h2>
           <b-button
             id="tooltip-verified-product"
@@ -30,7 +30,7 @@
           >
             <span
               v-html="md2html(
-                $t('catalog.summaryPage.productVerification.stepDetails')
+                $t('catalog.summaryPage.productCatalog.productVerification.stepDetails')
               )"
             />
           </b-tooltip>
@@ -40,6 +40,7 @@
       <b-button
         variant="outline-primary"
         class="ml-auto"
+        :disabled="!active"
       >
         <i class="material-icons">sync</i>
         {{ $t('cta.rescan') }}
@@ -75,7 +76,7 @@ export default defineComponent({
       type: Object as PropType<ValidationReport>,
       required: true,
     },
-    loading: {
+    active: {
       type: Boolean,
       required: true,
     },
@@ -85,7 +86,7 @@ export default defineComponent({
       if (!this.verificationsStats.lastScanDate) {
         return '';
       }
-      return this.$t('catalog.summaryPage.productVerification.lastScanDate', {
+      return this.$t('catalog.summaryPage.productCatalog.productVerification.lastScanDate', {
         date: this.verificationsStats.lastScanDate.toLocaleDateString(
           undefined,
           {year: 'numeric', month: 'numeric', day: 'numeric'},
@@ -105,24 +106,24 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
-        title: this.$t('catalog.summaryPage.productVerification.reportCards.productsInCatalog'),
-        description: this.$t('catalog.summaryPage.productVerification.reportCards.productsInCatalogDescription'),
+        title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalog'),
+        description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalogDescription'),
         value: this.productsInCatalog,
         variant: 'info',
         icon: 'redeem',
         reverseColors: false,
       },
       {
-        title: this.$t('catalog.summaryPage.productVerification.reportCards.verified'),
-        description: this.$t('catalog.summaryPage.productVerification.reportCards.verifiedDescription'),
+        title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verified'),
+        description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verifiedDescription'),
         value: this.verificationsStats.syncable,
         variant: 'success',
         icon: 'send',
         reverseColors: false,
       },
       {
-        title: this.$t('catalog.summaryPage.productVerification.reportCards.nonCompliant'),
-        description: this.$t('catalog.summaryPage.productVerification.reportCards.nonCompliantDescription'),
+        title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliant'),
+        description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliantDescription'),
         value: this.verificationsStats.notSyncable,
         variant: 'danger',
         icon: 'remove_shopping_cart',
