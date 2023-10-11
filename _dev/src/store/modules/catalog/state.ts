@@ -14,24 +14,36 @@ export type CategoryMatchingStatus = {
   }
 }
 
+export type ValidationReport = {
+  syncable: number|null,
+  notSyncable: number|null,
+  lastScanDate: Date|null,
+}
+
+export type SyncReport = {
+  catalog: number|null,
+  errored: number|null,
+  lastSyncDate: Date|null,
+}
+
 export type ProductFeedReport = {
-  prevalidation: {
-    syncable: number,
-    notSyncable: number,
-    lastScanDate: Date,
-  }|null,
-  reporting: {
-    catalog: number,
-    errored: number,
-    lastSyncDate: Date,
-  }|null,
+  prevalidation: ValidationReport,
+  reporting: SyncReport,
 }
 
 export const state: State = {
   warmedUp: false,
   enabledFeature: false,
   report: {
-    prevalidation: null,
-    reporting: null,
+    prevalidation: {
+      syncable: null,
+      notSyncable: null,
+      lastScanDate: null,
+    },
+    reporting: {
+      catalog: null,
+      errored: null,
+      lastSyncDate: null,
+    },
   },
 };

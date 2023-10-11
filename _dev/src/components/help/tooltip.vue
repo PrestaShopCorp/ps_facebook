@@ -25,7 +25,7 @@
     />
     <b-tooltip
       :target="`tooltip-circle-${this._uid}`"
-      :container="`#${this.$root.$el.id}`"
+      container="#psFacebookApp"
       triggers="hover"
       placement="right"
     >

@@ -30,14 +30,14 @@ CatalogNotShared.args = {
       },
       report: {
         prevalidation: {
-          lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
-          syncable: 134,
-          notSyncable: 12,
+          lastScanDate: null,
+          syncable: null,
+          notSyncable: null,
         },
         reporting: {
-          lastSyncDate: new Date('2023-09-23T02:23:52.123Z'),
-          catalog: 42,
-          errored: 42,
+          lastSyncDate: null,
+          catalog: null,
+          errored: null,
         },
       },
     };
@@ -62,7 +62,11 @@ CatalogRecentlyShared.args = {
           notSyncable: 12,
           lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
         },
-        reporting: null,
+        reporting: {
+          lastSyncDate: null,
+          catalog: null,
+          errored: null,
+        },
       },
     };
   },
