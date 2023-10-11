@@ -1,307 +1,251 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
-  <div>
-    <div class="illustration float-left mr-3 d-none d-md-block">
-      <img
-        src="@/assets/catalog_export_illustration.png"
-        :width="(exportDoneOnce && 48) || 134"
-        :height="(exportDoneOnce && 48) || 134"
-        alt="background illustration"
-      >
-    </div>
-
-    <h1 class="title">
-      <div
-        v-if="exportDoneOnce"
-        class="mt-1 ml-3"
-      >
-        <span class="d-none d-sm-inline">
-          {{
-            $t(exportOn
-              ? 'catalogSummary.catalogExportActivated'
-              : 'catalogSummary.catalogExportPaused'
-            )
-          }}
-        </span>
-        <div
-          class="switch-input switch-input-lg ml-1"
-          :class="exportOn ? '-checked' : null"
-          @click="exportClicked(!exportOn)"
-        >
-          <input
-            class="switch-input-lg"
-            type="checkbox"
-            :checked="exportOn"
-          >
-        </div>
-      </div>
+  <b-card
+    no-body
+  >
+    <b-card-header>
       {{ $t('catalogSummary.productCatalogExport') }}
-    </h1>
 
-    <div
-      v-if="!exportDoneOnce"
-      class="text"
-      :class="{ expanded: seeMoreState }"
-    >
-      {{ $t('catalogSummary.catalogExportIntro') }}
-      <br><br>
-
-      <p
-        class="app foldable p-2 mb-0"
-        v-html="md2html($t('catalogSummary.catalogExportInfo'))"
-      />
-      <span
-        class="see-more"
-        @click="seeMore"
+      <b-form-checkbox
+        v-if="exportDoneOnce"
+        switch
+        size="lg"
+        class="ml-1 ps_gs-switch"
+        v-model="syncIsActive"
+        inline
       >
-        <span>{{ $t('catalogSummary.showMore') }}</span>
-        ...
-      </span>
-      <span
-        class="see-less"
-        @click="seeLess"
-      >{{ $t('catalogSummary.showLess') }}</span>
-    </div>
-
-    <div v-else>
-      <br>
-      <b-container
-        fluid
-        class="w-100"
-      >
-        <b-row align-v="stretch">
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons text-info">sync</i>
-            {{ $t('catalogSummary.reportingLastSync') }}
-            <span
-              v-if="reporting.hasSynced"
-              class="big mt-2 ml-md-4"
-            >
-              {{ reporting.syncDate || '--' }}
-            </span>
-            <span
-              v-if="reporting.hasSynced"
-              class="text-muted ml-md-4"
-            >
-              {{ reporting.syncTime || '--' }}
-            </span>
-            <b-alert
-              v-if="!reporting.hasSynced"
-              variant="warning"
-              show
-              class="warning smaller"
-            >
-              {{ $t('catalogSummary.catalogExportNotice') }}
-            </b-alert>
-          </b-col>
-          <div class="w-100 d-block d-sm-none" />
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons">store</i>
-            {{ $t('catalogSummary.reportingCatalogCount') }}
-            <span class="big mt-2 ml-md-4">{{ reporting.catalog || '--' }}</span>
-          </b-col>
-          <div class="w-100 d-block d-md-none" />
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons text-danger">error_outline</i>
-            {{ $t('catalogSummary.reportingErrorsCount') }}
-            <br>
-            <b-link
-              class="float-right see-details mt-3"
-              @click="onReportingDetails"
-            >
-              {{ $t('catalogSummary.detailsButton') }}
-            </b-link>
-            <span class="big font-weight-700 text-danger mt-2 ml-md-4">
-              {{ reporting.errored || '--' }}
-            </span>
-          </b-col>
-        </b-row>
-      </b-container>
-
-      <b-link
-        v-if="catalogId"
-        class="view-button float-right ml-3 mb-2 mr-2 mt-2"
-        @click="onViewCatalog"
-        target="_blank"
-        :href="viewCatalogUrl"
-      >
-        {{ $t('catalogSummary.viewCatalogButton') }}
-      </b-link>
-      <br clear="both">
-    </div>
-
-    <template>
-      <h3>
-        {{ $t('catalogSummary.preApprovalScanTitle') }}
-      </h3>
-      <p>{{ $t('catalogSummary.preApprovalScanIntro') }}</p>
-
-      <b-container fluid>
-        <b-row align-v="stretch">
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons text-info">sync</i>
-            {{ $t( scanProcess.inProgress
-                     ? 'catalogSummary.preApprovalScanRefreshInProgress'
-                     : 'catalogSummary.preApprovalScanRefreshDate',
-                   [''])
-            }}
-            <br>
-            <span
-              class="spinner float-right mt-3 mr-3"
-              v-if="scanProcess.inProgress"
-            />
-            <button
-              class="btn btn-outline-secondary btn-sm float-right mt-3"
-              title="Rescan"
-              @click="rescan"
-              v-else
-            >
-              {{ $t('catalogSummary.preApprovalScanRescan') }}
-            </button>
-            <b-alert
-              v-if="scanProcess.error"
-              variant="warning"
-              show
-              class="warning smaller col-8"
-            >
-              {{ $t('catalogSummary.preApprovalScanError') }}
-              {{ scanProcess.error }}
-            </b-alert>
-            <span
-              class="big mt-2 ml-md-4"
-              v-if="scanProcess.inProgress"
-            >
-              {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
-                    [scanProcess.numberOfProductChecked])
-              }}
-            </span>
-            <span
-              class="big mt-2 ml-md-4"
-            >
-              {{ prevalidation.lastScanDate }}
-            </span>
-            <span
-              class="text-muted ml-md-4"
-            >
-              {{ prevalidation.lastScanTime }}
-            </span>
-          </b-col>
-          <div class="w-100 d-block d-sm-none" />
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons">store</i>
-            {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
-            <span class="big mt-2 ml-md-4">
-              <span class="font-weight-700 text-success">
-                {{ prevalidation.syncable }}
-              </span>
-              /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
-            </span>
-          </b-col>
-          <div class="w-100 d-block d-md-none" />
-          <b-col class="counter m-1 p-3">
-            <i class="material-icons text-danger">error_outline</i>
-            {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
-            <br>
-            <b-link
-              class="float-right see-details mt-3"
-              @click="onPrevalidationDetails"
-            >
-              {{ $t('catalogSummary.detailsButton') }}
-            </b-link>
-            <span class="big mt-2 ml-md-4">
-              <span class="font-weight-700 text-danger">
-                {{ prevalidation.notSyncable }}
-              </span>
-              /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
-            </span>
-          </b-col>
-        </b-row>
-      </b-container>
-    </template>
-
-    <hr class="separator">
-
-    <template v-if="!exportDoneOnce">
-      <b-button
-        class="float-right ml-4"
-        :variant="error ? 'danger' : 'primary'"
-        @click="exportClicked(true)"
-      >
-        {{ exportButtonLabel }}
-      </b-button>
-      <p class="disclaimer text-muted">
-        {{ $t('catalogSummary.catalogExportDisclaimer') }}
-      </p>
-    </template>
-
-    <template v-else>
-      <div
-        class="text"
-        :class="{ expanded: seeMoreState }"
-      >
-        <p class="app foldable p-2 mb-0">
-          <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
-          <a
-            href="javascript:void(0);"
-            @click="resetSync"
-          >
-            {{ $t('catalogSummary.resetExportLink') }}
-          </a>
-        </p>
-        <span
-          class="see-more"
-          @click="seeMore"
-        >
-          <span>{{ $t('catalogSummary.showMore') }}</span>
-          ...
+        <span class="small">
+          {{ syncIsActive
+            ? $t('catalogSummary.catalogExportActivated')
+            : $t('catalogSummary.catalogExportPaused') }}
         </span>
-        <span
-          class="see-less"
-          @click="seeLess"
-        >{{ $t('catalogSummary.showLess') }}</span>
+      </b-form-checkbox>
+    </b-card-header>
+
+    <b-card-body>
+
+      <div>
+        <br>
+        <b-container
+          fluid
+          class="w-100"
+        >
+          <b-row align-v="stretch">
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons text-info">sync</i>
+              {{ $t('catalogSummary.reportingLastSync') }}
+              <span
+                v-if="reporting.hasSynced"
+                class="big mt-2 ml-md-4"
+              >
+                {{ reporting.syncDate || '--' }}
+              </span>
+              <span
+                v-if="reporting.hasSynced"
+                class="text-muted ml-md-4"
+              >
+                {{ reporting.syncTime || '--' }}
+              </span>
+              <b-alert
+                v-if="!reporting.hasSynced"
+                variant="warning"
+                show
+                class="warning smaller"
+              >
+                {{ $t('catalogSummary.catalogExportNotice') }}
+              </b-alert>
+            </b-col>
+            <div class="w-100 d-block d-sm-none" />
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons">store</i>
+              {{ $t('catalogSummary.reportingCatalogCount') }}
+              <span class="big mt-2 ml-md-4">{{ reporting.catalog || '--' }}</span>
+            </b-col>
+            <div class="w-100 d-block d-md-none" />
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons text-danger">error_outline</i>
+              {{ $t('catalogSummary.reportingErrorsCount') }}
+              <br>
+              <b-link
+                class="float-right see-details mt-3"
+                @click="onReportingDetails"
+              >
+                {{ $t('catalogSummary.detailsButton') }}
+              </b-link>
+              <span class="big font-weight-700 text-danger mt-2 ml-md-4">
+                {{ reporting.errored || '--' }}
+              </span>
+            </b-col>
+          </b-row>
+        </b-container>
+
+        <b-link
+          v-if="catalogId"
+          class="view-button float-right ml-3 mb-2 mr-2 mt-2"
+          @click="onViewCatalog"
+          target="_blank"
+          :href="viewCatalogUrl"
+        >
+          {{ $t('catalogSummary.viewCatalogButton') }}
+        </b-link>
+        <br clear="both">
       </div>
-      <b-alert
-        v-if="resetLinkError"
-        variant="warning"
-        show
-        class="warning"
-      >
-        {{ $t('catalogSummary.resetExportError') }}
-      </b-alert>
-      <b-alert
-        v-if="resetLinkSuccess"
-        variant="success"
-        show
-        class="success"
-      >
-        {{ $t('catalogSummary.resetExportSuccess') }}
-      </b-alert>
-      <br v-if="!exportOn">
-      <p
-        v-if="!exportOn"
-        class="mb-0"
-      >
-        <i class="material-icons pause-icon">pause_circle_filled</i>
-        {{ $t('catalogSummary.catalogExportOperationPaused') }}
-      </p>
-    </template>
+
+      <template>
+        <h3>
+          {{ $t('catalogSummary.preApprovalScanTitle') }}
+        </h3>
+        <p>{{ $t('catalogSummary.preApprovalScanIntro') }}</p>
+
+        <b-container fluid>
+          <b-row align-v="stretch">
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons text-info">sync</i>
+              {{ $t( scanProcess.inProgress
+                      ? 'catalogSummary.preApprovalScanRefreshInProgress'
+                      : 'catalogSummary.preApprovalScanRefreshDate',
+                    [''])
+              }}
+              <br>
+              <span
+                class="spinner float-right mt-3 mr-3"
+                v-if="scanProcess.inProgress"
+              />
+              <button
+                class="btn btn-outline-secondary btn-sm float-right mt-3"
+                title="Rescan"
+                @click="rescan"
+                v-else
+              >
+                {{ $t('catalogSummary.preApprovalScanRescan') }}
+              </button>
+              <b-alert
+                v-if="scanProcess.error"
+                variant="warning"
+                show
+                class="warning smaller col-8"
+              >
+                {{ $t('catalogSummary.preApprovalScanError') }}
+                {{ scanProcess.error }}
+              </b-alert>
+              <span
+                class="big mt-2 ml-md-4"
+                v-if="scanProcess.inProgress"
+              >
+                {{ $t('catalogSummary.preApprovalScanProductsCheckedWhileInProgress',
+                      [scanProcess.numberOfProductChecked])
+                }}
+              </span>
+              <span
+                class="big mt-2 ml-md-4"
+              >
+                {{ prevalidation.lastScanDate }}
+              </span>
+              <span
+                class="text-muted ml-md-4"
+              >
+                {{ prevalidation.lastScanTime }}
+              </span>
+            </b-col>
+            <div class="w-100 d-block d-sm-none" />
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons">store</i>
+              {{ $t('catalogSummary.preApprovalScanReadyToSync') }}
+              <span class="big mt-2 ml-md-4">
+                <span class="font-weight-700 text-success">
+                  {{ prevalidation.syncable }}
+                </span>
+                /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
+              </span>
+            </b-col>
+            <div class="w-100 d-block d-md-none" />
+            <b-col class="counter m-1 p-3">
+              <i class="material-icons text-danger">error_outline</i>
+              {{ $t('catalogSummary.preApprovalScanNonSyncable') }}
+              <br>
+              <b-link
+                class="float-right see-details mt-3"
+                @click="onPrevalidationDetails"
+              >
+                {{ $t('catalogSummary.detailsButton') }}
+              </b-link>
+              <span class="big mt-2 ml-md-4">
+                <span class="font-weight-700 text-danger">
+                  {{ prevalidation.notSyncable }}
+                </span>
+                /&nbsp;{{ prevalidation.syncable + prevalidation.notSyncable }}
+              </span>
+            </b-col>
+          </b-row>
+        </b-container>
+      </template>
+
+      <hr class="separator">
+
+      <template v-if="!exportDoneOnce">
+        <b-button
+          class="float-right ml-4"
+          :variant="error ? 'danger' : 'primary'"
+          @click="exportClicked(true)"
+        >
+          {{ exportButtonLabel }}
+        </b-button>
+        <p class="disclaimer text-muted">
+          {{ $t('catalogSummary.catalogExportDisclaimer') }}
+        </p>
+      </template>
+
+      <template v-else>
+        <div
+          class="text"
+          :class="{ expanded: seeMoreState }"
+        >
+          <p class="app foldable p-2 mb-0">
+            <span v-html="md2html($t('catalogSummary.catalogExportInfo'))" />
+            <a
+              href="javascript:void(0);"
+              @click="resetSync"
+            >
+              {{ $t('catalogSummary.resetExportLink') }}
+            </a>
+          </p>
+          <span
+            class="see-more"
+            @click="seeMore"
+          >
+            <span>{{ $t('catalogSummary.showMore') }}</span>
+            ...
+          </span>
+          <span
+            class="see-less"
+            @click="seeLess"
+          >{{ $t('catalogSummary.showLess') }}</span>
+        </div>
+        <b-alert
+          v-if="resetLinkError"
+          variant="warning"
+          show
+          class="warning"
+        >
+          {{ $t('catalogSummary.resetExportError') }}
+        </b-alert>
+        <b-alert
+          v-if="resetLinkSuccess"
+          variant="success"
+          show
+          class="success"
+        >
+          {{ $t('catalogSummary.resetExportSuccess') }}
+        </b-alert>
+        <br v-if="!exportOn">
+        <p
+          v-if="!exportOn"
+          class="mb-0"
+        >
+          <i class="material-icons pause-icon">pause_circle_filled</i>
+          {{ $t('catalogSummary.catalogExportOperationPaused') }}
+        </p>
+      </template>
+    </b-card-body>
 
     <!-- Confirmation modal for Disabling synchronization -->
     <ps-modal
@@ -316,22 +260,18 @@
         {{ $t('integrate.buttons.modalConfirm') }}
       </template>
     </ps-modal>
-  </div>
+  </b-card>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
-import {BButton, BAlert, BLink} from 'bootstrap-vue';
 import showdown from 'showdown';
 import Spinner from '@/components/spinner/spinner.vue';
-import PsModal from '@/components/commons/ps-modal';
+import PsModal from '@/components/commons/ps-modal.vue';
 
 export default defineComponent({
   name: 'ExportCatalog',
   components: {
-    BButton,
-    BAlert,
-    BLink,
     Spinner,
     PsModal,
   },
@@ -421,6 +361,7 @@ export default defineComponent({
   },
   data() {
     return {
+      syncIsActive: this.exportOn as boolean,
       error: null,
       seeMoreState: true,
       resetLinkError: null,
@@ -584,6 +525,14 @@ export default defineComponent({
     if (this.validation.prevalidation === null) {
       this.rescan();
     }
+  },
+  watch: {
+    exportOn(newValue: boolean) {
+      this.syncIsActive = newValue;
+    },
+    syncIsActive(newValue: boolean) {
+      this.exportClicked(newValue);
+    },
   },
 });
 </script>

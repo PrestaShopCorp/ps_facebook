@@ -122,7 +122,8 @@
     },
     "catalogBanner": {
       "title": "One last step: Synchronize your catalog",
-      "subTitle": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook."
+      "subTitle": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook.",
+      "subTitleOnCatalogPage": "Synchronize your catalog and start sharing your products on Facebook."
     }
   },
   "catalogSummary": {
@@ -130,7 +131,7 @@
     "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
     "categoryMatchingNotice": "You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.",
     "matchCategoriesButton": "Map categories",
-    "productCatalogExport": "Your catalog in Facebook Business",
+    "productCatalogExport": "Product catalog",
     "exportCatalogButton": "Share catalog",
     "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
     "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all « active » products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",

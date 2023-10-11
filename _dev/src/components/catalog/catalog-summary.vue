@@ -4,14 +4,19 @@
     v-else
     id="catalogSummary"
   >
-    <b-card class="card m-3 p-3">
-      <export-catalog
-        :validation="GET_SYNCHRONIZATION_SUMMARY"
-        :export-done-once="GET_CATALOG_PAGE_ENABLED"
-        :export-on="GET_SYNCHRONIZATION_ACTIVE"
-        :catalog-id="GET_CATALOG_ID"
-      />
-    </b-card>
+    <banner-catalog-sharing
+      v-if="!GET_CATALOG_PAGE_ENABLED"
+      :on-catalog-page="true"
+      class="m-3"
+    />
+
+    <export-catalog
+      :validation="GET_SYNCHRONIZATION_SUMMARY"
+      :export-done-once="GET_CATALOG_PAGE_ENABLED"
+      :export-on="GET_SYNCHRONIZATION_ACTIVE"
+      :catalog-id="GET_CATALOG_ID"
+      class="m-3"
+    />
 
     <b-card
       class="card m-3 p-3"
@@ -32,7 +37,6 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {BCard} from 'bootstrap-vue';
 import {mapGetters} from 'vuex';
 import Spinner from '@/components/spinner/spinner.vue';
 import CatalogTabPages from '@/components/catalog/pages';
@@ -42,12 +46,13 @@ import CategoriesMatched from '@/components/catalog/summary/categories-matched.v
 import Survey from '@/components/survey/survey.vue';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
+import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
 
 export default defineComponent({
   name: 'CatalogSummary',
   components: {
+    BannerCatalogSharing,
     Spinner,
-    BCard,
     ExportCatalog,
     MatchCategories,
     CategoriesMatched,

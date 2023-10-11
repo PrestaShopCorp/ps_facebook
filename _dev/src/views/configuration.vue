@@ -212,7 +212,7 @@ import {OnboardingContext} from '@/store/modules/onboarding/state';
 import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
 import KeyFeatures from '@/components/configuration/key-features.vue';
 import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
-import BannerCatalogSharing from '@/components/configuration/banner-catalog-sharing.vue';
+import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
