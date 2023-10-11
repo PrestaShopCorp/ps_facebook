@@ -1,6 +1,5 @@
 <template>
   <b-card
-    bg-variant="info"
     no-body
     class="ps_sc_featurescard"
   >
