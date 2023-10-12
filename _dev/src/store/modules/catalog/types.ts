@@ -4,6 +4,7 @@ export type PreScanIntermediateResponseDto = {
   success: boolean,
   complete: false,
 
+  /* eslint-disable camelcase */
   page_done: number,
   progress: number,
 };

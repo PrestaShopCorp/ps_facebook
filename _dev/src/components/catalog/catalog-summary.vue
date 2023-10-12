@@ -62,7 +62,7 @@ export default defineComponent({
     ExportCatalog,
     Spinner,
     Survey,
-},
+  },
   data() {
     return {
       CatalogTabPages,

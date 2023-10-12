@@ -1,4 +1,4 @@
-import {RequestState} from '@/lib/api/types';
+import {RequestState} from '@/store/modules/catalog/types';
 import MutationsTypes from './mutations-types';
 import {
   State as LocalState,
@@ -14,7 +14,10 @@ export default {
   [MutationsTypes.SET_SYNCHRONIZATION_ACTIVE](state: LocalState, enabled: boolean) {
     state.exportOn = enabled;
   },
-  [MutationsTypes.SET_SYNCHRONIZATION_SUMMARY](state: LocalState, payload: Partial<ProductFeedReport>) {
+  [MutationsTypes.SET_SYNCHRONIZATION_SUMMARY](
+    state: LocalState,
+    payload: Partial<ProductFeedReport>,
+  ) {
     state.report = {
       ...state.report,
       ...payload,

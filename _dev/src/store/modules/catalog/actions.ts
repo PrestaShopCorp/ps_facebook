@@ -115,7 +115,8 @@ export default {
     });
 
     try {
-      for (page = 0; inProgress == true; page += 1) {
+      for (page = 0; inProgress === true; page += 1) {
+        /* eslint-disable no-await-in-loop */
         const result: PreScanIntermediateResponseDto|PreScanCompleteResponseDto = await fetchShop('RunPrevalidationScan', {
           page,
         });
