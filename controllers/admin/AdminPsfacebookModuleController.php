@@ -248,24 +248,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'requireProductSyncStart',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookRunPrevalidationScanRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'RunPrevalidationScan',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookGetCategoryMappingStatus' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -317,15 +299,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'GetProductStatuses',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookExportWholeCatalog' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'ExportWholeCatalog',
                     'ajax' => 1,
                 ]
             ),

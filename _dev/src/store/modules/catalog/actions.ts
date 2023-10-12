@@ -5,6 +5,7 @@ import MutationsTypes from './mutations-types';
 import {runIf} from '@/lib/Promise';
 import {CategoryMatchingStatus, ProductFeedReport, State} from './state';
 import {FullState} from '@/store';
+import {PreScanCompleteResponseDto, PreScanIntermediateResponseDto, RequestState} from './types';
 
 type Context = ActionContext<State, FullState>;
 
@@ -68,5 +69,96 @@ export default {
       matchingDone: result.matchingDone,
       matchingProgress: result.matchingProgress,
     } as CategoryMatchingStatus);
+  },
+
+  async [ActionsTypes.REQUEST_TOGGLE_SYNCHRONIZATION]({commit}: Context, newState: boolean) {
+    type ToggleResultDto = {
+      success: boolean,
+      message?: string,
+      turnOn: boolean,
+    };
+
+    commit(MutationsTypes.SET_REQUEST_STATE, {
+      request: 'syncToggle',
+      newState: RequestState.PENDING,
+    });
+
+    try {
+      const result: ToggleResultDto = await fetchShop('requireProductSyncStart', {
+        turn_on: newState,
+      });
+
+      if (!result.success) {
+        throw new Error();
+      }
+      commit(MutationsTypes.SET_CATALOG_PAGE_ENABLED);
+      commit(MutationsTypes.SET_SYNCHRONIZATION_ACTIVE, result.turnOn);
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'syncToggle',
+        newState: RequestState.SUCCESS,
+      });
+    } catch {
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'syncToggle',
+        newState: RequestState.FAILED,
+      });
+    }
+  },
+
+  async [ActionsTypes.REQUEST_PRODUCT_SCAN]({commit}: Context): Promise<number> {
+    let page: number = 0;
+    let inProgress: boolean = true;
+
+    commit(MutationsTypes.SET_REQUEST_STATE, {
+      request: 'scan',
+      newState: RequestState.PENDING,
+    });
+
+    try {
+      for (page = 0; inProgress == true; page += 1) {
+        const result: PreScanIntermediateResponseDto|PreScanCompleteResponseDto = await fetchShop('RunPrevalidationScan', {
+          page,
+        });
+
+        inProgress = !result.complete;
+
+        if (result.complete) {
+          commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, result.prevalidation);
+        }
+      }
+
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'scan',
+        newState: RequestState.SUCCESS,
+      });
+    } catch {
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'scan',
+        newState: RequestState.FAILED,
+      });
+    }
+
+    return page;
+  },
+
+  async [ActionsTypes.REQUEST_NEXT_SYNC_AS_FULL]({commit}: Context): Promise<void> {
+    commit(MutationsTypes.SET_REQUEST_STATE, {
+      request: 'requestNextSyncFull',
+      newState: RequestState.PENDING,
+    });
+
+    try {
+      await fetchShop('ExportWholeCatalog');
+
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'requestNextSyncFull',
+        newState: RequestState.SUCCESS,
+      });
+    } catch {
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'requestNextSyncFull',
+        newState: RequestState.FAILED,
+      });
+    }
   },
 };

@@ -27,15 +27,12 @@ declare global {
       psFacebookGetCategories: string;
       psFacebookGetFeaturesRoute: string;
       psFacebookUpdateFeatureRoute: string;
-      psFacebookStartProductSyncRoute: string;
-      psFacebookRunPrevalidationScanRoute: string;
       psFacebookGetCategoryMappingStatus: string;
       psFacebookRetrieveFaq: string;
       psFacebookUpdateConversionApiData: string;
       psFacebookGetProductsWithErrors: string;
       psFacebookGetProductSyncReporting: string;
       psFacebookGetProductStatuses: string;
-      psFacebookExportWholeCatalog: string;
       psFacebookRetrieveTokensRoute: string;
     }
   //   interface IntrinsicElements {

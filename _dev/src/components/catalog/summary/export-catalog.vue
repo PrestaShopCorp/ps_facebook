@@ -45,7 +45,7 @@
         </p>
 
         <b-alert
-          v-if="resetLinkError"
+          v-if="nextSyncAsFullRequestStatus === RequestState.FAILED"
           variant="warning"
           show
           class="warning"
@@ -53,7 +53,7 @@
           {{ $t('catalogSummary.resetExportError') }}
         </b-alert>
         <b-alert
-          v-if="resetLinkSuccess"
+          v-if="nextSyncAsFullRequestStatus === RequestState.SUCCESS"
           variant="success"
           show
           class="success"
@@ -87,6 +87,7 @@ import PsModal from '@/components/commons/ps-modal.vue';
 import {ProductFeedReport} from '@/store/modules/catalog/state';
 import VerifiedProducts from '@/components/catalog/summary/panel/verified-products.vue';
 import SubmittedProducts from '@/components/catalog/summary/panel/submitted-products.vue';
+import {RequestState} from '@/store/modules/catalog/types';
 
 export default defineComponent({
   name: 'ExportCatalog',
@@ -109,21 +110,6 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
-    startProductSyncRoute: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookStartProductSyncRoute || null,
-    },
-    resetProductSyncRoute: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookExportWholeCatalog || null,
-    },
-    runPrevalidationScanRoute: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookRunPrevalidationScanRoute || null,
-    },
     catalogId: {
       type: String,
       required: false,
@@ -133,19 +119,16 @@ export default defineComponent({
   data() {
     return {
       syncIsActive: this.exportOn as boolean,
-      error: null,
-      resetLinkError: null,
-      resetLinkSuccess: null,
-      scanProcess: {
-        inProgress: false,
-        numberOfProductChecked: 0,
-        page: 0,
-        error: null,
-      },
+      RequestState,
     };
   },
+  computed: {
+    nextSyncAsFullRequestStatus(): RequestState {
+      return this.$store.state.catalog.requests.requestNextSyncFull;
+    },
+  },
   methods: {
-    exportClicked(activate, confirm = false) {
+    exportClicked(activate: boolean, confirm: boolean = false) {
       if (!activate && !confirm) {
         this.$bvModal.show(
           this.$refs.ps_facebook_modal_unsync.$refs.modal.id,
@@ -163,104 +146,26 @@ export default defineComponent({
         });
       }
 
-      if (!this.startProductSyncRoute) {
-        return;
-      }
-
-      fetch(this.startProductSyncRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({
-          turn_on: activate,
-        }),
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return res.json();
-      }).then((res) => {
-        if (!res.success) {
-          throw new Error(res.statusText || res.status);
-        }
-        this.$parent.fetchData();
-      }).catch((error) => {
-        console.error(error);
-        this.error = setTimeout(() => {
-          this.error = null;
-        }, 5000);
-      });
+      this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', activate);
     },
-    rescan() {
-      this.scanProcess = {
-        ...this.scanProcess,
-        inProgress: true,
-        numberOfProductChecked: 0,
-        page: 0,
-        error: null,
-      };
-
-      this.fetchScanPage();
+    async rescan() {
       this.$segment.track('Scan of products triggered', {
         module: 'ps_facebook',
+      });
+
+      const numberOfPages = await this.$store.dispatch('catalog/REQUEST_PRODUCT_SCAN');
+
+      this.$segment.track('Scan of products done', {
+        module: 'ps_facebook',
+        numberOfPages,
       });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
 
-    resetSync() {
-      if (!this.resetProductSyncRoute) {
-        return;
-      }
-
-      fetch(this.resetProductSyncRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        // return res.json();
-      }).then(() => {
-        this.resetLinkSuccess = '👌';
-      }).catch((error) => {
-        console.error(error);
-        this.resetLinkError = setTimeout(() => {
-          this.resetLinkError = null;
-        }, 5000);
-      });
-    },
-    fetchScanPage() {
-      return fetch(this.runPrevalidationScanRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-        body: JSON.stringify({
-          page: this.scanProcess.page,
-        }),
-      }).then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        return res.json();
-      }).then((json) => {
-        if (!json.success) {
-          throw new Error(json.message || 'N/A');
-        }
-        this.scanProcess.inProgress = !json.complete;
-        this.scanProcess.numberOfProductChecked = json.progress;
-        if (this.scanProcess.inProgress) {
-          // Load next page
-          this.scanProcess.page += 1;
-          this.fetchScanPage();
-          return;
-        }
-
-        this.$segment.track('Scan of products done', {
-          module: 'ps_facebook',
-          numberOfPages: this.scanProcess.page,
-        });
-      }).catch((error) => {
-        this.scanProcess.inProgress = false;
-        this.scanProcess.error = error;
-        console.error(error);
+    async resetSync() {
+      await this.$store.dispatch('catalog/REQUEST_NEXT_SYNC_AS_FULL');
+      this.$segment.track('[FBK] Full scan requested', {
+        module: 'ps_facebook',
       });
     },
   },

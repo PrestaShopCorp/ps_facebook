@@ -1,9 +1,12 @@
+import {RequestState} from '@/store/modules/catalog/types';
+
 export type State = {
   warmedUp: boolean,
   enabledFeature: boolean,
   exportOn?: boolean,
   categoryMatching?: CategoryMatchingStatus,
   report: ProductFeedReport,
+  requests: CatalogRequests,
 }
 
 export type CategoryMatchingStatus = {
@@ -31,6 +34,12 @@ export type ProductFeedReport = {
   reporting: SyncReport,
 }
 
+export type CatalogRequests = {
+  syncToggle: RequestState,
+  scan: RequestState,
+  requestNextSyncFull: RequestState,
+}
+
 export const state: State = {
   warmedUp: false,
   enabledFeature: false,
@@ -45,5 +54,10 @@ export const state: State = {
       errored: null,
       lastSyncDate: null,
     },
+  },
+  requests: {
+    syncToggle: RequestState.IDLE,
+    scan: RequestState.IDLE,
+    requestNextSyncFull: RequestState.IDLE,
   },
 };
