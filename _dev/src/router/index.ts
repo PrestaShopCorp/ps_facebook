@@ -20,6 +20,7 @@ const routes: Array<RouteConfig> = [
     path: '/catalog',
     name: 'Catalog',
     component: CatalogTab,
+    redirect: {name: CatalogTabPages.summary},
     children: [
       {
         path: 'summary',
