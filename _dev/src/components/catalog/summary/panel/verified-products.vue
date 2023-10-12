@@ -80,6 +80,10 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    loading: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     lastScanText(): string {

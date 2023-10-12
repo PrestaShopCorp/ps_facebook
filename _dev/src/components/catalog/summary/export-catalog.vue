@@ -24,6 +24,7 @@
     <b-card-body>
       <verified-products
         :active="exportDoneOnce"
+        :loading="false"
         :verifications-stats="validation.prevalidation"
       />
       <submitted-products
@@ -137,12 +138,14 @@ export default defineComponent({
       }
 
       if (activate) {
-        this.$segment.track('Share catalog enable', {
+        this.$segment.track('[FBK] Share catalog enable', {
           module: 'ps_facebook',
+          source: 'toggle',
         });
       } else {
-        this.$segment.track('Share catalog disable', {
+        this.$segment.track('[FBK] Share catalog disable', {
           module: 'ps_facebook',
+          source: 'toggle',
         });
       }
 

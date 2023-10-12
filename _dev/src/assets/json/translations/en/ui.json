@@ -132,6 +132,14 @@
         "title": "Product catalog",
         "catalogExportPaused": "Paused",
         "catalogExportActivated": "Activated",
+        "alertSyncIsDisabled": {
+          "title": "The synchronization with Facebook is paused.",
+          "explanation": "Your products are still visible on Facebook, but are no longer synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook."
+        },
+        "alertSyncIsEnabled": {
+          "title": "Your catalog is shared with Facebook.",
+          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
+        },
         "productVerification": {
           "stepTitle": "Pre-synchronization scan",
           "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
@@ -341,7 +349,9 @@
   "cta": {
     "synchronizeCatalog": "Synchronize catalog",
     "cancel": "Cancel",
-    "rescan": "Rescan",
+    "ok": "Ok",
+    "learnMore": "Learn more",
+    "rescan": "Scan",
     "unlink": "Sign out of Facebook",
     "setupCategoryMatching": "Set up Google product categories",
     "manageCategoryMatching": "Manage Google product categories"
