@@ -3,6 +3,7 @@ import CatalogSummary from '@/components/catalog/catalog-summary.vue';
 import {State as CatalogState} from '@/store/modules/catalog/state';
 import {State as OnboardingState} from '@/store/modules/onboarding/state';
 import { stateOnboarded } from "@/../.storybook/mock/onboarding";
+import { RequestState } from "../src/store/modules/catalog/types";
 
 export default {
   title: 'Catalog/Summary page',
@@ -40,6 +41,11 @@ CatalogNotShared.args = {
           errored: null,
         },
       },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+      },
     };
   },
 };
@@ -67,6 +73,11 @@ CatalogRecentlyShared.args = {
           catalog: null,
           errored: null,
         },
+      },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
       },
     };
   },
@@ -96,6 +107,11 @@ SyncOn.args = {
           errored: 42,
         },
       },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+      },
     };
   },
 };
@@ -124,6 +140,11 @@ SyncPaused.args = {
           errored: 42,
         },
       },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+      },
     };
   },
 };
@@ -151,6 +172,11 @@ FullConfiguration.args = {
           catalog: 42,
           errored: 42,
         },
+      },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
       },
     };
   },
