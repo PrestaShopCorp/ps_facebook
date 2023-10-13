@@ -114,6 +114,14 @@ export default {
       newState: RequestState.PENDING,
     });
 
+    commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, {
+      prevalidation: {
+        lastScanDate: null,
+        notSyncable: null,
+        syncable: null,
+      },
+    } as Partial<ProductFeedReport>);
+
     try {
       for (page = 0; inProgress === true; page += 1) {
         /* eslint-disable no-await-in-loop */
@@ -124,7 +132,12 @@ export default {
         inProgress = !result.complete;
 
         if (result.complete) {
-          commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, result.prevalidation);
+          commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, {
+            prevalidation: {
+              ...result.prevalidation,
+              lastScanDate: new Date(result.prevalidation.lastScanDate),
+            },
+          } as Partial<ProductFeedReport>);
         }
       }
 

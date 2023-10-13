@@ -143,7 +143,11 @@
         "productVerification": {
           "stepTitle": "Pre-synchronization scan",
           "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
-          "lastScanDate": "Last scan on {date} at {time}",
+          "scanStatus": {
+            "notSubscribed": "No scan yet",
+            "inProgress": "Scan in progress",
+            "lastScanDate": "Last scan on {date} at {time}"
+          },
           "reportCards": {
             "productsInCatalog": "My product catalog",
             "productsInCatalogDescription": "Number of products in your catalog (including combinations and languages).",

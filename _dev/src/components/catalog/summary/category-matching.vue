@@ -7,11 +7,11 @@
       {{ $t('catalog.summaryPage.categoryMatching.title') }}
 
       <b-button
-        :variant="matchingProgress.matchingDone ? 'outline-primary': 'primary'"
+        :variant="matchingProgress && matchingProgress.matchingDone ? 'outline-primary': 'primary'"
         class="ml-auto"
         :disabled="!active"
       >
-        {{ matchingProgress.matchingDone
+        {{ matchingProgress && matchingProgress.matchingDone
           ? $t('cta.manageCategoryMatching')
           : $t('cta.setupCategoryMatching') }}
       </b-button>
@@ -21,7 +21,7 @@
       <div class="text-category-mapping">
         {{ $t('catalog.summaryPage.categoryMatching.description') }}
         <div
-          v-if="matchingProgress.matchingDone"
+          v-if="matchingProgress && matchingProgress.matchingDone"
           class="text-progress-bar-status"
         >
           {{ $t('catalog.summaryPage.categoryMatching.progress', {
@@ -42,7 +42,7 @@ export default defineComponent({
   name: 'CategoryMatching',
   props: {
     matchingProgress: {
-      type: Object as PropType<CategoryMatchingStatus>,
+      type: Object as PropType<CategoryMatchingStatus|undefined>,
       required: true,
     },
     active: {

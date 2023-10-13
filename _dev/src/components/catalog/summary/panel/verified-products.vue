@@ -40,9 +40,13 @@
       <b-button
         variant="outline-primary"
         class="ml-auto"
-        :disabled="!active"
+        :disabled="!active || scanRequestStatus === RequestState.PENDING"
+        @click="$emit('triggerScan')"
       >
-        <i class="material-icons">sync</i>
+        <i
+          class="material-icons"
+          :class="{'fa-spin': scanRequestStatus === RequestState.PENDING}"
+        >autorenew</i>
         {{ $t('cta.rescan') }}
       </b-button>
     </div>
@@ -66,10 +70,16 @@ import showdown from 'showdown';
 import StatusCardComponent, {StatusCardParameters} from '../status-card.vue';
 import {ValidationReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
+import {RequestState} from '@/store/modules/catalog/types';
 
 export default defineComponent({
   components: {
     StatusCardComponent,
+  },
+  data() {
+    return {
+      RequestState,
+    };
   },
   props: {
     verificationsStats: {
@@ -86,11 +96,19 @@ export default defineComponent({
     },
   },
   computed: {
+    scanRequestStatus(): RequestState {
+      return this.$store.state.catalog.requests.scan;
+    },
     lastScanText(): string {
-      if (!this.verificationsStats.lastScanDate) {
-        return '';
+      if (this.scanRequestStatus === RequestState.PENDING) {
+        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.inProgress');
       }
-      return this.$t('catalog.summaryPage.productCatalog.productVerification.lastScanDate', {
+
+      if (!this.verificationsStats.lastScanDate) {
+        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.notSubscribed');
+      }
+
+      return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.lastScanDate', {
         date: this.verificationsStats.lastScanDate.toLocaleDateString(
           undefined,
           {year: 'numeric', month: 'numeric', day: 'numeric'},

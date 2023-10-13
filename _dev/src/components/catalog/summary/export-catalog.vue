@@ -26,6 +26,7 @@
         :active="exportDoneOnce"
         :loading="false"
         :verifications-stats="validation.prevalidation"
+        @triggerScan="triggerProductsScan"
       />
       <submitted-products
         :loading="false"
@@ -151,7 +152,7 @@ export default defineComponent({
 
       this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', activate);
     },
-    async rescan() {
+    async triggerProductsScan() {
       this.$segment.track('Scan of products triggered', {
         module: 'ps_facebook',
       });
@@ -174,7 +175,7 @@ export default defineComponent({
   },
   mounted() {
     if (this.validation.prevalidation === null) {
-      this.rescan();
+      this.triggerProductsScan();
     }
   },
   watch: {

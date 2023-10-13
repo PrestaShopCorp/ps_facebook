@@ -12,7 +12,11 @@ export type PreScanCompleteResponseDto = {
   success: boolean,
   complete: true,
 
-  prevalidation: ValidationReport,
+  prevalidation: {
+    syncable: number;
+    notSyncable: number;
+    lastScanDate: string;
+},
 };
 
 export enum RequestState {
