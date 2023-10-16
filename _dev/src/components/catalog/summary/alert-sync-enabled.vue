@@ -16,11 +16,11 @@
           {{ $t('catalog.summaryPage.productCatalog.alertSyncIsEnabled.explanation') }}
         </span>
       </p>
-      <div class="d-md-flex flex-grow-1 text-center align-items-center mt-2">
+      <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
         <b-link
           href=""
           target="_blank"
-          class="text-nowrap ml-2"
+          class="text-nowrap ml-auto"
         >
           {{ $t('cta.learnMore') }}
         </b-link>

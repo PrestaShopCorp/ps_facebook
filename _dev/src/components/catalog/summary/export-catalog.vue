@@ -39,7 +39,7 @@
       />
 
       <template>
-        <p class="app foldable p-2 mb-0">
+        <p class="p-2 mb-0">
           <b-button
             variant="link"
             @click="resetSync"

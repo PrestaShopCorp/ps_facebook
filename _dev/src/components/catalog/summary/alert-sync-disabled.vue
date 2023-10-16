@@ -16,10 +16,10 @@
           {{ $t('catalog.summaryPage.productCatalog.alertSyncIsDisabled.explanation') }}
         </span>
       </p>
-      <div class="d-md-flex flex-grow-1 text-center align-items-center mt-2">
+      <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
         <b-button
           size="sm"
-          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap"
+          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto"
           variant="outline-primary"
           @click="enableSync"
         >
