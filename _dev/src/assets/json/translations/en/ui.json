@@ -130,8 +130,8 @@
     "summaryPage": {
       "productCatalog": {
         "title": "Product catalog",
-        "catalogExportPaused": "Paused",
-        "catalogExportActivated": "Activated",
+        "catalogExportPaused": "Not synchronized",
+        "catalogExportActivated": "Synchronized",
         "alertSyncIsDisabled": {
           "title": "The synchronization with Facebook is paused.",
           "explanation": "Your products are still visible on Facebook, but are no longer synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook."

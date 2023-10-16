@@ -4,23 +4,6 @@
   >
     <b-card-header>
       {{ $t('catalog.summaryPage.productCatalog.title') }}
-
-      <b-form-checkbox
-        v-if="exportDoneOnce"
-        switch
-        size="lg"
-        class="ml-1 ps_gs-switch"
-        :checked="exportOn"
-        @click.native.prevent="onExportClicked"
-        :disabled="syncToggleRequestStatus === RequestState.PENDING"
-        inline
-      >
-        <span class="small">
-          {{ exportOn
-            ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
-            : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
-        </span>
-      </b-form-checkbox>
     </b-card-header>
 
     <b-card-body>
@@ -36,6 +19,7 @@
         :sync-is-active="exportOn"
         :catalog-id="catalogId"
         :validation-summary="validation.reporting"
+        @toggleSync="onExportClicked"
       />
 
       <template>
@@ -130,9 +114,6 @@ export default defineComponent({
   computed: {
     nextSyncAsFullRequestStatus(): RequestState {
       return this.$store.state.catalog.requests.requestNextSyncFull;
-    },
-    syncToggleRequestStatus(): RequestState {
-      return this.$store.state.catalog.requests.syncToggle;
     },
   },
   methods: {

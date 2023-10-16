@@ -37,6 +37,22 @@
         </div>
         {{ lastSyncText }}
       </div>
+      <b-form-checkbox
+        v-if="pageIsActive"
+        switch
+        size="lg"
+        class="ml-1 ps_gs-switch ml-auto"
+        :checked="syncIsActive"
+        @click.native.prevent="$emit('toggleSync')"
+        :disabled="syncToggleRequestStatus === RequestState.PENDING"
+        inline
+      >
+        <span class="small">
+          {{ syncIsActive
+            ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
+            : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
+        </span>
+      </b-form-checkbox>
     </div>
 
     <div class="p-0 container-fluid">
@@ -58,10 +74,16 @@ import showdown from 'showdown';
 import StatusCardComponent, {StatusCardParameters} from '@/components/catalog/summary/status-card.vue';
 import {SyncReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
+import {RequestState} from '@/store/modules/catalog/types';
 
 export default defineComponent({
   components: {
     StatusCardComponent,
+  },
+  data() {
+    return {
+      RequestState,
+    };
   },
   props: {
     pageIsActive: {
@@ -86,6 +108,9 @@ export default defineComponent({
     },
   },
   computed: {
+    syncToggleRequestStatus(): RequestState {
+      return this.$store.state.catalog.requests.syncToggle;
+    },
     lastSyncText(): string {
       if (!this.pageIsActive) {
         return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.notSubscribed');
