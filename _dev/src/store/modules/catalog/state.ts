@@ -3,7 +3,7 @@ import {RequestState} from '@/store/modules/catalog/types';
 export type State = {
   warmedUp: boolean,
   enabledFeature: boolean,
-  exportOn?: boolean,
+  exportOn: boolean,
   categoryMatching?: CategoryMatchingStatus,
   report: ProductFeedReport,
   requests: CatalogRequests,
@@ -43,6 +43,7 @@ export type CatalogRequests = {
 export const state: State = {
   warmedUp: false,
   enabledFeature: false,
+  exportOn: false,
   report: {
     prevalidation: {
       syncable: null,

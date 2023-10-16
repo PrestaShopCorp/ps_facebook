@@ -10,11 +10,13 @@
         switch
         size="lg"
         class="ml-1 ps_gs-switch"
-        v-model="syncIsActive"
+        :checked="exportOn"
+        @click.native.prevent="onExportClicked"
+        :disabled="syncToggleRequestStatus === RequestState.PENDING"
         inline
       >
         <span class="small">
-          {{ syncIsActive
+          {{ exportOn
             ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
             : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
         </span>
@@ -70,7 +72,7 @@
       id="ps_facebook_modal_unsync"
       ref="ps_facebook_modal_unsync"
       :title="$t('catalogSummary.modalDeactivationTitle')"
-      @ok="exportClicked(false, true)"
+      @ok="toggleSyncStatus(false)"
       ok-only
     >
       {{ $t('catalogSummary.modalDeactivationText') }}
@@ -120,7 +122,6 @@ export default defineComponent({
   },
   data() {
     return {
-      syncIsActive: this.exportOn as boolean,
       RequestState,
     };
   },
@@ -128,17 +129,25 @@ export default defineComponent({
     nextSyncAsFullRequestStatus(): RequestState {
       return this.$store.state.catalog.requests.requestNextSyncFull;
     },
+    syncToggleRequestStatus(): RequestState {
+      return this.$store.state.catalog.requests.syncToggle;
+    },
   },
   methods: {
-    exportClicked(activate: boolean, confirm: boolean = false) {
-      if (!activate && !confirm) {
+    onExportClicked() {
+      const newValue = !this.exportOn;
+
+      if (!newValue) {
         this.$bvModal.show(
           this.$refs.ps_facebook_modal_unsync.$refs.modal.id,
         );
         return; // blocking modal, to confirm deactivation
       }
 
-      if (activate) {
+      this.toggleSyncStatus(newValue);
+    },
+    toggleSyncStatus(newValue: boolean): void {
+      if (newValue) {
         this.$segment.track('[FBK] Share catalog enable', {
           module: 'ps_facebook',
           source: 'toggle',
@@ -150,7 +159,7 @@ export default defineComponent({
         });
       }
 
-      this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', activate);
+      this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', newValue);
     },
     async triggerProductsScan() {
       this.$segment.track('Scan of products triggered', {
@@ -177,14 +186,6 @@ export default defineComponent({
     if (this.validation.prevalidation === null) {
       this.triggerProductsScan();
     }
-  },
-  watch: {
-    exportOn(newValue: boolean) {
-      this.syncIsActive = newValue;
-    },
-    syncIsActive(newValue: boolean) {
-      this.exportClicked(newValue);
-    },
   },
 });
 </script>
