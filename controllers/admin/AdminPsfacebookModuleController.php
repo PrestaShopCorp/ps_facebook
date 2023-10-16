@@ -311,6 +311,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookProductsUrl' => $this->context->link->getAdminLink('AdminProducts'),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,

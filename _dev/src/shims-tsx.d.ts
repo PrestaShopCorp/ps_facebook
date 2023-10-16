@@ -17,6 +17,7 @@ declare global {
       i18nSettings: any;
 
       psFacebookRouteToShopApi?: string;
+      psFacebookProductsUrl?: string;
 
       psFacebookPixelActivationRoute: string;
       psFacebookFbeOnboardingSaveRoute: string;

@@ -134,6 +134,12 @@ export default defineComponent({
         variant: 'info',
         icon: 'redeem',
         reverseColors: false,
+        ...(+(this.productsInCatalog || 0) && {
+          link: {
+            href: this.$store.state.app.links.coreProductsPageUrl,
+            target: '_blank',
+          },
+        }),
       },
       {
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verified'),

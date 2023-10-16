@@ -1,6 +1,9 @@
-import {IContextAuthentication, IContextBase, ISubscription} from '@prestashopcorp/billing-cdc';
+import {ISubscription} from '@prestashopcorp/billing-cdc';
 
 export type State = {
+  links: {
+    coreProductsPageUrl?: string,
+  },
   hooks: HooksStatuses;
   billing: {
     subscription?: ISubscription;
@@ -14,4 +17,7 @@ export const state: State = {
   billing: {
     subscription: window.psBillingSubscription,
   },
+  links: {
+    coreProductsPageUrl: window.psFacebookProductsUrl,
+  }
 };
