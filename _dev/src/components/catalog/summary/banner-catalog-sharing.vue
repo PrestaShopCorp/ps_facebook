@@ -23,23 +23,46 @@
         <b-button
           class="mx-1 ml-md-0 mr-md-1"
           variant="primary"
-          @click="onClickOnSyncCatalog"
+          @click="openModal"
         >
           {{ $t('cta.synchronizeCatalog') }}
         </b-button>
       </div>
     </div>
+
+    <ps-modal
+      id="ps_facebook_modal_enable_catalog"
+      ref="ps_facebook_modal_enable_catalog"
+      :title="$t('catalog.summaryPage.productCatalog.modals.startSharing.title')"
+      @ok="onClickOnSyncCatalog"
+    >
+      <h3>
+        {{ $t('catalog.summaryPage.productCatalog.modals.startSharing.subTitle') }}
+      </h3>
+      <p
+        v-html="md2html($t('catalog.summaryPage.productCatalog.modals.startSharing.description'))"
+      />
+      <template slot="modal-cancel">
+        {{ $t('cta.cancel') }}
+      </template>
+      <template slot="modal-ok">
+        {{ $t('cta.synchronizeCatalog') }}
+      </template>
+    </ps-modal>
   </ps-banner>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import showdown from 'showdown';
 import PsBanner from '@/components/commons/ps-banner.vue';
+import PsModal from '@/components/commons/ps-modal.vue';
 
 export default defineComponent({
   name: 'BannerCatalogSharing',
   components: {
     PsBanner,
+    PsModal,
   },
   props: {
     onCatalogPage: {
@@ -48,15 +71,20 @@ export default defineComponent({
     },
   },
   methods: {
-    onClickOnSyncCatalog(): void {
-      if (this.onCatalogPage) {
-        this.$emit('enableSyncAndCatalogPage');
-        return;
-      }
-      this.$router.push({
-        name: 'Catalog',
-      });
+    openModal(): void {
+      this.$bvModal.show(
+        this.$refs.ps_facebook_modal_enable_catalog.$refs.modal.id,
+      );
     },
+    async onClickOnSyncCatalog(): Promise<void> {
+      if (!this.onCatalogPage) {
+        await this.$router.push({
+          name: 'Catalog',
+        });
+      }
+      this.$emit('enableSyncAndCatalogPage');
+    },
+    md2html: (md: string) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>

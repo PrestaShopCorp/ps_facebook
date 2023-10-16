@@ -4,7 +4,7 @@
     class="ps_sc_featurescard"
   >
     <b-card-body
-      class="d-flex mx-5 my-4"
+      class="d-flex my-4"
     >
       <div>
         <img

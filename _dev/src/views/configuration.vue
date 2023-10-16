@@ -96,6 +96,7 @@
           </two-panel-cols>
         </div>
         <key-features
+          class="m-3"
           v-else
         />
 

@@ -141,6 +141,11 @@
           "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
         },
         "modals": {
+          "startSharing": {
+            "title": "Synchronize your catalog with Facebook",
+            "subTitle": "What happens when you synchronize your catalog?",
+            "description": "All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronize."
+          },
           "deactivation": {
             "title": "Confirm pausing catalog synchronization",
             "description": "You are about to pause your catalog synchronization with Facebook. Products will not sync until your synchronization is enabled"

@@ -18,9 +18,10 @@
       </p>
       <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
         <b-link
-          href=""
-          target="_blank"
           class="text-nowrap ml-auto"
+          @click="$router.push({
+            name: 'help',
+          })"
         >
           {{ $t('cta.learnMore') }}
         </b-link>
@@ -34,7 +35,5 @@ import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'AlertSyncEnabled',
-  methods: {
-  },
 });
 </script>
