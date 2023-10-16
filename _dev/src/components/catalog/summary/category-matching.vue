@@ -23,7 +23,7 @@
         {{ $t('catalog.summaryPage.categoryMatching.description') }}
         <div
           v-if="matchingProgress.matchingDone"
-          class="text-progress-bar-status"
+          class="text-progress-bar-status mt-2"
         >
           {{ $t('catalog.summaryPage.categoryMatching.progress', {
             current: matchingProgress.matchingProgress.matched,
