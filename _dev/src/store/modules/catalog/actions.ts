@@ -47,28 +47,44 @@ export default {
       }
     };
 
-    const result: SynchronizationStatusDto = await fetchShop('CatalogSummary');
+    commit(MutationsTypes.SET_REQUEST_STATE, {
+      request: 'catalogReport',
+      newState: RequestState.PENDING,
+    });
 
-    if (result.exportDone) {
-      commit(MutationsTypes.SET_CATALOG_PAGE_ENABLED);
+    try {
+      const result: SynchronizationStatusDto = await fetchShop('CatalogSummary');
+
+      if (result.exportDone) {
+        commit(MutationsTypes.SET_CATALOG_PAGE_ENABLED);
+      }
+
+      commit(MutationsTypes.SET_SYNCHRONIZATION_ACTIVE, result.exportOn);
+      commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, {
+        prevalidation: {
+          ...result.validation.prevalidation,
+          lastScanDate: new Date(result.validation.prevalidation.lastScanDate),
+        },
+        reporting: {
+          ...result.validation.reporting,
+          lastSyncDate: new Date(result.validation.reporting.lastSyncDate),
+        },
+      } as ProductFeedReport,
+      );
+      commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
+        matchingDone: result.matchingDone,
+        matchingProgress: result.matchingProgress,
+      } as CategoryMatchingStatus);
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'catalogReport',
+        newState: RequestState.SUCCESS,
+      });
+    } catch {
+      commit(MutationsTypes.SET_REQUEST_STATE, {
+        request: 'catalogReport',
+        newState: RequestState.FAILED,
+      });
     }
-
-    commit(MutationsTypes.SET_SYNCHRONIZATION_ACTIVE, result.exportOn);
-    commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, {
-      prevalidation: {
-        ...result.validation.prevalidation,
-        lastScanDate: new Date(result.validation.prevalidation.lastScanDate),
-      },
-      reporting: {
-        ...result.validation.reporting,
-        lastSyncDate: new Date(result.validation.reporting.lastSyncDate),
-      },
-    } as ProductFeedReport,
-    );
-    commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
-      matchingDone: result.matchingDone,
-      matchingProgress: result.matchingProgress,
-    } as CategoryMatchingStatus);
   },
 
   async [ActionsTypes.REQUEST_TOGGLE_SYNCHRONIZATION]({commit}: Context, newState: boolean) {

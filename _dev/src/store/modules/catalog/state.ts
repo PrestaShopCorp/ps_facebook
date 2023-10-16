@@ -4,7 +4,7 @@ export type State = {
   warmedUp: boolean,
   enabledFeature: boolean,
   exportOn: boolean,
-  categoryMatching?: CategoryMatchingStatus,
+  categoryMatching: CategoryMatchingStatus,
   report: ProductFeedReport,
   requests: CatalogRequests,
 }
@@ -12,8 +12,8 @@ export type State = {
 export type CategoryMatchingStatus = {
   matchingDone: boolean,
   matchingProgress: {
-    matched: number,
-    total: number,
+    matched: number|null,
+    total: number|null,
   }
 }
 
@@ -38,6 +38,7 @@ export type CatalogRequests = {
   syncToggle: RequestState,
   scan: RequestState,
   requestNextSyncFull: RequestState,
+  catalogReport: RequestState,
 }
 
 export const state: State = {
@@ -56,9 +57,17 @@ export const state: State = {
       lastSyncDate: null,
     },
   },
+  categoryMatching: {
+    matchingDone: false,
+    matchingProgress: {
+      matched: null,
+      total: null,
+    },
+  },
   requests: {
     syncToggle: RequestState.IDLE,
     scan: RequestState.IDLE,
     requestNextSyncFull: RequestState.IDLE,
+    catalogReport: RequestState.IDLE,
   },
 };

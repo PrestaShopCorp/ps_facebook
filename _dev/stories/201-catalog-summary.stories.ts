@@ -45,6 +45,7 @@ CatalogNotShared.args = {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
         syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
       },
     };
   },
@@ -78,6 +79,7 @@ CatalogRecentlyShared.args = {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
         syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
       },
     };
   },
@@ -111,6 +113,7 @@ SyncOn.args = {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
         syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
       },
     };
   },
@@ -144,6 +147,7 @@ SyncPaused.args = {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
         syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
       },
     };
   },
@@ -177,6 +181,7 @@ FullConfiguration.args = {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
         syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
       },
     };
   },

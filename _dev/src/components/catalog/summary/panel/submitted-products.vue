@@ -78,7 +78,7 @@ export default defineComponent({
     },
     catalogId: {
       type: String,
-      required: true,
+      required: false,
     },
     loading: {
       type: Boolean,
@@ -121,10 +121,12 @@ export default defineComponent({
         variant: 'success',
         icon: 'check',
         reverseColors: false,
-        link: {
-          href: this.viewCatalogUrl,
-          target: '_blank',
-        },
+        ...((this.catalogId) && {
+          link: {
+            href: this.viewCatalogUrl,
+            target: '_blank',
+          },
+        }),
       },
       {
         title: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.disapproved'),

@@ -13,7 +13,7 @@ export default {
   },
   [GettersTypes.GET_CATEGORY_MATCHING_SUMMARY](
     state: LocalState,
-  ): CategoryMatchingStatus|undefined {
+  ): CategoryMatchingStatus {
     return state.categoryMatching;
   },
 };

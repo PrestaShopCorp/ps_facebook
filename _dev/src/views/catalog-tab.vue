@@ -56,5 +56,9 @@ export default defineComponent({
       CatalogTabPages,
     };
   },
+  mounted() {
+    this.$store.dispatch('catalog/WARMUP_STORE');
+    this.$store.dispatch('onboarding/WARMUP_STORE');
+  },
 });
 </script>

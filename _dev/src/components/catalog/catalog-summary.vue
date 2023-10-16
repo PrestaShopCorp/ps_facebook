@@ -51,6 +51,7 @@ import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
 import AlertSyncDisabled from './summary/alert-sync-disabled.vue';
 import AlertSyncEnabled from './summary/alert-sync-enabled.vue';
+import {RequestState} from '@/store/modules/catalog/types';
 
 export default defineComponent({
   name: 'CatalogSummary',
@@ -66,7 +67,6 @@ export default defineComponent({
   data() {
     return {
       CatalogTabPages,
-      loading: false,
       showSyncEnabledAlert: false as boolean,
     };
   },
@@ -74,6 +74,11 @@ export default defineComponent({
     this.fetchData();
   },
   computed: {
+    loading(): boolean {
+      return this.$store.state.catalog.warmedUp === false
+        || (this.$store.state.catalog.requests.catalogReport === RequestState.PENDING
+        && !this.GET_SYNCHRONIZATION_SUMMARY.prevalidation.syncable);
+    },
     ...mapGetters('catalog', [
       GettersTypesCatalog.GET_CATALOG_PAGE_ENABLED,
       GettersTypesCatalog.GET_SYNCHRONIZATION_ACTIVE,
@@ -86,14 +91,10 @@ export default defineComponent({
   },
   methods: {
     async fetchData(): Promise<void> {
-      this.loading = true;
-
-      try {
-        await this.$store.dispatch('catalog/REQUEST_SYNCHRONIZATION_STATS');
-      } catch {
-        // Do nothing... yet?
+      if (this.loading) {
+        return;
       }
-      this.loading = false;
+      await this.$store.dispatch('catalog/REQUEST_SYNCHRONIZATION_STATS');
     },
   },
   watch: {
