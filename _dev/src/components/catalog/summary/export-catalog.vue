@@ -71,13 +71,15 @@
     <ps-modal
       id="ps_facebook_modal_unsync"
       ref="ps_facebook_modal_unsync"
-      :title="$t('catalogSummary.modalDeactivationTitle')"
+      :title="$t('catalog.summaryPage.productCatalog.modals.deactivation.title')"
       @ok="toggleSyncStatus(false)"
-      ok-only
     >
-      {{ $t('catalogSummary.modalDeactivationText') }}
+      {{ $t('catalog.summaryPage.productCatalog.modals.deactivation.description') }}
+      <template slot="modal-cancel">
+        {{ $t('cta.cancel') }}
+      </template>
       <template slot="modal-ok">
-        {{ $t('integrate.buttons.modalConfirm') }}
+        {{ $t('cta.modalConfirm') }}
       </template>
     </ps-modal>
   </b-card>

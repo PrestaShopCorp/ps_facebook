@@ -140,6 +140,12 @@
           "title": "Your catalog is shared with Facebook.",
           "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
         },
+        "modals": {
+          "deactivation": {
+            "title": "Confirm pausing catalog synchronization",
+            "description": "You are about to pause your catalog synchronization with Facebook. Products will not sync until your synchronization is enabled"
+          }
+        },
         "productVerification": {
           "stepTitle": "Pre-synchronization scan",
           "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
@@ -197,9 +203,7 @@
     "catalogExportNotice": "It can take up to 24h for your PrestaShop product information to sync to Facebook.",
     "catalogExportOperationPaused": "The operation is paused.",
     "backButton": "Back",
-    "exportCatalogButtonErrored": "Failed! Try again",
-    "modalDeactivationTitle": "Confirm deactivation?",
-    "modalDeactivationText": "You are about to disable your catalog sync with Facebook Business. Products will not sync until catalog export is reactivated."
+    "exportCatalogButtonErrored": "Failed! Try again"
   },
   "syncReport": {
     "title": "Product status",
@@ -355,6 +359,7 @@
     "synchronizeCatalog": "Synchronize catalog",
     "cancel": "Cancel",
     "ok": "Ok",
+    "modalConfirm": "Yes, confirm",
     "learnMore": "Learn more",
     "rescan": "Scan",
     "unlink": "Sign out of Facebook",

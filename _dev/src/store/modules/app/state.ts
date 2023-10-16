@@ -19,5 +19,5 @@ export const state: State = {
   },
   links: {
     coreProductsPageUrl: window.psFacebookProductsUrl,
-  }
+  },
 };

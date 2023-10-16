@@ -77,7 +77,7 @@
     >
       {{ $t('integrate.warning.disableFeatureModalText') }}
       <template slot="modal-ok">
-        {{ $t('integrate.buttons.modalConfirm') }}
+        {{ $t('cta.modalConfirm') }}
       </template>
     </ps-modal>
   </li>
