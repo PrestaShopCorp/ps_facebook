@@ -82,7 +82,7 @@ export default defineComponent({
           name: 'Catalog',
         });
       }
-      this.$emit('enableSyncAndCatalogPage');
+      await this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', true);
     },
     md2html: (md: string) => (new showdown.Converter()).makeHtml(md),
   },

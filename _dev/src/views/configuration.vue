@@ -51,6 +51,7 @@
         />
         <banner-catalog-sharing
           v-if="facebookConnected && !GET_CATALOG_PAGE_ENABLED"
+          :on-catalog-page="false"
           class="m-3"
         />
         <b-alert
