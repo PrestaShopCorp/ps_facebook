@@ -26,7 +26,9 @@
       <b-button
         class="float-left mr-3"
         variant="outline-secondary"
-        @click="$parent.back"
+        @click="$router.push({
+          name: 'Catalog',
+        })"
       >
         <i class="material-icons">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}

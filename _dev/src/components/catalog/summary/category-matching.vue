@@ -10,6 +10,7 @@
         :variant="matchingProgress && matchingProgress.matchingDone ? 'outline-primary': 'primary'"
         class="ml-auto"
         :disabled="!active"
+        @click="goToCategoryMatchingPage"
       >
         {{ matchingProgress && matchingProgress.matchingDone
           ? $t('cta.manageCategoryMatching')
@@ -37,6 +38,7 @@
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
 import {CategoryMatchingStatus} from '@/store/modules/catalog/state';
+import CatalogTabPages from '@/components/catalog/pages';
 
 export default defineComponent({
   name: 'CategoryMatching',
@@ -48,6 +50,13 @@ export default defineComponent({
     active: {
       type: Boolean,
       required: true,
+    },
+  },
+  methods: {
+    goToCategoryMatchingPage() {
+      this.$router.push({
+        name: CatalogTabPages.categoryMatchingView,
+      });
     },
   },
 });
