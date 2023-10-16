@@ -135,9 +135,12 @@ export default defineComponent({
         variant: 'danger',
         icon: 'cancel',
         reverseColors: false,
-        link: {
-          to: {name: CatalogTabPages.reportDetails},
-        },
+        ...((this.validationSummary.errored !== null) && {
+          link: {
+            to: {name: CatalogTabPages.reportDetails},
+          },
+          reverseColors: !!this.validationSummary.errored,
+        }),
       }];
     },
   },
