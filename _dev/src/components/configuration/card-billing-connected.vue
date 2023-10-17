@@ -47,7 +47,7 @@ import {
   BIconCheck,
   BIconCircleFill,
 } from 'bootstrap-vue';
-import {ISubscription} from '@prestashopcorp/billing-cdc';
+import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 
 export default defineComponent({
   name: 'CardBillingConnected',

@@ -1,5 +1,6 @@
 enum GettersTypes {
   GET_HOOKS_STATUS = 'GET_HOOKS_STATUS',
+  GET_BILLING_SUBSCRIPTION_ACTIVE = 'GET_BILLING_SUBSCRIPTION_ACTIVE',
 }
 
 export {GettersTypes as default};

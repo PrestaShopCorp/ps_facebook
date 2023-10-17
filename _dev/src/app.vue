@@ -24,13 +24,13 @@
     >
       <Menu :context-ps-facebook="contextPsFacebook">
         <MenuItem
-          v-if="isBillingSubscriptionRunning && GET_ONBOARDING_STATE"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/catalog"
         >
           {{ $t('general.tabs.catalog') }}
         </MenuItem>
         <MenuItem
-          v-if="isBillingSubscriptionRunning && GET_ONBOARDING_STATE"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/integrate"
         >
           {{ $t('general.tabs.integrate') }}
@@ -40,7 +40,7 @@
         </MenuItem>
         <MenuItem
           route="/billing"
-          v-if="isBillingSubscriptionRunning"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE"
         >
           {{ $t('general.tabs.billing') }}
         </MenuItem>
@@ -69,6 +69,7 @@ import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
+import GettersTypesApp from '@/store/modules/app/getters-types';
 
 let resizeEventTimer;
 const root = document.documentElement;
@@ -121,11 +122,11 @@ export default defineComponent({
     shopId(): string|null {
       return window.psAccountShopId;
     },
-    isBillingSubscriptionRunning(): boolean {
-      return !!this.$store.state.app.billing.subscription;
-    },
     ...mapGetters('onboarding', [
       GettersTypesOnboarding.GET_ONBOARDING_STATE,
+    ]),
+    ...mapGetters('app', [
+      GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
     ]),
   },
   methods: {

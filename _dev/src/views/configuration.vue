@@ -64,14 +64,14 @@
         <onboarding-deps-container
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
-          :billing-running="isBillingSubscriptionRunning"
+          :billing-running="GET_BILLING_SUBSCRIPTION_ACTIVE"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
           class="m-3"
         />
 
         <div
           class="m-3"
-          v-if="isBillingSubscriptionRunning"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE"
         >
           <two-panel-cols
             :title="$t('configuration.sectionTitle.pssocial')"
@@ -216,6 +216,7 @@ import KeyFeatures from '@/components/configuration/key-features.vue';
 import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
 import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
+import GettersTypesApp from '@/store/modules/app/getters-types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -364,13 +365,13 @@ export default defineComponent({
     ...mapGetters('catalog', [
       GettersTypesCatalog.GET_CATALOG_PAGE_ENABLED,
     ]),
+    ...mapGetters('app', [
+      GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
+    ]),
     psAccountsOnboarded() {
       return this.contextPsAccounts.user
         && this.contextPsAccounts.user.email !== null
         && this.contextPsAccounts.user.emailIsValidated;
-    },
-    isBillingSubscriptionRunning(): boolean {
-      return !!this.$store.state.app.billing.subscription;
     },
     facebookConnected() {
       return (this.contextPsFacebook

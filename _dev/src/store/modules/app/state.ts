@@ -1,4 +1,4 @@
-import {ISubscription} from '@prestashopcorp/billing-cdc';
+import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 
 export type State = {
   links: {
