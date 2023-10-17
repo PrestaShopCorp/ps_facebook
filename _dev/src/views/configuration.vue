@@ -410,6 +410,24 @@ export default defineComponent({
     dynamicContextPsFacebook(): OnboardingContext|null {
       return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
     },
+    safePopup(): Window|null {
+      // The popup can be unreachable if closed of blocked by CORS policy.
+      // We return it only when it is safe to do so (= allowed by the browser).
+      try {
+        if (!this.popup) {
+          return null;
+        }
+        // This should trigger an error in case of CORS.
+        this.popup.dispatchEvent(new Event('ping'));
+        return this.popup;
+      } catch (error) {
+        console.log('error', error instanceof DOMException);
+        if (error instanceof DOMException) {
+          return null;
+        }
+        throw error;
+      }
+    },
   },
   data() {
     return {
@@ -420,7 +438,7 @@ export default defineComponent({
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
-      openedPopup: null as Window|null,
+      popup: null as Window|null,
       shops: this.contextPsAccounts.shops || [],
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
@@ -500,11 +518,11 @@ export default defineComponent({
       window.open(url, '_blank');
     },
     onFbeOnboardClick() {
-      this.openedPopup = this.openPopup();
+      this.popup = this.openPopup();
       this.showPopupGlass = true;
     },
     onEditClick() {
-      this.openedPopup = this.openPopup();
+      this.popup = this.openPopup();
       this.showPopupGlass = true;
     },
     onUninstallClick() {
@@ -568,7 +586,9 @@ export default defineComponent({
     },
     onFbeOnboardClosed() {
       this.showPopupGlass = false;
-      this.openedPopup = null;
+      if (this.safePopup) {
+        this.popup = null;
+      }
       if (!this.popupReceptionDuplicate) {
         this.encourageToRetry = true;
       }
@@ -583,14 +603,18 @@ export default defineComponent({
 
       if (!response.access_token) {
         this.showPopupGlass = false;
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         return;
       }
       this.loading = true;
       this.showTokensGlass = true;
 
       save(response).then(() => {
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         this.alertSettings = {};
         this.popupReceptionDuplicate = false;
 
@@ -608,7 +632,9 @@ export default defineComponent({
         this.setErrorsFromFbCall(error);
         this.loading = false;
         this.showTokensGlass = false;
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
@@ -712,10 +738,10 @@ export default defineComponent({
       );
     },
     glassClicked() {
-      if (this.openedPopup) {
-        this.openedPopup.focus();
+      if (this.safePopup) {
+        this.safePopup.focus();
       } else {
-        this.openedPopup = this.openPopup();
+        this.popup = this.openPopup();
       }
       if (this.$segment) {
         this.$segment.track('Click on black screen', {
@@ -725,8 +751,8 @@ export default defineComponent({
     },
     closePopup(event) {
       event.stopPropagation(); // avoid popup to be focused before close
-      if (this.openedPopup) {
-        this.openedPopup.close();
+      if (this.safePopup) {
+        this.safePopup.close();
       }
       if (this.$segment) {
         this.$segment.track('Click on the cross to close the pop-in', {
