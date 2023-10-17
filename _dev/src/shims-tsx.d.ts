@@ -10,6 +10,7 @@ declare global {
 
     interface Window {
       contextPsAccounts: any;
+      psAccountShopId: string|null;
       contextPsEventbus: any;
       psBillingContext: IContextBase<IContextAuthentication>;
       psBillingSubscription?: ISubscription;
