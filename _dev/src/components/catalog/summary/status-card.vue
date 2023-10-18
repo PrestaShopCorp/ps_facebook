@@ -7,7 +7,7 @@
     >
       <template #loading>
         <div
-          class="d-flex flex-column align-items-center p-2"
+          class="d-flex flex-column align-items-center p-3"
         >
           <b-skeleton
             width="70%"
@@ -28,7 +28,7 @@
       </template>
 
       <div
-        class="d-flex p-2"
+        class="d-flex p-3"
       >
         <span
           class="material-icons-round ps_gs-fz-20 mt-1 mr-1
