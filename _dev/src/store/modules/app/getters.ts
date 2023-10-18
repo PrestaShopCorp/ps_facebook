@@ -8,7 +8,6 @@ export default {
   [GettersTypes.GET_BILLING_SUBSCRIPTION_ACTIVE](state: LocalState) {
     return state.billing.subscription
       // Using the type from billing-cdc prevents the module to work
-      // @ts-ignore
-      && state.billing.subscription.status !== 'CANCELLED';
+      && state.billing.subscription.status !== 'cancelled';
   },
 };
