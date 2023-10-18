@@ -22,7 +22,7 @@
     </b-card-header>
 
     <b-card-body
-      class="d-flex align-items-start justify-content-between pl-3 pr-3"
+      class="d-flex align-items-start justify-content-between"
     >
       <span v-if="!!contextPsFacebook">
         {{ $t('configuration.facebook.connected.description') }}
@@ -56,7 +56,7 @@
     </b-card-body>
 
     <b-card-body
-      class="py-0 px-1"
+      class="py-0"
     >
       <facebook-app
         :app-type="$t('configuration.facebook.connected.facebookBusinessManager')"

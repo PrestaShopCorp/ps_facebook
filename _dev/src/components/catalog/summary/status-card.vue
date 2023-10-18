@@ -1,6 +1,6 @@
 <template>
   <div
-    class="ps_gs-productfeed__products-status border border-600-20 col mx-1 mb-1"
+    class="ps_gs-productfeed__products-status card col mx-1 mb-1"
   >
     <b-skeleton-wrapper
       :loading="loading"
