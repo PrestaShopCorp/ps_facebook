@@ -79,7 +79,7 @@ import StatusCardComponent, {StatusCardParameters} from '@/components/catalog/su
 import {SyncReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
 import {RequestState} from '@/store/modules/catalog/types';
-import FullSyncRequest from "@/components/catalog/summary/panel/full-sync-request.vue";
+import FullSyncRequest from '@/components/catalog/summary/panel/full-sync-request.vue';
 
 export default defineComponent({
   components: {

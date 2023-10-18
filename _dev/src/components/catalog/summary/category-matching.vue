@@ -7,15 +7,15 @@
       <b-card-header class="d-flex">
         {{ $t('catalog.summaryPage.categoryMatching.title') }}
       </b-card-header>
-      
+
       <b-card-body class="d-flex justify-content-start">
         <div class="text-category-mapping ps_gs-fz-16">
           {{ $t('catalog.summaryPage.categoryMatching.description') }}
           <div
-          v-if="matchingProgress.matchingDone"
+            v-if="matchingProgress.matchingDone"
             class="text-progress-bar-status mt-2"
           >
-          {{ $t('catalog.summaryPage.categoryMatching.progress', {
+            {{ $t('catalog.summaryPage.categoryMatching.progress', {
               current: matchingProgress.matchingProgress.matched,
               total: matchingProgress.matchingProgress.total,
             }) }}

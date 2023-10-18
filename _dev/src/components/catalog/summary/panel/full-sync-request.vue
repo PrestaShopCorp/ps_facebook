@@ -36,11 +36,11 @@ import {defineComponent} from 'vue';
 import {RequestState} from '@/store/modules/catalog/types';
 
 export default defineComponent({
-  name: "FullSyncRequest",
+  name: 'FullSyncRequest',
   data() {
     return {
       RequestState,
-    }
+    };
   },
   computed: {
     nextSyncAsFullRequestStatus(): RequestState {
@@ -55,5 +55,5 @@ export default defineComponent({
       });
     },
   },
-})
+});
 </script>
