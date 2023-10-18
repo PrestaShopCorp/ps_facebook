@@ -9,7 +9,7 @@
       </b-card-header>
       
       <b-card-body class="d-flex justify-content-start">
-        <div class="text-category-mapping">
+        <div class="text-category-mapping ps_gs-fz-16">
           {{ $t('catalog.summaryPage.categoryMatching.description') }}
           <div
           v-if="matchingProgress.matchingDone"
