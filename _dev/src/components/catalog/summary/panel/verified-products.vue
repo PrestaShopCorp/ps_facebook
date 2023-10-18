@@ -1,64 +1,66 @@
 <template>
-  <div class="mb-4">
-    <div class="d-flex align-items-start mb-3">
-      <img
-        class="mr-2"
-        src="@/assets/logo_prestashop.svg"
-        width="44"
-        height="44"
-        alt="PrestaShop Social logo"
-      >
-      <div>
-        <div class="d-flex">
-          <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
-            {{ $t('catalog.summaryPage.productCatalog.productVerification.stepTitle') }}
-          </h2>
-          <b-button
-            id="tooltip-verified-product"
-            class="ml-1 p-0 d-flex"
-            variant="text"
-          >
-            <span class="material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
-              info_outlined
-            </span>
-          </b-button>
-          <b-tooltip
-            target="tooltip-verified-product"
-            triggers="hover"
-            container="#psFacebookApp"
-            custom-class="tooltip-lg"
-          >
-            <span
-              v-html="md2html(
-                $t('catalog.summaryPage.productCatalog.productVerification.stepDetails')
-              )"
-            />
-          </b-tooltip>
+  <div class="mb-4 d-flex flex-row">
+    <img
+      class="mr-2"
+      src="@/assets/logo_prestashop.svg"
+      width="44"
+      height="44"
+      alt="PrestaShop Social logo"
+    >
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-start mb-3">
+        <div>
+          <div class="d-flex">
+            <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
+              {{ $t('catalog.summaryPage.productCatalog.productVerification.stepTitle') }}
+            </h2>
+            <b-button
+              id="tooltip-verified-product"
+              class="ml-1 p-0 d-flex"
+              variant="text"
+            >
+              <span class="material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
+                info_outlined
+              </span>
+            </b-button>
+            <b-tooltip
+              target="tooltip-verified-product"
+              triggers="hover"
+              container="#psFacebookApp"
+              custom-class="tooltip-lg"
+            >
+              <span
+                v-html="md2html(
+                  $t('catalog.summaryPage.productCatalog.productVerification.stepDetails')
+                )"
+              />
+            </b-tooltip>
+          </div>
+          {{ lastScanText }}
         </div>
-        {{ lastScanText }}
+        <b-button
+          variant="outline-primary"
+          class="ml-auto"
+          :disabled="!active || scanRequestStatus === RequestState.PENDING"
+          @click="$emit('triggerScan')"
+        >
+          <i
+            class="material-icons"
+            :class="{'fa-spin': scanRequestStatus === RequestState.PENDING}"
+          >autorenew</i>
+          {{ $t('cta.rescan') }}
+        </b-button>
       </div>
-      <b-button
-        variant="outline-primary"
-        class="ml-auto"
-        :disabled="!active || scanRequestStatus === RequestState.PENDING"
-        @click="$emit('triggerScan')"
-      >
-        <i
-          class="material-icons"
-          :class="{'fa-spin': scanRequestStatus === RequestState.PENDING}"
-        >autorenew</i>
-        {{ $t('cta.rescan') }}
-      </b-button>
-    </div>
 
-    <div class="p-0 container-fluid">
-      <div class="row mx-n1 no-gutters mb-3">
-        <status-card-component
-          v-for="(status, index) in statusCards"
-          :key="index"
-          :status="status"
-          :loading="loading"
-        />
+      <div class="p-0 container-fluid">
+        <div class="row mx-n1 no-gutters mb-3">
+          <status-card-component
+            v-for="(status, index) in statusCards"
+            :key="index"
+            :status="status"
+            :loading="loading"
+          />
+        </div>
       </div>
     </div>
   </div>

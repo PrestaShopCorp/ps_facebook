@@ -1,68 +1,70 @@
 <template>
-  <div class="mb-4">
-    <div class="d-flex align-items-start my-3">
-      <img
-        class="mr-2"
-        src="@/assets/facebook_logo.svg"
-        width="44"
-        height="44"
-        alt="PrestaShop Social logo"
-      >
-      <div>
-        <div class="d-flex">
-          <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
-            {{ $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepTitle') }}
-          </h2>
-          <b-button
-            id="tooltip-submitted-product"
-            class="ml-1 p-0 d-flex"
-            variant="text"
-          >
-            <span class="material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
-              info_outlined
-            </span>
-          </b-button>
-          <b-tooltip
-            target="tooltip-submitted-product"
-            triggers="hover"
-            container="#psFacebookApp"
-            custom-class="tooltip-lg"
-          >
-            <span
-              v-html="md2html(
-                $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepDetails')
-              )"
-            />
-          </b-tooltip>
+  <div class="mb-4 d-flex flex-row">
+    <img
+      class="mr-2"
+      src="@/assets/facebook_logo.svg"
+      width="44"
+      height="44"
+      alt="PrestaShop Social logo"
+    >
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-start mb-3">
+        <div>
+          <div class="d-flex">
+            <h2 class="ps_gs-fz-16 font-weight-600 mb-0">
+              {{ $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepTitle') }}
+            </h2>
+            <b-button
+              id="tooltip-submitted-product"
+              class="ml-1 p-0 d-flex"
+              variant="text"
+            >
+              <span class="material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
+                info_outlined
+              </span>
+            </b-button>
+            <b-tooltip
+              target="tooltip-submitted-product"
+              triggers="hover"
+              container="#psFacebookApp"
+              custom-class="tooltip-lg"
+            >
+              <span
+                v-html="md2html(
+                  $t('catalog.summaryPage.productCatalog.productsSentToFacebook.stepDetails')
+                )"
+              />
+            </b-tooltip>
+          </div>
+          {{ lastSyncText }}
         </div>
-        {{ lastSyncText }}
+        <b-form-checkbox
+          v-if="pageIsActive"
+          switch
+          size="lg"
+          class="ml-1 ps_gs-switch ml-auto"
+          :checked="syncIsActive"
+          @click.native.prevent="$emit('toggleSync')"
+          :disabled="syncToggleRequestStatus === RequestState.PENDING"
+          inline
+        >
+          <span class="small">
+            {{ syncIsActive
+              ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
+              : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
+          </span>
+        </b-form-checkbox>
       </div>
-      <b-form-checkbox
-        v-if="pageIsActive"
-        switch
-        size="lg"
-        class="ml-1 ps_gs-switch ml-auto"
-        :checked="syncIsActive"
-        @click.native.prevent="$emit('toggleSync')"
-        :disabled="syncToggleRequestStatus === RequestState.PENDING"
-        inline
-      >
-        <span class="small">
-          {{ syncIsActive
-            ? $t('catalog.summaryPage.productCatalog.catalogExportActivated')
-            : $t('catalog.summaryPage.productCatalog.catalogExportPaused') }}
-        </span>
-      </b-form-checkbox>
-    </div>
 
-    <div class="p-0 container-fluid">
-      <div class="row mx-n1 no-gutters mb-3">
-        <status-card-component
-          v-for="(status, index) in statusCards"
-          :key="index"
-          :status="status"
-          :loading="loading"
-        />
+      <div class="p-0 container-fluid">
+        <div class="row mx-n1 no-gutters mb-3">
+          <status-card-component
+            v-for="(status, index) in statusCards"
+            :key="index"
+            :status="status"
+            :loading="loading"
+          />
+        </div>
       </div>
     </div>
   </div>
