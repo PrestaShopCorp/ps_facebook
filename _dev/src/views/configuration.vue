@@ -374,10 +374,8 @@ export default defineComponent({
         && this.contextPsAccounts.user.emailIsValidated;
     },
     facebookConnected() {
-      return (this.contextPsFacebook
-        && this.contextPsFacebook.facebookBusinessManager
-        && this.contextPsFacebook.facebookBusinessManager.id)
-        || false;
+      return (this.GET_BILLING_SUBSCRIPTION_ACTIVE
+        && !!this.contextPsFacebook?.facebookBusinessManager?.id);
     },
     categoryMatchingStarted() {
       return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
