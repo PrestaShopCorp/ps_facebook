@@ -1,14 +1,32 @@
 <template>
   <b-card
     no-body
-    class="category-matched"
+    class="category-matched d-flex flex-row flex-align-center"
   >
-    <b-card-header class="d-flex">
-      {{ $t('catalog.summaryPage.categoryMatching.title') }}
-
+    <div>
+      <b-card-header class="d-flex">
+        {{ $t('catalog.summaryPage.categoryMatching.title') }}
+      </b-card-header>
+      
+      <b-card-body class="d-flex justify-content-start">
+        <div class="text-category-mapping">
+          {{ $t('catalog.summaryPage.categoryMatching.description') }}
+          <div
+          v-if="matchingProgress.matchingDone"
+            class="text-progress-bar-status mt-2"
+          >
+          {{ $t('catalog.summaryPage.categoryMatching.progress', {
+              current: matchingProgress.matchingProgress.matched,
+              total: matchingProgress.matchingProgress.total,
+            }) }}
+          </div>
+        </div>
+      </b-card-body>
+    </div>
+    <b-card-body>
       <b-button
         :variant="matchingProgress.matchingDone ? 'outline-primary': 'primary'"
-        class="ml-auto"
+        class="ml-auto text-nowrap mt-2"
         :disabled="!active"
         @click="goToCategoryMatchingPage"
       >
@@ -16,21 +34,6 @@
           ? $t('cta.manageCategoryMatching')
           : $t('cta.setupCategoryMatching') }}
       </b-button>
-    </b-card-header>
-
-    <b-card-body class="d-flex justify-content-start">
-      <div class="text-category-mapping">
-        {{ $t('catalog.summaryPage.categoryMatching.description') }}
-        <div
-          v-if="matchingProgress.matchingDone"
-          class="text-progress-bar-status mt-2"
-        >
-          {{ $t('catalog.summaryPage.categoryMatching.progress', {
-            current: matchingProgress.matchingProgress.matched,
-            total: matchingProgress.matchingProgress.total,
-          }) }}
-        </div>
-      </div>
     </b-card-body>
   </b-card>
 </template>
