@@ -21,34 +21,6 @@
         :validation-summary="validation.reporting"
         @toggleSync="onExportClicked"
       />
-
-      <template>
-        <p class="p-2 mb-0">
-          <b-button
-            variant="link"
-            @click="resetSync"
-          >
-            {{ $t('catalogSummary.resetExportLink') }}
-          </b-button>
-        </p>
-
-        <b-alert
-          v-if="nextSyncAsFullRequestStatus === RequestState.FAILED"
-          variant="warning"
-          show
-          class="warning"
-        >
-          {{ $t('catalogSummary.resetExportError') }}
-        </b-alert>
-        <b-alert
-          v-if="nextSyncAsFullRequestStatus === RequestState.SUCCESS"
-          variant="success"
-          show
-          class="success"
-        >
-          {{ $t('catalogSummary.resetExportSuccess') }}
-        </b-alert>
-      </template>
     </b-card-body>
 
     <!-- Confirmation modal for Disabling synchronization -->
@@ -111,11 +83,6 @@ export default defineComponent({
       RequestState,
     };
   },
-  computed: {
-    nextSyncAsFullRequestStatus(): RequestState {
-      return this.$store.state.catalog.requests.requestNextSyncFull;
-    },
-  },
   methods: {
     onExportClicked() {
       const newValue = !this.exportOn;
@@ -157,13 +124,6 @@ export default defineComponent({
       });
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
-
-    async resetSync() {
-      await this.$store.dispatch('catalog/REQUEST_NEXT_SYNC_AS_FULL');
-      this.$segment.track('[FBK] Full scan requested', {
-        module: 'ps_facebook',
-      });
-    },
   },
   mounted() {
     if (this.validation.prevalidation === null) {
