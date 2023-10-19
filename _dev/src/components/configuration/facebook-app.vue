@@ -1,21 +1,3 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
   <div class="app pb-2 px-2">
     <div class="d-flex">
@@ -57,32 +39,29 @@
         <div v-else>
           <div
             v-if="!!email"
-            class="small text-truncate"
+            class="text-truncate"
           >
             {{ email }}
           </div>
           <div
             v-if="!!appId"
-            class="small text-truncate"
+            class="text-truncate"
           >
             {{ appId }}
           </div>
           <div
             v-if="null !== likes"
-            class="small"
           >
             {{ $tc('configuration.app.nbLikes', likes, [likes]) }}
           </div>
           <div
             v-if="!!createdAt"
-            class="small"
           >
             {{ $t('configuration.app.createdAt') }}
             {{ new Date(createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
           </div>
           <div
             v-if="!!lastActive"
-            class="small"
           >
             {{ $t('configuration.app.lastActive') }}
             {{ new Date(lastActive).toLocaleDateString(undefined, { dateStyle: 'medium' }) }}
@@ -90,7 +69,6 @@
           </div>
           <div
             v-if="activationSwitch"
-            class="small"
           >
             {{ $t('configuration.app.status') }}
             <b-form-checkbox
@@ -101,9 +79,7 @@
               :disabled="frozenSwitch"
               inline
             >
-              <span class="small">
-                {{ statusText }}
-              </span>
+              {{ statusText }}
             </b-form-checkbox>
           </div>
         </div>

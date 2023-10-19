@@ -80,14 +80,14 @@
               v-if="!facebookConnected"
               @onFbeOnboardClick="onFbeOnboardClick"
               :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
-              :can-connect="!!dynamicExternalBusinessId"
+              :can-connect="!!externalBusinessId"
               :encourage-to-retry="encourageToRetry"
             />
             <facebook-connected
               v-else
               :ps-facebook-app-id="psFacebookAppId"
-              :external-business-id="dynamicExternalBusinessId"
-              :context-ps-facebook="dynamicContextPsFacebook"
+              :external-business-id="externalBusinessId"
+              :context-ps-facebook="contextPsFacebook"
               :is-module-enabled="isModuleEnabled"
               @onEditClick="onEditClick"
               @onPixelActivation="onPixelActivation"
@@ -196,7 +196,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue';
+import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
@@ -223,7 +223,7 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
     const canGeneratePopup = (
       component.contextPsAccounts.currentShop
       && component.contextPsAccounts.currentShop.url
-      && component.dynamicExternalBusinessId
+      && component.externalBusinessId
       && component.psAccountsToken
     );
 
@@ -238,7 +238,7 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
       '/index.html',
       component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
       component.contextPsAccounts.currentShop.frontUrl,
-      component.dynamicExternalBusinessId,
+      component.externalBusinessId,
       component.psAccountsToken,
       component.currency,
       component.timezone,
@@ -275,20 +275,10 @@ export default defineComponent({
       required: false,
       default: () => global.contextPsAccounts,
     },
-    contextPsFacebook: {
-      type: Object as PropType<OnboardingContext>,
-      required: false,
-      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
-    },
     psFacebookAppId: {
       type: String,
       required: false,
       default: () => global.psFacebookAppId,
-    },
-    externalBusinessId: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookExternalBusinessId,
     },
     psAccountsToken: {
       type: String,
@@ -377,36 +367,17 @@ export default defineComponent({
       return (this.GET_BILLING_SUBSCRIPTION_ACTIVE
         && !!this.contextPsFacebook?.facebookBusinessManager?.id);
     },
-    categoryMatchingStarted() {
-      return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
-        && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
-    },
-    productSyncStarted() {
-      return this.contextPsFacebook && this.contextPsFacebook.catalog
-        && this.contextPsFacebook.catalog.productSyncStarted;
-    },
-    adCampaignStarted() {
-      // TODO !1: when true?
-      return false;
-    },
-    showSyncCatalogAdvice() {
-      const c = this.dynamicContextPsFacebook;
-      return c && this.facebookConnected && (
-        !c.catalog
-        || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
-      );
-    },
     openPopup(): () => Window|null {
-      if (!this.dynamicExternalBusinessId) {
+      if (!this.externalBusinessId) {
         return () => null;
       }
       return generateOpenPopup(this, this.psFacebookUiUrl);
     },
-    dynamicExternalBusinessId(): string|null {
-      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
+    externalBusinessId(): string|null {
+      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'];
     },
-    dynamicContextPsFacebook(): OnboardingContext|null {
-      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
+    contextPsFacebook(): OnboardingContext|null {
+      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'];
     },
     safePopup(): Window|null {
       // The popup can be unreachable if closed of blocked by CORS policy.
@@ -501,20 +472,6 @@ export default defineComponent({
         console.error(error);
       });
     },
-    onCategoryMatchingClick() {
-      this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
-    },
-    onSyncCatalogClick() {
-      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
-    },
-    onAdCampaignClick() {
-      const catalogId = this.dynamicContextPsFacebook.catalog.id;
-      const businessId = this.dynamicContextPsFacebook.facebookBusinessManager.id;
-      const host = 'https://business.facebook.com';
-      const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
-      const url = `${host}/products/catalogs/${catalogId}/ads${query}`;
-      window.open(url, '_blank');
-    },
     onFbeOnboardClick() {
       this.popup = this.openPopup();
       this.showPopupGlass = true;
@@ -548,7 +505,7 @@ export default defineComponent({
       });
     },
     onPixelActivation() {
-      const actualState = this.dynamicContextPsFacebook.pixel.isActive;
+      const actualState = this.contextPsFacebook.pixel.isActive;
       const newState = !actualState;
       // Save activation state in PHP side.
       fetch(this.pixelActivationRoute, {
@@ -566,15 +523,15 @@ export default defineComponent({
           throw new Error('Error');
         }
         this.$root.refreshContextPsFacebook({
-          ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: newState},
+          ...this.contextPsFacebook,
+          pixel: {...this.contextPsFacebook.pixel, isActive: newState},
         });
       }).catch((error) => {
         console.error(error);
         this.setErrorsFromFbCall(error);
         this.$root.refreshContextPsFacebook({
-          ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
+          ...this.contextPsFacebook,
+          pixel: {...this.contextPsFacebook.pixel, isActive: actualState},
         });
       });
     },
@@ -767,14 +724,11 @@ export default defineComponent({
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
-    contextPsAccounts() {
-      this.$forceUpdate();
-    },
-    dynamicExternalBusinessId(newValue) {
+    externalBusinessId(newValue) {
       this.$root.refreshExternalBusinessId(newValue);
       this.$root.identifySegment();
     },
-    dynamicContextPsFacebook(newValue: OnboardingContext|null) {
+    contextPsFacebook(newValue: OnboardingContext|null) {
       if (newValue) {
         this.$store.dispatch('catalog/WARMUP_STORE');
       }
