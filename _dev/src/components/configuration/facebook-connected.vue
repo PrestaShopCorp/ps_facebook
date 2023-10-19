@@ -3,21 +3,11 @@
     no-body
   >
     <b-card-header>
-      <b-iconstack
-        font-scale="1.5"
-        class="mr-2 align-bottom fixed-size"
-        width="20"
-        height="20"
-      >
-        <b-icon-circle-fill
-          stacked
-          variant="success"
-        />
-        <b-icon-check
-          stacked
-          variant="white"
-        />
-      </b-iconstack>
+      <span class="step-is-done rounded-circle bg-success d-flex align-items-center mr-1">
+        <i
+          class="material-icons text-light ps_gs-fz-16 ml-auto"
+        >check</i>
+      </span>
       {{ $t('configuration.facebook.title') }}
     </b-card-header>
 

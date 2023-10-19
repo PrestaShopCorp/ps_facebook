@@ -1,21 +1,13 @@
 <template>
   <b-card no-body>
-    <b-card-header>
-      <b-iconstack
-        font-scale="1.5"
-        class="mr-2 align-bottom fixed-size"
-        width="20"
-        height="20"
-      >
-        <b-icon-circle-fill
-          stacked
-          variant="success"
-        />
-        <b-icon-check
-          stacked
-          variant="white"
-        />
-      </b-iconstack>
+    <b-card-header
+      class="d-flex"
+    >
+      <span class="step-is-done rounded-circle bg-success d-flex align-items-center mr-1">
+        <i
+          class="material-icons text-light ps_gs-fz-16 ml-auto"
+        >check</i>
+      </span>
       {{ $t('configuration.billingFacade.title') }}
     </b-card-header>
     <b-card-body
@@ -79,3 +71,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.step-is-done {
+  width: 24px;
+  height: 24px;
+}
+</style>
