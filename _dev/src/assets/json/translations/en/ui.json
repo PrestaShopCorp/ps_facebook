@@ -54,6 +54,10 @@
       "catchPhrase": "Turn likes into sales with PrestaShop Social",
       "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
     },
+    "alertBillingCancelled": {
+      "title": "You’ve canceled your PrestaShop Social subscription.",
+      "explanation": "You can re-subscribe anytime to continue using the module."
+    },
     "billingFacade": {
       "title": "Subscription settings",
       "nextPayment": "Your subscription is active, next billing {date}",
@@ -370,6 +374,7 @@
     "modalConfirm": "Yes, confirm",
     "learnMore": "Learn more",
     "rescan": "Scan",
+    "resubscribe": "Re-subscribe",
     "unlink": "Sign out of Facebook",
     "setupCategoryMatching": "Set up Google product categories",
     "manageCategoryMatching": "Manage Google product categories"

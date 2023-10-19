@@ -172,3 +172,33 @@ FullyConnectedAndSyncing.args = {
   psCloudSyncVersionCheck,
 };
 
+export const NotRenewing: any = Template.bind({});
+NotRenewing.args = {
+  beforeMount: function(this: any) {
+    window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
+    window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = {
+      ...runningSubscription,
+      status: 'non_renewing',
+    };
+    window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState).enabledFeature = true;
+  },
+  mounted: function (this: any) {
+    this.$refs.page.$data.billingRunning = true;
+  },
+  contextPsAccounts: contextPsAccountsConnectedAndValidated,
+  psFacebookAppId: "1234567890",
+  psAccountsToken: "a-valid-token",
+  currency: "EUR",
+  timezone: "Europe/Paris",
+  locale: "fr-FR",
+  pixelActivationRoute: "http://perdu.com",
+  fbeOnboardingSaveRoute: "http://perdu.com",
+  psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
+  psAccountsVersionCheck,
+  psCloudSyncVersionCheck,
+};
+
+

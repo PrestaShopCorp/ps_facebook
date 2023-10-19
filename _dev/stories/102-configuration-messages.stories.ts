@@ -6,12 +6,11 @@ export default {
 };
 
 const props = ':showOnboardSucceeded="showOnboardSucceeded"';
-const events = '@onCategoryMatchingClick="onCategoryMatchingClick" @onSyncCatalogClick="onSyncCatalogClick" @onAdCampaignClick="onAdCampaignClick"';
 
 const Template = (args: any, { argTypes }: any) => ({
   props: Object.keys(argTypes),
   components: { Messages },
-  template: `<messages ${props} ${events} />`,
+  template: `<messages ${props} />`,
 });
 
 export const AllShown:any = Template.bind({});

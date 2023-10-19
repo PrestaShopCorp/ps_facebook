@@ -10,4 +10,9 @@ export default {
       // Using the type from billing-cdc prevents the module to work
       && state.billing.subscription.status !== 'cancelled';
   },
+  [GettersTypes.GET_BILLING_SUBSCRIPTION_EXPIRING](state: LocalState) {
+    return state.billing.subscription
+      // Using the type from billing-cdc prevents the module to work
+      && state.billing.subscription.status === 'non_renewing';
+  },
 };
