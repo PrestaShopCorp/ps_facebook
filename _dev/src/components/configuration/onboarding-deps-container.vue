@@ -6,6 +6,7 @@
       <prestashop-accounts />
     </two-panel-cols>
     <two-panel-cols
+      v-if="billingContext"
       :title="$t('configuration.sectionTitle.psbilling')"
     >
       <div
@@ -14,7 +15,7 @@
       />
       <div id="ps-modal-in-catalog-tab" />
       <card-billing-connected
-        v-if="billingRunning"
+        v-if="billingRunning && billingSubscription"
         :subscription="billingSubscription"
       />
     </two-panel-cols>
@@ -33,8 +34,11 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {EVENT_HOOK_TYPE} from '@prestashopcorp/billing-cdc/dist/constants/EventHookType';
+import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
+import {IContextAuthentication, IContextBase} from '@prestashopcorp/billing-cdc/dist/@types/context/ContextRoot';
 import TwoPanelCols from './two-panel-cols.vue';
 import CardBillingConnected from './card-billing-connected.vue';
+import {State as AppState} from '@/store/modules/app/state';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
@@ -53,8 +57,11 @@ export default defineComponent({
     },
   },
   computed: {
-    billingSubscription(): boolean {
-      return this.$store.state.app.billing.subscription;
+    billingContext(): IContextBase<IContextAuthentication> {
+      return window.psBillingContext;
+    },
+    billingSubscription(): ISubscription|undefined {
+      return (this.$store.state.app as AppState).billing.subscription;
     },
   },
   methods: {
@@ -94,7 +101,7 @@ export default defineComponent({
       if (!window.psBilling) {
         return;
       }
-      window.psBilling.initialize(window.psBillingContext.context, '#ps-billing-in-catalog-tab', '#ps-modal-in-catalog-tab', (type: EVENT_HOOK_TYPE, data: any) => {
+      window.psBilling.initialize(this.billingContext.context, '#ps-billing-in-catalog-tab', '#ps-modal-in-catalog-tab', (type: EVENT_HOOK_TYPE, data: any) => {
         switch (type) {
           // Hook triggered when the subscription is created
           case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
