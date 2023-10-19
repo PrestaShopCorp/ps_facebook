@@ -34,11 +34,11 @@
           class="d-flex justify-content-between"
         >
           <p class="mb-0">
-            <strong>
+            <strong class="ps_gs-fz-16">
               {{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}
             </strong>
             <br>
-            <span class="ps_gs-fz-12">
+            <span>
               {{ $t('configuration.facebook.notConnected.incompleteOnboarding.explanation') }}
             </span>
           </p>

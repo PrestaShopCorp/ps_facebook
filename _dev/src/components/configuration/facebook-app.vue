@@ -1,5 +1,5 @@
 <template>
-  <div class="app pb-2 px-2">
+  <div class="app pb-2">
     <div class="d-flex">
       <img
         v-if="!!logo"

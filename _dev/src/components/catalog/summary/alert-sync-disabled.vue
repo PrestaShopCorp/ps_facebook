@@ -8,11 +8,11 @@
       class="d-flex flex-column flex-md-row justify-content-between"
     >
       <p class="mb-0">
-        <strong>
+        <strong class="ps_gs-fz-16">
           {{ $t('catalog.summaryPage.productCatalog.alertSyncIsDisabled.title') }}
         </strong>
         <br>
-        <span class="ps_gs-fz-12">
+        <span>
           {{ $t('catalog.summaryPage.productCatalog.alertSyncIsDisabled.explanation') }}
         </span>
       </p>
