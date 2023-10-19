@@ -6,13 +6,13 @@ export const contextFacebookOnboarded: OnboardingContext = {
   },
   facebookBusinessManager: {
     name: "La Fanchonette",
-    createDate: Date.now().toString(),
+    createDate: '2020-07-14T08:46:48+0000',
     id: "12345689",
   },
   pixel: {
     name: "La Fanchonette Test Pixel",
     id: "1234567890",
-    lastActive: Date.now().toString(),
+    lastActive: '2023-10-19T10:56:51+0100',
     isActive: true,
     isUnavailable: false,
   },
@@ -25,7 +25,7 @@ export const contextFacebookOnboarded: OnboardingContext = {
   ads: {
     name: "La Fanchonette",
     id: "12541233",
-    createdAt: Date.now().toString(),
+    createdAt: '2020-07-14T10:47:12+0200',
   },
   catalog: {
     id: '34567890',

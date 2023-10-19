@@ -3,8 +3,9 @@ import Configuration from "@/views/configuration.vue";
 import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "@/../.storybook/mock/ps-accounts";
 import {contextPsEventBus} from "@/../.storybook/mock/ps-event-bus";
 import {contextPsBilling, runningSubscription} from "@/../.storybook/mock/ps-billing";
-import {contextFacebookOnboarded} from "@/../.storybook/mock/onboarding";
+import {stateOnboarded, contextFacebookOnboarded} from "@/../.storybook/mock/onboarding";
 import {State as CatalogState} from '../src/store/modules/catalog/state';
+import {State as OnboardingState, state as defaultOnboardingState} from '@/store/modules/onboarding/state';
 
 export default {
   title: "Configuration/Configuration page",
@@ -34,8 +35,7 @@ const psCloudSyncVersionCheck = {
 
 
 const params =
-  ':contextPsAccounts="contextPsAccounts" :contextPsFacebook="contextPsFacebook" ' +
-  ':externalBusinessId="externalBusinessId" :psAccountsToken="psAccountsToken" ' +
+  ':contextPsAccounts="contextPsAccounts" :psAccountsToken="psAccountsToken" ' +
   ':currency="currency" :timezone="timezone" :locale="locale" ' +
   ':pixelActivationRoute="pixelActivationRoute" :fbeOnboardingSaveRoute="fbeOnboardingSaveRoute" ' +
   ':psFacebookUiUrl="psFacebookUiUrl" ' +
@@ -55,11 +55,10 @@ export const NoPsAccountOnboarded: any = Template.bind({});
 NoPsAccountOnboarded.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsNotConnected);
+
   },
   contextPsAccounts: contextPsAccountsNotConnected,
-  contextPsFacebook: null,
   psFacebookAppId: "1234567890",
-  externalBusinessId: null,
   psAccountsToken: null,
   currency: "EUR",
   timezone: "Europe/Paris",
@@ -78,11 +77,11 @@ NoActiveSubscription.args = {
     window.psBillingContext = cloneDeep(contextPsBilling);
     this.$store.state.app.billing.subscription = undefined;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(defaultOnboardingState);
+    (this.$store.state.onboarding as OnboardingState).externalBusinessID = '0b2f5f57-5190-47e2-8df6-b2f96447ac9f';
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
-  contextPsFacebook: {},
   psFacebookAppId: "1234567890",
-  externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
   psAccountsToken: "a-valid-token",
   currency: "EUR",
   timezone: "Europe/Paris",
@@ -101,14 +100,14 @@ NotConnectedOnFb.args = {
     window.psBillingContext = cloneDeep(contextPsBilling);
     this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(defaultOnboardingState);
+    (this.$store.state.onboarding as OnboardingState).externalBusinessID = '0b2f5f57-5190-47e2-8df6-b2f96447ac9f';
   },
   mounted: function (this: any) {
     this.$refs.page.$data.billingRunning = true;
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
-  contextPsFacebook: {},
   psFacebookAppId: "1234567890",
-  externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
   psAccountsToken: "a-valid-token",
   currency: "EUR",
   timezone: "Europe/Paris",
@@ -128,15 +127,14 @@ FullyConnected.args = {
     this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
     (this.$store.state.catalog as CatalogState).enabledFeature = false;
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
   },
   mounted: function (this: any) {
     this.$refs.page.$data.billingRunning = true;
     this.$refs.page.$data.psFacebookJustOnboarded = true;
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
-  contextPsFacebook: contextFacebookOnboarded,
   psFacebookAppId: "1234567890",
-  externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
   psAccountsToken: "a-valid-token",
   currency: "EUR",
   timezone: "Europe/Paris",
@@ -155,15 +153,14 @@ FullyConnectedAndSyncing.args = {
     window.psBillingContext = cloneDeep(contextPsBilling);
     this.$store.state.app.billing.subscription = runningSubscription;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState).enabledFeature = true;
   },
   mounted: function (this: any) {
     this.$refs.page.$data.billingRunning = true;
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
-  contextPsFacebook: contextFacebookOnboarded,
   psFacebookAppId: "1234567890",
-  externalBusinessId: "0b2f5f57-5190-47e2-8df6-b2f96447ac9f",
   psAccountsToken: "a-valid-token",
   currency: "EUR",
   timezone: "Europe/Paris",
