@@ -71,10 +71,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.step-is-done {
-  width: 24px;
-  height: 24px;
-}
-</style>
