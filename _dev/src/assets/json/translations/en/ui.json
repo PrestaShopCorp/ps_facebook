@@ -121,7 +121,7 @@
       "configCompleted": {
         "title": "You’ve set up Facebook on your store.",
         "nextStep": "One last step: synchronize your product catalog with Facebook",
-        "remainingSteps": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook."
+        "remainingSteps": "What will happen?"
       }
     },
     "catalogBanner": {
@@ -148,7 +148,7 @@
           "startSharing": {
             "title": "Synchronize your catalog with Facebook",
             "subTitle": "What happens when you synchronize your catalog?",
-            "description": "All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronize."
+            "description": "All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
           },
           "deactivation": {
             "title": "Confirm pausing catalog synchronization",
