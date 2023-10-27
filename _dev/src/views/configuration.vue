@@ -181,7 +181,7 @@
 import {defineComponent, PropType} from 'vue';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
-import AlertIncomingPaidVersion  from '@/components/monetization/alert-incoming-paid-version.vue';
+import AlertIncomingPaidVersion from '@/components/monetization/alert-incoming-paid-version.vue';
 import PsModal from '@/components/commons/ps-modal';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';

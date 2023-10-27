@@ -8,7 +8,7 @@
       <strong>
         {{ $t('incomingPaidVersion.alert.title', {date, price}) }}
       </strong>
-      <p 
+      <span
         v-html="md2html($t('incomingPaidVersion.alert.description'))"
       />
     </p>
@@ -31,7 +31,7 @@ export default defineComponent({
       }).format(9.99);
     },
     date(): string {
-      return new Date('2023-11-16').toLocaleDateString(undefined, { dateStyle: 'medium' });
+      return new Date('2023-11-16').toLocaleDateString(undefined, {dateStyle: 'medium'});
     },
   },
   methods: {

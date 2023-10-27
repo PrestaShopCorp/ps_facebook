@@ -36,7 +36,7 @@ export default defineComponent({
       }).format(9.99);
     },
     date(): string {
-      return new Date('2023-11-16').toLocaleDateString(undefined, { dateStyle: 'medium' });
+      return new Date('2023-11-16').toLocaleDateString(undefined, {dateStyle: 'medium'});
     },
     shopId() {
       return window.psAccountShopId;
