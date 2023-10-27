@@ -240,7 +240,7 @@ class GoogleCategoryRepository
         $sql->select('cm.google_category_parent_id as googleCategoryParentId');
         $sql->select('cm.google_category_parent_name as googleCategoryParentName');
         $sql->select('cm.is_parent_category as isParentCategory');
-        $sql->select('case when c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
+        $sql->select('case when c.nleft > 0 AND c.nleft = c.nright -1 and c.`level_depth` = ' . Config::MAX_CATEGORY_DEPTH .
             ' then ' . self::NO_CHILDREN . ' else ' . self::HAS_CHILDREN . ' end deploy');
         $sql->from('category', 'c');
         $sql->innerJoin('category_shop', 'cs', 'cs.id_category = c.id_category');
