@@ -1,5 +1,5 @@
 import CardBillingConnected from '@/components/configuration/card-billing-connected.vue';
-import {runningSubscription} from '@/../.storybook/mock/ps-billing';
+import {runningSubscription, trialNotRenewedSubscription} from '@/../.storybook/mock/ps-billing';
 
 export default {
   title: 'Configuration/Billing',
@@ -18,4 +18,9 @@ const Template = (args: any, { argTypes }: any) => ({
 export const SubscriptionRunning: any = Template.bind({});
 SubscriptionRunning.args = {
   subscription: runningSubscription,
+};
+
+export const SubscriptionEnding: any = Template.bind({});
+SubscriptionEnding.args = {
+  subscription: trialNotRenewedSubscription,
 };

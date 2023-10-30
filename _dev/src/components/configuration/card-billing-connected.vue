@@ -16,9 +16,7 @@
       <i
         class="material-icons ps_gs-fz-48 mr-3"
       >credit_card</i>
-      {{ $t('configuration.billingFacade.nextPayment', {
-        date: nextBillingDate
-      }) }}
+      {{ billingStatusText }}
       <div class="d-md-flex ml-auto text-center">
         <b-button
           class="mx-1 ml-md-0 mr-md-1"
@@ -39,6 +37,7 @@ import {
   BIconCheck,
   BIconCircleFill,
 } from 'bootstrap-vue';
+import {LocaleMessage} from 'vue-i18n';
 import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 
 export default defineComponent({
@@ -57,9 +56,25 @@ export default defineComponent({
   computed: {
     nextBillingDate(): string {
       return new Date(this.subscription.next_billing_at * 1000).toLocaleDateString(
-        undefined,
-        {year: 'numeric', month: 'numeric', day: 'numeric'},
+        window.i18nSettings.languageLocale.substring(0, 2),
+        {dateStyle: 'long'},
       );
+    },
+    endOfSubscriptionDate(): string {
+      return new Date(this.subscription.cancelled_at * 1000).toLocaleDateString(
+        window.i18nSettings.languageLocale.substring(0, 2),
+        {dateStyle: 'long'},
+      );
+    },
+    billingStatusText(): LocaleMessage {
+      if (this.subscription.cancelled_at) {
+        return this.$t('configuration.billingFacade.willEnd', {
+          date: this.endOfSubscriptionDate,
+        });
+      }
+      return this.$t('configuration.billingFacade.nextPayment', {
+        date: this.nextBillingDate,
+      });
     },
   },
   methods: {

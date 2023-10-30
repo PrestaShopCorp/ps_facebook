@@ -6,8 +6,7 @@ export const contextPsBilling = {
     i18n: {
       isoCode: "fr",
     },
-    refreshToken:
-      "Fj3odcUR14ezlhTsG",
+    refreshToken: "Fj3odcUR14ezlhTsG",
     shop: {
       uuid: "shop-id",
       domain: "some.website.com",
@@ -27,6 +26,72 @@ export const contextPsBilling = {
       tosUrl: "https://yoururl/",
     },
   },
+};
+
+export const inTrialSubscription = {
+  id: "some-id",
+  plan_id: "ps_facebook-standard-EUR-Monthly",
+  customer_id: "shop-id",
+  status: "in_trial",
+  currency_code: "EUR",
+  has_scheduled_changes: false,
+  billing_period: 1,
+  billing_period_unit: "month",
+  due_invoices_count: 0,
+  meta_data: { module: "ps_facebook" },
+  plan_amount: 795,
+  plan_quantity: 1,
+  plan_unit_price: 795,
+  pricing_model: "flat_fee",
+  subscription_items: [
+    {
+      item_price_id: "ps_facebook-standard-EUR-Monthly",
+      group_id: "ps_facebook-standard",
+      amount: 795,
+      item_type: "plan",
+      quantity: 1,
+      unit_price: 795,
+    },
+  ],
+  created_at: 1696409796,
+  next_billing_at: 1698706800,
+  started_at: 1696409796,
+  updated_at: 1698687532,
+  trial_end: 1698706800,
+  is_free_trial_used: true,
+};
+
+export const trialNotRenewedSubscription = {
+  id: "some-id",
+  plan_id: "ps_facebook-standard-EUR-Monthly",
+  customer_id: "shop-id",
+  status: "in_trial",
+  currency_code: "EUR",
+  has_scheduled_changes: false,
+  billing_period: 1,
+  billing_period_unit: "month",
+  due_invoices_count: 0,
+  meta_data: { module: "ps_facebook" },
+  plan_amount: 795,
+  plan_quantity: 1,
+  plan_unit_price: 795,
+  pricing_model: "flat_fee",
+  subscription_items: [
+    {
+      item_price_id: "ps_facebook-standard-EUR-Monthly",
+      group_id: "ps_facebook-standard",
+      amount: 795,
+      item_type: "plan",
+      quantity: 1,
+      unit_price: 795,
+    },
+  ],
+  created_at: 1696409796,
+  cancelled_at: 1698706800,
+  started_at: 1696409796,
+  updated_at: 1698397879,
+  trial_end: 1698706800,
+  is_free_trial_used: true,
 };
 
 export const runningSubscription = {
