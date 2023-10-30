@@ -291,5 +291,17 @@
     "tips": "Nachdem Sie mit dem ersten Shop fertig sind, können Sie die anderen Shops konfigurieren, indem Sie sie nacheinander im Shop-Selektor im horizontalen Menü auswählen",
     "configure": "Konfigurieren",
     "group": "Gruppe einkaufen"
+  },
+  "incomingPaidVersion": {
+    "modal": {
+      "title": "Pricing update",
+      "description": "From **{date}, a {price}/Tax excl monthly subscription*** will be required to continue using PrestaShop Social. When you subscribe, you’ll start with a 14-day free trial. We won’t automatically enroll you. The choice to switch to the subscription plan is fully under your control - you can cancel at any time.\n\nThis change will allow us to deliver regular updates and introduce new features to enhance your overall experience. We've already started redesigning the module's experience, making it easier and quicker to set up.",
+      "cta": "Notify me when available"
+    },
+    "alert": {
+      "title": "From {date}, a {price}/Tax excl monthly subscription* will be required to use PrestaShop Social.",
+      "description": "When you subscribe, you’ll start with a 14-day free trial. You can cancel anytime. This change will allow us to deliver regular updates and introduce new features to enhance your overall experience."
+    },
+    "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
   }
 }
