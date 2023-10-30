@@ -10,6 +10,9 @@
     <p
       v-html="md2html($t('incomingPaidVersion.modal.description', {price, date}))"
     />
+    <p class="text-muted">
+      {{ $t('incomingPaidVersion.IncludedInHosted') }}
+    </p>
     <template slot="modal-ok">
       {{ $t('incomingPaidVersion.modal.cta') }}
     </template>
@@ -56,3 +59,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.text-muted {
+  font-size: 12px;
+}
+</style>

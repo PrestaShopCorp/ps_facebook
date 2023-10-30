@@ -11,6 +11,9 @@
       <span
         v-html="md2html($t('incomingPaidVersion.alert.description'))"
       />
+      <span class="text-muted">
+        {{ $t('incomingPaidVersion.IncludedInHosted') }}
+      </span>
     </p>
   </b-alert>
 </template>
@@ -39,3 +42,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.text-muted {
+  font-size: 12px;
+}
+</style>
