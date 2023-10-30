@@ -36,7 +36,6 @@
         @shop-selected="onShopSelected($event)"
       />
       <template v-else>
-        <alert-incoming-paid-version />
         <messages
           :show-onboard-succeeded="psFacebookJustOnboarded"
           :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
@@ -181,7 +180,6 @@
 import {defineComponent, PropType} from 'vue';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
-import AlertIncomingPaidVersion from '@/components/monetization/alert-incoming-paid-version.vue';
 import PsModal from '@/components/commons/ps-modal';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
@@ -230,7 +228,6 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
 export default defineComponent({
   name: 'Configuration',
   components: {
-    AlertIncomingPaidVersion,
     Spinner,
     PsModal,
     Introduction,

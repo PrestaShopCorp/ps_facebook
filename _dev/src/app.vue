@@ -49,10 +49,6 @@
       </Menu>
     </div>
 
-    <modal-incoming-paid-version
-      v-if="shopId"
-    />
-
     <router-view :context-ps-facebook="contextPsFacebook" />
     <div
       v-if="shopId"
@@ -68,7 +64,6 @@ import {defineComponent} from 'vue';
 import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
-import ModalIncomingPaidVersion from '@/components/monetization/modal-incoming-paid-version.vue';
 
 let resizeEventTimer;
 const root = document.documentElement;
@@ -92,7 +87,6 @@ export default defineComponent({
   components: {
     Menu,
     MenuItem,
-    ModalIncomingPaidVersion,
   },
   props: {
     contextPsFacebook: {

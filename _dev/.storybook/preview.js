@@ -101,12 +101,6 @@ addDecorator(() => ({
       immediate: true,
     },
   },
-  beforeCreate() {
-    window.i18nSettings = {
-      languageLocale: 'en-us',
-      isoCode: 'en',
-    }
-  },
   store,
 }));
 
