@@ -1,5 +1,8 @@
 <template>
   <div>
+    <alert-module-upgrade-for-billing
+      v-if="!billingContext"
+    />
     <two-panel-cols
       :title="$t('configuration.sectionTitle.psaccounts')"
     >
@@ -39,10 +42,12 @@ import TwoPanelCols from './two-panel-cols.vue';
 import CardBillingConnected from './card-billing-connected.vue';
 import {State as AppState} from '@/store/modules/app/state';
 import {billingUpdateCallback} from '@/lib/billing';
+import AlertModuleUpgradeForBilling from '@/components/monetization/alert-module-upgrade-for-billing.vue';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
   components: {
+    AlertModuleUpgradeForBilling,
     TwoPanelCols,
     CardBillingConnected,
   },

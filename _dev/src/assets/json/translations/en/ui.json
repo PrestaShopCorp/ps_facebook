@@ -50,6 +50,13 @@
       "EventBusEnableDone": "PrestaShop CloudSync is enabled.",
       "accountSuspended": "We seem to lack permissions on your Facebook account to be able to sync your products. To resolve this issue, please reonboard to put the permissions back to the correct state."
     },
+    "upgradeForBillingStep": {
+      "alert": {
+        "title": "To continue using PrestaShop Social, please update to the latest version.",
+        "description": "Since {date}, a {price}/Tax excl monthly subscription* is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience."
+      },
+      "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
+    },
     "keyFeatures": {
       "catchPhrase": "Turn likes into sales with PrestaShop Social",
       "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
