@@ -295,11 +295,11 @@
   "incomingPaidVersion": {
     "modal": {
       "title": "Mise à jour de la tarification",
-      "description": "A partir de **{date}, un abonnement mensuel {price}/Hors taxes** sera nécessaire pour continuer à utiliser PrestaShop Social. Lors de votre inscription, vous bénéficiez d’un essai gratuit de 14 jours pour tester le module. Il est important de noter que souscrire ce plan n'est pas automatique. Le choix de passer à ce plan de souscription est entièrement sous votre contrôle, et vous pouvez le résilier à tout moment.\n\nCe changement nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités afin d'enrichir votre expérience globale. Nous avons déjà commencé à faire évoluer le module, en le rendant plus facile à naviguer et plus rapide à configurer.",
+      "description": "A partir de **{date}, un abonnement mensuel {price}/Hors taxes*** sera nécessaire pour continuer à utiliser PrestaShop Social. Lors de votre inscription, vous bénéficiez d’un essai gratuit de 14 jours pour tester le module. Il est important de noter que souscrire ce plan n'est pas automatique. Le choix de passer à ce plan de souscription est entièrement sous votre contrôle, et vous pouvez le résilier à tout moment.\n\nCe changement nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités afin d'enrichir votre expérience globale. Nous avons déjà commencé à faire évoluer le module, en le rendant plus facile à naviguer et plus rapide à configurer.",
       "cta": "Je souhaite être notifié(e)"
     },
     "alert": {
-      "title": "A partir de {date}, un abonnement mensuel {price}/Hors taxes* sera nécessaire pour continuer à utiliser PrestaShop Social.",
+      "title": "À partir de {date}, un abonnement mensuel {price}/Hors taxes* sera nécessaire pour continuer à utiliser PrestaShop Social.",
       "description": "Lors de votre inscription, vous bénéficiez d’un essai gratuit de 14 jours pour tester le module. Vous pouvez le résilier à tout moment. Ce changement nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités afin d'enrichir votre expérience globale."
     },
     "IncludedInHosted": "* Si vous êtes déjà abonné à l'offre PrestaShop Hosted, vous n'êtes pas affecté par ce changement. PrestaShop Social reste gratuit pour vous."
