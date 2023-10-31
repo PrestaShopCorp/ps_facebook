@@ -33,12 +33,12 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {EVENT_HOOK_TYPE} from '@prestashopcorp/billing-cdc/dist/constants/EventHookType';
 import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 import {IContextAuthentication, IContextBase} from '@prestashopcorp/billing-cdc/dist/@types/context/ContextRoot';
 import TwoPanelCols from './two-panel-cols.vue';
 import CardBillingConnected from './card-billing-connected.vue';
 import {State as AppState} from '@/store/modules/app/state';
+import {billingUpdateCallback} from '@/lib/billing';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
@@ -57,7 +57,7 @@ export default defineComponent({
     },
   },
   computed: {
-    billingContext(): IContextBase<IContextAuthentication> {
+    billingContext(): IContextBase<IContextAuthentication>|undefined {
       return window.psBillingContext;
     },
     billingSubscription(): ISubscription|undefined {
@@ -98,23 +98,15 @@ export default defineComponent({
       window.psaccountsVue.init();
     },
     initBillingComponent() {
-      if (!window.psBilling) {
+      if (!window.psBilling || !this.billingContext) {
         return;
       }
-      window.psBilling.initialize(this.billingContext.context, '#ps-billing-in-catalog-tab', '#ps-modal-in-catalog-tab', (type: EVENT_HOOK_TYPE, data: any) => {
-        switch (type) {
-          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
-          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_UPDATED:
-          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CANCELLED:
-          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_REACTIVATED:
-            if (data?.subscription) {
-              this.$store.state.app.billing.subscription = data.subscription;
-            }
-            break;
-          default:
-            break;
-        }
-      });
+      window.psBilling.initialize(
+        this.billingContext.context,
+        '#ps-billing-in-catalog-tab',
+        '#ps-modal-in-catalog-tab',
+        billingUpdateCallback(window.psBilling, this.$store.state.app),
+      );
     },
   },
   mounted() {

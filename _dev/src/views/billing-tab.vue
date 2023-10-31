@@ -36,18 +36,19 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import {billingUpdateCallback} from '@/lib/billing';
 
 export default defineComponent({
   name: 'BillingTab',
   mounted() {
-    if (!window.psBilling) {
+    if (!window.psBilling || !window.psBillingContext) {
       return;
     }
     window.psBilling.initialize(
       window.psBillingContext.context,
       '#ps-billing-in-billing-tab',
       '#ps-modal-in-billing-tab',
-      () => {},
+      billingUpdateCallback(window.psBilling, this.$store.state.app),
     );
 
     window.psBilling.initializeInvoiceList(
