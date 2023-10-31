@@ -103,10 +103,13 @@ export default defineComponent({
       }
       window.psBilling.initialize(this.billingContext.context, '#ps-billing-in-catalog-tab', '#ps-modal-in-catalog-tab', (type: EVENT_HOOK_TYPE, data: any) => {
         switch (type) {
-          // Hook triggered when the subscription is created
           case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
-            // CHECKME: Do we actually receive data about the subscription?
-            this.$store.state.app.billing.subscription = data;
+          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_UPDATED:
+          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CANCELLED:
+          case window.psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_REACTIVATED:
+            if (data?.subscription) {
+              this.$store.state.app.billing.subscription = data.subscription;
+            }
             break;
           default:
             break;
