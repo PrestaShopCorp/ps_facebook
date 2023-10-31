@@ -4,6 +4,7 @@
     ref="ps_facebook_modal_incoming_paid_version"
     :title="$t('incomingPaidVersion.modal.title')"
     @ok="ack"
+    @hidden="hidden"
     ok-only
     :visible="!isModalAlreadyAknowledged()"
   >
@@ -47,15 +48,21 @@ export default defineComponent({
   },
   methods: {
     ack(): void {
-      localStorage.setItem(`incomingSubscriptionAck-${this.shopId}`, 'true');
+      this.doNotDisplayModalAnymore();
       this.$segment.track('[FBK] User wants to be notified of monetization launch', {
         module: 'ps_facebook',
       });
+    },
+    hidden(): void {
+      this.doNotDisplayModalAnymore();
     },
     isModalAlreadyAknowledged(): boolean {
       return !!JSON.parse(localStorage.getItem(`incomingSubscriptionAck-${this.shopId}`) || 'false');
     },
     md2html: (md: string) => (new Showdown.Converter()).makeHtml(md),
+    doNotDisplayModalAnymore(): void {
+      localStorage.setItem(`incomingSubscriptionAck-${this.shopId}`, 'true');
+    },
   },
 });
 </script>
