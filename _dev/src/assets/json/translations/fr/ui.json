@@ -294,7 +294,7 @@
   },
   "incomingPaidVersion": {
     "modal": {
-      "title": "Pricing update",
+      "title": "Mise à jour de la tarification",
       "description": "From **{date}, a {price}/Tax excl monthly subscription*** will be required to continue using PrestaShop Social. When you subscribe, you’ll start with a 14-day free trial. We won’t automatically enroll you. The choice to switch to the subscription plan is fully under your control - you can cancel at any time.\n\nThis change will allow us to deliver regular updates and introduce new features to enhance your overall experience. We've already started redesigning the module's experience, making it easier and quicker to set up.",
       "cta": "Notify me when available"
     },
