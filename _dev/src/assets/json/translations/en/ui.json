@@ -166,11 +166,11 @@
           "startSharing": {
             "title": "Synchronize your catalog with Facebook",
             "subTitle": "What happens when you synchronize your catalog?",
-            "description": "All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
+            "description": "* All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
           },
           "deactivation": {
-            "title": "Confirm pausing catalog synchronization",
-            "description": "You are about to pause your catalog synchronization with Facebook. Products will not sync until your synchronization is enabled"
+            "title": "Pause catalog synchronization?",
+            "description": "Your products will still be visible on Facebook, but they will no longer be synchronized.  This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
           }
         },
         "productVerification": {
@@ -388,6 +388,7 @@
     "upgrade": "Upgrade",
     "clickHere": "click here",
     "synchronizeCatalog": "Synchronize catalog",
+    "pauseSyncOfCatalog": "Pause catalog synchronization",
     "cancel": "Cancel",
     "ok": "Ok",
     "modalConfirm": "Yes, confirm",

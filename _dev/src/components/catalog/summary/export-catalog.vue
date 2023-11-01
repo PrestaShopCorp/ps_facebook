@@ -35,7 +35,7 @@
         {{ $t('cta.cancel') }}
       </template>
       <template slot="modal-ok">
-        {{ $t('cta.modalConfirm') }}
+        {{ $t('cta.pauseSyncOfCatalog') }}
       </template>
     </ps-modal>
   </b-card>
