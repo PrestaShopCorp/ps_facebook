@@ -22,7 +22,7 @@ CatalogNotShared.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
-      warmedUp: true,
+      warmedUp: RequestState.SUCCESS,
       enabledFeature: false,
       exportOn: false,
       categoryMatching: {
@@ -56,7 +56,7 @@ CatalogRecentlyShared.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
-      warmedUp: true,
+      warmedUp: RequestState.SUCCESS,
       enabledFeature: true,
       exportOn: true,
       categoryMatching: {
@@ -90,7 +90,7 @@ SyncOn.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
-      warmedUp: true,
+      warmedUp: RequestState.SUCCESS,
       enabledFeature: true,
       exportOn: true,
       categoryMatching: {
@@ -124,7 +124,7 @@ SyncPaused.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
-      warmedUp: true,
+      warmedUp: RequestState.SUCCESS,
       enabledFeature: true,
       exportOn: false,
       categoryMatching: {
@@ -158,7 +158,7 @@ FullConfiguration.args = {
   beforeMount: function(this: any) {
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState) = {
-      warmedUp: true,
+      warmedUp: RequestState.SUCCESS,
       enabledFeature: true,
       exportOn: true,
       categoryMatching: {

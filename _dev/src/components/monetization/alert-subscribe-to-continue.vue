@@ -20,8 +20,6 @@
           {{ $t('configuration.upgradeForBillingStep.IncludedInHosted') }}
         </span>
       </p>
-      <div class="d-md-flex text-center align-items-center mt-2">
-      </div>
     </div>
   </b-alert>
 </template>

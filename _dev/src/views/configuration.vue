@@ -53,7 +53,7 @@
           :module-version-check="psCloudSyncVersionCheck"
         />
         <banner-catalog-sharing
-          v-if="facebookConnected && !GET_CATALOG_PAGE_ENABLED"
+          v-if="facebookConnected && catalogDataloaded && !GET_CATALOG_PAGE_ENABLED"
           :on-catalog-page="false"
           class="m-3"
         />
@@ -223,6 +223,7 @@ import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
 import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
+import {RequestState} from '@/store/modules/catalog/types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
@@ -408,6 +409,9 @@ export default defineComponent({
         }
         throw error;
       }
+    },
+    catalogDataLoaded(): boolean {
+      return this.$store.state.catalog.warmedUp === RequestState.SUCCESS;
     },
   },
   data() {
@@ -741,9 +745,9 @@ export default defineComponent({
       this.$root.identifySegment();
     },
     contextPsFacebook: {
-      handler(newValue: OnboardingContext|null) {
+      async handler(newValue: OnboardingContext|null) {
         if (newValue) {
-          this.$store.dispatch('catalog/WARMUP_STORE');
+          await this.$store.dispatch('catalog/WARMUP_STORE');
         }
       },
       immediate: true,

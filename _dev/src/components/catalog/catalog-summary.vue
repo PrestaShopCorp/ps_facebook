@@ -75,9 +75,7 @@ export default defineComponent({
   },
   computed: {
     loading(): boolean {
-      return this.$store.state.catalog.warmedUp === false
-        || (this.$store.state.catalog.requests.catalogReport === RequestState.PENDING
-        && !this.GET_SYNCHRONIZATION_SUMMARY.prevalidation.syncable);
+      return this.$store.state.catalog.warmedUp !== RequestState.SUCCESS;
     },
     ...mapGetters('catalog', [
       GettersTypesCatalog.GET_CATALOG_PAGE_ENABLED,

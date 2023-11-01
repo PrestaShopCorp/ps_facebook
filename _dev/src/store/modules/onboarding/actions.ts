@@ -3,15 +3,19 @@ import ActionsTypes from './actions-types';
 import MutationsTypes from './mutations-types';
 import {OnboardingContext} from './state';
 import {runIf} from '@/lib/Promise';
+import {RequestState} from '@/store/modules/catalog/types';
 
 export default {
   async [ActionsTypes.WARMUP_STORE](
     {dispatch, state, getters},
   ) {
-    if (state.warmedUp) {
+    if ([
+      RequestState.PENDING,
+      RequestState.SUCCESS,
+    ].includes(state.warmedUp)) {
       return;
     }
-    state.warmedUp = true;
+    state.warmedUp = RequestState.PENDING;
 
     await runIf(
       !getters.GET_EXTERNAL_BUSINESS_ID,
@@ -21,6 +25,7 @@ export default {
       !getters.IS_USER_ONBOARDED,
       dispatch(ActionsTypes.REQUEST_ONBOARDING_STATE),
     );
+    state.warmedUp = RequestState.SUCCESS;
   },
 
   async [ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID]({commit}): Promise<string> {

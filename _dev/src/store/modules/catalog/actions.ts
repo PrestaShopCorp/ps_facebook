@@ -13,15 +13,20 @@ export default {
   async [ActionsTypes.WARMUP_STORE](
     {dispatch, state, getters}: Context,
   ) {
-    if (state.warmedUp) {
+    if ([
+      RequestState.PENDING,
+      RequestState.SUCCESS,
+    ].includes(state.warmedUp)) {
       return;
     }
-    state.warmedUp = true;
+    state.warmedUp = RequestState.PENDING;
 
     await runIf(
       !getters.GET_CATALOG_PAGE_ENABLED,
       dispatch(ActionsTypes.REQUEST_SYNCHRONIZATION_STATS),
     );
+
+    state.warmedUp = RequestState.SUCCESS;
   },
 
   async [ActionsTypes.REQUEST_SYNCHRONIZATION_STATS]({commit}: Context) {

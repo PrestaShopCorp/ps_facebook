@@ -1,7 +1,7 @@
 import {RequestState} from '@/store/modules/catalog/types';
 
 export type State = {
-  warmedUp: boolean,
+  warmedUp: RequestState,
   enabledFeature: boolean,
   exportOn: boolean,
   categoryMatching: CategoryMatchingStatus,
@@ -42,7 +42,7 @@ export type CatalogRequests = {
 }
 
 export const state: State = {
-  warmedUp: false,
+  warmedUp: RequestState.IDLE,
   enabledFeature: false,
   exportOn: false,
   report: {
