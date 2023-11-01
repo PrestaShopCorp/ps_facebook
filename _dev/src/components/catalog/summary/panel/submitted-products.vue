@@ -132,8 +132,8 @@ export default defineComponent({
 
       return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.lastSyncDate', {
         date: this.validationSummary.lastSyncDate.toLocaleDateString(
-          undefined,
-          {year: 'numeric', month: 'numeric', day: 'numeric'},
+          window.i18nSettings.languageLocale.substring(0, 2),
+          {dateStyle: 'long'},
         ),
         time: this.validationSummary.lastSyncDate.toLocaleTimeString(
           undefined,
