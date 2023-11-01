@@ -740,10 +740,13 @@ export default defineComponent({
       this.$root.refreshExternalBusinessId(newValue);
       this.$root.identifySegment();
     },
-    contextPsFacebook(newValue: OnboardingContext|null) {
-      if (newValue) {
-        this.$store.dispatch('catalog/WARMUP_STORE');
-      }
+    contextPsFacebook: {
+      handler(newValue: OnboardingContext|null) {
+        if (newValue) {
+          this.$store.dispatch('catalog/WARMUP_STORE');
+        }
+      },
+      immediate: true,
     },
   },
 });
