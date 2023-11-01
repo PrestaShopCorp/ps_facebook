@@ -73,7 +73,7 @@
     },
     "alertBillingCancelled": {
       "title": "You’ve canceled your PrestaShop Social subscription.",
-      "explanation": "You can re-subscribe anytime to continue using the module."
+      "explanation": "Your subscription ended on {date}, you can subscribe anytime to continue using the module. "
     },
     "billingFacade": {
       "title": "Subscription settings",
@@ -156,7 +156,7 @@
         "catalogExportActivated": "Synchronized",
         "alertSyncIsDisabled": {
           "title": "The synchronization with Facebook is paused.",
-          "explanation": "Your products are still visible on Facebook, but are no longer synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook."
+          "explanation": "Your products are still visible on Facebook, but they are no longer be synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
         },
         "alertSyncIsEnabled": {
           "title": "Your catalog is shared with Facebook.",

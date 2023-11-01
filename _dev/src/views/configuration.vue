@@ -36,9 +36,6 @@
         @shop-selected="onShopSelected($event)"
       />
       <template v-else>
-        <alert-subscription-cancelled
-          v-if="GET_BILLING_SUBSCRIPTION_EXPIRING"
-        />
         <messages
           :show-onboard-succeeded="psFacebookJustOnboarded"
           :alert-settings="alertSettings"
@@ -222,7 +219,6 @@ import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sh
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
-import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
 import {RequestState} from '@/store/types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
@@ -260,7 +256,6 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
 export default defineComponent({
   name: 'Configuration',
   components: {
-    AlertSubscriptionCancelled,
     BannerCatalogSharing,
     FacebookNotConnected,
     FacebookConnected,
@@ -365,7 +360,6 @@ export default defineComponent({
     ]),
     ...mapGetters('app', [
       GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
-      GettersTypesApp.GET_BILLING_SUBSCRIPTION_EXPIRING,
     ]),
     ...mapGetters('onboarding', [
       GettersTypesOnboarding.IS_USER_ONBOARDED,

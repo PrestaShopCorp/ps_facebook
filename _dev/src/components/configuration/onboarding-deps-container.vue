@@ -6,6 +6,10 @@
     <alert-subscribe-to-continue
       v-else-if="!billingRunning && facebookOnboarded"
     />
+    <alert-subscription-cancelled
+      v-else-if="billingSubscription && billingSubscription.cancelled_at"
+      :subscription="billingSubscription"
+    />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
     />
@@ -50,6 +54,7 @@ import {State as AppState} from '@/store/modules/app/state';
 import {billingUpdateCallback} from '@/lib/billing';
 import AlertModuleUpgradeForBilling from '@/components/monetization/alert-module-upgrade-for-billing.vue';
 import AlertSubscribeToContinue from '@/components/monetization/alert-subscribe-to-continue.vue';
+import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
 import ModalModuleUpgradeForBilling from '@/components/monetization/modal-module-upgrade-for-billing.vue';
 
 export default defineComponent({
@@ -57,6 +62,7 @@ export default defineComponent({
   components: {
     AlertModuleUpgradeForBilling,
     AlertSubscribeToContinue,
+    AlertSubscriptionCancelled,
     ModalModuleUpgradeForBilling,
     TwoPanelCols,
     CardBillingConnected,

@@ -1,7 +1,7 @@
 <template>
   <b-alert
     show
-    variant="warning"
+    variant="info"
   >
     <div
       class="d-flex flex-column flex-md-row justify-content-between"
@@ -12,7 +12,7 @@
         </strong>
         <br>
         <span>
-          {{ $t('configuration.alertBillingCancelled.explanation') }}
+          {{ $t('configuration.alertBillingCancelled.explanation', {date: endOfSubscriptionDate}) }}
         </span>
       </p>
       <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
@@ -29,10 +29,25 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
+import {PropType, defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'AlertSubscriptionCancelled',
+  props: {
+    subscription: {
+      type: Object as PropType<ISubscription>,
+      required: true,
+    },
+  },
+  computed: {
+    endOfSubscriptionDate(): string {
+      return new Date(this.subscription.cancelled_at * 1000).toLocaleDateString(
+        window.i18nSettings.languageLocale.substring(0, 2),
+        {dateStyle: 'long'},
+      );
+    },
+  },
   methods: {
     triggerSubscription() {
       // TODO: Open billing modal

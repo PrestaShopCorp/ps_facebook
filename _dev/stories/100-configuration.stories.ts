@@ -2,8 +2,8 @@ import cloneDeep from 'lodash.clonedeep';
 import Configuration from "@/views/configuration.vue";
 import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "@/../.storybook/mock/ps-accounts";
 import {contextPsEventBus} from "@/../.storybook/mock/ps-event-bus";
-import {contextPsBilling, runningSubscription} from "@/../.storybook/mock/ps-billing";
-import {stateOnboarded, contextFacebookOnboarded} from "@/../.storybook/mock/onboarding";
+import {contextPsBilling, runningSubscription, trialNotRenewedSubscription} from "@/../.storybook/mock/ps-billing";
+import {stateOnboarded} from "@/../.storybook/mock/onboarding";
 import {State as CatalogState} from '../src/store/modules/catalog/state';
 import {State as OnboardingState, state as defaultOnboardingState} from '@/store/modules/onboarding/state';
 
@@ -248,10 +248,7 @@ NotRenewing.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
-    this.$store.state.app.billing.subscription = {
-      ...runningSubscription,
-      status: 'non_renewing',
-    };
+    this.$store.state.app.billing.subscription = cloneDeep(trialNotRenewedSubscription);
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.catalog as CatalogState).enabledFeature = true;

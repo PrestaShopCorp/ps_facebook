@@ -12,7 +12,6 @@ export default {
   },
   [GettersTypes.GET_BILLING_SUBSCRIPTION_EXPIRING](state: LocalState): boolean {
     return !!state.billing.subscription
-      // Using the type from billing-cdc prevents the module to work
-      && state.billing.subscription.status === 'non_renewing';
+      && !!state.billing.subscription.cancelled_at;
   },
 };
