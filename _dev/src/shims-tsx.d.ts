@@ -9,6 +9,17 @@ declare global {
   //   // tslint:disable no-empty-interface
   //   interface ElementClass extends Vue {}
 
+    type ModuleCheck = {
+      currentVersion: string,
+      needsEnable: boolean,
+      needsInstall: boolean,
+      needsUpgrade: boolean,
+      psFacebookEnableRoute: string,
+      psFacebookInstallRoute: string,
+      psFacebookUpgradeRoute: string,
+      requiredVersion: string,
+    };
+
     interface Window {
       contextPsAccounts: any;
       psAccountShopId: string|null;
@@ -20,6 +31,7 @@ declare global {
 
       psFacebookRouteToShopApi?: string;
       psFacebookProductsUrl?: string;
+      psCloudSyncVersionCheck: ModuleCheck;
 
       psFacebookPixelActivationRoute: string;
       psFacebookFbeOnboardingSaveRoute: string;

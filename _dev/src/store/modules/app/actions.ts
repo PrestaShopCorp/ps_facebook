@@ -1,10 +1,14 @@
+import {ActionContext} from 'vuex';
 import {fetchShop} from '@/lib/api/shopClient';
 import ActionsTypes from './actions-types';
 import MutationsTypes from './mutations-types';
-import {HooksStatuses} from './state';
+import {HooksStatuses, State} from './state';
+import {FullState} from '@/store';
+
+type Context = ActionContext<State, FullState>;
 
 export default {
-  async [ActionsTypes.GET_MODULES_VERSIONS]({commit}, moduleName: string) {
+  async [ActionsTypes.GET_MODULES_VERSIONS]({commit}: Context, moduleName: string) {
     try {
       const result = await fetchShop('getModuleStatus', {moduleName});
       if (result.hooks) {
@@ -17,8 +21,31 @@ export default {
     }
   },
 
+  async [ActionsTypes.TRIGGER_MODULE_MANAGER_ACTION](
+    {state}: Context,
+    payload: {module: string, action: string},
+  ): Promise<boolean> {
+    const link = state.links.coreModuleActionUrl
+      .replace('{module}', payload.module)
+      .replace('{action}', payload.action);
+
+    if (!link) {
+      return false;
+    }
+
+    try {
+      await fetch(link, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+      });
+    } catch {
+      return false;
+    }
+    return true;
+  },
+
   // eslint-disable-next-line no-empty-pattern
-  async [ActionsTypes.TRIGGER_REGISTER_HOOK]({}, hookName: string) {
+  async [ActionsTypes.TRIGGER_REGISTER_HOOK]({}: Context, hookName: string) {
     return fetchShop('registerHook', {hookName});
   },
 

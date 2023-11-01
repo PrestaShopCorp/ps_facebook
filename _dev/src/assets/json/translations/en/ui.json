@@ -55,6 +55,12 @@
         "title": "To continue using PrestaShop Social, please update to the latest version.",
         "description": "Since {date}, a {price}/Tax excl monthly subscription* is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience."
       },
+      "modal": {
+        "title": "Update required",
+        "subtitle": "To continue using PrestaShop Social, please update to the latest version.",
+        "description": "Since {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience.\n\n**How to Update & Subscribe**\n\n* Click \"Update\" below.\n* Wait a few minutes until the installation is complete.\n* Subscribe and start a 14 days free trial, you can cancel at any time.",
+        "needHelp": "Any questions? We're here to help. {0}"
+      },
       "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
     },
     "keyFeatures": {
@@ -375,6 +381,7 @@
     "group": "Shop group"
   },
   "cta": {
+    "upgrade": "Upgrade",
     "clickHere": "click here",
     "synchronizeCatalog": "Synchronize catalog",
     "cancel": "Cancel",

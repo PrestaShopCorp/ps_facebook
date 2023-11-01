@@ -3,6 +3,9 @@
     <alert-module-upgrade-for-billing
       v-if="!billingContext"
     />
+    <modal-module-upgrade-for-billing
+      v-if="!billingContext && facebookOnboarded"
+    />
     <two-panel-cols
       :title="$t('configuration.sectionTitle.psaccounts')"
     >
@@ -43,11 +46,13 @@ import CardBillingConnected from './card-billing-connected.vue';
 import {State as AppState} from '@/store/modules/app/state';
 import {billingUpdateCallback} from '@/lib/billing';
 import AlertModuleUpgradeForBilling from '@/components/monetization/alert-module-upgrade-for-billing.vue';
+import ModalModuleUpgradeForBilling from '@/components/monetization/modal-module-upgrade-for-billing.vue';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
   components: {
     AlertModuleUpgradeForBilling,
+    ModalModuleUpgradeForBilling,
     TwoPanelCols,
     CardBillingConnected,
   },
@@ -57,6 +62,10 @@ export default defineComponent({
       required: true,
     },
     billingRunning: {
+      type: Boolean,
+      required: true,
+    },
+    facebookOnboarded: {
       type: Boolean,
       required: true,
     },

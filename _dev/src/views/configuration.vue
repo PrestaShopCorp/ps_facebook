@@ -68,6 +68,7 @@
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
           :billing-running="GET_BILLING_SUBSCRIPTION_ACTIVE"
+          :facebook-onboarded="IS_USER_ONBOARDED"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
           class="m-3"
         />
@@ -218,6 +219,7 @@ import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
 import KeyFeatures from '@/components/configuration/key-features.vue';
 import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
 import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
 import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
@@ -364,12 +366,16 @@ export default defineComponent({
       GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
       GettersTypesApp.GET_BILLING_SUBSCRIPTION_EXPIRING,
     ]),
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.IS_USER_ONBOARDED,
+    ]),
+
     psAccountsOnboarded() {
       return this.contextPsAccounts.user
         && this.contextPsAccounts.user.email !== null
         && this.contextPsAccounts.user.emailIsValidated;
     },
-    facebookConnected() {
+    facebookConnected(): boolean {
       return (this.GET_BILLING_SUBSCRIPTION_ACTIVE
         && !!this.contextPsFacebook?.facebookBusinessManager?.id);
     },
