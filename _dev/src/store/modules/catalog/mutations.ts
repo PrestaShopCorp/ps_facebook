@@ -1,4 +1,4 @@
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 import MutationsTypes from './mutations-types';
 import {
   State as LocalState,

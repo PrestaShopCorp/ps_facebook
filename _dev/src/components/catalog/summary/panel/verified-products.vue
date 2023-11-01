@@ -72,7 +72,7 @@ import showdown from 'showdown';
 import StatusCardComponent, {StatusCardParameters} from '../status-card.vue';
 import {ValidationReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 
 export default defineComponent({
   components: {

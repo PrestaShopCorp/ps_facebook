@@ -1,5 +1,3 @@
-import {ValidationReport} from './state';
-
 export type PreScanIntermediateResponseDto = {
   success: boolean,
   complete: false,
@@ -16,12 +14,5 @@ export type PreScanCompleteResponseDto = {
     syncable: number;
     notSyncable: number;
     lastScanDate: string;
-},
+  },
 };
-
-export enum RequestState {
-  IDLE = 'IDLE',
-  PENDING = 'PENDING',
-  FAILED = 'FAILED',
-  SUCCESS = 'SUCCESS',
-}

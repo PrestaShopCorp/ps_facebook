@@ -51,7 +51,7 @@ import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
 import AlertSyncDisabled from './summary/alert-sync-disabled.vue';
 import AlertSyncEnabled from './summary/alert-sync-enabled.vue';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 
 export default defineComponent({
   name: 'CatalogSummary',

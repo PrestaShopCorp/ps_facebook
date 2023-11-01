@@ -3,7 +3,7 @@ import CatalogSummary from '@/components/catalog/catalog-summary.vue';
 import {State as CatalogState} from '@/store/modules/catalog/state';
 import {State as OnboardingState} from '@/store/modules/onboarding/state';
 import { stateOnboarded } from "@/../.storybook/mock/onboarding";
-import { RequestState } from "@/store/modules/catalog/types";
+import {RequestState} from '@/store/types';
 
 export default {
   title: 'Catalog/Summary page',

@@ -223,7 +223,7 @@ import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
 import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {

@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash.clonedeep';
 import FullSyncRequest from "@/components/catalog/summary/panel/full-sync-request.vue";
-import { RequestState } from "@/store/modules/catalog/types";
+import {RequestState} from '@/store/types';
 import {State as CatalogState, state} from '@/store/modules/catalog/state';
 
 export default {

@@ -49,7 +49,7 @@ import PsModal from '@/components/commons/ps-modal.vue';
 import {ProductFeedReport} from '@/store/modules/catalog/state';
 import VerifiedProducts from '@/components/catalog/summary/panel/verified-products.vue';
 import SubmittedProducts from '@/components/catalog/summary/panel/submitted-products.vue';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 
 export default defineComponent({
   name: 'ExportCatalog',

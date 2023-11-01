@@ -4,8 +4,9 @@ import ActionsTypes from './actions-types';
 import MutationsTypes from './mutations-types';
 import {runIf} from '@/lib/Promise';
 import {CategoryMatchingStatus, ProductFeedReport, State} from './state';
-import {FullState} from '@/store';
-import {PreScanCompleteResponseDto, PreScanIntermediateResponseDto, RequestState} from './types';
+import {FullState} from '@/store/types';
+import {PreScanCompleteResponseDto, PreScanIntermediateResponseDto} from './types';
+import {RequestState} from '@/store/types';
 
 type Context = ActionContext<State, FullState>;
 

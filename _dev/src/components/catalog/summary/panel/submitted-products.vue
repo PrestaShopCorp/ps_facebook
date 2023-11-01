@@ -78,7 +78,7 @@ import showdown from 'showdown';
 import StatusCardComponent, {StatusCardParameters} from '@/components/catalog/summary/status-card.vue';
 import {SyncReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 import FullSyncRequest from '@/components/catalog/summary/panel/full-sync-request.vue';
 
 export default defineComponent({

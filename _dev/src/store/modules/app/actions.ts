@@ -3,7 +3,7 @@ import {fetchShop} from '@/lib/api/shopClient';
 import ActionsTypes from './actions-types';
 import MutationsTypes from './mutations-types';
 import {HooksStatuses, State} from './state';
-import {FullState} from '@/store';
+import {FullState} from '@/store/types';
 
 type Context = ActionContext<State, FullState>;
 

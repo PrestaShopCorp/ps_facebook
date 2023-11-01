@@ -3,7 +3,7 @@ import ActionsTypes from './actions-types';
 import MutationsTypes from './mutations-types';
 import {OnboardingContext} from './state';
 import {runIf} from '@/lib/Promise';
-import {RequestState} from '@/store/modules/catalog/types';
+import {RequestState} from '@/store/types';
 
 export default {
   async [ActionsTypes.WARMUP_STORE](
