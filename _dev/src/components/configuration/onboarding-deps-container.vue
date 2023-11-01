@@ -3,6 +3,9 @@
     <alert-module-upgrade-for-billing
       v-if="!billingContext"
     />
+    <alert-subscribe-to-continue
+      v-else-if="!billingRunning && facebookOnboarded"
+    />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
     />
@@ -46,12 +49,14 @@ import CardBillingConnected from './card-billing-connected.vue';
 import {State as AppState} from '@/store/modules/app/state';
 import {billingUpdateCallback} from '@/lib/billing';
 import AlertModuleUpgradeForBilling from '@/components/monetization/alert-module-upgrade-for-billing.vue';
+import AlertSubscribeToContinue from '@/components/monetization/alert-subscribe-to-continue.vue';
 import ModalModuleUpgradeForBilling from '@/components/monetization/modal-module-upgrade-for-billing.vue';
 
 export default defineComponent({
   name: 'OnboardingDepsContainer',
   components: {
     AlertModuleUpgradeForBilling,
+    AlertSubscribeToContinue,
     ModalModuleUpgradeForBilling,
     TwoPanelCols,
     CardBillingConnected,

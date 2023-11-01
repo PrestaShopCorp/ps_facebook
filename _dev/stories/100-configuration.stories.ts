@@ -118,14 +118,37 @@ ModuleUpgradeRequiredFromExistingUser.args = {
   psCloudSyncVersionCheck,
 };
 
-export const NoActiveSubscription: any = Template.bind({});
-NoActiveSubscription.args = {
+export const NoActiveSubscriptionFromNewUser: any = Template.bind({});
+NoActiveSubscriptionFromNewUser.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
     window.psBillingContext = cloneDeep(contextPsBilling);
     this.$store.state.app.billing.subscription = undefined;
     window.contextPsEventbus = cloneDeep(contextPsEventBus);
     (this.$store.state.onboarding as OnboardingState) = cloneDeep(defaultOnboardingState);
+    (this.$store.state.onboarding as OnboardingState).externalBusinessID = '0b2f5f57-5190-47e2-8df6-b2f96447ac9f';
+  },
+  contextPsAccounts: contextPsAccountsConnectedAndValidated,
+  psFacebookAppId: "1234567890",
+  psAccountsToken: "a-valid-token",
+  currency: "EUR",
+  timezone: "Europe/Paris",
+  locale: "fr-FR",
+  pixelActivationRoute: "http://perdu.com",
+  fbeOnboardingSaveRoute: "http://perdu.com",
+  psFacebookUiUrl: "https://facebook.psessentials.net/index.html",
+  psAccountsVersionCheck,
+  psCloudSyncVersionCheck,
+};
+
+export const NoActiveSubscriptionFromExistingUser: any = Template.bind({});
+NoActiveSubscriptionFromExistingUser.args = {
+  beforeMount: function(this: any) {
+    window.contextPsAccounts = Object.assign({}, contextPsAccountsConnectedAndValidated);
+    window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = undefined;
+    window.contextPsEventbus = cloneDeep(contextPsEventBus);
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
     (this.$store.state.onboarding as OnboardingState).externalBusinessID = '0b2f5f57-5190-47e2-8df6-b2f96447ac9f';
   },
   contextPsAccounts: contextPsAccountsConnectedAndValidated,
