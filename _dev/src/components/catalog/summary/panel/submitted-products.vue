@@ -152,7 +152,7 @@ export default defineComponent({
         variant: 'success',
         icon: 'check',
         reverseColors: false,
-        ...((this.catalogId) && {
+        ...((!!this.catalogId && !!this.validationSummary.catalog) && {
           link: {
             href: this.viewCatalogUrl,
             target: '_blank',
@@ -166,7 +166,7 @@ export default defineComponent({
         variant: 'danger',
         icon: 'cancel',
         reverseColors: false,
-        ...((this.validationSummary.errored !== null) && {
+        ...(!!this.validationSummary.errored && {
           link: {
             to: {name: CatalogTabPages.reportDetails},
           },

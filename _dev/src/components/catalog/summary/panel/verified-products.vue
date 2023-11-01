@@ -136,7 +136,7 @@ export default defineComponent({
         variant: 'info',
         icon: 'redeem',
         reverseColors: false,
-        ...(+(this.productsInCatalog || 0) && {
+        ...(!!this.productsInCatalog && {
           link: {
             href: this.$store.state.app.links.coreProductsPageUrl,
             target: '_blank',
@@ -158,7 +158,7 @@ export default defineComponent({
         variant: 'danger',
         icon: 'remove_shopping_cart',
         reverseColors: false,
-        ...((this.verificationsStats.notSyncable !== null) && {
+        ...(!!this.verificationsStats.notSyncable && {
           link: {
             to: {name: CatalogTabPages.prevalidationDetails},
           },
