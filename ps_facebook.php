@@ -123,7 +123,7 @@ class Ps_facebook extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('PS Social with Facebook & Instagram');
+        $this->displayName = $this->l('PS Social with Facebook and Instagram');
         $this->description = $this->l('PS Social with Facebook & Instagram gives you all the tools you need to successfully sell and market across Facebook and Instagram. Discover new opportunities to help you scale and grow your business, and manage all your Facebook accounts and products from one place.');
         $this->psVersionIs17 = (bool) version_compare(_PS_VERSION_, '1.7', '>=');
         $this->css_path = $this->_path . 'views/css/';
