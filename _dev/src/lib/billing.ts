@@ -113,7 +113,7 @@ export const initialize = (psBilling: typeof billing,
 };
 
 export const billingUpdateCallback = (
-  psBilling: unknown,
+  psBilling: typeof billing,
   state: AppState,
 ) => (type: EVENT_HOOK_TYPE, data: any) => {
   switch (type) {
