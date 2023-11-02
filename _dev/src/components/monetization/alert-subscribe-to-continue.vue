@@ -20,6 +20,15 @@
           {{ $t('configuration.upgradeForBillingStep.IncludedInHosted') }}
         </span>
       </p>
+      <div class="d-md-flex text-center align-items-center mt-2">
+        <b-button
+          class="mx-1 mt-3 mt-md-0 ml-md-0 mr-md-1 text-nowrap"
+          variant="outline-primary"
+          @click="$emit('startSubscription')"
+        >
+          {{ $t('cta.startFreeTrial') }}
+        </b-button>
+      </div>
     </div>
   </b-alert>
 </template>

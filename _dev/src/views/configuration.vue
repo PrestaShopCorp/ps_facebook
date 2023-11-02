@@ -50,7 +50,7 @@
           :module-version-check="psCloudSyncVersionCheck"
         />
         <banner-catalog-sharing
-          v-if="facebookConnected && catalogDataloaded && !GET_CATALOG_PAGE_ENABLED"
+          v-if="facebookConnected && catalogDataLoaded && !GET_CATALOG_PAGE_ENABLED"
           :on-catalog-page="false"
           class="m-3"
         />

@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {billingUpdateCallback} from '@/lib/billing';
+import {billingUpdateCallback, initialize} from '@/lib/billing';
 
 export default defineComponent({
   name: 'BillingTab',
@@ -44,7 +44,8 @@ export default defineComponent({
     if (!window.psBilling || !window.psBillingContext) {
       return;
     }
-    window.psBilling.initialize(
+    initialize(
+      window.psBilling,
       window.psBillingContext.context,
       '#ps-billing-in-billing-tab',
       '#ps-modal-in-billing-tab',

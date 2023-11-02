@@ -12,14 +12,23 @@
         </strong>
         <br>
         <span>
-          {{ $t('configuration.alertBillingCancelled.explanation', {date: endOfSubscriptionDate}) }}
+          {{ isSubscriptionRunning
+            ? $t(
+              'configuration.alertBillingCancelled.explanationBeforeCancellationDate',
+              {date: endOfSubscriptionDate},
+            )
+            : $t(
+              'configuration.alertBillingCancelled.explanationFromCancellationDate',
+              {date: endOfSubscriptionDate},
+            )
+          }}
         </span>
       </p>
       <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
         <b-button
           class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto"
           variant="outline-primary"
-          @click="triggerSubscription"
+          @click="$emit('startSubscription', 'subscription_reactivation')"
         >
           {{ $t('cta.resubscribe') }}
         </b-button>
@@ -41,16 +50,14 @@ export default defineComponent({
     },
   },
   computed: {
+    isSubscriptionRunning(): boolean {
+      return this.subscription.status !== 'cancelled';
+    },
     endOfSubscriptionDate(): string {
       return new Date(this.subscription.cancelled_at * 1000).toLocaleDateString(
         window.i18nSettings.languageLocale.substring(0, 2),
         {dateStyle: 'long'},
       );
-    },
-  },
-  methods: {
-    triggerSubscription() {
-      // TODO: Open billing modal
     },
   },
 });

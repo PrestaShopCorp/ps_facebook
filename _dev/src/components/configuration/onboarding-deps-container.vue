@@ -4,11 +4,13 @@
       v-if="!billingContext"
     />
     <alert-subscribe-to-continue
-      v-else-if="!billingRunning && facebookOnboarded"
+      v-else-if="!billingRunning && !billingSubscription && facebookOnboarded"
+      @startSubscription="startSubscription"
     />
     <alert-subscription-cancelled
       v-else-if="billingSubscription && billingSubscription.cancelled_at"
       :subscription="billingSubscription"
+      @startSubscription="startSubscription"
     />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
@@ -51,7 +53,7 @@ import {IContextAuthentication, IContextBase} from '@prestashopcorp/billing-cdc/
 import TwoPanelCols from './two-panel-cols.vue';
 import CardBillingConnected from './card-billing-connected.vue';
 import {State as AppState} from '@/store/modules/app/state';
-import {billingUpdateCallback} from '@/lib/billing';
+import {billingUpdateCallback, initialize} from '@/lib/billing';
 import AlertModuleUpgradeForBilling from '@/components/monetization/alert-module-upgrade-for-billing.vue';
 import AlertSubscribeToContinue from '@/components/monetization/alert-subscribe-to-continue.vue';
 import AlertSubscriptionCancelled from '@/components/configuration/alert-subscription-cancelled.vue';
@@ -80,6 +82,11 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  data() {
+    return {
+      openBillingModal: null as Function|null,
+    };
   },
   computed: {
     billingContext(): IContextBase<IContextAuthentication>|undefined {
@@ -116,22 +123,29 @@ export default defineComponent({
         }
       });
     },
-    initAccountsComponent() {
+    initAccountsComponent(): void {
       if (!window.psaccountsVue) {
         return;
       }
       window.psaccountsVue.init();
     },
-    initBillingComponent() {
+    initBillingComponent(): void {
       if (!window.psBilling || !this.billingContext) {
         return;
       }
-      window.psBilling.initialize(
+      const {openCheckout} = initialize(
+        window.psBilling,
         this.billingContext.context,
         '#ps-billing-in-catalog-tab',
         '#ps-modal-in-catalog-tab',
         billingUpdateCallback(window.psBilling, this.$store.state.app),
       );
+      this.openBillingModal = openCheckout;
+    },
+    startSubscription($event: string): void {
+      if (this.openBillingModal) {
+        this.openBillingModal($event);
+      }
     },
   },
   mounted() {

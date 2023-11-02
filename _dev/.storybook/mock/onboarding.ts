@@ -1,4 +1,5 @@
 import { OnboardingContext, State } from "@/store/modules/onboarding/state";
+import {RequestState} from "@/store/types";
 
 export const contextFacebookOnboarded: OnboardingContext = {
   user: {
@@ -35,7 +36,7 @@ export const contextFacebookOnboarded: OnboardingContext = {
 };
 
 export const stateOnboarded: State = {
-  warmedUp: true,
+  warmedUp: RequestState.SUCCESS,
   externalBusinessID: 'xxxxx-xxxxxx-xxxxx-xx',
   onboarded: contextFacebookOnboarded,
 };

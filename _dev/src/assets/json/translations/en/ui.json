@@ -73,7 +73,8 @@
     },
     "alertBillingCancelled": {
       "title": "You’ve canceled your PrestaShop Social subscription.",
-      "explanation": "Your subscription ended on {date}, you can subscribe anytime to continue using the module. "
+      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, You can re-subscribe anytime to continue using the module.",
+      "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
     "billingFacade": {
       "title": "Subscription settings",
@@ -395,6 +396,7 @@
     "learnMore": "Learn more",
     "rescan": "Scan",
     "resubscribe": "Re-subscribe",
+    "startFreeTrial": "Start free trial",
     "unlink": "Sign out of Facebook",
     "setupCategoryMatching": "Set up Google product categories",
     "manageCategoryMatching": "Manage Google product categories"

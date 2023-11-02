@@ -26,7 +26,7 @@ export default {
     payload: {module: string, action: string},
   ): Promise<boolean> {
     const link = state.links.coreModuleActionUrl
-      .replace('{module}', payload.module)
+      ?.replace('{module}', payload.module)
       .replace('{action}', payload.action);
 
     if (!link) {
