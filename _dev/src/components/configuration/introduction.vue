@@ -18,15 +18,6 @@
  *-->
 <template>
   <b-card class="introductionCard">
-    <div class="illustration float-right d-none d-md-block">
-      <img
-        src="@/assets/illustration_header.png"
-        width="271"
-        height="194"
-        alt="background illustration"
-      >
-    </div>
-
     <div class="p-3">
       <div>
         <img
@@ -45,11 +36,6 @@
       >
         {{ $t('configuration.introduction.getStarted') }}
       </b-button>
-
-      <div
-        class="text-muted small-text proPoints"
-        v-html="md2html($t('configuration.introduction.proPoints'))"
-      />
       <hr>
 
       <div class="potatoe">
@@ -108,16 +94,6 @@
         </div>
       </div>
 
-      <!--
-      {{ $t('configuration.introduction.needMoreFeatures') }}
-      <a
-        href="javascript:void(0);"
-        class="font-weight-bold"
-      >
-        {{ $t('configuration.introduction.seeDetailedPlans') }}
-      </a>
-      -->
-
       <hr>
       <div class="text-center">
         <p>{{ $t('configuration.introduction.resume') }}</p>
@@ -168,20 +144,6 @@ export default defineComponent({
   }
 </style>
 <style lang="scss">
-  .proPoints > ul {
-    padding-inline-start: 0;
-    > li {
-      display: inline;
-      padding-left: 0.8em;
-      padding-right: 1em;
-    }
-    > li:before {
-      content: "✓";
-      position: relative;
-      left: -0.5em;
-    }
-  }
-
   .potatoe {
     display: flex;
     align-items: center;
