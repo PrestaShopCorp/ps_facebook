@@ -462,7 +462,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         'prevalidation' => $prevalidationScanDataProvider->getPrevalidationScanSummary($this->context->shop->id),
                         'reporting' => [
                             'lastSyncDate' => $syncReport['lastFinishedSyncStartedAt'],
-                            'catalog' => $productCount['product_count'] ?? '--',
+                            'catalog' => $productCount['product_count'] ?? null,
                             'errored' => count($syncReport['errors']), // no distinction for base lang vs l10n errors
                         ],
                     ],

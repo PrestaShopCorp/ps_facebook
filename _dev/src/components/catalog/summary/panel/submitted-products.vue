@@ -152,7 +152,7 @@ export default defineComponent({
         variant: 'success',
         icon: 'check',
         reverseColors: false,
-        ...((!!this.catalogId && !!this.validationSummary.catalog) && {
+        ...((this.catalogId && this.validationSummary.catalog) && {
           link: {
             href: this.viewCatalogUrl,
             target: '_blank',
