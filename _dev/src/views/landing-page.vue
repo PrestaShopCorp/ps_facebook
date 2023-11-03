@@ -32,7 +32,7 @@
       <b-button
         class="mb-2 mt-1"
         variant="primary"
-        @click="onHide"
+        @click="goToConfiguration"
       >
         {{ $t('configuration.introduction.getStarted') }}
       </b-button>
@@ -99,7 +99,7 @@
         <p>{{ $t('configuration.introduction.resume') }}</p>
         <b-button
           variant="primary"
-          @click="onHide"
+          @click="goToConfiguration"
         >
           {{ $t('configuration.introduction.getStarted') }}
         </b-button>
@@ -114,18 +114,20 @@ import {BCard, BButton} from 'bootstrap-vue';
 import showdown from 'showdown';
 
 export default defineComponent({
-  name: 'Introduction',
+  name: 'LandingPage',
   components: {BCard, BButton},
   methods: {
-    onHide() {
-      this.$emit('onHide');
-      if (this.$segment) {
-        this.$segment.track('PS Social with Facebook & Instagram installed', {
-          module: 'ps_facebook',
-        });
-      }
+    goToConfiguration() {
+      this.$router.push({name: 'Configuration'});
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
+  },
+  mounted() {
+    if (this.$segment) {
+      this.$segment.track('PS Social with Facebook & Instagram installed', {
+        module: 'ps_facebook',
+      });
+    }
   },
 });
 </script>
