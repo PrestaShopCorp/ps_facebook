@@ -2,7 +2,7 @@ import CardBillingConnected from '@/components/configuration/card-billing-connec
 import {runningSubscription, trialNotRenewedSubscription} from '@/../.storybook/mock/ps-billing';
 
 export default {
-  title: 'Configuration/Billing Card',
+  title: 'Configuration/Billing/Card',
   component: CardBillingConnected,
 };
 
