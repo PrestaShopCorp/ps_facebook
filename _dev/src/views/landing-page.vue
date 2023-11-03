@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-card class="introductionCard">
+  <b-card class="m-3">
     <div class="p-3">
       <div>
         <img
@@ -38,7 +38,7 @@
       </b-button>
       <hr>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/manage_business_illustration.png"
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/understand_traffic_illustration.png"
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/boost_your_sales_illustration.png"
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/reach_people_illustration.png"
@@ -131,33 +131,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-  .introductionCard {
-    border: none;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .illustration > img {
-    position: relative;
-    right: calc(-1.25rem - 2px);
-    top: calc(-1.25rem - 2px);
-  }
-</style>
-<style lang="scss">
-  .potatoe {
-    display: flex;
-    align-items: center;
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      justify-items: center;
-
-      > p {
-        font-size: medium;
-      }
-    }
-  }
-</style>
