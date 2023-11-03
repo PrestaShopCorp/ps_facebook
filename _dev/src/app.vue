@@ -65,7 +65,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
-import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
@@ -75,18 +74,6 @@ let resizeEventTimer;
 const root = document.documentElement;
 const header = document.querySelector('#content .page-head');
 const headerFull = document.querySelector('#header_infos');
-
-const getGenericRouteFromSpecificOne = (route: string): string => {
-  const url = new URL(route);
-  const genericSearchParams = new URLSearchParams();
-  url.searchParams.forEach((value, param) => {
-    if (['token', 'controller'].includes(param)) {
-      genericSearchParams.set(param, value);
-    }
-  });
-  url.search = `?${genericSearchParams.toString()}`;
-  return url.toString();
-};
 
 export default defineComponent({
   name: 'Home',
@@ -102,12 +89,6 @@ export default defineComponent({
     },
   },
   created() {
-    initShopClient({
-      shopUrl: window.psFacebookRouteToShopApi || getGenericRouteFromSpecificOne(
-        window.psFacebookEnsureTokensExchanged,
-      ),
-    });
-
     this.setCustomProperties();
     window.addEventListener('resize', this.resizeEventHandler);
   },

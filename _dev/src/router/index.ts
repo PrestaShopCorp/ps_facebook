@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, {NavigationGuard, RouteConfig} from 'vue-router';
 import CatalogTabPages from '@/components/catalog/pages';
 import GettersTypesApp from '@/store/modules/app/getters-types';
+import ActionsTypesOnboarding from '@/store/modules/onboarding/actions-types';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import store from '@/store';
 import Configuration from '@/views/configuration.vue';
@@ -26,9 +27,10 @@ const billingNavigationGuard: NavigationGuard = (to, from, next) => {
   return next();
 };
 
-const initialPath = (to, from, next) => {
+const initialPath = async (to, from, next) => {
+  await store.dispatch(`onboarding/${ActionsTypesOnboarding.WARMUP_STORE}`);
   if (from.path === '/'
-    && store.getters[`onboarding/${GettersTypesOnboarding.IS_USER_ONBOARDED}`] === false
+    && !store.getters[`onboarding/${GettersTypesOnboarding.IS_USER_ONBOARDED}`]
   ) {
     next({name: 'landing-page'});
   } else {
