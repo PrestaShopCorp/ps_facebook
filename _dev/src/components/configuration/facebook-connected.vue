@@ -76,7 +76,7 @@
         :app-id="`Pixel ID: ${contextPsFacebook.pixel.id}`"
         :last-active="contextPsFacebook.pixel.lastActive"
         :url="pixelUrl"
-        :activation-switch="contextPsFacebook.pixel.isActive"
+        :activation-switch="true"
         :frozen-switch="!isModuleEnabled"
         @onActivation="pixelActivation"
         :logo="require('@/assets/icon_meta.png')"
