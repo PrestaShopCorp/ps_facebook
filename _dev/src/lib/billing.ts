@@ -56,7 +56,7 @@ export const initialize = (psBilling: typeof billing,
         ...data,
       },
       onCloseModal,
-      onEventHook,
+      onEventHook: onEventHook(onEventHookCallback),
     });
     currentModal.render(domModalSelector);
   }
