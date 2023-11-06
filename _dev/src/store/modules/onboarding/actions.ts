@@ -17,23 +17,26 @@ export default {
     }
     state.warmedUp = RequestState.PENDING;
 
-    await runIf(
-      !getters.GET_EXTERNAL_BUSINESS_ID,
-      dispatch(ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID),
-    );
-    await runIf(
-      !getters.IS_USER_ONBOARDED,
-      dispatch(ActionsTypes.REQUEST_ONBOARDING_STATE),
-    );
-    state.warmedUp = RequestState.SUCCESS;
+    try {
+      await runIf(
+        !getters.GET_EXTERNAL_BUSINESS_ID,
+        dispatch(ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID),
+      );
+      await runIf(
+        !getters.IS_USER_ONBOARDED,
+        dispatch(ActionsTypes.REQUEST_ONBOARDING_STATE),
+      );
+      state.warmedUp = RequestState.SUCCESS;
+    } catch {
+      state.warmedUp = RequestState.FAILED;
+    }
   },
 
-  async [ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID]({commit}): Promise<string> {
+  async [ActionsTypes.REQUEST_EXTERNAL_BUSINESS_ID]({commit}): Promise<void> {
     const json: {externalBusinessId: string} = await fetchShop(
       'RetrieveExternalBusinessId',
     );
     commit(MutationsTypes.SET_EXTERNAL_BUSINESS_ID, json.externalBusinessId);
-    return json.externalBusinessId;
   },
 
   async [ActionsTypes.REQUEST_ONBOARDING_STATE]({commit, state}) {
