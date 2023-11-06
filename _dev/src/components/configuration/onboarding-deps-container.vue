@@ -23,6 +23,7 @@
     <two-panel-cols
       v-if="billingContext"
       :title="$t('configuration.sectionTitle.psbilling')"
+      :description="$t('configuration.sectionDesc.psbilling')"
     >
       <div
         v-show="!billingRunning"
@@ -36,6 +37,7 @@
     </two-panel-cols>
     <two-panel-cols
       :title="$t('configuration.sectionTitle.pscloudsync')"
+      :description="$t('configuration.sectionDesc.pscloudsync')"
       v-show="billingRunning"
     >
       <div

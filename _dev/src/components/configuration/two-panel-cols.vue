@@ -29,7 +29,7 @@ export default defineComponent({
       type: String as PropType<TranslateResult|string>,
     },
     description: {
-      type: String as PropType<string|null>,
+      type: String as PropType<TranslateResult|string|null>,
       required: false,
       default: null,
     },

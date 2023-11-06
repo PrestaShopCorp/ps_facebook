@@ -31,6 +31,11 @@
       "pscloudsync": "Allow data sharing",
       "pssocial": "Set up Facebook"
     },
+    "sectionDesc": {
+      "psbilling": "Access and manage your subscription and related payment method.",
+      "pscloudsync": "Help us enhance your experience and improve our service by giving consent to securely share relevant data with us.",
+      "pssocial": "Easily establish links with a range of social assets, including Facebook Pages, Meta Ads, Meta Pixel, and more, to enhance your online presence and marketing potential."
+    },
     "messages": {
       "success": "PrestaShop Social with Facebook & Instagram is now activated!",
       "reloadButton": "Reload",

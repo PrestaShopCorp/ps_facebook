@@ -76,6 +76,7 @@
         >
           <two-panel-cols
             :title="$t('configuration.sectionTitle.pssocial')"
+            :description="$t('configuration.sectionDesc.pssocial')"
           >
             <facebook-not-connected
               v-if="!facebookConnected"
