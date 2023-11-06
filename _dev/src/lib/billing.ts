@@ -56,7 +56,7 @@ export const initialize = (psBilling: typeof billing,
         ...data,
       },
       onCloseModal,
-      onEventHook,
+      onEventHook: onEventHook(onEventHookCallback),
     });
     currentModal.render(domModalSelector);
   }
@@ -114,7 +114,6 @@ export const billingUpdateCallback = (
   psBilling: typeof billing,
   state: AppState,
 ) => (type: EVENT_HOOK_TYPE, data: any) => {
-  console.log('billingUpdateCallback', type);
   switch (type) {
     case psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_CREATED:
     case psBilling.EVENT_HOOK_TYPE.SUBSCRIPTION_UPDATED:
