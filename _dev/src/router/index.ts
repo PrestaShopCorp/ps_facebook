@@ -1,14 +1,17 @@
 import Vue from 'vue';
 import VueRouter, {NavigationGuard, RouteConfig} from 'vue-router';
-import Configuration from '../views/configuration.vue';
-import CatalogTab from '../views/catalog-tab.vue';
-import Debug from '../views/debug-page.vue';
-import Integrate from '../views/integrate.vue';
-import BillingTab from '../views/billing-tab.vue';
-import Help from '../views/help.vue';
-import CatalogTabPages from '../components/catalog/pages';
+import CatalogTabPages from '@/components/catalog/pages';
 import GettersTypesApp from '@/store/modules/app/getters-types';
+import ActionsTypesOnboarding from '@/store/modules/onboarding/actions-types';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import store from '@/store';
+import Configuration from '@/views/configuration.vue';
+import BillingTab from '@/views/billing-tab.vue';
+import CatalogTab from '@/views/catalog-tab.vue';
+import Debug from '@/views/debug-page.vue';
+import Integrate from '@/views/integrate.vue';
+import LandingPage from '@/views/landing-page.vue';
+import Help from '@/views/help.vue';
 
 Vue.use(VueRouter);
 
@@ -24,7 +27,23 @@ const billingNavigationGuard: NavigationGuard = (to, from, next) => {
   return next();
 };
 
+const initialPath = async (to, from, next) => {
+  await store.dispatch(`onboarding/${ActionsTypesOnboarding.WARMUP_STORE}`);
+  if (from.path === '/'
+    && !store.getters[`onboarding/${GettersTypesOnboarding.IS_USER_ONBOARDED}`]
+  ) {
+    next({name: 'landing-page'});
+  } else {
+    next({name: 'Configuration'});
+  }
+};
+
 const routes: RouteConfig[] = [
+  {
+    path: '/landing-page',
+    name: 'landing-page',
+    component: LandingPage,
+  },
   {
     path: '/configuration',
     name: 'Configuration',
@@ -76,7 +95,7 @@ const routes: RouteConfig[] = [
   },
   {
     path: '/',
-    redirect: '/configuration',
+    beforeEnter: initialPath,
   },
   {
     path: '/integrate',

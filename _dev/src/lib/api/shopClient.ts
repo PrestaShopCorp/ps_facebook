@@ -47,6 +47,18 @@ export const fetchShop = async (action: string, params?: { [key: string]: unknow
   return response.json();
 };
 
+export const getGenericRouteFromSpecificOne = (route: string): string => {
+  const url = new URL(route);
+  const genericSearchParams = new URLSearchParams();
+  url.searchParams.forEach((value, param) => {
+    if (['token', 'controller'].includes(param)) {
+      genericSearchParams.set(param, value);
+    }
+  });
+  url.search = `?${genericSearchParams.toString()}`;
+  return url.toString();
+};
+
 export default {
   initShopClient,
   fetchShop,

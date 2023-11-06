@@ -17,16 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <b-card class="introductionCard">
-    <div class="illustration float-right d-none d-md-block">
-      <img
-        src="@/assets/illustration_header.png"
-        width="271"
-        height="194"
-        alt="background illustration"
-      >
-    </div>
-
+  <b-card class="m-3">
     <div class="p-3">
       <div>
         <img
@@ -41,18 +32,13 @@
       <b-button
         class="mb-2 mt-1"
         variant="primary"
-        @click="onHide"
+        @click="goToConfiguration"
       >
         {{ $t('configuration.introduction.getStarted') }}
       </b-button>
-
-      <div
-        class="text-muted small-text proPoints"
-        v-html="md2html($t('configuration.introduction.proPoints'))"
-      />
       <hr>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/manage_business_illustration.png"
@@ -66,7 +52,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/understand_traffic_illustration.png"
@@ -80,7 +66,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/boost_your_sales_illustration.png"
@@ -94,7 +80,7 @@
         </div>
       </div>
 
-      <div class="potatoe">
+      <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
           class="mx-4 mt-2 mb-4 d-none d-md-block"
           src="@/assets/reach_people_illustration.png"
@@ -108,22 +94,12 @@
         </div>
       </div>
 
-      <!--
-      {{ $t('configuration.introduction.needMoreFeatures') }}
-      <a
-        href="javascript:void(0);"
-        class="font-weight-bold"
-      >
-        {{ $t('configuration.introduction.seeDetailedPlans') }}
-      </a>
-      -->
-
       <hr>
       <div class="text-center">
         <p>{{ $t('configuration.introduction.resume') }}</p>
         <b-button
           variant="primary"
-          @click="onHide"
+          @click="goToConfiguration"
         >
           {{ $t('configuration.introduction.getStarted') }}
         </b-button>
@@ -138,62 +114,20 @@ import {BCard, BButton} from 'bootstrap-vue';
 import showdown from 'showdown';
 
 export default defineComponent({
-  name: 'Introduction',
+  name: 'LandingPage',
   components: {BCard, BButton},
   methods: {
-    onHide() {
-      this.$emit('onHide');
-      if (this.$segment) {
-        this.$segment.track('PS Social with Facebook & Instagram installed', {
-          module: 'ps_facebook',
-        });
-      }
+    goToConfiguration() {
+      this.$router.push({name: 'Configuration'});
     },
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
+  mounted() {
+    if (this.$segment) {
+      this.$segment.track('PS Social with Facebook & Instagram installed', {
+        module: 'ps_facebook',
+      });
+    }
+  },
 });
 </script>
-
-<style lang="scss" scoped>
-  .introductionCard {
-    border: none;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .illustration > img {
-    position: relative;
-    right: calc(-1.25rem - 2px);
-    top: calc(-1.25rem - 2px);
-  }
-</style>
-<style lang="scss">
-  .proPoints > ul {
-    padding-inline-start: 0;
-    > li {
-      display: inline;
-      padding-left: 0.8em;
-      padding-right: 1em;
-    }
-    > li:before {
-      content: "✓";
-      position: relative;
-      left: -0.5em;
-    }
-  }
-
-  .potatoe {
-    display: flex;
-    align-items: center;
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      justify-items: center;
-
-      > p {
-        font-size: medium;
-      }
-    }
-  }
-</style>

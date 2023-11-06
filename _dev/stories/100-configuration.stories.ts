@@ -55,7 +55,9 @@ export const NoPsAccountOnboarded: any = Template.bind({});
 NoPsAccountOnboarded.args = {
   beforeMount: function(this: any) {
     window.contextPsAccounts = Object.assign({}, contextPsAccountsNotConnected);
-
+    window.psBillingContext = cloneDeep(contextPsBilling);
+    this.$store.state.app.billing.subscription = undefined;
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(defaultOnboardingState);
   },
   contextPsAccounts: contextPsAccountsNotConnected,
   psFacebookAppId: "1234567890",

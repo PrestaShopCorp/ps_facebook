@@ -24,13 +24,8 @@
       class="ps-facebook-configuration-tab"
       v-else
     >
-      <introduction
-        v-if="!psAccountsOnboarded && showIntroduction"
-        @onHide="showIntroduction = false"
-        class="m-3"
-      />
       <MultiStoreSelector
-        v-else-if="!contextPsAccounts.isShopContext && shops.length"
+        v-if="!contextPsAccounts.isShopContext && shops.length"
         :shops="shops"
         class="m-3"
         @shop-selected="onShopSelected($event)"
@@ -204,7 +199,6 @@ import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import PsModal from '@/components/commons/ps-modal.vue';
 import Spinner from '../components/spinner/spinner.vue';
-import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
@@ -260,7 +254,6 @@ export default defineComponent({
     BannerCatalogSharing,
     FacebookNotConnected,
     FacebookConnected,
-    Introduction,
     KeyFeatures,
     Messages,
     ModalConfigurationCompleted,
@@ -411,7 +404,6 @@ export default defineComponent({
   },
   data() {
     return {
-      showIntroduction: true, // Initialized to true except if a props should avoid the introduction
       psFacebookJustOnboarded: false, // Put this to true just after FBE onboarding is finished once
       showPopupGlass: false,
       showTokensGlass: false,

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import {BootstrapVue} from 'bootstrap-vue';
 import VueCollapse from 'vue2-collapse';
 import VueSegment from '@/lib/segment';
+import {initShopClient, getGenericRouteFromSpecificOne} from '@/lib/api/shopClient';
 import router from './router';
 import store from './store';
 import App from './app.vue';
@@ -18,6 +19,12 @@ Vue.use(VueSegment, {
   router,
   debug: process.env.NODE_ENV !== 'production',
   pageCategory: '[FBK]',
+});
+
+initShopClient({
+  shopUrl: window.psFacebookRouteToShopApi || getGenericRouteFromSpecificOne(
+    window.psFacebookEnsureTokensExchanged,
+  ),
 });
 
 new Vue({
