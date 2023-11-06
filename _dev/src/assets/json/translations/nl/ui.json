@@ -11,19 +11,16 @@
   "configuration": {
     "introduction": {
       "getStarted": "Aan de slag",
-      "subTitle": "Bouw uw zakelijke aanwezigheid in de Facebook community eenvoudig en snel op!",
-      "proPoints": "- Geen creditcard nodig. \n- Eenvoudige installatie \n- Annuleer wanneer u maar wilt",
-      "resume": "Maak uw eerste stappen met PrestaShop Social with Facebook & Instagram!",
-      "proPoint1Title": "Beheer uw bedrijf",
-      "proPoint1Description": "Controleer uw advertentie-instellingen en zakelijke tools vanaf één plek.",
-      "proPoint2Title": "Begrijp uw traffic",
-      "proPoint2Description": "Gebruik gegevens van Facebook Pixel om inzicht te krijgen in de acties die mensen ondernemen op uw website.",
-      "proPoint3Title": "Verhoog uw verkoop",
-      "proPoint3Description": "Beheer uw productcatalogus en ontgrendel de kracht van advertenties.",
-      "proPoint4Title": "Creëer een betere winkelervaring en optimaliseer deze",
-      "proPoint4Description": "Dankzij de automatische synchronisatie van de productcatalogus en het in kaart brengen van uw categorieën heeft u een bijgewerkte en efficiëntere Facebook catalogus.",
-      "needMoreFeatures": "Hebt u meer functies nodig?",
-      "seeDetailedPlans": "Zie gedetailleerde abonnementen"
+      "subTitle": "Easily boost your revenue with smart ads on Facebook and Instagram",
+      "resume": "Make your store social media ready",
+      "proPoint1Title": "Synchronize your catalog with Facebook & Instagram",
+      "proPoint1Description": "Connect your Facebook account and import your product catalog to Facebook & Instagram, so that your updates synchronize on a daily basis.",
+      "proPoint2Title": "Launch smart ads campaigns",
+      "proPoint2Description": "Get the right products to the right customers with dynamic ads using the best out of Facebook’s advertising technology.",
+      "proPoint3Title": "Data sharing control",
+      "proPoint3Description": "The Meta Pixel and the Conversions API allow you to control what data you share and when you share it, as well as provide your customers with more transparency by respecting their privacy.",
+      "proPoint4Title": "Integrate Messenger",
+      "proPoint4Description": "Build customer loyalty by integrating Messenger into your store and make shopping experience more personal for your customers."
     },
     "sectionTitle": {
       "psaccounts": "Je winkel koppelen aan een PrestaShop-account",
