@@ -68,7 +68,7 @@
             {{ new Date(lastActive).toLocaleTimeString(undefined) }}
           </div>
           <div
-            v-if="activationSwitch"
+            v-if="activationSwitch !== null"
           >
             {{ $t('configuration.app.status') }}
             <b-form-checkbox
