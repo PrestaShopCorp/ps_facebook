@@ -11,19 +11,16 @@
   "configuration": {
     "introduction": {
       "getStarted": "Démarrer",
-      "subTitle": "Construisez facilement et rapidement votre présence au sein de la communauté Facebook",
-      "proPoints": "- Pas de carte de crédit requise  \n- Une installation facile \n- Annuler à tout moment",
-      "resume": "Faites vos premiers pas avec PrestaShop Social with Facebook & Instagram !",
-      "proPoint1Title": "Gérer votre entreprise",
-      "proPoint1Description": "Organisez et gérez vos pages professionnelles et vos comptes publicitaires dans un seul endroit.",
-      "proPoint2Title": "Comprendre votre trafic",
-      "proPoint2Description": "Utilisez les données du Pixel Facebook pour comprendre les actions des internautes sur votre site et améliorez la personnalisation des audiences de vos publicités Facebook.",
-      "proPoint3Title": "Booster vos ventes",
-      "proPoint3Description": "Aidez les gens à trouver et à acheter vos produits en synchronisant vos produits PrestaShop sur un catalogue Facebook.",
-      "proPoint4Title": "Créer et optimiser une meilleure expérience d'achat",
-      "proPoint4Description": "Grâce à la synchronisation automatique et quotidienne du catalogue PrestaShop et au mapping de vos catégories, disposez d'un catalogue Facebook actualisé et plus efficace.",
-      "needMoreFeatures": "Besoin de plus de fonctionnalités ?",
-      "seeDetailedPlans": "Voir les plans détaillés"
+      "subTitle": "Easily boost your revenue with smart ads on Facebook and Instagram",
+      "resume": "Make your store social media ready",
+      "proPoint1Title": "Synchronize your catalog with Facebook & Instagram",
+      "proPoint1Description": "Connect your Facebook account and import your product catalog to Facebook & Instagram, so that your updates synchronize on a daily basis.",
+      "proPoint2Title": "Launch smart ads campaigns",
+      "proPoint2Description": "Get the right products to the right customers with dynamic ads using the best out of Facebook’s advertising technology.",
+      "proPoint3Title": "Data sharing control",
+      "proPoint3Description": "The Meta Pixel and the Conversions API allow you to control what data you share and when you share it, as well as provide your customers with more transparency by respecting their privacy.",
+      "proPoint4Title": "Integrate Messenger",
+      "proPoint4Description": "Build customer loyalty by integrating Messenger into your store and make shopping experience more personal for your customers."
     },
     "sectionTitle": {
       "psaccounts": "Liez votre boutique à un compte PrestaShop",
