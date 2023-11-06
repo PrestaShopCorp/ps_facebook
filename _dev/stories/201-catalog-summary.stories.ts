@@ -1,4 +1,9 @@
-import CatalogSummary from '../src/components/catalog/summary.vue';
+import { cloneDeep } from "lodash";
+import CatalogSummary from '@/components/catalog/catalog-summary.vue';
+import {State as CatalogState} from '@/store/modules/catalog/state';
+import {State as OnboardingState} from '@/store/modules/onboarding/state';
+import { stateOnboarded } from "@/../.storybook/mock/onboarding";
+import {RequestState} from '@/store/types';
 
 export default {
   title: 'Catalog/Summary page',
@@ -8,110 +13,176 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {CatalogSummary},
-  template: '<catalog-summary :data="data" />',
+  template: '<catalog-summary />',
+  beforeMount: args.beforeMount,
 });
 
-export const FreshInstall: any = Template.bind({});
-FreshInstall.args = {
-  data: {
-    exportDone: false,
-    exportOn: false,
-    matchingDone: false,
-    matchingProgress: {total: 42, matched: 0},
-    validation: {
-      prevalidation: {
-        syncable: 134,
-        notSyncable: 12,
+export const CatalogNotShared: any = Template.bind({});
+CatalogNotShared.args = {
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState) = {
+      warmedUp: RequestState.SUCCESS,
+      enabledFeature: false,
+      exportOn: false,
+      categoryMatching: {
+        matchingDone: false,
+        matchingProgress: {total: 42, matched: 0},
       },
-      reporting: {
-        lastSyncDate: new Date(),
-        catalog: 42,
-        errored: 42,
+      report: {
+        prevalidation: {
+          lastScanDate: null,
+          syncable: null,
+          notSyncable: null,
+        },
+        reporting: {
+          lastSyncDate: null,
+          catalog: null,
+          errored: null,
+        },
       },
-    },
-    catalogId: '34567890',
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
+      },
+    };
   },
 };
 
-export const JustActivated: any = Template.bind({});
-JustActivated.args = {
-  data: {
-    exportDone: true,
-    exportOn: true,
-    matchingDone: true,
-    matchingProgress: {total: 42, matched: 23},
-    validation: {
-      prevalidation: {
-        syncable: 134,
-        notSyncable: 12,
+export const CatalogRecentlyShared: any = Template.bind({});
+CatalogRecentlyShared.args = {
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState) = {
+      warmedUp: RequestState.SUCCESS,
+      enabledFeature: true,
+      exportOn: true,
+      categoryMatching: {
+        matchingDone: true,
+        matchingProgress: {total: 42, matched: 23},
       },
-      reporting: { },
-    },
-    catalogId: '34567890',
+      report: {
+        prevalidation: {
+          syncable: 134,
+          notSyncable: 12,
+          lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
+        },
+        reporting: {
+          lastSyncDate: null,
+          catalog: null,
+          errored: null,
+        },
+      },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
+      },
+    };
   },
 };
 
 export const SyncOn: any = Template.bind({});
 SyncOn.args = {
-  data: {
-    exportDone: true,
-    exportOn: true,
-    matchingDone: false,
-    matchingProgress: {total: 42, matched: 23},
-    validation: {
-      prevalidation: {
-        syncable: 134,
-        notSyncable: 12,
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState) = {
+      warmedUp: RequestState.SUCCESS,
+      enabledFeature: true,
+      exportOn: true,
+      categoryMatching: {
+        matchingDone: false,
+        matchingProgress: {total: 42, matched: 0},
       },
-      reporting: {
-        lastSyncDate: new Date(),
-        catalog: 42,
-        errored: 42,
+      report: {
+        prevalidation: {
+          syncable: 134,
+          notSyncable: 12,
+          lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
+        },
+        reporting: {
+          lastSyncDate: new Date('2023-09-23T02:23:52.123Z'),
+          catalog: 42,
+          errored: 42,
+        },
       },
-    },
-    catalogId: '34567890',
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
+      },
+    };
   },
 };
 
 export const SyncPaused: any = Template.bind({});
 SyncPaused.args = {
-  data: {
-    exportDone: true,
-    exportOn: false,
-    matchingDone: false,
-    matchingProgress: {total: 42, matched: 23},
-    validation: {
-      prevalidation: {
-        syncable: 134,
-        notSyncable: 12,
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState) = {
+      warmedUp: RequestState.SUCCESS,
+      enabledFeature: true,
+      exportOn: false,
+      categoryMatching: {
+        matchingDone: false,
+        matchingProgress: {total: 42, matched: 23},
       },
-      reporting: {
-        lastSyncDate: new Date(),
-        catalog: 42,
-        errored: 42,
+      report: {
+        prevalidation: {
+          syncable: 134,
+          notSyncable: 12,
+          lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
+        },
+        reporting: {
+          lastSyncDate: new Date('2023-09-23T02:23:52.123Z'),
+          catalog: 42,
+          errored: 42,
+        },
       },
-    },
-    catalogId: '34567890',
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
+      },
+    };
   },
 };
 
-export const BothDone: any = Template.bind({});
-BothDone.args = {
-  data: {
-    exportDone: true,
-    exportOn: true,
-    matchingDone: true,
-    matchingProgress: {total: 42, matched: 42},
-    validation: {
-      prevalidation: {
-        syncable: 134,
-        notSyncable: 12,
+export const FullConfiguration: any = Template.bind({});
+FullConfiguration.args = {
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+    (this.$store.state.catalog as CatalogState) = {
+      warmedUp: RequestState.SUCCESS,
+      enabledFeature: true,
+      exportOn: true,
+      categoryMatching: {
+        matchingDone: true,
+        matchingProgress: {total: 42, matched: 42},
       },
-      reporting: {
-        lastSyncDate: new Date(),
-        catalog: 42,
-        errored: 42,
+      report: {
+        prevalidation: {
+          syncable: 134,
+          notSyncable: 12,
+          lastScanDate: new Date('2023-09-22T11:59:59.568Z'),
+        },
+        reporting: {
+          lastSyncDate: new Date('2023-09-23T02:23:52.123Z'),
+          catalog: 42,
+          errored: 42,
+        },
       },
-    },
+      requests: {
+        requestNextSyncFull: RequestState.IDLE,
+        scan: RequestState.IDLE,
+        syncToggle: RequestState.IDLE,
+        catalogReport: RequestState.IDLE,
+      },
+    };
   },
 };

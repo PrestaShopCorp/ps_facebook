@@ -27,6 +27,8 @@ use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
+use PrestaShopCorp\Billing\Presenter\BillingPresenter;
+use PrestaShopCorp\Billing\Services\BillingService;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -105,6 +107,10 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         $psAccountsData = $this->getPsAccountsData();
 
+        /************************
+         * PrestaShop CloudSync *
+         ************************/
+
         $moduleManager = ModuleManagerBuilder::getInstance()->build();
 
         if ($moduleManager->isInstalled('ps_eventbus')) {
@@ -118,6 +124,32 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ]);
             }
         }
+
+        /**********************
+         * PrestaShop Billing *
+         **********************/
+
+        // Load the context for PrestaShop Billing
+        $billingFacade = $this->module->getService(BillingPresenter::class);
+        $billingService = $this->module->getService(BillingService::class);
+        $partnerLogo = $this->module->getLocalPath() . 'logo.png';
+        $currentSubscription = $billingService->getCurrentSubscription();
+
+        // PrestaShop Billing
+        Media::addJsDef($billingFacade->present([
+            'logo' => $partnerLogo,
+            'tosLink' => 'https://yoururl/',
+            'privacyLink' => 'https://yoururl/',
+            // This field is deprecated, but must be provided to ensure backward compatibility
+            'emailSupport' => '',
+        ]));
+        Media::addJsDef([
+            'psBillingSubscription' => (!empty($currentSubscription['success']) ? $currentSubscription['body'] : null),
+        ]);
+
+        /*********************
+         * PrestaShop Social *
+         *********************/
 
         Media::addJsDef([
             // (object) cast is useful for the js when the array is empty
@@ -216,33 +248,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookStartProductSyncRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'requireProductSyncStart',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookGetCatalogSummaryRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'CatalogSummary',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookRunPrevalidationScanRoute' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'RunPrevalidationScan',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookGetCategoryMappingStatus' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -297,15 +302,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookExportWholeCatalog' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'ExportWholeCatalog',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookRetrieveTokensRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -315,6 +311,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookProductsUrl' => $this->context->link->getAdminLink('AdminProducts'),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
                 'languageLocale' => $this->context->language->language_code,

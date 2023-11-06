@@ -29,7 +29,9 @@
       <b-button
         class="float-left mr-3"
         variant="outline-secondary"
-        @click="$parent.back"
+        @click="$router.push({
+          name: 'Catalog',
+        })"
       >
         <i class="material-icons">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}
@@ -49,7 +51,9 @@
       <b-button
         class="w-auto mb-3"
         variant="outline-secondary"
-        @click="$parent.back"
+        @click="$router.push({
+          name: 'Catalog',
+        })"
       >
         <i class="material-icons">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}
@@ -72,7 +76,7 @@
     <b-button
       class="float-right ml-3"
       variant="primary"
-      @click="$parent.goto($parent.PAGES.categoryMatchingView)"
+      @click="$parent.goto($parent.CatalogTabPages.categoryMatchingView)"
     >
       {{ $t('categoryMatching.edit') }}
     </b-button>
@@ -85,7 +89,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import Showdown from 'showdown';
 import {BButton, BCard} from 'bootstrap-vue';
 import EditTable from '../category-matching/editTable.vue';

@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import EditingRow from './editing-row.vue';
 import MixinMatching from './matching.ts';
 

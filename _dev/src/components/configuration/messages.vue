@@ -41,56 +41,24 @@
         </b-button>
       </p>
     </b-alert>
-
-    <stepper
-      v-if="showSyncCatalogAdvice"
-      :category-matching-started="categoryMatchingStarted"
-      :product-sync-started="productSyncStarted"
-      :ad-campaign-started="adCampaignStarted"
-      @onCategoryMatchingClick="onCategoryMatchingClick"
-      @onSyncCatalogClick="onSyncCatalogClick"
-      @onAdCampaignClick="onAdCampaignClick"
-    />
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {
   BAlert,
   BButton,
 } from 'bootstrap-vue';
-import Stepper from './stepper.vue';
 
 export default defineComponent({
   name: 'Messages',
   components: {
     BAlert,
     BButton,
-    Stepper,
   },
   props: {
     showOnboardSucceeded: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    showSyncCatalogAdvice: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    categoryMatchingStarted: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    productSyncStarted: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    adCampaignStarted: {
       type: Boolean,
       required: false,
       default: false,
@@ -102,15 +70,6 @@ export default defineComponent({
     },
   },
   methods: {
-    onCategoryMatchingClick() {
-      this.$emit('onCategoryMatchingClick');
-    },
-    onSyncCatalogClick() {
-      this.$emit('onSyncCatalogClick');
-    },
-    onAdCampaignClick() {
-      this.$emit('onAdCampaignClick');
-    },
     setMerchandAction(errors) {
       if (errors.length > 0) {
         this.$parent.openPopup();

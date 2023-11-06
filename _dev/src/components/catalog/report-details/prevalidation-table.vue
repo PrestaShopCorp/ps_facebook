@@ -167,7 +167,7 @@
 
 <script>
 /* eslint-disable camelcase */
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BTableSimple} from 'bootstrap-vue';
 import Tooltip from '../../help/tooltip.vue';
 

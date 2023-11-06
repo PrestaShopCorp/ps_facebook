@@ -24,15 +24,13 @@
     >
       <Menu :context-ps-facebook="contextPsFacebook">
         <MenuItem
-          @click="onProduct"
-          :onboarding-required="true"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/catalog"
         >
           {{ $t('general.tabs.catalog') }}
         </MenuItem>
         <MenuItem
-          @click="onSales"
-          :onboarding-required="true"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/integrate"
         >
           {{ $t('general.tabs.integrate') }}
@@ -41,7 +39,12 @@
           {{ $t('general.tabs.configuration') }}
         </MenuItem>
         <MenuItem
-          @click="onHelp"
+          route="/billing"
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE"
+        >
+          {{ $t('general.tabs.billing') }}
+        </MenuItem>
+        <MenuItem
           route="/help"
         >
           {{ $t('general.tabs.help') }}
@@ -49,11 +52,7 @@
       </Menu>
     </div>
 
-    <modal-incoming-paid-version
-      v-if="shopId"
-    />
-
-    <router-view :context-ps-facebook="contextPsFacebook" />
+    <router-view />
     <div
       v-if="shopId"
       id="helper-shopid"
@@ -65,10 +64,12 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import {mapGetters} from 'vuex';
 import {initShopClient} from '@/lib/api/shopClient';
 import Menu from '@/components/menu/menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
-import ModalIncomingPaidVersion from '@/components/monetization/modal-incoming-paid-version.vue';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
+import GettersTypesApp from '@/store/modules/app/getters-types';
 
 let resizeEventTimer;
 const root = document.documentElement;
@@ -92,7 +93,6 @@ export default defineComponent({
   components: {
     Menu,
     MenuItem,
-    ModalIncomingPaidVersion,
   },
   props: {
     contextPsFacebook: {
@@ -119,9 +119,15 @@ export default defineComponent({
     window.removeEventListener('resize', this.resizeEventHandler);
   },
   computed: {
-    shopId() {
+    shopId(): string|null {
       return window.psAccountShopId;
     },
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.GET_ONBOARDING_STATE,
+    ]),
+    ...mapGetters('app', [
+      GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
+    ]),
   },
   methods: {
     resizeEventHandler() {
@@ -141,21 +147,6 @@ export default defineComponent({
       this.$root.refreshContextPsFacebook(
         this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
       );
-    },
-    onHelp() {
-      this.$segment.track('Click on Help tab', {
-        module: 'ps_facebook',
-      });
-    },
-    onProduct() {
-      this.$segment.track('Click on Product catalog tab', {
-        module: 'ps_facebook',
-      });
-    },
-    onSales() {
-      this.$segment.track('Click on Sales channels tab', {
-        module: 'ps_facebook',
-      });
     },
   },
   watch: {

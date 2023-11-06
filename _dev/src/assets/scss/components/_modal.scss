@@ -4,18 +4,29 @@
   &__header {
     border: none;
     min-height: auto;
+
+    padding: $ps-modal-padding;
+    padding-bottom: 0;
   }
 
   &__title {
     font-weight: 600;
-    font-size: rem(18);
+    font-size: rem(24);
+    line-height: rem(32);
+  }
+
+  &__body {
+    padding: $ps-modal-padding;
+    padding-bottom: 0;
   }
 
   &__content {
     border-radius: 0;
+    box-shadow: none;
   }
 
   &__footer {
+    padding: $ps-modal-padding;
     padding-top: rem(8);
     border: none;
     text-align: unset;

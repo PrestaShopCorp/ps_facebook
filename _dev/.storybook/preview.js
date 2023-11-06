@@ -53,7 +53,7 @@ window.psFacebookGenerateOpenPopup = (component) => () => {
   }, 3000);
 };
 
-
+Vue.config.ignoredElements = ['prestashop-accounts'];
 // i18n and store
 Vue.use(VueI18n);
 Vue.use(VueSegment, {

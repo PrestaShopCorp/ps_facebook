@@ -207,7 +207,7 @@ export default defineComponent({
       }
       return null;
     },
-    shopId() {
+    shopId(): string|null {
       return window.psAccountShopId;
     },
     contextPsFacebook(): string {

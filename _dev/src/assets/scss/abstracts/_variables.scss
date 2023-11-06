@@ -23,11 +23,18 @@ $yellow-300: #FFD999;
 $yellow-100: #FFECCC;
 $yellow-50: #FFF5E5;
 
+$amber-500: #F8E08E;
+$amber-100: #FDF6DD;
+
 $blue-700: #2942CC;
 $blue-500: #174EEF;
 $blue-300: #A2B8F9;
 $blue-100: #D1DCFC;
 $blue-50: #E8EDFD;
+
+$oceanblue-700: #5C92AA;
+$oceanblue-500: #A4DBE8;
+$oceanblue-50: #e4f4f8;
 
 $grey_dark: $primary-700;
 $grey_muted: $primary-700;
@@ -55,7 +62,7 @@ $light-blue-900: #A7BED1;
 $off-white: #FBFEFF;
 
 $primary: $primary-800;
-$secondary: $primary-500;
+$secondary: $primary-600;
 $info: $blue;
 $success: $green;
 $danger: $red;
@@ -78,6 +85,14 @@ $primary-disabled: $grey-disabled;
 $theme-colors: (
   "secondary": $secondary,
 );
+$banner-theme-colors: (
+  "primary": $primary,
+  "secondary": $light-blue-050,
+  "success": $green-100,
+  "info": $oceanblue-500,
+  "warning": $amber-500,
+  "danger": $red-100,
+) !default;
 $theme-colors-hover: (
   "primary": $primary-hover,
 );
@@ -112,3 +127,5 @@ $custom-control-indicator-focus-border-color: $primary-600;
 // Fonts
 $font-family-sans-serif: "IBM Plex Sans","Open Sans",Helvetica,Arial,sans-serif;
 $headings-font-family: $font-family-sans-serif;
+
+$ps-modal-padding: 1.5rem;

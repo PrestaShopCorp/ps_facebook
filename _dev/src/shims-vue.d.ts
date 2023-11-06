@@ -1,11 +1,14 @@
+import {AnalyticsBrowser} from '@segment/analytics-next';
+
 declare module '*.vue' {
   import Vue from 'vue';
 
   export default Vue;
 }
 
-declare module 'prestashop_accounts_vue_components' {
-  const psAccountsVueComponents: any;
+declare module 'vue/types/vue' {
 
-  export default psAccountsVueComponents;
+  interface Vue {
+    $segment: AnalyticsBrowser,
+  }
 }

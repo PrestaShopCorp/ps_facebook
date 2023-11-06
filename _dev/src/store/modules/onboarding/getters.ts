@@ -13,4 +13,8 @@ export default {
   [GettersTypes.IS_USER_ONBOARDED](state: LocalState): boolean {
     return !!state.onboarded?.user?.email;
   },
+
+  [GettersTypes.GET_CATALOG_ID](state: LocalState): string|null {
+    return state.onboarded?.catalog.id || null;
+  },
 };

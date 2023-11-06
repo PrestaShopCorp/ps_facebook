@@ -21,11 +21,11 @@
     <b-icon-info-circle
       :id="`tooltip-circle-${this._uid}`"
       class="iconInfo ml-2"
-      variant="secondary"
+      variant="primary"
     />
     <b-tooltip
       :target="`tooltip-circle-${this._uid}`"
-      :container="`#${this.$root.$el.id}`"
+      container="#psFacebookApp"
       triggers="hover"
       placement="right"
     >

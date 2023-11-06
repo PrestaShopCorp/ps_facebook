@@ -26,7 +26,7 @@ use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use Psr\Http\Client\ClientInterface;
+use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 class ProductSyncReportProvider
 {
@@ -36,7 +36,7 @@ class ProductSyncReportProvider
     private $configurationAdapter;
 
     /**
-     * @var ClientInterface
+     * @var HttpClientInterface
      */
     private $psApiClient;
 

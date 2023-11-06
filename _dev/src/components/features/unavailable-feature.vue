@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BCard, BCardBody} from 'bootstrap-vue';
 import Tooltip from '../help/tooltip.vue';
 

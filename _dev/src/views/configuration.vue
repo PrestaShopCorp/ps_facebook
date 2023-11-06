@@ -36,17 +36,9 @@
         @shop-selected="onShopSelected($event)"
       />
       <template v-else>
-        <alert-incoming-paid-version />
         <messages
           :show-onboard-succeeded="psFacebookJustOnboarded"
-          :show-sync-catalog-advice="psAccountsOnboarded && showSyncCatalogAdvice"
-          :category-matching-started="categoryMatchingStarted"
-          :product-sync-started="productSyncStarted"
-          :ad-campaign-started="adCampaignStarted"
           :alert-settings="alertSettings"
-          @onSyncCatalogClick="onSyncCatalogClick"
-          @onCategoryMatchingClick="onCategoryMatchingClick"
-          @onAdCampaignClick="onAdCampaignClick"
           class="m-3"
         />
         <ModuleActionNeeded
@@ -56,6 +48,11 @@
         <ModuleActionNeeded
           module-name="EventBus"
           :module-version-check="psCloudSyncVersionCheck"
+        />
+        <banner-catalog-sharing
+          v-if="facebookConnected && catalogDataLoaded && !GET_CATALOG_PAGE_ENABLED"
+          :on-catalog-page="false"
+          class="m-3"
         />
         <b-alert
           v-if="psAccountShopInConflict"
@@ -67,29 +64,45 @@
         <onboarding-deps-container
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
+          :billing-running="GET_BILLING_SUBSCRIPTION_ACTIVE"
+          :facebook-onboarded="IS_USER_ONBOARDED"
           @onCloudsyncConsentUpdated="cloudSyncSharingConsentGiven = $event"
           class="m-3"
         />
 
-        <facebook-not-connected
-          v-if="!facebookConnected"
-          @onFbeOnboardClick="onFbeOnboardClick"
+        <div
           class="m-3"
-          :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
-          :can-connect="!!dynamicExternalBusinessId"
-        />
-        <facebook-connected
+          v-if="GET_BILLING_SUBSCRIPTION_ACTIVE"
+        >
+          <two-panel-cols
+            :title="$t('configuration.sectionTitle.pssocial')"
+            :description="$t('configuration.sectionDesc.pssocial')"
+          >
+            <facebook-not-connected
+              v-if="!facebookConnected"
+              @onFbeOnboardClick="onFbeOnboardClick"
+              :active="psAccountsOnboarded && cloudSyncSharingConsentGiven"
+              :can-connect="!!externalBusinessId"
+              :encourage-to-retry="encourageToRetry"
+            />
+            <facebook-connected
+              v-else
+              :ps-facebook-app-id="psFacebookAppId"
+              :external-business-id="externalBusinessId"
+              :context-ps-facebook="contextPsFacebook"
+              :is-module-enabled="isModuleEnabled"
+              @onEditClick="onEditClick"
+              @onPixelActivation="onPixelActivation"
+              @onFbeUnlinkRequest="onFbeUnlinkRequest"
+              @onUninstallClick="onUninstallClick"
+            />
+          </two-panel-cols>
+        </div>
+        <key-features
+          class="m-3"
           v-else
-          :ps-facebook-app-id="psFacebookAppId"
-          :external-business-id="dynamicExternalBusinessId"
-          :context-ps-facebook="dynamicContextPsFacebook"
-          :is-module-enabled="isModuleEnabled"
-          @onEditClick="onEditClick"
-          @onPixelActivation="onPixelActivation"
-          @onFbeUnlinkRequest="onFbeUnlinkRequest"
-          @onUninstallClick="onUninstallClick"
-          class="m-3"
         />
+
         <survey v-if="facebookConnected" />
         <div
           v-if="showPopupGlass"
@@ -167,26 +180,32 @@
       ref="ps_facebook_modal_unlink"
       :title="$t('configuration.facebook.connected.unlinkModalHeader')"
       @ok="onUninstallClick"
-      ok-only
+      ok-variant="danger"
     >
       {{ $t('configuration.facebook.connected.unlinkModalText') }}
+      <template slot="modal-cancel">
+        {{ $t('cta.cancel') }}
+      </template>
       <template slot="modal-ok">
-        {{ $t('integrate.buttons.modalConfirm') }}
+        {{ $t('cta.unlink') }}
       </template>
     </ps-modal>
+
+    <modal-configuration-completed
+      v-if="psFacebookJustOnboarded"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue';
+import {defineComponent} from 'vue';
+import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
-import AlertIncomingPaidVersion from '@/components/monetization/alert-incoming-paid-version.vue';
-import PsModal from '@/components/commons/ps-modal';
+import PsModal from '@/components/commons/ps-modal.vue';
 import Spinner from '../components/spinner/spinner.vue';
 import Introduction from '../components/configuration/introduction.vue';
 import Messages from '../components/configuration/messages.vue';
-import NoConfig from '../components/configuration/no-config.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-container.vue';
@@ -194,13 +213,21 @@ import Survey from '../components/survey/survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
+import TwoPanelCols from '@/components/configuration/two-panel-cols.vue';
+import KeyFeatures from '@/components/configuration/key-features.vue';
+import ModalConfigurationCompleted from '@/components/configuration/modal-configuration-completed.vue';
+import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
+import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
+import GettersTypesApp from '@/store/modules/app/getters-types';
+import {RequestState} from '@/store/types';
 
 const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpenPopup || (
   (component, popupUrl: string) => {
     const canGeneratePopup = (
       component.contextPsAccounts.currentShop
       && component.contextPsAccounts.currentShop.url
-      && component.dynamicExternalBusinessId
+      && component.externalBusinessId
       && component.psAccountsToken
     );
 
@@ -215,7 +242,7 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
       '/index.html',
       component.contextPsAccounts.currentShop.name || 'Unnamed PrestaShop shop',
       component.contextPsAccounts.currentShop.frontUrl,
-      component.dynamicExternalBusinessId,
+      component.externalBusinessId,
       component.psAccountsToken,
       component.currency,
       component.timezone,
@@ -230,18 +257,20 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
 export default defineComponent({
   name: 'Configuration',
   components: {
-    AlertIncomingPaidVersion,
-    Spinner,
-    PsModal,
-    Introduction,
-    Messages,
-    MultiStoreSelector,
-    ModuleActionNeeded,
-    NoConfig,
-    OnboardingDepsContainer,
+    BannerCatalogSharing,
     FacebookNotConnected,
     FacebookConnected,
+    Introduction,
+    KeyFeatures,
+    Messages,
+    ModalConfigurationCompleted,
+    ModuleActionNeeded,
+    MultiStoreSelector,
+    OnboardingDepsContainer,
+    PsModal,
+    Spinner,
     Survey,
+    TwoPanelCols,
   },
   mixins: [],
   props: {
@@ -250,20 +279,10 @@ export default defineComponent({
       required: false,
       default: () => global.contextPsAccounts,
     },
-    contextPsFacebook: {
-      type: Object as PropType<OnboardingContext>,
-      required: false,
-      default: () => global.contextPsFacebook || {}, // fallback to {} is important!
-    },
     psFacebookAppId: {
       type: String,
       required: false,
       default: () => global.psFacebookAppId,
-    },
-    externalBusinessId: {
-      type: String,
-      required: false,
-      default: () => global.psFacebookExternalBusinessId,
     },
     psAccountsToken: {
       type: String,
@@ -337,47 +356,57 @@ export default defineComponent({
     },
   },
   computed: {
+    ...mapGetters('catalog', [
+      GettersTypesCatalog.GET_CATALOG_PAGE_ENABLED,
+    ]),
+    ...mapGetters('app', [
+      GettersTypesApp.GET_BILLING_SUBSCRIPTION_ACTIVE,
+    ]),
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.IS_USER_ONBOARDED,
+    ]),
+
     psAccountsOnboarded() {
       return this.contextPsAccounts.user
         && this.contextPsAccounts.user.email !== null
         && this.contextPsAccounts.user.emailIsValidated;
     },
-    facebookConnected() {
-      return (this.contextPsFacebook
-        && this.contextPsFacebook.facebookBusinessManager
-        && this.contextPsFacebook.facebookBusinessManager.id)
-        || false;
-    },
-    categoryMatchingStarted() {
-      return this.dynamicContextPsFacebook && this.dynamicContextPsFacebook.catalog
-        && this.dynamicContextPsFacebook.catalog.categoryMatchingStarted;
-    },
-    productSyncStarted() {
-      return this.contextPsFacebook && this.contextPsFacebook.catalog
-        && this.contextPsFacebook.catalog.productSyncStarted;
-    },
-    adCampaignStarted() {
-      // TODO !1: when true?
-      return false;
-    },
-    showSyncCatalogAdvice() {
-      const c = this.dynamicContextPsFacebook;
-      return c && this.facebookConnected && (
-        !c.catalog
-        || (c.catalog.categoryMatchingStarted !== true || c.catalog.productSyncStarted !== true)
-      );
+    facebookConnected(): boolean {
+      return (this.GET_BILLING_SUBSCRIPTION_ACTIVE
+        && !!this.contextPsFacebook?.facebookBusinessManager?.id);
     },
     openPopup(): () => Window|null {
-      if (!this.dynamicExternalBusinessId) {
+      if (!this.externalBusinessId) {
         return () => null;
       }
       return generateOpenPopup(this, this.psFacebookUiUrl);
     },
-    dynamicExternalBusinessId(): string|null {
-      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'] || this.externalBusinessId;
+    externalBusinessId(): string|null {
+      return this.$store.getters['onboarding/GET_EXTERNAL_BUSINESS_ID'];
     },
-    dynamicContextPsFacebook(): OnboardingContext|null {
-      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'] || this.contextPsFacebook;
+    contextPsFacebook(): OnboardingContext|null {
+      return this.$store.getters['onboarding/GET_ONBOARDING_STATE'];
+    },
+    safePopup(): Window|null {
+      // The popup can be unreachable if closed of blocked by CORS policy.
+      // We return it only when it is safe to do so (= allowed by the browser).
+      try {
+        if (!this.popup) {
+          return null;
+        }
+        // This should trigger an error in case of CORS.
+        this.popup.dispatchEvent(new Event('ping'));
+        return this.popup;
+      } catch (error) {
+        console.log('error', error instanceof DOMException);
+        if (error instanceof DOMException) {
+          return null;
+        }
+        throw error;
+      }
+    },
+    catalogDataLoaded(): boolean {
+      return this.$store.state.catalog.warmedUp === RequestState.SUCCESS;
     },
   },
   data() {
@@ -389,11 +418,12 @@ export default defineComponent({
       alertSettings: {},
       loading: true,
       popupReceptionDuplicate: false,
-      openedPopup: null as Window|null,
+      popup: null as Window|null,
       shops: this.contextPsAccounts.shops || [],
       exchangeTokensTryAgain: false,
       exchangeTokensErrored: false,
       cloudSyncSharingConsentGiven: false,
+      encourageToRetry: false as boolean,
     };
   },
   created() {
@@ -453,26 +483,12 @@ export default defineComponent({
         console.error(error);
       });
     },
-    onCategoryMatchingClick() {
-      this.$router.push({name: 'Catalog', query: {page: 'categoryMatchingEdit'}});
-    },
-    onSyncCatalogClick() {
-      this.$router.push({name: 'Catalog', query: {page: 'summary'}});
-    },
-    onAdCampaignClick() {
-      const catalogId = this.dynamicContextPsFacebook.catalog.id;
-      const businessId = this.dynamicContextPsFacebook.facebookBusinessManager.id;
-      const host = 'https://business.facebook.com';
-      const query = `?business_id=${businessId}&channel=COLLECTION_ADS`;
-      const url = `${host}/products/catalogs/${catalogId}/ads${query}`;
-      window.open(url, '_blank');
-    },
     onFbeOnboardClick() {
-      this.openedPopup = this.openPopup();
+      this.popup = this.openPopup();
       this.showPopupGlass = true;
     },
     onEditClick() {
-      this.openedPopup = this.openPopup();
+      this.popup = this.openPopup();
       this.showPopupGlass = true;
     },
     onUninstallClick() {
@@ -500,7 +516,7 @@ export default defineComponent({
       });
     },
     onPixelActivation() {
-      const actualState = this.dynamicContextPsFacebook.pixel.isActive;
+      const actualState = this.contextPsFacebook.pixel.isActive;
       const newState = !actualState;
       // Save activation state in PHP side.
       fetch(this.pixelActivationRoute, {
@@ -518,24 +534,30 @@ export default defineComponent({
           throw new Error('Error');
         }
         this.$root.refreshContextPsFacebook({
-          ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: newState},
+          ...this.contextPsFacebook,
+          pixel: {...this.contextPsFacebook.pixel, isActive: newState},
         });
       }).catch((error) => {
         console.error(error);
         this.setErrorsFromFbCall(error);
         this.$root.refreshContextPsFacebook({
-          ...this.dynamicContextPsFacebook,
-          pixel: {...this.dynamicContextPsFacebook.pixel, isActive: actualState},
+          ...this.contextPsFacebook,
+          pixel: {...this.contextPsFacebook.pixel, isActive: actualState},
         });
       });
     },
     onFbeOnboardOpened() {
+      this.encourageToRetry = false;
       this.showPopupGlass = true;
     },
     onFbeOnboardClosed() {
       this.showPopupGlass = false;
-      this.openedPopup = null;
+      if (this.safePopup) {
+        this.popup = null;
+      }
+      if (!this.popupReceptionDuplicate) {
+        this.encourageToRetry = true;
+      }
     },
     onFbeOnboardResponded(response, save = this.saveFbeOnboarding.bind(this)) {
       if (this.popupReceptionDuplicate) {
@@ -547,14 +569,18 @@ export default defineComponent({
 
       if (!response.access_token) {
         this.showPopupGlass = false;
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         return;
       }
       this.loading = true;
       this.showTokensGlass = true;
 
       save(response).then(() => {
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         this.alertSettings = {};
         this.popupReceptionDuplicate = false;
 
@@ -572,7 +598,9 @@ export default defineComponent({
         this.setErrorsFromFbCall(error);
         this.loading = false;
         this.showTokensGlass = false;
-        this.openedPopup = null;
+        if (this.safePopup) {
+          this.popup = null;
+        }
         this.popupReceptionDuplicate = false;
         this.$forceUpdate();
       });
@@ -676,10 +704,10 @@ export default defineComponent({
       );
     },
     glassClicked() {
-      if (this.openedPopup) {
-        this.openedPopup.focus();
+      if (this.safePopup) {
+        this.safePopup.focus();
       } else {
-        this.openedPopup = this.openPopup();
+        this.popup = this.openPopup();
       }
       if (this.$segment) {
         this.$segment.track('Click on black screen', {
@@ -689,8 +717,8 @@ export default defineComponent({
     },
     closePopup(event) {
       event.stopPropagation(); // avoid popup to be focused before close
-      if (this.openedPopup) {
-        this.openedPopup.close();
+      if (this.safePopup) {
+        this.safePopup.close();
       }
       if (this.$segment) {
         this.$segment.track('Click on the cross to close the pop-in', {
@@ -707,12 +735,17 @@ export default defineComponent({
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
-    contextPsAccounts() {
-      this.$forceUpdate();
-    },
-    dynamicExternalBusinessId(newValue) {
+    externalBusinessId(newValue) {
       this.$root.refreshExternalBusinessId(newValue);
       this.$root.identifySegment();
+    },
+    contextPsFacebook: {
+      async handler(newValue: OnboardingContext|null) {
+        if (newValue) {
+          await this.$store.dispatch('catalog/WARMUP_STORE');
+        }
+      },
+      immediate: true,
     },
   },
 });

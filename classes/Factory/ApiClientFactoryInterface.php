@@ -20,12 +20,12 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
-use Psr\Http\Client\ClientInterface;
+use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 interface ApiClientFactoryInterface
 {
     /**
-     * @return ClientInterface
+     * @return HttpClientInterface
      */
     public function createClient();
 }

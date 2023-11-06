@@ -19,19 +19,58 @@
 <template>
   <b-card no-body>
     <template v-slot:header>
-      <h3 class="d-inline">
-        {{ $t('configuration.facebook.notConnected.title') }}
-      </h3>
+      {{ $t('configuration.facebook.notConnected.title') }}
     </template>
     <b-card-body
-      class="pl-3 pt-3 pr-3"
+      v-if="encourageToRetry"
+      class="pt-0"
     >
-      {{ $t('configuration.facebook.notConnected.intro') }}
+      <b-alert
+        show
+        variant="warning"
+        class="mb-0 mt-3"
+      >
+        <div
+          class="d-flex justify-content-between"
+        >
+          <p class="mb-0">
+            <strong class="ps_gs-fz-16">
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}
+            </strong>
+            <br>
+            <span>
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.explanation') }}
+            </span>
+          </p>
+          <div class="d-md-flex text-center align-items-center mt-2">
+            <b-button
+              class="mx-1 mt-3 mt-md-0 ml-md-0 mr-md-1 text-nowrap"
+              variant="outline-primary"
+              @click="onFbeOnboardClick"
+            >
+              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.cta') }}
+            </b-button>
+          </div>
+        </div>
+      </b-alert>
     </b-card-body>
-    <b-card-body class="pt-0 pl-3 pb-3 pr-3">
+    <b-card-body
+      v-else
+      class="pt-2 pl-3 pb-4 pr-3 d-flex align-items-center"
+    >
+      <img
+        src="@/assets/logo_highres.png"
+        alt="colors"
+        class="logo mr-3"
+      >
+
+      <div class="description pr-2">
+        {{ $t('configuration.facebook.notConnected.description') }}
+      </div>
+
       <b-button
         :variant="active && canConnect ? 'primary' : 'outline-primary disabled'"
-        class="float-right ml-4 btn-with-spinner"
+        class="ml-4 btn-with-spinner text-nowrap ml-auto"
         @click="onFbeOnboardClick"
         :disabled="!active || !canConnect"
       >
@@ -43,30 +82,12 @@
           class="spinner"
         />
       </b-button>
-
-      <div class="logo mr-3">
-        <img
-          src="@/assets/facebook_logo.svg"
-          alt="colors"
-        >
-      </div>
-
-      <div class="description pr-2">
-        <div>
-          {{ $t('configuration.facebook.notConnected.description') }}
-          <br>
-          <p
-            class="facebook-not-connected-details small-text text-muted"
-            v-html="md2html($t('configuration.facebook.notConnected.details'))"
-          />
-        </div>
-      </div>
     </b-card-body>
   </b-card>
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BCard, BCardBody, BOverlay} from 'bootstrap-vue';
 import showdown from 'showdown';
 
@@ -82,6 +103,10 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    encourageToRetry: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
     onFbeOnboardClick() {
@@ -92,7 +117,7 @@ export default defineComponent({
         });
       }
     },
-    md2html: (md) => (new showdown.Converter()).makeHtml(md),
+    md2html: (md: string) => (new showdown.Converter()).makeHtml(md),
   },
 });
 </script>

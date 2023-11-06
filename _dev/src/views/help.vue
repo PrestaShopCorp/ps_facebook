@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import faq from '../components/help/faq.vue';
 
 export default defineComponent({

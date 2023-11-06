@@ -62,12 +62,15 @@
 
   // Components
   @import './components/button';
+  @import './components/cards';
   @import './components/categorymatching';
   @import './components/categorymatchingdropdown';
   @import './components/faq';
   @import './components/forms';
   @import './components/modal';
   @import './components/nav';
+  @import './components/productfeedreportcard';
+  @import './components/ps-banner';
 
   // Pages
   @import './pages/configuration';

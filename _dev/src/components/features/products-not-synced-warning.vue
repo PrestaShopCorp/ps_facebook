@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent} from 'vue';
 import {BCard, BCardBody, BButton} from 'bootstrap-vue';
 
 export default defineComponent({

@@ -1,0 +1,19 @@
+.ps-banner {
+  @each $color, $value in $banner-theme-colors {
+    &-#{$color} {
+      @include alert-variant(theme-color-level($color), $primary, $primary);
+
+      background-color: $value;
+      @if ($color == 'primary') {
+        color: $white;
+      }
+      @else {
+        color: $primary;
+      } 
+    }
+  }
+  
+  .card-body {
+    padding: 1.5rem 2rem; 
+  }
+}

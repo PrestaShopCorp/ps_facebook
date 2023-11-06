@@ -1,6 +1,49 @@
-.ps-facebook-configuration-tab {
-  div.card:not(.survey) {
-    border: none !important;
-    border-radius: 3px;
+.logo {
+  max-width: 2.75rem;
+  max-height: 2.75rem;
+}
+
+.app {
+  &:not(:last-child) {
+    &::after {
+      content: '';
+      border-top: 1px solid $primary-300;
+      display: block;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.ps_sc_featurescard {
+  border-width: 0;
+  background-color: $oceanblue-500;
+  &__title {
+    font-size: rem(32);
+    font-weight: 800;
+  }
+
+  &__list {
+    ul {
+      padding-inline-start: 0;
+      list-style-type: none;
+
+      li {
+        padding-left: 1em;
+        padding-right: 1em;
+
+        &:before {
+          font-family: 'Material Icons';
+          content: "check_circle_outline";
+          -webkit-font-feature-settings: 'liga';
+    
+          display: inline-block;
+          vertical-align: middle;
+          text-decoration: none;
+          position: relative;
+          left: -0.9rem;
+          font-size: rem(24);
+        }
+      }
+    }
   }
 }

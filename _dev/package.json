@@ -11,8 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@prestashopcorp/billing-cdc": "0.0.48",
     "@segment/analytics-next": "^1.45.0",
-    "@vue/composition-api": "^1.7.0",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "debounce": "^1.2.1",
@@ -20,7 +20,7 @@
     "showdown": "^1.9.1",
     "ts-loader": "^8.4.0",
     "uuid": "^8.3.2",
-    "vue": "^2.7.10",
+    "vue": "^2.7.15",
     "vue-i18n": "^8.27.2",
     "vue-router": "^3.6.4",
     "vue2-collapse": "^1.0.15",
@@ -58,6 +58,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-vue": "^6.2.2",
+    "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "typescript": "^4.9.5",

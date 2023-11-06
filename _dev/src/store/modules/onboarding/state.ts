@@ -1,5 +1,7 @@
+import {RequestState} from '@/store/types';
+
 export type State = {
-  warmedUp: boolean;
+  warmedUp: RequestState,
   externalBusinessID: string|null;
   onboarded: OnboardingContext|null;
 }
@@ -51,7 +53,7 @@ export type OnboardedCatalog = {
 }
 
 export const state: State = {
-  warmedUp: false,
+  warmedUp: RequestState.IDLE,
   externalBusinessID: null,
   onboarded: null,
 };
