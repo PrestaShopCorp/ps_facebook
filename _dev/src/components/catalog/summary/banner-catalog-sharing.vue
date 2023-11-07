@@ -14,9 +14,7 @@
           >local_fire_department</i>
           {{ $t('configuration.catalogBanner.title') }}
         </div>
-        {{ onCatalogPage
-          ? $t('configuration.catalogBanner.subTitleOnCatalogPage')
-          : $t('configuration.catalogBanner.subTitle') }}
+        {{ $t('configuration.catalogBanner.subTitle') }}
       </div>
 
       <div class="d-md-flex ml-auto text-center">

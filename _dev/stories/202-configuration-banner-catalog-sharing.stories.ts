@@ -12,12 +12,8 @@ const Template = (args: any, { argTypes }: any) => ({
     <banner-catalog-sharing :onCatalogPage="onCatalogPage" />
   `,
 });
-export const GoToCatalogPage: any = Template.bind({});
-GoToCatalogPage.args = {
-  onCatalogPage: false,
-};
 
-export const OnCatalogPage: any = Template.bind({});
-OnCatalogPage.args = {
+export const CatalogSharing: any = Template.bind({});
+CatalogSharing.args = {
   onCatalogPage: true,
 };
