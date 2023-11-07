@@ -476,6 +476,7 @@ export default defineComponent({
           ]);
           this.psFacebookJustOnboarded = false;
           this.loading = false;
+          this.$store.commit('catalog/RESET');
         }).catch((error) => {
           console.error(error);
           this.setErrorsFromFbCall(error);

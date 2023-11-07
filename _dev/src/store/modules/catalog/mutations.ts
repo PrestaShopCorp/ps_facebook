@@ -39,4 +39,11 @@ export default {
   ) {
     state.requests[payload.request] = payload.newState;
   },
+
+  [MutationsTypes.RESET](
+    state: LocalState,
+  ) {
+    state.warmedUp = RequestState.IDLE;
+    state.enabledFeature = false;
+  },
 };

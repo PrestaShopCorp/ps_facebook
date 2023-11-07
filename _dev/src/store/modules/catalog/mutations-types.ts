@@ -5,6 +5,8 @@ enum MutationsTypes {
   SET_CATEGORY_MATCHING_SUMMARY = 'SET_CATEGORY_MATCHING_SUMMARY',
 
   SET_REQUEST_STATE = 'SET_REQUEST_STATE',
+
+  RESET = 'RESET',
 }
 
 export {MutationsTypes as default};
