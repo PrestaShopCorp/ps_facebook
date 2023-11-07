@@ -147,8 +147,7 @@
     },
     "catalogBanner": {
       "title": "One last step: Synchronize your catalog",
-      "subTitle": "Go to the Product catalog tab to synchronize your catalog and start sharing your products on Facebook.",
-      "subTitleOnCatalogPage": "Synchronize your catalog and start sharing your products on Facebook."
+      "subTitle": "Synchronize your catalog and start sharing your products on Facebook."
     }
   },
   "catalog": {
