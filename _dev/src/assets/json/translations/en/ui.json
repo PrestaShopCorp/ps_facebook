@@ -192,7 +192,7 @@
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Products sent to Facebook",
+          "stepTitle": "Synchronization with Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
             "notSubscribed": "No sync yet.",
