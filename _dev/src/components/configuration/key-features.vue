@@ -15,7 +15,7 @@
         >
       </div>
       <div>
-        <p class="ps_sc_featurescard__title">
+        <p class="ps_sc_featurescard__title prestafont">
           {{ $t('configuration.keyFeatures.catchPhrase') }}
         </p>
 

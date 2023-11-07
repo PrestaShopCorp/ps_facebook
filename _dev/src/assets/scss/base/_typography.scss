@@ -10,6 +10,22 @@
   text-align: left;
 }
 
+.prestafont {
+  font-family: "prestafont", "IBM Plex Sans", "Open Sans", Helvetica, Arial, sans-serif;
+  --glyph-1:off;
+  --glyph-2:off;
+  --glyph-3:off;
+  --glyph-4:off;
+  --auto:off;
+  font-feature-settings:"kern" on,"liga" var(--auto),"calt" var(--auto),"sups" off,"frac" off,"ordn" off,"case" off,"ss01" var(--glyph-1),"ss02" var(--glyph-2),"ss03" var(--glyph-3),"ss04" var(--glyph-4);
+  -moz-font-feature-settings:"kern" on,"liga" var(--auto),"calt" var(--auto),"sups" off,"frac" off,"ordn" off,"case" off,"ss01" var(--glyph-1),"ss02" var(--glyph-2),"ss03" var(--glyph-3),"ss04" var(--glyph-4);
+  -webkit-font-feature-settings:"kern" on,"liga" var(--auto),"calt" var(--auto),"sups" off,"frac" off,"ordn" off,"case" off,"ss01" var(--glyph-1),"ss02" var(--glyph-2),"ss03" var(--glyph-3),"ss04" var(--glyph-4);
+  -ms-font-feature-settings:"kern" on,"liga" var(--auto),"calt" var(--auto),"sups" off,"frac" off,"ordn" off,"case" off,"ss01" var(--glyph-1),"ss02" var(--glyph-2),"ss03" var(--glyph-3),"ss04" var(--glyph-4);
+  -o-font-feature-settings:"kern" on,"liga" var(--auto),"calt" var(--auto),"sups" off,"frac" off,"ordn" off,"case" off,"ss01" var(--glyph-1),"ss02" var(--glyph-2),"ss03" var(--glyph-3),"ss04" var(--glyph-4);
+  // Fallback when prestafont is not available
+  text-transform: uppercase;
+}
+
 
 .ps_gs-fz-48 {
   font-size: rem(48) !important;
