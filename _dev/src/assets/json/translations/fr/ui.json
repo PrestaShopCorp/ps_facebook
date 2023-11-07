@@ -31,7 +31,7 @@
     "sectionDesc": {
       "psbilling": "Accéder et gérer votre abonnement et le mode de paiement associé.",
       "pscloudsync": "Aidez-nous à améliorer votre expérience et à améliorer notre service en consentant à partager en toute sécurité des données pertinentes avec nous.",
-      "pssocial": "Easily establish links with a range of social assets, including Facebook Pages, Meta Ads, Meta Pixel, and more, to enhance your online presence and marketing potential."
+      "pssocial": "Établissez facilement des liens avec tout un éventail de leviers sociaux, comprenant les pages Facebook, les publicités Meta, les pixels Meta, etc., afin d'améliorer votre présence en ligne et votre potentiel de marketing."
     },
     "messages": {
       "success": "PrestaShop Social with Facebook & Instagram est maintenant activé !",
@@ -54,7 +54,7 @@
     },
     "upgradeForBillingStep": {
       "alert": {
-        "title": "To continue using PrestaShop Social, please update to the latest version.",
+        "title": "Pour continuer à utiliser PrestaShop Social, veuillez mettre à jour la dernière version.",
         "description": "Since {date}, a {price}/Tax excl monthly subscription* is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience."
       },
       "modal": {
