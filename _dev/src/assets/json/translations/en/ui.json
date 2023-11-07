@@ -92,9 +92,8 @@
         "connectButton": "Set up Facebook",
         "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
         "incompleteOnboarding": {
-          "title": "You haven’t finished setting up Facebook yet.",
-          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to contact us. ",
-          "cta": "Finish setup"
+          "title": "You haven’t set up Facebook yet.",
+          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to {contactUsLink}."
         }
       },
       "connected": {
