@@ -33,7 +33,7 @@ new Vue({
   router,
   store,
   i18n,
-  template: '<App :contextPsFacebook="contextPsFacebook" />',
+  template: '<App />',
   components: {App},
   computed: {
     ...mapGetters('onboarding', [

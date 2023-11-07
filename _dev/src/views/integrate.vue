@@ -207,7 +207,7 @@ export default defineComponent({
         page_cta: `https://www.facebook.com/${this.GET_ONBOARDING_STATE?.page?.id}`,
         view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${this.GET_ONBOARDING_STATE?.page?.id}`,
       };
-    }
+    },
   },
   methods: {
     fetchData() {

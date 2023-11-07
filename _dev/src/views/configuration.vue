@@ -99,7 +99,7 @@
               class="ps_gs-glass__button mt-3"
               variant="outline-secondary"
               size="sm"
-              @click="forceFocus"
+              @click="glassClicked"
             >
               {{ $t('configuration.glass.link') }}
             </b-button>
@@ -464,16 +464,18 @@ export default defineComponent({
       // FIXME: Duplicated by ensureTokensExchanged()
       fetch(this.fbeOnboardingUninstallRoute)
         .then((res) => {
-          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
           return res.json();
         })
-        .then((json) => {
-          this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
-          this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE');
+        .then(async () => {
+          await Promise.all([
+            this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID'),
+            this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE'),
+          ]);
           this.psFacebookJustOnboarded = false;
+          this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.setErrorsFromFbCall(error);
@@ -638,7 +640,7 @@ export default defineComponent({
               }
               return res.json();
             })
-            .then((json) => {
+            .then(() => {
               this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
               this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE');
               this.facebookConnected = false;
