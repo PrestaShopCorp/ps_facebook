@@ -1,7 +1,5 @@
 import EnabledFeature from '../src/components/features/enabled-feature.vue';
 
-/* global window */
-
 export default {
   title: 'Integrate/3- Active Feature',
   component: EnabledFeature,

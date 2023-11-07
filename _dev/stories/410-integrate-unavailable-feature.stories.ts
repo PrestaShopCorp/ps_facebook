@@ -1,7 +1,5 @@
 import UnavailableFeature from '../src/components/features/unavailable-feature.vue';
 
-/* global window */
-
 export default {
   title: 'Integrate/1- Unavailable Feature',
   component: UnavailableFeature,

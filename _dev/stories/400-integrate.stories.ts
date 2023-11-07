@@ -1,6 +1,7 @@
-import Integrate from '../src/views/integrate.vue';
-
-/* global window */
+import cloneDeep from 'lodash.clonedeep';
+import {State as OnboardingState, state as defaultOnboardingState} from '@/store/modules/onboarding/state';
+import {stateOnboarded} from "@/../.storybook/mock/onboarding";
+import Integrate from '@/views/integrate.vue';
 
 export default {
   title: 'Integrate/Whole tab',
@@ -11,12 +12,10 @@ const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Integrate},
   template: '<integrate :enabledFeatures="enabledFeatures" :availableFeatures="disabledFeatures" :unavailableFeatures="unavailableFeatures" :manageRoute="manageRoute" />',
+  beforeMount: function(this: any) {
+    (this.$store.state.onboarding as OnboardingState) = cloneDeep(stateOnboarded);
+  },
 });
-
-const manageRoute = {
-  default: `https://www.facebook.com/facebook_business_extension?app_id=0&external_business_id=0`,
-  page_cta: `https://www.facebook.com/0`
-};
 
 export const NoFeaturesEnabled: any = Template.bind({});
 NoFeaturesEnabled.args = {
@@ -37,7 +36,6 @@ NoFeaturesEnabled.args = {
       enabled: false
     }
   },
-  manageRoute,
 };
 
 export const MessengerEnabled: any = Template.bind({});
@@ -60,7 +58,6 @@ MessengerEnabled.args = {
       enabled: false
     }
   },
-  manageRoute,
 };
 
 export const WithCatalogSynchronized: any = Template.bind({});
@@ -83,7 +80,6 @@ WithCatalogSynchronized.args = {
   },
   unavailableFeatures: {
   },
-  manageRoute,
 };
 
 export const AllFeaturesEnabled: any = Template.bind({});
@@ -106,7 +102,6 @@ AllFeaturesEnabled.args = {
   },
   unavailableFeatures: {
   },
-  manageRoute,
 };
 
 export const WarningWhenNoFeatures: any = Template.bind({});
@@ -117,5 +112,4 @@ WarningWhenNoFeatures.args = {
   },
   unavailableFeatures: {
   },
-  manageRoute,
 };

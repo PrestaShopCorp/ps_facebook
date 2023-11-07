@@ -1,21 +1,3 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
   <div id="integrate">
     <spinner v-if="loading" />
@@ -116,6 +98,8 @@
 <script>
 import {defineComponent} from 'vue';
 import {BAlert, BButton} from 'bootstrap-vue';
+import {mapGetters} from 'vuex';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
 import Spinner from '../components/spinner/spinner.vue';
@@ -159,16 +143,6 @@ export default defineComponent({
       required: false,
       default: () => global.shopUrl || null,
     },
-    manageRoute: {
-      type: Object,
-      required: false,
-      default: () => ({
-        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${global.psFacebookExternalBusinessId}`,
-        messenger_chat: `https://business.facebook.com/latest/inbox/settings/chat_plugin?asset_id=${global.contextPsFacebook?.page?.id}`,
-        page_cta: `https://www.facebook.com/${global.contextPsFacebook?.page?.id}`,
-        view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${global.contextPsFacebook?.page?.id}`,
-      }),
-    },
     isModuleEnabled: {
       type: Boolean,
       required: false,
@@ -208,6 +182,10 @@ export default defineComponent({
     document.removeEventListener(this.visibilityChangeEvent, this.onWindowVisibilityChange, false);
   },
   computed: {
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.GET_EXTERNAL_BUSINESS_ID,
+      GettersTypesOnboarding.GET_ONBOARDING_STATE,
+    ]),
     dynamicEnabledFeaturesLength() {
       return Object.keys(this.dynamicEnabledFeatures).length;
     },
@@ -222,6 +200,14 @@ export default defineComponent({
         + this.dynamicAvailableFeaturesLength
         + this.dynamicUnavailableFeaturesLength;
     },
+    manageRoute() {
+      return {
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${this.GET_EXTERNAL_BUSINESS_ID}`,
+        messenger_chat: `https://business.facebook.com/latest/inbox/settings/chat_plugin?asset_id=${this.GET_ONBOARDING_STATE?.page?.id}`,
+        page_cta: `https://www.facebook.com/${this.GET_ONBOARDING_STATE?.page?.id}`,
+        view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${this.GET_ONBOARDING_STATE?.page?.id}`,
+      };
+    }
   },
   methods: {
     fetchData() {

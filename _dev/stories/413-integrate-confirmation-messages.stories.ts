@@ -1,7 +1,5 @@
 import SuccessAlert from '../src/components/features/success-alert.vue';
 
-/* global window */
-
 export default {
   title: 'Integrate/Confirmation messages',
   component: SuccessAlert,
