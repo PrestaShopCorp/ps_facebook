@@ -132,11 +132,11 @@ export default defineComponent({
       return [{
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalog'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalogDescription'),
-        value: this.productsInCatalog,
+        value: this.active ? this.productsInCatalog : null,
         variant: 'info',
         icon: 'redeem',
         reverseColors: false,
-        ...(!!this.productsInCatalog && {
+        ...(this.active && this.productsInCatalog && {
           link: {
             href: this.$store.state.app.links.coreProductsPageUrl,
             target: '_blank',
@@ -146,7 +146,7 @@ export default defineComponent({
       {
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verified'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verifiedDescription'),
-        value: this.verificationsStats.syncable,
+        value: this.active ? this.verificationsStats.syncable : null,
         variant: 'success',
         icon: 'send',
         reverseColors: false,
@@ -154,11 +154,11 @@ export default defineComponent({
       {
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliant'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliantDescription'),
-        value: this.verificationsStats.notSyncable,
+        value: this.active ? this.verificationsStats.notSyncable : null,
         variant: 'danger',
         icon: 'remove_shopping_cart',
         reverseColors: false,
-        ...(!!this.verificationsStats.notSyncable && {
+        ...(this.active && this.verificationsStats.notSyncable && {
           link: {
             to: {name: CatalogTabPages.prevalidationDetails},
           },
