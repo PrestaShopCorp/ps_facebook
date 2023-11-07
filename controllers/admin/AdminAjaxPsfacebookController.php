@@ -196,6 +196,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $e->getCode(),
                 true
             );
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                        'turnOn' => false,
+                    ]
+                )
+            );
 
             return;
         }
@@ -205,6 +214,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 new FacebookOnboardException(
                     json_encode($response['message']),
                     FacebookOnboardException::FACEBOOK_RETRIEVE_EXTERNAL_BUSINESS_ID_EXCEPTION
+                )
+            );
+
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => $response['message'],
+                        'turnOn' => false,
+                    ]
                 )
             );
 
