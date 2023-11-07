@@ -79,7 +79,7 @@
       "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
     "billingFacade": {
-      "title": "Subscription settings",
+      "title": "Payment details",
       "nextPayment": "Your subscription is active, next billing on {date}",
       "willEnd": "Your subscription will end on {date}.",
       "managePayment": "Manage payments"
