@@ -1,7 +1,5 @@
 import AvailableFeature from '../src/components/features/available-feature.vue';
 
-/* global window */
-
 export default {
   title: 'Integrate/2- Available Feature',
   component: AvailableFeature,

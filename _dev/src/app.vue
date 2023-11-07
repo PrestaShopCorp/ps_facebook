@@ -1,28 +1,10 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
   <div id="psFacebookApp">
     <div
       id="head_tabs"
       class="ps_gs-sticky-head page-head-tabs"
     >
-      <Menu :context-ps-facebook="contextPsFacebook">
+      <Menu>
         <MenuItem
           v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/catalog"
@@ -81,20 +63,12 @@ export default defineComponent({
     Menu,
     MenuItem,
   },
-  props: {
-    contextPsFacebook: {
-      type: Object,
-      required: false,
-      default: () => global.contextPsFacebook || null, // avoid undefined
-    },
-  },
   created() {
     this.setCustomProperties();
     window.addEventListener('resize', this.resizeEventHandler);
   },
   mounted() {
     this.getFbContext();
-    this.$root.identifySegment();
   },
   destroyed() {
     window.removeEventListener('resize', this.resizeEventHandler);
@@ -123,11 +97,6 @@ export default defineComponent({
     },
     async getFbContext() {
       await this.$store.dispatch('onboarding/WARMUP_STORE');
-
-      // CHECK ME: To be kept in the future?
-      this.$root.refreshContextPsFacebook(
-        this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
-      );
     },
   },
   watch: {

@@ -1,21 +1,3 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
   <div>
     <spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
@@ -117,7 +99,7 @@
               class="ps_gs-glass__button mt-3"
               variant="outline-secondary"
               size="sm"
-              @click="forceFocus"
+              @click="glassClicked"
             >
               {{ $t('configuration.glass.link') }}
             </b-button>
@@ -430,12 +412,6 @@ export default defineComponent({
       this.loading = true;
       try {
         await this.$store.dispatch('onboarding/WARMUP_STORE');
-
-        // CHECK ME: To be kept in the future?
-        this.$root.refreshContextPsFacebook(
-          this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
-        );
-
         await this.fetchTokens();
       } catch (error) {
         this.setErrorsFromFbCall(error);
@@ -488,16 +464,18 @@ export default defineComponent({
       // FIXME: Duplicated by ensureTokensExchanged()
       fetch(this.fbeOnboardingUninstallRoute)
         .then((res) => {
-          this.loading = false;
           if (!res.ok) {
             throw new Error(res.statusText || res.status);
           }
           return res.json();
         })
-        .then((json) => {
-          this.$root.refreshContextPsFacebook(json.contextPsFacebook);
-          this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
+        .then(async () => {
+          await Promise.all([
+            this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID'),
+            this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE'),
+          ]);
           this.psFacebookJustOnboarded = false;
+          this.loading = false;
         }).catch((error) => {
           console.error(error);
           this.setErrorsFromFbCall(error);
@@ -525,17 +503,9 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error');
         }
-        this.$root.refreshContextPsFacebook({
-          ...this.contextPsFacebook,
-          pixel: {...this.contextPsFacebook.pixel, isActive: newState},
-        });
       }).catch((error) => {
         console.error(error);
         this.setErrorsFromFbCall(error);
-        this.$root.refreshContextPsFacebook({
-          ...this.contextPsFacebook,
-          pixel: {...this.contextPsFacebook.pixel, isActive: actualState},
-        });
       });
     },
     onFbeOnboardOpened() {
@@ -618,7 +588,7 @@ export default defineComponent({
             module: 'ps_facebook',
           });
         }
-        this.$root.refreshContextPsFacebook(res.contextPsFacebook);
+        this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE');
       });
     },
     ensureTokensExchanged(tryAgainOnError = false) {
@@ -670,9 +640,9 @@ export default defineComponent({
               }
               return res.json();
             })
-            .then((json) => {
-              this.$root.refreshContextPsFacebook(json.contextPsFacebook);
+            .then(() => {
               this.$store.dispatch('onboarding/REQUEST_EXTERNAL_BUSINESS_ID');
+              this.$store.dispatch('onboarding/REQUEST_ONBOARDING_STATE');
               this.facebookConnected = false;
               this.psFacebookJustOnboarded = false;
             }).catch((err) => {
@@ -727,10 +697,6 @@ export default defineComponent({
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },
   watch: {
-    externalBusinessId(newValue) {
-      this.$root.refreshExternalBusinessId(newValue);
-      this.$root.identifySegment();
-    },
     contextPsFacebook: {
       async handler(newValue: OnboardingContext|null) {
         if (newValue) {

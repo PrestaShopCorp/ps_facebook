@@ -1,8 +1,10 @@
 import Vue from 'vue';
+import {mapGetters} from 'vuex';
 import {BootstrapVue} from 'bootstrap-vue';
 import VueCollapse from 'vue2-collapse';
 import VueSegment from '@/lib/segment';
 import {initShopClient, getGenericRouteFromSpecificOne} from '@/lib/api/shopClient';
+import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import router from './router';
 import store from './store';
 import App from './app.vue';
@@ -31,33 +33,15 @@ new Vue({
   router,
   store,
   i18n,
-  template: '<App :contextPsFacebook="contextPsFacebook" />',
+  template: '<App />',
   components: {App},
-  data() {
-    return {
-      // @ts-ignore
-      contextPsFacebook: global.contextPsFacebook,
-      // @ts-ignore
-      psFacebookExternalBusinessId: global.psFacebookExternalBusinessId,
-    };
+  computed: {
+    ...mapGetters('onboarding', [
+      GettersTypesOnboarding.GET_EXTERNAL_BUSINESS_ID,
+      GettersTypesOnboarding.GET_ONBOARDING_STATE,
+    ]),
   },
   methods: {
-    refreshContextPsFacebook(context) {
-      this.contextPsFacebook = context;
-      // @ts-ignore
-      global.contextPsFacebook = context;
-
-      // @ts-ignore
-      this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
-        psx_ps_facebook_account_connected: (context !== null),
-        psx_ps_pixel_disabled: !(context?.pixel?.isActive),
-      });
-    },
-    refreshExternalBusinessId(externalBusinessId) {
-      this.psFacebookExternalBusinessId = externalBusinessId;
-      // @ts-ignore
-      global.psFacebookExternalBusinessId = externalBusinessId;
-    },
     identifySegment() {
       // @ts-ignore
       if (!this.$segment) {
@@ -73,9 +57,17 @@ new Vue({
           language: this.$store.state.context.statei18nSettings?.isoCode,
           version_ps: this.$store.state.context.appContext.psVersion,
           fbk_module_version: this.$store.state.context.appContext.moduleVersion,
-          external_business_id: this.psFacebookExternalBusinessId,
+          external_business_id: this.GET_EXTERNAL_BUSINESS_ID,
         });
       }
+    },
+  },
+  watch: {
+    GET_ONBOARDING_STATE(newValue) {
+      this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
+        psx_ps_facebook_account_connected: (newValue !== null),
+        psx_ps_pixel_disabled: !(newValue?.pixel?.isActive),
+      });
     },
   },
 }).$mount('#psFacebookApp');
