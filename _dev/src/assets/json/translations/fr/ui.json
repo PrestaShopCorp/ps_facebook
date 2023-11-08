@@ -146,45 +146,45 @@
     },
     "catalogBanner": {
       "title": "Une dernière étape : Synchroniser votre catalogue",
-      "subTitle": "Synchronize your catalog and start sharing your products on Facebook."
+      "subTitle": "Synchronisez votre catalogue et commencez à partager vos produits sur Facebook."
     }
   },
   "catalog": {
     "summaryPage": {
       "productCatalog": {
         "title": "Catalogue produit",
-        "catalogExportPaused": "Not synchronized",
-        "catalogExportActivated": "Synchronized",
+        "catalogExportPaused": "Non synchronisé",
+        "catalogExportActivated": "Synchronisé",
         "alertSyncIsDisabled": {
-          "title": "The synchronization with Facebook is paused.",
-          "explanation": "Your products are still visible on Facebook, but they are no longer be synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+          "title": "La synchronisation avec Facebook est en pause.",
+          "explanation": "Vos produits sont toujours visibles sur Facebook, mais ils ne sont plus synchronisés. Cela signifie que toute modification apportée à vos produits sur votre boutique PrestaShop ne sera pas reflétée sur Facebook jusqu'à ce que vous synchronisiez à nouveau votre catalogue."
         },
         "alertSyncIsEnabled": {
-          "title": "Your catalog is shared with Facebook.",
-          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
+          "title": "Votre catalogue est partagé avec Facebook.",
+          "explanation": "La première synchronisation aura lieu dans quelques heures. D'ici là, assurez-vous que vos produits sont conformes. Si ce n'est pas le cas, modifiez-les pour les rendre conformes à la politique de Facebook et scannez à nouveau votre catalogue."
         },
         "modals": {
           "startSharing": {
-            "title": "Synchronize your catalog with Facebook",
-            "subTitle": "What happens when you synchronize your catalog?",
-            "description": "* All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
+            "title": "Synchronisez votre catalogue avec Facebook",
+            "subTitle": "Que se passe-t-il lorsque vous synchronisez votre catalogue ?",
+            "description": "* Tous les produits actifs sont envoyés vers Facebook.\n\n* Votre catalogue est synchronisé 4 fois par jour. \n* La synchronisation peut prendre jusqu'à 24 heures.\n* Seuls les produits modifiés seront mis à jour lors de la prochaine synchronisation.\n* Seuls les produits conformes seront synchronisés."
           },
           "deactivation": {
-            "title": "Pause catalog synchronization?",
-            "description": "Your products will still be visible on Facebook, but they will no longer be synchronized.  This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+            "title": "Mettre en pause la synchronisation du catalogue ?",
+            "description": "Vos produits sont toujours visibles sur Facebook, mais ils ne sont plus synchronisés. Cela signifie que toute modification apportée à vos produits sur votre boutique PrestaShop ne sera pas reflétée sur Facebook jusqu'à ce que vous synchronisiez à nouveau votre catalogue."
           }
         },
         "productVerification": {
-          "stepTitle": "Pre-synchronization scan",
-          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
+          "stepTitle": "Analyse de pré-synchronisation",
+          "stepDetails": "Nous vérifions que vos produits ne comportent pas d'erreurs avant de les envoyer à Facebook. Si un produit n'est pas conforme, vous pouvez corriger l'erreur et scanner à nouveau votre catalogue. Seuls les produits conformes seront envoyés à Facebook lors de la prochaine synchronisation.",
           "scanStatus": {
-            "notSubscribed": "No scan yet.",
-            "inProgress": "Scan in progress...",
+            "notSubscribed": "Aucun scan pour le moment.",
+            "inProgress": "Scan en cours...",
             "lastScanDate": "Last scan on {date} at {time}."
           },
           "reportCards": {
             "productsInCatalog": "Mon catalogue produit",
-            "productsInCatalogDescription": "Number of products in your catalog (including combinations and languages).",
+            "productsInCatalogDescription": "Nombre de produits dans votre catalogue (y compris les déclinaisons et les langues).",
             "verified": "Produits conformes",
             "verifiedDescription": "These products will be sent to Facebook at the next synchronization.",
             "nonCompliant": "Produits non conformes",
@@ -192,17 +192,17 @@
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Synchronization with Facebook",
+          "stepTitle": "Synchronisation avec Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
             "notSubscribed": "No sync yet.",
-            "firstSyncSoon": "The first synchronization will take place in a few hours.",
-            "paused": "Synchronization is paused.",
-            "lastSyncDate": "Last sync on {date} at {time}."
+            "firstSyncSoon": "La première synchronisation sera effectuée dans quelques heures.",
+            "paused": "La synchronisation est en pause.",
+            "lastSyncDate": "Dernière synchronisation le {date} à {time}."
           },
           "reportCards": {
             "approved": "Actifs",
-            "approvedDescription": "These products were approved by Facebook.",
+            "approvedDescription": "Ces produits ont été approuvés par Facebook.",
             "disapproved": "Refusé",
             "disapprovedDescription": "Facebook rejected these products as they didn’t comply with its policy."
           }
@@ -370,7 +370,7 @@
   },
   "billing": {
     "planTitle": "Plan & billing information",
-    "invoicesTitle": "Invoices"
+    "invoicesTitle": "Factures"
   },
   "productStatuses": {
     "Approved": "Actifs",
@@ -386,19 +386,19 @@
     "group": "Groupe de boutiques"
   },
   "cta": {
-    "upgrade": "Upgrade",
-    "clickHere": "click here",
-    "synchronizeCatalog": "Synchronize catalog",
-    "pauseSyncOfCatalog": "Pause catalog synchronization",
+    "upgrade": "Mettre à jour",
+    "clickHere": "cliquez ici",
+    "synchronizeCatalog": "Synchroniser le catalogue",
+    "pauseSyncOfCatalog": "Mettre en pause la synchronisation du catalogue",
     "cancel": "Annuler",
     "ok": "Ok",
-    "modalConfirm": "Yes, confirm",
-    "learnMore": "Learn more",
+    "modalConfirm": "Oui, je confirme",
+    "learnMore": "En savoir plus",
     "rescan": "Scan",
     "resubscribe": "Re-subscribe",
-    "startFreeTrial": "Start free trial",
-    "unlink": "Sign out of Facebook",
-    "setupCategoryMatching": "Set up Google product categories",
-    "manageCategoryMatching": "Manage Google product categories"
+    "startFreeTrial": "Commencer l'essai gratuit",
+    "unlink": "Se déconnecter de Facebook",
+    "setupCategoryMatching": "Configurer les catégories de produits Google",
+    "manageCategoryMatching": "Gérer les catégories de produits Google"
   }
 }
