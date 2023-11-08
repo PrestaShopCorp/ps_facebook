@@ -71,10 +71,10 @@
     },
     "alertBillingNotStarted": {
       "title": "Subscribe to continue using PrestaShop Social",
-      "description": "As of {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to continue using PrestaShop Social*. You start with a 14-day free trial and you can cancel at anytime. This change will allow us to deliver regular updates and introduce new features to enhance your overall experience. Subscribe now to access this new version of PrestaShop Social, which offers easier and faster setup."
+      "description": "A partir de {date}, un abonnement mensuel {price}/Hors taxes* est nécessaire pour continuer à utiliser PrestaShop Social*. Vous commencez avec un essai gratuit de 14 jours et vous pouvez annuler à tout moment. Ce changement nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités pour améliorer votre expérience globale. Abonnez-vous maintenant pour accéder à cette nouvelle version de PrestaShop Social, qui offre une installation plus facile et plus rapide."
     },
     "alertBillingCancelled": {
-      "title": "You’ve canceled your PrestaShop Social subscription.",
+      "title": "Vous avez annulé votre abonnement à PrestaShop Social.",
       "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, You can re-subscribe anytime to continue using the module.",
       "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
