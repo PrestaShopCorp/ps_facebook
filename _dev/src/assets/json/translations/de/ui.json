@@ -24,7 +24,7 @@
     },
     "sectionTitle": {
       "psaccounts": "Verknüpfen Sie Ihr Geschäft mit einem PrestaShop Account",
-      "psbilling": "Subscribe to start using PrestaShop Social",
+      "psbilling": "Billing information",
       "pscloudsync": "Allow data sharing",
       "pssocial": "Set up Facebook"
     },
@@ -79,7 +79,7 @@
       "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
     "billingFacade": {
-      "title": "Subscription settings",
+      "title": "Payment details",
       "nextPayment": "Your subscription is active, next billing on {date}",
       "willEnd": "Your subscription will end on {date}.",
       "managePayment": "Manage payments"
@@ -92,9 +92,8 @@
         "connectButton": "Set up Facebook",
         "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
         "incompleteOnboarding": {
-          "title": "You haven’t finished setting up Facebook yet.",
-          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to contact us. ",
-          "cta": "Finish setup"
+          "title": "You haven’t set up Facebook yet.",
+          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to {contactUsLink}."
         }
       },
       "connected": {
@@ -193,7 +192,7 @@
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Products sent to Facebook",
+          "stepTitle": "Synchronization with Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
             "notSubscribed": "No sync yet.",
