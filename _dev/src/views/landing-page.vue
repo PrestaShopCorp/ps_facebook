@@ -24,56 +24,72 @@
 
       <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/manage_business_illustration.png"
-          width="192"
-          height="128"
+          class="mx-5 d-none d-md-block"
+          src="@/assets/PS-SOCIAL-synchronize.svg"
+          width="150"
+          height="150"
           alt="A potatoe"
         >
         <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint1Title') }}</h1>
+          <h1
+            class="mb-1"
+          >
+            {{ $t('configuration.introduction.proPoint1Title') }}
+          </h1>
           <p>{{ $t('configuration.introduction.proPoint1Description') }}</p>
         </div>
       </div>
 
       <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/understand_traffic_illustration.png"
-          width="192"
-          height="128"
+          class="mx-5 d-none d-md-block"
+          src="@/assets/PS-SOCIAL-smartads.svg"
+          width="150"
+          height="150"
           alt="A potatoe"
         >
         <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint2Title') }}</h1>
+          <h1
+            class="mb-1"
+          >
+            {{ $t('configuration.introduction.proPoint2Title') }}
+          </h1>
           <p>{{ $t('configuration.introduction.proPoint2Description') }}</p>
         </div>
       </div>
 
       <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/boost_your_sales_illustration.png"
-          width="192"
-          height="128"
+          class="mx-5 d-none d-md-block"
+          src="@/assets/PS-SOCIAL-data.svg"
+          width="150"
+          height="150"
           alt="A potatoe"
         >
         <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint3Title') }}</h1>
+          <h1
+            class="mb-1"
+          >
+            {{ $t('configuration.introduction.proPoint3Title') }}
+          </h1>
           <p>{{ $t('configuration.introduction.proPoint3Description') }}</p>
         </div>
       </div>
 
       <div class="d-flex flex-column flex-md-row align-items-center mb-2">
         <img
-          class="mx-4 mt-2 mb-4 d-none d-md-block"
-          src="@/assets/reach_people_illustration.png"
-          width="192"
-          height="128"
+          class="mx-5 d-none d-md-block"
+          src="@/assets/PS-SOCIAL-messenger.svg"
+          width="150"
+          height="150"
           alt="A potatoe"
         >
         <div class="mb-4 mb-md-0">
-          <h1>{{ $t('configuration.introduction.proPoint4Title') }}</h1>
+          <h1
+            class="mb-1"
+          >
+            {{ $t('configuration.introduction.proPoint4Title') }}
+          </h1>
           <p>{{ $t('configuration.introduction.proPoint4Description') }}</p>
         </div>
       </div>
