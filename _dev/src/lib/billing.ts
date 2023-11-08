@@ -30,7 +30,6 @@ export const initialize = (psBilling: typeof billing,
   }
 
   function onOpenModal(type, data) {
-    console.log('Modal', type, data);
     currentModal = new psBilling.ModalContainerComponent({
       type,
       context: {
