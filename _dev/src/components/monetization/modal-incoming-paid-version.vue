@@ -57,11 +57,11 @@ export default defineComponent({
       this.doNotDisplayModalAnymore();
     },
     isModalAlreadyAknowledged(): boolean {
-      return !!JSON.parse(localStorage.getItem(`incomingSubscriptionAck-${this.shopId}`) || 'false');
+      return !!JSON.parse(localStorage.getItem(`incomingSubscriptionReminderAck-${this.shopId}`) || 'false');
     },
     md2html: (md: string) => (new Showdown.Converter()).makeHtml(md),
     doNotDisplayModalAnymore(): void {
-      localStorage.setItem(`incomingSubscriptionAck-${this.shopId}`, 'true');
+      localStorage.setItem(`incomingSubscriptionReminderAck-${this.shopId}`, 'true');
     },
   },
 });
