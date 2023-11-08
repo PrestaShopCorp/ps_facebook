@@ -31,24 +31,34 @@
         class="mb-0 mt-3"
       >
         <div
-          class="d-flex justify-content-between"
+          class="d-flex flex-column flex-md-row justify-content-between"
         >
           <p class="mb-0">
             <strong class="ps_gs-fz-16">
               {{ $t('configuration.facebook.notConnected.incompleteOnboarding.title') }}
             </strong>
-            <br>
-            <span>
-              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.explanation') }}
-            </span>
+            <i18n
+              path="configuration.facebook.notConnected.incompleteOnboarding.explanation"
+              tag="p"
+            >
+              <template slot="contactUsLink">
+                <b-link
+                  :to="{ name: 'help' }"
+                  class="text-decoration-underline"
+                >
+                  {{ $t("help.help.contactUs").toLocaleLowerCase() }}
+                </b-link>
+              </template>
+            </i18n>
+            <span />
           </p>
-          <div class="d-md-flex text-center align-items-center mt-2">
+          <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
             <b-button
               class="mx-1 mt-3 mt-md-0 ml-md-0 mr-md-1 text-nowrap"
               variant="outline-primary"
               @click="onFbeOnboardClick"
             >
-              {{ $t('configuration.facebook.notConnected.incompleteOnboarding.cta') }}
+              {{ $t('configuration.facebook.notConnected.connectButton') }}
             </b-button>
           </div>
         </div>
