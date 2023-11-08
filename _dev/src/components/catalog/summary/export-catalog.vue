@@ -126,7 +126,7 @@ export default defineComponent({
     md2html: (md) => (new showdown.Converter()).makeHtml(md),
   },
   mounted() {
-    if (this.validation.prevalidation === null) {
+    if (this.validation.prevalidation.lastScanDate === null) {
       this.triggerProductsScan();
     }
   },
