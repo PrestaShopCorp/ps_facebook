@@ -3,6 +3,7 @@
   <div
     v-else
     id="catalogSummary"
+    :class="{'catalogSummary__disabled': !GET_SYNCHRONIZATION_ACTIVE}"
   >
     <banner-catalog-sharing
       v-if="!GET_CATALOG_PAGE_ENABLED"

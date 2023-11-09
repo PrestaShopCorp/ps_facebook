@@ -1,6 +1,7 @@
 <template>
   <b-card
     no-body
+    class="catalogSummary__card"
   >
     <b-card-header>
       {{ $t('catalog.summaryPage.productCatalog.title') }}

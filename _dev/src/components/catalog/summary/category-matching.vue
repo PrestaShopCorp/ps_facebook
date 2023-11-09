@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="category-matched d-flex flex-row flex-align-center"
+    class="category-matched d-flex flex-row flex-align-center catalogSummary__card"
   >
     <div>
       <b-card-header class="d-flex">
