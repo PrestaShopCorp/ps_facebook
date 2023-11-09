@@ -35,10 +35,11 @@ export default defineComponent({
     PsModal,
   },
   methods: {
-    goToProductCatalog() {
+    goToProductCatalog(): void {
       this.$router.push({
         name: 'Catalog',
       });
+      this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', true);
     },
     md2html: (md: string) => (new Showdown.Converter()).makeHtml(md),
   },
