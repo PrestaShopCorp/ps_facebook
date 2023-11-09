@@ -23,6 +23,12 @@ export default {
       ...payload,
     };
   },
+  [MutationsTypes.SET_VALIDATION_PROGRESS](
+    state: LocalState,
+    payload: number|null,
+  ) {
+    state.progress.prevalidation = payload;
+  },
   [MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY](
     state: LocalState,
     payload: CategoryMatchingStatus,
