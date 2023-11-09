@@ -76,7 +76,7 @@ export default defineComponent({
     },
     async onClickOnSyncCatalog(): Promise<void> {
       if (!this.onCatalogPage) {
-        await this.$router.push({
+        this.$router.push({
           name: 'Catalog',
         });
       }
