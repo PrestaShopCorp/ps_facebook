@@ -6,6 +6,7 @@ export type State = {
   exportOn: boolean,
   categoryMatching: CategoryMatchingStatus,
   report: ProductFeedReport,
+  progress: ProductFeedProgress,
   requests: CatalogRequests,
 }
 
@@ -21,6 +22,10 @@ export type ValidationReport = {
   syncable: number|null,
   notSyncable: number|null,
   lastScanDate: Date|null,
+}
+
+export type ProductFeedProgress = {
+  prevalidation: number|null,
 }
 
 export type SyncReport = {
@@ -56,6 +61,9 @@ export const state: State = {
       errored: null,
       lastSyncDate: null,
     },
+  },
+  progress: {
+    prevalidation: null,
   },
   categoryMatching: {
     matchingDone: false,

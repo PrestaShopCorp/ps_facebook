@@ -159,6 +159,8 @@ export default {
               lastScanDate: new Date(result.prevalidation.lastScanDate),
             },
           } as Partial<ProductFeedReport>);
+        } else {
+          commit(MutationsTypes.SET_VALIDATION_PROGRESS, result.progress);
         }
       }
 
@@ -171,6 +173,8 @@ export default {
         request: 'scan',
         newState: RequestState.FAILED,
       });
+    } finally {
+      commit(MutationsTypes.SET_VALIDATION_PROGRESS, null);
     }
 
     return page;

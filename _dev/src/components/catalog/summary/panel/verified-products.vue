@@ -69,8 +69,8 @@
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
 import showdown from 'showdown';
+import {State as CatalogState, ValidationReport} from '@/store/modules/catalog/state';
 import StatusCardComponent, {StatusCardParameters} from '../status-card.vue';
-import {ValidationReport} from '@/store/modules/catalog/state';
 import CatalogTabPages from '@/components/catalog/pages';
 import {RequestState} from '@/store/types';
 
@@ -99,11 +99,21 @@ export default defineComponent({
   },
   computed: {
     scanRequestStatus(): RequestState {
-      return this.$store.state.catalog.requests.scan;
+      return (this.$store.state.catalog as CatalogState).requests.scan;
+    },
+    scanProgress(): number|null {
+      return (this.$store.state.catalog as CatalogState).progress.prevalidation;
     },
     lastScanText(): string {
       if (this.scanRequestStatus === RequestState.PENDING) {
-        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.inProgress');
+        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.inProgress',
+          {
+            progress: this.$tc('catalog.summaryPage.productCatalog.productVerification.scanStatus.nbOfVerifiedProducts',
+              +this.scanProgress,
+              {xProducts: this.scanProgress},
+            ),
+          },
+        );
       }
 
       if (!this.verificationsStats.lastScanDate) {
