@@ -24,7 +24,7 @@
     },
     "sectionTitle": {
       "psaccounts": "Liez votre boutique à un compte PrestaShop",
-      "psbilling": "Billing information",
+      "psbilling": "Informations de facturation",
       "pscloudsync": "Autoriser le partage de données",
       "pssocial": "Configurer Facebook"
     },
@@ -58,48 +58,48 @@
         "description": "Depuis {date}, un abonnement mensuel {price}/Hors taxes* est nécessaire pour continuer à utiliser PrestaShop Social. Cette modification de notre modèle de tarification est motivée par notre engagement à améliorer le module. Cela nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités afin d'enrichir votre expérience globale."
       },
       "modal": {
-        "title": "Update required",
-        "subtitle": "To continue using PrestaShop Social, please update to the latest version.",
+        "title": "Mise à jour requise",
+        "subtitle": "Pour continuer à utiliser PrestaShop Social, veuillez mettre à jour la dernière version.",
         "description": "Depuis {date}, un abonnement mensuel {price}/Hors taxes* est nécessaire pour continuer à utiliser PrestaShop Social. Cette modification de notre modèle de tarification est motivée par notre engagement à améliorer le module. Cela nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités afin d'enrichir votre expérience globale.\n\nComment mettre à jour et s'abonner ? \n\n* Cliquez sur \"Mettre à jour\" ci-dessous.\n* Attendez quelques minutes jusqu'à ce que l'installation de la mise à jour soit terminée.\n* Abonnez vous et commencez un essai gratuit de 14 jours, vous pouvez annuler à tout moment.",
-        "needHelp": "Any questions? We're here to help. {0}"
+        "needHelp": "Vous avez des questions ? Nous sommes là pour vous aider. {0}"
       },
-      "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
+      "IncludedInHosted": "* Si vous êtes déjà abonné à l'offre PrestaShop Hosted, vous n'êtes pas affecté par ce changement. PrestaShop Social reste gratuit pour vous."
     },
     "keyFeatures": {
-      "catchPhrase": "Turn likes into sales with PrestaShop Social",
-      "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
+      "catchPhrase": "Transformez les likes en ventes avec PrestaShop Social",
+      "features": "* Touchez de nouvelles audiences et générez du trafic vers votre boutique\n* Synchronisez votre catalogue avec Facebook\n* Discutez avec vos clients sur Facebook Messenger\n* Suivez vos campagnes publicitaires sur Facebook"
     },
     "alertBillingNotStarted": {
-      "title": "Subscribe to continue using PrestaShop Social",
+      "title": "Abonnez-vous pour continuer à utiliser PrestaShop Social",
       "description": "A partir de {date}, un abonnement mensuel {price}/Hors taxes* est nécessaire pour continuer à utiliser PrestaShop Social*. Vous commencez avec un essai gratuit de 14 jours et vous pouvez annuler à tout moment. Ce changement nous permettra de fournir des mises à jour régulières et d'introduire de nouvelles fonctionnalités pour améliorer votre expérience globale. Abonnez-vous maintenant pour accéder à cette nouvelle version de PrestaShop Social, qui offre une installation plus facile et plus rapide."
     },
     "alertBillingCancelled": {
       "title": "Vous avez annulé votre abonnement à PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, You can re-subscribe anytime to continue using the module.",
-      "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
+      "explanationBeforeCancellationDate": "Votre abonnement restera actif jusqu'à {date}, Vous pouvez vous réabonner à tout moment pour continuer à utiliser le module.",
+      "explanationFromCancellationDate": "Votre abonnement a pris fin le {date}, vous pouvez vous abonner à tout moment pour continuer à utiliser le module."
     },
     "billingFacade": {
-      "title": "Payment details",
-      "nextPayment": "Your subscription is active, next billing on {date}",
-      "willEnd": "Your subscription will end on {date}.",
-      "managePayment": "Manage payments"
+      "title": "Détails de paiement",
+      "nextPayment": "Votre abonnement est actif, prochaine facturation le {date}",
+      "willEnd": "Votre abonnement prendra fin le {date}.",
+      "managePayment": "Gérer les paiements"
     },
     "facebook": {
-      "title": "Set up Facebook",
+      "title": "Configurer Facebook",
       "notConnected": {
-        "title": "Set up Facebook",
+        "title": "Configurer Facebook",
         "intro": "Intégrez votre boutique à Facebook.",
-        "connectButton": "Set up Facebook",
-        "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
+        "connectButton": "Configurer Facebook",
+        "description": "Connectez-vous à Facebook et suivez les instructions de l'assistant d'installation. Vous devrez créer ou sélectionner des comptes Facebook existants pour les connecter à votre boutique.",
         "incompleteOnboarding": {
-          "title": "You haven’t set up Facebook yet.",
-          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to {contactUsLink}."
+          "title": "Vous n'avez pas encore configuré Facebook.",
+          "explanation": "Vous devez configurer Facebook avant de pouvoir synchroniser votre catalogue. Si vous avez besoin d'aide, n'hésitez pas à {contactUsLink}."
         }
       },
       "connected": {
-        "description": "Here are the Facebook assets you’ve connected to your store.",
-        "dropdownButton": "Update settings",
-        "editButton": "Update account settings",
+        "description": "Voici les comptes Facebook que vous avez connectées à votre boutique.",
+        "dropdownButton": "Mettre à jour les paramètres",
+        "editButton": "Mettre à jour les paramètres du compte",
         "unlinkButton": "Se déconnecter",
         "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "Facebook Business Manager est l'outil de Facebook pour une gestion multi-pages et multi-comptes.",
@@ -109,9 +109,9 @@
         "facebookPageTooltip": "Votre page Facebook constituera la vitrine de votre entreprise dans vos publicités",
         "facebookAds": "Annonces Facebook",
         "facebookAdsTooltip": "Le compte Facebook Ads vous permet d'accéder à votre outil de gestion des publicités, de réaliser, de modifier et d'analyser vos campagnes payantes sur Facebook",
-        "manageFbeButton": "Go to Meta Business Manager",
-        "unlinkModalHeader": "Sign out of Facebook?",
-        "unlinkModalText": "Your Facebook assets will be disconnected from your store."
+        "manageFbeButton": "Accéder à Meta Business Manager",
+        "unlinkModalHeader": "Se déconnecter de Facebook ?",
+        "unlinkModalText": "Vos omptes Facebook seront déconnectées de votre boutique."
       },
       "exchangeTokens": {
         "almostThere": "Vous y êtes presque.",
@@ -123,14 +123,14 @@
       }
     },
     "app": {
-      "nbLikes": "{0} like|{0} likes",
+      "nbLikes": "{0} j'aime |{0} j'aime",
       "createdAt": "Créé",
       "lastActive": "Dernière activation",
       "activated": "Activé",
       "disabled": "Désactivé",
       "moduleDisabled": "Le module est désactivé",
       "viewStats": "Voir les statistiques",
-      "status": "Status:",
+      "status": "Statut :",
       "informationCannotBeDisplayedWarning": "Cette information ne peut pas être affichée pour le moment"
     },
     "glass": {
@@ -139,52 +139,52 @@
     },
     "modal": {
       "configCompleted": {
-        "title": "You’ve set up Facebook on your store.",
-        "nextStep": "One last step: synchronize your product catalog with Facebook",
-        "remainingSteps": "What will happen?"
+        "title": "Vous avez configuré Facebook sur votre boutique.",
+        "nextStep": "Une dernière étape: synchronisez votre catalogue de produits avec Facebook",
+        "remainingSteps": "Que va-t-il se passer ?"
       }
     },
     "catalogBanner": {
-      "title": "One last step: Synchronize your catalog",
-      "subTitle": "Synchronize your catalog and start sharing your products on Facebook."
+      "title": "Une dernière étape : Synchronisez votre catalogue",
+      "subTitle": "Synchronisez votre catalogue et commencez à partager vos produits sur Facebook."
     }
   },
   "catalog": {
     "summaryPage": {
       "productCatalog": {
         "title": "Catalogue produit",
-        "catalogExportPaused": "Not synchronized",
-        "catalogExportActivated": "Synchronized",
+        "catalogExportPaused": "Non synchronisé",
+        "catalogExportActivated": "Synchronisé",
         "alertSyncIsDisabled": {
-          "title": "The synchronization with Facebook is paused.",
-          "explanation": "Your products are still visible on Facebook, but they are no longer be synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+          "title": "La synchronisation avec Facebook est en pause.",
+          "explanation": "Vos produits sont toujours visibles sur Facebook, mais ils ne sont plus synchronisés. Cela signifie que toute modification apportée à vos produits sur votre boutique PrestaShop ne sera pas reflétée sur Facebook jusqu'à ce que vous synchronisiez à nouveau votre catalogue."
         },
         "alertSyncIsEnabled": {
-          "title": "Your catalog is shared with Facebook.",
-          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
+          "title": "Votre catalogue est partagé avec Facebook.",
+          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and verify your catalog again."
         },
         "modals": {
           "startSharing": {
-            "title": "Synchronize your catalog with Facebook",
-            "subTitle": "What happens when you synchronize your catalog?",
-            "description": "* All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
+            "title": "Synchronisez votre catalogue avec Facebook",
+            "subTitle": "Que se passe-t-il lorsque vous synchronisez votre catalogue ?",
+            "description": "* Tous les produits actifs sont envoyés vers Facebook.\n\n* Votre catalogue est synchronisé 4 fois par jour. \n* La synchronisation peut prendre jusqu'à 24 heures.\n* Seuls les produits modifiés seront mis à jour lors de la prochaine synchronisation.\n* Seuls les produits conformes seront synchronisés."
           },
           "deactivation": {
-            "title": "Pause catalog synchronization?",
-            "description": "Your products will still be visible on Facebook, but they will no longer be synchronized.  This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+            "title": "Mettre en pause la synchronisation du catalogue ?",
+            "description": "Vos produits sont toujours visibles sur Facebook, mais ils ne sont plus synchronisés. Cela signifie que toute modification apportée à vos produits sur votre boutique PrestaShop ne sera pas reflétée sur Facebook jusqu'à ce que vous synchronisiez à nouveau votre catalogue."
           }
         },
         "productVerification": {
-          "stepTitle": "Pre-synchronization scan",
-          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
+          "stepTitle": "Product verification by PrestaShop",
+          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
           "scanStatus": {
-            "notSubscribed": "No scan yet.",
-            "inProgress": "Scan in progress...",
-            "lastScanDate": "Last scan on {date} at {time}."
+            "notSubscribed": "No verification yet.",
+            "inProgress": "Verification in progress...",
+            "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {
             "productsInCatalog": "Mon catalogue produit",
-            "productsInCatalogDescription": "Number of products in your catalog (including combinations and languages).",
+            "productsInCatalogDescription": "Nombre de produits dans votre catalogue (y compris les déclinaisons et les langues).",
             "verified": "Produits conformes",
             "verifiedDescription": "These products will be sent to Facebook at the next synchronization.",
             "nonCompliant": "Produits non conformes",
@@ -192,17 +192,17 @@
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Synchronization with Facebook",
+          "stepTitle": "Synchronisation avec Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
-            "notSubscribed": "No sync yet.",
-            "firstSyncSoon": "The first synchronization will take place in a few hours.",
-            "paused": "Synchronization is paused.",
-            "lastSyncDate": "Last sync on {date} at {time}."
+            "notSubscribed": "No synchronization yet.",
+            "firstSyncSoon": "La première synchronisation sera effectuée dans quelques heures.",
+            "paused": "La synchronisation est en pause.",
+            "lastSyncDate": "Last synchronization on {date} at {time}."
           },
           "reportCards": {
             "approved": "Actifs",
-            "approvedDescription": "These products were approved by Facebook.",
+            "approvedDescription": "Ces produits ont été approuvés par Facebook.",
             "disapproved": "Refusé",
             "disapprovedDescription": "Facebook rejected these products as they didn’t comply with its policy."
           }
@@ -370,7 +370,7 @@
   },
   "billing": {
     "planTitle": "Plan & billing information",
-    "invoicesTitle": "Invoices"
+    "invoicesTitle": "Factures"
   },
   "productStatuses": {
     "Approved": "Actifs",
@@ -386,19 +386,19 @@
     "group": "Groupe de boutiques"
   },
   "cta": {
-    "upgrade": "Upgrade",
-    "clickHere": "click here",
-    "synchronizeCatalog": "Synchronize catalog",
-    "pauseSyncOfCatalog": "Pause catalog synchronization",
+    "upgrade": "Mettre à jour",
+    "clickHere": "cliquez ici",
+    "synchronizeCatalog": "Synchroniser le catalogue",
+    "pauseSyncOfCatalog": "Mettre en pause la synchronisation du catalogue",
     "cancel": "Annuler",
     "ok": "Ok",
-    "modalConfirm": "Yes, confirm",
-    "learnMore": "Learn more",
-    "rescan": "Scan",
+    "modalConfirm": "Oui, je confirme",
+    "learnMore": "En savoir plus",
+    "rescan": "Verify",
     "resubscribe": "Re-subscribe",
-    "startFreeTrial": "Start free trial",
-    "unlink": "Sign out of Facebook",
-    "setupCategoryMatching": "Set up Google product categories",
-    "manageCategoryMatching": "Manage Google product categories"
+    "startFreeTrial": "Commencer l'essai gratuit",
+    "unlink": "Se déconnecter de Facebook",
+    "setupCategoryMatching": "Configurer les catégories de produits Google",
+    "manageCategoryMatching": "Gérer les catégories de produits Google"
   }
 }

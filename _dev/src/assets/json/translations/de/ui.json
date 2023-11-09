@@ -161,7 +161,7 @@
         },
         "alertSyncIsEnabled": {
           "title": "Your catalog is shared with Facebook.",
-          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and scan your catalog again."
+          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and verify your catalog again."
         },
         "modals": {
           "startSharing": {
@@ -175,12 +175,12 @@
           }
         },
         "productVerification": {
-          "stepTitle": "Pre-synchronization scan",
-          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and scan your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
+          "stepTitle": "Product verification by PrestaShop",
+          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
           "scanStatus": {
-            "notSubscribed": "No scan yet.",
-            "inProgress": "Scan in progress...",
-            "lastScanDate": "Last scan on {date} at {time}."
+            "notSubscribed": "No verification yet.",
+            "inProgress": "Verification in progress...",
+            "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {
             "productsInCatalog": "Mein Produktkatalog",
@@ -195,10 +195,10 @@
           "stepTitle": "Synchronization with Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
-            "notSubscribed": "No sync yet.",
+            "notSubscribed": "No synchronization yet.",
             "firstSyncSoon": "The first synchronization will take place in a few hours.",
             "paused": "Synchronization is paused.",
-            "lastSyncDate": "Last sync on {date} at {time}."
+            "lastSyncDate": "Last synchronization on {date} at {time}."
           },
           "reportCards": {
             "approved": "Genehmigt",
@@ -394,7 +394,7 @@
     "ok": "Ok",
     "modalConfirm": "Yes, confirm",
     "learnMore": "Learn more",
-    "rescan": "Scan",
+    "rescan": "Verify",
     "resubscribe": "Re-subscribe",
     "startFreeTrial": "Start free trial",
     "unlink": "Sign out of Facebook",
