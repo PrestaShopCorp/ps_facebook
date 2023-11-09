@@ -123,7 +123,7 @@
       }
     },
     "app": {
-      "nbLikes": "{0} j'aime |{0} j'aimes",
+      "nbLikes": "{0} j'aime |{0} j'aime",
       "createdAt": "Créé",
       "lastActive": "Dernière activation",
       "activated": "Activé",
@@ -141,11 +141,11 @@
       "configCompleted": {
         "title": "Vous avez configuré Facebook sur votre boutique.",
         "nextStep": "Une dernière étape: synchronisez votre catalogue de produits avec Facebook",
-        "remainingSteps": "Que va-t-il se passer?"
+        "remainingSteps": "Que va-t-il se passer ?"
       }
     },
     "catalogBanner": {
-      "title": "Une dernière étape : Synchroniser votre catalogue",
+      "title": "Une dernière étape : Synchronisez votre catalogue",
       "subTitle": "Synchronisez votre catalogue et commencez à partager vos produits sur Facebook."
     }
   },
@@ -161,7 +161,7 @@
         },
         "alertSyncIsEnabled": {
           "title": "Votre catalogue est partagé avec Facebook.",
-          "explanation": "La première synchronisation aura lieu dans quelques heures. D'ici là, assurez-vous que vos produits sont conformes. Si ce n'est pas le cas, modifiez-les pour les rendre conformes à la politique de Facebook et scannez à nouveau votre catalogue."
+          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and verify your catalog again."
         },
         "modals": {
           "startSharing": {
@@ -175,12 +175,12 @@
           }
         },
         "productVerification": {
-          "stepTitle": "Analyse de pré-synchronisation",
-          "stepDetails": "Nous vérifions que vos produits ne comportent pas d'erreurs avant de les envoyer à Facebook. Si un produit n'est pas conforme, vous pouvez corriger l'erreur et scanner à nouveau votre catalogue. Seuls les produits conformes seront envoyés à Facebook lors de la prochaine synchronisation.",
+          "stepTitle": "Product verification by PrestaShop",
+          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
           "scanStatus": {
-            "notSubscribed": "Aucun scan pour le moment.",
-            "inProgress": "Scan en cours...",
-            "lastScanDate": "Last scan on {date} at {time}."
+            "notSubscribed": "No verification yet.",
+            "inProgress": "Verification in progress...",
+            "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {
             "productsInCatalog": "Mon catalogue produit",
@@ -195,10 +195,10 @@
           "stepTitle": "Synchronisation avec Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
-            "notSubscribed": "No sync yet.",
+            "notSubscribed": "No synchronization yet.",
             "firstSyncSoon": "La première synchronisation sera effectuée dans quelques heures.",
             "paused": "La synchronisation est en pause.",
-            "lastSyncDate": "Dernière synchronisation le {date} à {time}."
+            "lastSyncDate": "Last synchronization on {date} at {time}."
           },
           "reportCards": {
             "approved": "Actifs",
@@ -394,7 +394,7 @@
     "ok": "Ok",
     "modalConfirm": "Oui, je confirme",
     "learnMore": "En savoir plus",
-    "rescan": "Scan",
+    "rescan": "Verify",
     "resubscribe": "Re-subscribe",
     "startFreeTrial": "Commencer l'essai gratuit",
     "unlink": "Se déconnecter de Facebook",
