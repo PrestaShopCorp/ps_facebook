@@ -41,6 +41,9 @@ CatalogNotShared.args = {
           errored: null,
         },
       },
+      progress: {
+        prevalidation: null,
+      },
       requests: {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
@@ -74,6 +77,9 @@ CatalogRecentlyShared.args = {
           catalog: null,
           errored: null,
         },
+      },
+      progress: {
+        prevalidation: null,
       },
       requests: {
         requestNextSyncFull: RequestState.IDLE,
@@ -109,6 +115,9 @@ SyncOn.args = {
           errored: 42,
         },
       },
+      progress: {
+        prevalidation: null,
+      },
       requests: {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
@@ -143,6 +152,9 @@ SyncPaused.args = {
           errored: 42,
         },
       },
+      progress: {
+        prevalidation: null,
+      },
       requests: {
         requestNextSyncFull: RequestState.IDLE,
         scan: RequestState.IDLE,
@@ -176,6 +188,9 @@ FullConfiguration.args = {
           catalog: 42,
           errored: 42,
         },
+      },
+      progress: {
+        prevalidation: null,
       },
       requests: {
         requestNextSyncFull: RequestState.IDLE,

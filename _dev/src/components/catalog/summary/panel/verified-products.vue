@@ -106,7 +106,7 @@ export default defineComponent({
     },
     lastScanText(): string {
       if (this.scanRequestStatus === RequestState.PENDING) {
-        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.inProgressWithProductsChecked',
+        return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.inProgress',
           {
             progress: this.$tc('catalog.summaryPage.productCatalog.productVerification.scanStatus.nbOfVerifiedProducts',
               +this.scanProgress,

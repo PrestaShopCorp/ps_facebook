@@ -180,7 +180,7 @@
           "scanStatus": {
             "notSubscribed": "No verification yet.",
             "inProgress": "Verification in progress... {progress}",
-            "nbOfVerifiedProducts": "|{xProducts} verified.|{xProducts} verified.",
+            "nbOfVerifiedProducts": " |{xProducts} verified.|{xProducts} verified.",
             "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {
