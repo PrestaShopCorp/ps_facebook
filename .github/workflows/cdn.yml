@@ -19,6 +19,19 @@ jobs:
         id: get_tag
         run: echo TAG=$(echo $GITHUB_REF | cut -d / -f 3) >> $GITHUB_OUTPUT
 
+      - name: Get assets URL
+        id: get_assets_url
+        run: |
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            echo URL=https://storage.googleapis.com/psxfacebook/${MAJOR}.${MINOR}.${PATCH}/ >> $GITHUB_OUTPUT
+          else
+            echo URL=https://storage.googleapis.com/psxfacebook/${MAJOR}.x.x/ >> $GITHUB_OUTPUT
+          fi
+        env:
+          MAJOR: ${{ steps.get_tag.outputs.MAJOR }}
+          MINOR: ${{ steps.get_tag.outputs.MINOR }}
+          PATCH: ${{ steps.get_tag.outputs.PATCH }}
+
       - name: Trigger storage
         uses: benc-uk/workflow-dispatch@v1
         with:
@@ -26,4 +39,4 @@ jobs:
           repo: PrestaShopCorp/services-deployment
           token: ${{ secrets.ACCESS_TOKEN }}
           ref: 'refs/heads/main'
-          inputs: '{ "version": "${{ steps.get_tag.outputs.TAG }}", "nodeVersion": "${{ env.NODE_VERSION }}", "vuejsPath": "${{ env.VUE_PATH }}", "vuejsBuildPath": "${{ env.BUILD_PATH }}", "isRelease": "${{ !github.event.release.prerelease && true || false }}" }'
+          inputs: '{ "version": "${{ steps.get_tag.outputs.TAG }}", "nodeVersion": "${{ env.NODE_VERSION }}", "vuejsPath": "${{ env.VUE_PATH }}", "vuejsBuildPath": "${{ env.BUILD_PATH }}", "isRelease": "${{ !github.event.release.prerelease && true || false }}", "assetsUrl": "${{ steps.get_assets_url.outputs.URL }}" }'
