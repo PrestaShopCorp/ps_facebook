@@ -179,7 +179,8 @@
           "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
           "scanStatus": {
             "notSubscribed": "No verification yet.",
-            "inProgress": "Verification in progress...",
+            "inProgress": "Verification in progress... {progress}",
+            "nbOfVerifiedProducts": " |{xProducts} verified.|{xProducts} verified.",
             "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {

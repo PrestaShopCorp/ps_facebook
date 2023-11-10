@@ -161,7 +161,7 @@
         },
         "alertSyncIsEnabled": {
           "title": "Votre catalogue est partagé avec Facebook.",
-          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and verify your catalog again."
+          "explanation": "La première synchronisation aura lieu dans quelques heures. D'ici là, assurez-vous que vos produits sont conformes. Si ce n'est pas le cas, modifiez-les pour les rendre conformes à la politique de Facebook et lancer à nouveau la vérification de votre catalogue."
         },
         "modals": {
           "startSharing": {
@@ -175,11 +175,12 @@
           }
         },
         "productVerification": {
-          "stepTitle": "Product verification by PrestaShop",
-          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
+          "stepTitle": "Vérification des produits par PrestaShop",
+          "stepDetails": "Nous vérifions que vos produits ne comportent pas d'erreurs avant de les envoyer à Facebook. Si un produit n'est pas conforme, vous pouvez corriger l'erreur et lancer à nouveau la vérification de votre catalogue. Seuls les produits conformes seront envoyés à Facebook lors de la prochaine synchronisation.",
           "scanStatus": {
             "notSubscribed": "No verification yet.",
-            "inProgress": "Verification in progress...",
+            "inProgress": "Verification in progress... {progress}",
+            "nbOfVerifiedProducts": " |{xProducts} verified.|{xProducts} verified.",
             "lastScanDate": "Last verification on {date} at {time}."
           },
           "reportCards": {
