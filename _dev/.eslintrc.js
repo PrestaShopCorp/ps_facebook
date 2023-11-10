@@ -32,5 +32,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-shadow': 'off',
     'no-param-reassign': ['error', {props: false}],
+    // Need some help to handle this error
+    'no-restricted-exports': 'off',
   },
 };
