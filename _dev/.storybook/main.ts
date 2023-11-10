@@ -8,10 +8,6 @@ const config: StorybookConfig = {
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-knobs",
-  ],
-  presets: [
-    "@storybook/preset-scss"
   ],
   staticDirs: ['./assets'],
   framework: {
