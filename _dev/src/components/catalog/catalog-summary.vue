@@ -71,9 +71,6 @@ export default defineComponent({
       showSyncEnabledAlert: false as boolean,
     };
   },
-  created() {
-    this.fetchData();
-  },
   computed: {
     loading(): boolean {
       return this.$store.state.catalog.warmedUp !== RequestState.SUCCESS;
@@ -87,14 +84,6 @@ export default defineComponent({
     ...mapGetters('onboarding', [
       GettersTypesOnboarding.GET_CATALOG_ID,
     ]),
-  },
-  methods: {
-    async fetchData(): Promise<void> {
-      if (this.loading) {
-        return;
-      }
-      await this.$store.dispatch('catalog/REQUEST_SYNCHRONIZATION_STATS');
-    },
   },
   watch: {
     GET_SYNCHRONIZATION_ACTIVE(newValue: boolean): void {
