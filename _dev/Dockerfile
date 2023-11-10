@@ -1,5 +1,5 @@
 # Build package
-FROM node:14-alpine as package
+FROM node:20-alpine as package
 
 WORKDIR /app
 
