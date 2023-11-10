@@ -47,6 +47,7 @@ new Vue({
       }
 
       const userId = this.$store.state.context?.appContext?.shopId;
+
       if (userId) {
         // @ts-ignore
         this.$segment.identify(userId, {

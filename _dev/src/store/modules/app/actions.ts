@@ -11,6 +11,7 @@ export default {
   async [ActionsTypes.GET_MODULES_VERSIONS]({commit}: Context, moduleName: string) {
     try {
       const result = await fetchShop('getModuleStatus', {moduleName});
+
       if (result.hooks) {
         commit(MutationsTypes.SET_HOOKS_STATUS, result.hooks);
       }
