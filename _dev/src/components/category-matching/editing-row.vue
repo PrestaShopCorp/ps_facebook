@@ -213,6 +213,7 @@ export default defineComponent({
         this.currentSubcategoryName = null;
       }
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
+
       if (checkbox) {
         checkbox.focus();
       }

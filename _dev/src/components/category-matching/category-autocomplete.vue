@@ -32,7 +32,7 @@
     @shown="afterDropdownShown"
     @hidden="afterDropdownHidden"
   >
-    <template v-slot:button-content>
+    <template #button-content>
       <template v-if="currentCategoryName">
         {{ currentCategoryName }}
       </template>
@@ -165,6 +165,7 @@ export default defineComponent({
     },
     afterDropdownShown() {
       const input = document.getElementById(`dropdown-category-input-${this.shopCategoryId}`);
+
       if (input) {
         input.focus();
       }

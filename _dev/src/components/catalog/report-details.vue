@@ -167,6 +167,7 @@ export default defineComponent({
         const {
           list, url, success, hasMoreProducts,
         } = res;
+
         if (success && list && list.length > 0) {
           const newPage = list.map((row) => ({...row, page}));
           this.prevalidationRows = this.prevalidationRows
@@ -211,6 +212,7 @@ export default defineComponent({
     },
     fetchData() {
       const fetches = [];
+
       if (this.forcePrevalidationRows === null || this.forcePrevalidationRows.length > 0) {
         this.prevalidationRows = this.forcePrevalidationRows;
       } else {

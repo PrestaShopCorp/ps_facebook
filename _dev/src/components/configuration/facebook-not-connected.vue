@@ -18,7 +18,7 @@
  *-->
 <template>
   <b-card no-body>
-    <template v-slot:header>
+    <template #header>
       {{ $t('configuration.facebook.notConnected.title') }}
     </template>
     <b-card-body

@@ -18,7 +18,7 @@
  *-->
 <template>
   <b-card no-body>
-    <template v-slot:header>
+    <template #header>
       <i class="material-icons">help</i>{{ $t("help.title") }}
     </template>
 

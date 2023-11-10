@@ -161,6 +161,7 @@ export default defineComponent({
     },
     fbeUrl() {
       const q = `?app_id=${this.psFacebookAppId}&external_business_id=${this.externalBusinessId}`;
+
       return `https://www.facebook.com/facebook_business_extension/management/${q}`;
     },
     pixelUrl() {
@@ -168,6 +169,7 @@ export default defineComponent({
         return '#';
       }
       const pixId = this.contextPsFacebook.pixel.id;
+
       return `https://business.facebook.com/events_manager2/list/pixel/${pixId}/overview`;
     },
   },

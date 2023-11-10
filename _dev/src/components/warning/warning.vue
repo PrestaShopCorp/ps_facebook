@@ -16,10 +16,6 @@ import {BCard, BCardBody} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'Warning',
-  components: {
-    BCard,
-    BCardBody,
-  },
   props: {
     warningText: {
       type: String,

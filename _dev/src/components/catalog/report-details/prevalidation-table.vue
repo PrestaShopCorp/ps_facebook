@@ -204,6 +204,7 @@ export default defineComponent({
       if (index > 0) {
         const previousAttribute = this.dynamicRows[index - 1].id_product_attribute;
         const previousProduct = this.dynamicRows[index - 1].id_product;
+
         if (attribute === previousAttribute && product === previousProduct) {
           return false;
         }
@@ -213,6 +214,7 @@ export default defineComponent({
     variantLabel(index) {
       // Show label only if previous variant in the array is different than the current one
       const attribute = this.dynamicRows[index].id_product_attribute;
+
       if (!attribute || !this.isNewVariant(index)) {
         return '';
       }
@@ -260,6 +262,7 @@ export default defineComponent({
     },
     handleScroll() {
       const de = document.documentElement;
+
       if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
         this.loadNextPage();
       }

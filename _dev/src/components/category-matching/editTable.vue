@@ -73,7 +73,7 @@ import {defineComponent} from 'vue';
 import MixinMatching from './matching.ts';
 
 export default defineComponent({
-  name: 'editTable',
+  name: 'EditTable',
   components: {
   },
   mixins: [
@@ -124,6 +124,7 @@ export default defineComponent({
   methods: {
     getCurrentRow(currentShopCategoryID) {
       let subcategory = null;
+
       if (this.overrideGetCurrentRow) {
         const result = this.overrideGetCurrentRow(currentShopCategoryID);
         subcategory = result;
@@ -227,6 +228,7 @@ export default defineComponent({
 
     handleScroll() {
       const de = document.documentElement;
+
       if (this.loading === false && de.scrollTop + window.innerHeight
           === de.scrollHeight
       ) {
