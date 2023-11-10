@@ -44,6 +44,17 @@
         <div class="col-6">
           <ul>
             <li>
+              <strong>Versions</strong>:
+              <ul>
+                <li>
+                  <strong>Prestashop</strong>: {{ this.$store.state.context.appContext.psVersion }}
+                </li>
+                <li>
+                  <strong>Interface (Vue.js)</strong>: {{ appBuildVersion }}
+                </li>
+              </ul>
+            </li>
+            <li>
               <strong>Shop ID</strong>: {{ shopId }}
             </li>
             <li>
@@ -192,6 +203,7 @@ export default defineComponent({
       testEventCode: null,
       isLoading: false as boolean,
       healthCheckContent: {},
+      appBuildVersion: process.env.VUE_APP_BUILD_VERSION || 'Not provided',
     };
   },
   computed: {
