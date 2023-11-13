@@ -75,7 +75,7 @@
     },
     "alertBillingCancelled": {
       "title": "You’ve canceled your PrestaShop Social subscription.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, You can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
       "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
     "billingFacade": {
