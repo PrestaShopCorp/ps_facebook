@@ -75,7 +75,7 @@
     },
     "alertBillingCancelled": {
       "title": "Hai annullato l'abbonamento a PrestaShop Social.",
-      "explanationBeforeCancellationDate": "L'abbonamento rimarrà attivo fino a {date}, e sarà possibile sottoscrivere nuovamente l'abbonamento in qualsiasi momento per continuare a utilizzare il modulo.",
+      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
       "explanationFromCancellationDate": "L'abbonamento rimarrà attivo fino a {date}, e sarà possibile sottoscrivere nuovamente l'abbonamento in qualsiasi momento per continuare a utilizzare il modulo."
     },
     "billingFacade": {
