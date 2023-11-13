@@ -24,11 +24,11 @@
         <b-th>{{ $t('syncReport.name') }}</b-th>
         <b-th>
           {{ $t('syncReport.language') }}
-          <span><tooltip :text="$t('syncReport.languageTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.languageTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.error') }}
-          <span><tooltip :text="$t('syncReport.errorTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.errorTooltip')" /></span>
         </b-th>
       </b-tr>
     </b-thead>
@@ -96,14 +96,12 @@
 
 <script>
 import {defineComponent} from 'vue';
-import {BTableSimple} from 'bootstrap-vue';
-import Tooltip from '../../help/tooltip.vue';
+import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
   name: 'ReportingTable',
   components: {
-    BTableSimple,
-    Tooltip,
+    TooltipStack,
   },
   props: {
     rows: {

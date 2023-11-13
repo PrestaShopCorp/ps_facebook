@@ -4,7 +4,7 @@
       id="head_tabs"
       class="ps_gs-sticky-head page-head-tabs"
     >
-      <Menu>
+      <AppMenu>
         <MenuItem
           v-if="GET_BILLING_SUBSCRIPTION_ACTIVE && GET_ONBOARDING_STATE"
           route="/catalog"
@@ -31,7 +31,7 @@
         >
           {{ $t('general.tabs.help') }}
         </MenuItem>
-      </Menu>
+      </AppMenu>
     </div>
 
     <router-view />
@@ -47,7 +47,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
-import Menu from '@/components/menu/menu.vue';
+import AppMenu from '@/components/menu/app-menu.vue';
 import MenuItem from '@/components/menu/menu-item.vue';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
@@ -58,9 +58,8 @@ const header = document.querySelector('#content .page-head');
 const headerFull = document.querySelector('#header_infos');
 
 export default defineComponent({
-  name: 'Home',
   components: {
-    Menu,
+    AppMenu,
     MenuItem,
   },
   created() {

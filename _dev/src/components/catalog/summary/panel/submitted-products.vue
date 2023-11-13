@@ -105,8 +105,9 @@ export default defineComponent({
       required: true,
     },
     catalogId: {
-      type: String,
+      type: String as PropType<string|null>,
       required: false,
+      default: null,
     },
     loading: {
       type: Boolean,

@@ -136,7 +136,24 @@
 import {defineComponent} from 'vue';
 
 export default defineComponent({
-  props: ['faq', 'contactUsLink', 'docLink', 'loading'],
+  props: {
+    faq: {
+      type: Object,
+      required: true,
+    },
+    contactUsLink: {
+      type: String,
+      required: true,
+    },
+    docLink: {
+      type: String,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
     supportUrl(): string {
       return `?utm_source=back-office&utm_medium=psx&psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;

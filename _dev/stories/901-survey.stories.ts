@@ -1,14 +1,14 @@
-import Survey from '../src/components/survey/survey.vue';
+import CardSurvey from '../src/components/survey/card-survey.vue';
 
 export default {
   title: 'Others/Survey',
-  component: Survey,
+  component: CardSurvey,
 };
 
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
-  components: {Survey},
-  template: '<survey :locale="locale" />',
+  components: {CardSurvey},
+  template: '<card-survey :locale="locale" />',
 });
 
 export const Default: any = Template.bind({});

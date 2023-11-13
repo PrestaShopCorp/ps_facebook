@@ -21,7 +21,7 @@
     id="help"
     class="ps-facebook-help-tab"
   >
-    <faq
+    <card-faq
       :faq="faq"
       :contact-us-link="contactUsLink"
       :doc-link="docLink"
@@ -33,12 +33,12 @@
 
 <script>
 import {defineComponent} from 'vue';
-import faq from '../components/help/faq.vue';
+import CardFaq from '@/components/help/card-faq.vue';
 
 export default defineComponent({
   name: 'HelpTab',
   components: {
-    faq,
+    CardFaq,
   },
   props: {
     psFacebookRetrieveFaq: {

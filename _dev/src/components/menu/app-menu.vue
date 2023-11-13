@@ -6,6 +6,6 @@
 
 <script lang="ts">
 export default {
-  name: 'Menu',
+  name: 'AppMenu',
 };
 </script>

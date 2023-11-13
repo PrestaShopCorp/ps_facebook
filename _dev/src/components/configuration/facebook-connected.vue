@@ -98,38 +98,12 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {
-  BCard,
-  BButton,
-  BCardBody,
-  BCardHeader,
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
-  BContainer,
-  BRow,
-  BCol,
-  BDropdown,
-  BDropdownItem,
-} from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 
 export default defineComponent({
   name: 'FacebookConnected',
   components: {
-    BCard,
-    BButton,
-    BCardBody,
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
     FacebookApp,
-    BContainer,
-    BRow,
-    BCol,
-    BCardHeader,
-    BDropdown,
-    BDropdownItem,
   },
   props: {
     psFacebookAppId: {

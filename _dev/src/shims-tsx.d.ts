@@ -1,4 +1,4 @@
-import Vue, {VNode} from 'vue';
+// import Vue, {VNode} from 'vue';
 import {IContextAuthentication, IContextBase} from '@prestashopcorp/billing-cdc/dist/@types/context/ContextRoot';
 import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 

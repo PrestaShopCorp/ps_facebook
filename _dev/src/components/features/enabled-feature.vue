@@ -14,7 +14,7 @@
               >
               {{ $t(`integrate.features.${name}.name`) }}
             </span>
-            <tooltip :text="$t(`integrate.features.${name}.description`)" />
+            <tooltip-stack :text="$t(`integrate.features.${name}.description`)" />
           </div>
           <div
             class="align-self-center"
@@ -85,24 +85,14 @@
 
 <script>
 import {defineComponent} from 'vue';
-import {
-  BCard,
-  BCardBody,
-  BButton,
-  BTooltip,
-} from 'bootstrap-vue';
 import PsModal from '@/components/commons/ps-modal';
-import Tooltip from '../help/tooltip.vue';
+import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
   name: 'EnabledFeature',
   components: {
-    BCard,
-    BCardBody,
-    BButton,
-    BTooltip,
     PsModal,
-    Tooltip,
+    TooltipStack,
   },
   mixins: [],
   props: {

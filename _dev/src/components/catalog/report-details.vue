@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading" />
+  <loading-page-spinner v-if="loading" />
   <div
     v-else
     id="catalogReportDetails"
@@ -81,23 +81,16 @@
 
 <script>
 import {defineComponent} from 'vue';
-import {
-  BButton, BCard, BFormGroup, BFormRadioGroup,
-} from 'bootstrap-vue';
-import Spinner from '../spinner/spinner.vue';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import PrevalidationTable from './report-details/prevalidation-table.vue';
 import ReportingTable from './report-details/reporting-table.vue';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
   components: {
-    Spinner,
-    BButton,
-    BCard,
+    LoadingPageSpinner,
     PrevalidationTable,
     ReportingTable,
-    BFormGroup,
-    BFormRadioGroup,
   },
   props: {
     getProductsWithErrorsRoute: { // prevalidation scan reporting call

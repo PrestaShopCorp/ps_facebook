@@ -45,7 +45,6 @@
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
 import showdown from 'showdown';
-import Spinner from '@/components/spinner/spinner.vue';
 import PsModal from '@/components/commons/ps-modal.vue';
 import {ProductFeedReport} from '@/store/modules/catalog/state';
 import VerifiedProducts from '@/components/catalog/summary/panel/verified-products.vue';
@@ -55,7 +54,6 @@ import {RequestState} from '@/store/types';
 export default defineComponent({
   name: 'ExportCatalog',
   components: {
-    Spinner,
     PsModal,
     VerifiedProducts,
     SubmittedProducts,

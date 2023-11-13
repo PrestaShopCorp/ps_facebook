@@ -23,15 +23,9 @@
 
 <script>
 import {defineComponent} from 'vue';
-import {BCard, BCardBody, BButton} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'ProductsNotSyncedWarning',
-  components: {
-    BCard,
-    BCardBody,
-    BButton,
-  },
 });
 </script>
 

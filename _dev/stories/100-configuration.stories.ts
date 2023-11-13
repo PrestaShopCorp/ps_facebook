@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import Configuration from "@/views/configuration.vue";
+import Configuration from "@/views/configuration-tab.vue";
 import {contextPsAccountsNotConnected, contextPsAccountsConnectedAndValidated} from "@/../.storybook/mock/ps-accounts";
 import {contextPsEventBus} from "@/../.storybook/mock/ps-event-bus";
 import {contextPsBilling, runningSubscription, trialNotRenewedSubscription} from "@/../.storybook/mock/ps-billing";

@@ -10,7 +10,7 @@
       <div>
         <div class="font-weight-500 d-flex ps_gs-fz-16 mb-2">
           {{ appType }}
-          <tooltip
+          <tooltip-stack
             v-if="!!tooltip"
             :text="tooltip"
           />
@@ -34,7 +34,14 @@
         </div>
 
         <div v-if="displayWarning">
-          <warning :warning-text="$t('configuration.app.informationCannotBeDisplayedWarning')" />
+          <b-alert
+            show
+            variant="warning"
+          >
+            <p>
+              {{ $t('configuration.app.informationCannotBeDisplayedWarning') }}
+            </p>
+          </b-alert>
         </div>
         <div v-else>
           <div
@@ -91,16 +98,14 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {BFormCheckbox, BLink} from 'bootstrap-vue';
-import Tooltip from '@/components/help/tooltip.vue';
-import Warning from '@/components/warning/warning.vue';
+import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
   name: 'FacebookApp',
   components: {
     BFormCheckbox,
     BLink,
-    Tooltip,
-    Warning,
+    TooltipStack,
   },
   props: {
     appType: {

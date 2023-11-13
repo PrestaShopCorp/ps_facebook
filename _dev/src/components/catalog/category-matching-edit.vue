@@ -17,7 +17,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *-->
 <template>
-  <spinner v-if="loading" />
+  <loading-page-spinner v-if="loading" />
 
   <b-card
     class="card m-3"
@@ -91,17 +91,14 @@
 <script>
 import {defineComponent} from 'vue';
 import Showdown from 'showdown';
-import {BButton, BCard} from 'bootstrap-vue';
 import EditTable from '../category-matching/editTable.vue';
-import Spinner from '../spinner/spinner.vue';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import MixinMatching from '../category-matching/matching.ts';
 
 export default defineComponent({
   name: 'CatalogMatchingEdit',
   components: {
-    BButton,
-    BCard,
-    Spinner,
+    LoadingPageSpinner,
     EditTable,
   },
   mixins: [

@@ -24,19 +24,19 @@
         <b-th>{{ $t('syncReport.name') }}</b-th>
         <b-th>
           {{ $t('syncReport.language') }}
-          <span><tooltip :text="$t('syncReport.languageTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.languageTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.image') }}
-          <span><tooltip :text="$t('syncReport.imageTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.imageTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.description') }}
-          <span><tooltip :text="$t('syncReport.descriptionTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.descriptionTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.barcode') }}
-          <span><tooltip :text="$t('syncReport.barcodeTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.barcodeTooltip')" /></span>
         </b-th>
         <b-th>{{ $t('syncReport.price') }}</b-th>
       </b-tr>
@@ -168,14 +168,12 @@
 <script>
 /* eslint-disable camelcase */
 import {defineComponent} from 'vue';
-import {BTableSimple} from 'bootstrap-vue';
-import Tooltip from '../../help/tooltip.vue';
+import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
   name: 'PrevalidationTable',
   components: {
-    BTableSimple,
-    Tooltip,
+    TooltipStack,
   },
   props: {
     rows: {

@@ -55,6 +55,33 @@ const contextPsFacebookOverflows = {
   },
 };
 
+const contextPsFacebookMissingPermissions = {
+  user: {
+    email: 'him@prestashop.com',
+  },
+  facebookBusinessManager: {
+    name: 'La Fanchonette',
+    email: 'fanchonette@ps.com',
+    createdAt: Date.now(),
+    id: '12345689',
+  },
+  pixel: {
+    name: 'La Fanchonette Test Pixel',
+    id: '1234567890',
+    lastActive: Date.now(),
+    isActive: true,
+  },
+  page: {
+    page: null,
+    likes: null,
+    logo: null,
+  },
+  ads: {
+    name: 'La Fanchonette',
+    createdAt: Date.now(),
+  },
+};
+
 export default {
   title: 'Configuration/Facebook connected',
   component: FacebookConnected,
@@ -76,4 +103,11 @@ OverflowData.args = {
   psFacebookAppId: '1234567890',
   externalBusinessId: '0987654321',
   contextPsFacebook: contextPsFacebookOverflows,
+};
+
+export const MissingPermissions:any = Template.bind({});
+MissingPermissions.args = {
+  psFacebookAppId: '1234567890',
+  externalBusinessId: '0987654321',
+  contextPsFacebook: contextPsFacebookMissingPermissions,
 };

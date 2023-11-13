@@ -92,25 +92,9 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {debounce} from 'debounce';
-import {
-  BDropdown,
-  BDropdownItem,
-  BDropdownForm,
-  BFormInput,
-  BFormCheckbox,
-  BSpinner,
-} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'CategoryAutocomplete',
-  components: {
-    BDropdown,
-    BDropdownItem,
-    BDropdownForm,
-    BFormInput,
-    BFormCheckbox,
-    BSpinner,
-  },
   mixins: [],
   props: {
     language: {
