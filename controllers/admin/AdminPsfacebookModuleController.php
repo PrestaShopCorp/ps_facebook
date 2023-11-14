@@ -138,8 +138,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         // PrestaShop Billing
         Media::addJsDef($billingFacade->present([
             'logo' => $partnerLogo,
-            'tosLink' => 'https://yoururl/',
-            'privacyLink' => 'https://yoururl/',
+            'tosLink' => 'https://prestashop.com/prestashop-account-terms-conditions/',
+            'privacyLink' => 'https://prestashop.com/prestashop-account-privacy/',
             // This field is deprecated, but must be provided to ensure backward compatibility
             'emailSupport' => '',
         ]));
