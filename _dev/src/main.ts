@@ -11,6 +11,9 @@ import App from './app.vue';
 import i18n from './lib/i18n';
 import './assets/scss/app.scss';
 
+// Prevent rebranding on PrestaShop Edition to alter our interface
+document.body.classList.add('no-smb-reskin');
+
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = ['prestashop-accounts'];
 Vue.use(BootstrapVue);
