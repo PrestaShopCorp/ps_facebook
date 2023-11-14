@@ -4,364 +4,364 @@
       "configuration": "Configurare",
       "catalog": "Catalog de produse",
       "help": "Ajutor",
-      "integrate": "Sales channels",
-      "billing": "Subscription"
+      "integrate": "Canale de vânzări",
+      "billing": "Abonare"
     }
   },
   "configuration": {
     "introduction": {
-      "getStarted": "Get started",
-      "subTitle": "Easily boost your revenue with smart ads on Facebook and Instagram",
-      "resume": "Make your store social media ready",
-      "proPoint1Title": "Synchronize your catalog with Facebook & Instagram",
-      "proPoint1Description": "Connect your Facebook account and import your product catalog to Facebook & Instagram, so that your updates synchronize on a daily basis.",
-      "proPoint2Title": "Launch smart ads campaigns",
-      "proPoint2Description": "Get the right products to the right customers with dynamic ads using the best out of Facebook’s advertising technology.",
-      "proPoint3Title": "Data sharing control",
-      "proPoint3Description": "The Meta Pixel and the Conversions API allow you to control what data you share and when you share it, as well as provide your customers with more transparency by respecting their privacy.",
-      "proPoint4Title": "Integrate Messenger",
-      "proPoint4Description": "Build customer loyalty by integrating Messenger into your store and make shopping experience more personal for your customers."
+      "getStarted": "Începe",
+      "subTitle": "Stimulează-ți cu ușurință veniturile, cu reclame inteligente pe Facebook și Instagram",
+      "resume": "Pregătește-ți magazinul pentru rețelele sociale",
+      "proPoint1Title": "Sincronizează-ți catalogul cu Facebook și Instagram",
+      "proPoint1Description": "Conectează-ți contul Facebook și importă catalogul de produse în Facebook și Instagram, astfel încât actualizările să se sincronizeze zilnic.",
+      "proPoint2Title": "Lansează campanii de reclame inteligente",
+      "proPoint2Description": "Adu produsele potrivite la clienții potriviți cu reclame dinamice, utilizând cea mai bună tehnologie de publicitate Facebook.",
+      "proPoint3Title": "Controlul schimbului de date",
+      "proPoint3Description": "Meta Pixel și API-ul de conversii îți permit să controlezi ce date partajezi și când le partajezi, precum și să oferi clienților mai multă transparență, respectându-le confidențialitatea.",
+      "proPoint4Title": "Integrează Messenger",
+      "proPoint4Description": "Asigură loialitatea clienților integrând Messenger în magazinul tău și personalizează și mai mult experiența de cumpărături pentru clienți."
     },
     "sectionTitle": {
       "psaccounts": "Conectează-ți magazinul la un cont PrestaShop",
-      "psbilling": "Billing information",
-      "pscloudsync": "Allow data sharing",
-      "pssocial": "Set up Facebook"
+      "psbilling": "Informații privind facturarea",
+      "pscloudsync": "Permite partajarea datelor",
+      "pssocial": "Configurează Facebook"
     },
     "sectionDesc": {
-      "psbilling": "Access and manage your subscription and related payment method.",
-      "pscloudsync": "Help us enhance your experience and improve our service by giving consent to securely share relevant data with us.",
-      "pssocial": "Easily establish links with a range of social assets, including Facebook Pages, Meta Ads, Meta Pixel, and more, to enhance your online presence and marketing potential."
+      "psbilling": "Accesează și gestionează abonamentul și metoda de plată aferentă.",
+      "pscloudsync": "Ajută-ne să îmbunătățim experiența ta și serviciile noastre, acordându-ne consimțământul pentru a partaja în siguranță date relevante cu noi.",
+      "pssocial": "Stabilește cu ușurință linkuri pentru o serie de active sociale, inclusiv Facebook Pages, Meta Ads, Meta Pixel și multe altele, pentru a-ți îmbunătăți prezența online și potențialul de marketing."
     },
     "messages": {
-      "success": "PrestaShop Social with Facebook & Instagram is now activated!",
-      "reloadButton": "Reload",
-      "shopInConflictError": "You are already connected to Facebook from another shop. At the moment, PrestaShop Social with Facebook & Instagram can only be configured on one shop. You must log out of your first shop to connect this one.",
-      "unknownOnboardingError": "An unknown error occurred during onboarding process. Please reload and try again.",
-      "AccountsUpgradeNeededWarning": "The version of the module PrestaShop Account running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop Account.",
-      "AccountsUpgradeButton": "Upgrade PrestaShop Accounts",
-      "AccountsUpgradeDone": "PrestaShop Account has been successfully upgraded.",
-      "EventBusUpgradeNeededWarning": "The version of the module PrestaShop CloudSync running on this shop (v{currentVersion}) is older than the minimum required v{requiredVersion}.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you upgrade PrestaShop CloudSync.",
-      "EventBusUpgradeButton": "Upgrade PrestaShop CloudSync",
-      "EventBusUpgradeDone": "PrestaShop CloudSync has been successfully upgraded.",
-      "EventBusInstallNeededWarning": "PrestaShop CloudSync in not installed on this shop.\n\nYou may use PrestaShop Social with Facebook & Instagram but some features (i.e product synchronization) won't be available until you install PrestaShop CloudSync.",
-      "EventBusInstallButton": "Install PrestaShop CloudSync",
-      "EventBusInstallDone": "PrestaShop CloudSync has been successfully installed.",
-      "EventBusEnableNeededWarning": "PrestaShop CloudSync is currently disabled on this shop.\n\nChanges made on your product catalog won't be synchronized until PrestaShop CloudSync is enabled.",
-      "EventBusEnableButton": "Enable PrestaShop CloudSync",
-      "EventBusEnableDone": "PrestaShop CloudSync is enabled.",
-      "accountSuspended": "We seem to lack permissions on your Facebook account to be able to sync your products. To resolve this issue, please reonboard to put the permissions back to the correct state."
+      "success": "PrestaShop Social cu Facebook și Instagram este acum activat!",
+      "reloadButton": "Reîncarcă",
+      "shopInConflictError": "Ești deja conectat la Facebook dintr-un alt magazin. În prezent, PrestaShop Social cu Facebook și Instagram poate fi configurat doar pentru un singur magazin. Trebuie să te deconectezi de la primul magazin pentru a-l conecta pe acesta.",
+      "unknownOnboardingError": "A apărut o eroare necunoscută în timpul procesului de înregistrare. Te rugăm să reîncarci pagina și să încerci din nou.",
+      "AccountsUpgradeNeededWarning": "Versiunea modulului PrestaShop Account care rulează în acest magazin (v{currentVersion}) este mai veche decât minimul necesar v{requiredVersion}.\n\nPoți utiliza PrestaShop Social cu Facebook și Instagram, dar unele funcționalități (de exemplu, sincronizarea produselor) nu vor fi disponibile până când nu faci upgrade la PrestaShop Account.",
+      "AccountsUpgradeButton": "Upgrade la PrestaShop Account",
+      "AccountsUpgradeDone": "PrestaShop Account a fost actualizat cu succes.",
+      "EventBusUpgradeNeededWarning": "Versiunea modulului PrestaShop CloudSync care rulează în acest magazin (v{currentVersion}) este mai veche decât minimul necesar v{requiredVersion}.\n\nPoți utiliza PrestaShop Social cu Facebook și Instagram, dar unele funcționalități (de exemplu, sincronizarea produselor) nu vor fi disponibile până când nu faci upgrade la PrestaShop CloudSync.",
+      "EventBusUpgradeButton": "Upgrade la PrestaShop CloudSync",
+      "EventBusUpgradeDone": "PrestaShop CloudSync a fost actualizat cu succes.",
+      "EventBusInstallNeededWarning": "PrestaShop CloudSync nu este instalat în acest magazin.\n\nPoți utiliza PrestaShop Social cu Facebook și Instagram, dar unele funcționalități (de exemplu, sincronizarea produselor) nu vor fi disponibile până când nu instalezi PrestaShop CloudSync.",
+      "EventBusInstallButton": "Instalează PrestaShop CloudSync",
+      "EventBusInstallDone": "PrestaShop CloudSync a fost instalat cu succes.",
+      "EventBusEnableNeededWarning": "PrestaShop CloudSync este în prezent dezactivat în acest magazin.\n\nModificările efectuate în catalogul de produse nu vor fi sincronizate până când PrestaShop CloudSync nu este activat.",
+      "EventBusEnableButton": "Activează PrestaShop CloudSync",
+      "EventBusEnableDone": "PrestaShop CloudSync este activat.",
+      "accountSuspended": "Se pare că nu avem permisiuni pe contul tău de Facebook pentru a-ți putea sincroniza produsele. Pentru a rezolva această problemă, te rugăm să reiei procesul pentru a readuce permisiunile la starea corectă."
     },
     "upgradeForBillingStep": {
       "alert": {
-        "title": "To continue using PrestaShop Social, please update to the latest version.",
-        "description": "Since {date}, a {price}/Tax excl monthly subscription* is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience."
+        "title": "Pentru a continua să utilizezi PrestaShop Social, te rugăm să actualizezi la cea mai recentă versiune.",
+        "description": "Începând cu {date}, este necesar un abonament lunar de {price}/fără taxe* pentru a utiliza PrestaShop Social. Această modificare a modelului nostru de stabilire a prețurilor este determinată de angajamentul nostru de a îmbunătăți modulul. Ne va permite să alocăm mai multe resurse pentru dezvoltare, astfel încât să putem oferi actualizări regulate și să introducem noi funcționalități pentru a-ți îmbunătăți experiența generală."
       },
       "modal": {
-        "title": "Update required",
-        "subtitle": "To continue using PrestaShop Social, please update to the latest version.",
-        "description": "Since {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience.\n\n**How to Update & Subscribe**\n\n* Click \"Update\" below.\n* Wait a few minutes until the installation is complete.\n* Subscribe and start a 14 days free trial, you can cancel at any time.",
-        "needHelp": "Any questions? We're here to help. {0}"
+        "title": "Actualizare necesară",
+        "subtitle": "Pentru a continua să utilizezi PrestaShop Social, te rugăm să actualizezi la cea mai recentă versiune.",
+        "description": "Începând cu {date}, pentru a utiliza PrestaShop Social este necesar un abonament lunar de {price}/fără taxe*. Această modificare a modelului nostru de stabilire a prețurilor este determinată de angajamentul nostru de a îmbunătăți modulul. Ne va permite să alocăm mai multe resurse pentru dezvoltare, astfel încât să putem oferi actualizări regulate și să introducem noi funcționalități pentru a-ți îmbunătăți experiența generală.\n\n**Cum să actualizezi și să te abonezi**\n\n* Dă clic pe „Actualizează” mai jos.\n* Așteaptă câteva minute până la finalizarea instalării.\n* Abonează-te și începe o perioadă de probă gratuită de 14 zile. Poți anula în orice moment.",
+        "needHelp": "Ai întrebări? Suntem aici pentru a te ajuta. {0}"
       },
-      "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
+      "IncludedInHosted": "* Dacă te-ai abonat deja la oferta PrestaShop Hosted, nu te va afecta această modificare. PrestaShop Social rămâne gratuit pentru tine."
     },
     "keyFeatures": {
-      "catchPhrase": "Turn likes into sales with PrestaShop Social",
-      "features": "* Reach new audiences and drive traffic to your store\n* Synchronize your catalog with Facebook\n* Chat with your customers on Facebook Messenger\n* Keep track of your Facebook ads campaigns"
+      "catchPhrase": "Transformă aprecierile în vânzări cu PrestaShop Social",
+      "features": "* Atrage noi segmente de public și generează trafic pentru magazinul tău\n* Sincronizează-ți catalogul cu Facebook\n* Discută cu clienții pe Facebook Messenger\n* Ține evidența campaniilor de reclame pe Facebook"
     },
     "alertBillingNotStarted": {
-      "title": "Subscribe to continue using PrestaShop Social",
-      "description": "As of {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to continue using PrestaShop Social*. You start with a 14-day free trial and you can cancel at anytime. This change will allow us to deliver regular updates and introduce new features to enhance your overall experience. Subscribe now to access this new version of PrestaShop Social, which offers easier and faster setup."
+      "title": "Abonează-te pentru a continua să utilizezi PrestaShop Social",
+      "description": "Începând cu {date}, pentru a continua să utilizezi PrestaShop Social* este necesar un abonament lunar de {price}/fără taxe*. Începe cu o perioadă de probă gratuită de 14 zile și poți anula în orice moment. Această modificare ne va permite să oferim actualizări regulate și să introducem noi funcționalități pentru a-ți îmbunătăți experiența generală. Abonează-te acum pentru a accesa această nouă versiune de PrestaShop Social, care oferă o configurare mai ușoară și mai rapidă."
     },
     "alertBillingCancelled": {
-      "title": "You’ve canceled your PrestaShop Social subscription.",
+      "title": "Ți-ai anulat abonamentul PrestaShop Social.",
       "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
-      "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
+      "explanationFromCancellationDate": "Abonamentul tău s-a încheiat la {date}. Te poți abona oricând pentru a continua să utilizezi modulul."
     },
     "billingFacade": {
-      "title": "Payment details",
-      "nextPayment": "Your subscription is active, next billing on {date}",
-      "willEnd": "Your subscription will end on {date}.",
-      "managePayment": "Manage payments"
+      "title": "Detaliile plății",
+      "nextPayment": "Abonamentul tău este activ, următoarea facturare este pe {date}",
+      "willEnd": "Abonamentul tău se va încheia la {date}.",
+      "managePayment": "Gestionează plățile"
     },
     "facebook": {
-      "title": "Set up Facebook",
+      "title": "Configurează Facebook",
       "notConnected": {
-        "title": "Set up Facebook",
-        "intro": "Integrate your shop with Facebook.",
-        "connectButton": "Set up Facebook",
-        "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
+        "title": "Configurează Facebook",
+        "intro": "Integrează-ți magazinul cu Facebook.",
+        "connectButton": "Configurează Facebook",
+        "description": "Conectează-te la Facebook și urmează instrucțiunile asistentului de configurare. Va trebui să creezi sau să selectezi active Facebook existente pentru a te conecta la magazinul tău.",
         "incompleteOnboarding": {
-          "title": "You haven’t set up Facebook yet.",
-          "explanation": "You must set up Facebook before you can synchronize your catalog. If you need help, feel free to {contactUsLink}."
+          "title": "Nu ai configurat încă Facebook.",
+          "explanation": "Trebuie să configurezi Facebook înainte de a-ți putea sincroniza catalogul. Dacă ai nevoie de ajutor, nu ezita să {contactUsLink}."
         }
       },
       "connected": {
-        "description": "Here are the Facebook assets you’ve connected to your store.",
-        "dropdownButton": "Update settings",
-        "editButton": "Update account settings",
-        "unlinkButton": "Logout",
+        "description": "Iată materialele Facebook pe care le-ai conectat la magazinul tău.",
+        "dropdownButton": "Actualizare setări",
+        "editButton": "Actualizare setări cont",
+        "unlinkButton": "Deconectare",
         "facebookBusinessManager": "Facebook Business Manager",
-        "facebookBusinessManagerTooltip": "Facebook business account allows you to manage advertising accounts, Pages and the people who work on them in the same place",
+        "facebookBusinessManagerTooltip": "Contul de afaceri Facebook îți permite să gestionezi conturile de publicitate, paginile și persoanele care lucrează la ele în același loc",
         "facebookPixel": "Facebook Pixel",
-        "facebookPixelTooltip": "The Facebook pixel is a piece of code (Javascript) that we automatically install on your website pages. It allows you to “track” who visits your website, track conversions of your Facebook ads and create retargeting audiences",
+        "facebookPixelTooltip": "Pixelul Facebook este o bucată de cod (Javascript) pe care o instalăm automat pe paginile site-ului tău web. Îți permite să „urmărești” cine îți vizitează site-ul, să urmărești conversiile reclamelor tale Facebook și să creezi segmente de public pe care să le vizezi din nou",
         "facebookPage": "Facebook Page",
-        "facebookPageTooltip": "Your Facebook page will represent your business in your ads",
+        "facebookPageTooltip": "Pagina ta de Facebook îți va reprezenta afacerea în reclamele tale",
         "facebookAds": "Facebook Ads",
-        "facebookAdsTooltip": "Facebook Ads account allows merchants to access their ads management tool, to make, edit and analyze paid promotional Facebook campaigns",
-        "manageFbeButton": "Go to Meta Business Manager",
-        "unlinkModalHeader": "Sign out of Facebook?",
-        "unlinkModalText": "Your Facebook assets will be disconnected from your store."
+        "facebookAdsTooltip": "Contul de Facebook Ads permite comercianților să acceseze instrumentul de gestionare a reclamelor, să creeze, să editeze și să analizeze campaniile promoționale plătite pe Facebook",
+        "manageFbeButton": "Accesează Meta Business Manager",
+        "unlinkModalHeader": "Te deconectezi de la Facebook?",
+        "unlinkModalText": "Activele tale Facebook vor fi deconectate de la magazinul tău."
       },
       "exchangeTokens": {
-        "almostThere": "You are almost there",
-        "acknowledging": "Acknowledging your permissions with Facebook services.",
-        "takesTime": "This can take several seconds...",
-        "tryAgain": "Seems Facebook servers have difficulties to deliver an access to your account. Please wait a bit more...",
-        "errored": "Cannot get an access to your account from Facebook servers, please try to onboard your facebook account once again. If this error persist, please contact support.",
-        "understood": "I understand"
+        "almostThere": "Aproape ai terminat",
+        "acknowledging": "Recunoașterea permisiunilor tale cu serviciile Facebook.",
+        "takesTime": "Acest lucru poate dura câteva secunde...",
+        "tryAgain": "Se pare că serverele Facebook au dificultăți în a oferi acces la contul tău. Te rugăm să aștepți un pic mai mult...",
+        "errored": "Nu se poate accesa contul tău de pe serverele Facebook, te rugăm să încerci să te înregistrezi din nou în contul tău de Facebook. Dacă această eroare persistă, te rugăm să contactezi echipa de suport.",
+        "understood": "Înțeleg"
       }
     },
     "app": {
-      "nbLikes": "{0} like|{0} likes",
-      "createdAt": "Created",
-      "lastActive": "Last active",
-      "activated": "Activated",
+      "nbLikes": "{0} apreciere|{0} aprecieri",
+      "createdAt": "Creat",
+      "lastActive": "Ultima dată activ",
+      "activated": "Activat",
       "disabled": "Dezactivat",
-      "moduleDisabled": "Module is disabled",
-      "viewStats": "View stats",
-      "status": "Status:",
-      "informationCannotBeDisplayedWarning": "This information cannot be displayed at the moment"
+      "moduleDisabled": "Modulul este dezactivat",
+      "viewStats": "Vizualizare statistici",
+      "status": "Stare:",
+      "informationCannotBeDisplayedWarning": "Aceste informații nu pot fi afișate în acest moment"
     },
     "glass": {
-      "text": "You don’t see Facebook secured browser? We help you relaunch the window to finish configuration. You may need to activate popup windows in your browser to continue.",
+      "text": "Nu vezi browserul securizat Facebook? Te ajutăm să relansezi fereastra pentru a finaliza configurarea. Pentru a continua, poate fi necesar să activezi ferestrele pop-up în browser.",
       "link": "Continuare"
     },
     "modal": {
       "configCompleted": {
-        "title": "You’ve set up Facebook on your store.",
-        "nextStep": "One last step: synchronize your product catalog with Facebook",
-        "remainingSteps": "What will happen?"
+        "title": "Ai configurat Facebook în magazinul tău.",
+        "nextStep": "Un ultim pas: sincronizează catalogul de produse cu Facebook",
+        "remainingSteps": "Ce se va întâmpla?"
       }
     },
     "catalogBanner": {
-      "title": "One last step: Synchronize your catalog",
-      "subTitle": "Synchronize your catalog and start sharing your products on Facebook."
+      "title": "Un ultim pas: sincronizează catalogul",
+      "subTitle": "Sincronizează-ți catalogul și începe să partajezi produsele pe Facebook."
     }
   },
   "catalog": {
     "summaryPage": {
       "productCatalog": {
         "title": "Catalog de produse",
-        "catalogExportPaused": "Not synchronized",
-        "catalogExportActivated": "Synchronized",
+        "catalogExportPaused": "Nu este sincronizat",
+        "catalogExportActivated": "Sincronizat",
         "alertSyncIsDisabled": {
-          "title": "The synchronization with Facebook is paused.",
-          "explanation": "Your products are still visible on Facebook, but they are no longer be synchronized. This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+          "title": "Sincronizarea cu Facebook este întreruptă.",
+          "explanation": "Produsele tale sunt încă vizibile pe Facebook, dar nu mai sunt sincronizate. Acest lucru înseamnă că eventualele modificări pe care le faci produselor tale în magazinul PrestaShop nu vor fi reflectate pe Facebook până când nu îți sincronizezi din nou catalogul."
         },
         "alertSyncIsEnabled": {
-          "title": "Your catalog is shared with Facebook.",
-          "explanation": "The first synchronization will take place in a few hours. In the meantime, make sure your products are compliant. If not, edit them to comply with Facebook’s policy and verify your catalog again."
+          "title": "Catalogul tău este partajat cu Facebook.",
+          "explanation": "Prima sincronizare va avea loc în câteva ore. Între timp, asigură-te că produsele sunt conforme. Dacă nu, editează-le pentru a respecta politica Facebook și verifică din nou catalogul."
         },
         "modals": {
           "startSharing": {
-            "title": "Synchronize your catalog with Facebook",
-            "subTitle": "What happens when you synchronize your catalog?",
-            "description": "* All active products are sent to Facebook.\n\n* Your catalog is synchronized 4 times a day. \n* Synchronization can take up to 24 hours.\n* Only edited products will be updated at the next synchronization.\n* Only compliant products will be synchronized."
+            "title": "Sincronizează-ți catalogul cu Facebook",
+            "subTitle": "Ce se întâmplă atunci când îți sincronizezi catalogul?",
+            "description": "* Toate produsele active sunt trimise pe Facebook.\n\n* Catalogul tău este sincronizat de 4 ori pe zi. \n* Sincronizarea poate dura până la 24 de ore.\n* Numai produsele editate vor fi actualizate la următoarea sincronizare.\n* Numai produsele conforme vor fi sincronizate."
           },
           "deactivation": {
-            "title": "Pause catalog synchronization?",
-            "description": "Your products will still be visible on Facebook, but they will no longer be synchronized.  This means that any changes you make to your products on your PrestaShop store will not be reflected on Facebook until you synchronize your catalog again."
+            "title": "Dorești să întrerupi sincronizarea catalogului?",
+            "description": "Produsele tale vor fi în continuare vizibile pe Facebook, dar nu vor mai fi sincronizate.  Acest lucru înseamnă că eventualele modificări pe care le faci produselor tale în magazinul PrestaShop nu vor fi reflectate pe Facebook până când nu îți sincronizezi din nou catalogul."
           }
         },
         "productVerification": {
-          "stepTitle": "Product verification by PrestaShop",
-          "stepDetails": "We check your products for errors before sending them to Facebook. If a product is not compliant, you can fix the error and verify your catalog again. Only compliant products will be sent to Facebook during the next synchronization.",
+          "stepTitle": "Verificarea produsului de către PrestaShop",
+          "stepDetails": "Verificăm dacă produsele tale au erori înainte de a le trimite pe Facebook. Dacă un produs nu este conform, poți remedia eroarea și poți verifica din nou catalogul. Numai produsele conforme vor fi trimise pe Facebook în timpul următoarei sincronizări.",
           "scanStatus": {
-            "notSubscribed": "No verification yet.",
-            "inProgress": "Verification in progress... {progress}",
-            "nbOfVerifiedProducts": " |{xProducts} verified.|{xProducts} verified.",
-            "lastScanDate": "Last verification on {date} at {time}."
+            "notSubscribed": "Încă nu s-a efectuat verificarea.",
+            "inProgress": "Verificare în curs... {progress}",
+            "nbOfVerifiedProducts": " |{xProducts} verificat.|{xProducts} verificate.",
+            "lastScanDate": "Ultima verificare pe {date} la {time}."
           },
           "reportCards": {
             "productsInCatalog": "Catalogul meu de produse",
-            "productsInCatalogDescription": "Number of products in your catalog (including combinations and languages).",
+            "productsInCatalogDescription": "Numărul de produse din catalog (inclusiv combinații și limbi).",
             "verified": "Produse conforme",
-            "verifiedDescription": "These products will be sent to Facebook at the next synchronization.",
+            "verifiedDescription": "Aceste produse vor fi trimise pe Facebook la următoarea sincronizare.",
             "nonCompliant": "Produse neconforme",
-            "nonCompliantDescription": "These products won’t be sent to Facebook as they don’t meet the requirements."
+            "nonCompliantDescription": "Aceste produse nu vor fi trimise pe Facebook, deoarece nu îndeplinesc cerințele."
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Synchronization with Facebook",
-          "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
+          "stepTitle": "Sincronizare cu Facebook",
+          "stepDetails": "Facebook face o verificare finală înainte de a-ți publica produsele. În ciuda verificării noastre, este posibil ca unele produse să fie în continuare respinse. Dacă se întâmplă acest lucru, încearcă să editezi produsele respinse pentru a respecta politica Facebook și acestea vor fi examinate automat din nou la următoarea sincronizare.",
           "syncStatus": {
-            "notSubscribed": "No synchronization yet.",
-            "firstSyncSoon": "The first synchronization will take place in a few hours.",
-            "paused": "Synchronization is paused.",
-            "lastSyncDate": "Last synchronization on {date} at {time}."
+            "notSubscribed": "Încă nu s-a efectuat sincronizarea.",
+            "firstSyncSoon": "Prima sincronizare va avea loc în câteva ore.",
+            "paused": "Sincronizarea este întreruptă.",
+            "lastSyncDate": "Ultima sincronizare pe {date} la {time}."
           },
           "reportCards": {
             "approved": "Aprobat",
-            "approvedDescription": "These products were approved by Facebook.",
+            "approvedDescription": "Aceste produse au fost aprobate de Facebook.",
             "disapproved": "Respins",
-            "disapprovedDescription": "Facebook rejected these products as they didn’t comply with its policy."
+            "disapprovedDescription": "Facebook a respins aceste produse deoarece nu au respectat politica sa."
           }
         },
         "fullScanRequest": {
-          "resetExportLink": "If you need to synchronize your entire catalog, {0}.",
-          "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
-          "resetExportError": "Unknown error occurred trying to reset export. Please try again later."
+          "resetExportLink": "Dacă trebuie să sincronizezi întregul catalog, {0}.",
+          "resetExportSuccess": "Mulțumim, toate produsele eligibile vor fi transferate pe Facebook în timpul următoarei sincronizări programate.",
+          "resetExportError": "A apărut o eroare necunoscută la încercarea de resetare a exportului. Încearcă din nou mai târziu."
         }
       },
       "categoryMatching": {
-        "title": "Help customers find you with Google product categories",
-        "description": "Match your products to Google’s product categories. An improved catalog structure will help potential customers find your products and improve your ad’s performance.",
-        "progress": "{current}/{total} mapped categories"
+        "title": "Ajută clienții să te găsească cu categoriile de produse Google",
+        "description": "Asociază produsele cu categoriile de produse Google. O structură îmbunătățită a catalogului va ajuta clienții potențiali să-ți găsească produsele și să îmbunătățească performanța reclamei tale.",
+        "progress": "{current}/{total} categorii mapate"
       }
     }
   },
   "catalogSummary": {
-    "categoryMatching": "Enhance your catalog",
-    "categoryMatchingIntro": "To enhance your catalog and help customers discover your items online, enter a Google product category (GPC) for your items.",
-    "categoryMatchingNotice": "You **must** choose at least one of these category types: 1) to use onsite Facebook checkout and 2) to enhance your catalog with category-specific attributes. Both category types are optional, but conditionally required.",
-    "matchCategoriesButton": "Map categories",
-    "exportCatalogButton": "Share catalog",
-    "catalogExportIntro": "Before buyers can purchase items from you, you'll need to upload your products information into a Facebook Product Catalog.",
-    "catalogExportInfo": "Please be aware of the following: \n1. The export of the catalog is done once a day (during the night). \n2. It can take up to 24h for your PrestaShop product information to sync to Facebook. \n3. Only all « active » products are exported to Facebook for their base language. \n4. Only products with mandatory fields filled will be synchronized: a (short) description, a quantity, a price, a cover, a manufacturer or an ean/upc/isbn. \n5. Export of product localizations (for translations) are still in beta and could trigger some unexpected errors. \n6. Only products that have been modified will be updated in your catalog.",
-    "catalogExportWarning": "Products will be exported then updated every 24h.",
-    "catalogExportDisclaimer": "By sharing your catalog, you agree PrestaShop may send all information related to the catalog products to Facebook.",
-    "catalogExportNotice": "It can take up to 24h for your PrestaShop product information to sync to Facebook.",
-    "catalogExportOperationPaused": "The operation is paused.",
+    "categoryMatching": "Îmbunătățește-ți catalogul",
+    "categoryMatchingIntro": "Pentru a-ți îmbunătăți catalogul și a ajuta clienții să descopere articolele tale online, introdu o categorie de produse Google (GPC) pentru articolele tale.",
+    "categoryMatchingNotice": "**Trebuie** să alegi cel puțin unul dintre aceste tipuri de categorii: 1) utilizarea unui checkout Facebook direct pe site și 2) îmbunătățirea catalogului cu caracteristici specifice categoriei. Ambele tipuri de categorii sunt opționale, dar necesare condiționat.",
+    "matchCategoriesButton": "Mapare categorii",
+    "exportCatalogButton": "Distribuie catalogul",
+    "catalogExportIntro": "Înainte ca potențialii cumpărători să poată achiziționa articole de la tine, va trebui să încarci informațiile despre produse într-un catalog de produse Facebook.",
+    "catalogExportInfo": "Te rugăm să ai în vedere următoarele: \n1. Exportul catalogului se face o dată pe zi (noaptea). \n2. Sincronizarea informațiilor despre produsul PrestaShop cu Facebook poate dura până la 24 de ore. \n3. Numai produsele „active” sunt exportate pe Facebook pentru limba lor de bază. \n4. Numai produsele cu câmpuri obligatorii completate vor fi sincronizate: o descriere (scurtă), o cantitate, un preț, o copertă, un producător sau un ean/upc/isbn. \n5. Exportul localizărilor produselor (pentru traduceri) este încă în versiune beta și ar putea declanșa unele erori neașteptate. \n6. Numai produsele care au fost modificate vor fi actualizate în catalogul tău.",
+    "catalogExportWarning": "Produsele vor fi exportate, apoi actualizate la fiecare 24 de ore.",
+    "catalogExportDisclaimer": "Prin distribuirea catalogului, ești de acord că PrestaShop poate trimite toate informațiile legate de produsele din catalog către Facebook.",
+    "catalogExportNotice": "Sincronizarea informațiilor despre produsul PrestaShop cu Facebook poate dura până la 24 de ore.",
+    "catalogExportOperationPaused": "Operația este întreruptă.",
     "backButton": "Înapoi",
-    "exportCatalogButtonErrored": "Failed! Try again"
+    "exportCatalogButtonErrored": "Eșuat! Încearcă din nou"
   },
   "syncReport": {
-    "title": "Product status",
+    "title": "Stare produs",
     "views": {
-      "prevalidation": "Before export{0}",
-      "reporting": "After export{0}",
-      "oneError": " (1 error)",
-      "manyErrors": " ({0} errors)"
+      "prevalidation": "Înainte de export{0}",
+      "reporting": "După export{0}",
+      "oneError": "(1 eroare)",
+      "manyErrors": " ({0} erori)"
     },
     "id": "ID",
-    "name": "Name",
+    "name": "Denumire",
     "language": "Limbă",
-    "languageTooltip": "This is the language in which the error is found.",
-    "image": "Image",
-    "imageTooltip": "The main image of your item. Images must be in JPG, GIF or PNG format, at least 500 x 500 pixels and up to 8 MB. See product image specifications.",
+    "languageTooltip": "Aceasta este limba în care se găsește eroarea.",
+    "image": "Imagine",
+    "imageTooltip": "Imaginea principală a articolului. Imaginile trebuie să fie în format JPG, GIF sau PNG, de cel puțin 500 x 500 pixeli și până la 8 MB. Vezi specificațiile imaginii produsului.",
     "description": "Descriere",
-    "descriptionTooltip": "A short, relevant description of the item. Include specific and unique product features like material or color. Use plain text (not HTML) and don't enter text in all capital letters or include any links. See product description specifications. Character limit: 5,000.",
-    "barcode": "Barcode/Brand",
-    "barcodeTooltip": "The brand name, unique manufacturer part number (MPN) or Global Trade Item Number (GTIN) of the item. You only need to enter one of these, not all of them. For GTIN, enter the item's UPC, EAN, JAN or ISBN. Character limit: 100.",
-    "price": "Price",
-    "error": "Error type",
-    "errorTooltip": "This is the error given by Facebook when trying to export the product.",
-    "prevalidationText": "Products with detected problems and which couldn't be synced are listed below:",
-    "reportingText": "Products with detected problems after catalog export are listed below:",
-    "lastSyncDate": "Last sync {0} at {1}",
-    "otherLanguage": "Other",
-    "prevalidationEmpty": "Well done! All your products are ready to be exported",
-    "reportingEmpty": "Well done! All your products have been exported to your Facebook catalog.",
-    "loadNextPage": "Load next results"
+    "descriptionTooltip": "O descriere scurtă și relevantă a articolului. Include funcționalități specifice și unice ale produsului, cum ar fi materialul sau culoarea. Folosește text simplu (nu HTML), nu introduce text cu majuscule și nici nu include niciun link. Vezi specificațiile descrierii produsului. Limită de caractere: 5.000.",
+    "barcode": "Cod de bare/Marca",
+    "barcodeTooltip": "Denumirea mărcii, numărul unic de piesă al producătorului (MPN) sau numărul comercial global (GTIN) al articolului. Trebuie să introduci doar una dintre acestea, nu pe toate. Pentru GTIN, introdu UPC, EAN, JAN sau ISBN ale articolului. Limită de caractere: 100.",
+    "price": "Preț",
+    "error": "Tip de eroare",
+    "errorTooltip": "Aceasta este eroarea dată de Facebook atunci când încearcă să exporte produsul.",
+    "prevalidationText": "Produsele cu probleme detectate și care nu au putut fi sincronizate sunt enumerate mai jos:",
+    "reportingText": "Produsele cu probleme detectate după exportul catalogului sunt enumerate mai jos:",
+    "lastSyncDate": "Ultima sincronizare {0} la {1}",
+    "otherLanguage": "Altele",
+    "prevalidationEmpty": "Foarte bine! Toate produsele tale sunt gata de export",
+    "reportingEmpty": "Foarte bine! Toate produsele tale au fost exportate în catalogul tău Facebook.",
+    "loadNextPage": "Încarcă următoarele rezultate"
   },
   "categoryMatching": {
-    "title": "Enhance your catalog : category mapping",
-    "intro": "Important: \n - The Google Category and Google Subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and sub-categories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its sub-categories, by checking the 'Apply to sub categories' box",
-    "counterSubTitle": "specified categories",
-    "edit": "Edit",
+    "title": "Îmbunătățește-ți catalogul: maparea categoriilor",
+    "intro": "Important: \n― Câmpurile Categorie Google și Subcategorie Google sunt obligatorii pentru fiecare dintre categoriile tale PrestaShop \n― Maparea categoriilor este salvată automat după ce ai conectat categoria PrestaShop la o categorie și subcategorie Google \n― După ce ai mapat categoriile și subcategoriile, dă clic pe „Înapoi”. \n― Economisește timp aplicând maparea categoriei principale la subcategoriile sale, bifând caseta „Aplică subcategoriilor”",
+    "counterSubTitle": "categorii specificate",
+    "edit": "Editare",
     "autocomplete": {
-      "typeToFilter": "Type to filter",
+      "typeToFilter": "Introdu pentru a filtra",
       "select": "Selectează",
-      "noResult": "No result for your search",
-      "tooManyResults": "Too many results, please complete your search.",
-      "fetchError": "An error occurred during search process.",
-      "unassign": "Unassign category"
+      "noResult": "Niciun rezultat pentru căutarea ta",
+      "tooManyResults": "Prea multe rezultate, te rugăm să finalizezi căutarea.",
+      "fetchError": "A apărut o eroare în timpul procesului de căutare.",
+      "unassign": "Anulează alocarea categoriei"
     },
     "tableMatching": {
-      "firstTd": "Category on your site",
-      "secondTd": "Google category",
-      "thirdTd": "Apply to sub-categories?",
-      "fourthTd": "Google subcategory"
+      "firstTd": "Categorie pe site-ul tău",
+      "secondTd": "Categorie Google",
+      "thirdTd": "Aplici la subcategorii?",
+      "fourthTd": "Subcategorie Google"
     },
     "editTable": {
-      "required": "Mandatory",
-      "checkboxTxt": "Show unmapped categories",
-      "psCategoryName": "Category on your site",
-      "fbCategoryName": "Google category",
-      "fbSubcategoryName": "Google subcategory"
+      "required": "Obligatoriu",
+      "checkboxTxt": "Afișează categoriile nemapate",
+      "psCategoryName": "Categorie pe site-ul tău",
+      "fbCategoryName": "Categorie Google",
+      "fbSubcategoryName": "Subcategorie Google"
     },
-    "errors": "An error occurred, please update the module."
+    "errors": "A apărut o eroare, te rugăm să actualizezi modulul."
   },
   "integrate": {
     "buttons": {
-      "syncProducts": "Sync products",
-      "modalConfirm": "Yes, confirm"
+      "syncProducts": "Sincronizarea produselor",
+      "modalConfirm": "Da, confirm"
     },
     "features": {
       "ig_shopping": {
-        "name": "Instagram shopping",
-        "description": "Instagram Shopping gives your business an immersive storefront for people to explore your best products.",
-        "addButton": "Add",
-        "editButton": "Manage"
+        "name": "Instagram Shopping",
+        "description": "Instagram Shopping oferă afacerii tale o vitrină imersivă pentru ca potențialii clienți să exploreze cele mai bune produse ale tale.",
+        "addButton": "Adăugare",
+        "editButton": "Gestionare"
       },
       "messenger_chat": {
-        "name": "Messenger Chat Plugin",
-        "description": "The Chat Plugin allows you to integrate your Messenger experience directly into your website.",
-        "addButton": "Add",
-        "checkMessages": "Check my messages",
-        "editButton": "Customize settings"
+        "name": "Plugin de chat Messenger",
+        "description": "Pluginul de chat îți permite să integrezi experiența Messenger direct în site-ul tău web.",
+        "addButton": "Adăugare",
+        "checkMessages": "Verifică mesajele mele",
+        "editButton": "Personalizează setările"
       },
       "page_shop": {
-        "name": "Add a shop tab on your Facebook page",
-        "description": "Facebook Page shop allows you to list products you're selling and connect with more customers on Facebook.",
-        "addButton": "Add",
-        "editButton": "Manage"
+        "name": "Adaugă o filă de magazin pe pagina ta de Facebook",
+        "description": "Facebook Page pentru magazinul tău îți permite să listezi produsele comercializate și să te conectezi cu mai mulți clienți pe Facebook.",
+        "addButton": "Adăugare",
+        "editButton": "Gestionare"
       },
       "page_cta": {
-        "name": "Add a button on your Facebook page",
-        "description": "Add a button on your Facebook Page to get people to take an action from your page such as your shop.",
-        "addButton": "Add",
-        "editButton": "Edit"
+        "name": "Adaugă un buton pe pagina ta de Facebook",
+        "description": "Adaugă un buton pe pagina ta de Facebook pentru a determina clienții să ia o acțiune de pe pagina ta, cum ar fi magazinul tău.",
+        "addButton": "Adăugare",
+        "editButton": "Editare"
       }
     },
     "headings": {
-      "availableFeatures": "To boost sales, add to your shop...",
-      "unavailableFeatures": "Unavailable features at the moment"
+      "availableFeatures": "Pentru a stimula vânzările, adaugă în magazin...",
+      "unavailableFeatures": "Funcționalități indisponibile în acest moment"
     },
     "success": {
-      "featureEnabled": "You added {0}!",
-      "shopLink": "View your shop"
+      "featureEnabled": "Ai adăugat {0}!",
+      "shopLink": "Vezi magazinul tău"
     },
     "warning": {
-      "productsNotSynced": "You first need to import your product catalog so you will be able to set up Facebook Shop and Instagram Shopping and also create ad campaigns.",
-      "disableFeatureModalHeader": "Confirm deactivation?",
-      "disableFeatureModalText": "You are about to disable this feature. This may limit some functionality.",
-      "noFeatures": "Features could not be retrieved from Facebook. This may be caused by the token expiration and can be fixed by restarting the onboarding."
+      "productsNotSynced": "Mai întâi trebuie să imporți catalogul de produse, astfel încât să poți configura Facebook Shop și Instagram Shopping și, de asemenea, să creezi campanii publicitare.",
+      "disableFeatureModalHeader": "Confirmi dezactivarea?",
+      "disableFeatureModalText": "Ești pe cale să dezactivezi această funcție. Acest lucru poate limita unele funcționalități.",
+      "noFeatures": "Funcționalitățile nu au putut fi recuperate de pe Facebook. Acest lucru poate fi cauzat de expirarea tokenului și poate fi rezolvat prin repornirea procesului de înregistrare."
     },
     "error": {
-      "failedToUpdateFeature": "Failed to update facebook feature."
+      "failedToUpdateFeature": "Actualizarea funcționalității Facebook a eșuat."
     }
   },
   "survey": {
-    "title": "Give us your feedback!",
-    "text": "Only 3 minutes to give some feedback on the configuration and use of PrestaShop Social with Facebook & Instagram!",
-    "button": "Let's begin"
+    "title": "Trimite-ne feedback-ul tău!",
+    "text": "Doar 3 minute pentru un feedback succint cu privire la configurarea și utilizarea PrestaShop Social cu Facebook și Instagram!",
+    "button": "Să începem"
   },
   "help": {
-    "title": "Help for PrestaShop Social with Facebook & Instagram",
+    "title": "Ajutor pentru PrestaShop Social cu Facebook și Instagram",
     "allowsYouTo": {
       "title": "Acest modul îți permite să:",
-      "business": "Manage your business",
-      "account": "Manage your ad account",
-      "traffic": "Understand your traffic",
-      "inventory": "Build and manage inventory",
-      "people": "Reach more people"
+      "business": "Gestionează-ți afacerea",
+      "account": "Gestionează-ți contul pentru reclame",
+      "traffic": "Înțelege traficul",
+      "inventory": "Construiește și gestionează inventarul",
+      "people": "Abordează mai mulți oameni"
     },
     "help": {
       "needHelp": "Ai nevoie de ajutor? Găsești aici documentația acestui modul.",
       "downloadPdf": "Descarcă PDF",
-      "couldntFindAnyAnswer": "Couldn't find any answer to your question?",
+      "couldntFindAnyAnswer": "Nu ai găsit niciun răspuns la întrebarea ta?",
       "contactUs": "Contactează-ne"
     }
   },
@@ -370,8 +370,8 @@
     "noFaq": "Nu există întrebări frecvente disponibile."
   },
   "billing": {
-    "planTitle": "Plan & billing information",
-    "invoicesTitle": "Invoices"
+    "planTitle": "Informații despre plan și facturare",
+    "invoicesTitle": "Facturi"
   },
   "productStatuses": {
     "Approved": "Aprobat",
@@ -388,18 +388,18 @@
   },
   "cta": {
     "upgrade": "Upgrade",
-    "clickHere": "click here",
-    "synchronizeCatalog": "Synchronize catalog",
-    "pauseSyncOfCatalog": "Pause catalog synchronization",
+    "clickHere": "clic aici",
+    "synchronizeCatalog": "Sincronizează catalogul",
+    "pauseSyncOfCatalog": "Întrerupe sincronizarea catalogului",
     "cancel": "Anulare",
     "ok": "Ok",
-    "modalConfirm": "Yes, confirm",
-    "learnMore": "Learn more",
-    "rescan": "Verify",
-    "resubscribe": "Re-subscribe",
-    "startFreeTrial": "Start free trial",
-    "unlink": "Sign out of Facebook",
-    "setupCategoryMatching": "Set up Google product categories",
-    "manageCategoryMatching": "Manage Google product categories"
+    "modalConfirm": "Da, confirm",
+    "learnMore": "Află mai multe",
+    "rescan": "Verifică",
+    "resubscribe": "Abonează-te din nou",
+    "startFreeTrial": "Începe perioada de probă gratuită",
+    "unlink": "Deconectează-te de la Facebook",
+    "setupCategoryMatching": "Configurează categoriile de produse Google",
+    "manageCategoryMatching": "Gestionează categoriile de produse Google"
   }
 }
