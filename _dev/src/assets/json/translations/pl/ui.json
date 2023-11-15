@@ -117,7 +117,7 @@
         "almostThere": "To już prawie wszystko",
         "acknowledging": "Potwierdzanie uprawnień za pomocą usług Facebooka.",
         "takesTime": "Może to potrwać kilka sekund...",
-        "tryAgain": "Wygląda na to, że serwery Facebooka mają problemy z dostarczeniem dostępu do Twojego konta. Proszę poczekać jeszcze trochę...",
+        "tryAgain": "Wygląda na to, że serwery Facebooka mają problemy z dostarczeniem dostępu do Twojego konta. Poczekaj jeszcze chwilę...",
         "errored": "Nie można uzyskać dostępu do Twojego konta z serwerów Facebooka, spróbuj ponownie zalogować się na swoje konto facebookowe. Jeśli błąd będzie się powtarzał, prosimy o kontakt z obsługą.",
         "understood": "Rozumiem"
       }
@@ -134,7 +134,7 @@
       "informationCannotBeDisplayedWarning": "Ta informacja nie może być wyświetlana w tym momencie"
     },
     "glass": {
-      "text": "Nie widzisz zabezpieczonej przeglądarki na Facebooku? Pomożemy Ci ponownie uruchomić okno, aby zakończyć konfigurację. Może być konieczne włączenie wyskakujących okienek w przeglądarce, aby kontynuować.",
+      "text": "Nie widzisz zabezpieczonej przeglądarki na Facebooku? Pomożemy Ci ponownie uruchomić okno, aby zakończyć konfigurację. Aby kontynuować, należy aktywować wyskakujące okna w przeglądarce.",
       "link": "Kontynuuj"
     },
     "modal": {
@@ -259,7 +259,7 @@
     "errorTooltip": "To jest błąd podany przez Facebooka podczas próby wyeksportowania produktu.",
     "prevalidationText": "Produkty, w których wykryto problemy i które nie mogły zostać zsynchronizowane, są wymienione poniżej:",
     "reportingText": "Produkty z wykrytymi problemami po eksporcie katalogu są wymienione poniżej:",
-    "lastSyncDate": "Ostatnia synchronizacja {0} w {1}",
+    "lastSyncDate": "Ostatnia synchronizacja: {0} o {1}",
     "otherLanguage": "Inne",
     "prevalidationEmpty": "Dobra robota! Wszystkie Twoje produkty są gotowe do eksportu.",
     "reportingEmpty": "Dobra robota! Wszystkie Twoje produkty zostały wyeksportowane do Twojego katalogu na Facebooku.",
@@ -271,10 +271,10 @@
     "counterSubTitle": "określone kategorie",
     "edit": "Edytuj",
     "autocomplete": {
-      "typeToFilter": "Typ do filtrowania",
+      "typeToFilter": "Wpisz, aby filtrować",
       "select": "Wybierz",
       "noResult": "Brak wyników wyszukiwania",
-      "tooManyResults": "Zbyt wiele wyników, proszę zakończyć wyszukiwanie.",
+      "tooManyResults": "Zbyt wiele wyników, uzupełnij wyszukiwanie.",
       "fetchError": "Podczas procesu wyszukiwania wystąpił błąd.",
       "unassign": "Usuń przypisanie kategorii"
     },
@@ -301,13 +301,13 @@
     "features": {
       "ig_shopping": {
         "name": "Instagram Shopping",
-        "description": "Instagram Shopping daje Twojej firmie wciągającą witrynę sklepową dla ludzi, którzy odkryją Twoje najlepsze produkty.",
+        "description": "Instagram Shopping pozwala Twojej firmie na stworzenie wciągającego sklepu, który pozwala na odkrycie Twoich najlepszych produktów.",
         "addButton": "Dodaj",
         "editButton": "Zarządzaj"
       },
       "messenger_chat": {
         "name": "Wtyczka Messenger Chat",
-        "description": "Wtyczka Czat pozwala na zintegrowanie Twoich doświadczeń Messengera bezpośrednio z Twoją stroną internetową.",
+        "description": "Wtyczka czatu pozwala na integrację aplikacji Messenger bezpośrednio z Twoją stroną.",
         "addButton": "Dodaj",
         "checkMessages": "Sprawdź wiadomości",
         "editButton": "Dostosuj ustawienia"
@@ -320,7 +320,7 @@
       },
       "page_cta": {
         "name": "Dodaj przycisk na swojej stronie na Facebooku",
-        "description": "Dodaj przycisk na swojej stronie na Facebooku, aby skłonić ludzi do podjęcia akcji z Twojej strony, takiej jak Twój sklep.",
+        "description": "Dodaj przycisk na swojej stronie na Facebooku, aby zachęcić ludzi do podjęcia działań na Twojej stronie, takich jak Twój sklep.",
         "addButton": "Dodaj",
         "editButton": "Edytuj"
       }
@@ -337,7 +337,7 @@
       "productsNotSynced": "Najpierw musisz zaimportować swój katalog produktów, aby móc założyć Facebook Shop i Instagram Shopping, a także tworzyć kampanie reklamowe.",
       "disableFeatureModalHeader": "Potwierdzasz dezaktywację?",
       "disableFeatureModalText": "Ta funkcja zostanie wyłączona. Może to ograniczyć inne funkcje.",
-      "noFeatures": "Funkcje nie mogły zostać pobrane z Facebooka. Może to być spowodowane wygaśnięciem żetonu i może być naprawione przez ponowne uruchomienie pokładu."
+      "noFeatures": "Nie można pobrać funkcji z Facebooka. Może to być spowodowane wygaśnięciem tokena i można to naprawić poprzez ponowne uruchomienie onboardingu."
     },
     "error": {
       "failedToUpdateFeature": "Nie udało się zaktualizować funkcji Facebooka."
