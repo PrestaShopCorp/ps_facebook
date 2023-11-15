@@ -4,7 +4,6 @@ services:
     arguments:
     - '@PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
     - '@ps_facebook.context'
-    - true # if true, enables the sandbox mode, if false or empty, disables it
 
   PrestaShopCorp\Billing\Presenter\BillingPresenter:
     class: 'PrestaShopCorp\Billing\Presenter\BillingPresenter'
