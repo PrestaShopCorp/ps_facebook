@@ -5,7 +5,7 @@
       "catalog": "Catálogo de productos",
       "help": "Ayuda",
       "integrate": "Canales de venta",
-      "billing": "Subscription"
+      "billing": "Suscripción"
     }
   },
   "configuration": {
@@ -13,12 +13,12 @@
       "getStarted": "Empezar",
       "subTitle": "Easily boost your revenue with smart ads on Facebook and Instagram",
       "resume": "Make your store social media ready",
-      "proPoint1Title": "Synchronize your catalog with Facebook & Instagram",
+      "proPoint1Title": "Sincroniza tu catálogo con Facebook e Instagram",
       "proPoint1Description": "Connect your Facebook account and import your product catalog to Facebook & Instagram, so that your updates synchronize on a daily basis.",
       "proPoint2Title": "Launch smart ads campaigns",
       "proPoint2Description": "Get the right products to the right customers with dynamic ads using the best out of Facebook’s advertising technology.",
       "proPoint3Title": "Data sharing control",
-      "proPoint3Description": "The Meta Pixel and the Conversions API allow you to control what data you share and when you share it, as well as provide your customers with more transparency by respecting their privacy.",
+      "proPoint3Description": "El Píxel de Meta y la API de Conversiones te permiten controlar qué datos compartes y cuándo lo haces, así como ofrecer a tus clientes una mayor transparencia respetando su privacidad.",
       "proPoint4Title": "Integrate Messenger",
       "proPoint4Description": "Build customer loyalty by integrating Messenger into your store and make shopping experience more personal for your customers."
     },
@@ -26,7 +26,7 @@
       "psaccounts": "Conecta tu tienda con la cuenta PrestaShop",
       "psbilling": "Billing information",
       "pscloudsync": "Allow data sharing",
-      "pssocial": "Set up Facebook"
+      "pssocial": "Configurar Facebook"
     },
     "sectionDesc": {
       "psbilling": "Access and manage your subscription and related payment method.",
@@ -54,14 +54,14 @@
     },
     "upgradeForBillingStep": {
       "alert": {
-        "title": "To continue using PrestaShop Social, please update to the latest version.",
+        "title": "Para seguir utilizando PrestaShop Social, actualiza a la última versión.",
         "description": "Since {date}, a {price}/Tax excl monthly subscription* is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience."
       },
       "modal": {
         "title": "Update required",
-        "subtitle": "To continue using PrestaShop Social, please update to the latest version.",
+        "subtitle": "Para seguir utilizando PrestaShop Social, actualiza a la última versión.",
         "description": "Since {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to use PrestaShop Social. This change in our pricing model is driven by our commitment to improving the module. It will allow us to allocate more resources to development, so we can deliver regular updates and introduce new features to enhance your overall experience.\n\n**How to Update & Subscribe**\n\n* Click \"Update\" below.\n* Wait a few minutes until the installation is complete.\n* Subscribe and start a 14 days free trial, you can cancel at any time.",
-        "needHelp": "Any questions? We're here to help. {0}"
+        "needHelp": "¿Alguna pregunta? Estamos aquí para ayudarte. {0}"
       },
       "IncludedInHosted": "* If you are already subscribed to the PrestaShop Hosted offer, you are not affected by this change. PrestaShop Social remains free for you."
     },
@@ -74,22 +74,22 @@
       "description": "As of {date}, a {price}/Tax excl monthly subscription* exclusive of tax is required to continue using PrestaShop Social*. You start with a 14-day free trial and you can cancel at anytime. This change will allow us to deliver regular updates and introduce new features to enhance your overall experience. Subscribe now to access this new version of PrestaShop Social, which offers easier and faster setup."
     },
     "alertBillingCancelled": {
-      "title": "You’ve canceled your PrestaShop Social subscription.",
+      "title": "Has cancelado tu suscripción a PrestaShop Social.",
       "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
       "explanationFromCancellationDate": "Your subscription ended on {date}, you can subscribe anytime to continue using the module."
     },
     "billingFacade": {
       "title": "Payment details",
-      "nextPayment": "Your subscription is active, next billing on {date}",
-      "willEnd": "Your subscription will end on {date}.",
-      "managePayment": "Manage payments"
+      "nextPayment": "Tu suscripción está activa, próxima facturación en {date}",
+      "willEnd": "Tu suscripción finalizará en {date}.",
+      "managePayment": "Gestionar pagos"
     },
     "facebook": {
-      "title": "Set up Facebook",
+      "title": "Configurar Facebook",
       "notConnected": {
-        "title": "Set up Facebook",
+        "title": "Configurar Facebook",
         "intro": "Integra tu tienda con Facebook.",
-        "connectButton": "Set up Facebook",
+        "connectButton": "Configurar Facebook",
         "description": "Sign in to Facebook and follow the setup assistant’s instructions. You’ll need to create or select existing Facebook assets to connect to your store.",
         "incompleteOnboarding": {
           "title": "You haven’t set up Facebook yet.",
@@ -193,7 +193,7 @@
           }
         },
         "productsSentToFacebook": {
-          "stepTitle": "Synchronization with Facebook",
+          "stepTitle": "Sincronización con Facebook",
           "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
           "syncStatus": {
             "notSubscribed": "No synchronization yet.",
