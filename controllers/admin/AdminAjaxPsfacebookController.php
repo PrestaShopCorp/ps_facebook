@@ -625,7 +625,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $moduleName = Tools::getValue('module_name');
         $moduleAction = Tools::getValue('module_action');
 
-        if (!in_array($moduleName, ['ps_accounts', 'ps_eventbus'])
+        if (!in_array($moduleName, ['ps_accounts', 'ps_eventbus', 'ps_facebook'])
             || !in_array($moduleAction, ['enable', 'install', 'upgrade'])) {
             http_response_code(401);
             $this->ajaxDie(
