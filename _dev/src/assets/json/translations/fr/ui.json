@@ -75,7 +75,7 @@
     },
     "alertBillingCancelled": {
       "title": "Vous avez annulé votre abonnement à PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Votre abonnement restera actif jusqu'à {date}, Vous pouvez vous réabonner à tout moment pour continuer à utiliser le module.",
       "explanationFromCancellationDate": "Votre abonnement a pris fin le {date}, vous pouvez vous abonner à tout moment pour continuer à utiliser le module."
     },
     "billingFacade": {
@@ -178,46 +178,46 @@
           "stepTitle": "Vérification des produits par PrestaShop",
           "stepDetails": "Nous vérifions que vos produits ne comportent pas d'erreurs avant de les envoyer à Facebook. Si un produit n'est pas conforme, vous pouvez corriger l'erreur et lancer à nouveau la vérification de votre catalogue. Seuls les produits conformes seront envoyés à Facebook lors de la prochaine synchronisation.",
           "scanStatus": {
-            "notSubscribed": "No verification yet.",
-            "inProgress": "Verification in progress... {progress}",
-            "nbOfVerifiedProducts": " |{xProducts} verified.|{xProducts} verified.",
-            "lastScanDate": "Last verification on {date} at {time}."
+            "notSubscribed": "Aucune vérification n'a encore été effectuée.",
+            "inProgress": "Vérification en cours... {progress}",
+            "nbOfVerifiedProducts": " |{xProducts} vérifié(s).|{xProducts} vérifié(s).",
+            "lastScanDate": "Dernière vérification le {date} à {time}."
           },
           "reportCards": {
             "productsInCatalog": "Mon catalogue produit",
             "productsInCatalogDescription": "Nombre de produits dans votre catalogue (y compris les déclinaisons et les langues).",
             "verified": "Produits conformes",
-            "verifiedDescription": "These products will be sent to Facebook at the next synchronization.",
+            "verifiedDescription": "Ces produits seront envoyés à Facebook lors de la prochaine synchronisation.",
             "nonCompliant": "Produits non conformes",
-            "nonCompliantDescription": "These products won’t be sent to Facebook as they don’t meet the requirements."
+            "nonCompliantDescription": "Ces produits ne seront pas envoyés à Facebook car ils ne remplissent pas les conditions requises."
           }
         },
         "productsSentToFacebook": {
           "stepTitle": "Synchronisation avec Facebook",
-          "stepDetails": "Facebook makes a final check before publishing your products. Despite our verification, some products may still be rejected. If this happens, try to edit rejected products to comply with Facebook policy and they’ll be automatically reviewed again at the next synchronization.",
+          "stepDetails": "Facebook effectue un dernier contrôle avant de publier vos produits. Malgré notre vérification, certains produits peuvent être rejetés. Dans ce cas, essayez de modifier les produits rejetés pour qu'ils soient conformes à la politique de Facebook et ils seront automatiquement réexaminés lors de la prochaine synchronisation.",
           "syncStatus": {
-            "notSubscribed": "No synchronization yet.",
+            "notSubscribed": "Pas encore de synchronisation.",
             "firstSyncSoon": "La première synchronisation sera effectuée dans quelques heures.",
             "paused": "La synchronisation est en pause.",
-            "lastSyncDate": "Last synchronization on {date} at {time}."
+            "lastSyncDate": "Dernière synchronisation le {date} à {time}."
           },
           "reportCards": {
             "approved": "Actifs",
             "approvedDescription": "Ces produits ont été approuvés par Facebook.",
             "disapproved": "Refusé",
-            "disapprovedDescription": "Facebook rejected these products as they didn’t comply with its policy."
+            "disapprovedDescription": "Facebook a rejeté ces produits car ils n'étaient pas conformes à sa politique."
           }
         },
         "fullScanRequest": {
-          "resetExportLink": "If you need to synchronize your entire catalog, {0}.",
-          "resetExportSuccess": "Thank you, all the eligible products will be pushed to Facebook during the next scheduled synchronization.",
-          "resetExportError": "Unknown error occurred trying to reset export. Please try again later."
+          "resetExportLink": "Si vous avez besoin de synchroniser l'intégralité de votre catalogue, {0}.",
+          "resetExportSuccess": "Merci, tous les produits conformes seront envoyés vers Facebook lors de la prochaine synchronisation.",
+          "resetExportError": "Une erreur inconnue s'est produite lors de la réinitialisation de l'export. Veuillez réessayer plus tard."
         }
       },
       "categoryMatching": {
-        "title": "Help customers find you with Google product categories",
-        "description": "Match your products to Google’s product categories. An improved catalog structure will help potential customers find your products and improve your ad’s performance.",
-        "progress": "{current}/{total} mapped categories"
+        "title": "Aidez les clients à vous trouver avec les catégories de produits Google",
+        "description": "Associez vos produits aux catégories de produits de Google. Une structure de catalogue améliorée aidera les clients potentiels à trouver vos produits et améliorera les performances de votre annonce.",
+        "progress": "{current}/{total} catégories mappées"
       }
     }
   },
@@ -370,7 +370,7 @@
     "noFaq": "Pas de FAQ disponible."
   },
   "billing": {
-    "planTitle": "Plan & billing information",
+    "planTitle": "Informations sur l'abonnement et la facturation",
     "invoicesTitle": "Factures"
   },
   "productStatuses": {
@@ -395,8 +395,8 @@
     "ok": "Ok",
     "modalConfirm": "Oui, je confirme",
     "learnMore": "En savoir plus",
-    "rescan": "Verify",
-    "resubscribe": "Re-subscribe",
+    "rescan": "Vérifier",
+    "resubscribe": "Se réabonner",
     "startFreeTrial": "Commencer l'essai gratuit",
     "unlink": "Se déconnecter de Facebook",
     "setupCategoryMatching": "Configurer les catégories de produits Google",
