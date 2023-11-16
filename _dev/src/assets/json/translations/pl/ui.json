@@ -104,11 +104,11 @@
         "facebookBusinessManager": "Facebook Business Manager",
         "facebookBusinessManagerTooltip": "Konto biznesowe na Facebooku pozwala na zarządzanie kontami reklamowymi, stronami i osobami, które pracują nad nimi w tym samym miejscu",
         "facebookPixel": "Piksel Facebooka",
-        "facebookPixelTooltip": "Piksel z Facebooka jest kawałkiem kodu (Javascript), który automatycznie instalujemy na Twoich stronach internetowych. Pozwala &amp;quot;śledzić&amp;quot;, kto odwiedza Twoją stronę, śledzić konwersje reklam na Facebooku i tworzyć retargetowanie odbiorców",
+        "facebookPixelTooltip": "Piksel Facebooka to fragment kodu (Javascript), który automatycznie instalujemy na stronach witryny. Umożliwia on \"śledzenie\" osób odwiedzających witrynę, śledzenie konwersji reklam na Facebooku i tworzenie grup docelowych",
         "facebookPage": "Strona na Facebooku",
         "facebookPageTooltip": "Twoja strona na Facebooku będzie reprezentować Twoją firmę w reklamach",
         "facebookAds": "Facebook Ads",
-        "facebookAdsTooltip": "Konto Facebook Ads pozwala handlowcom na dostęp do narzędzia do zarządzania reklamami, do tworzenia, edycji i analizy płatnych kampanii promocyjnych na Facebooku",
+        "facebookAdsTooltip": "Konto Facebook Ads pozwala merchantom na dostęp do narzędzia do zarządzania reklamami, do tworzenia, edycji i analizy płatnych kampanii promocyjnych na Facebooku",
         "manageFbeButton": "Przejdź do Meta Business Manager",
         "unlinkModalHeader": "Chcesz wylogować się z Facebooka?",
         "unlinkModalText": "Twoje zasoby na Facebooku zostaną odłączone od Twojego sklepu."
@@ -118,7 +118,7 @@
         "acknowledging": "Potwierdzanie uprawnień za pomocą usług Facebooka.",
         "takesTime": "Może to potrwać kilka sekund...",
         "tryAgain": "Wygląda na to, że serwery Facebooka mają problemy z dostarczeniem dostępu do Twojego konta. Poczekaj jeszcze chwilę...",
-        "errored": "Nie można uzyskać dostępu do Twojego konta z serwerów Facebooka, spróbuj ponownie zalogować się na swoje konto facebookowe. Jeśli błąd będzie się powtarzał, prosimy o kontakt z obsługą.",
+        "errored": "Nie można uzyskać dostępu do konta z serwerów Facebooka, spróbuj ponownie zalogować się na swoje konto na Facebooku. Jeśli błąd będzie się powtarzał, skontaktuj się z pomocą techniczną.",
         "understood": "Rozumiem"
       }
     },
@@ -223,12 +223,12 @@
   },
   "catalogSummary": {
     "categoryMatching": "Poszerz swój katalog",
-    "categoryMatchingIntro": "Aby wzbogacić swój katalog i pomóc klientom odkryć Twoje produkty online, wpisz na Googleu kategorię produktów (GPC) dla swoich produktów, a następnie dodaj więcej informacji specyficznych dla każdej kategorii. Zalecamy wybranie jak najbardziej specyficznej kategorii, która ma zastosowanie do każdego przedmiotu, aby pomóc klientom zrozumieć, jaki rodzaj przedmiotu sprzedajesz.",
-    "categoryMatchingNotice": "Musisz** wybrać przynajmniej jeden z tych typów kategorii: 1) do korzystania z kasy na Facebooku oraz 2) do wzbogacenia katalogu o atrybuty charakterystyczne dla danej kategorii. Oba typy kategorii są opcjonalne, ale warunkowo wymagane.",
+    "categoryMatchingIntro": "Aby ulepszyć Twój katalog i ułatwić klientom znajdowanie produktów online, wprowadź kategorię produktów Google (GPC) dla swoich produktów.",
+    "categoryMatchingNotice": "**Musisz** wybrać co najmniej jeden z tych typów kategorii: 1) aby korzystać z usługi Facebook Checkout w witrynie i 2) aby wzbogacić katalog o atrybuty specyficzne dla kategorii. Oba typy kategorii są opcjonalne, ale warunkowo wymagane.",
     "matchCategoriesButton": "Zmapowane kategorie",
     "exportCatalogButton": "Udostępnij katalog",
-    "catalogExportIntro": "Zanim kupujący będą mogli kupować u Ciebie produkty, będziesz musiał załadować informacje o swoich produktach do Katalogu Produktów na Facebooku.",
-    "catalogExportInfo": "Proszę zwrócić uwagę na następujące kwestie: \n\n1. Eksport katalogu odbywa się raz dziennie (w nocy)\n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem może potrwać do 24 godzin.\n3. Do Facebooka eksportowane są tylko aktywne produkty. \n4. Synchronizowane będą tylko produkty z wypełnionymi polami obowiązkowymi: krótki opis, ilość, cena, zdjęcie produktu, producent lub ean/upc/isbn.\n5. Eksport lokalizacji produktów (na potrzeby tłumaczeń) jest nadal w fazie beta i może generować nieoczekiwane błędy.\n6. W Twoim katalogu zostaną zaktualizowane tylko produkty, które uległy zmianie. ",
+    "catalogExportIntro": "Zanim kupujący będą mogli kupować od Ciebie produkty, musisz przesłać informacje o swoich produktach do katalogu produktów na Facebooku.",
+    "catalogExportInfo": "Należy pamiętać o następujących kwestiach: \n1. Eksport katalogu odbywa się raz dziennie (w nocy). \n2. Synchronizacja informacji o produktach PrestaShop z Facebookiem może potrwać do 24 godzin. \n3. Tylko wszystkie \"aktywne\" produkty są eksportowane do Facebooka dla ich języka bazowego. \n4. Tylko produkty z wypełnionymi polami obowiązkowymi zostaną zsynchronizowane: (krótki) opis, ilość, cena, okładka, producent lub ean/upc/isbn. \n5. Eksport lokalizacji produktów (dla tłumaczeń) jest nadal w wersji beta i może powodować nieoczekiwane błędy. \n6. Tylko produkty, które zostały zmodyfikowane, zostaną zaktualizowane w katalogu.",
     "catalogExportWarning": "Produkty będą eksportowane, a następnie aktualizowane co 24 godziny.",
     "catalogExportDisclaimer": "Udostępniając swój katalog, zgadzasz się, że PrestaShop może wysyłać do Facebooka wszystkie informacje dotyczące produktów z katalogu.",
     "catalogExportNotice": "Synchronizacja informacji o produktach PrestaShop z Facebookiem może potrwać do 24 godzin.",
@@ -249,7 +249,7 @@
     "language": "Język",
     "languageTooltip": "Jest to język, w którym znaleziono błąd.",
     "image": "Obraz",
-    "imageTooltip": " Głównego obrazu przedstawiającego artykuł. Obrazy muszą być w formacie JPG, GIF lub PNG, a także muszą mieć rozdzielczość co najmniej 500 × 500 pikseli oraz rozmiar do 8 MB. Zobacz specyfikacje obrazu produktu.",
+    "imageTooltip": "Główny obraz przedmiotu. Obrazy muszą być w formacie JPG, GIF lub PNG, mieć co najmniej 500 x 500 pikseli i do 8 MB. Zobacz specyfikacje obrazów produktów.",
     "description": "Opis",
     "descriptionTooltip": "Krótki, trafny opis artykułu. Powinien uwzględniać unikatowe cechy produktu, takie jak materiał czy kolor. W opisie używaj zwykłego tekstu (nie w formacie HTML), nie używaj samych wielkich liter i nie dodawaj linków. Zobacz specyfikacje opisu produktu. Limit znaków: 5000.",
     "barcode": "Kod kreskowy / Marka",
@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Ulepsz swój katalog: mapowanie kategorii",
-    "intro": "Ważne:\n- Pola Google Category i Google Subcategory są obowiązkowe dla każdej kategorii PrestaShop\n- Kopia zapasowa mapowania kategorii tworzy się automatycznie, gdy połączysz swoją kategorię prestaShop z kategorią i podkategorią Google\n- Kiedy już zmapujesz swoje kategorie i podkategorie, możesz kliknąć 'Powrót'\n- Oszczędzaj czas, stosując mapowanie kategorii głównej do jej kategorii podrzędnych', zaznaczając pole  'Zastosuj do kategorii podrzędnych'",
+    "intro": "Ważne:\n- Pola Kategoria Google i Podkategoria Google są obowiązkowe dla każdej kategorii PrestaShop\n- Mapowanie kategorii jest automatycznie zapisywane po powiązaniu kategorii PrestaShop z kategorią i podkategorią Google \n- Po zmapowaniu kategorii i podkategorii wystarczy kliknąć \"Wróć\" \n- Zaoszczędź czas, stosując mapowanie głównej kategorii do jej podkategorii, zaznaczając pole \"Zastosuj do podkategorii\"",
     "counterSubTitle": "określone kategorie",
     "edit": "Edytuj",
     "autocomplete": {
