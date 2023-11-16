@@ -22,12 +22,11 @@ export default {
   },
 
   async [ActionsTypes.TRIGGER_MODULE_MANAGER_ACTION](
-    {state}: Context,
-    payload: {module: string, action: string},
   ): Promise<boolean> {
-    const link = state.links.coreModuleActionUrl
-      ?.replace('{module}', payload.module)
-      .replace('{action}', payload.action);
+    // Oh no, our module is unable to update itself
+    const link = window.contextPsAccounts.psAccountsEnableLink
+      .replace('ps_accounts', 'ps_facebook')
+      .replace('enable', 'upgrade');
 
     if (!link) {
       return false;
