@@ -114,7 +114,7 @@ class Ps_facebook extends Module
     {
         $this->name = 'ps_facebook';
         $this->tab = 'advertising_marketing';
-        $this->version = '1.33.1';
+        $this->version = '1.33.2';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
         $this->module_key = '860395eb54512ec72d98615805274591';
