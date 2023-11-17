@@ -100,8 +100,8 @@ export default defineComponent({
   },
   methods: {
     initCloudSyncConsent() {
-      // If data related to CloudSync consent screen is available
-      if (!window.cloudSyncSharingConsent && this.psAccountsOnboarded) {
+      // If data related to CloudSync consent screen is not available
+      if (!window.cloudSyncSharingConsent || !this.psAccountsOnboarded) {
         return;
       }
 
