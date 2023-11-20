@@ -33,14 +33,12 @@
 <script>
 import {defineComponent} from 'vue';
 import {BCard, BCardBody} from 'bootstrap-vue';
-import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'UnavailableFeature',
   components: {
     BCard,
     BCardBody,
-    Tooltip,
   },
   mixins: [],
   props: {

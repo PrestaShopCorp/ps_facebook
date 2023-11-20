@@ -32,21 +32,11 @@
 
 <script lang="ts">
 import {PropType, defineComponent} from 'vue';
-import {
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
-} from 'bootstrap-vue';
 import {LocaleMessage} from 'vue-i18n';
 import {ISubscription} from '@prestashopcorp/billing-cdc/dist/@types/Subscription';
 
 export default defineComponent({
   name: 'CardBillingConnected',
-  components: {
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
-  },
   props: {
     subscription: {
       type: Object as PropType<ISubscription>,

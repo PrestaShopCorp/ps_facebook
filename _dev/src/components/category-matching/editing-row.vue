@@ -213,6 +213,7 @@ export default defineComponent({
         this.currentSubcategoryName = null;
       }
       const checkbox = document.getElementById(`propagation-${this.shopCategoryId}`);
+
       if (checkbox) {
         checkbox.focus();
       }
@@ -260,9 +261,6 @@ export default defineComponent({
     },
   },
   watch: {
-    categoryStyle(val) {
-      this.categoryStyle = val;
-    },
     initialCategoryName(newVal) {
       this.currentCategoryName = newVal;
     },
@@ -277,9 +275,6 @@ export default defineComponent({
     },
     initialPropagation(newVal) {
       this.currentPropagation = newVal;
-    },
-    isMainCategory(newVal) {
-      this.isMainCategory = newVal;
     },
   },
 });

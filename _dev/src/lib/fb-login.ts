@@ -23,6 +23,7 @@ const openPopupGenerator = (
 
   const listener = (event: MessageEvent): boolean => {
     const strippedPopupDomain = popupDomain.replace(/^(https?:\/\/[^/]+)(.*)/, '$1');
+
     if (event.origin !== strippedPopupDomain) {
       console.log('Bad origin message. Ignored.', event, strippedPopupDomain);
       return true;
@@ -47,6 +48,7 @@ const openPopupGenerator = (
         } // let responseCallback be called even if API did an error, to have partial data.
         responseCallback(event.data);
     }
+
     return true;
   };
 

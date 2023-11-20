@@ -25,7 +25,7 @@ import {defineComponent} from 'vue';
 import {BCard, BButton} from 'bootstrap-vue';
 
 export default defineComponent({
-  name: 'Survey',
+  name: 'CardSurvey',
   components: {
     BCard,
     BButton,

@@ -72,6 +72,7 @@ const mixin = Vue.extend({
 
     formatDataFromLazyLoading(request, categories) {
       const nbrCategories = categories.length;
+
       if (Array.isArray(request)) {
         request.forEach((el) => {
           if (undefined === this.findShopCategory(categories, el.shopCategoryId)) {
@@ -116,6 +117,7 @@ const mixin = Vue.extend({
 
       categories.forEach((element) => {
         const floor = element.shopParentCategoryIds.split('/').length - 1;
+
         if (floor === 1) {
           parents.push(element);
         }

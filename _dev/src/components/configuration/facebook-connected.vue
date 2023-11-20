@@ -98,38 +98,12 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {
-  BCard,
-  BButton,
-  BCardBody,
-  BCardHeader,
-  BIconstack,
-  BIconCheck,
-  BIconCircleFill,
-  BContainer,
-  BRow,
-  BCol,
-  BDropdown,
-  BDropdownItem,
-} from 'bootstrap-vue';
 import FacebookApp from './facebook-app.vue';
 
 export default defineComponent({
   name: 'FacebookConnected',
   components: {
-    BCard,
-    BButton,
-    BCardBody,
-    BIconstack,
-    BIconCheck,
-    BIconCircleFill,
     FacebookApp,
-    BContainer,
-    BRow,
-    BCol,
-    BCardHeader,
-    BDropdown,
-    BDropdownItem,
   },
   props: {
     psFacebookAppId: {
@@ -161,6 +135,7 @@ export default defineComponent({
     },
     fbeUrl() {
       const q = `?app_id=${this.psFacebookAppId}&external_business_id=${this.externalBusinessId}`;
+
       return `https://www.facebook.com/facebook_business_extension/management/${q}`;
     },
     pixelUrl() {
@@ -168,6 +143,7 @@ export default defineComponent({
         return '#';
       }
       const pixId = this.contextPsFacebook.pixel.id;
+
       return `https://business.facebook.com/events_manager2/list/pixel/${pixId}/overview`;
     },
   },

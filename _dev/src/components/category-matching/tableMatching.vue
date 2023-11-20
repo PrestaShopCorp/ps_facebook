@@ -144,10 +144,12 @@ export default defineComponent({
           update_children: updateParent,
         }),
       });
+
       if (!res.ok) {
         throw new Error(res.statusText || res.status);
       }
       const responseContents = await res.json();
+
       if (responseContents.success === false) {
         throw new Error(responseContents.message || 'Unknown error');
       }
@@ -180,6 +182,7 @@ export default defineComponent({
 
     getCurrentRow(currentShopCategoryID) {
       let subcategory;
+
       if (this.overrideGetCurrentRow) {
         const result = this.overrideGetCurrentRow(currentShopCategoryID);
         subcategory = result;
@@ -263,6 +266,7 @@ export default defineComponent({
 
     handleScroll() {
       const de = document.documentElement;
+
       if (this.loading === false && de.scrollTop + window.innerHeight
           === de.scrollHeight
       ) {
@@ -292,6 +296,7 @@ export default defineComponent({
         2: () => this.showChildren(currentCategory),
         3: () => this.hideChildren(currentCategory),
       };
+
       return dictionary[currentCategory.deploy].call();
     },
   },

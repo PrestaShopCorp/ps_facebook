@@ -38,7 +38,7 @@
 import {BIconInfoCircle} from 'bootstrap-vue';
 
 export default {
-  name: 'Tooltip',
+  name: 'TooltipStack',
   components: {
     BIconInfoCircle,
   },

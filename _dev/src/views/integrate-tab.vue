@@ -1,6 +1,6 @@
 <template>
   <div id="integrate">
-    <spinner v-if="loading" />
+    <loading-page-spinner v-if="loading" />
     <div v-else>
       <div class="mr-3 ml-3">
         <!-- Display a warning when no features are shown (token expired?) -->
@@ -90,7 +90,7 @@
         </feature-list>
       </div>
 
-      <survey />
+      <card-survey />
     </div>
   </div>
 </template>
@@ -102,24 +102,24 @@ import {mapGetters} from 'vuex';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import FeatureList from '../components/features/feature-list.vue';
 import EnabledFeature from '../components/features/enabled-feature.vue';
-import Spinner from '../components/spinner/spinner.vue';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
 import SuccessAlert from '../components/features/success-alert.vue';
-import Survey from '../components/survey/survey.vue';
+import CardSurvey from '@/components/survey/card-survey.vue';
 
 export default defineComponent({
-  name: 'Integrate',
+  name: 'IntegrateTab',
   components: {
     BAlert,
     BButton,
-    Spinner,
+    CardSurvey,
     EnabledFeature,
     FeatureList,
+    LoadingPageSpinner,
     UnavailableFeature,
     AvailableFeature,
     SuccessAlert,
-    Survey,
   },
   mixins: [],
   props: {

@@ -24,19 +24,19 @@
         <b-th>{{ $t('syncReport.name') }}</b-th>
         <b-th>
           {{ $t('syncReport.language') }}
-          <span><tooltip :text="$t('syncReport.languageTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.languageTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.image') }}
-          <span><tooltip :text="$t('syncReport.imageTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.imageTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.description') }}
-          <span><tooltip :text="$t('syncReport.descriptionTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.descriptionTooltip')" /></span>
         </b-th>
         <b-th>
           {{ $t('syncReport.barcode') }}
-          <span><tooltip :text="$t('syncReport.barcodeTooltip')" /></span>
+          <span><tooltip-stack :text="$t('syncReport.barcodeTooltip')" /></span>
         </b-th>
         <b-th>{{ $t('syncReport.price') }}</b-th>
       </b-tr>
@@ -168,14 +168,12 @@
 <script>
 /* eslint-disable camelcase */
 import {defineComponent} from 'vue';
-import {BTableSimple} from 'bootstrap-vue';
-import Tooltip from '../../help/tooltip.vue';
+import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
   name: 'PrevalidationTable',
   components: {
-    BTableSimple,
-    Tooltip,
+    TooltipStack,
   },
   props: {
     rows: {
@@ -204,6 +202,7 @@ export default defineComponent({
       if (index > 0) {
         const previousAttribute = this.dynamicRows[index - 1].id_product_attribute;
         const previousProduct = this.dynamicRows[index - 1].id_product;
+
         if (attribute === previousAttribute && product === previousProduct) {
           return false;
         }
@@ -213,6 +212,7 @@ export default defineComponent({
     variantLabel(index) {
       // Show label only if previous variant in the array is different than the current one
       const attribute = this.dynamicRows[index].id_product_attribute;
+
       if (!attribute || !this.isNewVariant(index)) {
         return '';
       }
@@ -260,6 +260,7 @@ export default defineComponent({
     },
     handleScroll() {
       const de = document.documentElement;
+
       if (this.loading === false && de.scrollTop + window.innerHeight === de.scrollHeight) {
         this.loadNextPage();
       }

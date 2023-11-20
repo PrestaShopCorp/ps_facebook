@@ -18,7 +18,6 @@
  *}
 {include file='./head.tpl'}
 
-<link href="{$pathApp|escape:'htmlall':'UTF-8'}" rel=preload as=script>
 <link href="https://unpkg.com/prestashop_accounts_vue_components@5" rel=preload as=script>
 <link href="https://assets.prestashop3.com/ext/cloudsync-merchant-sync-consent/latest/cloudsync-cdc.js" rel=preload as=script>
 
@@ -27,5 +26,11 @@
 <script src="https://unpkg.com/prestashop_accounts_vue_components@5"></script>
 <script src="https://assets.prestashop3.com/ext/cloudsync-merchant-sync-consent/latest/cloudsync-cdc.js"></script>
 <script src="https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js" rel=preload></script>
-<script src="{$chunkVendor|escape:'htmlall':'UTF-8'}"></script>
-<script src="{$pathApp|escape:'htmlall':'UTF-8'}"></script>
+
+{if $psSocialLiveMode}
+  <script type="module" src="http://localhost:5173/@vite/client"></script>
+  <script type="module" src="http://localhost:5173/src/main.ts"></script>
+{else}
+  <link href="{$pathApp|escape:'htmlall':'UTF-8'}" rel=preload as=script>
+  <script src="{$pathApp|escape:'htmlall':'UTF-8'}" type="module"></script>
+{/if}

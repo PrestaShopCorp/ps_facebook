@@ -5,7 +5,7 @@ on:
     types: [published]
 
 env:
-  NODE_VERSION: 14
+  NODE_VERSION: 20
   CDN_URL_ENV_NAME: PSX_FACEBOOK_CDN_URL
   GLOUD_CDN_BUCKET: psxfacebook
   GLOUD_SECRET_NAME: facebook-module
@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{env.NODE_VERSION}}
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
           cache-dependency-path: '_dev/package-lock.json'
 

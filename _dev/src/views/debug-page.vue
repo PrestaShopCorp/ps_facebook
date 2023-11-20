@@ -34,7 +34,7 @@
       no-body
       class="m-3"
     >
-      <template v-slot:header>
+      <template #header>
         Application info
       </template>
 
@@ -100,7 +100,7 @@
       no-body
       class="m-3"
     >
-      <template v-slot:header>
+      <template #header>
         Conversion API data management
       </template>
 
@@ -225,7 +225,8 @@ export default defineComponent({
     contextPsFacebook(): string {
       return JSON.stringify(
         this.$store.getters['onboarding/GET_ONBOARDING_STATE'],
-        null, 2) || 'Loading...';
+        null,
+        2) || 'Loading...';
     },
   },
   methods: {

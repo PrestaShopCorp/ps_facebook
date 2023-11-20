@@ -1,6 +1,6 @@
 <template>
   <div>
-    <spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
+    <loading-page-spinner v-if="loading && !showPopupGlass && !showTokensGlass" />
     <div
       id="configuration"
       class="ps-facebook-configuration-tab"
@@ -13,7 +13,7 @@
         @shop-selected="onShopSelected($event)"
       />
       <template v-else>
-        <messages
+        <messages-container
           :show-onboard-succeeded="psFacebookJustOnboarded"
           :alert-settings="alertSettings"
           class="m-3"
@@ -36,8 +36,11 @@
           variant="danger"
           class="m-3"
           show
-          v-html="md2html($t('configuration.messages.shopInConflictError'))"
-        />
+        >
+          <p
+            v-html="md2html($t('configuration.messages.shopInConflictError'))"
+          />
+        </b-alert>
         <onboarding-deps-container
           v-else
           :ps-accounts-onboarded="psAccountsOnboarded"
@@ -80,7 +83,7 @@
           v-else
         />
 
-        <survey v-if="facebookConnected" />
+        <card-survey v-if="facebookConnected" />
         <div
           v-if="showPopupGlass"
           class="glass"
@@ -141,7 +144,7 @@
               <br>
               {{ $t('configuration.facebook.exchangeTokens.takesTime') }}
             </p>
-            <span class="exchangeTokensLoader"><spinner /></span>
+            <span class="exchangeTokensLoader"><loading-page-spinner /></span>
             <p v-if="exchangeTokensTryAgain">
               <i class="material-icons float-left fixed-size-big">warning</i>
               {{ $t('configuration.facebook.exchangeTokens.tryAgain') }}
@@ -180,12 +183,12 @@ import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
 import MultiStoreSelector from '@/components/multistore/multi-store-selector.vue';
 import PsModal from '@/components/commons/ps-modal.vue';
-import Spinner from '../components/spinner/spinner.vue';
-import Messages from '../components/configuration/messages.vue';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
+import MessagesContainer from '../components/configuration/messages-container.vue';
 import FacebookConnected from '../components/configuration/facebook-connected.vue';
 import FacebookNotConnected from '../components/configuration/facebook-not-connected.vue';
 import OnboardingDepsContainer from '@/components/configuration/onboarding-deps-container.vue';
-import Survey from '../components/survey/survey.vue';
+import CardSurvey from '@/components/survey/card-survey.vue';
 import openPopupGenerator from '../lib/fb-login';
 import ModuleActionNeeded from '../components/warning/module-action-needed.vue';
 import {OnboardingContext} from '@/store/modules/onboarding/state';
@@ -231,20 +234,20 @@ const generateOpenPopup: () => () => Window|null = window.psFacebookGenerateOpen
   });
 
 export default defineComponent({
-  name: 'Configuration',
+  name: 'ConfigurationTab',
   components: {
     BannerCatalogSharing,
+    CardSurvey,
     FacebookNotConnected,
     FacebookConnected,
     KeyFeatures,
-    Messages,
+    LoadingPageSpinner,
+    MessagesContainer,
     ModalConfigurationCompleted,
     ModuleActionNeeded,
     MultiStoreSelector,
     OnboardingDepsContainer,
     PsModal,
-    Spinner,
-    Survey,
     TwoPanelCols,
   },
   mixins: [],

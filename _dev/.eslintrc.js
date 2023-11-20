@@ -20,20 +20,19 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    browser: true,
   },
   extends: [
     'prestashop',
     'plugin:vue/strongly-recommended',
     '@vue/typescript',
   ],
-  parserOptions: {
-    ecmaVersion: 2021,
-    parser: '@typescript-eslint/parser',
-  },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-shadow': 'off',
     'no-param-reassign': ['error', {props: false}],
+    // Need some help to handle this error
+    'no-restricted-exports': 'off',
   },
 };

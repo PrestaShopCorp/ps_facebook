@@ -52,7 +52,7 @@ import {
 } from 'bootstrap-vue';
 
 export default defineComponent({
-  name: 'Messages',
+  name: 'MessagesContainer',
   components: {
     BAlert,
     BButton,

@@ -5,11 +5,11 @@ import GettersTypesApp from '@/store/modules/app/getters-types';
 import ActionsTypesOnboarding from '@/store/modules/onboarding/actions-types';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import store from '@/store';
-import Configuration from '@/views/configuration.vue';
+import Configuration from '@/views/configuration-tab.vue';
 import BillingTab from '@/views/billing-tab.vue';
 import CatalogTab from '@/views/catalog-tab.vue';
 import Debug from '@/views/debug-page.vue';
-import Integrate from '@/views/integrate.vue';
+import IntegrateTab from '@/views/integrate-tab.vue';
 import LandingPage from '@/views/landing-page.vue';
 import Help from '@/views/help.vue';
 
@@ -100,7 +100,7 @@ const routes: RouteConfig[] = [
   {
     path: '/integrate',
     name: 'Integrate',
-    component: Integrate,
+    component: IntegrateTab,
     beforeEnter: billingNavigationGuard,
   },
   {

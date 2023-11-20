@@ -1,5 +1,5 @@
 <template>
-  <spinner v-if="loading" />
+  <loading-page-spinner v-if="loading" />
   <div
     v-else
     id="catalogSummary"
@@ -35,18 +35,18 @@
       class="m-3"
     />
 
-    <survey />
+    <card-survey />
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
-import Spinner from '@/components/spinner/spinner.vue';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import CatalogTabPages from '@/components/catalog/pages';
 import ExportCatalog from '@/components/catalog/summary/export-catalog.vue';
 import CategoryMatching from '@/components/catalog/summary/category-matching.vue';
-import Survey from '@/components/survey/survey.vue';
+import CardSurvey from '@/components/survey/card-survey.vue';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import BannerCatalogSharing from '@/components/catalog/summary/banner-catalog-sharing.vue';
@@ -60,10 +60,10 @@ export default defineComponent({
     AlertSyncDisabled,
     AlertSyncEnabled,
     BannerCatalogSharing,
+    CardSurvey,
     CategoryMatching,
     ExportCatalog,
-    Spinner,
-    Survey,
+    LoadingPageSpinner,
   },
   data() {
     return {

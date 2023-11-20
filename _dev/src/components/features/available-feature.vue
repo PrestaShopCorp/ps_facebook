@@ -37,21 +37,9 @@
 
 <script>
 import {defineComponent} from 'vue';
-import {
-  BCard,
-  BCardBody,
-  BButton,
-} from 'bootstrap-vue';
-import Tooltip from '../help/tooltip.vue';
 
 export default defineComponent({
   name: 'DisabledFeature',
-  components: {
-    BCard,
-    BCardBody,
-    BButton,
-    Tooltip,
-  },
   mixins: [],
   props: {
     name: {

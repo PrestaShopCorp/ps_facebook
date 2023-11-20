@@ -32,7 +32,7 @@
     @shown="afterDropdownShown"
     @hidden="afterDropdownHidden"
   >
-    <template v-slot:button-content>
+    <template #button-content>
       <template v-if="currentCategoryName">
         {{ currentCategoryName }}
       </template>
@@ -92,25 +92,9 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {debounce} from 'debounce';
-import {
-  BDropdown,
-  BDropdownItem,
-  BDropdownForm,
-  BFormInput,
-  BFormCheckbox,
-  BSpinner,
-} from 'bootstrap-vue';
 
 export default defineComponent({
   name: 'CategoryAutocomplete',
-  components: {
-    BDropdown,
-    BDropdownItem,
-    BDropdownForm,
-    BFormInput,
-    BFormCheckbox,
-    BSpinner,
-  },
   mixins: [],
   props: {
     language: {
@@ -165,6 +149,7 @@ export default defineComponent({
     },
     afterDropdownShown() {
       const input = document.getElementById(`dropdown-category-input-${this.shopCategoryId}`);
+
       if (input) {
         input.focus();
       }

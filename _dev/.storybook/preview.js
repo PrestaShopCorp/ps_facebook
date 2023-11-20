@@ -16,13 +16,12 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-import { addDecorator } from '@storybook/vue';
-import Vue from 'vue';
-import { select } from '@storybook/addon-knobs'
+import Vue, { defineComponent } from 'vue';
 
 // import vue plugins
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
+import {useGlobals} from '@storybook/client-api';
 import VueSegment from '@/lib/segment';
 
 // import css style
@@ -30,17 +29,11 @@ import 'bootstrap-vue/dist/bootstrap-vue';
 import 'prestakit/dist/css/bootstrap-prestashop-ui-kit.css';
 Vue.use(BootstrapVue, BootstrapVueIcons);
 
-import {messages, locales} from '@/lib/translations';
+import i18n, {availableLocales, loadLanguageAsync} from '@/lib/i18n.ts';
 import store from '@/store';
 
-// import css style
-// theme.css v1.7.5 from the Back-Office
-// all font import are commented to avoid 404
-import '!style-loader!css-loader?url=false!./assets/theme.css';
-// shame.css is a set of rules to better mimic the BO behavior in a shameful way
-import '!style-loader!css-loader?url=false!./assets/shame.css';
 // app.scss all the styles for the module
-import '!style-loader!css-loader!sass-loader!../src/assets/scss/app.scss';
+import '../src/assets/scss/app.scss';
 
 // Mock to simulate a FB onboarding popup
 window.psFacebookGenerateOpenPopup = (component) => () => {
@@ -61,54 +54,56 @@ Vue.use(VueSegment, {
   debug: true,
   pageCategory: '[GGL]',
 });
-addDecorator(() => ({
-  template: `
-    <div
-      class='nobootstrap'
-      style='
-        background: none;
-        padding: 0;
-        min-width: 0;
-    '>
-      <div id='psFacebookApp'>
-        <div class='ps_gs-sticky-head'>
-          <b-toaster
-            name='b-toaster-top-right'
-            class='ps_gs-toaster-top-right'
-          />
+export const decorators = [
+  (story, context) => {
+    const [{storybookLocale}] = useGlobals();
+    loadLanguageAsync(storybookLocale);
+
+    return defineComponent({
+      template: `
+        <div
+          class='nobootstrap'
+          style='
+            background: none;
+            padding: 0;
+            min-width: 0;
+        '>
+          <div id='psFacebookApp'>
+            <div class='ps_gs-sticky-head'>
+              <b-toaster
+                name='b-toaster-top-right'
+                class='ps_gs-toaster-top-right'
+              />
+            </div>
+            <story />
+          </div>
         </div>
-        <story />
-      </div>
-    </div>
-    `,
-    i18n: new VueI18n({
-    locale: 'en',
-    locales: locales,
-    messages: messages,
-  }),
-  props: {
-    storybookLocale: {
-      type: String,
-      default: select('I18n locale', locales, 'en'),
-    },
-  },
-  watch: {
-    // add a watcher to toggle language
-    storybookLocale: {
-      handler() {
-        this.$i18n.locale = this.storybookLocale;
+        `,
+      i18n,
+      data() {
+        return {
+          storybookLocale,
+        }
       },
-      immediate: true,
-    },
+      watch: {
+        // add a watcher to toggle language
+        storybookLocale: {
+          handler() {
+            this.$i18n.locale = this.storybookLocale;
+          },
+          immediate: true,
+        },
+      },
+      beforeCreate() {
+        window.i18nSettings = {
+          languageLocale: 'en-us',
+          isoCode: 'en',
+        }
+      },
+      store,
+    });
   },
-  beforeCreate() {
-    window.i18nSettings = {
-      languageLocale: 'en-us',
-      isoCode: 'en',
-    }
-  },
-  store,
-}));
+];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -130,3 +125,24 @@ export const parameters = {
     ],
   }
 }
+
+export const globalTypes = {
+  storybookLocale: {
+    description: 'Internationalization locale',
+    defaultValue: 'en',
+    toolbar: {
+      icon: 'globe',
+      items: availableLocales.map((languageLocale) => ({
+        value: languageLocale,
+        title: new Intl.DisplayNames(
+            [navigator.language || 'en'],
+            {type: 'language'},
+          ).of(languageLocale),
+        right: String.fromCodePoint(...(languageLocale === 'en' ? 'gb': languageLocale)
+          .toUpperCase()
+          .split('')
+          .map(char =>  127397 + char.charCodeAt())),
+      })),
+    },
+  },
+};

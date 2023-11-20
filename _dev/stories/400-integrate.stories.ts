@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import {State as OnboardingState, state as defaultOnboardingState} from '@/store/modules/onboarding/state';
 import {stateOnboarded} from "@/../.storybook/mock/onboarding";
-import Integrate from '@/views/integrate.vue';
+import Integrate from '@/views/integrate-tab.vue';
 
 export default {
   title: 'Integrate/Whole tab',

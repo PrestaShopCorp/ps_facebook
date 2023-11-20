@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import {BootstrapVue} from 'bootstrap-vue';
-import VueCollapse from 'vue2-collapse';
 import VueSegment from '@/lib/segment';
 import {initShopClient, getGenericRouteFromSpecificOne} from '@/lib/api/shopClient';
 import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
@@ -17,7 +16,6 @@ document.body.classList.add('no-smb-reskin');
 Vue.config.productionTip = false;
 Vue.config.ignoredElements = ['prestashop-accounts'];
 Vue.use(BootstrapVue);
-Vue.use(VueCollapse);
 Vue.use(VueSegment, {
   // @ts-ignore
   id: global.psFacebookSegmentId,
@@ -52,6 +50,7 @@ new Vue({
       }
 
       const userId = this.$store.state.context?.appContext?.shopId;
+
       if (userId) {
         // @ts-ignore
         this.$segment.identify(userId, {
