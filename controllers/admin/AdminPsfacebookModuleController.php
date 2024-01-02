@@ -140,8 +140,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'logo' => $partnerLogo,
             'tosLink' => 'https://prestashop.com/prestashop-account-terms-conditions/',
             'privacyLink' => 'https://prestashop.com/prestashop-account-privacy/',
-            // This field is deprecated, but must be provided to ensure backward compatibility
-            'emailSupport' => '',
+            // This field is deprecated but a valid email must be provided to ensure backward compatibility
+            'emailSupport' => 'no-reply@prestashop.com',
         ]));
         Media::addJsDef([
             'psBillingSubscription' => (!empty($currentSubscription['success']) ? $currentSubscription['body'] : null),
