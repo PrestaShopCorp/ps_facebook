@@ -9,7 +9,7 @@
             <span class="h1">
               <img
                 class="mr-1"
-                :src="require(`@/assets/${name}.png`)"
+                :src="imageUrl"
                 width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
@@ -83,9 +83,9 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
-import PsModal from '@/components/commons/ps-modal';
+import PsModal from '@/components/commons/ps-modal.vue';
 import TooltipStack from '@/components/help/tooltip-stack.vue';
 
 export default defineComponent({
@@ -146,6 +146,9 @@ export default defineComponent({
         return this.$t('configuration.app.disabled');
       }
       return this.$t('configuration.app.activated');
+    },
+    imageUrl(): string {
+      return new URL(`/src/assets/${this.name}.png`, import.meta.url).href;
     },
   },
   methods: {

@@ -7,7 +7,7 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo d-none d-md-block"
-            :src="require(`@/assets/${name}.png`)"
+            :src="imageUrl"
             :alt="$t(`integrate.features.${name}.name`)"
             width="80"
           >
@@ -35,7 +35,7 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
 
 export default defineComponent({
@@ -55,6 +55,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: global.psFacebookUpdateFeatureRoute,
+    },
+  },
+  computed: {
+    imageUrl(): string {
+      return new URL(`/src/assets/${this.name}.png`, import.meta.url).href;
     },
   },
   methods: {

@@ -7,7 +7,7 @@
         <div class="d-flex">
           <img
             class="mr-2 align-self-center logo d-none d-md-block"
-            :src="require(`@/assets/${name}_disabled.png`)"
+            :src="imageUrl"
             width="80"
           >
           <div class="description align-self-top flex-grow-1 pl-3 pr-2">
@@ -30,7 +30,7 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
 import {BCard, BCardBody} from 'bootstrap-vue';
 
@@ -40,7 +40,11 @@ export default defineComponent({
     BCard,
     BCardBody,
   },
-  mixins: [],
+  computed: {
+    imageUrl(): string {
+      return new URL(`/src/assets/${this.name}_disabled.png`, import.meta.url).href;
+    },
+  },
   props: {
     name: {
       type: String,
