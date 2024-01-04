@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Îmbunătățește-ți catalogul: maparea categoriilor",
-    "intro": "Important: \n― Câmpurile Categorie Google și Subcategorie Google sunt obligatorii pentru fiecare dintre categoriile tale PrestaShop \n― Maparea categoriilor este salvată automat după ce ai conectat categoria PrestaShop la o categorie și subcategorie Google \n― După ce ai mapat categoriile și subcategoriile, dă clic pe „Înapoi”. \n― Economisește timp aplicând maparea categoriei principale la subcategoriile sale, bifând caseta „Aplică subcategoriilor”",
+    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
     "counterSubTitle": "categorii specificate",
     "edit": "Editare",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Categorie pe site-ul tău",
       "secondTd": "Categorie Google",
-      "thirdTd": "Aplici la subcategorii?",
+      "thirdTd": "Apply to subcategories?",
       "fourthTd": "Subcategorie Google"
     },
     "editTable": {

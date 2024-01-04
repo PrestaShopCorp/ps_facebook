@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Ulepsz swój katalog: mapowanie kategorii",
-    "intro": "Ważne:\n- Pola Kategoria Google i Podkategoria Google są obowiązkowe dla każdej kategorii PrestaShop\n- Mapowanie kategorii jest automatycznie zapisywane po powiązaniu kategorii PrestaShop z kategorią i podkategorią Google \n- Po zmapowaniu kategorii i podkategorii wystarczy kliknąć \"Wróć\" \n- Zaoszczędź czas, stosując mapowanie głównej kategorii do jej podkategorii, zaznaczając pole \"Zastosuj do podkategorii\"",
+    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
     "counterSubTitle": "określone kategorie",
     "edit": "Edytuj",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Kategoria na Twojej stronie",
       "secondTd": "Kategoria Google",
-      "thirdTd": "Zastosować do podkategorii?",
+      "thirdTd": "Apply to subcategories?",
       "fourthTd": "Podkategoria Google"
     },
     "editTable": {
