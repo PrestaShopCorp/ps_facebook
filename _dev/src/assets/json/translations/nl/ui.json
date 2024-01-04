@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Verbeter uw catalogus: categorie in kaart brengen",
-    "intro": "Belangrijk:\n- De velden Google Categorie en Google Subcategorie zijn verplicht voor elk van uw PrestaShop categorieën\n- De back-up van uw categorie mapping is automatisch zodra u uw prestaShop categorie hebt gekoppeld aan een categorie en subcategorie van Google\n- Zodra u uw categorieën en subcategorieën in kaart hebt gebracht, kunt u op 'Terug' klikken\n- Bespaar tijd door de mapping van uw hoofdcategorie toe te passen op de 'kind'-categorieën', door het vakje 'Toepassen op subcategorieën' aan te vinken",
+    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
     "counterSubTitle": "In kaart gebrachte categorieën",
     "edit": "Bewerk",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Categorie op uw site",
       "secondTd": "Google categorie",
-      "thirdTd": "Toepassen op subcategorieën?",
+      "thirdTd": "Apply to subcategories?",
       "fourthTd": "Google subcategorie"
     },
     "editTable": {
