@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Расширение вашего каталога : отображение категорий",
-    "intro": "Важно: \n - Поля Google Category и Google Subcategory являются обязательными для каждой из категорий PrestaShop \n- Сопоставление категорий автоматически сохраняется, как только вы связали категорию PrestaShop с категорией и подкатегорией Google \n- Как только вы сопоставили ваши категории и подкатегории, просто нажмите \"Вернуться назад\" \n- Сэкономьте время, применив отображение главной категории к ее подкатегориям, установив флажок \"Применить к подкатегориям\".",
+    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
     "counterSubTitle": "указанные категории",
     "edit": "Редактировать",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Категория на вашем сайте",
       "secondTd": "Категория Google",
-      "thirdTd": "Применять к подкатегориям?",
+      "thirdTd": "Apply to subcategories?",
       "fourthTd": "Подкатегория Google"
     },
     "editTable": {
