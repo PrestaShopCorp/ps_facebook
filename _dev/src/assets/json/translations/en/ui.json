@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Enhance your catalog : category mapping",
-    "intro": "Important: \n - The Google Category and Google Subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and sub-categories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its sub-categories, by checking the 'Apply to sub categories' box",
+    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
     "counterSubTitle": "specified categories",
     "edit": "Edit",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Category on your site",
       "secondTd": "Google category",
-      "thirdTd": "Apply to sub-categories?",
+      "thirdTd": "Apply to subcategories?",
       "fourthTd": "Google subcategory"
     },
     "editTable": {
