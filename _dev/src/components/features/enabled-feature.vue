@@ -124,7 +124,7 @@ export default defineComponent({
     updateFeatureRoute: {
       type: String,
       required: false,
-      default: global.psFacebookUpdateFeatureRoute,
+      default: window.psFacebookUpdateFeatureRoute,
     },
     manageRoute: {
       type: Object,

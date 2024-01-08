@@ -87,17 +87,17 @@ export default defineComponent({
     getChildrensOfParentRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCategory || null,
+      default: () => window.psFacebookGetCategory || null,
     },
     saveParentStatement: {
       type: String,
       required: false,
-      default: () => global.psFacebookUpdateCategoryMatch || null,
+      default: () => window.psFacebookUpdateCategoryMatch || null,
     },
     getCategoriesRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCategories || null,
+      default: () => window.psFacebookGetCategories || null,
     },
   },
   computed: {

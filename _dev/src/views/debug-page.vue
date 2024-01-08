@@ -247,7 +247,7 @@ export default defineComponent({
     },
     sendPostRequest(data) {
       this.isLoading = true;
-      fetch(global.psFacebookUpdateConversionApiData, {
+      fetch(window.psFacebookUpdateConversionApiData, {
         method: 'POST',
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify(data),
@@ -267,7 +267,7 @@ export default defineComponent({
       });
     },
     callHeathCheck() {
-      fetch(global.psFacebookHealthCheckRoute)
+      fetch(window.psFacebookHealthCheckRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

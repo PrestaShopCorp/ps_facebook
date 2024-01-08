@@ -113,12 +113,12 @@ export default defineComponent({
     getCategoryMappingStatusRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCategoryMappingStatus || null,
+      default: () => window.psFacebookGetCategoryMappingStatus || null,
     },
     getCategoriesRoute: {
       type: String,
       required: false,
-      default: () => global.psFacebookGetCategories || null,
+      default: () => window.psFacebookGetCategories || null,
     },
     forceFetchData: {
       type: Object,

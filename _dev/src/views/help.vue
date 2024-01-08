@@ -44,7 +44,7 @@ export default defineComponent({
     psFacebookRetrieveFaq: {
       type: String,
       required: false,
-      default: () => global.psFacebookRetrieveFaq,
+      default: () => window.psFacebookRetrieveFaq,
     },
   },
   data() {

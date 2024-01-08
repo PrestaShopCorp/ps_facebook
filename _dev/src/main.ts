@@ -18,7 +18,7 @@ Vue.config.ignoredElements = ['prestashop-accounts'];
 Vue.use(BootstrapVue);
 Vue.use(VueSegment, {
   // @ts-ignore
-  id: global.psFacebookSegmentId,
+  id: window.psFacebookSegmentId,
   router,
   debug: process.env.NODE_ENV !== 'production',
   pageCategory: '[FBK]',
