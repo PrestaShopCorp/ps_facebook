@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => ({
     'process.env.NODE_ENV': mode === 'production' ? '"production"' : '"development"',
   },
   build: {
-    outDir: '../../../views/',
+    outDir: '../views/',
     publicPath: process.env.VITE_ASSETS_URL || '../modules/ps_facebook/views/',
     emptyOutDir: false,
     rollupOptions: {
