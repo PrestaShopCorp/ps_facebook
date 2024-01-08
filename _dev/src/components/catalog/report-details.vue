@@ -96,12 +96,12 @@ export default defineComponent({
     getProductsWithErrorsRoute: { // prevalidation scan reporting call
       type: String,
       required: false,
-      default: () => global.psFacebookGetProductsWithErrors || null,
+      default: () => window.psFacebookGetProductsWithErrors || null,
     },
     getProductStatusesRoute: { // reporting from FB
       type: String,
       required: false,
-      default: () => global.psFacebookGetProductStatuses || null,
+      default: () => window.psFacebookGetProductStatuses || null,
     },
     forceView: {
       type: String,

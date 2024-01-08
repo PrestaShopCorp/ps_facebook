@@ -141,12 +141,12 @@ export default defineComponent({
     shopUrl: {
       type: String,
       required: false,
-      default: () => global.shopUrl || null,
+      default: () => window.shopUrl || null,
     },
     isModuleEnabled: {
       type: Boolean,
       required: false,
-      default: () => global.psFacebookModuleEnabled ?? true,
+      default: () => window.psFacebookModuleEnabled ?? true,
     },
   },
   data() {
@@ -202,7 +202,7 @@ export default defineComponent({
     },
     manageRoute() {
       return {
-        default: `https://www.facebook.com/facebook_business_extension?app_id=${global.psFacebookAppId}&external_business_id=${this.GET_EXTERNAL_BUSINESS_ID}`,
+        default: `https://www.facebook.com/facebook_business_extension?app_id=${window.psFacebookAppId}&external_business_id=${this.GET_EXTERNAL_BUSINESS_ID}`,
         messenger_chat: `https://business.facebook.com/latest/inbox/settings/chat_plugin?asset_id=${this.GET_ONBOARDING_STATE?.page?.id}`,
         page_cta: `https://www.facebook.com/${this.GET_ONBOARDING_STATE?.page?.id}`,
         view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=${this.GET_ONBOARDING_STATE?.page?.id}`,
@@ -212,7 +212,7 @@ export default defineComponent({
   methods: {
     fetchData() {
       this.loading = true;
-      fetch(global.psFacebookGetFeaturesRoute)
+      fetch(window.psFacebookGetFeaturesRoute)
         .then((res) => {
           if (!res.ok) {
             throw new Error(res.statusText || res.status);

@@ -116,7 +116,7 @@ export default defineComponent({
     locale: {
       type: String,
       required: false,
-      default: () => global.psFacebookLocale || 'en-US',
+      default: () => window.psFacebookLocale || 'en-US',
     },
   },
   data() {
