@@ -34,8 +34,6 @@ new Vue({
   router,
   store,
   i18n,
-  template: '<App />',
-  components: {App},
   computed: {
     ...mapGetters('onboarding', [
       GettersTypesOnboarding.GET_EXTERNAL_BUSINESS_ID,
@@ -72,4 +70,5 @@ new Vue({
       });
     },
   },
+  render: (h) => h(App),
 }).$mount('#psFacebookApp');
