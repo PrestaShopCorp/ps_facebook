@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Erweitern Sie Ihren Katalog : Kategoriezuordnung",
-    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
+    "intro": "Wichtig:\n- Die Felder Google Kategorie und Google Unterkategorie sind für jede Ihrer PrestaShop-Kategorien obligatorisch\n- Die Sicherung Ihrer Kategoriezuordnung erfolgt automatisch, sobald Sie Ihre prestaShop-Kategorie mit einer Kategorie und Google-Unterkategorie verknüpft haben\n- Wenn Sie Ihre Kategorien und Unterkategorien zugewiesen haben, können Sie auf 'Zurück klicken'\n- Sparen Sie Zeit, indem Sie die Zuordnung Ihrer Hauptkategorie auf ihre untergeordneten 'Kategorien anwenden', indem Sie das Kontrollkästchen 'Auf Unterkategorien anwenden aktivieren'",
     "counterSubTitle": "Zugeordnete Kategorien",
     "edit": "Bearbeiten",
     "autocomplete": {
@@ -281,7 +281,7 @@
     "tableMatching": {
       "firstTd": "Kategorie auf Ihrer Website",
       "secondTd": "Google-Kategorie",
-      "thirdTd": "Apply to subcategories?",
+      "thirdTd": "Auf Unterkategorien anwenden?",
       "fourthTd": "Google-Unterkategorie"
     },
     "editTable": {
