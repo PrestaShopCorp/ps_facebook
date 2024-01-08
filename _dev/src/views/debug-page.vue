@@ -203,7 +203,7 @@ export default defineComponent({
       testEventCode: null,
       isLoading: false as boolean,
       healthCheckContent: {},
-      appBuildVersion: process.env.VUE_APP_BUILD_VERSION || 'Not provided',
+      appBuildVersion: import.meta.env.VITE_BUILD_VERSION || 'Not provided',
     };
   },
   computed: {
