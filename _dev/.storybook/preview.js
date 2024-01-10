@@ -123,7 +123,11 @@ export const parameters = {
         value: '#000000'
       },
     ],
-  }
+  },
+  chromatic: {
+    delay: 500,
+    diffThreshold: 0.15, // Test to see if we have less false positive
+  },
 }
 
 export const globalTypes = {
