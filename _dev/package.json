@@ -11,7 +11,8 @@
     "lint": "eslint --no-fix -c .eslintrc.js src/",
     "lint-fix": "eslint --fix -c .eslintrc.js src/",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@prestashopcorp/billing-cdc": "0.0.48",
@@ -44,6 +45,7 @@
     "@vitejs/plugin-vue2": "^2.0.3",
     "@vue/eslint-config-airbnb": "^5.3.0",
     "@vue/eslint-config-typescript": "^12.0.0",
+    "chromatic": "^10.2.0",
     "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prestashop": "^0.2.1",
@@ -63,5 +65,8 @@
     "vite-plugin-vue2": "^2.0.3",
     "vue-loader": "^15.10",
     "vue-template-compiler": "^2.7.14"
-  }
+  },
+  "version": "",
+  "readme": "ERROR: No README data found!",
+  "_id": "dev@"
 }
