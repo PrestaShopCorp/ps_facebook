@@ -8,7 +8,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {DebugPage},
-  template: '<debug-page :locale="locale" />',
+  template: '<debug-page />',
 });
 
 export const Debug: any = Template.bind({});

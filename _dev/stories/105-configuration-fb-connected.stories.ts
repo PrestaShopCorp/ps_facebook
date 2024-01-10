@@ -9,13 +9,13 @@ const contextPsFacebook = {
   facebookBusinessManager: {
     name: 'La Fanchonette',
     email: 'fanchonette@ps.com',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
     id: '12345689',
   },
   pixel: {
     name: 'La Fanchonette Test Pixel',
     id: '1234567890',
-    lastActive: Date.now(),
+    lastActive: '2024-01-10T14:29:09+0100',
     isActive: true,
   },
   page: {
@@ -25,7 +25,7 @@ const contextPsFacebook = {
   },
   ads: {
     name: 'La Fanchonette',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
   },
 };
 
@@ -36,12 +36,12 @@ const contextPsFacebookOverflows = {
   facebookBusinessManager: {
     name: 'La Fanchonette qui s\'étend sur la longueur',
     email: 'fanchonette.a.very.long.email.should.not.be.a.problem.even.if.its.too.long@ps.com',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
   },
   pixel: {
     name: 'La Fanchonette qui s\'étend sur la longueur Test Pixel',
     id: '123456789012345678901234567890',
-    lastActive: Date.now(),
+    lastActive: '2024-01-10T14:29:09+0100',
     isActive: true,
   },
   page: {
@@ -51,7 +51,7 @@ const contextPsFacebookOverflows = {
   },
   ads: {
     name: 'La Fanchonette qui s\'étend sur la longueur',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
   },
 };
 
@@ -62,13 +62,13 @@ const contextPsFacebookMissingPermissions = {
   facebookBusinessManager: {
     name: 'La Fanchonette',
     email: 'fanchonette@ps.com',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
     id: '12345689',
   },
   pixel: {
     name: 'La Fanchonette Test Pixel',
     id: '1234567890',
-    lastActive: Date.now(),
+    lastActive: '2024-01-10T14:29:09+0100',
     isActive: true,
   },
   page: {
@@ -78,7 +78,7 @@ const contextPsFacebookMissingPermissions = {
   },
   ads: {
     name: 'La Fanchonette',
-    createdAt: Date.now(),
+    createdAt: '2024-01-10T14:29:09+0100',
   },
 };
 
@@ -90,7 +90,7 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {FacebookConnected},
-  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :psFacebookAppId="psFacebookAppId" :externalBusinessId="externalBusinessId" @onEditClick="onEditClick" @onUninstallClick="onUninstallClick" @onPixelActivation="onPixelActivation" />',
+  template: '<facebook-connected :contextPsFacebook="contextPsFacebook" :psFacebookAppId="psFacebookAppId" :externalBusinessId="externalBusinessId" @onEditClick="onEditClick" @onPixelActivation="onPixelActivation" />',
 });
 export const Default:any = Template.bind({});
 Default.args = {

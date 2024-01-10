@@ -9,9 +9,7 @@ const Template = (args: any, { argTypes }: any) => ({
   props: Object.keys(argTypes),
   components: { ModalConfigurationCompleted },
   template: `
-    <modal-configuration-completed
-      @onHide="onHide"
-    />
+    <modal-configuration-completed />
   `,
 });
 export const ConfigurationCompleted: any = Template.bind({});
