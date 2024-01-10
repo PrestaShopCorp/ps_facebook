@@ -8,6 +8,13 @@ export default {
   component: Integrate,
 };
 
+const managementRoutes = {
+  default: `https://www.facebook.com/facebook_business_extension?app_id=XXX&external_business_id=XXX`,
+  messenger_chat: `https://business.facebook.com/latest/inbox/settings/chat_plugin?asset_id=XXX`,
+  page_cta: `https://www.facebook.com/XXX`,
+  view_message_url: `https://business.facebook.com/latest/inbox/all?asset_id=XXX`,
+};
+
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {Integrate},
@@ -19,7 +26,7 @@ const Template = (args: any, {argTypes}: any) => ({
 
 export const NoFeaturesEnabled: any = Template.bind({});
 NoFeaturesEnabled.args = {
-  enabledFeatures: [],
+  enabledFeatures: {},
   disabledFeatures: {
     "messenger_chat": {
       enabled: false
@@ -36,6 +43,7 @@ NoFeaturesEnabled.args = {
       enabled: false
     }
   },
+  manageRoute: managementRoutes,
 };
 
 export const MessengerEnabled: any = Template.bind({});
@@ -58,6 +66,7 @@ MessengerEnabled.args = {
       enabled: false
     }
   },
+  manageRoute: managementRoutes,
 };
 
 export const WithCatalogSynchronized: any = Template.bind({});
@@ -80,6 +89,7 @@ WithCatalogSynchronized.args = {
   },
   unavailableFeatures: {
   },
+  manageRoute: managementRoutes,
 };
 
 export const AllFeaturesEnabled: any = Template.bind({});
@@ -102,6 +112,7 @@ AllFeaturesEnabled.args = {
   },
   unavailableFeatures: {
   },
+  manageRoute: managementRoutes,
 };
 
 export const WarningWhenNoFeatures: any = Template.bind({});
@@ -112,4 +123,5 @@ WarningWhenNoFeatures.args = {
   },
   unavailableFeatures: {
   },
+  manageRoute: managementRoutes,
 };
