@@ -1,5 +1,8 @@
 <template>
-  <li :class="switchActivated ? null : 'disabled'">
+  <li
+    class="ps_fb_featurecard"
+    :class="switchActivated ? null : 'disabled'"
+  >
     <b-card no-body>
       <b-card-body
         class="p-3"
@@ -8,9 +11,8 @@
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <span class="h1">
               <img
-                class="mr-1"
+                class="mr-1 logo-sm"
                 :src="imageUrl"
-                width="40"
               >
               {{ $t(`integrate.features.${name}.name`) }}
             </span>
@@ -148,7 +150,7 @@ export default defineComponent({
       return this.$t('configuration.app.activated');
     },
     imageUrl(): string {
-      return new URL(`/src/assets/${this.name}.png`, import.meta.url).href;
+      return new URL(`/src/assets/${this.name}.svg`, import.meta.url).href;
     },
   },
   methods: {
@@ -236,9 +238,7 @@ export default defineComponent({
       border: none !important;
       border-radius: 3px;
     }
-    .flex-grow-1 {
-      flex-grow:1
-    }
+
     .switch-input {
       &.disabled {
         background: #eee !important;

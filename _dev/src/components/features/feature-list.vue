@@ -4,19 +4,10 @@
   </ul>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'FeatureList',
 });
 </script>
-
-<style lang="scss" scoped>
-  ul {
-    li {
-      list-style: none;
-      padding-bottom: 15px;
-    }
-  }
-</style>

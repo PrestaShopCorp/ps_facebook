@@ -1,14 +1,13 @@
 <template>
-  <li>
+  <li class="ps_fb_featurecard">
     <b-card no-body>
       <b-card-body
         class="p-3"
       >
         <div class="d-flex">
           <img
-            class="mr-2 align-self-center logo d-none d-md-block"
+            class="mr-2 align-self-center logo logo-disabled d-none d-md-block"
             :src="imageUrl"
-            width="80"
           >
           <div class="description align-self-top flex-grow-1 pl-3 pr-2">
             <h3>
@@ -42,7 +41,7 @@ export default defineComponent({
   },
   computed: {
     imageUrl(): string {
-      return new URL(`/src/assets/${this.name}_disabled.png`, import.meta.url).href;
+      return new URL(`/src/assets/${this.name}.svg`, import.meta.url).href;
     },
   },
   props: {
@@ -54,20 +53,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.logo {
-  float: left;
-  display: block;
-  height: 80px;
-  width: 80px;
-}
-
-.description {
-  display: table-cell;
-}
-
-.flex-grow-1 {
-  flex-grow:1
-}
-</style>
