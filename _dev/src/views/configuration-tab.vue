@@ -111,7 +111,7 @@
             class="closeCross p-1 m-4"
             @click="closePopup"
           >
-            <i class="material-icons">close</i>
+            <i class="material-icons-round">close</i>
           </div>
         </div>
         <div
@@ -122,7 +122,7 @@
             v-if="exchangeTokensErrored"
             class="refocus"
           >
-            <i class="material-icons fixed-size-large mb-2">warning</i>
+            <i class="material-icons-round fixed-size-large mb-2">warning</i>
             <p>{{ $t('configuration.facebook.exchangeTokens.errored') }}</p>
             <b-button
               variant="primary"
@@ -146,7 +146,7 @@
             </p>
             <span class="exchangeTokensLoader"><loading-page-spinner /></span>
             <p v-if="exchangeTokensTryAgain">
-              <i class="material-icons float-left fixed-size-big">warning</i>
+              <i class="material-icons-round float-left fixed-size-big">warning</i>
               {{ $t('configuration.facebook.exchangeTokens.tryAgain') }}
             </p>
           </div>

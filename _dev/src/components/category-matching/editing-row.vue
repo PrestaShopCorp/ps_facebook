@@ -72,7 +72,7 @@
         class="error"
         :title="error"
       >
-        <i class="material-icons">error</i>
+        <i class="material-icons-round">error</i>
       </div>
       <div
         v-else-if="loading === false"

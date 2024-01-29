@@ -4,7 +4,7 @@
     no-body
     class="m-3 mt-4 p-3 text-center survey"
   >
-    <h3><i class="material-icons">mood</i>  {{ $t('survey.title') }}</h3>
+    <h3><i class="material-icons-round">mood</i>  {{ $t('survey.title') }}</h3>
     <p class="small-text">
       {{ $t('survey.text') }}
     </p>
