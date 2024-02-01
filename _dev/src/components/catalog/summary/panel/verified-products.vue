@@ -45,7 +45,7 @@
           @click="$emit('triggerScan')"
         >
           <i
-            class="material-icons"
+            class="material-icons-round"
             :class="{'fa-spin': scanRequestStatus === RequestState.PENDING}"
           >autorenew</i>
           {{ $t('cta.rescan') }}

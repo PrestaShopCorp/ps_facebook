@@ -19,7 +19,7 @@
 <template>
   <b-card no-body>
     <template #header>
-      <i class="material-icons">help</i>{{ $t("help.title") }}
+      <i class="material-icons-round">help</i>{{ $t("help.title") }}
     </template>
 
     <b-card-body
@@ -108,7 +108,7 @@
                   @click="onQuestionClick(index + '_' + i)"
                 >
                   <summary class="faq__summary">
-                    <i class="material-icons">keyboard_arrow_right</i>
+                    <i class="material-icons-round">keyboard_arrow_right</i>
                     {{ item.question }}
                   </summary>
                   <p class="faq__answer">

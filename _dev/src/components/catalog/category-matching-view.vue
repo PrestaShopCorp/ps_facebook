@@ -32,7 +32,7 @@
           name: 'Catalog',
         })"
       >
-        <i class="material-icons">keyboard_backspace</i>
+        <i class="material-icons-round">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}
       </b-button>
       <div class="counter float-right ml-5">
@@ -54,7 +54,7 @@
           name: 'Catalog',
         })"
       >
-        <i class="material-icons">keyboard_backspace</i>
+        <i class="material-icons-round">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}
       </b-button>
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
