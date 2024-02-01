@@ -48,6 +48,12 @@ new Vue({
       }
 
       const userId = this.$store.state.context?.appContext?.shopId;
+      const anonymousId = btoa(window.location.host).slice(0, -1);
+
+      this.$segment.setAnonymousId(anonymousId);
+      if (userId) {
+        this.$segment.alias(userId, anonymousId);
+      }
 
       if (userId) {
         // @ts-ignore
