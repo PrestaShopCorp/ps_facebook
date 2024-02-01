@@ -1,0 +1,23 @@
+.ps_fb_featurecard {
+  list-style: none;
+  padding-bottom: 15px;
+
+  .logo {
+    max-height: 80px;
+    max-width: 80px;
+
+    &-disabled {
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+    }
+
+    &-sm {
+      max-height: 40px;
+      max-width: 40px;
+    }
+  }
+
+  .description {
+    display: table-cell;
+  }
+}
