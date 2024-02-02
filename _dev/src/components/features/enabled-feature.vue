@@ -11,7 +11,7 @@
           <div class="description align-self-center flex-grow-1 pl-3 pr-2">
             <span class="h1">
               <img
-                class="mr-1 logo-sm"
+                class="mr-1 logo"
                 :src="imageUrl"
               >
               {{ $t(`integrate.features.${name}.name`) }}
@@ -243,9 +243,6 @@ export default defineComponent({
       &.disabled {
         background: #eee !important;
       }
-    }
-    .feature-header {
-      margin-bottom: 1em;
     }
   }
 </style>
