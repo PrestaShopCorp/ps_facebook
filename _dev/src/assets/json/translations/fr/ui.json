@@ -267,7 +267,7 @@
   },
   "categoryMatching": {
     "title": "Améliorez votre catalogue : mapping des catégories",
-    "intro": "Important :\n- Les champs Catégorie Google et Sous-catégorie Google sont à remplir obligatoirement pour chacune de vos catégories PrestaShop,\n- La sauvegarde est automatique dès lors que vous avez lié votre catégorie PrestaShop à une catégorie et sous-catégorie Google,\n- Une fois que vous avez lié vos catégories et sous-catégories, vous pouvez cliquer sur &quot;Retour&quot;,\n- En cochant la case &quot;Appliquer aux sous catégories&quot;, vous pouvez appliquer le choix de votre catégorie « parent » à ses sous-catégories « enfants ».",
+    "intro": "Important :\n- Les champs Catégorie Google et Sous-catégorie Google sont à remplir obligatoirement pour chacune de vos catégories PrestaShop,\n- La sauvegarde est automatique dès lors que vous avez lié votre catégorie PrestaShop à une catégorie et sous-catégorie Google,\n- Une fois que vous avez lié vos catégories et sous-catégories, vous pouvez cliquer sur &quot;Précédent&quot;,\n- En cochant la case &quot;Appliquer aux sous catégories&quot;, vous pouvez appliquer le choix de votre catégorie « parent » à ses sous-catégories « enfants ».",
     "counterSubTitle": "Catégories mappées",
     "edit": "Editer",
     "autocomplete": {
