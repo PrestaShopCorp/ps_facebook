@@ -24,7 +24,7 @@ declare global {
       contextPsAccounts: any;
       psAccountShopId: string|null;
       contextPsEventbus: any;
-      psBillingContext?: IContextBase<IContextAuthentication>;
+      psBillingContext?: {context: IContextBase<IContextAuthentication>};
       psBillingSubscription?: ISubscription;
       psBilling: unknown;
       i18nSettings: any;
