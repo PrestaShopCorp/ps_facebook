@@ -38,8 +38,8 @@
       </b-button>
       <div class="counter float-right ml-5">
         <h3 :class="matchingDone">
-          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
-          <br>
+          {{ matchingProgress.matched }}
+          / {{ matchingProgress.total }}          <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
       </div>
@@ -61,7 +61,8 @@
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
       <div class="counter">
         <h3 :class="matchingDone">
-          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          {{ matchingProgress.matched }}
+          / {{ matchingProgress.total }}
           <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
@@ -88,12 +89,14 @@
   </b-card>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
+import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
-import EditTable from '../category-matching/editTable.vue';
+import EditTable from '@/components/category-matching/editTable.vue';
+import MixinMatching from '@/components/category-matching/matching';
 import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
-import MixinMatching from '../category-matching/matching.ts';
+import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 
 export default defineComponent({
   name: 'CatalogMatchingEdit',
@@ -105,59 +108,43 @@ export default defineComponent({
     MixinMatching,
   ],
   props: {
-    data: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-    getCategoryMappingStatusRoute: {
-      type: String,
-      required: false,
-      default: () => window.psFacebookGetCategoryMappingStatus || null,
-    },
     getCategoriesRoute: {
       type: String,
       required: false,
       default: () => window.psFacebookGetCategories || null,
     },
-    forceFetchData: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-    forceCategories: {
-      type: Array,
-      required: false,
-      default: null,
-    },
   },
   computed: {
+    ...mapGetters('catalog', [
+      GettersTypesCatalog.GET_CATEGORY_MATCHING_SUMMARY,
+    ]),
     matchingDone() {
-      if (this.matchingProgress.matched === this.matchingProgress.total) {
+      if (this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress
+        && this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress.matched
+        === this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress.total
+      ) {
         return 'matching-finished';
       }
       return '';
     },
+    matchingProgress() {
+      return {
+        matched: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.matched || '--',
+        total: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.total || '--',
+      };
+    },
   },
   data() {
     return {
-      loading: true,
-      categories: [],
-      matchingProgress: this.data ? this.data.matchingProgress : {total: '--', matched: '--'},
+      loading: true as boolean,
+      categories: [] as unknown[],
     };
   },
-  created() {
-    this.loading = true;
-    this.fetchCategoryMatchingCounters();
-    if (this.forceCategories !== null) {
-      this.categories = this.forceCategories;
-      this.loading = false;
-    } else {
-      this.fetchCategories(0, 1).then((res) => {
-        this.categories = res;
-        this.loading = false;
-      });
-    }
+  async mounted() {
+    await Promise.allSettled([
+      this.fetchCategoryMatchingCounters(),
+      this.fetchCategories(0, 1),
+    ]);
 
     // @ts-ignore
     this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
@@ -165,48 +152,32 @@ export default defineComponent({
     });
   },
   methods: {
-    fetchCategoryMatchingCounters() {
-      fetch(this.getCategoryMappingStatusRoute)
-        .then((res) => {
-          if (this.forceFetchData !== null) {
-            return this.forceFetchData;
-          }
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        })
-        .then((res) => {
-          this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
-        }).catch((error) => {
-          console.error(error);
-        });
+    async fetchCategoryMatchingCounters(): Promise<void> {
+      this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_STATS');
     },
 
-    fetchCategories(idCategory, page) {
-      let mainCategoryId = idCategory;
+    async fetchCategories(idCategory: number, page: number) {
+      const mainCategoryId = idCategory || this.$store.state.context.appContext.defaultCategory.id_category;
+      this.loading = true;
 
-      if (mainCategoryId === 0) {
-        mainCategoryId = this.$store.state.context.appContext.defaultCategory.id_category;
-      }
-
-      return fetch(this.getCategoriesRoute, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_category=${mainCategoryId}&page=${page}`,
-      }).then((res) => {
+      try {
+        const res = await fetch(this.getCategoriesRoute, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: `id_category=${mainCategoryId}&page=${page}`,
+        });
         if (!res.ok) {
           throw new Error(res.statusText || res.status);
         }
-        return res.json();
-      })
-        .then((res) => this.setValuesFromRequest(res)).catch((error) => {
-          console.error(error);
-        });
+        const json = await res.json();
+        this.categories = this.setValuesFromRequest(json);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
     },
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
-  },
-  watch: {
   },
 });
 </script>

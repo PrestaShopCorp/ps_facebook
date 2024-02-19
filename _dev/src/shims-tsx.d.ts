@@ -42,7 +42,6 @@ declare global {
       psFacebookGetCategories: string;
       psFacebookGetFeaturesRoute: string;
       psFacebookUpdateFeatureRoute: string;
-      psFacebookGetCategoryMappingStatus: string;
       psFacebookRetrieveFaq: string;
       psFacebookUpdateConversionApiData: string;
       psFacebookGetProductsWithErrors: string;

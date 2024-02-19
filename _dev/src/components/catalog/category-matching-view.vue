@@ -121,11 +121,6 @@ export default defineComponent({
       required: false,
       default: null,
     },
-    getCategoryMappingStatusRoute: {
-      type: String,
-      required: false,
-      default: () => window.psFacebookGetCategoryMappingStatus || null,
-    },
   },
   computed: {
     matchingDone() {
@@ -162,22 +157,8 @@ export default defineComponent({
     });
   },
   methods: {
-    fetchCategoryMatchingCounters() {
-      fetch(this.getCategoryMappingStatusRoute)
-        .then((res) => {
-          if (this.forceFetchData !== null) {
-            return this.forceFetchData;
-          }
-          if (!res.ok) {
-            throw new Error(res.statusText || res.status);
-          }
-          return res.json();
-        })
-        .then((res) => {
-          this.matchingProgress = (res && res.matchingProgress) || {total: '--', matched: '--'};
-        }).catch((error) => {
-          console.error(error);
-        });
+    async fetchCategoryMatchingCounters(): Promise<void> {
+      this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_STATS');
     },
 
     fetchCategories(idCategory, page) {

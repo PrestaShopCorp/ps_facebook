@@ -8,11 +8,18 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {CategoryMatchingEdit},
-  template: '<category-matching-edit :forceFetchData="testFetchData" :forceCategories="testFetchCategories" />',
+  template: '<category-matching-edit />',
+  beforeMount: args.beforeMount,
 });
 
 export const Default: any = Template.bind({});
 Default.args = {
+  beforeMount(this: any) {
+    this.$store.state.context.appContext.defaultCategory = {id_category: 1};
+    this.$store.state.catalog.categoryMatching.matchingProgress = {total: 2, matched: 0};
+
+    console.log(this.$store.state.catalog);
+  },
   testFetchData: {
     matchingProgress: {total: 2, matched: 0}
   },
@@ -46,6 +53,11 @@ Default.args = {
 
 export const ExportDone: any = Template.bind({});
 ExportDone.args = {
+
+  beforeMount(this: any) {
+    this.$store.state.context.appContext.defaultCategory = {id_category: 1};
+    this.$store.state.catalog.categoryMatching.matchingProgress = {total: 2, matched: 0};
+  },
   testFetchData: {
     matchingProgress: {total: 2, matched: 2}
   },

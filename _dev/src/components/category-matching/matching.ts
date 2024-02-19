@@ -97,7 +97,7 @@ const mixin = Vue.extend({
       };
     },
 
-    setValuesFromRequest(request) {
+    setValuesFromRequest(request: T): T {
       request.forEach((el) => {
         const propagation = (el.isParentCategory === '1');
         /* eslint no-param-reassign: "error" */

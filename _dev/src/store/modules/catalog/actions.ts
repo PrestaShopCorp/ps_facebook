@@ -200,4 +200,19 @@ export default {
       });
     }
   },
+
+  async [ActionsTypes.REQUEST_CATEGORY_MAPPING_STATS]({commit}: Context): Promise<void> {
+    try {
+      const result = await fetchShop('CategoryMappingCounters');
+
+      commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
+        matchingProgress: result.matchingProgress,
+      } as CategoryMatchingStatus);
+    } catch {
+      commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
+        matchingDone: null,
+        matchingProgress: null,
+      } as CategoryMatchingStatus);
+    }
+  },
 };
