@@ -1,9 +1,9 @@
 <template>
-  <loading-page-spinner v-if="loading" />
+  <loading-page-spinner v-if="loading && !categories.length" />
   <b-card
     class="card m-3"
     v-else
-    id="catalogCategoryMatchingView"
+    id="catalogCategoryMatchingEdit"
   >
     <div>
       <b-button
@@ -40,7 +40,7 @@
     </b-alert>
 
     <TableMatching
-      v-if="categories"
+      v-if="categories.length"
       :initial-categories="categories"
     />
   </b-card>
@@ -86,7 +86,7 @@ export default defineComponent({
   },
   data() {
     return {
-      categories: [] as unknown[],
+      categories: [] as Category[],
       loading: true as boolean,
       errors: false as boolean,
     };
@@ -94,7 +94,7 @@ export default defineComponent({
   async mounted() {
     await Promise.allSettled([
       this.fetchCategoryMatchingCounters(),
-      this.fetchCategories(0, 1),
+      this.fetchRootCategories(),
     ]);
 
     this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
@@ -106,7 +106,11 @@ export default defineComponent({
       this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_STATS');
     },
 
-    async fetchCategories(idCategory: number, page: number) {
+    async fetchRootCategories(): Promise<void> {
+      this.categories = await this.fetchCategories(0, 1);
+    },
+
+    async fetchCategories(idCategory: number, page: number): Promise<Category[]> {
       const mainCategoryId = idCategory
         || this.$store.state.context.appContext.defaultCategory.id_category;
       this.loading = true;
@@ -116,12 +120,15 @@ export default defineComponent({
         const categories = await this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_LIST', {
           idCategory: mainCategoryId, page,
         });
-        this.categories = this.setValuesFromRequest(categories);
+
+        return this.setValuesFromRequest(categories);
       } catch (error) {
         console.error(error);
         this.errors = true;
+        throw error;
+      } finally {
+        this.loading = false;
       }
-      this.loading = false;
     },
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },

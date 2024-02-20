@@ -306,12 +306,6 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-#psFacebookApp .display-table-matchingFb .table-responsive:after {
-  height: 24.6rem !important;
-  content: '';
-  display: block;
-}
-
 .display-table-matchingFb .psfb-lazy-loading {
   width: 100%;
   height: 40px;

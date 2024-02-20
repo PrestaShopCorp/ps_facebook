@@ -536,8 +536,23 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
     public function displayAjaxGetCategories()
     {
-        $categoryId = (int) Tools::getValue('id_category');
-        $page = (int) Tools::getValue('page');
+        $inputs = json_decode(Tools::file_get_contents('php://input'), true);
+
+        $categoryId = isset($inputs['id_category']) ? (int) $inputs['id_category'] : null;
+        $page = isset($inputs['page']) ? (int) $inputs['page'] : null;
+
+        if ($categoryId === null || $page === null) {
+            http_response_code(400);
+            $this->ajaxDie(
+                json_encode(
+                    [
+                        'success' => false,
+                        'message' => 'Missing data',
+                    ]
+                )
+            );
+        }
+
         $shopId = (int) $this->context->shop->id;
         $langId = $this->context->language->id;
         /** @var GoogleCategoryProviderInterface $googleCategoryProvider */
