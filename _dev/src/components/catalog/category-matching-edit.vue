@@ -1,21 +1,3 @@
-<!--**
- * 2007-2021 PrestaShop and Contributors
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@prestashop.com so we can send you a copy immediately.
- *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2021 PrestaShop SA and Contributors
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
- * International Registered Trademark & Property of PrestaShop SA
- *-->
 <template>
   <loading-page-spinner v-if="loading" />
 
@@ -24,8 +6,7 @@
     v-else
     id="catalogCategoryMatchingEdit"
   >
-    <!-- Large screen -->
-    <div class="d-none d-md-block">
+    <div>
       <b-button
         class="float-left mr-3"
         variant="outline-secondary"
@@ -39,35 +20,14 @@
       <div class="counter float-right ml-5">
         <h3 :class="matchingDone">
           {{ matchingProgress.matched }}
-          / {{ matchingProgress.total }}          <br>
+          / {{ matchingProgress.total }}
+          <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
       </div>
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
     </div>
 
-    <!-- Small screen -->
-    <div class="d-block d-md-none">
-      <b-button
-        class="w-auto mb-3"
-        variant="outline-secondary"
-        @click="$router.push({
-          name: 'Catalog',
-        })"
-      >
-        <i class="material-icons-round">keyboard_backspace</i>
-        {{ $t('catalogSummary.backButton') }}
-      </b-button>
-      <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
-      <div class="counter">
-        <h3 :class="matchingDone">
-          {{ matchingProgress.matched }}
-          / {{ matchingProgress.total }}
-          <br>
-          <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
-        </h3>
-      </div>
-    </div>
 
     <p
       class="py-3"
@@ -107,13 +67,6 @@ export default defineComponent({
   mixins: [
     MixinMatching,
   ],
-  props: {
-    getCategoriesRoute: {
-      type: String,
-      required: false,
-      default: () => window.psFacebookGetCategories || null,
-    },
-  },
   computed: {
     ...mapGetters('catalog', [
       GettersTypesCatalog.GET_CATEGORY_MATCHING_SUMMARY,
@@ -129,8 +82,8 @@ export default defineComponent({
     },
     matchingProgress() {
       return {
-        matched: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.matched || '--',
-        total: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.total || '--',
+        matched: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.matched ?? '--',
+        total: this.GET_CATEGORY_MATCHING_SUMMARY.matchingProgress?.total ?? '--',
       };
     },
   },
@@ -146,7 +99,6 @@ export default defineComponent({
       this.fetchCategories(0, 1),
     ]);
 
-    // @ts-ignore
     this.$segment.identify(this.$store.state.context?.appContext?.shopId, {
       psx_ps_category_mapping_tool_clicked: true,
     });
@@ -161,21 +113,14 @@ export default defineComponent({
       this.loading = true;
 
       try {
-        const res = await fetch(this.getCategoriesRoute, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: `id_category=${mainCategoryId}&page=${page}`,
+        const categories = await this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_LIST', {
+          idCategory: mainCategoryId, page
         });
-        if (!res.ok) {
-          throw new Error(res.statusText || res.status);
-        }
-        const json = await res.json();
-        this.categories = this.setValuesFromRequest(json);
+        this.categories = this.setValuesFromRequest(categories);
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
+      this.loading = false;
     },
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },

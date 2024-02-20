@@ -30,7 +30,18 @@ import 'prestakit/dist/css/bootstrap-prestashop-ui-kit.css';
 Vue.use(BootstrapVue, BootstrapVueIcons);
 
 import i18n, {availableLocales, loadLanguageAsync} from '@/lib/i18n.ts';
+import {initShopClient} from '@/lib/api/shopClient';
 import store from '@/store';
+
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+// Initialize MSW
+initialize({
+  serviceWorker: {
+    // Points to the custom location of the Service Worker file.
+    url: './mockServiceWorker.js'
+  },
+  onUnhandledRequest: 'bypass',
+});
 
 // app.scss all the styles for the module
 import '../src/assets/scss/app.scss';
@@ -98,11 +109,13 @@ export const decorators = [
         window.i18nSettings = {
           languageLocale: 'en-us',
           isoCode: 'en',
-        }
+        };
+        initShopClient({shopUrl: 'shop-bo-mocked-api?token=wololo'});
       },
       store,
     });
   },
+  mswDecorator,
 ];
 
 export const parameters = {

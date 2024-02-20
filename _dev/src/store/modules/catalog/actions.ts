@@ -215,4 +215,11 @@ export default {
       } as CategoryMatchingStatus);
     }
   },
+
+  async [ActionsTypes.REQUEST_CATEGORY_MAPPING_LIST]({commit}: Context, payload): Promise<any> {
+    return fetchShop('getCategories', {
+      id_category: payload.idCategory,
+      page: payload.page,
+    });
+  },
 };
