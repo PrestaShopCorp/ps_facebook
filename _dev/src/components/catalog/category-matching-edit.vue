@@ -107,13 +107,14 @@ export default defineComponent({
     },
 
     async fetchCategories(idCategory: number, page: number) {
-      const mainCategoryId = idCategory || this.$store.state.context.appContext.defaultCategory.id_category;
+      const mainCategoryId = idCategory
+        || this.$store.state.context.appContext.defaultCategory.id_category;
       this.loading = true;
       this.errors = false;
 
       try {
         const categories = await this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_LIST', {
-          idCategory: mainCategoryId, page
+          idCategory: mainCategoryId, page,
         });
         this.categories = this.setValuesFromRequest(categories);
       } catch (error) {
