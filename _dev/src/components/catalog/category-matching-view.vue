@@ -1,9 +1,10 @@
 <template>
   <loading-page-spinner v-if="loading" />
+
   <b-card
     class="card m-3"
     v-else
-    id="catalogCategoryMatchingView"
+    id="catalogCategoryMatchingEdit"
   >
     <div>
       <b-button
@@ -18,7 +19,8 @@
       </b-button>
       <div class="counter float-right ml-5">
         <h3 :class="matchingDone">
-          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
+          {{ matchingProgress.matched }}
+          / {{ matchingProgress.total }}
           <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
@@ -26,21 +28,22 @@
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
     </div>
 
+
     <p
       class="py-3"
       v-html="md2html($t('categoryMatching.intro'))"
     />
 
-    <b-alert
-      v-if="errors"
-      show
-      variant="danger"
+    <b-button
+      class="float-right ml-3"
+      variant="primary"
+      @click="goToCategoryMatchingEditPage"
     >
-      {{ $t('categoryMatching.errors') }}
-    </b-alert>
+      {{ $t('categoryMatching.edit') }}
+    </b-button>
 
-    <TableMatching
-      v-if="categories"
+    <EditTable
+      v-if="categories.length > 0"
       :initial-categories="categories"
     />
   </b-card>
@@ -50,16 +53,17 @@
 import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
-import TableMatching from '@/components/category-matching/tableMatching.vue';
-import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
+import EditTable from '@/components/category-matching/editTable.vue';
 import MixinMatching from '@/components/category-matching/matching';
+import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
+import CatalogTabPages from './pages';
 
 export default defineComponent({
   name: 'CatalogMatchingView',
   components: {
     LoadingPageSpinner,
-    TableMatching,
+    EditTable,
   },
   mixins: [
     MixinMatching,
@@ -86,9 +90,8 @@ export default defineComponent({
   },
   data() {
     return {
-      categories: [] as unknown[],
       loading: true as boolean,
-      errors: false as boolean,
+      categories: [] as unknown[],
     };
   },
   async mounted() {
@@ -109,7 +112,6 @@ export default defineComponent({
     async fetchCategories(idCategory: number, page: number) {
       const mainCategoryId = idCategory || this.$store.state.context.appContext.defaultCategory.id_category;
       this.loading = true;
-      this.errors = false;
 
       try {
         const categories = await this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_LIST', {
@@ -118,9 +120,13 @@ export default defineComponent({
         this.categories = this.setValuesFromRequest(categories);
       } catch (error) {
         console.error(error);
-        this.errors = true;
       }
       this.loading = false;
+    },
+    goToCategoryMatchingEditPage() {
+      this.$router.push({
+        name: CatalogTabPages.categoryMatchingEdit,
+      });
     },
     md2html: (md) => (new Showdown.Converter()).makeHtml(md),
   },

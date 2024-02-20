@@ -1,10 +1,9 @@
 <template>
   <loading-page-spinner v-if="loading" />
-
   <b-card
     class="card m-3"
     v-else
-    id="catalogCategoryMatchingEdit"
+    id="catalogCategoryMatchingView"
   >
     <div>
       <b-button
@@ -19,8 +18,7 @@
       </b-button>
       <div class="counter float-right ml-5">
         <h3 :class="matchingDone">
-          {{ matchingProgress.matched }}
-          / {{ matchingProgress.total }}
+          {{ matchingProgress.matched }} / {{ matchingProgress.total }}
           <br>
           <span>{{ $t('categoryMatching.counterSubTitle') }}</span>
         </h3>
@@ -28,22 +26,21 @@
       <h1>{{ $t('catalogSummary.categoryMatching') }}</h1>
     </div>
 
-
     <p
       class="py-3"
       v-html="md2html($t('categoryMatching.intro'))"
     />
 
-    <b-button
-      class="float-right ml-3"
-      variant="primary"
-      @click="$parent.goto($parent.CatalogTabPages.categoryMatchingView)"
+    <b-alert
+      v-if="errors"
+      show
+      variant="danger"
     >
-      {{ $t('categoryMatching.edit') }}
-    </b-button>
+      {{ $t('categoryMatching.errors') }}
+    </b-alert>
 
-    <EditTable
-      v-if="categories.length > 0"
+    <TableMatching
+      v-if="categories"
       :initial-categories="categories"
     />
   </b-card>
@@ -53,16 +50,16 @@
 import {defineComponent} from 'vue';
 import {mapGetters} from 'vuex';
 import Showdown from 'showdown';
-import EditTable from '@/components/category-matching/editTable.vue';
-import MixinMatching from '@/components/category-matching/matching';
+import TableMatching from '@/components/category-matching/tableMatching.vue';
 import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
+import MixinMatching from '@/components/category-matching/matching';
 import GettersTypesCatalog from '@/store/modules/catalog/getters-types';
 
 export default defineComponent({
   name: 'CatalogMatchingEdit',
   components: {
     LoadingPageSpinner,
-    EditTable,
+    TableMatching,
   },
   mixins: [
     MixinMatching,
@@ -89,8 +86,9 @@ export default defineComponent({
   },
   data() {
     return {
-      loading: true as boolean,
       categories: [] as unknown[],
+      loading: true as boolean,
+      errors: false as boolean,
     };
   },
   async mounted() {
@@ -111,6 +109,7 @@ export default defineComponent({
     async fetchCategories(idCategory: number, page: number) {
       const mainCategoryId = idCategory || this.$store.state.context.appContext.defaultCategory.id_category;
       this.loading = true;
+      this.errors = false;
 
       try {
         const categories = await this.$store.dispatch('catalog/REQUEST_CATEGORY_MAPPING_LIST', {
@@ -119,6 +118,7 @@ export default defineComponent({
         this.categories = this.setValuesFromRequest(categories);
       } catch (error) {
         console.error(error);
+        this.errors = true;
       }
       this.loading = false;
     },

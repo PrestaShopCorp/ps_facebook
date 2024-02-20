@@ -57,8 +57,14 @@ export default defineComponent({
   },
   methods: {
     goToCategoryMatchingPage() {
+      if (this.matchingProgress.matchingDone) {
+        this.$router.push({
+          name: CatalogTabPages.categoryMatchingView,
+        });
+        return;
+      }
       this.$router.push({
-        name: CatalogTabPages.categoryMatchingView,
+        name: CatalogTabPages.categoryMatchingEdit,
       });
     },
   },
