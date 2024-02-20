@@ -218,6 +218,20 @@ export default {
 
   // eslint-disable-next-line no-empty-pattern
   async [ActionsTypes.REQUEST_CATEGORY_MAPPING_LIST]({}: Context, payload): Promise<any> {
+    // Backward compatibility for module versions below 1.36
+    if (window.psFacebookGetCategories) {
+      const res = await fetch(window.psFacebookGetCategories, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_category=${payload.idCategory}&page=${payload.page}`,
+      });
+
+      if (!res.ok) {
+        throw new Error(res.statusText || res.status);
+      }
+      return res.json();
+    }
+
     return fetchShop('getCategories', {
       id_category: payload.idCategory,
       page: payload.page,
