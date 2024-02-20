@@ -94,11 +94,6 @@ export default defineComponent({
       required: false,
       default: () => window.psFacebookUpdateCategoryMatch || null,
     },
-    getCategoriesRoute: {
-      type: String,
-      required: false,
-      default: () => window.psFacebookGetCategories || null,
-    },
   },
   computed: {
     activeCategories() {

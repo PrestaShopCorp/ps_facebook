@@ -39,7 +39,6 @@ declare global {
       psFacebookFbeOnboardingUninstallRoute: string;
       psFacebookUpdateCategoryMatch: string;
       psFacebookGetCategory: string;
-      psFacebookGetCategories: string;
       psFacebookGetFeaturesRoute: string;
       psFacebookUpdateFeatureRoute: string;
       psFacebookRetrieveFaq: string;
