@@ -19,7 +19,7 @@
               class="ml-1 p-0 d-flex"
               variant="text"
             >
-              <span class="material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
+              <span class="material-icons material-icons-round ps_gs-fz-20 mb-1 ml-0 text-secondary">
                 help_outline
               </span>
             </b-button>
@@ -45,7 +45,7 @@
           @click="$emit('triggerScan')"
         >
           <i
-            class="material-icons-round"
+            class="material-icons material-icons-round"
             :class="{'fa-spin': scanRequestStatus === RequestState.PENDING}"
           >autorenew</i>
           {{ $t('cta.rescan') }}

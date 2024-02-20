@@ -5,7 +5,7 @@
     >
       <span class="step-is-done rounded-circle bg-success d-flex align-items-center mr-1">
         <i
-          class="material-icons-round text-light ps_gs-fz-16 ml-auto mr-auto"
+          class="material-icons material-icons-round text-light ps_gs-fz-16 ml-auto mr-auto"
         >check</i>
       </span>
       {{ $t('configuration.billingFacade.title') }}
@@ -14,7 +14,7 @@
       class="d-flex align-items-center"
     >
       <i
-        class="material-icons-round ps_gs-fz-48 mr-3"
+        class="material-icons material-icons-round ps_gs-fz-48 mr-3"
       >credit_card</i>
       {{ billingStatusText }}
       <div class="d-md-flex ml-auto text-center">

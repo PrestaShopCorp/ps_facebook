@@ -3,7 +3,7 @@
     <b-card>
       <div class="d-flex">
         <div class="warning-left">
-          <i class="material-icons-round align-self-center m-3">error_outline</i>
+          <i class="material-icons material-icons-round align-self-center m-3">error_outline</i>
         </div>
         <div class="flex-grow-1 warning-right">
           <p class="m-2">

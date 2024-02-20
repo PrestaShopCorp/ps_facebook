@@ -30,7 +30,7 @@
           name: 'Catalog',
         })"
       >
-        <i class="material-icons-round">keyboard_backspace</i>
+        <i class="material-icons material-icons-round">keyboard_backspace</i>
         {{ $t('catalogSummary.backButton') }}
       </b-button>
       <h1>{{ $t('syncReport.title') }}</h1>

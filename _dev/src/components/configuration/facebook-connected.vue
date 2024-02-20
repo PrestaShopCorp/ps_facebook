@@ -7,7 +7,7 @@
     >
       <span class="step-is-done rounded-circle bg-success d-flex align-items-center mr-1">
         <i
-          class="material-icons-round text-light ps_gs-fz-16 ml-auto mr-auto"
+          class="material-icons material-icons-round text-light ps_gs-fz-16 ml-auto mr-auto"
         >check</i>
       </span>
       {{ $t('configuration.facebook.title') }}
