@@ -124,7 +124,7 @@ export default defineComponent({
 
       return this.$t('catalog.summaryPage.productCatalog.productVerification.scanStatus.lastScanDate', {
         date: this.verificationsStats.lastScanDate.toLocaleDateString(
-          window.i18nSettings.languageLocale.substring(0, 2),
+          this.$i18n.locale,
           {dateStyle: 'long'},
         ),
         time: this.verificationsStats.lastScanDate.toLocaleTimeString(
