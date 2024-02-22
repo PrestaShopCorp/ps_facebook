@@ -45,7 +45,7 @@ export default {
           lastScanDate: string,
         },
         reporting: {
-          lastSyncDate: string,
+          lastSyncDate: string|0,
           catalog: number,
           errored: number,
         }
@@ -59,6 +59,12 @@ export default {
 
     try {
       const result: SynchronizationStatusDto = await fetchShop('CatalogSummary');
+      const toDateOrNull = (source: string|0): Date|null => {
+        if (!source) {
+          return null;
+        }
+        return new Date(source);
+      };
 
       if (result.exportDone) {
         commit(MutationsTypes.SET_CATALOG_PAGE_ENABLED);
@@ -68,11 +74,11 @@ export default {
       commit(MutationsTypes.SET_SYNCHRONIZATION_SUMMARY, {
         prevalidation: {
           ...result.validation.prevalidation,
-          lastScanDate: new Date(result.validation.prevalidation.lastScanDate),
+          lastScanDate: toDateOrNull(result.validation.prevalidation.lastScanDate),
         },
         reporting: {
           ...result.validation.reporting,
-          lastSyncDate: new Date(result.validation.reporting.lastSyncDate),
+          lastSyncDate: toDateOrNull(result.validation.reporting.lastSyncDate),
         },
       } as ProductFeedReport,
       );
