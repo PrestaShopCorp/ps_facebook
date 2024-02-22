@@ -766,6 +766,7 @@ export default defineComponent({
 
         & .spinner {
           top: 3rem;
+          background-color: unset !important;
         }
       }
     }
