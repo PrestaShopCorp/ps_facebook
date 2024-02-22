@@ -124,7 +124,7 @@ export default defineComponent({
   },
   mounted() {
     if (this.$segment) {
-      this.$segment.track('PS Social with Facebook & Instagram installed', {
+      this.$segment.track('[FBK] PS Social with Facebook & Instagram installed', {
         module: 'ps_facebook',
       });
     }

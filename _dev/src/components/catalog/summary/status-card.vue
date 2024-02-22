@@ -79,6 +79,7 @@
 import {PropType, defineComponent} from 'vue';
 
 export type StatusCardParameters = {
+  id: string,
   title: string;
   description: string;
   icon: string;
@@ -127,7 +128,7 @@ export default defineComponent({
   },
   methods: {
     onLinkClick(): void {
-      this.$segment.track(`[FBK] Product feed - Click on Status card "${this.status.title}"`, {
+      this.$segment.track(`[FBK] Product feed - Click on Status card "${this.status.id}"`, {
         module: 'ps_facebook',
       });
     },

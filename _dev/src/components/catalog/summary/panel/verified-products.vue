@@ -142,6 +142,7 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
+        id: 'Approved',
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalog'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalogDescription'),
         value: this.active ? this.productsInCatalog : null,
@@ -156,6 +157,7 @@ export default defineComponent({
         }),
       },
       {
+        id: 'Verified',
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verified'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.verifiedDescription'),
         value: this.active ? this.verificationsStats.syncable : null,
@@ -164,6 +166,7 @@ export default defineComponent({
         reverseColors: false,
       },
       {
+        id: 'NonCompliant',
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliant'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.nonCompliantDescription'),
         value: this.active ? this.verificationsStats.notSyncable : null,

@@ -165,14 +165,14 @@ export default defineComponent({
           this.$bvModal.show(
             this.$refs[`modal_${this.name}`].$refs.modal.id,
           );
-          this.$segment.track('Sales Channels - Disable modal displayed', {
+          this.$segment.track('[FBK] Sales Channels - Disable modal displayed', {
             module: 'ps_facebook',
           });
         }
       }
     },
     onManageClick(name) {
-      this.$segment.track(`Click on "manage" ${name}`, {
+      this.$segment.track(`[FBK] Click on "manage" ${name}`, {
         module: 'ps_facebook',
       });
     },

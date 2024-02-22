@@ -102,7 +102,7 @@ export default defineComponent({
     onFbeOnboardClick() {
       if (this.canConnect) {
         this.$emit('onFbeOnboardClick');
-        this.$segment.track('Launch FB configuration', {
+        this.$segment.track('[FBK] Launch FB configuration', {
           module: 'ps_facebook',
         });
       }

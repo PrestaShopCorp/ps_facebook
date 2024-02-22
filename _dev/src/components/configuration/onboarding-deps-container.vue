@@ -132,6 +132,12 @@ export default defineComponent({
       window.psaccountsVue.init();
     },
     initBillingComponent(): void {
+      if (!this.billingSubscription) {
+        this.$segment.track('[FBK] PS Account connected', {
+          module: 'ps_facebook',
+        });
+      }
+
       if (!window.psBilling || !this.billingContext) {
         return;
       }

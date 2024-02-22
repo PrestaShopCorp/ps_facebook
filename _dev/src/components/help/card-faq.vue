@@ -161,18 +161,18 @@ export default defineComponent({
   },
   methods: {
     contactUs() {
-      this.$segment.track('Click on Contact us', {
+      this.$segment.track('[FBK] Click on Contact us', {
         module: 'ps_facebook',
       });
     },
     getDocumentation() {
       window.open(this.$props.docLink, '_blank');
-      this.$segment.track('Click on Download the guide CTA', {
+      this.$segment.track('[FBK] Click on Download the guide CTA', {
         module: 'ps_facebook',
       });
     },
     onQuestionClick(ref) {
-      this.$segment.track(`Click on the question #${ref}`, {
+      this.$segment.track(`[FBK] Click on the question #${ref}`, {
         module: 'ps_facebook',
       });
     },
