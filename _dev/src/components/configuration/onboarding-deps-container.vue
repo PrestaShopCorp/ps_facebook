@@ -91,7 +91,7 @@ export default defineComponent({
     };
   },
   computed: {
-    billingContext(): IContextBase<IContextAuthentication>|undefined {
+    billingContext(): {context: IContextBase<IContextAuthentication>}|undefined {
       return window.psBillingContext;
     },
     billingSubscription(): ISubscription|undefined {

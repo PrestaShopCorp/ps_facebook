@@ -24,7 +24,10 @@
           }}
         </span>
       </p>
-      <div class="d-md-flex flex-grow-1 text-center align-items-end mt-2">
+      <div
+        class="d-md-flex flex-grow-1 text-center align-items-end mt-2"
+        v-if="isResubscriptionPossible"
+      >
         <b-button
           class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto"
           variant="outline-primary"
@@ -58,6 +61,9 @@ export default defineComponent({
         window.i18nSettings.languageLocale.substring(0, 2),
         {dateStyle: 'long'},
       );
+    },
+    isResubscriptionPossible(): boolean {
+      return !this.subscription.parent_plan_name;
     },
   },
 });

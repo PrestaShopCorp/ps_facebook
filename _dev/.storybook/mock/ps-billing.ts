@@ -160,3 +160,19 @@ export const runningSubscription = {
   trial_end: 1698706800,
   is_free_trial_used: true,
 };
+
+
+export const makeSubscriptionFromEdition = (subscription) => {
+  return {
+    ...subscription,
+    parent_plan_name: "PrestaShop",
+    parent_product_id: "smb_edition",
+    plan_amount: 2900,
+    plan_unit_price: 2900,
+    subscription_items: [{
+      group_id: "smb_edition-growth",
+      item_price_id: "ps_facebook-standard-EUR-Monthly",
+      item_type: "plan",
+    }],
+  };
+};
