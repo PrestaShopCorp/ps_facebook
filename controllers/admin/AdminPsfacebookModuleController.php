@@ -221,15 +221,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
-            'psFacebookGetCategories' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'getCategories',
-                    'ajax' => 1,
-                ]
-            ),
             'psFacebookGetFeaturesRoute' => $this->context->link->getAdminLink(
                 'AdminAjaxPsfacebook',
                 true,
@@ -245,15 +236,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'UpdateFeature',
-                    'ajax' => 1,
-                ]
-            ),
-            'psFacebookGetCategoryMappingStatus' => $this->context->link->getAdminLink(
-                'AdminAjaxPsfacebook',
-                true,
-                [],
-                [
-                    'action' => 'CategoryMappingCounters',
                     'ajax' => 1,
                 ]
             ),

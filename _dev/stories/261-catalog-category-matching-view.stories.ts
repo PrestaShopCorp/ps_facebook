@@ -1,4 +1,5 @@
-import CategoryMatchingView from '../src/components/catalog/category-matching-view.vue';
+import { rest } from 'msw';
+import CategoryMatchingView from '@/components/catalog/category-matching-view.vue';
 
 export default {
   title: 'Catalog/Category matching view page',
@@ -8,71 +9,126 @@ export default {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {CategoryMatchingView},
-  template: '<category-matching-view  :forceFetchData="testFetchData" :forceCategories="testFetchCategories"/>',
+  template: '<category-matching-view />',
 });
 
 export const Default: any = Template.bind({});
 Default.args = {
-  testFetchData: {
-    matchingProgress: {total: 2, matched: 0}
+  beforeMount(this: any) {
+    this.$store.state.context.appContext.defaultCategory = {id_category: 1};
   },
-  testFetchCategories: [
-    {
-      'shopCategoryId': '2',
-      'shopCategoryName': 'Bird',
-      'deploy': '0',
-      'show': true,
-      'googleCategoryParentName': '',
-      'googleCategoryParentId': 0,
-      'shopParentCategoryIds': '',
-      'googleCategoryName':'',
-      'subcategoryId': 0,
-      'isParentCategory': false,
-    },
-    {
-      'shopCategoryId': '3',
-      'shopCategoryName': 'Bird Baths',
-      'deploy': '0',
-      'show': true,
-      'googleCategoryParentName': '',
-      'googleCategoryParentId': 0,
-      'shopParentCategoryIds': '',
-      'googleCategoryName':'',
-      'subcategoryId': 0,
-      'isParentCategory': false,
-    }
-  ]
+};
+Default.parameters = {
+  msw: {
+    handlers: [
+      rest.post('/shop-bo-mocked-api', (req, res, ctx) => {
+        const action = req.body.action;
+        if (action === 'getCategories') {
+          return res(
+            ctx.json([
+              {
+                'shopCategoryId': '2',
+                'shopCategoryName': 'Bird',
+                'deploy': '0',
+                'show': true,
+                'googleCategoryParentName': '',
+                'googleCategoryParentId': 0,
+                'shopParentCategoryIds': '',
+                'googleCategoryName':'',
+                'subcategoryId': 0,
+                'isParentCategory': false,
+              },
+              {
+                'shopCategoryId': '3',
+                'shopCategoryName': 'Bird Baths',
+                'deploy': '0',
+                'show': true,
+                'googleCategoryParentName': '',
+                'googleCategoryParentId': 0,
+                'shopParentCategoryIds': '',
+                'googleCategoryName':'',
+                'subcategoryId': 0,
+                'isParentCategory': false,
+              }
+            ]),
+          );
+        }
+
+        if (action === 'CategoryMappingCounters') {
+          return res(
+            ctx.json({
+              matchingProgress: {
+                matched: 0,
+                total: 2,
+              },
+            }),
+          );
+        }
+        return res(
+          ctx.status(404)
+        );
+      }),
+    ],
+  },
 };
 
 export const ExportDone: any = Template.bind({});
 ExportDone.args = {
-  testFetchData: {
-    matchingProgress: {total: 2, matched: 2}
+  beforeMount(this: any) {
+    this.$store.state.context.appContext.defaultCategory = {id_category: 1};
   },
-  testFetchCategories: [
-    {
-      'shopCategoryId': '2',
-      'shopCategoryName': 'Bird',
-      'deploy': '0',
-      'show': true,
-      'googleCategoryParentName': 'Bird Supplies',
-      'googleCategoryParentId': 2,
-      'shopParentCategoryIds': '',
-      'googleCategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies',
-      'googleCategoryId': 3,
-      'isParentCategory': true,
-    },
-    {
-      'shopCategoryId': '3',
-      'shopCategoryName': 'Bird Baths',
-      'deploy': '0',
-      'show': true,
-      'googleCategoryParentName': 'Animals & Pet Supplies',
-      'googleCategoryParentId': 2,
-      'shopParentCategoryIds': '',
-      'googleCategoryName':'Animals & Pet Supplies > Pet Supplies',
-      'googleCategoryId': 499954,
-      'isParentCategory': true,
-    }
-  ]
+};
+
+ExportDone.parameters = {
+  msw: {
+    handlers: [
+      rest.post('/shop-bo-mocked-api', (req, res, ctx) => {
+        const action = req.body.action;
+        if (action === 'getCategories') {
+          return res(
+            ctx.json([
+              {
+                'shopCategoryId': '2',
+                'shopCategoryName': 'Bird',
+                'deploy': '0',
+                'show': true,
+                'googleCategoryParentName': 'Bird Supplies',
+                'googleCategoryParentId': 2,
+                'shopParentCategoryIds': '',
+                'googleCategoryName':'Animals & Pet Supplies > Pet Supplies > Bird Supplies',
+                'googleCategoryId': 3,
+                'isParentCategory': true,
+              },
+              {
+                'shopCategoryId': '3',
+                'shopCategoryName': 'Bird Baths',
+                'deploy': '0',
+                'show': true,
+                'googleCategoryParentName': 'Animals & Pet Supplies',
+                'googleCategoryParentId': 2,
+                'shopParentCategoryIds': '',
+                'googleCategoryName':'Animals & Pet Supplies > Pet Supplies',
+                'googleCategoryId': 499954,
+                'isParentCategory': true,
+              }
+            ]),
+          );
+        }
+
+        if (action === 'CategoryMappingCounters') {
+          return res(
+            ctx.json({
+              matchingProgress: {
+                matched: 2,
+                total: 2,
+              },
+            }),
+          );
+        }
+        return res(
+          ctx.status(404)
+        );
+      }),
+    ],
+  },
 };

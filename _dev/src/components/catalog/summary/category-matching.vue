@@ -1,32 +1,15 @@
 <template>
   <b-card
     no-body
-    class="category-matched d-flex flex-row flex-align-center catalogSummary__card"
+    class="category-matched catalogSummary__card"
   >
-    <div>
-      <b-card-header class="d-flex">
+    <b-card-header class="d-flex align-items-start">
+      <div>
         {{ $t('catalog.summaryPage.categoryMatching.title') }}
-      </b-card-header>
-
-      <b-card-body class="d-flex justify-content-start">
-        <div class="text-category-mapping ps_gs-fz-16">
-          {{ $t('catalog.summaryPage.categoryMatching.description') }}
-          <div
-            v-if="matchingProgress.matchingDone"
-            class="text-progress-bar-status mt-2"
-          >
-            {{ $t('catalog.summaryPage.categoryMatching.progress', {
-              current: matchingProgress.matchingProgress.matched,
-              total: matchingProgress.matchingProgress.total,
-            }) }}
-          </div>
-        </div>
-      </b-card-body>
-    </div>
-    <b-card-body>
+      </div>
       <b-button
         :variant="matchingProgress.matchingDone ? 'outline-primary': 'primary'"
-        class="ml-auto text-nowrap mt-2"
+        class="ml-auto text-nowrap"
         :disabled="!active"
         @click="goToCategoryMatchingPage"
       >
@@ -34,6 +17,21 @@
           ? $t('cta.manageCategoryMatching')
           : $t('cta.setupCategoryMatching') }}
       </b-button>
+    </b-card-header>
+
+    <b-card-body class="d-flex justify-content-start">
+      <div class="text-category-mapping ps_gs-fz-16">
+        {{ $t('catalog.summaryPage.categoryMatching.description') }}
+        <div
+          v-if="matchingProgress.matchingDone"
+          class="text-progress-bar-status mt-2"
+        >
+          {{ $t('catalog.summaryPage.categoryMatching.progress', {
+            current: matchingProgress.matchingProgress.matched,
+            total: matchingProgress.matchingProgress.total,
+          }) }}
+        </div>
+      </div>
     </b-card-body>
   </b-card>
 </template>
@@ -57,8 +55,14 @@ export default defineComponent({
   },
   methods: {
     goToCategoryMatchingPage() {
+      if (this.matchingProgress.matchingDone) {
+        this.$router.push({
+          name: CatalogTabPages.categoryMatchingView,
+        });
+        return;
+      }
       this.$router.push({
-        name: CatalogTabPages.categoryMatchingView,
+        name: CatalogTabPages.categoryMatchingEdit,
       });
     },
   },

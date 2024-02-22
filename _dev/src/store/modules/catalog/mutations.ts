@@ -33,7 +33,10 @@ export default {
     state: LocalState,
     payload: CategoryMatchingStatus,
   ) {
-    state.categoryMatching = payload;
+    state.categoryMatching = {
+      ...state.categoryMatching,
+      ...payload,
+    };
   },
 
   [MutationsTypes.SET_REQUEST_STATE](

@@ -200,4 +200,41 @@ export default {
       });
     }
   },
+
+  async [ActionsTypes.REQUEST_CATEGORY_MAPPING_STATS]({commit}: Context): Promise<void> {
+    try {
+      const result = await fetchShop('CategoryMappingCounters');
+
+      commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
+        matchingProgress: result.matchingProgress,
+      } as CategoryMatchingStatus);
+    } catch {
+      commit(MutationsTypes.SET_CATEGORY_MATCHING_SUMMARY, {
+        matchingDone: null,
+        matchingProgress: null,
+      } as CategoryMatchingStatus);
+    }
+  },
+
+  // eslint-disable-next-line no-empty-pattern
+  async [ActionsTypes.REQUEST_CATEGORY_MAPPING_LIST]({}: Context, payload): Promise<any> {
+    // Backward compatibility for module versions below 1.36
+    if (window.psFacebookGetCategories) {
+      const res = await fetch(window.psFacebookGetCategories, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_category=${payload.idCategory}&page=${payload.page}`,
+      });
+
+      if (!res.ok) {
+        throw new Error(res.statusText || res.status);
+      }
+      return res.json();
+    }
+
+    return fetchShop('getCategories', {
+      id_category: payload.idCategory,
+      page: payload.page,
+    });
+  },
 };

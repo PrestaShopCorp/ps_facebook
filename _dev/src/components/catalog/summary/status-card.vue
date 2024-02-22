@@ -31,7 +31,7 @@
         class="d-flex p-3"
       >
         <span
-          class="material-icons-round ps_gs-fz-20 mt-1 mr-1
+          class="material-icons material-icons-round ps_gs-fz-20 mt-1 mr-1
             ps_gs-productfeed__products-status__icon"
           :class="`text-${status.variant}`"
           data-test-id="pf-status-icon"

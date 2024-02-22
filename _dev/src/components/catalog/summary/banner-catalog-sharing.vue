@@ -10,7 +10,7 @@
           class="ps_gs-fz-24 font-weight-700 mb-2 prestafont"
         >
           <i
-            class="material-icons-round mr-1 pb-1"
+            class="material-icons material-icons-round mr-1 pb-1"
           >local_fire_department</i>
           {{ $t('configuration.catalogBanner.title') }}
         </div>

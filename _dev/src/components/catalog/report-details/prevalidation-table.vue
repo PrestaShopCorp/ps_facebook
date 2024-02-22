@@ -102,41 +102,41 @@
         <b-td>
           <i
             v-if="cover"
-            class="material-icons-round text-success"
+            class="material-icons material-icons-round text-success"
           >done</i>
           <i
             v-else
-            class="material-icons-round text-danger"
+            class="material-icons material-icons-round text-danger"
           >close</i>
         </b-td>
         <b-td>
           <i
             v-if="d"
-            class="material-icons-round text-success"
+            class="material-icons material-icons-round text-success"
           >done</i>
           <i
             v-else
-            class="material-icons-round text-danger"
+            class="material-icons material-icons-round text-danger"
           >close</i>
         </b-td>
         <b-td>
           <i
             v-if="isbn"
-            class="material-icons-round text-success"
+            class="material-icons material-icons-round text-success"
           >done</i>
           <i
             v-else
-            class="material-icons-round text-danger"
+            class="material-icons material-icons-round text-danger"
           >close</i>
         </b-td>
         <b-td>
           <i
             v-if="price"
-            class="material-icons-round text-success"
+            class="material-icons material-icons-round text-success"
           >done</i>
           <i
             v-else
-            class="material-icons-round text-danger"
+            class="material-icons material-icons-round text-danger"
           >close</i>
         </b-td>
       </b-tr>
