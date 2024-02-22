@@ -57,8 +57,14 @@
           class="text-muted text-italic"
         >
           {{ $t('syncReport.lastSyncDate', [
-            lastSyncDate.toLocaleDateString(undefined, { dateStyle: 'medium' }),
-            lastSyncDate.toLocaleTimeString(undefined),
+            lastSyncDate.toLocaleDateString(
+              $i18n.locale,
+              {dateStyle: 'long'},
+            ),
+            lastSyncDate.toLocaleTimeString(
+              $i18n.locale,
+              {hour: '2-digit', minute: '2-digit'},
+            ),
           ]) }}
         </span>
         <br v-if="lastSyncDate">
