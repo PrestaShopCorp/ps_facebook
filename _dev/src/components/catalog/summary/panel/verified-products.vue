@@ -128,7 +128,7 @@ export default defineComponent({
           {dateStyle: 'long'},
         ),
         time: this.verificationsStats.lastScanDate.toLocaleTimeString(
-          undefined,
+          this.$i18n.locale,
           {hour: '2-digit', minute: '2-digit'},
         ),
       });

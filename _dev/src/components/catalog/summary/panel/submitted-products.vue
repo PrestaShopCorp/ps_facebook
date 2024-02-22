@@ -139,7 +139,7 @@ export default defineComponent({
           {dateStyle: 'long'},
         ),
         time: this.validationSummary.lastSyncDate.toLocaleTimeString(
-          undefined,
+          this.$i18n.locale,
           {hour: '2-digit', minute: '2-digit'},
         ),
       });
