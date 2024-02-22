@@ -149,6 +149,7 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
+        id: 'Approved',
         title: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.approved'),
         description: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.approvedDescription'),
         value: this.validationSummary.catalog,
@@ -163,6 +164,7 @@ export default defineComponent({
         }),
       },
       {
+        id: 'Disapproved',
         title: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.disapproved'),
         description: this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.reportCards.disapprovedDescription'),
         value: this.validationSummary.errored,

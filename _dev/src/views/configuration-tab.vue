@@ -588,7 +588,7 @@ export default defineComponent({
         }
         console.log('Onboarding successfull on PrestaShop side.');
         if (this.$segment) {
-          this.$segment.track('[FBK] PS Account & FBE connected', {
+          this.$segment.track('[FBK] Onboarding - FBE connected', {
             module: 'ps_facebook',
           });
         }
@@ -612,7 +612,7 @@ export default defineComponent({
         }
         console.log('Tokens exchanged - FBE fully onboarded.');
         if (this.$segment) {
-          this.$segment.track('[FBK] FBE fully onboarded', {
+          this.$segment.track('[FBK] Onboarding - FBE Tokens validated', {
             module: 'ps_facebook',
           });
         }
@@ -631,7 +631,7 @@ export default defineComponent({
           // failure, force un-onboarding
           console.log('Exchange tokens failed, un-onboard now...');
           if (this.$segment) {
-            this.$segment.track('[FBK] Exchange tokens failed, un-onboard now', {
+            this.$segment.track('[FBK] Exchange tokens failed', {
               module: 'ps_facebook',
             });
           }
