@@ -107,6 +107,7 @@ export default defineComponent({
       categories: this.initialCategories,
       loading: false,
       language: this.$store.state.context.appContext.localeLang,
+      page: 2 as number,
     };
   },
   methods: {
@@ -266,9 +267,10 @@ export default defineComponent({
           === de.scrollHeight
       ) {
         this.loading = true;
-        this.$parent.fetchCategories(0, 1).then((res) => {
+        this.$parent.fetchCategories(0, this.page).then((res) => {
           const resp = this.formatDataFromLazyLoading(res, this.categories);
           this.categories = resp.newCategories;
+          this.page += 1;
           if (resp.hasCategoriesStatement === true) {
             window.removeEventListener('scroll', this.handleScroll);
           }
