@@ -63,7 +63,7 @@ export default defineComponent({
   },
   methods: {
     onSales(name) {
-      this.$segment.track(`Add CTA - ${name}`, {
+      this.$segment.track(`[FBK] Add CTA - ${name}`, {
         module: 'ps_facebook',
       });
 

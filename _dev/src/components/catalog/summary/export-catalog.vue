@@ -111,13 +111,13 @@ export default defineComponent({
       this.$store.dispatch('catalog/REQUEST_TOGGLE_SYNCHRONIZATION', newValue);
     },
     async triggerProductsScan() {
-      this.$segment.track('Scan of products triggered', {
+      this.$segment.track('[FBK] Scan of products triggered', {
         module: 'ps_facebook',
       });
 
       const numberOfPages = await this.$store.dispatch('catalog/REQUEST_PRODUCT_SCAN');
 
-      this.$segment.track('Scan of products done', {
+      this.$segment.track('[FBK] Scan of products done', {
         module: 'ps_facebook',
         numberOfPages,
       });

@@ -75,7 +75,7 @@ class Installer
      */
     public function install()
     {
-        $this->segment->setMessage('PS Social with Facebook & Instagram installed');
+        $this->segment->setMessage('[FBK] PS Social with Facebook & Instagram installed');
         $this->segment->track();
 
         return $this->installConfiguration() &&

@@ -237,7 +237,7 @@ export default defineComponent({
         return;
       }
       this.$segment.track(
-        newView === 'PREVALIDATION' ? 'See prevalidation scan details' : 'See reporting details',
+        `[FBK] ${newView === 'PREVALIDATION' ? 'See prevalidation scan details' : 'See reporting details'}`,
         {
           module: 'ps_facebook',
         },

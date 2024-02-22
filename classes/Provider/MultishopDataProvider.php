@@ -69,7 +69,7 @@ class MultishopDataProvider
                 continue;
             }
 
-            $this->segment->setMessage('Error: Warn about multistore incompatibility with PS Account');
+            $this->segment->setMessage('[FBK] Error: Warn about multistore incompatibility with PS Account');
             $this->segment->track();
 
             return true;

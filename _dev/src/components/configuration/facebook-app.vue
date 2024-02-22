@@ -196,7 +196,7 @@ export default defineComponent({
       this.switchActivated = !this.switchActivated;
     },
     onStats() {
-      this.$segment.track('Click on view stat CTA', {
+      this.$segment.track('[FBK] Click on view stat CTA', {
         module: 'ps_facebook',
       });
     },
@@ -207,10 +207,10 @@ export default defineComponent({
     },
     switchActivated(newValue: boolean) {
       this.$emit('onActivation', newValue);
-      this.$segment.track('Click on pixel switch CTA', {
+      this.$segment.track('[FBK] Click on pixel switch CTA', {
         module: 'ps_facebook',
       });
-      this.$segment.track(`Feature Pixel ${newValue ? 'enabled' : 'disabled'}`, {
+      this.$segment.track(`[FBK] Feature Pixel ${newValue ? 'enabled' : 'disabled'}`, {
         module: 'ps_facebook',
       });
     },

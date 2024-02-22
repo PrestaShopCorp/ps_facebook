@@ -150,7 +150,7 @@ export default defineComponent({
   methods: {
     edit() {
       this.$emit('onEditClick');
-      this.$segment.track('Click on Restart onboarding', {
+      this.$segment.track('[FBK] Click on Restart onboarding', {
         module: 'ps_facebook',
       });
     },
@@ -159,7 +159,7 @@ export default defineComponent({
     },
     openManageFbe() {
       window.open(this.fbeUrl, '_blank');
-      this.$segment.track('Click on Open advanced Settings', {
+      this.$segment.track('[FBK] Click on Open advanced Settings', {
         module: 'ps_facebook',
       });
     },

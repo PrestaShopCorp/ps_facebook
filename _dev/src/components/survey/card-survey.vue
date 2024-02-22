@@ -39,7 +39,7 @@ export default defineComponent({
   },
   methods: {
     onSurvey() {
-      this.$segment.track('Take the survey', {
+      this.$segment.track('[FBK] Take the survey', {
         module: 'ps_facebook',
       });
     },

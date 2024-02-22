@@ -140,13 +140,13 @@ export default defineComponent({
         }
         this.loading = false;
         this.actionNeededDone = true;
-        this.$segment.track(`${this.moduleName} upgraded from alert`, {
+        this.$segment.track(`[FBK] ${this.moduleName} upgraded from alert`, {
           module: 'ps_facebook',
         });
       }).catch((error) => {
         console.error(error);
         this.loading = false;
-        this.$segment.track(`Upgrade of ${this.moduleName} failed`, {
+        this.$segment.track(`[FBK] Upgrade of ${this.moduleName} failed`, {
           module: 'ps_facebook',
         });
       });

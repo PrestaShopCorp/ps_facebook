@@ -485,7 +485,7 @@ export default defineComponent({
           this.setErrorsFromFbCall(error);
         });
 
-      this.$segment.track('Click on unlink', {
+      this.$segment.track('[FBK] Click on unlink', {
         module: 'ps_facebook',
       });
     },
@@ -557,7 +557,7 @@ export default defineComponent({
         console.error('The pop-up gets blocked');
         console.error(error);
         if (this.$segment) {
-          this.$segment.track('The pop-up gets blocked', {
+          this.$segment.track('[FBK] The pop-up gets blocked', {
             module: 'ps_facebook',
           });
         }
@@ -588,7 +588,7 @@ export default defineComponent({
         }
         console.log('Onboarding successfull on PrestaShop side.');
         if (this.$segment) {
-          this.$segment.track('PS Account & FBE connected', {
+          this.$segment.track('[FBK] PS Account & FBE connected', {
             module: 'ps_facebook',
           });
         }
@@ -612,7 +612,7 @@ export default defineComponent({
         }
         console.log('Tokens exchanged - FBE fully onboarded.');
         if (this.$segment) {
-          this.$segment.track('FBE fully onboarded', {
+          this.$segment.track('[FBK] FBE fully onboarded', {
             module: 'ps_facebook',
           });
         }
@@ -631,7 +631,7 @@ export default defineComponent({
           // failure, force un-onboarding
           console.log('Exchange tokens failed, un-onboard now...');
           if (this.$segment) {
-            this.$segment.track('Exchange tokens failed, un-onboard now', {
+            this.$segment.track('[FBK] Exchange tokens failed, un-onboard now', {
               module: 'ps_facebook',
             });
           }
@@ -676,7 +676,7 @@ export default defineComponent({
         this.popup = this.openPopup();
       }
       if (this.$segment) {
-        this.$segment.track('Click on black screen', {
+        this.$segment.track('[FBK] Click on black screen', {
           module: 'ps_facebook',
         });
       }
@@ -687,7 +687,7 @@ export default defineComponent({
         this.safePopup.close();
       }
       if (this.$segment) {
-        this.$segment.track('Click on the cross to close the pop-in', {
+        this.$segment.track('[FBK] Click on the cross to close the pop-in', {
           module: 'ps_facebook',
         });
       }

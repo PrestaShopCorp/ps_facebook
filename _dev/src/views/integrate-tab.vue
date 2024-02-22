@@ -269,7 +269,7 @@ export default defineComponent({
       this.displaySuccessMessages(newEnabledFeatures);
       this.dynamicEnabledFeatures = newEnabledFeatures;
 
-      this.$segment.track(`Feature ${name} ${newStatus ? 'enabled' : 'disabled'}`, {
+      this.$segment.track(`[FBK] Feature ${name} ${newStatus ? 'enabled' : 'disabled'}`, {
         module: 'ps_facebook',
       });
     },
