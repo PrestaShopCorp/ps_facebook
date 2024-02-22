@@ -207,9 +207,6 @@ export default defineComponent({
     },
     switchActivated(newValue: boolean) {
       this.$emit('onActivation', newValue);
-      this.$segment.track('[FBK] Click on pixel switch CTA', {
-        module: 'ps_facebook',
-      });
       this.$segment.track(`[FBK] Feature Pixel ${newValue ? 'enabled' : 'disabled'}`, {
         module: 'ps_facebook',
       });
