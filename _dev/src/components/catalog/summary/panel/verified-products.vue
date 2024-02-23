@@ -142,7 +142,7 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
-        id: 'Approved',
+        id: 'InCatalog',
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalog'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalogDescription'),
         value: this.active ? this.productsInCatalog : null,
