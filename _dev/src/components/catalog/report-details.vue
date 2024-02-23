@@ -79,11 +79,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
 import LoadingPageSpinner from '@/components/spinner/loading-page-spinner.vue';
 import PrevalidationTable from './report-details/prevalidation-table.vue';
 import ReportingTable from './report-details/reporting-table.vue';
+import {toDateOrNull} from '@/utils/Dates';
 
 export default defineComponent({
   name: 'CatalogReportDetails',
@@ -137,7 +138,7 @@ export default defineComponent({
       prevalidationRows: [],
       reportingRows: [],
       url: '',
-      lastSyncDate: null,
+      lastSyncDate: null as Date|null,
     };
   },
   mounted() {
@@ -199,7 +200,7 @@ export default defineComponent({
         const newPage = Object.values(list || {}).map((row) => ({...row, page}));
         this.reportingRows = this.reportingRows.filter((row) => row.page < page).concat(newPage);
         this.url = url;
-        this.lastSyncDate = new Date(lastFinishedSyncStartedAt);
+        this.lastSyncDate = toDateOrNull(lastFinishedSyncStartedAt);
         return newPage.length;
       });
     },
