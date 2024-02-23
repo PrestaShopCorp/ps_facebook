@@ -175,7 +175,7 @@ export default defineComponent({
         reverseColors: false,
         ...(this.active && this.verificationsStats.notSyncable && {
           link: {
-            to: {name: CatalogTabPages.prevalidationDetails},
+            to: {name: CatalogTabPages.nonCompliantProductsReport},
           },
           reverseColors: !!this.verificationsStats.notSyncable,
         }),

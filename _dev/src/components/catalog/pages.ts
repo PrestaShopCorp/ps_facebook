@@ -2,8 +2,8 @@ const CatalogTabPages = {
   summary: 'summary',
   categoryMatchingView: 'categoryMatchingView',
   categoryMatchingEdit: 'categoryMatchingEdit',
-  prevalidationDetails: 'prevalidationDetails',
-  reportDetails: 'reportDetails',
+  nonCompliantProductsReport: 'nonCompliantProductsReport',
+  disapprovedProductsReport: 'disapprovedProductsReport',
 };
 
 export default CatalogTabPages;

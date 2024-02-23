@@ -26,9 +26,9 @@
     <catalog-category-matching-view v-if="$route.name === CatalogTabPages.categoryMatchingView" />
     <catalog-report-details
       v-if="
-        $route.name === CatalogTabPages.prevalidationDetails ||
-          $route.name === CatalogTabPages.reportDetails"
-      :force-view="$route.name === CatalogTabPages.prevalidationDetails
+        $route.name === CatalogTabPages.nonCompliantProductsReport ||
+          $route.name === CatalogTabPages.disapprovedProductsReport"
+      :force-view="$route.name === CatalogTabPages.nonCompliantProductsReport
         ? 'PREVALIDATION' : 'REPORTING'"
     />
   </div>
