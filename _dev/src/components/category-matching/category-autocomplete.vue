@@ -24,8 +24,9 @@
     ref="dropdown"
     variant="outline-secondary"
     class="m-2 category-matching-dropdown"
-    boundary="scrollParent"
-    menu-class="w-100"
+    boundary=".editing-row"
+    menu-class="w-25"
+    no-caret
     no-flip
     :disabled="disabled"
     @show="beforeDropdownShown"
