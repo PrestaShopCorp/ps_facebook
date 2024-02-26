@@ -3,7 +3,7 @@
     <i18n
       path="catalog.summaryPage.productCatalog.fullScanRequest.resetExportLink"
       tag="div"
-      class="py-2 mb-0"
+      class="py-2 mb-1"
     >
       <b-link
         @click="resetSync"
