@@ -8,12 +8,12 @@
         {{ $t('catalog.summaryPage.categoryMatching.title') }}
       </div>
       <b-button
-        :variant="matchingProgress.matchingDone ? 'outline-primary': 'primary'"
+        :variant="hasCategoryMappingStarted ? 'outline-primary': 'primary'"
         class="ml-auto text-nowrap"
         :disabled="!active"
         @click="goToCategoryMatchingPage"
       >
-        {{ matchingProgress.matchingDone
+        {{ hasCategoryMappingStarted
           ? $t('cta.manageCategoryMatching')
           : $t('cta.setupCategoryMatching') }}
       </b-button>
@@ -23,7 +23,7 @@
       <div class="text-category-mapping ps_gs-fz-16">
         {{ $t('catalog.summaryPage.categoryMatching.description') }}
         <div
-          v-if="matchingProgress.matchingDone"
+          v-if="hasCategoryMappingStarted"
           class="text-progress-bar-status mt-2"
         >
           {{ $t('catalog.summaryPage.categoryMatching.progress', {
@@ -53,9 +53,14 @@ export default defineComponent({
       required: true,
     },
   },
+  computed: {
+    hasCategoryMappingStarted(): boolean {
+      return !!this.matchingProgress.matchingProgress.matched;
+    },
+  },
   methods: {
     goToCategoryMatchingPage() {
-      if (this.matchingProgress.matchingDone) {
+      if (this.hasCategoryMappingStarted) {
         this.$router.push({
           name: CatalogTabPages.categoryMatchingView,
         });
