@@ -68,7 +68,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue';
 import MixinMatching from './matching.ts';
 
@@ -114,6 +114,7 @@ export default defineComponent({
       enableCheckbox: false,
       filterCategory: false,
       numberOfCategoryWithoutMatching: 0,
+      page: 2 as number,
     };
   },
   methods: {
@@ -228,9 +229,10 @@ export default defineComponent({
           === de.scrollHeight
       ) {
         this.loading = true;
-        this.$parent.fetchCategories(0, 1).then((res) => {
+        this.$parent.fetchCategories(0, this.page).then((res) => {
           const resp = this.formatDataFromLazyLoading(res, this.categories);
           this.categories = resp.newCategories;
+          this.page += 1;
           if (resp.hasCategoriesStatement === true) {
             window.removeEventListener('scroll', this.handleScroll);
           }
