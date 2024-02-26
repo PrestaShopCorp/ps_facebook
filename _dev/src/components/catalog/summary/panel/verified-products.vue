@@ -142,7 +142,7 @@ export default defineComponent({
     },
     statusCards(): StatusCardParameters[] {
       return [{
-        id: 'Approved',
+        id: 'InCatalog',
         title: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalog'),
         description: this.$t('catalog.summaryPage.productCatalog.productVerification.reportCards.productsInCatalogDescription'),
         value: this.active ? this.productsInCatalog : null,
@@ -175,7 +175,7 @@ export default defineComponent({
         reverseColors: false,
         ...(this.active && this.verificationsStats.notSyncable && {
           link: {
-            to: {name: CatalogTabPages.prevalidationDetails},
+            to: {name: CatalogTabPages.nonCompliantProductsReport},
           },
           reverseColors: !!this.verificationsStats.notSyncable,
         }),

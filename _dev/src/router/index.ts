@@ -76,13 +76,13 @@ const routes: RouteConfig[] = [
       },
       {
         path: 'reporting/verification',
-        name: CatalogTabPages.prevalidationDetails,
+        name: CatalogTabPages.nonCompliantProductsReport,
         component: CatalogTab,
         beforeEnter: billingNavigationGuard,
       },
       {
         path: 'reporting/synchonization',
-        name: CatalogTabPages.reportDetails,
+        name: CatalogTabPages.disapprovedProductsReport,
         component: CatalogTab,
         beforeEnter: billingNavigationGuard,
       },

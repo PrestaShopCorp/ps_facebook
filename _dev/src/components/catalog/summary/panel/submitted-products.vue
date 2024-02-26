@@ -173,7 +173,7 @@ export default defineComponent({
         reverseColors: false,
         ...(!!this.validationSummary.errored && {
           link: {
-            to: {name: CatalogTabPages.reportDetails},
+            to: {name: CatalogTabPages.disapprovedProductsReport},
           },
           reverseColors: !!this.validationSummary.errored,
         }),
