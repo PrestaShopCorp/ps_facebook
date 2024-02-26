@@ -135,11 +135,11 @@ export default defineComponent({
 
       return this.$t('catalog.summaryPage.productCatalog.productsSentToFacebook.syncStatus.lastSyncDate', {
         date: this.validationSummary.lastSyncDate.toLocaleDateString(
-          window.i18nSettings.languageLocale.substring(0, 2),
+          this.$i18n.locale,
           {dateStyle: 'long'},
         ),
         time: this.validationSummary.lastSyncDate.toLocaleTimeString(
-          undefined,
+          this.$i18n.locale,
           {hour: '2-digit', minute: '2-digit'},
         ),
       });

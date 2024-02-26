@@ -46,13 +46,13 @@ export default defineComponent({
   computed: {
     nextBillingDate(): string {
       return new Date(this.subscription.next_billing_at * 1000).toLocaleDateString(
-        window.i18nSettings.languageLocale.substring(0, 2),
+        this.$i18n.locale,
         {dateStyle: 'long'},
       );
     },
     endOfSubscriptionDate(): string {
       return new Date(this.subscription.cancelled_at * 1000).toLocaleDateString(
-        window.i18nSettings.languageLocale.substring(0, 2),
+        this.$i18n.locale,
         {dateStyle: 'long'},
       );
     },

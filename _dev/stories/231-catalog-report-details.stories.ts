@@ -91,7 +91,8 @@ const reporting = {
 const Template = (args: any, {argTypes}: any) => ({
   props: Object.keys(argTypes),
   components: {ReportDetails},
-  template: '<report-details :forceView="forceView" :forcePrevalidationRows="forcePrevalidationRows" :forceReportingRows="forceReportingRows" />',
+  template: '<report-details ref="page" :forceView="forceView" :forcePrevalidationRows="forcePrevalidationRows" :forceReportingRows="forceReportingRows" />',
+  mounted: args.mounted,
 });
 
 export const PrevalidationErrors: any = Template.bind({});
@@ -99,6 +100,9 @@ PrevalidationErrors.args = {
   forceView: 'PREVALIDATION',
   forcePrevalidationRows: [prevalidation15, prevalidation16a, prevalidation16bEn, prevalidation16bFr],
   forceReportingRows: reporting,
+  mounted: function(this: any) {
+    this.$refs.page.$data.lastSyncDate = new Date('2030-02-04 13:37');
+  },
 };
 
 export const NoPrevalidationError: any = Template.bind({});
@@ -106,6 +110,9 @@ NoPrevalidationError.args = {
   forceView: 'PREVALIDATION',
   forcePrevalidationRows: [],
   forceReportingRows: reporting,
+  mounted: function(this: any) {
+    this.$refs.page.$data.lastSyncDate = new Date('2030-02-04 13:37');
+  },
 };
 
 export const Reporting: any = Template.bind({});
@@ -113,6 +120,9 @@ Reporting.args = {
   forceView: 'REPORTING',
   forcePrevalidationRows: [prevalidation15],
   forceReportingRows: reporting,
+  mounted: function(this: any) {
+    this.$refs.page.$data.lastSyncDate = new Date('2030-02-04 13:37');
+  },
 };
 
 export const EmptyReporting: any = Template.bind({});
@@ -120,6 +130,9 @@ EmptyReporting.args = {
   forceView: 'REPORTING',
   forcePrevalidationRows: [prevalidation15],
   forceReportingRows: {},
+  mounted: function(this: any) {
+    this.$refs.page.$data.lastSyncDate = new Date('2030-02-04 13:37');
+  },
 };
 
 export const NoReportingAvailable: any = Template.bind({});
@@ -127,4 +140,7 @@ NoReportingAvailable.args = {
   forceView: 'PREVALIDATION',
   forcePrevalidationRows: [prevalidation15],
   forceReportingRows: null,
+  mounted: function(this: any) {
+    this.$refs.page.$data.lastSyncDate = new Date('2030-02-04 13:37');
+  },
 };
