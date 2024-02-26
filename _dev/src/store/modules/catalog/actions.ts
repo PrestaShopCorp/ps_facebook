@@ -6,6 +6,7 @@ import {runIf} from '@/lib/Promise';
 import {CategoryMatchingStatus, ProductFeedReport, State} from './state';
 import {FullState, RequestState} from '@/store/types';
 import {PreScanCompleteResponseDto, PreScanIntermediateResponseDto} from './types';
+import {toDateOrNull} from '@/utils/Dates';
 
 type Context = ActionContext<State, FullState>;
 
@@ -59,12 +60,6 @@ export default {
 
     try {
       const result: SynchronizationStatusDto = await fetchShop('CatalogSummary');
-      const toDateOrNull = (source: string|0): Date|null => {
-        if (!source) {
-          return null;
-        }
-        return new Date(source);
-      };
 
       if (result.exportDone) {
         commit(MutationsTypes.SET_CATALOG_PAGE_ENABLED);
