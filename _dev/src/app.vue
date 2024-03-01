@@ -53,9 +53,6 @@ import GettersTypesOnboarding from '@/store/modules/onboarding/getters-types';
 import GettersTypesApp from '@/store/modules/app/getters-types';
 
 let resizeEventTimer;
-const root = document.documentElement;
-const header = document.querySelector('#content .page-head');
-const headerFull = document.querySelector('#header_infos');
 
 export default defineComponent({
   components: {
@@ -91,8 +88,15 @@ export default defineComponent({
       }, 250);
     },
     setCustomProperties() {
-      root.style.setProperty('--header-height', `${header.clientHeight}px`);
-      root.style.setProperty('--header-height-full', `${header.clientHeight + headerFull.clientHeight}px`);
+      const root = document.documentElement;
+      const header = document.querySelector('#content .page-head');
+
+      if (!header) {
+        return;
+      }
+
+      root.style.setProperty('--header-height', `${header.clientHeight + 20}px`);
+      root.style.setProperty('--header-height-full', `${header.offsetTop + header.clientHeight}px`);
     },
     async getFbContext() {
       await this.$store.dispatch('onboarding/WARMUP_STORE');
