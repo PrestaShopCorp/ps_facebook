@@ -127,7 +127,7 @@
       "createdAt": "Создано",
       "lastActive": "Последний активный",
       "activated": "Активированный",
-      "disabled": "Инвалид",
+      "disabled": "Отключено",
       "moduleDisabled": "Модуль отключен",
       "viewStats": "Просмотр статистики",
       "status": "Статус:",
