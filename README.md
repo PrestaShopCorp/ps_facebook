@@ -13,7 +13,7 @@ Check other commands with `make help`.
 
 ## Requirements
 
-This module is compliant with PHP 5.6+ and PrestaShop 1.7, (tested with PS 1.7.2+ before each release).
+This module is compliant with PrestaShop 1.7+. PHP compatibility can be found in `composer.json`.
 
 You need a facebook developper account added to the PrestaShop Social Media app (ID:726899634800479) to manage its settings.
 
