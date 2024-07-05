@@ -72,8 +72,6 @@ class Config
 
     public const REPORTS_PER_PAGE = 1000;
 
-    public const PS_FACEBOOK_MERCHANT_HAS_CHAT_DISABLED = 'PS_FACEBOOK_MERCHANT_HAS_CHAT_DISABLED';
-
     // Data that can be overwritten by .env file if using the Env class
     public const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
     public const PSX_FACEBOOK_UI_URL = 'https://facebook.psessentials.net';
