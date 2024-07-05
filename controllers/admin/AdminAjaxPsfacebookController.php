@@ -450,6 +450,42 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         }
     }
 
+    public function displayAjaxDisabledMessengerFeature()
+    {
+        /**
+         * @var FbeFeatureManager
+         */
+        $featureManager = $this->module->getService(FbeFeatureManager::class);
+
+        $featureManager->updateFeature('messenger_chat', false);
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'success' => true,
+                ]
+            )
+        );
+    }
+
+    public function displayAjaxMerchantHasChatDisabled()
+    {
+        $messengerChatFeature = json_decode($this->configurationAdapter->get(Config::FBE_FEATURE_CONFIGURATION . 'messenger_chat'));
+        $isEnabled = false;
+
+        if (!empty($messengerChatFeature->enabled)) {
+            $isEnabled = $messengerChatFeature->enabled;
+        }
+
+        $this->ajaxDie(
+            json_encode(
+                [
+                    'messengerChatStatus' => $isEnabled,
+                ]
+            )
+        );
+    }
+
     /**
      * @throws PrestaShopException
      */

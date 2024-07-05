@@ -62,8 +62,8 @@ class Config
     public const PS_FACEBOOK_PRODUCT_SYNC_FIRST_START = 'PS_FACEBOOK_PRODUCT_SYNC_FIRST_START';
     public const PS_FACEBOOK_PRODUCT_SYNC_ON = 'PS_FACEBOOK_PRODUCT_SYNC_ON';
 
-    public const AVAILABLE_FBE_FEATURES = ['messenger_chat', 'page_cta', 'page_shop'/*, 'ig_shopping'*/];
-    public const CONFIGURABLE_FBE_FEATURES = ['messenger_chat'];
+    public const AVAILABLE_FBE_FEATURES = ['page_cta', 'page_shop'/*, 'ig_shopping'*/];
+    public const CONFIGURABLE_FBE_FEATURES = [];
     public const FBE_FEATURES_REQUIRING_PRODUCT_SYNC = ['page_shop', 'ig_shopping'];
     public const FBE_FEATURE_CONFIGURATION = 'PS_FACEBOOK_FBE_FEATURE_CONFIG_';
 
@@ -71,6 +71,8 @@ class Config
     public const MAX_CATEGORY_DEPTH = 3;
 
     public const REPORTS_PER_PAGE = 1000;
+
+    public const PS_FACEBOOK_MERCHANT_HAS_CHAT_DISABLED = 'PS_FACEBOOK_MERCHANT_HAS_CHAT_DISABLED';
 
     // Data that can be overwritten by .env file if using the Env class
     public const PSX_FACEBOOK_API_URL = 'https://facebook-api.psessentials.net';
