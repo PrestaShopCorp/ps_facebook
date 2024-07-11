@@ -54,7 +54,7 @@ export default defineComponent({
     return {
       isLoading: false,
       canDisplay: true,
-    }
+    };
   },
   methods: {
     disableMessenger() {
@@ -68,12 +68,14 @@ export default defineComponent({
           return res.json();
         }).catch((error) => {
           console.error(error);
-        }).finally(() =>  this.isLoading = false);
+        }).finally(() => {
+          this.isLoading = false;
+        });
     },
     redirectToFb() {
       window.open('https://developers.facebook.com/docs/messenger-platform/discovery/facebook-chat-plugin/', '_blank');
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="css">

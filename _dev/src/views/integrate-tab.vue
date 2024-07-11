@@ -249,9 +249,7 @@ export default defineComponent({
           return res.json();
         })
         .then((json) => {
-          console.log(json);
           this.messengerIsDeactivated = json.messengerChatStatus;
-          console.log(this.messengerIsDeactivated)
         }).catch((error) => {
           console.error(error);
         });
