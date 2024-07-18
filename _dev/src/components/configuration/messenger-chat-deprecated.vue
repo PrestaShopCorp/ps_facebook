@@ -19,7 +19,7 @@
         class="d-md-flex text-center align-items-end mt-2"
       >
         <b-button
-          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto black-color"
+          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto btn-outline-secondary"
           variant="link"
           @click="redirectToFb()"
         >
@@ -30,13 +30,13 @@
           variant="outline-primary"
           @click="disableMessenger()"
         >
-          <div class="d-inline-flex">
+          <span class="d-inline-flex">
             {{ $t('configuration.disableMessenger.btn') }}
-            <div
+            <span
               v-if="isLoading"
               class="spinner ml-1"
             />
-          </div>
+          </span>
         </b-button>
       </div>
     </div>
@@ -77,9 +77,3 @@ export default defineComponent({
     },
   },
 });
-</script>
-<style lang="css">
-.black-color {
-  color: black!important;
-}
-</style>

@@ -23,7 +23,7 @@
 
       <MessengerChatDeprecated
         v-if="messengerIsDeactivated"
-        class="mr-3 ml-3"
+        class="mx-3"
       />
       <div
         id="enabled-features"
