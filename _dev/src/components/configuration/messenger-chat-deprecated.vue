@@ -19,7 +19,7 @@
         class="d-md-flex text-center align-items-end mt-2"
       >
         <b-button
-          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto btn-outline-secondary"
+          class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto btn-link-muted"
           variant="link"
           @click="redirectToFb()"
         >
