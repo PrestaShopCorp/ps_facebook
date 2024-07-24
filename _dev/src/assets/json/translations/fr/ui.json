@@ -52,6 +52,12 @@
       "EventBusEnableDone": "PrestaShop CloudSync est activé.",
       "accountSuspended": "Il semble que votre compte Facebook ne dispose pas des autorisations nécessaires pour synchroniser vos produits. Pour résoudre ce problème, veuillez vous réinscrire pour rétablir les autorisations."
     },
+    "disableMessenger": {
+      "title": "Meta Chat Messenger Plugin support ended",
+      "description": "Meta has stopped supporting the Chat Messenger plugin since May 9th 2024. To avoid issues on your shop, please deactivate this feature.",
+      "more": "Learn more",
+      "btn": "Deactivate"
+    },
     "upgradeForBillingStep": {
       "alert": {
         "title": "Pour continuer à utiliser PrestaShop Social, veuillez mettre à jour la dernière version.",
