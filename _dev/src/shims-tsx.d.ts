@@ -48,6 +48,8 @@ declare global {
       psFacebookGetProductSyncReporting: string;
       psFacebookGetProductStatuses: string;
       psFacebookRetrieveTokensRoute: string;
+      psFacebookDisableMessengerChat: string;
+      psFacebookGetChatStatus: string;
     }
   //   interface IntrinsicElements {
   //     [elem: string]: any;

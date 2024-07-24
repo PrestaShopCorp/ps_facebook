@@ -21,6 +21,10 @@
         />
       </div>
 
+      <MessengerChatDeprecated
+        v-if="messengerIsDeactivated"
+        class="mx-3"
+      />
       <div
         id="enabled-features"
         v-if="dynamicEnabledFeaturesLength"
@@ -107,6 +111,7 @@ import AvailableFeature from '../components/features/available-feature.vue';
 import UnavailableFeature from '../components/features/unavailable-feature.vue';
 import SuccessAlert from '../components/features/success-alert.vue';
 import CardSurvey from '@/components/survey/card-survey.vue';
+import MessengerChatDeprecated from '@/components/configuration/messenger-chat-deprecated.vue';
 
 export default defineComponent({
   name: 'IntegrateTab',
@@ -120,6 +125,7 @@ export default defineComponent({
     UnavailableFeature,
     AvailableFeature,
     SuccessAlert,
+    MessengerChatDeprecated,
   },
   mixins: [],
   props: {
@@ -161,6 +167,7 @@ export default defineComponent({
       disallowSwitch: [
         'page_shop',
       ],
+      messengerIsDeactivated: true,
     };
   },
   created() {
@@ -171,6 +178,7 @@ export default defineComponent({
     ) {
       this.fetchData();
       this.registerToWindowVisibilityChangeEvent();
+      this.isMessengerIsActive();
     } else {
       this.loading = false;
     }
@@ -230,6 +238,20 @@ export default defineComponent({
           console.error(error);
           this.error = 'configuration.messages.unknownOnboardingError';
           this.loading = false;
+        });
+    },
+    isMessengerIsActive() {
+      fetch(window.psFacebookGetChatStatus)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText || res.status);
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.messengerIsDeactivated = json.messengerChatStatus;
+        }).catch((error) => {
+          console.error(error);
         });
     },
     displaySuccessMessages(newEnabledFeatures) {

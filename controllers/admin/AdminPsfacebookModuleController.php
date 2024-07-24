@@ -293,6 +293,24 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                     'ajax' => 1,
                 ]
             ),
+            'psFacebookGetChatStatus' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'MerchantHasChatDisabled',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookDisableMessengerChat' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'DisabledMessengerFeature',
+                    'ajax' => 1,
+                ]
+            ),
             'psFacebookProductsUrl' => $this->context->link->getAdminLink('AdminProducts'),
             'i18nSettings' => [
                 'isoCode' => $this->context->language->iso_code,
