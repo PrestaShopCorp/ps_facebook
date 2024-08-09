@@ -112,7 +112,8 @@ docker-watch-front:
 # target: docker-up|du                 	 - Start docker containers
 du: docker-up
 docker-up:
-	docker-compose up -d --build
+	@printf "Starting docker containers...\n"
+	docker compose --project-directory ./e2e-env up --remove-orphans --force-recreate --renew-anon-volumes --detach
 
 # target: docker-down|dd               	 - Stop docker containers
 dd: docker-down
