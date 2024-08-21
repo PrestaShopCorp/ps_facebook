@@ -53,10 +53,10 @@
       "accountSuspended": "Sembra che non ci siano i permessi sul tuo account Facebook per poter sincronizzare i prodotti. Per risolvere questo problema, è necessario eseguire nuovamente la sincronizzazione per ripristinare i permessi nello stato corretto."
     },
     "disableMessenger": {
-      "title": "Meta Chat Messenger Plugin support ended",
-      "description": "Meta has stopped supporting the Chat Messenger plugin since May 9th 2024. To avoid issues on your shop, please deactivate this feature.",
-      "more": "Learn more",
-      "btn": "Deactivate"
+      "title": "Supporto al plugin Meta Chat Messenger terminato",
+      "description": "Meta non supporta più il plugin Chat Messenger dal 9 maggio 2024. Per evitare problemi con il tuo store, disattiva questa funzionalità.",
+      "more": "Scopri di più",
+      "btn": "Disattiva"
     },
     "upgradeForBillingStep": {
       "alert": {
@@ -81,7 +81,7 @@
     },
     "alertBillingCancelled": {
       "title": "Hai annullato l'abbonamento a PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Il tuo abbonamento sarà ancora attivo fino al giorno {date}; puoi iscriverti nuovamente in qualsiasi momento per continuare a utilizzare il modulo.",
       "explanationFromCancellationDate": "L'abbonamento rimarrà attivo fino a {date}, e sarà possibile sottoscrivere nuovamente l'abbonamento in qualsiasi momento per continuare a utilizzare il modulo."
     },
     "billingFacade": {
