@@ -53,10 +53,10 @@
       "accountSuspended": "Se pare că nu avem permisiuni pe contul tău de Facebook pentru a-ți putea sincroniza produsele. Pentru a rezolva această problemă, te rugăm să reiei procesul pentru a readuce permisiunile la starea corectă."
     },
     "disableMessenger": {
-      "title": "Meta Chat Messenger Plugin support ended",
-      "description": "Meta has stopped supporting the Chat Messenger plugin since May 9th 2024. To avoid issues on your shop, please deactivate this feature.",
-      "more": "Learn more",
-      "btn": "Deactivate"
+      "title": "Suportul pentru pluginul Meta Chat Messenger s-a încheiat",
+      "description": "Meta nu mai acceptă pluginul Chat Messenger din 9 mai 2024. Pentru a evita problemele din magazinul tău, dezactivează această funcționalitate.",
+      "more": "Află mai multe",
+      "btn": "Dezactivează"
     },
     "upgradeForBillingStep": {
       "alert": {
@@ -81,7 +81,7 @@
     },
     "alertBillingCancelled": {
       "title": "Ți-ai anulat abonamentul PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Abonamentul tău va fi în continuare activ până la {date}. Te poți abona din nou oricând pentru a continua să utilizezi modulul.",
       "explanationFromCancellationDate": "Abonamentul tău s-a încheiat la {date}. Te poți abona oricând pentru a continua să utilizezi modulul."
     },
     "billingFacade": {
