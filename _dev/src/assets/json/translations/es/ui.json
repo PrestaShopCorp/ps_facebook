@@ -53,10 +53,10 @@
       "accountSuspended": "Parece que no disponemos de permisos en tu cuenta de Facebook para poder sincronizar tus productos. Para resolver este problema, repite el proceso de incorporación para darnos los permisos correctamente."
     },
     "disableMessenger": {
-      "title": "Meta Chat Messenger Plugin support ended",
-      "description": "Meta has stopped supporting the Chat Messenger plugin since May 9th 2024. To avoid issues on your shop, please deactivate this feature.",
-      "more": "Learn more",
-      "btn": "Deactivate"
+      "title": "Ha terminado el soporte del plug-in Chat Messenger de Meta",
+      "description": "Meta dejó de ofrecer soporte para el plug-in Chat Messenger el 9 de mayo de 2024. Para evitar problemas en tu tienda, desactiva esta funcionalidad.",
+      "more": "Más información",
+      "btn": "Desactivar"
     },
     "upgradeForBillingStep": {
       "alert": {
