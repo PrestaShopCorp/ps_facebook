@@ -52,6 +52,12 @@
       "EventBusEnableDone": "Модуль PrestaShop CloudSync включен.",
       "accountSuspended": "Похоже, что в вашей учетной записи Facebook нет нужных для синхронизации товаров разрешений. Чтобы устранить эту проблему и активировать нужные разрешения, отключите и снова подключите приложение."
     },
+    "disableMessenger": {
+      "title": "Поддержка плагина Meta Chat Messenger прекращена",
+      "description": "Meta прекратила поддержку плагина Chat Messenger с 9 мая 2024 года. Во избежание проблем в магазине, отключите эту функцию.",
+      "more": "Подробнее",
+      "btn": "Отключить"
+    },
     "upgradeForBillingStep": {
       "alert": {
         "title": "Чтобы продолжить работу с PrestaShop Social, обновите модуль до последней версии.",
@@ -75,7 +81,7 @@
     },
     "alertBillingCancelled": {
       "title": "Вы отменили подписку на PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Уже оплаченный срок подписки истечет {date}. Чтобы продолжить использование модуля, подпишитесь снова в любое время.",
       "explanationFromCancellationDate": "Срок вашей подписки истек {date}. Чтобы продолжить использование модуля, подпишитесь в любое время."
     },
     "billingFacade": {
@@ -127,7 +133,7 @@
       "createdAt": "Создано",
       "lastActive": "Последний активный",
       "activated": "Активированный",
-      "disabled": "Инвалид",
+      "disabled": "Отключено",
       "moduleDisabled": "Модуль отключен",
       "viewStats": "Просмотр статистики",
       "status": "Статус:",
@@ -267,7 +273,7 @@
   },
   "categoryMatching": {
     "title": "Расширение вашего каталога : отображение категорий",
-    "intro": "Important: \n - The Google Category and Google subcategory fields are mandatory for each of your PrestaShop categories \n- Category mapping is automatically saved once you have linked your PrestaShop category to a Google category and subcategory \n- Once you have mapped your categories and subcategories, simply click on 'Go back' \n- Save time by applying your main category’s mapping to its subcategories, by checking the 'Apply to subcategories' box",
+    "intro": "Важно: \n - Поля «Категория Google» и «Подкатегория Google» являются обязательными для каждой категории PrestaShop \n- Сопоставление категорий автоматически сохраняется после привязки категории PrestaShop к категории и подкатегории Google\n- После сопоставления категорий и подкатегорий просто нажмите «Назад» \n- Для экономии времени примените сопоставление основной категории к ее подкатегориям, установив флажок «Применить к подкатегориям»",
     "counterSubTitle": "указанные категории",
     "edit": "Редактировать",
     "autocomplete": {
@@ -281,7 +287,7 @@
     "tableMatching": {
       "firstTd": "Категория на вашем сайте",
       "secondTd": "Категория Google",
-      "thirdTd": "Apply to subcategories?",
+      "thirdTd": "Применить к подкатегориям?",
       "fourthTd": "Подкатегория Google"
     },
     "editTable": {

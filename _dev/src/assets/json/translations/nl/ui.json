@@ -52,6 +52,12 @@
       "EventBusEnableDone": "PrestaShop CloudSync is ingeschakeld.",
       "accountSuspended": "Het lijkt erop dat we geen toestemming hebben om je producten te synchroniseren met je Facebook-account. Om dit probleem op te lossen, moet je opnieuw aan boord gaan om de machtigingen weer in de juiste staat te zetten."
     },
+    "disableMessenger": {
+      "title": "Ondersteuning voor Meta Chat Messenger-plug-in beëindigd",
+      "description": "Meta ondersteunt de Chat Messenger-plug-in sinds 9 mei 2024 niet meer. Deactiveer deze functie om problemen in je winkel te voorkomen.",
+      "more": "Meer informatie",
+      "btn": "Deactiveren"
+    },
     "upgradeForBillingStep": {
       "alert": {
         "title": "Werk bij naar de nieuwste versie om PrestaShop Social te blijven gebruiken.",
@@ -75,7 +81,7 @@
     },
     "alertBillingCancelled": {
       "title": "Je hebt je PrestaShop Social-abonnement geannuleerd.",
-      "explanationBeforeCancellationDate": "Your subscription will still be active until {date}, you can re-subscribe anytime to continue using the module.",
+      "explanationBeforeCancellationDate": "Je abonnement is nog steeds actief tot {date}. Je kunt je op elk gewenst moment opnieuw abonneren om de module te blijven gebruiken.",
       "explanationFromCancellationDate": "Je abonnement is beëindigd op {date}. Je kunt je op elk gewenst moment abonneren om de module te blijven gebruiken."
     },
     "billingFacade": {
