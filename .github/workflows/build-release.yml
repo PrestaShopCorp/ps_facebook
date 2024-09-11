@@ -38,7 +38,8 @@ jobs:
         uses: PrestaShopCorp/github-action-clean-before-deploy@v1.0
 
       - name: Create & upload artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
-          path: ../
+          path: ./
+          include-hidden-files: true
