@@ -61,6 +61,7 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}
           path: ../
+          include-hidden-files: true
 
   upload_release_asset_production:
     name: Upload the production zip asset to the release
