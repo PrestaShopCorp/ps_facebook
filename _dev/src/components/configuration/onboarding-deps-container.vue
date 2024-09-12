@@ -5,12 +5,12 @@
     />
     <alert-subscribe-to-continue
       v-else-if="!billingRunning && !billingSubscription && facebookOnboarded"
-      @startSubscription="startSubscription"
+      @startSubscription="handleStartSubscription('subscription_funnel')"
     />
     <alert-subscription-cancelled
       v-else-if="billingSubscription && billingSubscription.cancelled_at"
       :subscription="billingSubscription"
-      @startSubscription="startSubscription"
+      @startSubscription="handleStartSubscription('subscription_reactivation')"
     />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
@@ -150,9 +150,9 @@ export default defineComponent({
       );
       this.openBillingModal = openCheckout;
     },
-    startSubscription($event: string): void {
+    handleStartSubscription(subscriptionActionType) {
       if (this.openBillingModal) {
-        this.openBillingModal($event);
+        this.openBillingModal(subscriptionActionType);
       }
     },
   },
