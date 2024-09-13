@@ -73,6 +73,11 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}
 
+      - name: Debug
+        run: |
+          pwd
+          ls -la
+
       - name: Prepare the production zip
         run: |
           cd ${{ github.event.repository.name }}
