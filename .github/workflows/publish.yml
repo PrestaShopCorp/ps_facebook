@@ -72,7 +72,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
-          path: '.'
+          path: ./${{ github.event.repository.name }}
 
       - name: Prepare the production zip
         run: |
@@ -97,13 +97,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
-          path: '.'
-
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.event.repository.name }}
+          path: ./${{ github.event.repository.name }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
