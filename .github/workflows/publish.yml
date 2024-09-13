@@ -72,10 +72,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
+          path: '.'
 
       - name: Prepare the production zip
         run: |
-          cd ..
+          cd ${{ github.event.repository.name }}
           zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip ${{ github.event.repository.name }} -x '*.git*'
 
       - name: Publish the production zip
@@ -96,10 +97,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
+          path: '.'
 
-      - name: Move to parent directory
-        run: |
-          cd ..
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
@@ -117,8 +121,8 @@ jobs:
 
       - name: Prepare the integration zip
         run: |
+          cd ${{ github.event.repository.name }}
           zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}_integration.zip ${{ github.event.repository.name }}  -x '*.git*'
-
       - name: Publish the integration zip
         uses: shogo82148/actions-upload-release-asset@v1
         with:
