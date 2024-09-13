@@ -55,12 +55,19 @@ jobs:
           name: ${{ github.event.repository.name }}
           path: ./${{ github.event.repository.name }}
 
-      - name: Prepare the production zip
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.G_PROJECT_INTEGRATION }}
+          service_account_key: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
+          export_default_credentials: true
+
+      - name: Copy env files
         run: |
           pwd
           ls -la
-
-      - name: Prepare the production zip
-        run: |
-          zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip ${{ github.event.repository.name }} -x '*.git*'
+          gcloud components install beta
+          gcloud beta secrets versions access latest --secret="${{env.GLOUD_SECRET_NAME}}" >> ${{ github.event.repository.name }}/${{ github.event.repository.name }}/.env
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
 
