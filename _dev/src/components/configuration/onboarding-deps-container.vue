@@ -5,12 +5,12 @@
     />
     <alert-subscribe-to-continue
       v-else-if="!billingRunning && !billingSubscription && facebookOnboarded"
-      @startSubscription="handleStartSubscription('subscription_funnel')"
+      @startSubscription="handleStartSubscription('subscription_reactivation')"
     />
     <alert-subscription-cancelled
       v-else-if="billingSubscription && billingSubscription.cancelled_at"
       :subscription="billingSubscription"
-      @startSubscription="handleStartSubscription('subscription_reactivation')"
+      @startSubscription="handleStartSubscription($event)"
     />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
