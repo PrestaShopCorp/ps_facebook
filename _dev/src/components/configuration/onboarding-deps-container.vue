@@ -10,7 +10,7 @@
     <alert-subscription-cancelled
       v-else-if="billingSubscription && billingSubscription.cancelled_at"
       :subscription="billingSubscription"
-      @startSubscription="(event) => handleStartSubscription(event)"
+      @startSubscription="handleStartSubscription($event)"
     />
     <modal-module-upgrade-for-billing
       v-if="!billingContext && facebookOnboarded"
