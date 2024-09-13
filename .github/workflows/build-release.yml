@@ -67,7 +67,7 @@ jobs:
           pwd
           ls -la
           gcloud components install beta
-          gcloud beta secrets versions access latest --secret="${{env.GLOUD_SECRET_NAME}}" >> ${{ github.event.repository.name }}/${{ github.event.repository.name }}/.env
+          gcloud beta secrets versions access latest --secret="${{env.GLOUD_SECRET_NAME}}" >> ${{ github.event.repository.name }}/${{ github.event.repository.name }}/${{ github.event.repository.name }}/.env
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.G_CREDENTIAL_INTEGRATION }}
 
