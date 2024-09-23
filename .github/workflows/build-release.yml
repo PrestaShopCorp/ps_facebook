@@ -41,5 +41,27 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}
-          path: ./
+          path: '.'
           include-hidden-files: true
+
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: ./${{ github.event.repository.name }}
+
+      - name: Prepare the production zip
+        run: |
+          zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip ${{ github.event.repository.name }} -x '*.git*'
+
+      - name: Debug
+        run: |
+          pwd
+          ls -la
+
+
