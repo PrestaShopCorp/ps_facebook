@@ -158,7 +158,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 ->present($this->module->name),
             'psAccountsToken' => $psAccountsData['psAccountsToken'],
             'defaultCategory' => $this->shopRepository->getDefaultCategoryShop(),
-            'psAccountShopInConflict' => $this->multishopDataProvider->isCurrentShopInConflict($this->context->shop),
+            'psAccountShopInConflict' => false,
             'psFacebookAppId' => $this->env->get('PSX_FACEBOOK_APP_ID'),
             'psFacebookFbeUiUrl' => $this->env->get('PSX_FACEBOOK_UI_URL'),
             'psFacebookSegmentId' => $this->env->get('PSX_FACEBOOK_SEGMENT_API_KEY'),
