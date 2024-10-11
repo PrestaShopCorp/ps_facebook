@@ -23,7 +23,6 @@ use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Presenter\ModuleUpgradePresenter;
-use PrestaShop\Module\PrestashopFacebook\Provider\MultishopDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
@@ -51,11 +50,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
     private $moduleUpgradePresenter;
 
     /**
-     * @var MultishopDataProvider
-     */
-    private $multishopDataProvider;
-
-    /**
      * @var ShopRepository
      */
     private $shopRepository;
@@ -69,7 +63,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->env = $this->module->getService(Env::class);
         $this->moduleUpgradePresenter = $this->module->getService(ModuleUpgradePresenter::class);
-        $this->multishopDataProvider = $this->module->getService(MultishopDataProvider::class);
         $this->shopRepository = $this->module->getService(ShopRepository::class);
         $this->module->getService(ErrorHandler::class);
         $this->bootstrap = false;
