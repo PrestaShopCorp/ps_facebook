@@ -369,7 +369,8 @@
       "downloadPdf": "Descarcă PDF",
       "couldntFindAnyAnswer": "Nu ai găsit niciun răspuns la întrebarea ta?",
       "contactUs": "Contactează-ne"
-    }
+    },
+    "helpCenterUrl": "https://prestashop-academy.com/gb/contact-us"
   },
   "faq": {
     "title": "ÎNTREBĂRI FRECVENTE",

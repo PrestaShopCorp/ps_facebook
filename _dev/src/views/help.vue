@@ -51,12 +51,17 @@ export default defineComponent({
     return {
       faq: {},
       docLink: '',
-      contactUsLink: 'https://help-center.prestashop.com/contact',
+      contactUsLink: this.$i18n.t('help.helpCenterUrl'),
       loading: true,
     };
   },
   created() {
     this.fetchFaq();
+  },
+  mounted() {
+    console.log('window.psFacebookLocale', window.psFacebookLocale);
+    console.log('this.i18n', this.$i18n.locale);
+    console.log('this.$store.state.context.appContext.localeLang', this.$store.state.context.appContext.localeLang);
   },
   methods: {
     fetchFaq() {
