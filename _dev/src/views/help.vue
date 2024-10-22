@@ -58,11 +58,6 @@ export default defineComponent({
   created() {
     this.fetchFaq();
   },
-  mounted() {
-    console.log('window.psFacebookLocale', window.psFacebookLocale);
-    console.log('this.i18n', this.$i18n.locale);
-    console.log('this.$store.state.context.appContext.localeLang', this.$store.state.context.appContext.localeLang);
-  },
   methods: {
     fetchFaq() {
       fetch(this.psFacebookRetrieveFaq)
