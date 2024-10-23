@@ -369,7 +369,8 @@
       "downloadPdf": "Download de PDF",
       "couldntFindAnyAnswer": "Kon u geen antwoord vinden op uw vraag?",
       "contactUs": "Neem contact met ons op"
-    }
+    },
+    "helpCenterUrl": "https://prestashop-academy.com/gb/contact-us"
   },
   "faq": {
     "title": "FAQ",
