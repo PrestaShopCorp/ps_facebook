@@ -51,7 +51,7 @@ export default defineComponent({
     return {
       faq: {},
       docLink: '',
-      contactUsLink: 'https://help-center.prestashop.com/contact',
+      contactUsLink: this.$i18n.t('help.helpCenterUrl'),
       loading: true,
     };
   },
