@@ -31,7 +31,10 @@
         <b-button
           class="mx-1 mt-3 mt-md-0 mr-md-1 text-nowrap ml-auto"
           variant="outline-primary"
-          @click="$emit('startSubscription', 'subscription_reactivation')"
+          @click="$emit(
+            'startSubscription',
+            isSubscriptionRunning ? 'subscription_reactivation' : 'subscription_funnel'
+          )"
         >
           {{ $t('cta.resubscribe') }}
         </b-button>

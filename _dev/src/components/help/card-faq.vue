@@ -21,7 +21,6 @@
     <template #header>
       <i class="material-icons material-icons-round">help</i>{{ $t("help.title") }}
     </template>
-
     <b-card-body
       class="p-3"
     >
