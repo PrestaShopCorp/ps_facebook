@@ -81,7 +81,7 @@
     },
     "alertBillingCancelled": {
       "title": "Vous avez annulé votre abonnement à PrestaShop Social.",
-      "explanationBeforeCancellationDate": "Votre abonnement restera actif jusqu'à {date}, vous pouvez vous réabonner à tout moment pour continuer à utiliser le module.",
+      "explanationBeforeCancellationDate": "Votre abonnement restera actif jusqu'à {date}, Vous pouvez vous réabonner à tout moment pour continuer à utiliser le module.",
       "explanationFromCancellationDate": "Votre abonnement a pris fin le {date}, vous pouvez vous abonner à tout moment pour continuer à utiliser le module."
     },
     "billingFacade": {
@@ -369,8 +369,7 @@
       "downloadPdf": "Télécharger le PDF",
       "couldntFindAnyAnswer": "Vous n'avez pas trouvé de réponse à votre question ?",
       "contactUs": "Nous contacter"
-    },
-    "helpCenterUrl": "https://prestashop-academy.com/fr/nous-contacter"
+    }
   },
   "faq": {
     "title": "FAQ",
