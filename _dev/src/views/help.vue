@@ -23,7 +23,7 @@
   >
     <card-faq
       :faq="faq"
-      :contact-us-link="contactUsLink"
+      :contact-us-link="supportLink()"
       :doc-link="docLink"
       :loading="loading"
       class="m-3"
@@ -51,7 +51,6 @@ export default defineComponent({
     return {
       faq: {},
       docLink: '',
-      contactUsLink: this.$i18n.t('help.helpCenterUrl'),
       loading: true,
     };
   },
@@ -59,6 +58,17 @@ export default defineComponent({
     this.fetchFaq();
   },
   methods: {
+    supportLink() {
+      const urls = {
+        fr: 'https://prestashop-academy.com/fr/nous-contacter',
+        it: 'https://prestashop-academy.com/it/contattaci',
+        es: 'https://prestashop-academy.com/es/contactenos',
+      };
+
+      const currentLocale = this.$i18n.locale;
+
+      return urls[currentLocale] || 'https://prestashop-academy.com/gb/contact-us';
+    },
     fetchFaq() {
       fetch(this.psFacebookRetrieveFaq)
         .then((res) => {
