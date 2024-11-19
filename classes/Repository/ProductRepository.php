@@ -217,9 +217,11 @@ class ProductRepository
 
         $sql->innerJoin('product_shop', 'ps', 'ps.id_product = p.id_product');
         $sql->innerJoin('product_lang', 'pl', 'pl.id_product = ps.id_product AND pl.id_shop = ps.id_shop');
+        $sql->innerJoin('lang', 'l', 'l.id_lang = pl.id_lang');
         $sql->leftJoin('product_attribute_shop', 'pas', 'pas.id_product = ps.id_product AND pas.id_shop = ps.id_shop');
 
         $sql->where('ps.id_shop = ' . (int) $shopId);
+        $sql->where('l.active = 1');
         if (isset($options['onlyActive'])) {
             $sql->where('ps.active = 1');
         }
