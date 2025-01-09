@@ -127,6 +127,15 @@
           </template>
         </div>
       </div>
+      <div class="mt-2">
+        <b-link
+          variant="link"
+          target="_blank"
+          href="https://prestashop.com/privacy-policy/"
+        >
+          {{ $t("help.help.privacyPolicy") }}
+        </b-link>
+      </div>
     </b-card-body>
   </b-card>
 </template>
