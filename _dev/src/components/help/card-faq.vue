@@ -131,7 +131,7 @@
         <b-link
           variant="link"
           target="_blank"
-          href="https://prestashop.com/privacy-policy/"
+          :href="privacyPolicyLink()"
         >
           {{ $t("help.help.privacyPolicy") }}
         </b-link>
@@ -162,6 +162,11 @@ export default defineComponent({
       required: true,
     },
   },
+  data() {
+    return {
+      lang: this.$i18n.locale,
+    };
+  },
   computed: {
     supportUrl(): string {
       return `?utm_source=back-office&utm_medium=psx&psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
@@ -183,6 +188,16 @@ export default defineComponent({
       this.$segment.track(`[FBK] Click on the question #${ref}`, {
         module: 'ps_facebook',
       });
+    },
+    privacyPolicyLink() {
+      const urls = {
+        fr: 'https://prestashop.fr/politique-confidentialite/',
+        en: 'https://prestashop.com/privacy-policy/',
+      };
+
+      const currentLocale = this.$i18n.locale;
+
+      return urls[currentLocale] || urls.en;
     },
   },
 });
