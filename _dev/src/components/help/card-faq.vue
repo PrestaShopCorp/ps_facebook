@@ -162,11 +162,6 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      lang: this.$i18n.locale,
-    };
-  },
   computed: {
     supportUrl(): string {
       return `?utm_source=back-office&utm_medium=psx&psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
