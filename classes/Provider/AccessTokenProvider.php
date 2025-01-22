@@ -21,11 +21,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
 use Controller;
-use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Exception\AccessTokenException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 
 class AccessTokenProvider
@@ -46,11 +43,6 @@ class AccessTokenProvider
     private $psApiClientFactory;
 
     /**
-     * @var ResponseListener
-     */
-    private $responseListener;
-
-    /**
      * @var string
      */
     private $userAccessToken;
@@ -62,12 +54,10 @@ class AccessTokenProvider
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ResponseListener $responseListener,
         $controller,
         ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->responseListener = $responseListener;
         $this->controller = $controller;
         $this->psApiClientFactory = $psApiClientFactory;
     }
@@ -133,22 +123,10 @@ class AccessTokenProvider
             $managerId = null;
         }
 
-        $response = $this->responseListener->handleResponse(
-            $this->psApiClientFactory->createClient()->sendRequest(
-                new Request(
-                    'POST',
-                    '/account/' . $externalBusinessId . '/exchange_tokens',
-                    [],
-                    json_encode([
-                        'userAccessToken' => $accessToken,
-                        'businessManagerId' => $managerId,
-                    ])
-                )
-            ),
-            [
-                'exceptionClass' => AccessTokenException::class,
-            ]
-        );
+        $response = $this->psApiClientFactory->createClient()->post('/account/' . $externalBusinessId . '/exchange_tokens', json_encode([
+            'userAccessToken' => $accessToken,
+            'businessManagerId' => $managerId,
+        ]));
 
         if (!$response->isSuccessful()) {
             return;
@@ -179,17 +157,7 @@ class AccessTokenProvider
     {
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        $response = $this->responseListener->handleResponse(
-            $this->psApiClientFactory->createClient()->sendRequest(
-                new Request(
-                'GET',
-                '/account/' . $externalBusinessId . '/app_tokens'
-                )
-            ),
-            [
-                'exceptionClass' => AccessTokenException::class,
-            ]
-        );
+        $response = $this->psApiClientFactory->createClient()->get('/account/' . $externalBusinessId . '/app_tokens');
 
         if (!$response->isSuccessful()) {
             return null;

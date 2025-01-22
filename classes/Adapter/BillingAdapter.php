@@ -18,11 +18,34 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-namespace PrestaShop\Module\PrestashopFacebook\API\EventSubscriber;
+namespace PrestaShop\Module\PrestashopFacebook\Adapter;
 
-use PrestaShop\Module\PrestashopFacebook\API\ParsedResponse;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 
-interface SubscriberInterface
+class BillingAdapter
 {
-    public function onParsedResponse(ParsedResponse $response, array $options): void;
+    private const BILLING_URL = 'https://billing-api.distribution.prestashop.net/v1/';
+
+    /**
+     * @var string
+     */
+    private $jwt;
+
+    public function __construct($jwt)
+    {
+        $this->jwt = $jwt;
+    }
+
+    public function getCurrentSubscription($shopId, $productId)
+    {
+        $httpClient = new HttpClient(self::BILLING_URL);
+        $httpClient->setHeaders([
+            'Accept: application/json',
+            'Authorization: Bearer ' . $this->jwt,
+            'Content-Type: application/json',
+            'User-Agent : module-lib-billing v3 (' . $productId . ')',
+        ]);
+
+        return $httpClient->get('/customers/' . $shopId . '/subscriptions/' . $productId);
+    }
 }

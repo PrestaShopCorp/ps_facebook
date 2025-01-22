@@ -23,8 +23,8 @@ namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 use Exception;
 use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
+use PrestaShop\Module\PrestashopFacebook\Domain\Http\Response;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Page;
@@ -33,9 +33,9 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
-use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
-
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 class FacebookClient
 {
     /**
@@ -54,7 +54,7 @@ class FacebookClient
     private $sdkVersion;
 
     /**
-     * @var HttpClientInterface
+     * @var HttpClient
      */
     private $client;
 
@@ -69,16 +69,16 @@ class FacebookClient
     private $configurationHandler;
 
     /**
-     * @var ResponseListener
+     * @var ErrorHandler
      */
-    private $responseListener;
+    private $errorHandler;
 
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
         ConfigurationHandler $configurationHandler,
-        ResponseListener $responseListener
+        ErrorHandler $errorHandler
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->systemToken = $accessTokenProvider->getSystemAccessToken();
@@ -86,7 +86,7 @@ class FacebookClient
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
         $this->configurationHandler = $configurationHandler;
-        $this->responseListener = $responseListener;
+        $this->errorHandler = $errorHandler;
     }
 
     public function setAccessToken($accessToken)
@@ -217,6 +217,7 @@ class FacebookClient
         );
 
         return reset($responseContent['data']);
+
     }
 
     public function getFbeFeatures($externalBusinessId)
@@ -330,18 +331,7 @@ class FacebookClient
             $query
         );
 
-        $request = new Request(
-            'GET',
-            "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
-        );
-
-        $response = $this->responseListener->handleResponse(
-            $this->client->sendRequest($request),
-            [
-                'exceptionClass' => FacebookClientException::class,
-            ]
-        );
-
+        $response = $this->client->get("/{$this->sdkVersion}/{$id}?" . http_build_query($query));
         $responseContent = $response->getBody();
 
         if (!$response->isSuccessful()) {
@@ -354,7 +344,6 @@ class FacebookClient
                 $this->disconnectFromFacebook();
                 $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
             }
-
             return false;
         }
 
@@ -402,24 +391,27 @@ class FacebookClient
             $body
         );
 
-        $request = new Request(
-            $method,
-            "/{$this->sdkVersion}/{$id}",
-            $headers,
-            json_encode($body)
-        );
+        $this->client->setHeaders($headers);
 
-        $response = $this->responseListener->handleResponse(
-            $this->client->sendRequest($request),
-            [
-                'exceptionClass' => FacebookClientException::class,
-            ]
-        );
+        $response = $this->client->request($method,  "/{$this->sdkVersion}/{$id}", $body);
 
         if (!$response->isSuccessful()) {
             return false;
         }
 
         return $response->getBody();
+    }
+
+    private function getErrorMessage(Response $response) {
+        $body = $response->getBody();
+
+        if (!empty($body['error']['code']) && !empty($body['error']['error_subcode']) && !empty($body['error']['type'])) {
+            return 'Facebook API errored with ' . $body['error']['type'] . ' (' . $body['error']['code'] . ' / ' . $body['error']['error_subcode'] . ')';
+        }
+        if (!empty($body['error']['code']) && !empty($body['error']['type'])) {
+            return 'Facebook API errored with ' . $body['error']['type'] . ' (' . $body['error']['code'] . ')';
+        }
+
+        return 'API errored with HTTP ' . $response->getStatusCode();
     }
 }

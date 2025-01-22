@@ -21,10 +21,10 @@
 namespace PrestaShop\Module\PrestashopFacebook\API\EventSubscriber;
 
 use Exception;
-use PrestaShop\Module\PrestashopFacebook\API\ParsedResponse;
+use PrestaShop\Module\PrestashopFacebook\Domain\Http\Response;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 
-class ApiErrorSubscriber implements SubscriberInterface
+class ApiErrorSubscriber
 {
     /**
      * @var ErrorHandler
@@ -36,7 +36,7 @@ class ApiErrorSubscriber implements SubscriberInterface
         $this->errorHandler = $errorHandler;
     }
 
-    public function onParsedResponse(ParsedResponse $response, array $options): void
+    public function onParsedResponse(Response $response, array $options): void
     {
         if ($response->isSuccessful()) {
             return;
@@ -49,7 +49,7 @@ class ApiErrorSubscriber implements SubscriberInterface
             new $class(
                 $this->getMessage($response)
             ),
-            $response->getResponse()->getStatusCode(),
+            $response->getStatusCode(),
             false,
             [
                 'extra' => $response->getBody(),
@@ -57,7 +57,7 @@ class ApiErrorSubscriber implements SubscriberInterface
         );
     }
 
-    private function getMessage(ParsedResponse $response)
+    private function getMessage(Response $response)
     {
         $body = $response->getBody();
         // If there is a error object returned by the Facebook API, use their codes
@@ -68,6 +68,6 @@ class ApiErrorSubscriber implements SubscriberInterface
             return 'Facebook API errored with ' . $body['error']['type'] . ' (' . $body['error']['code'] . ')';
         }
 
-        return 'API errored with HTTP ' . $response->getResponse()->getStatusCode();
+        return 'API errored with HTTP ' . $response->getStatusCode();
     }
 }

@@ -20,17 +20,13 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
-use GuzzleHttp\Psr7\Request;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
-use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 class FacebookCategoryClient
 {
     /**
-     * @var HttpClientInterface
+     * @var HttpClient
      */
     private $client;
 
@@ -39,21 +35,13 @@ class FacebookCategoryClient
      */
     private $googleCategoryRepository;
 
-    /**
-     * @var ResponseListener
-     */
-    private $responseListener;
-
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         GoogleCategoryRepository $googleCategoryRepository,
-        ResponseListener $responseListener
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
-        $this->responseListener = $responseListener;
     }
-
     /**
      * @param int $categoryId
      * @param int $shopId
@@ -86,20 +74,7 @@ class FacebookCategoryClient
             $query
         );
 
-        $request = new Request(
-            'GET',
-            "/{$id}",
-            [
-                'query' => $query,
-            ]
-        );
-
-        $response = $this->responseListener->handleResponse(
-            $this->client->sendRequest($request),
-            [
-                'exceptionClass' => FacebookClientException::class,
-            ]
-        );
+        $response = $this->client->get("/{$id}" . http_build_query($query));
 
         if (!$response->isSuccessful()) {
             return false;

@@ -20,30 +20,20 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
-use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 
 class FacebookEssentialsApiClientFactory implements ApiClientFactoryInterface
 {
     public const API_URL = 'https://graph.facebook.com';
 
-    /**
-     * @var ClientFactory
-     */
-    private $clientFactory;
-
-    public function __construct(ClientFactory $clientFactory)
-    {
-        $this->clientFactory = $clientFactory;
-    }
-
     public function createClient()
     {
-        return $this->clientFactory->getClient([
-            'base_url' => self::API_URL,
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ],
+        $httpClient = new HttpClient(self::API_URL);
+        $httpClient->setHeaders([
+            'Accept: application/json',
+            'Content-Type: application/json',
         ]);
+
+        return $httpClient;
     }
 }

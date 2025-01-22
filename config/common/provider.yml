@@ -4,7 +4,6 @@ services:
     public: true
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
-      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
       - '@ps_facebook.controller'
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
 
@@ -72,7 +71,6 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
-      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
 
   PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider:
     class: PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanCacheProvider
