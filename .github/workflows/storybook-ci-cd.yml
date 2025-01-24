@@ -26,7 +26,7 @@ jobs:
         with:
           workflow: facebook-storybook.yml
           repo: PrestaShopCorp/services-deployment
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
           ref: 'refs/heads/main'
           inputs: '{ "branch": "${{ steps.branch.outputs.current_branch }}", "nodeVersion": "${{ env.NODE_VERSION }}", "path": "_dev", "issue": "${{ github.event.number }}" }'
 
@@ -45,6 +45,6 @@ jobs:
         with:
           workflow: facebook-storybook.yml
           repo: PrestaShopCorp/services-deployment
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
           ref: 'refs/heads/main'
           inputs: '{ "branch": "${{ steps.branch.outputs.current_branch }}", "nodeVersion": "${{ env.NODE_VERSION }}", "path": "_dev", "environment": "stable" }'
