@@ -76,6 +76,10 @@ class PixelHandler
         $eventType = false;
         if (isset($params['event_type'])) {
             $eventType = $params['event_type'];
+            
+            if ($eventType = 'ViewCategory') {
+                $track = 'trackCustom';
+            }
         }
         if (isset($params['user'])) {
             $userData = $params['user'];
