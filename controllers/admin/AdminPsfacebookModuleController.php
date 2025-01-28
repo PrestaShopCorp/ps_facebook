@@ -18,6 +18,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
+use PrestaShop\Module\PrestashopFacebook\Adapter\BillingAdapter;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
@@ -27,7 +28,6 @@ use PrestaShop\Module\PrestashopFacebook\Repository\ShopRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 use PrestaShopCorp\Billing\Presenter\BillingPresenter;
-use PrestaShopCorp\Billing\Services\BillingService;
 
 class AdminPsfacebookModuleController extends ModuleAdminController
 {
@@ -124,9 +124,10 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         // Load the context for PrestaShop Billing
         $billingFacade = $this->module->getService(BillingPresenter::class);
-        $billingService = $this->module->getService(BillingService::class);
+        $billingAdapter = new BillingAdapter($psAccountsData['psAccountsToken']);
+        $fetchSubscriptions = $billingAdapter->getCurrentSubscription($psAccountsData['psAccountShopId'], $this->module->name);
+        $currentSubscription = $fetchSubscriptions->getBody();
         $partnerLogo = $this->module->getLocalPath() . 'logo.png';
-        $currentSubscription = $billingService->getCurrentSubscription();
 
         // PrestaShop Billing
         Media::addJsDef($billingFacade->present([
@@ -137,7 +138,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'emailSupport' => 'no-reply@prestashop.com',
         ]));
         Media::addJsDef([
-            'psBillingSubscription' => (!empty($currentSubscription['success']) ? $currentSubscription['body'] : null),
+            'psBillingSubscription' => $fetchSubscriptions->isSuccessful() ? $currentSubscription : null,
         ]);
 
         /*********************
@@ -301,6 +302,15 @@ class AdminPsfacebookModuleController extends ModuleAdminController
                 [],
                 [
                     'action' => 'DisabledMessengerFeature',
+                    'ajax' => 1,
+                ]
+            ),
+            'psFacebookRetrieveExternalBusinessId' => $this->context->link->getAdminLink(
+                'AdminAjaxPsfacebook',
+                true,
+                [],
+                [
+                    'action' => 'RetrieveExternalBusinessId',
                     'ajax' => 1,
                 ]
             ),

@@ -38,11 +38,12 @@ class ErrorHandler
      */
     protected $client;
 
-    /**
-     * @param Ps_facebook $module
-     */
-    public function __construct(Module $module, Env $env, Context $context = null)
+    public function __construct()
     {
+        /** @var Ps_facebook $module */
+        $module = Module::getInstanceByName('ps_facebook');
+        $env = new Env();
+
         $this->client = new ModuleFilteredRavenClient(
             $env->get('PSX_FACEBOOK_SENTRY_CREDENTIALS'),
             [
@@ -57,7 +58,7 @@ class ErrorHandler
                 ],
                 'release' => "v{$module->version}",
                 'error_types' => E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE & ~E_USER_NOTICE,
-                'sample_rate' => $this->isContextInFrontOffice($context) ? 0.2 : 1,
+                'sample_rate' => $this->isContextInFrontOffice($module->getContext()) ? 0.2 : 1,
             ]
         );
 

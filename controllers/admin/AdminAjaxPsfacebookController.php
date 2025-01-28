@@ -18,12 +18,9 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
-use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
 use PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookCatalogExportException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookDependencyUpdateException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookOnboardException;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookPrevalidationScanException;
@@ -34,6 +31,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
@@ -45,7 +43,6 @@ use PrestaShop\Module\PrestashopFacebook\Provider\PrevalidationScanDataProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ModuleRepository;
-use PrestaShop\ModuleLibFaq\Faq;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
@@ -70,18 +67,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     private $errorHandler;
 
-    /**
-     * @var ResponseListener
-     */
-    private $responseListener;
-
     public function __construct()
     {
         parent::__construct();
         $this->configurationAdapter = $this->module->getService(ConfigurationAdapter::class);
         $this->clientFactory = $this->module->getService(PsApiClientFactory::class);
         $this->errorHandler = $this->module->getService(ErrorHandler::class);
-        $this->responseListener = $this->module->getService(ResponseListener::class);
+        $this->ajax = true;
     }
 
     public function displayAjaxSaveTokenFbeAccount()
@@ -89,7 +81,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $token = \Tools::getValue('accessToken');
         $response = $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_USER_ACCESS_TOKEN, $token);
 
-        $this->ajaxDie(json_encode($response));
+        $this->render(json_encode($response), 200);
     }
 
     public function displayAjaxEnsureTokensExchanged()
@@ -97,12 +89,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         /** @var AccessTokenProvider */
         $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => (bool) $accessTokenProvider->getSystemAccessToken(),
                 ]
-            )
+            ), 200
         );
     }
 
@@ -133,11 +125,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, false);
         $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_SUSPENSION_REASON);
 
-        $this->ajaxDie(
+        $this->render(
             json_encode([
                 'success' => true,
                 'contextPsFacebook' => $facebookContext,
-            ])
+            ]), 200
         );
     }
 
@@ -162,11 +154,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         if (isset($inputs['event_status'])) {
             $pixelStatus = $inputs['event_status'];
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PIXEL_ENABLED, $pixelStatus);
-            $this->ajaxDie(json_encode(['success' => true]));
+            $this->render(json_encode(['success' => true]), 200);
         }
 
-        http_response_code(400);
-        $this->ajaxDie(json_encode(['success' => false]));
+        $this->render(json_encode(['success' => false]), 400);
     }
 
     public function displayAjaxRetrieveExternalBusinessId()
@@ -174,18 +165,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
         try {
-            $response = $this->clientFactory->createClient()->sendRequest(
-                new Request(
-                    'POST',
-                    '/account/onboard',
-                    [],
-                    json_encode([
-                        // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
-                        'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-                    ])
-                )
+            $response = $this->clientFactory->createClient()->post(
+                '/account/onboard',
+                json_encode([
+                    // For now, not used, so this is not the final URL. To fix if webhook controller is needed.
+                    'webhookUrl' => 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                ])
             );
-            $response = json_decode($response->getBody()->getContents(), true);
+            $response = $response->getBody();
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookOnboardException(
@@ -196,14 +183,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $e->getCode(),
                 true
             );
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => $e->getMessage(),
                         'turnOn' => false,
                     ]
-                )
+                    ), 400
             );
 
             return;
@@ -217,14 +204,14 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 )
             );
 
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => $response['message'],
                         'turnOn' => false,
                     ]
-                )
+                    ), 400
             );
 
             return;
@@ -235,12 +222,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID, $externalBusinessId);
         }
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'externalBusinessId' => $externalBusinessId,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -254,14 +241,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         try {
-            $this->clientFactory->createClient()->sendRequest(
-                new Request(
-                    'POST',
-                    '/account/' . $externalBusinessId . '/start_product_sync',
-                    [],
-                    json_encode(['turnOn' => $turnOn])
-                )
-            );
+            $this->clientFactory->createClient()->post('/account/' . $externalBusinessId . '/start_product_sync', json_encode(['turnOn' => $turnOn]));
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookProductSyncException(
@@ -273,27 +253,27 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 false
             );
 
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => $e->getMessage(),
                         'turnOn' => false,
                     ]
-                )
+                    ), 400
             );
         }
 
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START, true);
         $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_PRODUCT_SYNC_ON, $turnOn);
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => true,
                     'turnOn' => $turnOn,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -304,14 +284,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
     {
         if ($this->configurationAdapter->get(Config::PS_FACEBOOK_FORCED_DISCONNECT) == true) {
             // $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, false);
-            http_response_code(401);
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'error' => true,
                         'reason' => $this->module->l('We are sorry but the link to Facebook has expired, please reconnect'),
                     ]
-            ));
+            ), 401);
         }
         /** @var FbeDataProvider $fbeDataProvider */
         $fbeDataProvider = $this->module->getService(FbeDataProvider::class);
@@ -320,13 +299,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $facebookDataProvider = $this->module->getService(FacebookDataProvider::class);
         $facebookContext = $facebookDataProvider->getContext($fbeDataProvider->getFbeData());
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'psFacebookExternalBusinessId' => $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID),
                     'contextPsFacebook' => $facebookContext,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -345,13 +324,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $updateChildren = isset($inputs['update_children']) ? (bool) $inputs['update_children'] : false;
 
         if (!$categoryId) {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => 'Missing data',
                     ]
-                )
+                    ), 200
             );
         }
         try {
@@ -365,22 +344,22 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $this->context->shop->id
             );
         } catch (Exception $e) {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => $e->getMessage(),
                     ]
-                )
+                    ), 500
             );
         }
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => true,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -395,8 +374,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         // FIXME : for now, this function will call our API to get taxonomy details about a category ID.
         //  The needed feature is totally different : see ticket http://forge.prestashop.com/browse/EMKTG-305
 
-        $this->ajaxDie(
-            json_encode($googleCategory)
+        $this->render(
+            json_encode($googleCategory), 200
         );
     }
 
@@ -410,12 +389,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $fbeFeatures = $fbeFeatureDataProvider->getFbeFeatures();
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'fbeFeatures' => $fbeFeatures,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -434,18 +413,18 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $response = $featureManager->updateFeature($inputs['featureName'], $inputs['enabled']);
 
         if (is_array($response)) {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     $response
-                )
+                ), 200
             );
         } else {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                     ]
-                )
+                    ), 200
             );
         }
     }
@@ -459,12 +438,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         $featureManager->updateFeature('messenger_chat', false);
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => true,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -477,12 +456,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $isEnabled = $messengerChatFeature->enabled;
         }
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'messengerChatStatus' => $isEnabled,
                 ]
-            )
+                ), 200
         );
     }
 
@@ -506,7 +485,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $productSyncReportProvider = $this->module->getService(ProductSyncReportProvider::class);
         $syncReport = $productSyncReportProvider->getProductSyncReport();
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'exportDone' => (true == $this->configurationAdapter->get(Config::PS_FACEBOOK_PRODUCT_SYNC_FIRST_START)),
@@ -522,7 +501,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                         ],
                     ],
                 ]
-            )
+                ),
+                200
         );
     }
 
@@ -537,9 +517,9 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             /** @var PrevalidationScanRefreshHandler $prevalidationScanRefreshHandler */
             $prevalidationScanRefreshHandler = $this->module->getService(PrevalidationScanRefreshHandler::class);
 
-            return $this->ajaxDie(json_encode(
+            return $this->render(json_encode(
                 $prevalidationScanRefreshHandler->run((int) $inputs['page'] ?: 0)
-            ));
+            ), 200);
         } catch (Exception $e) {
             $this->errorHandler->handle(
                 new FacebookPrevalidationScanException(
@@ -551,10 +531,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 false
             );
 
-            $this->ajaxDie(json_encode([
+            $this->render(json_encode([
                 'success' => false,
                 'message' => $e->getMessage(),
-            ]));
+            ]), 400);
         }
     }
 
@@ -567,7 +547,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProvider::class);
         $informationAboutCategoryMatching = $googleCategoryProvider->getInformationAboutCategoryMatches($this->context->shop->id);
 
-        $this->ajaxDie(json_encode(['matchingProgress' => $informationAboutCategoryMatching]));
+        $this->render(json_encode(['matchingProgress' => $informationAboutCategoryMatching]), 200);
     }
 
     public function displayAjaxGetCategories()
@@ -578,14 +558,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $page = isset($inputs['page']) ? (int) $inputs['page'] : null;
 
         if ($categoryId === null || $page === null) {
-            http_response_code(400);
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                         'message' => 'Missing data',
                     ]
-                )
+                    ), 400
             );
         }
 
@@ -595,8 +574,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $googleCategoryProvider = $this->module->getService(GoogleCategoryProviderInterface::class);
         $googleCategories = $googleCategoryProvider->getGoogleCategoryChildren($categoryId, $langId, $shopId, $page);
 
-        $this->ajaxDie(
-            json_encode($googleCategories)
+        $this->render(
+            json_encode($googleCategories), 200
         );
     }
 
@@ -609,15 +588,24 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
      */
     public function displayAjaxRetrieveFaq()
     {
-        $faq = new Faq($this->module->module_key, _PS_VERSION_, $this->context->language->iso_code);
+        $faq = [
+            'categories' => [],
+        ];
 
-        $this->ajaxDie(
+        $request = new HttpClient('https://api.addons.prestashop.com');
+        $result = $request->get('/request/faq/' . $this->module->module_key . '/' . _PS_VERSION_ . '/' . $this->context->language->iso_code, []);
+
+        if ($result->getStatusCode() === 200) {
+            $faq['categories'] = $result->getBody();
+        }
+
+        $this->render(
             json_encode(
                 [
-                    'faq' => $faq->getFaq(),
+                    'faq' => $faq['categories'],
                     'doc' => $this->getReadme(),
                 ]
-            )
+                ), 200
         );
     }
 
@@ -643,10 +631,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 $this->configurationAdapter->deleteByName(Config::PS_FACEBOOK_CAPI_TEST_EVENT_CODE);
         }
 
-        if (!$success) {
-            http_response_code(400);
-        }
-        $this->ajaxDie(json_encode(['success' => $success]));
+        $this->render(json_encode(['success' => $success]), $success ? 200 : 400);
     }
 
     public function displayAjaxGetProductsWithErrors()
@@ -663,12 +648,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $page
         );
 
-        $this->ajaxDie(json_encode([
+        $this->render(json_encode([
             'success' => true,
             'list' => $productsWithErrors,
             'hasMoreProducts' => count($productsWithErrors) === Config::REPORTS_PER_PAGE,
             'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
-        ]));
+        ]), 200);
     }
 
     public function displayAjaxManageModule()
@@ -678,12 +663,11 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
 
         if (!in_array($moduleName, ['ps_accounts', 'ps_eventbus', 'ps_facebook'])
             || !in_array($moduleAction, ['enable', 'install', 'upgrade'])) {
-            http_response_code(401);
-            $this->ajaxDie(
+            $this->render(
                 json_encode([
                     'success' => false,
                     'message' => 'Module name and/or action are invalid',
-                ]));
+                ]), 401);
         }
 
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
@@ -704,16 +688,16 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 false
             );
 
-            $this->ajaxDie(json_encode([
+            $this->render(json_encode([
                 'success' => false,
                 'message' => $e->getMessage(),
-            ]));
+            ]), 200);
         }
 
-        $this->ajaxDie(json_encode([
+        $this->render(json_encode([
             'success' => $isActionSuccessful,
             'message' => $moduleManager->getError($moduleName),
-        ]));
+        ]), 200);
     }
 
     public function displayAjaxGetProductSyncReporting()
@@ -723,12 +707,12 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $syncReport = $productSyncReportProvider->getProductSyncReport();
 
         if (!$syncReport) {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                     ]
-                )
+                    ), 200
             );
         }
 
@@ -739,14 +723,15 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $isoCode = Context::getContext()->language->iso_code;
         $informationAboutProductsWithErrors = $eventBusProductHandler->getInformationAboutEventBusProductsWithErrors($syncReport['errors'], $shopId, $isoCode);
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => true,
                     'productsWithErrors' => $informationAboutProductsWithErrors,
                     'lastFinishedSyncStartedAt' => $syncReport['lastFinishedSyncStartedAt'],
                 ]
-            )
+            ),
+            200
         );
     }
 
@@ -757,12 +742,13 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $syncReport = $productSyncReportProvider->getProductSyncReport();
 
         if (!$syncReport) {
-            $this->ajaxDie(
+            $this->render(
                 json_encode(
                     [
                         'success' => false,
                     ]
-                )
+                ),
+                200
             );
         }
 
@@ -776,7 +762,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             $shopId
         );
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 [
                     'success' => true,
@@ -784,7 +770,8 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                     'list' => $informationAboutProducts,
                     'url' => $this->context->link->getAdminLink('AdminProducts', true, ['id_product' => 1, 'updateproduct' => '1']),
                 ]
-            )
+            ),
+            200
         );
     }
 
@@ -793,28 +780,19 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
         $response = 200;
 
-        $request = new Request(
-            'POST',
-            '/account/' . $externalBusinessId . '/reset_product_sync'
-        );
-        $response = $this->responseListener->handleResponse(
-            $this->clientFactory->createClient()->sendRequest($request),
-            [
-                'exceptionClass' => FacebookCatalogExportException::class,
-            ]
-        );
+        $response = $this->clientFactory->createClient()->post('/account/' . $externalBusinessId . '/reset_product_sync');
 
         if (!$response->isSuccessful()) {
-            $code = $response->getResponse()->getStatusCode();
-            $this->ajaxDie(json_encode([
+            $code = $response->getStatusCode();
+            $this->render(json_encode([
                 'response' => 500,
                 'message' => "Failed to export the whole catalog (HTTP {$code})",
-            ]));
+            ]), 500);
         }
 
-        $this->ajaxDie(json_encode([
+        $this->render(json_encode([
             'response' => $response->getBody(),
-        ]));
+        ]), 200);
     }
 
     public function displayAjaxRetrieveTokens()
@@ -823,10 +801,10 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $accessTokenProvider = $this->module->getService(AccessTokenProvider::class);
         $tokens = $accessTokenProvider->retrieveTokens();
 
-        $this->ajaxDie(json_encode([
+        $this->render(json_encode([
             'tokens' => $tokens,
             'suspensionReason' => $this->configurationAdapter->get(Config::PS_FACEBOOK_SUSPENSION_REASON),
-        ]));
+        ]), 200);
     }
 
     public function displayAjaxGetModuleStatus()
@@ -834,17 +812,17 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         if (!isset($inputs['moduleName'])) {
-            http_response_code(400);
-            $this->ajaxDie(json_encode([
+            $this->render(json_encode([
                 'success' => false,
                 'message' => 'Missing moduleName key',
-            ]));
+            ]), 400);
         }
 
-        $this->ajaxDie(
+        $this->render(
             json_encode(
                 (new ModuleRepository($inputs['moduleName']))->getInformationsAboutModule()
-            )
+            ),
+            400
         );
     }
 
@@ -853,27 +831,36 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         $inputs = json_decode(Tools::file_get_contents('php://input'), true);
 
         if (!isset($inputs['hookName'])) {
-            http_response_code(400);
-            $this->ajaxDie(json_encode([
+            $this->render(json_encode([
                 'success' => false,
                 'message' => 'Missing hookName key',
-            ]));
+            ]), 400);
         }
 
-        $this->ajaxDie(
+        $this->render(
             json_encode([
                 'success' => $this->module->registerHook($inputs['hookName']),
-            ])
+            ]),
+            200
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function ajaxDie($value = null, $controller = null, $method = null)
+    private function render($response, $code)
     {
-        header('Content-Type: application/json');
-        parent::ajaxDie($value, $controller, $method);
+        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        header('Content-Type: application/json;charset=utf-8');
+        header("HTTP/1.1 $code");
+
+        if (_PS_VERSION_ === '9.0.0') {
+            //@phpstan-ignore-next-line
+            parent::ajaxRender($response);
+            exit;
+        }
+
+        parent::ajaxDie($response, null, null);
     }
 
     /**

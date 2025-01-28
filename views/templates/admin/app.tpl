@@ -31,6 +31,17 @@
   <script type="module" src="http://localhost:5173/@vite/client"></script>
   <script type="module" src="http://localhost:5173/src/main.ts"></script>
 {else}
-  <link href="{$pathApp|escape:'htmlall':'UTF-8'}" rel=preload as=script>
+  <link href="{$pathApp|escape:'htmlall':'UTF-8'}" as=script>
   <script src="{$pathApp|escape:'htmlall':'UTF-8'}" type="module"></script>
 {/if}
+
+<script>
+// it's used to avoid breaking the menu on the module
+document.addEventListener('DOMContentLoaded', function () {
+  const hasNoBootstrapClass = document.querySelector('#content.nobootstrap');
+  if (hasNoBootstrapClass === null) {
+    document.querySelector('#content').classList.add('nobootstrap');
+    document.querySelector('#content').classList.remove('bootstrap');
+  }
+});
+</script>

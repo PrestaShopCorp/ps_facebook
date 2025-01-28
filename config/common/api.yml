@@ -5,7 +5,6 @@ services:
     arguments:
       - '@PrestaShop\Module\PrestashopFacebook\Factory\PsApiClientFactory'
       - '@PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository'
-      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
 
   PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient:
     class: PrestaShop\Module\PrestashopFacebook\API\Client\FacebookClient
@@ -15,7 +14,6 @@ services:
       - '@PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider'
       - '@PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter'
       - '@PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler'
-      - '@PrestaShop\Module\PrestashopFacebook\API\ResponseListener'
 
   PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber:
     class: PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber
@@ -26,14 +24,3 @@ services:
   PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber:
     class: PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber
     public: true
-    arguments:
-      - '@PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler'
-
-  PrestaShop\Module\PrestashopFacebook\API\ResponseListener:
-    class: PrestaShop\Module\PrestashopFacebook\API\ResponseListener
-    public: true
-    arguments:
-      [[
-        '@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\AccountSuspendedSubscriber',
-        '@PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber'
-      ]]

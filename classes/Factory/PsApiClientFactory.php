@@ -21,7 +21,7 @@
 namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
 use PrestaShop\Module\PrestashopFacebook\Config\Env;
-use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 use PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts;
 
 class PsApiClientFactory implements ApiClientFactoryInterface
@@ -36,19 +36,12 @@ class PsApiClientFactory implements ApiClientFactoryInterface
      */
     private $psAccountsFacade;
 
-    /**
-     * @var ClientFactory
-     */
-    private $clientFactory;
-
     public function __construct(
         Env $env,
-        PsAccounts $psAccountsFacade,
-        ClientFactory $clientFactory
+        PsAccounts $psAccountsFacade
     ) {
         $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
         $this->psAccountsFacade = $psAccountsFacade;
-        $this->clientFactory = $clientFactory;
     }
 
     /**
@@ -56,15 +49,11 @@ class PsApiClientFactory implements ApiClientFactoryInterface
      */
     public function createClient()
     {
-        $client = $this->clientFactory->getClient([
-            'base_url' => $this->baseUrl,
-            'timeout' => 10,
-            'verify' => false,
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->psAccountsFacade->getPsAccountsService()->getOrRefreshToken(),
-            ],
+        $client = new HttpClient($this->baseUrl);
+        $client->setHeaders([
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Authorization: Bearer ' . $this->psAccountsFacade->getPsAccountsService()->getOrRefreshToken(),
         ]);
 
         return $client;

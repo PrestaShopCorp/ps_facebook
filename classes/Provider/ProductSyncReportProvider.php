@@ -20,13 +20,10 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\Provider;
 
-use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
-use PrestaShop\Module\PrestashopFacebook\Exception\FacebookAccountException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
-use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 
 class ProductSyncReportProvider
 {
@@ -36,22 +33,15 @@ class ProductSyncReportProvider
     private $configurationAdapter;
 
     /**
-     * @var HttpClientInterface
+     * @var HttpClient
      */
     private $psApiClient;
 
-    /**
-     * @var ResponseListener
-     */
-    private $responseListener;
-
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ApiClientFactoryInterface $psApiClientFactory,
-        ResponseListener $responseListener
+        ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
-        $this->responseListener = $responseListener;
         $this->psApiClient = $psApiClientFactory->createClient();
     }
 
@@ -59,17 +49,7 @@ class ProductSyncReportProvider
     {
         $businessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
-        $response = $this->responseListener->handleResponse(
-            $this->psApiClient->sendRequest(
-                new Request(
-                    'GET',
-                    "/account/{$businessId}/reporting"
-                )
-            ),
-            [
-                'exceptionClass' => FacebookAccountException::class,
-            ]
-        );
+        $response = $this->psApiClient->get("/account/{$businessId}/reporting");
 
         $responseContent = $response->getBody();
 

@@ -21,9 +21,8 @@
 namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
 use Exception;
-use GuzzleHttp\Psr7\Request;
 use PrestaShop\Module\PrestashopFacebook\Adapter\ConfigurationAdapter;
-use PrestaShop\Module\PrestashopFacebook\API\ResponseListener;
+use PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber;
 use PrestaShop\Module\PrestashopFacebook\Config\Config;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\Ad;
 use PrestaShop\Module\PrestashopFacebook\DTO\Object\FacebookBusinessManager;
@@ -33,8 +32,8 @@ use PrestaShop\Module\PrestashopFacebook\DTO\Object\User;
 use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
 use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
-use Prestashop\ModuleLibGuzzleAdapter\Interfaces\HttpClientInterface;
 
 class FacebookClient
 {
@@ -54,7 +53,7 @@ class FacebookClient
     private $sdkVersion;
 
     /**
-     * @var HttpClientInterface
+     * @var HttpClient
      */
     private $client;
 
@@ -68,17 +67,11 @@ class FacebookClient
      */
     private $configurationHandler;
 
-    /**
-     * @var ResponseListener
-     */
-    private $responseListener;
-
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ConfigurationHandler $configurationHandler,
-        ResponseListener $responseListener
+        ConfigurationHandler $configurationHandler
     ) {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->systemToken = $accessTokenProvider->getSystemAccessToken();
@@ -86,7 +79,6 @@ class FacebookClient
         $this->client = $apiClientFactory->createClient();
         $this->configurationAdapter = $configurationAdapter;
         $this->configurationHandler = $configurationHandler;
-        $this->responseListener = $responseListener;
     }
 
     public function setAccessToken($accessToken)
@@ -216,6 +208,10 @@ class FacebookClient
             ]
         );
 
+        if (!is_array($responseContent)) {
+            return [];
+        }
+
         return reset($responseContent['data']);
     }
 
@@ -316,7 +312,7 @@ class FacebookClient
      * @param array $fields
      * @param array $query
      *
-     * @return false|array
+     * @return array
      *
      * @throws Exception
      */
@@ -330,18 +326,7 @@ class FacebookClient
             $query
         );
 
-        $request = new Request(
-            'GET',
-            "/{$this->sdkVersion}/{$id}?" . http_build_query($query)
-        );
-
-        $response = $this->responseListener->handleResponse(
-            $this->client->sendRequest($request),
-            [
-                'exceptionClass' => FacebookClientException::class,
-            ]
-        );
-
+        $response = $this->client->get("/{$this->sdkVersion}/{$id}", $query);
         $responseContent = $response->getBody();
 
         if (!$response->isSuccessful()) {
@@ -354,8 +339,7 @@ class FacebookClient
                 $this->disconnectFromFacebook();
                 $this->configurationAdapter->updateValue(Config::PS_FACEBOOK_FORCED_DISCONNECT, true);
             }
-
-            return false;
+            (new ApiErrorSubscriber())->onParsedResponse($response, ['exceptionClass' => FacebookClientException::class]);
         }
 
         return $responseContent;
@@ -366,7 +350,7 @@ class FacebookClient
      * @param array $headers
      * @param array $body
      *
-     * @return false|array
+     * @return array
      */
     private function post($id, array $headers = [], array $body = [])
     {
@@ -378,7 +362,7 @@ class FacebookClient
      * @param array $headers
      * @param array $body
      *
-     * @return false|array
+     * @return array
      */
     private function delete($id, array $headers = [], array $body = [])
     {
@@ -391,7 +375,7 @@ class FacebookClient
      * @param array $body
      * @param string $method
      *
-     * @return false|array
+     * @return array
      */
     private function sendRequest($id, array $headers, array $body, $method)
     {
@@ -402,22 +386,12 @@ class FacebookClient
             $body
         );
 
-        $request = new Request(
-            $method,
-            "/{$this->sdkVersion}/{$id}",
-            $headers,
-            json_encode($body)
-        );
+        $this->client->setHeaders($headers);
 
-        $response = $this->responseListener->handleResponse(
-            $this->client->sendRequest($request),
-            [
-                'exceptionClass' => FacebookClientException::class,
-            ]
-        );
+        $response = $this->client->request($method, "/{$this->sdkVersion}/{$id}", $body);
 
         if (!$response->isSuccessful()) {
-            return false;
+            (new ApiErrorSubscriber())->onParsedResponse($response, ['exceptionClass' => FacebookClientException::class]);
         }
 
         return $response->getBody();
