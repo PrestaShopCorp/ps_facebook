@@ -31,6 +31,7 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ConfigurationHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\EventBusProductHandler;
 use PrestaShop\Module\PrestashopFacebook\Handler\PrevalidationScanRefreshHandler;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 use PrestaShop\Module\PrestashopFacebook\Manager\FbeFeatureManager;
 use PrestaShop\Module\PrestashopFacebook\Provider\AccessTokenProvider;
 use PrestaShop\Module\PrestashopFacebook\Provider\FacebookDataProvider;
@@ -43,7 +44,6 @@ use PrestaShop\Module\PrestashopFacebook\Provider\ProductSyncReportProvider;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 use PrestaShop\Module\PrestashopFacebook\Repository\ModuleRepository;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
-use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 
 class AdminAjaxPsfacebookController extends ModuleAdminController
 {
@@ -94,7 +94,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
                 [
                     'success' => (bool) $accessTokenProvider->getSystemAccessToken(),
                 ]
-                ), 200
+            ), 200
         );
     }
 
@@ -859,7 +859,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             exit;
         }
 
-        parent::render($response, null, null);
+        parent::ajaxDie($response, null, null);
     }
 
     /**

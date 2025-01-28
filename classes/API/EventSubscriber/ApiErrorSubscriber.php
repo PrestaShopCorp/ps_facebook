@@ -26,26 +26,11 @@ use PrestaShop\Module\PrestashopFacebook\Handler\ErrorHandler\ErrorHandler;
 
 class ApiErrorSubscriber
 {
-    /**
-     * @var ErrorHandler
-     */
-    private $errorHandler;
-
-    public function __construct(ErrorHandler $errorHandler)
-    {
-        $this->errorHandler = $errorHandler;
-    }
-
     public function onParsedResponse(Response $response, array $options): void
     {
-        if ($response->isSuccessful()) {
-            return;
-        }
-
         $class = $options['exceptionClass'] ?: Exception::class;
 
-        // TODO: Error sent to the error handler can be improved from the response content
-        $this->errorHandler->handle(
+        (new ErrorHandler())->handle(
             new $class(
                 $this->getMessage($response)
             ),

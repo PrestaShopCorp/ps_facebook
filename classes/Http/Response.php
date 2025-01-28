@@ -31,22 +31,17 @@ class Response
     private $body;
     /** @var array<string,string> */
     private $headers;
-    /** @var string|null */
-    private $error;
 
     /**
      * @param int $statusCode
      * @param string $body
      * @param array<string,string> $headers
-     * @param string|null $error
-     *
      **/
-    public function __construct($statusCode, $body, $headers = [], $error = null)
+    public function __construct($statusCode, $body, $headers = [])
     {
         $this->statusCode = $statusCode;
         $this->body = $body;
         $this->headers = $headers;
-        $this->error = $error;
     }
 
     /**
@@ -71,19 +66,11 @@ class Response
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getBody()
     {
         return json_decode($this->body, true);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getError()
-    {
-        return $this->error;
     }
 
     public function isSuccessful()

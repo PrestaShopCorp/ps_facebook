@@ -164,7 +164,6 @@ class HttpClient
         // Split response into headers and body
         $headerStr = substr((string) $response, 0, $headerSize);
         $body = substr((string) $response, $headerSize);
-        $error = curl_error($this->curl);
 
         // Parse headers
         $headers = [];
@@ -178,7 +177,6 @@ class HttpClient
             $httpCode,
             $body,
             $headers,
-            $error
         );
     }
 

@@ -138,7 +138,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'emailSupport' => 'no-reply@prestashop.com',
         ]));
         Media::addJsDef([
-            'psBillingSubscription' => [],
+            'psBillingSubscription' => $fetchSubscriptions->isSuccessful() ? $currentSubscription : null,
         ]);
 
         /*********************

@@ -20,7 +20,10 @@
 
 namespace PrestaShop\Module\PrestashopFacebook\API\Client;
 
+use PrestaShop\Module\PrestashopFacebook\API\EventSubscriber\ApiErrorSubscriber;
+use PrestaShop\Module\PrestashopFacebook\Exception\FacebookClientException;
 use PrestaShop\Module\PrestashopFacebook\Factory\ApiClientFactoryInterface;
+use PrestaShop\Module\PrestashopFacebook\Http\HttpClient;
 use PrestaShop\Module\PrestashopFacebook\Repository\GoogleCategoryRepository;
 
 class FacebookCategoryClient
@@ -42,6 +45,7 @@ class FacebookCategoryClient
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;
     }
+
     /**
      * @param int $categoryId
      * @param int $shopId
@@ -77,7 +81,7 @@ class FacebookCategoryClient
         $response = $this->client->get("/{$id}" . http_build_query($query));
 
         if (!$response->isSuccessful()) {
-            return false;
+            (new ApiErrorSubscriber())->onParsedResponse($response, ['exceptionClass' => FacebookClientException::class]);
         }
 
         return $response->getBody();
