@@ -71,8 +71,9 @@ class FacebookClient
         ApiClientFactoryInterface $apiClientFactory,
         AccessTokenProvider $accessTokenProvider,
         ConfigurationAdapter $configurationAdapter,
-        ConfigurationHandler $configurationHandler,
-    ) {
+        ConfigurationHandler $configurationHandler
+    )
+    {
         $this->accessToken = $accessTokenProvider->getUserAccessToken();
         $this->systemToken = $accessTokenProvider->getSystemAccessToken();
         $this->sdkVersion = Config::API_VERSION;

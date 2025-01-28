@@ -176,7 +176,7 @@ class HttpClient
         return new Response(
             $httpCode,
             $body,
-            $headers,
+            $headers
         );
     }
 

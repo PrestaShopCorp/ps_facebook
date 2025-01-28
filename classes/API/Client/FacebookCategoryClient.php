@@ -40,7 +40,7 @@ class FacebookCategoryClient
 
     public function __construct(
         ApiClientFactoryInterface $apiClientFactory,
-        GoogleCategoryRepository $googleCategoryRepository,
+        GoogleCategoryRepository $googleCategoryRepository
     ) {
         $this->client = $apiClientFactory->createClient();
         $this->googleCategoryRepository = $googleCategoryRepository;

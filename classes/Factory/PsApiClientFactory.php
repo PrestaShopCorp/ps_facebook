@@ -38,7 +38,7 @@ class PsApiClientFactory implements ApiClientFactoryInterface
 
     public function __construct(
         Env $env,
-        PsAccounts $psAccountsFacade,
+        PsAccounts $psAccountsFacade
     ) {
         $this->baseUrl = $env->get('PSX_FACEBOOK_API_URL');
         $this->psAccountsFacade = $psAccountsFacade;

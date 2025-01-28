@@ -39,7 +39,7 @@ class ProductSyncReportProvider
 
     public function __construct(
         ConfigurationAdapter $configurationAdapter,
-        ApiClientFactoryInterface $psApiClientFactory,
+        ApiClientFactoryInterface $psApiClientFactory
     ) {
         $this->configurationAdapter = $configurationAdapter;
         $this->psApiClient = $psApiClientFactory->createClient();
