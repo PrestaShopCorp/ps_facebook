@@ -854,7 +854,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
         header('Content-Type: application/json;charset=utf-8');
         header("HTTP/1.1 $code");
 
-        if (_PS_VERSION_ === '9.0.0') {
+        if ((bool) version_compare(_PS_VERSION_, '9.0.0', '>=')) {
             //@phpstan-ignore-next-line
             parent::ajaxRender($response);
             exit;
