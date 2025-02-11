@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "storybook" {
 
         container {
           name = "ui"
-          image = "eu.gcr.io/${local.project}/facebook-storybook:${var.app_version}"
+          image = "europe-west1-docker.pkg.dev/${local.project}/facebook-storybook:${var.app_version}"
           image_pull_policy = "Always"
         }
       }
