@@ -124,7 +124,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         // Load the context for PrestaShop Billing
         $billingFacade = $this->module->getService(BillingPresenter::class);
-        $billingAdapter = new BillingAdapter($psAccountsData['psAccountsToken']);
+        $billingAdapter = new BillingAdapter($psAccountsData['psAccountsToken'], (bool) $this->env->get('USE_BILLING_SANDBOX'));
         $fetchSubscriptions = $billingAdapter->getCurrentSubscription($psAccountsData['psAccountShopId'], $this->module->name);
         $currentSubscription = $fetchSubscriptions->getBody();
         $partnerLogo = $this->module->getLocalPath() . 'logo.png';
