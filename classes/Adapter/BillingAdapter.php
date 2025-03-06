@@ -31,20 +31,32 @@ class BillingAdapter
      */
     private $jwt;
 
-    public function __construct($jwt)
+    /**
+     * @var bool
+     */
+    private $isSandbox;
+
+    public function __construct($jwt, $isSandbox)
     {
         $this->jwt = $jwt;
+        $this->isSandbox = $isSandbox;
     }
 
     public function getCurrentSubscription($shopId, $productId)
     {
         $httpClient = new HttpClient(self::BILLING_URL);
-        $httpClient->setHeaders([
+        $headers = [
             'Accept: application/json',
             'Authorization: Bearer ' . $this->jwt,
             'Content-Type: application/json',
             'User-Agent : module-lib-billing v3 (' . $productId . ')',
-        ]);
+        ];
+
+        if ($this->isSandbox === true) {
+            $headers[] = 'sandbox: true';
+        }
+
+        $httpClient->setHeaders($headers);
 
         return $httpClient->get('/customers/' . $shopId . '/subscriptions/' . $productId);
     }

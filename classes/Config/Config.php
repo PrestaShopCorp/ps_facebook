@@ -30,6 +30,7 @@ class Config
 
     public const USE_LOCAL_VUE_APP = false;
     public const USE_LIVE_VUE_APP = false;
+    public const USE_BILLING_SANDBOX = false;
     public const PSX_FACEBOOK_CDN_URL = 'https://storage.googleapis.com/psxfacebook/v1.x.x/js/';
 
     public const HOOK_LIST = [
