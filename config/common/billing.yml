@@ -4,6 +4,7 @@ services:
     arguments:
     - '@PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
     - '@ps_facebook.context'
+    - '@ps_facebook.billing_env'
 
   PrestaShopCorp\Billing\Presenter\BillingPresenter:
     class: 'PrestaShopCorp\Billing\Presenter\BillingPresenter'
