@@ -18,9 +18,9 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
  */
 
- namespace PrestaShop\Module\PrestashopFacebook\Factory;
+namespace PrestaShop\Module\PrestashopFacebook\Factory;
 
- use PrestaShop\Module\PrestashopFacebook\Config\Env;
+use PrestaShop\Module\PrestashopFacebook\Config\Env;
 
  class ParametersFactory
  {
