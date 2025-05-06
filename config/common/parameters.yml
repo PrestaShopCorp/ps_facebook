@@ -1,0 +1,5 @@
+services:
+   ps_facebook.billing_env:
+     class: 'PrestaShop\Module\PrestashopFacebook\Factory\ParametersFactory'
+     public: true
+     factory: ['PrestaShop\Module\PrestashopFacebook\Factory\ParametersFactory', 'getBillingEnv']

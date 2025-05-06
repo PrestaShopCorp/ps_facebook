@@ -1,4 +1,5 @@
 imports:
+  - { resource: common/parameters.yml }
   - { resource: common/accounts.yml }
   - { resource: common/billing.yml}
   - { resource: common/adapter.yml }
