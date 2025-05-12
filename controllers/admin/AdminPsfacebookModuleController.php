@@ -90,7 +90,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'pathApp' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/pssocial-ui.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'pssocial-ui.js',
             'psSocialLiveMode' => (bool) $this->env->get('USE_LIVE_VUE_APP'),
             'billingUrl' => $billingUrl,
-            'cloudSyncUrl' => $cloudsyncUrl
+            'cloudSyncUrl' => $cloudsyncUrl,
         ]);
 
         $defaultCurrency = $this->context->currency;
