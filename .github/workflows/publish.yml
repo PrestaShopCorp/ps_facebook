@@ -51,6 +51,8 @@ jobs:
         run: |
           echo '${{env.CDN_URL_ENV_NAME}}=https://storage.googleapis.com/${{env.GLOUD_CDN_BUCKET}}/${{ steps.get_tag.outputs.MAJOR }}.${{ steps.get_tag.outputs.MINOR }}.${{ steps.get_tag.outputs.PATCH }}/js/' >> .env
           echo 'USE_BILLING_SANDBOX=1' >> .env
+          echo 'USE_BILLING_PREPROD=1' >> .env
+          echo 'USE_CLOUDSYNC_PREPROD=1' >> .env
 
 
       - name: Clean-up project

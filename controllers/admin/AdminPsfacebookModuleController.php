@@ -80,6 +80,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         (new PrestaShop\PsAccountsInstaller\Installer\Installer(Config::REQUIRED_PS_ACCOUNTS_VERSION))->install();
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
+        $billingUrl = (bool) $this->env->get('USE_BILLING_PREPROD') ? $this->env->get('PSX_FACEBOOK_BILLING_PREPROD_CDC_URL') : $this->env->get('PSX_FACEBOOK_BILLING_CDC_URL');
+        $cloudsyncUrl = (bool) $this->env->get('USE_CLOUDSYNC_PREPROD') ? $this->env->get('PSX_FACEBOOK_CLOUDSYNC_PREPROD_CDC_URL') : $this->env->get('PSX_FACEBOOK_CLOUDSYNC_CDC_URL');
 
         $this->context->smarty->assign([
             'id_pixel' => pSQL($this->configurationAdapter->get(Config::PS_PIXEL_ID)),
@@ -87,6 +89,8 @@ class AdminPsfacebookModuleController extends ModuleAdminController
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'pathApp' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/pssocial-ui.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'pssocial-ui.js',
             'psSocialLiveMode' => (bool) $this->env->get('USE_LIVE_VUE_APP'),
+            'billingUrl' => $billingUrl,
+            'cloudSyncUrl' => $cloudsyncUrl
         ]);
 
         $defaultCurrency = $this->context->currency;
@@ -124,7 +128,7 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         // Load the context for PrestaShop Billing
         $billingFacade = $this->module->getService(BillingPresenter::class);
-        $billingAdapter = new BillingAdapter($psAccountsData['psAccountsToken'], (bool) $this->env->get('USE_BILLING_SANDBOX'));
+        $billingAdapter = new BillingAdapter($psAccountsData['psAccountsToken'], (bool) $this->env->get('USE_BILLING_SANDBOX'), (bool) $this->env->get('USE_BILLING_PREPROD'));
         $fetchSubscriptions = $billingAdapter->getCurrentSubscription($psAccountsData['psAccountShopId'], $this->module->name);
         $currentSubscription = $fetchSubscriptions->getBody();
         $partnerLogo = $this->module->getLocalPath() . 'logo.png';
