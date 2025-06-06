@@ -368,7 +368,8 @@
       "needHelp": "Besoin d'aide ? Retrouvez ici la documentation de ce module.",
       "downloadPdf": "Télécharger le PDF",
       "couldntFindAnyAnswer": "Vous n'avez pas trouvé de réponse à votre question ?",
-      "contactUs": "Nous contacter"
+      "contactUs": "Nous contacter",
+      "privacyPolicy": "Privacy policy"
     }
   },
   "faq": {
