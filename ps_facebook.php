@@ -281,7 +281,9 @@ class Ps_facebook extends Module
 
     public function hookDisplayBackOfficeHeader()
     {
-        $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
+        if (version_compare(_PS_VERSION_, '9.0.0', '<')) {
+            $this->context->controller->addCSS($this->getPathUri() . 'views/css/admin/menu.css');
+        }
     }
 
     public function hookActionFrontControllerSetMedia()
