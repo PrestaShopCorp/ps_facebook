@@ -51,5 +51,11 @@
     ],
     "author": "PrestaShop",
     "license": "AFL-3.0",
-    "type": "prestashop-module"
+    "type": "prestashop-module",
+    "authors": [
+        {
+            "name": "PrestaShop SA",
+            "email": "contact@prestashop.com"
+        }
+    ]
 }
