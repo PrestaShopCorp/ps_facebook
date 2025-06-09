@@ -15,11 +15,12 @@
         "vlucas/phpdotenv": "^3.4",
         "prestashop/prestashop-accounts-installer": "^1.0",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
+        "prestashop/module-lib-faq": "^2.2",
         "prestashop/module-lib-service-container": "^2.0",
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
-        "facebook/php-business-sdk": "dev-remove-guzzle",
-        "prestashopcorp/module-lib-billing": "^4.0"
+        "facebook/php-business-sdk": "dev-guzzle-adapter",
+        "prestashopcorp/module-lib-billing": "^3.2"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "^4.2",
@@ -49,12 +50,7 @@
             "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk"
         }
     ],
+    "author": "PrestaShop",
     "license": "AFL-3.0",
-    "type": "prestashop-module",
-    "authors": [
-        {
-            "name": "PrestaShop SA",
-            "email": "contact@prestashop.com"
-        }
-    ]
+    "type": "prestashop-module"
 }

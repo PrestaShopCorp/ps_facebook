@@ -8,3 +8,7 @@ services:
   PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter:
     class: PrestaShop\Module\PrestashopFacebook\Adapter\ToolsAdapter
     public: true
+
+  Prestashop\ModuleLibGuzzleAdapter\ClientFactory:
+    class: Prestashop\ModuleLibGuzzleAdapter\ClientFactory
+    public: true
