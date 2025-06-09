@@ -19,7 +19,7 @@
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
         "facebook/php-business-sdk": "dev-guzzle-adapter",
-        "prestashopcorp/module-lib-billing": "^3.2"
+        "prestashopcorp/module-lib-billing": "^4.0"
     },
     "require-dev": {
         "prestashop/php-dev-tools": "^4.2",

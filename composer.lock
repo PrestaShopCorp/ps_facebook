@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d0d0094a7729fb05bbcdd57ce89fa0d",
+    "content-hash": "d6d649eb7daa7af4339f790b20e3f5d9",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -676,25 +676,24 @@
         },
         {
             "name": "prestashopcorp/module-lib-billing",
-            "version": "3.3.1",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/module-lib-billing.git",
-                "reference": "afc83c3cfaaa5f54c14ad35fb793a3caa332ffdb"
+                "reference": "11cc7687df3fd890c17feaf84e69be3a7163e09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/module-lib-billing/zipball/afc83c3cfaaa5f54c14ad35fb793a3caa332ffdb",
-                "reference": "afc83c3cfaaa5f54c14ad35fb793a3caa332ffdb",
+                "url": "https://api.github.com/repos/PrestaShopCorp/module-lib-billing/zipball/11cc7687df3fd890c17feaf84e69be3a7163e09b",
+                "reference": "11cc7687df3fd890c17feaf84e69be3a7163e09b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6",
-                "prestashop/module-lib-guzzle-adapter": "0.6"
+                "php": ">=5.6"
             },
             "require-dev": {
-                "guzzlehttp/guzzle": "^5.3",
-                "prestashop/php-dev-tools": "^3"
+                "friendsofphp/php-cs-fixer": "^2.19",
+                "prestashop/php-dev-tools": ">=3.0"
             },
             "type": "library",
             "autoload": {
@@ -712,9 +711,9 @@
             "description": "Utility package to retrieve Built for PS context and more",
             "support": {
                 "issues": "https://github.com/PrestaShopCorp/module-lib-billing/issues",
-                "source": "https://github.com/PrestaShopCorp/module-lib-billing/tree/3.3.1"
+                "source": "https://github.com/PrestaShopCorp/module-lib-billing/tree/4.0.0"
             },
-            "time": "2024-07-26T06:02:36+00:00"
+            "time": "2025-01-20T15:04:06+00:00"
         },
         {
             "name": "psr/http-message",
