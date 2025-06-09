@@ -15,7 +15,6 @@
         "vlucas/phpdotenv": "^3.4",
         "prestashop/prestashop-accounts-installer": "^1.0",
         "prestashop/module-lib-cache-directory-provider": "^1.0",
-        "prestashop/module-lib-faq": "^2.2",
         "prestashop/module-lib-service-container": "^2.0",
         "segmentio/analytics-php": "^1.5",
         "sentry/sentry": "^1.11.0",
