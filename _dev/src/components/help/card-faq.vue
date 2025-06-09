@@ -164,7 +164,7 @@ export default defineComponent({
   },
   computed: {
     supportUrl(): string {
-      return `?utm_source=back-office&utm_medium=psx&psx=ps_facebook&shop_domain=${window.contextPsAccounts.currentShop.domain}`;
+      return `?form=support&subject=psfacebook&url=${window.contextPsAccounts.currentShop.domain}`;
     },
   },
   methods: {
