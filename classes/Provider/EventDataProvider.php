@@ -33,6 +33,7 @@ use PrestaShop\Module\Ps_facebook\Utility\ProductCatalogUtility;
 use PrestaShopException;
 use Product;
 use Ps_facebook;
+use Validate;
 
 class EventDataProvider
 {
@@ -111,7 +112,13 @@ class EventDataProvider
                     return $this->getCustomEventData();
                 }
                 if ($this->context->controller instanceof \ProductControllerCore) {
-                    return $this->getProductPageData();
+                    if(\Tools::getIsset('id_product') && (int) \Tools::getValue('id_product') > 0) {
+                        $id_product = (int) \Tools::getValue('id_product');
+                        $product = new Product($id_product, false, $this->context->language->id);
+                        if(Validate::isLoadedObject($product)) {
+                            return $this->getProductPageData();
+                        }
+                    }
                 }
                 if ($this->context->controller instanceof \CategoryControllerCore) {
                     return $this->getCategoryPageData();
