@@ -60,14 +60,14 @@ export default defineComponent({
   methods: {
     supportLink() {
       const urls = {
-        fr: 'https://prestashop-academy.com/fr/nous-contacter',
-        it: 'https://prestashop-academy.com/it/contattaci',
-        es: 'https://prestashop-academy.com/es/contactenos',
+        fr: 'https://care-center.prestashop.com/fr/nous-contacter',
+        it: 'https://care-center.prestashop.com/it/contattaci',
+        es: 'https://care-center.prestashop.com/es/contactenos',
       };
 
       const currentLocale = this.$i18n.locale;
 
-      return urls[currentLocale] || 'https://prestashop-academy.com/gb/contact-us';
+      return urls[currentLocale] || 'https://care-center.prestashop.com/gb/contact-us';
     },
     fetchFaq() {
       fetch(this.psFacebookRetrieveFaq)
