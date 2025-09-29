@@ -118,4 +118,5 @@ docker-up:
 # target: docker-down|dd               	 - Stop docker containers
 dd: docker-down
 docker-down:
-	docker-compose down
+	docker compose --project-directory ./e2e-env down -v --remove-orphans
+
