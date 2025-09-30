@@ -21,23 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Cache vendor folder
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: php-${{ hashFiles('composer.lock') }}
+      - name: Setup PHP
+        uses: ./.github/actions/setup-php
 
-      - name: Cache composer folder
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: php-composer-cache
-
-      - run: composer install
-
-      - name: Run PHP-CS-Fixer
+      - name: Run PHP CS Fixer
         run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
   phpstan:
