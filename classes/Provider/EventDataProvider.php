@@ -112,10 +112,10 @@ class EventDataProvider
                     return $this->getCustomEventData();
                 }
                 if ($this->context->controller instanceof \ProductControllerCore) {
-                    if(\Tools::getIsset('id_product') && (int) \Tools::getValue('id_product') > 0) {
+                    if (\Tools::getIsset('id_product') && (int) \Tools::getValue('id_product') > 0) {
                         $id_product = (int) \Tools::getValue('id_product');
                         $product = new Product($id_product, false, $this->context->language->id);
-                        if(Validate::isLoadedObject($product)) {
+                        if (Validate::isLoadedObject($product)) {
                             return $this->getProductPageData();
                         }
                     }
