@@ -12,27 +12,14 @@ error() {
   exit "${2:-1}"
 }
 
-run_user() {
-  sudo -g www-data -u www-data -- "$@"
-}
-
-# Missing PsAccountsPresenter for now, will be fixed soon in https://github.com/PrestaShopCorp/ps_accounts_mock
-# /!\ You will have to manually instrall ps_accounts yourself.
-# ps_accounts_mock_install() {
-#   echo "* [ps_accounts_mock] downloading..."
-#   wget -q -O /tmp/ps_accounts.zip "https://github.com/PrestaShopCorp/ps_accounts_mock/releases/download/v1.0.0/ps_accounts.zip"
-#   echo "* [ps_accounts_mock] unziping..."
-#   run_user unzip -qq /tmp/ps_accounts.zip -d /var/www/html/modules
-#   echo "* [ps_accounts_mock] installing the module..."
-#   cd "$PS_FOLDER"
-#   run_user php -d memory_limit=-1 bin/console prestashop:module --no-interaction install "ps_accounts"
-# }
-
+# we also decide to clear the cache after the installation of the module
+# because sometimes some issues occurs when trying to go to the configuration page of the module
 ps_facebook_install() {
   echo "* [ps_facebook] installing the module..."
   [ ! -d "./modules/ps_facebook/vendor" ] && error "please install composer dependencies first" 2
-  run_user php -d memory_limit=-1 bin/console prestashop:module --no-interaction install "ps_facebook"
+  php -d memory_limit=-1 bin/console prestashop:module --no-interaction install "ps_facebook"
+  php -d memory_limit=-1 bin/console cache:clear
 }
 
-# ps_accounts_mock_install
+# install modules
 ps_facebook_install

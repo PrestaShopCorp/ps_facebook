@@ -1,0 +1,23 @@
+name: Setup PHP (Composite Action)
+description: Install PHP then install dependencies
+inputs:
+  php-version:
+    required: false
+    default: 7.2.5
+    type: string
+  working-directory:
+    required: false
+    default: ./
+    type: string
+runs:
+  using: composite
+  steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+
+    - name: Composer Install
+      working-directory:
+      shell: bash
+      run: composer install --prefer-dist --working-dir=${{ inputs.working-directory }}
