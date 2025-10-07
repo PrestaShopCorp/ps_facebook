@@ -346,8 +346,7 @@ export default defineComponent({
 
     psAccountsOnboarded() {
       return this.contextPsAccounts.user
-        && this.contextPsAccounts.user.email !== null
-        && this.contextPsAccounts.user.emailIsValidated;
+        && this.contextPsAccounts.user.email !== null;
     },
     facebookConnected(): boolean {
       return (this.GET_BILLING_SUBSCRIPTION_ACTIVE
