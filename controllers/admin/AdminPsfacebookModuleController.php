@@ -81,12 +81,23 @@ class AdminPsfacebookModuleController extends ModuleAdminController
 
         $externalBusinessId = $this->configurationAdapter->get(Config::PS_FACEBOOK_EXTERNAL_BUSINESS_ID);
 
+        $moduleManager = ModuleManagerBuilder::getInstance()->build();
+
+        if ($moduleManager->isInstalled('ps_accounts')) {
+            $accountsModule = \Module::getInstanceByName('ps_accounts');
+            if ($accountsModule && version_compare($accountsModule->version, '7', '>=')) {
+                /* @phpstan-ignore-next-line */
+                $accountsCdn = $accountsModule->getParameter('ps_accounts.accounts_cdn_url');
+            }
+        }
+
         $this->context->smarty->assign([
             'id_pixel' => pSQL($this->configurationAdapter->get(Config::PS_PIXEL_ID)),
             'access_token' => pSQL($this->configurationAdapter->get('PS_FBE_ACCESS_TOKEN')),
             'PsfacebookControllerLink' => $this->context->link->getAdminLink('AdminAjaxPsfacebook'),
             'pathApp' => (bool) $this->env->get('USE_LOCAL_VUE_APP') ? $this->module->getPathUri() . 'views/js/pssocial-ui.js' : $this->env->get('PSX_FACEBOOK_CDN_URL') . 'pssocial-ui.js',
             'psSocialLiveMode' => (bool) $this->env->get('USE_LIVE_VUE_APP'),
+            'psAccountsCdnUrl' => $accountsCdn ?? 'https://unpkg.com/prestashop_accounts_vue_components@5',
         ]);
 
         $defaultCurrency = $this->context->currency;
@@ -103,8 +114,6 @@ class AdminPsfacebookModuleController extends ModuleAdminController
         /************************
          * PrestaShop CloudSync *
          ************************/
-
-        $moduleManager = ModuleManagerBuilder::getInstance()->build();
 
         if ($moduleManager->isInstalled('ps_eventbus')) {
             $eventbusModule = \Module::getInstanceByName('ps_eventbus');
