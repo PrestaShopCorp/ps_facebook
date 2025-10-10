@@ -53,4 +53,8 @@ export default {
 
     commit(MutationsTypes.SET_ONBOARDED_CONTEXT, json.contextPsFacebook);
   },
+
+  [ActionsTypes.UPDATE_PIXEL_STATUS]({commit}, newStatus: boolean) {
+    commit(MutationsTypes.UPDATE_PIXEL_STATUS, newStatus);
+  },
 };

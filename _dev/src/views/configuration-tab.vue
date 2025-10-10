@@ -506,6 +506,7 @@ export default defineComponent({
         if (!res.success) {
           throw new Error('Error');
         }
+        this.$store.dispatch('onboarding/UPDATE_PIXEL_STATUS', newState);
       }).catch((error) => {
         console.error(error);
         this.setErrorsFromFbCall(error);

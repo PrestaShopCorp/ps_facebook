@@ -29,3 +29,5 @@ views/js/chunk-vendors.js
 
 tests/integration/config.json
 .terraform/
+
+.DS_Store
