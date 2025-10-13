@@ -14,4 +14,9 @@ export default {
   ) {
     state.onboarded = newState;
   },
+  [MutationsTypes.UPDATE_PIXEL_STATUS](state: LocalState, newStatus: boolean) {
+    if (state.onboarded) {
+      state.onboarded.pixel.isActive = newStatus;
+    }
+  },
 };
