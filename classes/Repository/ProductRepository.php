@@ -170,7 +170,7 @@ class ProductRepository
         $sql->leftJoin('manufacturer', 'm', 'm.id_manufacturer = p.id_manufacturer');
         $sql->leftJoin('image_shop', 'is', 'is.id_product = ps.id_product AND is.id_shop = ps.id_shop AND is.cover = 1');
 
-        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1');
+        $sql->where('ps.id_shop = ' . (int) $shopId . ' AND ps.active = 1 AND l.active = 1');
         $sql->where('
         (m.name = "" OR m.name IS NULL) AND p.ean13 = "" AND p.upc = "" AND p.isbn = ""
         OR ((pl.description_short = "" OR pl.description_short IS NULL) AND (pl.description = "" OR pl.description IS NULL))
