@@ -822,7 +822,7 @@ class AdminAjaxPsfacebookController extends ModuleAdminController
             json_encode(
                 (new ModuleRepository($inputs['moduleName']))->getInformationsAboutModule()
             ),
-            400
+            200
         );
     }
 
