@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PrestaShopCorp/facebook-php-business-sdk.git",
-                "reference": "6dc8508e68cc2c7a651a281328ed7df3421d366e"
+                "reference": "79b01f936f40eb85947b7ddcdebcded98b795224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/6dc8508e68cc2c7a651a281328ed7df3421d366e",
-                "reference": "6dc8508e68cc2c7a651a281328ed7df3421d366e",
+                "url": "https://api.github.com/repos/PrestaShopCorp/facebook-php-business-sdk/zipball/79b01f936f40eb85947b7ddcdebcded98b795224",
+                "reference": "79b01f936f40eb85947b7ddcdebcded98b795224",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
             "support": {
                 "source": "https://github.com/PrestaShopCorp/facebook-php-business-sdk/tree/remove-guzzle"
             },
-            "time": "2025-06-09T13:43:20+00:00"
+            "time": "2025-12-10T10:10:34+00:00"
         },
         {
             "name": "phpoption/phpoption",
