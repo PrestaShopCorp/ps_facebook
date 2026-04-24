@@ -73,11 +73,15 @@
       {if isset($product_manufacturer->id)}
         <meta property="product:brand" content="{$product_manufacturer->name}">
       {/if}
-      <meta property="product:availability" content="{$product_availability}">
+      {if isset($product_availability)}
+        <meta property="product:availability" content="{$product_availability}">
+      {/if}
       <meta property="product:condition" content="{$product.embedded_attributes.condition}">
-      <meta property="product:retailer_item_id" content="{$retailer_item_id}">
-      <meta property="product:item_group_id" content="{$product.id_product}">
-      <meta property="product:category" content="{$item_group_id}"/>
+      {if isset($retailer_item_id)}
+        <meta property="product:retailer_item_id" content="{$retailer_item_id}">
+        <meta property="product:item_group_id" content="{$product.id_product}">
+        <meta property="product:category" content="{$item_group_id}"/>
+      {/if}
   {/if}
 {/if}
 <!-- END OF Set Facebook Pixel Product Export -->
