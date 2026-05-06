@@ -222,7 +222,7 @@ class EventDataProvider
             foreach ($prods as $product) {
                 $contentIds[] = ProductCatalogUtility::makeProductId(
                     $product['id_product'],
-                    $product['id_product_attribute'] ?: null
+                    $product['id_product_attribute'] ?? null
                 );
             }
         }
@@ -231,7 +231,7 @@ class EventDataProvider
             'content_name' => \Tools::replaceAccentedChars($category->name) . ' ' . $this->locale,
             'content_category' => \Tools::replaceAccentedChars($breadcrumb),
             'content_type' => self::CATEGORY_TYPE,
-            'content_ids' => $contentIds ?? null,
+            'content_ids' => $contentIds ?: null,
         ];
 
         return [
