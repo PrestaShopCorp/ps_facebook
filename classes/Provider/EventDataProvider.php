@@ -222,7 +222,7 @@ class EventDataProvider
             foreach ($prods as $product) {
                 $contentIds[] = ProductCatalogUtility::makeProductId(
                     $product['id_product'],
-                    $product['id_product_attribute']
+                    $product['id_product_attribute'] ?: null
                 );
             }
         }
