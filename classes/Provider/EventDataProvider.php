@@ -153,7 +153,7 @@ class EventDataProvider
 
         $fbProductId = ProductCatalogUtility::makeProductId(
             $product['id_product'],
-            $product['id_product_attribute']
+            $product['id_product_attribute'] ?? 0
         );
 
         $productUrl = $this->context->link->getProductLink($product['id']);
@@ -222,7 +222,7 @@ class EventDataProvider
             foreach ($prods as $product) {
                 $contentIds[] = ProductCatalogUtility::makeProductId(
                     $product['id_product'],
-                    $product['id_product_attribute']
+                    $product['id_product_attribute'] ?? 0
                 );
             }
         }
@@ -306,7 +306,7 @@ class EventDataProvider
             'content_ids' => [
                 ProductCatalogUtility::makeProductId(
                     $idProduct,
-                    $idProductAttribute
+                    $idProductAttribute ?? 0
                 ),
             ],
             'currency' => $this->getCurrency(),
@@ -384,7 +384,7 @@ class EventDataProvider
         foreach ($order->getCartProducts() as $product) {
             $productList[] = ProductCatalogUtility::makeProductId(
                 $product['id_product'],
-                $product['id_product_attribute']
+                $product['id_product_attribute'] ?? 0
             );
         }
 
