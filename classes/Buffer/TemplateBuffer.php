@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\PrestashopFacebook\Buffer;
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
 class TemplateBuffer
@@ -37,15 +38,38 @@ class TemplateBuffer
      */
     public function init($userId)
     {
-        $this->session = new Session(
-            new MockFileSessionStorage(
-                \_PS_CACHE_DIR_ . '/ps_facebook_sessions',
-                'pixel'
-            )
-        );
-        $this->session->setId($userId);
+        $this->session = new Session($this->createStorage($userId));
+
+        if (!empty($userId)) {
+            $this->session->setId($userId);
+        }
+
         $this->session->start();
         register_shutdown_function([$this, 'save']);
+    }
+
+    /**
+     * Persist the buffer on disk only when we have a stable identifier to read it back with.
+     *
+     * When $userId is empty, MockArraySessionStorage::start() generates a random session id.
+     * A file written under that id can never be found again by any later request, so it would
+     * remain on disk forever. MockFileSessionStorage performs no garbage collection, which turns
+     * every such request into a permanent orphaned file and eventually exhausts the inode quota.
+     *
+     * @param string $userId
+     *
+     * @return MockArraySessionStorage
+     */
+    private function createStorage($userId)
+    {
+        if (empty($userId)) {
+            return new MockArraySessionStorage('pixel');
+        }
+
+        return new MockFileSessionStorage(
+            \_PS_CACHE_DIR_ . '/ps_facebook_sessions',
+            'pixel'
+        );
     }
 
     /**
